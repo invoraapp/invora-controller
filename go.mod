@@ -1,4 +1,4 @@
-module github.com/invoraapp/billing-controller
+module github.com/invoraapp/invora-controller
 
 go 1.25.0
 

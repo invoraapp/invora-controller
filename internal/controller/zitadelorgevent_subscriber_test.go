@@ -13,7 +13,7 @@ import (
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 
-	billingv1alpha1 "github.com/invoraapp/billing-controller/api/v1alpha1"
+	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
 )
 
 // newSubscriberForTest wires a subscriber against a fake client preloaded

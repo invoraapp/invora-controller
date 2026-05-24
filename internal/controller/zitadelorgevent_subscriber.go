@@ -33,7 +33,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
-	billingv1alpha1 "github.com/invoraapp/billing-controller/api/v1alpha1"
+	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
 )
 
 const (

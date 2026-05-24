@@ -15,9 +15,9 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	"sigs.k8s.io/controller-runtime/pkg/metrics/server"
 
-	billingv1alpha1 "github.com/invoraapp/billing-controller/api/v1alpha1"
-	"github.com/invoraapp/billing-controller/internal/controller"
-	"github.com/invoraapp/billing-controller/internal/billingclient"
+	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
+	"github.com/invoraapp/invora-controller/internal/controller"
+	"github.com/invoraapp/invora-controller/internal/billingclient"
 )
 
 var (
