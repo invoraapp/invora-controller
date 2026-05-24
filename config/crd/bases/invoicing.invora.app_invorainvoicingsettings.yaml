@@ -4,24 +4,24 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.17.2
-  name: invorabillingmetrics.billing.invora.app
+  name: invorainvoicingsettings.invoicing.invora.app
 spec:
-  group: billing.invora.app
+  group: invoicing.invora.app
   names:
-    kind: InvoraBillingMetric
-    listKind: InvoraBillingMetricList
-    plural: invorabillingmetrics
+    kind: InvoraInvoicingSettings
+    listKind: InvoraInvoicingSettingsList
+    plural: invorainvoicingsettings
     shortNames:
-    - lbm
-    singular: billingbillablemetric
+    - iset
+    singular: invorainvoicingsettings
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
-    - jsonPath: .spec.code
-      name: Code
+    - jsonPath: .spec.defaultCurrency
+      name: Currency
       type: string
-    - jsonPath: .spec.aggregationType
-      name: Type
+    - jsonPath: .spec.defaultLanguage
+      name: Language
       type: string
     - jsonPath: .status.conditions[?(@.type=="Ready")].status
       name: Ready
@@ -32,7 +32,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: InvoraBillingMetric represents a billable metric in a billing organization.
+        description: InvoraInvoicingSettings represents tenant-level invoicing configuration.
         properties:
           apiVersion:
             description: |-
@@ -52,107 +52,48 @@ spec:
           metadata:
             type: object
           spec:
-            description: InvoraBillingMetricSpec defines a usage measurement definition
-              in billing.
+            description: InvoraInvoicingSettingsSpec defines tenant-level invoicing
+              settings.
             properties:
-              aggregationType:
-                description: AggregationType defines how events are aggregated.
-                enum:
-                - count_agg
-                - sum_agg
-                - max_agg
-                - unique_count_agg
-                - latest_agg
-                - weighted_sum_agg
-                - custom_agg
+              autoCalculate:
+                default: true
+                description: AutoCalculate enables automatic total/tax calculation
+                  on document save.
+                type: boolean
+              defaultCurrency:
+                description: DefaultCurrency is the default currency for new documents
+                  (ISO 4217).
                 type: string
-              code:
-                description: Code is the unique identifier for this metric. Immutable
-                  after creation.
-                minLength: 1
+              defaultLanguage:
+                description: DefaultLanguage is the default document language (ISO
+                  639-1).
                 type: string
-              deletionPolicy:
-                default: Delete
-                description: DeletionPolicy determines what happens to the billing resource
-                  when this CR is deleted.
-                enum:
-                - Delete
-                - Orphan
+              defaultPaymentTermsDays:
+                description: DefaultPaymentTermsDays is the default net payment terms.
+                format: int32
+                type: integer
+              documentNumberFormat:
+                description: DocumentNumberFormat defines the number format pattern.
                 type: string
-              description:
-                description: Description is optional.
-                type: string
-              fieldName:
-                description: FieldName is the event property to aggregate. Required
-                  for sum_agg, max_agg, etc.
-                type: string
-              filters:
-                description: |-
-                  Filters defines property-based filter keys and their allowed values for
-                  billing charge filter matching. Events carry these properties; plan charges
-                  use ChargeFilter to price each combination independently.
-                items:
-                  description: |-
-                    BillableMetricFilter defines a property-based filter key and its allowed values
-                    for billing charge filter matching.
-                  properties:
-                    key:
-                      description: Key is the event property name used for filtering
-                        (e.g. "document_type", "regulation_id").
-                      minLength: 1
-                      type: string
-                    values:
-                      description: Values are the allowed values for this filter key.
-                      items:
-                        type: string
-                      minItems: 1
-                      type: array
-                  required:
-                  - key
-                  - values
-                  type: object
-                type: array
-              name:
-                description: Name is the display name.
-                minLength: 1
-                type: string
-              organizationRef:
-                description: OrganizationRef references the InvoraBillingOrganization this
-                  metric belongs to.
+              instanceRef:
+                description: InstanceRef references the InvoraBillingInstance (gateway
+                  connection).
                 properties:
                   name:
-                    description: Name of the referenced resource.
-                    minLength: 1
                     type: string
                   namespace:
-                    description: |-
-                      Namespace of the referenced resource. Defaults to the namespace
-                      of the referencing resource when omitted.
                     type: string
                 required:
                 - name
                 type: object
-              recurring:
-                description: Recurring indicates if the metric is recurring across
-                  billing periods.
-                type: boolean
-              weightedInterval:
-                description: WeightedInterval for weighted_sum_agg (e.g. "seconds").
-                type: string
             required:
-            - aggregationType
-            - code
-            - name
-            - organizationRef
+            - instanceRef
             type: object
           status:
-            description: InvoraBillingMetricStatus defines the observed state of a
-              InvoraBillingMetric.
+            description: InvoraInvoicingSettingsStatus defines the observed state.
             properties:
               conditions:
-                description: |-
-                  Conditions represent the latest available observations of the
-                  resource's state.
+                description: Conditions represent the latest observations.
                 items:
                   description: Condition contains details for one aspect of the current
                     state of this API Resource.
@@ -208,22 +149,13 @@ spec:
                   - type
                   type: object
                 type: array
-              id:
-                description: ID is the billing-assigned resource identifier.
-                type: string
-              billingId:
-                description: billingID is the billing-assigned UUID.
-                type: string
               lastSyncedAt:
-                description: |-
-                  LastSyncedAt is the last time the controller successfully reconciled
-                  the resource against the billing API.
+                description: LastSyncedAt is the last time this resource was synced.
                 format: date-time
                 type: string
               observedGeneration:
-                description: |-
-                  ObservedGeneration is the most recent .metadata.generation observed
-                  by the controller.
+                description: ObservedGeneration is the last spec generation the controller
+                  acted on.
                 format: int64
                 type: integer
             type: object

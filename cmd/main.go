@@ -16,6 +16,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/metrics/server"
 
 	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
+	corev1alpha1 "github.com/invoraapp/invora-controller/api/core/v1alpha1"
+	invoicingv1alpha1 "github.com/invoraapp/invora-controller/api/invoicing/v1alpha1"
 	"github.com/invoraapp/invora-controller/internal/controller"
 	"github.com/invoraapp/invora-controller/internal/billingclient"
 )
@@ -28,6 +30,8 @@ var (
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 	utilruntime.Must(billingv1alpha1.AddToScheme(scheme))
+	utilruntime.Must(corev1alpha1.AddToScheme(scheme))
+	utilruntime.Must(invoicingv1alpha1.AddToScheme(scheme))
 }
 
 func main() {
@@ -95,7 +99,6 @@ func main() {
 		{"InvoraBillingSubscription", &controller.InvoraBillingSubscriptionReconciler{BaseReconciler: base}},
 		{"InvoraBillingWebhookEndpoint", &controller.InvoraBillingWebhookEndpointReconciler{BaseReconciler: base}},
 		{"InvoraBillingTapProvider", &controller.InvoraBillingTapProviderReconciler{BaseReconciler: base}},
-		{"InvoraBillingEntity", &controller.InvoraBillingEntityReconciler{BaseReconciler: base}},
 	}
 
 	for _, c := range controllers {
