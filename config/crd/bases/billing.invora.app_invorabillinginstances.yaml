@@ -13,12 +13,12 @@ spec:
     plural: invorabillinginstances
     shortNames:
     - li
-    singular: billinginstance
+    singular: invorabillinginstance
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
-    - jsonPath: .spec.host
-      name: Host
+    - jsonPath: .spec.gatewayUrl
+      name: Gateway
       type: string
     - jsonPath: .status.conditions[?(@.type=="Ready")].status
       name: Ready
@@ -30,7 +30,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: |-
-          InvoraBillingInstance defines a connection to a billing deployment. It serves as
+          InvoraBillingInstance defines a connection to an Invora Billing instance. It serves as
           the endpoint and authentication configuration that InvoraBillingOrganization
           resources reference via their instanceRef field.
         properties:
@@ -53,21 +53,22 @@ spec:
             type: object
           spec:
             description: |-
-              InvoraBillingInstanceSpec defines connection parameters to a billing deployment.
+              InvoraBillingInstanceSpec defines connection parameters to an Invora Billing instance.
               Every other billing CRD references a InvoraBillingInstance (directly or via
-              InvoraBillingOrganization) to know which billing server to talk to.
+              InvoraBillingOrganization) to know which billing gateway to talk to.
             properties:
-              host:
-                description: Host is the base URL of the billing API (e.g. "https://billing.example.com").
+              gatewayUrl:
+                description: GatewayURL is the base URL of the Invora Billing gateway
+                  (e.g. "https://dev-gateway.invora.app").
                 minLength: 1
                 type: string
               insecure:
                 default: false
                 description: Insecure disables TLS verification.
                 type: boolean
-              superAdminTokenRef:
+              tokenRef:
                 description: |-
-                  SuperAdminTokenRef references the Secret containing the
+                  TokenRef references the Secret containing the service account
                   service account token. Required for organization lifecycle
                   operations (create/delete via GraphQL).
                 properties:
@@ -88,8 +89,8 @@ spec:
                 - name
                 type: object
             required:
-            - host
-            - superAdminTokenRef
+            - gatewayUrl
+            - tokenRef
             type: object
           status:
             description: InvoraBillingInstanceStatus reports the connection health.
@@ -154,7 +155,7 @@ spec:
                   type: object
                 type: array
               id:
-                description: ID is the billing-assigned resource identifier.
+                description: ID is the billing-backend-assigned resource identifier.
                 type: string
               lastConnectedAt:
                 description: |-

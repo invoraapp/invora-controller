@@ -4,21 +4,27 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.17.2
-  name: invorabillingfeatures.billing.invora.app
+  name: invorabillingwallets.billing.invora.app
 spec:
   group: billing.invora.app
   names:
-    kind: InvoraBillingFeature
-    listKind: InvoraBillingFeatureList
-    plural: invorabillingfeatures
+    kind: InvoraBillingWallet
+    listKind: InvoraBillingWalletList
+    plural: invorabillingwallets
     shortNames:
-    - lfeat
-    singular: invorabillingfeature
+    - iwallet
+    singular: invorabillingwallet
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
-    - jsonPath: .spec.code
-      name: Code
+    - jsonPath: .spec.externalCustomerId
+      name: Customer
+      type: string
+    - jsonPath: .spec.currency
+      name: Currency
+      type: string
+    - jsonPath: .status.balanceCredits
+      name: Balance
       type: string
     - jsonPath: .status.conditions[?(@.type=="Ready")].status
       name: Ready
@@ -29,8 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: InvoraBillingFeature represents a feature definition in a billing
-          organization.
+        description: InvoraBillingWallet represents a prepaid credit wallet attached
+          to a customer.
         properties:
           apiVersion:
             description: |-
@@ -50,38 +56,44 @@ spec:
           metadata:
             type: object
           spec:
-            description: InvoraBillingFeatureSpec defines a feature/entitlement definition
-              in billing.
+            description: |-
+              InvoraBillingWalletSpec defines a prepaid credit wallet attached to a
+              billing customer. Wallets allow customers to maintain a credit balance
+              that is automatically applied to invoices before charging the payment method.
             properties:
-              code:
-                description: Code is the unique identifier. Immutable after creation.
-                minLength: 1
+              currency:
+                description: Currency is the wallet currency (ISO 4217). Must match
+                  the customer's currency.
+                maxLength: 3
+                minLength: 3
                 type: string
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy determines what happens to the billing
-                  resource when this CR is deleted.
+                description: |-
+                  DeletionPolicy determines what happens to the billing resource when this
+                  CR is deleted.
                 enum:
                 - Delete
                 - Orphan
                 type: string
-              description:
-                description: Description is optional.
+              expirationAt:
+                description: ExpirationAt is when the wallet expires (ISO 8601). Empty
+                  means no expiration.
                 type: string
-              metadata:
-                additionalProperties:
-                  type: string
-                description: |-
-                  Metadata stores arbitrary key-value pairs at the feature level.
-                  Useful for categorizing features (e.g. entity_type: "book").
-                type: object
-              name:
-                description: Name is the display name.
+              externalCustomerId:
+                description: ExternalCustomerID is the customer who owns this wallet.
                 minLength: 1
+                type: string
+              grantedCredits:
+                description: GrantedCredits is the initial free/promotional credits
+                  to grant.
+                type: string
+              name:
+                description: Name is a human-readable label for the wallet.
                 type: string
               organizationRef:
                 description: OrganizationRef references the InvoraBillingOrganization
-                  this feature belongs to.
+                  that owns this wallet.
                 properties:
                   name:
                     description: Name of the referenced resource.
@@ -95,14 +107,55 @@ spec:
                 required:
                 - name
                 type: object
+              paidCredits:
+                description: PaidCredits is the initial credits to grant on creation.
+                type: string
+              rateAmount:
+                default: "1.0"
+                description: |-
+                  RateAmount is the conversion rate from credits to currency units.
+                  For 1:1 mapping, set to "1.0".
+                type: string
+              recurringTopUp:
+                description: RecurringTopUp configures automatic wallet top-up rules.
+                properties:
+                  grantedCredits:
+                    description: GrantedCredits is the free credits to add on each
+                      top-up.
+                    type: string
+                  interval:
+                    description: 'Interval is the top-up frequency for fixed method:
+                      "weekly" or "monthly" or "quarterly" or "yearly".'
+                    type: string
+                  method:
+                    description: 'Method is the top-up trigger: "fixed" (periodic)
+                      or "target" (balance threshold).'
+                    enum:
+                    - fixed
+                    - target
+                    type: string
+                  paidCredits:
+                    description: PaidCredits is the amount to top up each time.
+                    type: string
+                  thresholdCredits:
+                    description: ThresholdCredits triggers top-up when balance falls
+                      below this (target method).
+                    type: string
+                required:
+                - method
+                - paidCredits
+                type: object
             required:
-            - code
-            - name
+            - currency
+            - externalCustomerId
             - organizationRef
             type: object
           status:
-            description: InvoraBillingFeatureStatus defines the observed state.
+            description: InvoraBillingWalletStatus defines the observed state.
             properties:
+              balanceCredits:
+                description: BalanceCredits is the current credit balance (last observed).
+                type: string
               conditions:
                 description: |-
                   Conditions represent the latest available observations of the
@@ -162,7 +215,8 @@ spec:
                   - type
                   type: object
                 type: array
-              externalId:
+              consumedCredits:
+                description: ConsumedCredits is the total credits consumed (last observed).
                 type: string
               id:
                 description: ID is the billing-backend-assigned resource identifier.
@@ -179,6 +233,10 @@ spec:
                   by the controller.
                 format: int64
                 type: integer
+              walletId:
+                description: WalletID is the billing-backend-assigned UUID for this
+                  wallet.
+                type: string
             type: object
         type: object
     served: true

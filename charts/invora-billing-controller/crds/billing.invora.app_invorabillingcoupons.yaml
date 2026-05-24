@@ -13,7 +13,7 @@ spec:
     plural: invorabillingcoupons
     shortNames:
     - lcoup
-    singular: billingcoupon
+    singular: invorabillingcoupon
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -73,8 +73,8 @@ spec:
                 type: string
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy determines what happens to the billing resource
-                  when this CR is deleted.
+                description: DeletionPolicy determines what happens to the billing
+                  resource when this CR is deleted.
                 enum:
                 - Delete
                 - Orphan
@@ -100,8 +100,8 @@ spec:
                 minLength: 1
                 type: string
               organizationRef:
-                description: OrganizationRef references the InvoraBillingOrganization this
-                  coupon belongs to.
+                description: OrganizationRef references the InvoraBillingOrganization
+                  this coupon belongs to.
                 properties:
                   name:
                     description: Name of the referenced resource.
@@ -191,10 +191,10 @@ spec:
                   - type
                   type: object
                 type: array
-              id:
-                description: ID is the billing-assigned resource identifier.
+              externalId:
                 type: string
-              billingId:
+              id:
+                description: ID is the billing-backend-assigned resource identifier.
                 type: string
               lastSyncedAt:
                 description: |-

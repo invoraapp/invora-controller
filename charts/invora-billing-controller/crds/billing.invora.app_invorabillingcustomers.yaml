@@ -13,7 +13,7 @@ spec:
     plural: invorabillingcustomers
     shortNames:
     - lcust
-    singular: billingcustomer
+    singular: invorabillingcustomer
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -32,7 +32,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: InvoraBillingCustomer represents a billable customer in a billing organization.
+        description: InvoraBillingCustomer represents a billable customer in a billing
+          organization.
         properties:
           apiVersion:
             description: |-
@@ -52,7 +53,8 @@ spec:
           metadata:
             type: object
           spec:
-            description: InvoraBillingCustomerSpec defines a billable customer in billing.
+            description: InvoraBillingCustomerSpec defines a billable customer in
+              billing.
             properties:
               addressLine1:
                 description: AddressLine1 is the primary address line.
@@ -71,8 +73,8 @@ spec:
                 type: string
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy determines what happens to the billing resource
-                  when this CR is deleted.
+                description: DeletionPolicy determines what happens to the billing
+                  resource when this CR is deleted.
                 enum:
                 - Delete
                 - Orphan
@@ -95,8 +97,8 @@ spec:
                 description: Name of the customer.
                 type: string
               organizationRef:
-                description: OrganizationRef references the InvoraBillingOrganization this
-                  customer belongs to.
+                description: OrganizationRef references the InvoraBillingOrganization
+                  this customer belongs to.
                 properties:
                   name:
                     description: Name of the referenced resource.
@@ -193,11 +195,11 @@ spec:
                   - type
                   type: object
                 type: array
-              id:
-                description: ID is the billing-assigned resource identifier.
+              externalId:
+                description: ExternalID is the billing-backend-assigned UUID.
                 type: string
-              billingId:
-                description: billingID is the billing-assigned UUID.
+              id:
+                description: ID is the billing-backend-assigned resource identifier.
                 type: string
               lastSyncedAt:
                 description: |-

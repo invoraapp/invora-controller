@@ -4,21 +4,24 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.17.2
-  name: invorabillingfeatures.billing.invora.app
+  name: invorabillingmetrics.billing.invora.app
 spec:
   group: billing.invora.app
   names:
-    kind: InvoraBillingFeature
-    listKind: InvoraBillingFeatureList
-    plural: invorabillingfeatures
+    kind: InvoraBillingMetric
+    listKind: InvoraBillingMetricList
+    plural: invorabillingmetrics
     shortNames:
-    - lfeat
-    singular: invorabillingfeature
+    - lbm
+    singular: invorabillingmetric
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
     - jsonPath: .spec.code
       name: Code
+      type: string
+    - jsonPath: .spec.aggregationType
+      name: Type
       type: string
     - jsonPath: .status.conditions[?(@.type=="Ready")].status
       name: Ready
@@ -29,7 +32,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: InvoraBillingFeature represents a feature definition in a billing
+        description: InvoraBillingMetric represents a billable metric in a billing
           organization.
         properties:
           apiVersion:
@@ -50,11 +53,23 @@ spec:
           metadata:
             type: object
           spec:
-            description: InvoraBillingFeatureSpec defines a feature/entitlement definition
+            description: InvoraBillingMetricSpec defines a usage measurement definition
               in billing.
             properties:
+              aggregationType:
+                description: AggregationType defines how events are aggregated.
+                enum:
+                - count_agg
+                - sum_agg
+                - max_agg
+                - unique_count_agg
+                - latest_agg
+                - weighted_sum_agg
+                - custom_agg
+                type: string
               code:
-                description: Code is the unique identifier. Immutable after creation.
+                description: Code is the unique identifier for this metric. Immutable
+                  after creation.
                 minLength: 1
                 type: string
               deletionPolicy:
@@ -68,20 +83,43 @@ spec:
               description:
                 description: Description is optional.
                 type: string
-              metadata:
-                additionalProperties:
-                  type: string
+              fieldName:
+                description: FieldName is the event property to aggregate. Required
+                  for sum_agg, max_agg, etc.
+                type: string
+              filters:
                 description: |-
-                  Metadata stores arbitrary key-value pairs at the feature level.
-                  Useful for categorizing features (e.g. entity_type: "book").
-                type: object
+                  Filters defines property-based filter keys and their allowed values for
+                  billing charge filter matching. Events carry these properties; plan charges
+                  use ChargeFilter to price each combination independently.
+                items:
+                  description: |-
+                    BillableMetricFilter defines a property-based filter key and its allowed values
+                    for billing charge filter matching.
+                  properties:
+                    key:
+                      description: Key is the event property name used for filtering
+                        (e.g. "document_type", "regulation_id").
+                      minLength: 1
+                      type: string
+                    values:
+                      description: Values are the allowed values for this filter key.
+                      items:
+                        type: string
+                      minItems: 1
+                      type: array
+                  required:
+                  - key
+                  - values
+                  type: object
+                type: array
               name:
                 description: Name is the display name.
                 minLength: 1
                 type: string
               organizationRef:
                 description: OrganizationRef references the InvoraBillingOrganization
-                  this feature belongs to.
+                  this metric belongs to.
                 properties:
                   name:
                     description: Name of the referenced resource.
@@ -95,13 +133,22 @@ spec:
                 required:
                 - name
                 type: object
+              recurring:
+                description: Recurring indicates if the metric is recurring across
+                  billing periods.
+                type: boolean
+              weightedInterval:
+                description: WeightedInterval for weighted_sum_agg (e.g. "seconds").
+                type: string
             required:
+            - aggregationType
             - code
             - name
             - organizationRef
             type: object
           status:
-            description: InvoraBillingFeatureStatus defines the observed state.
+            description: InvoraBillingMetricStatus defines the observed state of a
+              InvoraBillingMetric.
             properties:
               conditions:
                 description: |-
@@ -163,6 +210,7 @@ spec:
                   type: object
                 type: array
               externalId:
+                description: ExternalID is the billing-backend-assigned UUID.
                 type: string
               id:
                 description: ID is the billing-backend-assigned resource identifier.

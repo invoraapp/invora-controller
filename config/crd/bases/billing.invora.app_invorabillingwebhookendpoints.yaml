@@ -13,7 +13,7 @@ spec:
     plural: invorabillingwebhookendpoints
     shortNames:
     - lwh
-    singular: billingwebhookendpoint
+    singular: invorabillingwebhookendpoint
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -29,7 +29,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: InvoraBillingWebhookEndpoint represents a webhook endpoint in a billing organization.
+        description: InvoraBillingWebhookEndpoint represents a webhook endpoint in
+          a billing organization.
         properties:
           apiVersion:
             description: |-
@@ -49,19 +50,20 @@ spec:
           metadata:
             type: object
           spec:
-            description: InvoraBillingWebhookEndpointSpec defines a webhook endpoint in billing.
+            description: InvoraBillingWebhookEndpointSpec defines a webhook endpoint
+              in billing.
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy determines what happens to the billing resource
-                  when this CR is deleted.
+                description: DeletionPolicy determines what happens to the billing
+                  resource when this CR is deleted.
                 enum:
                 - Delete
                 - Orphan
                 type: string
               organizationRef:
-                description: OrganizationRef references the InvoraBillingOrganization this
-                  webhook belongs to.
+                description: OrganizationRef references the InvoraBillingOrganization
+                  this webhook belongs to.
                 properties:
                   name:
                     description: Name of the referenced resource.
@@ -151,12 +153,12 @@ spec:
                   - type
                   type: object
                 type: array
-              id:
-                description: ID is the billing-assigned resource identifier.
+              externalId:
+                description: ExternalID is the billing-backend-assigned UUID (webhooks
+                  are identified by UUID, not code).
                 type: string
-              billingId:
-                description: billingID is the billing-assigned UUID (webhooks are identified
-                  by UUID, not code).
+              id:
+                description: ID is the billing-backend-assigned resource identifier.
                 type: string
               lastSyncedAt:
                 description: |-

@@ -4,19 +4,22 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.17.2
-  name: invorabillingfeatures.billing.invora.app
+  name: invorabillingpaymentproviders.billing.invora.app
 spec:
   group: billing.invora.app
   names:
-    kind: InvoraBillingFeature
-    listKind: InvoraBillingFeatureList
-    plural: invorabillingfeatures
+    kind: InvoraBillingPaymentProvider
+    listKind: InvoraBillingPaymentProviderList
+    plural: invorabillingpaymentproviders
     shortNames:
-    - lfeat
-    singular: invorabillingfeature
+    - ipay
+    singular: invorabillingpaymentprovider
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
+    - jsonPath: .spec.providerType
+      name: Type
+      type: string
     - jsonPath: .spec.code
       name: Code
       type: string
@@ -29,8 +32,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: InvoraBillingFeature represents a feature definition in a billing
-          organization.
+        description: |-
+          InvoraBillingPaymentProvider represents a generic payment provider configured
+          on a billing organization. Use provider-specific CRDs when available.
         properties:
           apiVersion:
             description: |-
@@ -50,38 +54,61 @@ spec:
           metadata:
             type: object
           spec:
-            description: InvoraBillingFeatureSpec defines a feature/entitlement definition
-              in billing.
+            description: |-
+              InvoraBillingPaymentProviderSpec defines a generic payment provider for
+              providers that don't have a dedicated CRD (e.g., Moneyhash, Cashfree,
+              Flutterwave). Use the provider-specific CRDs (StripeProvider, AdyenProvider,
+              TapProvider, GoCardlessProvider) when available for better validation.
             properties:
               code:
-                description: Code is the unique identifier. Immutable after creation.
+                description: Code is the provider code. Immutable after creation.
                 minLength: 1
                 type: string
+              config:
+                additionalProperties:
+                  type: string
+                description: |-
+                  Config holds provider-specific configuration as key-value pairs.
+                  Consult the provider documentation for supported keys.
+                type: object
+              credentialsRef:
+                description: |-
+                  CredentialsRef references the Kubernetes Secret holding the provider's
+                  API credentials. The expected keys depend on the ProviderType.
+                properties:
+                  key:
+                    description: Key within the Secret data.
+                    minLength: 1
+                    type: string
+                  name:
+                    description: Name of the Secret.
+                    minLength: 1
+                    type: string
+                  namespace:
+                    description: Namespace of the Secret. Defaults to the referencing
+                      resource's namespace.
+                    type: string
+                required:
+                - key
+                - name
+                type: object
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy determines what happens to the billing
-                  resource when this CR is deleted.
+                description: |-
+                  DeletionPolicy determines what happens to the billing resource when this
+                  CR is deleted.
                 enum:
                 - Delete
                 - Orphan
                 type: string
-              description:
-                description: Description is optional.
-                type: string
-              metadata:
-                additionalProperties:
-                  type: string
-                description: |-
-                  Metadata stores arbitrary key-value pairs at the feature level.
-                  Useful for categorizing features (e.g. entity_type: "book").
-                type: object
               name:
-                description: Name is the display name.
+                description: Name is the display name shown in the billing UI.
                 minLength: 1
                 type: string
               organizationRef:
-                description: OrganizationRef references the InvoraBillingOrganization
-                  this feature belongs to.
+                description: |-
+                  OrganizationRef references the InvoraBillingOrganization that owns this
+                  payment provider.
                 properties:
                   name:
                     description: Name of the referenced resource.
@@ -95,13 +122,46 @@ spec:
                 required:
                 - name
                 type: object
+              providerType:
+                description: |-
+                  ProviderType identifies the payment provider type.
+                  Must match one of the supported backend types (e.g., "moneyhash",
+                  "cashfree", "flutterwave").
+                minLength: 1
+                type: string
+              successRedirectUrl:
+                description: SuccessRedirectUrl is the URL for successful payments.
+                type: string
+              webhookSecretRef:
+                description: |-
+                  WebhookSecretRef references the Kubernetes Secret holding the webhook
+                  signing secret for this provider.
+                properties:
+                  key:
+                    description: Key within the Secret data.
+                    minLength: 1
+                    type: string
+                  name:
+                    description: Name of the Secret.
+                    minLength: 1
+                    type: string
+                  namespace:
+                    description: Namespace of the Secret. Defaults to the referencing
+                      resource's namespace.
+                    type: string
+                required:
+                - key
+                - name
+                type: object
             required:
             - code
+            - credentialsRef
             - name
             - organizationRef
+            - providerType
             type: object
           status:
-            description: InvoraBillingFeatureStatus defines the observed state.
+            description: InvoraBillingPaymentProviderStatus defines the observed state.
             properties:
               conditions:
                 description: |-
@@ -162,8 +222,6 @@ spec:
                   - type
                   type: object
                 type: array
-              externalId:
-                type: string
               id:
                 description: ID is the billing-backend-assigned resource identifier.
                 type: string
@@ -179,6 +237,13 @@ spec:
                   by the controller.
                 format: int64
                 type: integer
+              providerCode:
+                description: ProviderCode is the resolved billing provider code.
+                type: string
+              providerId:
+                description: ProviderID is the billing-backend-assigned UUID for this
+                  provider.
+                type: string
             type: object
         type: object
     served: true

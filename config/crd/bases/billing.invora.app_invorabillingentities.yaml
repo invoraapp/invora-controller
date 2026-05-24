@@ -4,21 +4,27 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.17.2
-  name: invorabillingfeatures.billing.invora.app
+  name: invorabillingentities.billing.invora.app
 spec:
   group: billing.invora.app
   names:
-    kind: InvoraBillingFeature
-    listKind: InvoraBillingFeatureList
-    plural: invorabillingfeatures
+    kind: InvoraBillingEntity
+    listKind: InvoraBillingEntityList
+    plural: invorabillingentities
     shortNames:
-    - lfeat
-    singular: invorabillingfeature
+    - lbe
+    singular: invorabillingentity
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
     - jsonPath: .spec.code
       name: Code
+      type: string
+    - jsonPath: .spec.name
+      name: Name
+      type: string
+    - jsonPath: .spec.defaultCurrency
+      name: Currency
       type: string
     - jsonPath: .status.conditions[?(@.type=="Ready")].status
       name: Ready
@@ -29,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: InvoraBillingFeature represents a feature definition in a billing
+        description: InvoraBillingEntity represents a Billing Entity in a billing
           organization.
         properties:
           apiVersion:
@@ -50,38 +56,114 @@ spec:
           metadata:
             type: object
           spec:
-            description: InvoraBillingFeatureSpec defines a feature/entitlement definition
-              in billing.
+            description: |-
+              InvoraBillingEntitySpec defines a Billing Entity inside a billing
+              organization. Backed by the GraphQL mutations createBillingEntity /
+              updateBillingEntity (auth: organization API key).
             properties:
+              addressLine1:
+                description: AddressLine1 is the primary address line.
+                type: string
+              addressLine2:
+                description: AddressLine2 is the secondary address line.
+                type: string
+              city:
+                description: City of the entity.
+                type: string
               code:
-                description: Code is the unique identifier. Immutable after creation.
+                description: |-
+                  Code is the billing-entity code (billing concept). Immutable after
+                  creation.
                 minLength: 1
                 type: string
+              country:
+                description: Country (ISO 3166-1 alpha-2).
+                type: string
+              defaultCurrency:
+                description: DefaultCurrency (ISO 4217). Required by the billing when
+                  set.
+                minLength: 3
+                type: string
               deletionPolicy:
-                default: Delete
-                description: DeletionPolicy determines what happens to the billing
-                  resource when this CR is deleted.
+                default: Orphan
+                description: |-
+                  DeletionPolicy determines what happens to the billing resource when this
+                  CR is deleted. The billing does not currently allow destroying
+                  billing entities, so Delete is best-effort and falls back to Orphan
+                  semantics if the API rejects the request.
                 enum:
                 - Delete
                 - Orphan
                 type: string
-              description:
-                description: Description is optional.
+              documentNumberPrefix:
+                description: DocumentNumberPrefix is the prefix used for invoice numbering.
                 type: string
-              metadata:
-                additionalProperties:
-                  type: string
+              documentNumbering:
+                description: DocumentNumbering controls invoice numbering scheme.
+                enum:
+                - per_customer
+                - per_billing_entity
+                type: string
+              dunningCampaignCode:
                 description: |-
-                  Metadata stores arbitrary key-value pairs at the feature level.
-                  Useful for categorizing features (e.g. entity_type: "book").
+                  DunningCampaignCode is the code of the dunning campaign applied to
+                  this billing entity. Reserved for future use; currently held in the
+                  CR but not forwarded to the billing.
+                type: string
+              einvoicing:
+                description: Einvoicing enables electronic invoicing on this billing
+                  entity.
+                type: boolean
+              email:
+                description: Email contact address.
+                type: string
+              emailSettings:
+                description: |-
+                  EmailSettings configures which emails the billing system sends from this billing
+                  entity.
+                properties:
+                  creditNoteCreated:
+                    description: CreditNoteCreated enables the "credit_note.created"
+                      email setting.
+                    type: boolean
+                  invoiceFinalized:
+                    description: InvoiceFinalized enables the "invoice.finalized"
+                      email setting.
+                    type: boolean
+                  paymentReceiptCreated:
+                    description: |-
+                      PaymentReceiptCreated enables the "payment_receipt.created" email
+                      setting.
+                    type: boolean
                 type: object
+              euTaxManagement:
+                description: EuTaxManagement enables EU tax management on this billing
+                  entity.
+                type: boolean
+              finalizeZeroAmountInvoice:
+                description: |-
+                  FinalizeZeroAmountInvoice controls whether zero-amount invoices are
+                  finalized automatically.
+                type: boolean
+              legalName:
+                description: LegalName of the entity.
+                type: string
+              legalNumber:
+                description: LegalNumber of the entity (registration number).
+                type: string
               name:
                 description: Name is the display name.
                 minLength: 1
                 type: string
+              netPaymentTerm:
+                description: NetPaymentTerm is the default net payment term in days.
+                format: int32
+                minimum: 0
+                type: integer
               organizationRef:
-                description: OrganizationRef references the InvoraBillingOrganization
-                  this feature belongs to.
+                description: |-
+                  InvoraBillingOrganizationRef references the InvoraBillingOrganization that owns this
+                  billing entity.
                 properties:
                   name:
                     description: Name of the referenced resource.
@@ -95,14 +177,31 @@ spec:
                 required:
                 - name
                 type: object
+              state:
+                description: State or province.
+                type: string
+              taxIdentificationNumber:
+                description: TaxIdentificationNumber is the tax/VAT registration number.
+                type: string
+              timezone:
+                description: Timezone (IANA format, e.g. "UTC", "Europe/Paris").
+                type: string
+              zipcode:
+                description: Zipcode or postal code.
+                type: string
             required:
             - code
+            - defaultCurrency
             - name
             - organizationRef
             type: object
           status:
-            description: InvoraBillingFeatureStatus defines the observed state.
+            description: InvoraBillingEntityStatus defines the observed state.
             properties:
+              billingEntityId:
+                description: InvoraBillingEntityID is the billing-backend-assigned
+                  UUID for this billing entity.
+                type: string
               conditions:
                 description: |-
                   Conditions represent the latest available observations of the
@@ -162,8 +261,6 @@ spec:
                   - type
                   type: object
                 type: array
-              externalId:
-                type: string
               id:
                 description: ID is the billing-backend-assigned resource identifier.
                 type: string

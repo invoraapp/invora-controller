@@ -13,7 +13,7 @@ spec:
     plural: invorabillingsubscriptions
     shortNames:
     - lsub
-    singular: billingsubscription
+    singular: invorabillingsubscription
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -32,7 +32,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: InvoraBillingSubscription represents a subscription in a billing organization.
+        description: InvoraBillingSubscription represents a subscription in a billing
+          organization.
         properties:
           apiVersion:
             description: |-
@@ -52,8 +53,8 @@ spec:
           metadata:
             type: object
           spec:
-            description: InvoraBillingSubscriptionSpec defines a plan subscription for a customer
-              in billing.
+            description: InvoraBillingSubscriptionSpec defines a plan subscription
+              for a customer in billing.
             properties:
               billingTime:
                 description: 'BillingTime: calendar or anniversary.'
@@ -80,8 +81,8 @@ spec:
                 type: object
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy determines what happens to the billing resource
-                  when this CR is deleted.
+                description: DeletionPolicy determines what happens to the billing
+                  resource when this CR is deleted.
                 enum:
                 - Delete
                 - Orphan
@@ -100,8 +101,8 @@ spec:
                 description: Name is the display name for the subscription.
                 type: string
               organizationRef:
-                description: OrganizationRef references the InvoraBillingOrganization this
-                  subscription belongs to.
+                description: OrganizationRef references the InvoraBillingOrganization
+                  this subscription belongs to.
                 properties:
                   name:
                     description: Name of the referenced resource.
@@ -203,11 +204,11 @@ spec:
                   - type
                   type: object
                 type: array
-              id:
-                description: ID is the billing-assigned resource identifier.
+              externalId:
+                description: ExternalID is the billing-backend-assigned UUID.
                 type: string
-              billingId:
-                description: billingID is the billing-assigned UUID.
+              id:
+                description: ID is the billing-backend-assigned resource identifier.
                 type: string
               lastSyncedAt:
                 description: |-

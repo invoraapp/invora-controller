@@ -13,7 +13,7 @@ spec:
     plural: invorabillingplans
     shortNames:
     - lplan
-    singular: billingplan
+    singular: invorabillingplan
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -110,8 +110,8 @@ spec:
                 type: string
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy determines what happens to the billing resource
-                  when this CR is deleted.
+                description: DeletionPolicy determines what happens to the billing
+                  resource when this CR is deleted.
                 enum:
                 - Delete
                 - Orphan
@@ -132,8 +132,8 @@ spec:
                 minLength: 1
                 type: string
               organizationRef:
-                description: OrganizationRef references the InvoraBillingOrganization this
-                  plan belongs to.
+                description: OrganizationRef references the InvoraBillingOrganization
+                  this plan belongs to.
                 properties:
                   name:
                     description: Name of the referenced resource.
@@ -152,7 +152,8 @@ spec:
                   period.
                 type: boolean
               taxCodes:
-                description: TaxCodes references billing tax codes to apply to this plan.
+                description: TaxCodes references billing tax codes to apply to this
+                  plan.
                 items:
                   type: string
                 type: array
@@ -230,11 +231,11 @@ spec:
                   - type
                   type: object
                 type: array
-              id:
-                description: ID is the billing-assigned resource identifier.
+              externalId:
+                description: ExternalID is the billing-backend-assigned UUID.
                 type: string
-              billingId:
-                description: billingID is the billing-assigned UUID.
+              id:
+                description: ID is the billing-backend-assigned resource identifier.
                 type: string
               lastSyncedAt:
                 description: |-

@@ -13,7 +13,7 @@ spec:
     plural: invorabillingorganizations
     shortNames:
     - lorg
-    singular: billingorganization
+    singular: invorabillingorganization
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
@@ -60,8 +60,8 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy determines what happens to the billing org
-                  when this CR is deleted.
+                description: DeletionPolicy determines what happens to the billing
+                  org when this CR is deleted.
                 enum:
                 - Delete
                 - Orphan
@@ -89,8 +89,8 @@ spec:
                   Zitadel ID stored in metadata.name (typically "tenant-<zitadel-org-id>").
                 type: string
               instanceRef:
-                description: InstanceRef references the InvoraBillingInstance connection to
-                  use.
+                description: InstanceRef references the InvoraBillingInstance connection
+                  to use.
                 properties:
                   name:
                     description: Name of the referenced resource.
@@ -164,7 +164,8 @@ spec:
             - writeSecretToRef
             type: object
           status:
-            description: InvoraBillingOrganizationStatus defines the observed state of a InvoraBillingOrganization.
+            description: InvoraBillingOrganizationStatus defines the observed state
+              of a InvoraBillingOrganization.
             properties:
               apiKeyId:
                 description: ApiKeyID is the billing UUID of the current API key (needed
@@ -230,7 +231,7 @@ spec:
                   type: object
                 type: array
               id:
-                description: ID is the billing-assigned resource identifier.
+                description: ID is the billing-backend-assigned resource identifier.
                 type: string
               lastSyncedAt:
                 description: |-

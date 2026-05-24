@@ -4,21 +4,24 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.17.2
-  name: invorabillingfeatures.billing.invora.app
+  name: invorabillingtapproviders.billing.invora.app
 spec:
   group: billing.invora.app
   names:
-    kind: InvoraBillingFeature
-    listKind: InvoraBillingFeatureList
-    plural: invorabillingfeatures
+    kind: InvoraBillingTapProvider
+    listKind: InvoraBillingTapProviderList
+    plural: invorabillingtapproviders
     shortNames:
-    - lfeat
-    singular: invorabillingfeature
+    - ltap
+    singular: invorabillingtapprovider
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
     - jsonPath: .spec.code
       name: Code
+      type: string
+    - jsonPath: .spec.name
+      name: Name
       type: string
     - jsonPath: .status.conditions[?(@.type=="Ready")].status
       name: Ready
@@ -29,8 +32,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: InvoraBillingFeature represents a feature definition in a billing
-          organization.
+        description: |-
+          InvoraBillingTapProvider represents a Tap payment provider configured on
+          a billing organization.
         properties:
           apiVersion:
             description: |-
@@ -50,38 +54,44 @@ spec:
           metadata:
             type: object
           spec:
-            description: InvoraBillingFeatureSpec defines a feature/entitlement definition
-              in billing.
+            description: |-
+              InvoraBillingTapProviderSpec defines the desired state of a Tap payment
+              provider attached to a billing organization.
+
+              Backed by the billing GraphQL mutations addTapPaymentProvider /
+              updateTapPaymentProvider, which authenticate as the organization (the
+              org's API key from spec.billingOrganizationRef's WriteSecretToRef Secret).
             properties:
               code:
-                description: Code is the unique identifier. Immutable after creation.
+                description: Code is the provider code (billing concept). Immutable
+                  after creation.
                 minLength: 1
                 type: string
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy determines what happens to the billing
-                  resource when this CR is deleted.
+                description: |-
+                  DeletionPolicy determines what happens to the billing resource when this
+                  CR is deleted. Note: upstream billing does not currently expose a Tap
+                  destroy mutation, so Delete is best-effort.
                 enum:
                 - Delete
                 - Orphan
                 type: string
-              description:
-                description: Description is optional.
-                type: string
-              metadata:
-                additionalProperties:
-                  type: string
+              failureRedirectUrl:
                 description: |-
-                  Metadata stores arbitrary key-value pairs at the feature level.
-                  Useful for categorizing features (e.g. entity_type: "book").
-                type: object
+                  FailureRedirectUrl is the URL the customer is redirected to after a
+                  failed payment. Reserved for future billing support; currently held in
+                  the CR but not forwarded.
+                type: string
               name:
-                description: Name is the display name.
+                description: Name is the display name shown in the billing UI.
                 minLength: 1
                 type: string
               organizationRef:
-                description: OrganizationRef references the InvoraBillingOrganization
-                  this feature belongs to.
+                description: |-
+                  InvoraBillingOrganizationRef references the InvoraBillingOrganization that owns this
+                  payment provider. The controller resolves the org's API key from the
+                  Secret declared in the InvoraBillingOrganization's writeSecretToRef.
                 properties:
                   name:
                     description: Name of the referenced resource.
@@ -95,13 +105,84 @@ spec:
                 required:
                 - name
                 type: object
+              successRedirectUrl:
+                description: |-
+                  SuccessRedirectUrl is the URL the customer is redirected to after a
+                  successful payment.
+                type: string
+              tapApiKeyRef:
+                description: |-
+                  TapApiKeyRef references the Kubernetes Secret holding the Tap secret
+                  API key. The value is read at reconcile time and forwarded to the billing.
+                properties:
+                  key:
+                    description: Key within the Secret data.
+                    minLength: 1
+                    type: string
+                  name:
+                    description: Name of the Secret.
+                    minLength: 1
+                    type: string
+                  namespace:
+                    description: Namespace of the Secret. Defaults to the referencing
+                      resource's namespace.
+                    type: string
+                required:
+                - key
+                - name
+                type: object
+              tapPublicKeyRef:
+                description: |-
+                  TapPublicKeyRef references the Kubernetes Secret holding the Tap
+                  public/publishable key. Held in the CR for completeness; only
+                  forwarded to the billing when the upstream API accepts it.
+                properties:
+                  key:
+                    description: Key within the Secret data.
+                    minLength: 1
+                    type: string
+                  name:
+                    description: Name of the Secret.
+                    minLength: 1
+                    type: string
+                  namespace:
+                    description: Namespace of the Secret. Defaults to the referencing
+                      resource's namespace.
+                    type: string
+                required:
+                - key
+                - name
+                type: object
+              tapWebhookSecretRef:
+                description: |-
+                  TapWebhookSecretRef references the Kubernetes Secret holding the Tap
+                  webhook signing secret. Held in the CR for completeness; only
+                  forwarded to the billing when the upstream API accepts it.
+                properties:
+                  key:
+                    description: Key within the Secret data.
+                    minLength: 1
+                    type: string
+                  name:
+                    description: Name of the Secret.
+                    minLength: 1
+                    type: string
+                  namespace:
+                    description: Namespace of the Secret. Defaults to the referencing
+                      resource's namespace.
+                    type: string
+                required:
+                - key
+                - name
+                type: object
             required:
             - code
             - name
             - organizationRef
+            - tapApiKeyRef
             type: object
           status:
-            description: InvoraBillingFeatureStatus defines the observed state.
+            description: InvoraBillingTapProviderStatus defines the observed state.
             properties:
               conditions:
                 description: |-
@@ -162,8 +243,6 @@ spec:
                   - type
                   type: object
                 type: array
-              externalId:
-                type: string
               id:
                 description: ID is the billing-backend-assigned resource identifier.
                 type: string
@@ -179,6 +258,13 @@ spec:
                   by the controller.
                 format: int64
                 type: integer
+              providerCode:
+                description: ProviderCode is the resolved billing provider code.
+                type: string
+              providerId:
+                description: ProviderID is the billing-backend-assigned UUID for this
+                  Tap provider.
+                type: string
             type: object
         type: object
     served: true

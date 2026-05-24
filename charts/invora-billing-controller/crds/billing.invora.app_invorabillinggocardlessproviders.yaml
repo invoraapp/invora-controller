@@ -4,21 +4,24 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.17.2
-  name: invorabillingfeatures.billing.invora.app
+  name: invorabillinggocardlessproviders.billing.invora.app
 spec:
   group: billing.invora.app
   names:
-    kind: InvoraBillingFeature
-    listKind: InvoraBillingFeatureList
-    plural: invorabillingfeatures
+    kind: InvoraBillingGoCardlessProvider
+    listKind: InvoraBillingGoCardlessProviderList
+    plural: invorabillinggocardlessproviders
     shortNames:
-    - lfeat
-    singular: invorabillingfeature
+    - igc
+    singular: invorabillinggocardlessprovider
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
     - jsonPath: .spec.code
       name: Code
+      type: string
+    - jsonPath: .spec.name
+      name: Name
       type: string
     - jsonPath: .status.conditions[?(@.type=="Ready")].status
       name: Ready
@@ -29,8 +32,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: InvoraBillingFeature represents a feature definition in a billing
-          organization.
+        description: |-
+          InvoraBillingGoCardlessProvider represents a GoCardless payment provider
+          configured on a billing organization.
         properties:
           apiVersion:
             description: |-
@@ -50,38 +54,52 @@ spec:
           metadata:
             type: object
           spec:
-            description: InvoraBillingFeatureSpec defines a feature/entitlement definition
-              in billing.
+            description: |-
+              InvoraBillingGoCardlessProviderSpec defines the desired state of a GoCardless
+              payment provider attached to a billing organization.
             properties:
+              accessTokenRef:
+                description: |-
+                  AccessTokenRef references the Kubernetes Secret holding the GoCardless
+                  access token.
+                properties:
+                  key:
+                    description: Key within the Secret data.
+                    minLength: 1
+                    type: string
+                  name:
+                    description: Name of the Secret.
+                    minLength: 1
+                    type: string
+                  namespace:
+                    description: Namespace of the Secret. Defaults to the referencing
+                      resource's namespace.
+                    type: string
+                required:
+                - key
+                - name
+                type: object
               code:
-                description: Code is the unique identifier. Immutable after creation.
+                description: Code is the provider code. Immutable after creation.
                 minLength: 1
                 type: string
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy determines what happens to the billing
-                  resource when this CR is deleted.
+                description: |-
+                  DeletionPolicy determines what happens to the billing resource when this
+                  CR is deleted.
                 enum:
                 - Delete
                 - Orphan
                 type: string
-              description:
-                description: Description is optional.
-                type: string
-              metadata:
-                additionalProperties:
-                  type: string
-                description: |-
-                  Metadata stores arbitrary key-value pairs at the feature level.
-                  Useful for categorizing features (e.g. entity_type: "book").
-                type: object
               name:
-                description: Name is the display name.
+                description: Name is the display name shown in the billing UI.
                 minLength: 1
                 type: string
               organizationRef:
-                description: OrganizationRef references the InvoraBillingOrganization
-                  this feature belongs to.
+                description: |-
+                  OrganizationRef references the InvoraBillingOrganization that owns this
+                  payment provider.
                 properties:
                   name:
                     description: Name of the referenced resource.
@@ -95,13 +113,45 @@ spec:
                 required:
                 - name
                 type: object
+              prefilledCustomer:
+                description: |-
+                  PrefilledCustomer enables prefilling customer details in the GoCardless
+                  hosted payment page.
+                type: boolean
+              successRedirectUrl:
+                description: SuccessRedirectUrl is the URL for successful mandate
+                  setup.
+                type: string
+              webhookSecretRef:
+                description: |-
+                  WebhookSecretRef references the Kubernetes Secret holding the GoCardless
+                  webhook secret for signature verification.
+                properties:
+                  key:
+                    description: Key within the Secret data.
+                    minLength: 1
+                    type: string
+                  name:
+                    description: Name of the Secret.
+                    minLength: 1
+                    type: string
+                  namespace:
+                    description: Namespace of the Secret. Defaults to the referencing
+                      resource's namespace.
+                    type: string
+                required:
+                - key
+                - name
+                type: object
             required:
+            - accessTokenRef
             - code
             - name
             - organizationRef
             type: object
           status:
-            description: InvoraBillingFeatureStatus defines the observed state.
+            description: InvoraBillingGoCardlessProviderStatus defines the observed
+              state.
             properties:
               conditions:
                 description: |-
@@ -162,8 +212,6 @@ spec:
                   - type
                   type: object
                 type: array
-              externalId:
-                type: string
               id:
                 description: ID is the billing-backend-assigned resource identifier.
                 type: string
@@ -179,6 +227,13 @@ spec:
                   by the controller.
                 format: int64
                 type: integer
+              providerCode:
+                description: ProviderCode is the resolved billing provider code.
+                type: string
+              providerId:
+                description: ProviderID is the billing-backend-assigned UUID for this
+                  GoCardless provider.
+                type: string
             type: object
         type: object
     served: true
