@@ -1,0 +1,33 @@
+# Binaries
+bin/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test output
+*.test
+cover.out
+coverage.html
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# OMC / Claude state
+.omc/
+.claude/
+
+# Go
+vendor/
+
+# Helm
+charts/*/charts/
+charts/**/tmpcharts/

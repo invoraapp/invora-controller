@@ -1,0 +1,124 @@
+domain: invora.app
+layout:
+- go.kubebuilder.io/v4
+projectName: invora-billing-controller
+repo: github.com/bdaya-dev/invora-billing-controller
+version: "3"
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: invora.app
+  group: billing
+  kind: InvoraBillingInstance
+  path: github.com/bdaya-dev/invora-billing-controller/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: invora.app
+  group: billing
+  kind: InvoraBillingTapProvider
+  path: github.com/bdaya-dev/invora-billing-controller/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: invora.app
+  group: billing
+  kind: InvoraBillingEntity
+  path: github.com/bdaya-dev/invora-billing-controller/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: invora.app
+  group: billing
+  kind: InvoraBillingOrganization
+  path: github.com/bdaya-dev/invora-billing-controller/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: invora.app
+  group: billing
+  kind: InvoraBillingPlan
+  path: github.com/bdaya-dev/invora-billing-controller/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: invora.app
+  group: billing
+  kind: InvoraBillingCustomer
+  path: github.com/bdaya-dev/invora-billing-controller/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: invora.app
+  group: billing
+  kind: InvoraBillingSubscription
+  path: github.com/bdaya-dev/invora-billing-controller/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: invora.app
+  group: billing
+  kind: InvoraBillingTax
+  path: github.com/bdaya-dev/invora-billing-controller/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: invora.app
+  group: billing
+  kind: InvoraBillingAddon
+  path: github.com/bdaya-dev/invora-billing-controller/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: invora.app
+  group: billing
+  kind: InvoraBillingCoupon
+  path: github.com/bdaya-dev/invora-billing-controller/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: invora.app
+  group: billing
+  kind: InvoraBillingFeature
+  path: github.com/bdaya-dev/invora-billing-controller/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: invora.app
+  group: billing
+  kind: InvoraBillingMetric
+  path: github.com/bdaya-dev/invora-billing-controller/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: invora.app
+  group: billing
+  kind: InvoraBillingWebhookEndpoint
+  path: github.com/bdaya-dev/invora-billing-controller/api/v1alpha1
+  version: v1alpha1

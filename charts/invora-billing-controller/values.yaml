@@ -1,0 +1,45 @@
+replicaCount: 1
+
+image:
+  repository: europe-west1-docker.pkg.dev/inpro-invora/invora-tools/invora-billing-controller
+  tag: latest
+  pullPolicy: IfNotPresent
+
+serviceAccount:
+  create: true
+  name: invora-billing-controller
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+leaderElection:
+  enabled: true
+
+metrics:
+  port: 8080
+
+health:
+  port: 8081
+
+watchNamespace: ""
+
+# Zitadel event subscriber. When zitadelSubscriber.enabled=true the controller
+# polls the configured Zitadel admin API for org.* events and materialises
+# tenant InvoraBillingOrganization CRs into spec.tenantNamespace.
+zitadelSubscriber:
+  enabled: false
+  zitadelDomain: ""
+  zitadelPort: ""
+  zitadelInsecure: false
+  systemAPI:
+    user: "iam_ci"
+    secretName: "zitadel-system-api-private-key"
+    secretKey: "iam_ci.pem"
+  billingInstance:
+    name: ""
+    namespace: ""
+  tenantNamespace: ""
+  invoraEnv: ""
+  interval: "30s"

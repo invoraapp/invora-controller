@@ -1,0 +1,240 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.17.2
+  name: invorabillingsubscriptions.billing.invora.app
+spec:
+  group: billing.invora.app
+  names:
+    kind: InvoraBillingSubscription
+    listKind: InvoraBillingSubscriptionList
+    plural: invorabillingsubscriptions
+    shortNames:
+    - lsub
+    singular: billingsubscription
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.externalId
+      name: ExternalID
+      type: string
+    - jsonPath: .status.subscriptionStatus
+      name: Status
+      type: string
+    - jsonPath: .status.conditions[?(@.type=="Ready")].status
+      name: Ready
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: InvoraBillingSubscription represents a subscription in a billing organization.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: InvoraBillingSubscriptionSpec defines a plan subscription for a customer
+              in billing.
+            properties:
+              billingTime:
+                description: 'BillingTime: calendar or anniversary.'
+                enum:
+                - calendar
+                - anniversary
+                type: string
+              customerRef:
+                description: |-
+                  CustomerRef references a InvoraBillingCustomer CR. The controller resolves it
+                  to the customer's externalId. Mutually exclusive with externalCustomerID.
+                properties:
+                  name:
+                    description: Name of the referenced resource.
+                    minLength: 1
+                    type: string
+                  namespace:
+                    description: |-
+                      Namespace of the referenced resource. Defaults to the namespace
+                      of the referencing resource when omitted.
+                    type: string
+                required:
+                - name
+                type: object
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy determines what happens to the billing resource
+                  when this CR is deleted.
+                enum:
+                - Delete
+                - Orphan
+                type: string
+              externalCustomerId:
+                description: |-
+                  ExternalCustomerID references the customer by external ID.
+                  Mutually exclusive with customerRef.
+                type: string
+              externalId:
+                description: ExternalID is the subscription's unique external identifier.
+                  Immutable.
+                minLength: 1
+                type: string
+              name:
+                description: Name is the display name for the subscription.
+                type: string
+              organizationRef:
+                description: OrganizationRef references the InvoraBillingOrganization this
+                  subscription belongs to.
+                properties:
+                  name:
+                    description: Name of the referenced resource.
+                    minLength: 1
+                    type: string
+                  namespace:
+                    description: |-
+                      Namespace of the referenced resource. Defaults to the namespace
+                      of the referencing resource when omitted.
+                    type: string
+                required:
+                - name
+                type: object
+              planCode:
+                description: |-
+                  PlanCode references the plan by code.
+                  Mutually exclusive with planRef.
+                type: string
+              planRef:
+                description: |-
+                  PlanRef references a InvoraBillingPlan CR. The controller resolves it
+                  to the plan's code. Mutually exclusive with planCode.
+                properties:
+                  name:
+                    description: Name of the referenced resource.
+                    minLength: 1
+                    type: string
+                  namespace:
+                    description: |-
+                      Namespace of the referenced resource. Defaults to the namespace
+                      of the referencing resource when omitted.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - externalId
+            - organizationRef
+            type: object
+          status:
+            description: InvoraBillingSubscriptionStatus defines the observed state.
+            properties:
+              conditions:
+                description: |-
+                  Conditions represent the latest available observations of the
+                  resource's state.
+                items:
+                  description: Condition contains details for one aspect of the current
+                    state of this API Resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        lastTransitionTime is the last time the condition transitioned from one status to another.
+                        This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        message is a human readable message indicating details about the transition.
+                        This may be an empty string.
+                      maxLength: 32768
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        observedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      minimum: 0
+                      type: integer
+                    reason:
+                      description: |-
+                        reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                        Producers of specific condition types may define expected values and meanings for this field,
+                        and whether the values are considered a guaranteed API.
+                        The value should be a CamelCase string.
+                        This field may not be empty.
+                      maxLength: 1024
+                      minLength: 1
+                      pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                      type: string
+                    status:
+                      description: status of the condition, one of True, False, Unknown.
+                      enum:
+                      - "True"
+                      - "False"
+                      - Unknown
+                      type: string
+                    type:
+                      description: type of condition in CamelCase or in foo.example.com/CamelCase.
+                      maxLength: 316
+                      pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - message
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              id:
+                description: ID is the billing-assigned resource identifier.
+                type: string
+              billingId:
+                description: billingID is the billing-assigned UUID.
+                type: string
+              lastSyncedAt:
+                description: |-
+                  LastSyncedAt is the last time the controller successfully reconciled
+                  the resource against the billing API.
+                format: date-time
+                type: string
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the most recent .metadata.generation observed
+                  by the controller.
+                format: int64
+                type: integer
+              resolvedCustomerExternalId:
+                description: ResolvedCustomerExternalID is populated from customerRef
+                  resolution.
+                type: string
+              resolvedPlanCode:
+                description: ResolvedPlanCode is populated from planRef resolution.
+                type: string
+              subscriptionStatus:
+                description: SubscriptionStatus is the current billing status (pending,
+                  active, terminated, canceled).
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

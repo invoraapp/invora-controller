@@ -1,0 +1,113 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "invora-billing-controller.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "invora-billing-controller.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "invora-billing-controller.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "invora-billing-controller.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: manager
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - --metrics-bind-address=:{{ .Values.metrics.port }}
+            - --health-probe-bind-address=:{{ .Values.health.port }}
+            {{- if .Values.leaderElection.enabled }}
+            - --leader-elect
+            {{- end }}
+          {{- if or .Values.watchNamespace .Values.zitadelSubscriber.enabled }}
+          env:
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            {{- if .Values.watchNamespace }}
+            - name: WATCH_NAMESPACE
+              value: {{ .Values.watchNamespace | quote }}
+            {{- end }}
+            {{- if .Values.zitadelSubscriber.enabled }}
+            - name: ZITADEL_DOMAIN
+              value: {{ .Values.zitadelSubscriber.zitadelDomain | quote }}
+            {{- if .Values.zitadelSubscriber.zitadelPort }}
+            - name: ZITADEL_PORT
+              value: {{ .Values.zitadelSubscriber.zitadelPort | quote }}
+            {{- end }}
+            {{- if .Values.zitadelSubscriber.zitadelInsecure }}
+            - name: ZITADEL_INSECURE
+              value: "true"
+            {{- end }}
+            - name: ZITADEL_SYSTEM_API_USER
+              value: {{ .Values.zitadelSubscriber.systemAPI.user | quote }}
+            - name: ZITADEL_SYSTEM_API_KEY_FILE
+              value: "/etc/zitadel-system-api/{{ .Values.zitadelSubscriber.systemAPI.secretKey }}"
+            - name: BILLING_INSTANCE_NAME
+              value: {{ .Values.zitadelSubscriber.billingInstance.name | quote }}
+            - name: BILLING_INSTANCE_NAMESPACE
+              value: {{ .Values.zitadelSubscriber.billingInstance.namespace | quote }}
+            {{- if .Values.zitadelSubscriber.tenantNamespace }}
+            - name: TENANT_NAMESPACE
+              value: {{ .Values.zitadelSubscriber.tenantNamespace | quote }}
+            {{- end }}
+            {{- if .Values.zitadelSubscriber.invoraEnv }}
+            - name: INVORA_ENV
+              value: {{ .Values.zitadelSubscriber.invoraEnv | quote }}
+            {{- end }}
+            {{- if .Values.zitadelSubscriber.interval }}
+            - name: ZITADEL_SUBSCRIBER_INTERVAL
+              value: {{ .Values.zitadelSubscriber.interval | quote }}
+            {{- end }}
+            {{- end }}
+          {{- end }}
+          {{- if .Values.zitadelSubscriber.enabled }}
+          volumeMounts:
+            - name: zitadel-system-api-key
+              mountPath: /etc/zitadel-system-api
+              readOnly: true
+          {{- end }}
+          ports:
+            - name: metrics
+              containerPort: {{ .Values.metrics.port }}
+              protocol: TCP
+            - name: health
+              containerPort: {{ .Values.health.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: health
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: health
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+      {{- if .Values.zitadelSubscriber.enabled }}
+      volumes:
+        - name: zitadel-system-api-key
+          secret:
+            secretName: {{ .Values.zitadelSubscriber.systemAPI.secretName | quote }}
+      {{- end }}

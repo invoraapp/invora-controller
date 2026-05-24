@@ -1,0 +1,81 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "invora-billing-controller.fullname" . }}-manager
+  labels:
+    {{- include "invora-billing-controller.labels" . | nindent 4 }}
+rules:
+  - apiGroups: ["billing.invora.app"]
+    resources:
+      - invorabillinginstances
+      - invorabillingorganizations
+      - invorabillingmetrics
+      - invorabillingplans
+      - invorabillingtaxes
+      - invorabillingaddons
+      - invorabillingcoupons
+      - invorabillingfeatures
+      - invorabillingcustomers
+      - invorabillingsubscriptions
+      - invorabillingwebhookendpoints
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["billing.invora.app"]
+    resources:
+      - invorabillinginstances/status
+      - invorabillingorganizations/status
+      - invorabillingmetrics/status
+      - invorabillingplans/status
+      - invorabillingtaxes/status
+      - invorabillingaddons/status
+      - invorabillingcoupons/status
+      - invorabillingfeatures/status
+      - invorabillingcustomers/status
+      - invorabillingsubscriptions/status
+      - invorabillingwebhookendpoints/status
+    verbs: ["get", "update", "patch"]
+  - apiGroups: ["billing.invora.app"]
+    resources:
+      - invorabillinginstances/finalizers
+      - invorabillingorganizations/finalizers
+      - invorabillingmetrics/finalizers
+      - invorabillingplans/finalizers
+      - invorabillingtaxes/finalizers
+      - invorabillingaddons/finalizers
+      - invorabillingcoupons/finalizers
+      - invorabillingfeatures/finalizers
+      - invorabillingcustomers/finalizers
+      - invorabillingsubscriptions/finalizers
+      - invorabillingwebhookendpoints/finalizers
+    verbs: ["update"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  # Phase 4 — Zitadel event subscriber needs to discover Zitadel CRs and
+  # persist its last-processed event sequence to a ConfigMap.
+  - apiGroups: ["zitadel.bdaya-dev.com"]
+    resources: ["zitadelinstances", "zitadelorganizations"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list", "watch", "create", "update", "patch"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["create", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "invora-billing-controller.fullname" . }}-manager
+  labels:
+    {{- include "invora-billing-controller.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "invora-billing-controller.fullname" . }}-manager
+subjects:
+  - kind: ServiceAccount
+    name: {{ .Values.serviceAccount.name }}
+    namespace: {{ .Release.Namespace }}

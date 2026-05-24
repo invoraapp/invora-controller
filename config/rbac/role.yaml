@@ -1,0 +1,79 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manager-role
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - billing.bdaya-dev.com
+  resources:
+  - billingaddons
+  - billingbillablemetrics
+  - billingbillingentities
+  - billingcoupons
+  - billingcustomers
+  - billingfeatures
+  - billinginstances
+  - billingorganizations
+  - billingplans
+  - billingsubscriptions
+  - billingtappaymentproviders
+  - billingtaxes
+  - billingwebhookendpoints
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - billing.bdaya-dev.com
+  resources:
+  - billingaddons/finalizers
+  - billingbillablemetrics/finalizers
+  - billingbillingentities/finalizers
+  - billingcoupons/finalizers
+  - billingcustomers/finalizers
+  - billingfeatures/finalizers
+  - billinginstances/finalizers
+  - billingorganizations/finalizers
+  - billingplans/finalizers
+  - billingsubscriptions/finalizers
+  - billingtappaymentproviders/finalizers
+  - billingtaxes/finalizers
+  - billingwebhookendpoints/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - billing.bdaya-dev.com
+  resources:
+  - billingaddons/status
+  - billingbillablemetrics/status
+  - billingbillingentities/status
+  - billingcoupons/status
+  - billingcustomers/status
+  - billingfeatures/status
+  - billinginstances/status
+  - billingorganizations/status
+  - billingplans/status
+  - billingsubscriptions/status
+  - billingtappaymentproviders/status
+  - billingtaxes/status
+  - billingwebhookendpoints/status
+  verbs:
+  - get
+  - patch
+  - update

@@ -1,0 +1,35 @@
+# Import existing billing resources into the controller using import-id annotations.
+# The controller adopts the resource by ID, clears the annotation, and continues
+# with normal drift detection.
+#
+# Use case: migrating from Terraform provider to CRD controller.
+# After import, run: tofu state rm billing_organization.invora
+---
+apiVersion: billing.bdaya-dev.com/v1alpha1
+kind: billingOrganization
+metadata:
+  name: invora
+  namespace: billing
+  annotations:
+    billing.bdaya-dev.com/import-id: "abc12345-def6-7890-ghij-klmnopqrstuv"
+spec:
+  instanceRef:
+    name: billing-main
+  name: "Invora"
+  email: "admin@invora.app"
+  writeSecretToRef:
+    name: billing-invora-api-key
+---
+apiVersion: billing.bdaya-dev.com/v1alpha1
+kind: billingBillableMetric
+metadata:
+  name: api-calls
+  namespace: billing
+  annotations:
+    billing.bdaya-dev.com/import-id: "metric-uuid-here"
+spec:
+  organizationRef:
+    name: invora
+  code: api_calls
+  name: "API Calls"
+  aggregationType: count_agg

@@ -1,0 +1,282 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.17.2
+  name: invorabillingentities.billing.invora.app
+spec:
+  group: billing.invora.app
+  names:
+    kind: InvoraBillingEntity
+    listKind: InvoraBillingEntityList
+    plural: invorabillingentities
+    shortNames:
+    - lbe
+    singular: billingbillingentity
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.code
+      name: Code
+      type: string
+    - jsonPath: .spec.name
+      name: Name
+      type: string
+    - jsonPath: .spec.defaultCurrency
+      name: Currency
+      type: string
+    - jsonPath: .status.conditions[?(@.type=="Ready")].status
+      name: Ready
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: InvoraBillingEntity represents a Billing Entity in a billing organization.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: |-
+              InvoraBillingEntitySpec defines a Billing Entity inside a billing
+              organization. Backed by the GraphQL mutations createBillingEntity /
+              updateBillingEntity (auth: organization API key).
+            properties:
+              addressLine1:
+                description: AddressLine1 is the primary address line.
+                type: string
+              addressLine2:
+                description: AddressLine2 is the secondary address line.
+                type: string
+              city:
+                description: City of the entity.
+                type: string
+              code:
+                description: |-
+                  Code is the billing-entity code (billing concept). Immutable after
+                  creation.
+                minLength: 1
+                type: string
+              country:
+                description: Country (ISO 3166-1 alpha-2).
+                type: string
+              defaultCurrency:
+                description: DefaultCurrency (ISO 4217). Required by billing when set.
+                minLength: 3
+                type: string
+              deletionPolicy:
+                default: Orphan
+                description: |-
+                  DeletionPolicy determines what happens to the billing resource when this
+                  CR is deleted. Upstream billing does not currently allow destroying
+                  billing entities, so Delete is best-effort and falls back to Orphan
+                  semantics if the API rejects the request.
+                enum:
+                - Delete
+                - Orphan
+                type: string
+              documentNumberPrefix:
+                description: DocumentNumberPrefix is the prefix used for invoice numbering.
+                type: string
+              documentNumbering:
+                description: DocumentNumbering controls invoice numbering scheme.
+                enum:
+                - per_customer
+                - per_billing_entity
+                type: string
+              dunningCampaignCode:
+                description: |-
+                  DunningCampaignCode is the code of the dunning campaign applied to
+                  this billing entity. Reserved for future use; currently held in the
+                  CR but not forwarded to billing.
+                type: string
+              einvoicing:
+                description: Einvoicing enables electronic invoicing on this billing
+                  entity.
+                type: boolean
+              email:
+                description: Email contact address.
+                type: string
+              emailSettings:
+                description: |-
+                  EmailSettings configures which emails billing sends from this billing
+                  entity.
+                properties:
+                  creditNoteCreated:
+                    description: CreditNoteCreated enables the "credit_note.created"
+                      email setting.
+                    type: boolean
+                  invoiceFinalized:
+                    description: InvoiceFinalized enables the "invoice.finalized"
+                      email setting.
+                    type: boolean
+                  paymentReceiptCreated:
+                    description: |-
+                      PaymentReceiptCreated enables the "payment_receipt.created" email
+                      setting.
+                    type: boolean
+                type: object
+              euTaxManagement:
+                description: EuTaxManagement enables EU tax management on this billing
+                  entity.
+                type: boolean
+              finalizeZeroAmountInvoice:
+                description: |-
+                  FinalizeZeroAmountInvoice controls whether zero-amount invoices are
+                  finalized automatically.
+                type: boolean
+              billingOrganizationRef:
+                description: |-
+                  InvoraBillingOrganizationRef references the InvoraBillingOrganization that owns this
+                  billing entity.
+                properties:
+                  name:
+                    description: Name of the referenced resource.
+                    minLength: 1
+                    type: string
+                  namespace:
+                    description: |-
+                      Namespace of the referenced resource. Defaults to the namespace
+                      of the referencing resource when omitted.
+                    type: string
+                required:
+                - name
+                type: object
+              legalName:
+                description: LegalName of the entity.
+                type: string
+              legalNumber:
+                description: LegalNumber of the entity (registration number).
+                type: string
+              name:
+                description: Name is the display name.
+                minLength: 1
+                type: string
+              netPaymentTerm:
+                description: NetPaymentTerm is the default net payment term in days.
+                format: int32
+                minimum: 0
+                type: integer
+              state:
+                description: State or province.
+                type: string
+              taxIdentificationNumber:
+                description: TaxIdentificationNumber is the tax/VAT registration number.
+                type: string
+              timezone:
+                description: Timezone (IANA format, e.g. "UTC", "Europe/Paris").
+                type: string
+              zipcode:
+                description: Zipcode or postal code.
+                type: string
+            required:
+            - code
+            - defaultCurrency
+            - billingOrganizationRef
+            - name
+            type: object
+          status:
+            description: InvoraBillingEntityStatus defines the observed state.
+            properties:
+              conditions:
+                description: |-
+                  Conditions represent the latest available observations of the
+                  resource's state.
+                items:
+                  description: Condition contains details for one aspect of the current
+                    state of this API Resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        lastTransitionTime is the last time the condition transitioned from one status to another.
+                        This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        message is a human readable message indicating details about the transition.
+                        This may be an empty string.
+                      maxLength: 32768
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        observedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      minimum: 0
+                      type: integer
+                    reason:
+                      description: |-
+                        reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                        Producers of specific condition types may define expected values and meanings for this field,
+                        and whether the values are considered a guaranteed API.
+                        The value should be a CamelCase string.
+                        This field may not be empty.
+                      maxLength: 1024
+                      minLength: 1
+                      pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                      type: string
+                    status:
+                      description: status of the condition, one of True, False, Unknown.
+                      enum:
+                      - "True"
+                      - "False"
+                      - Unknown
+                      type: string
+                    type:
+                      description: type of condition in CamelCase or in foo.example.com/CamelCase.
+                      maxLength: 316
+                      pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - message
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              id:
+                description: ID is the billing-assigned resource identifier.
+                type: string
+              billingBillingEntityId:
+                description: InvoraBillingEntityID is the billing-assigned UUID for this
+                  billing entity.
+                type: string
+              lastSyncedAt:
+                description: |-
+                  LastSyncedAt is the last time the controller successfully reconciled
+                  the resource against the billing API.
+                format: date-time
+                type: string
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the most recent .metadata.generation observed
+                  by the controller.
+                format: int64
+                type: integer
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
