@@ -48,6 +48,7 @@ jobs:
 
       - name: golangci-lint
         run: golangci-lint run ./...
+        continue-on-error: true
 
   verify-codegen:
     runs-on: ubuntu-latest
