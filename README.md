@@ -119,21 +119,41 @@ spec:
 
 ## Architecture
 
+```mermaid
+graph LR
+    subgraph Kubernetes Cluster
+        CRDs[CRDs<br/>desired state]
+        Controller[invora-controller]
+    end
+
+    subgraph Invora Platform
+        Gateway[Invora Gateway<br/>gRPC-JSON transcoding]
+        Backend[Billing Backend<br/>subscriptions, invoices, payments]
+    end
+
+    Controller -->|watches| CRDs
+    Controller -->|reconciles via| Gateway
+    Gateway --> Backend
 ```
-┌─────────────────────────────────────────────────────┐
-│  Kubernetes Cluster                                  │
-│                                                      │
-│  ┌──────────────┐     ┌─────────────────────────┐  │
-│  │ invora-      │────>│ Invora Gateway          │  │
-│  │ controller   │     │ (gRPC-JSON transcoding) │  │
-│  └──────┬───────┘     └────────────┬────────────┘  │
-│         │                          │                 │
-│  ┌──────┴───────┐     ┌───────────┴─────────────┐  │
-│  │ CRDs         │     │ Invora Billing Backend   │  │
-│  │ (desired     │     │ (manages subscriptions,  │  │
-│  │  state)      │     │  invoices, payments)     │  │
-│  └──────────────┘     └─────────────────────────┘  │
-└─────────────────────────────────────────────────────┘
+
+```mermaid
+graph TD
+    Instance[InvoraBillingInstance<br/>gatewayUrl + tokenRef]
+    Org[InvoraBillingOrganization<br/>tenant]
+
+    Instance --> Org
+    Org --> Plans[Plans]
+    Org --> Customers[Customers]
+    Org --> Subscriptions[Subscriptions]
+    Org --> Taxes[Taxes]
+    Org --> Addons[Addons]
+    Org --> Coupons[Coupons]
+    Org --> Features[Features]
+    Org --> Metrics[Metrics]
+    Org --> Webhooks[WebhookEndpoints]
+    Org --> Entities[BillingEntities]
+    Org --> Wallets[Wallets]
+    Org --> Providers[Payment Providers<br/>Tap / Stripe / Adyen / GoCardless / Generic]
 ```
 
 The controller watches CRDs and reconciles them against the Invora billing backend through the gateway's gRPC-JSON transcoding endpoint. Authentication uses service account Bearer tokens with per-org scoping via `x-invora-org-id` headers.
