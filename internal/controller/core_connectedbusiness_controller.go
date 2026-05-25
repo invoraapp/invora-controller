@@ -37,10 +37,10 @@ func (r *InvoraConnectedBusinessReconciler) Reconcile(ctx context.Context, req c
 	cb.Status.LastSyncedAt = &now
 	meta.SetStatusCondition(&cb.Status.Conditions, metav1.Condition{
 		Type:               "Ready",
-		Status:             metav1.ConditionTrue,
+		Status:             metav1.ConditionFalse,
 		ObservedGeneration: cb.Generation,
-		Reason:             "Reconciled",
-		Message:            "connected business reconciled",
+		Reason:             "NotImplemented",
+		Message:            "connected business not yet implemented — controller stub",
 	})
 	if err := r.Status().Update(ctx, &cb); err != nil {
 		return ctrl.Result{}, err

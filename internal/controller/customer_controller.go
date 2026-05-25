@@ -16,9 +16,9 @@ import (
 
 type InvoraBillingCustomerReconciler struct{ BaseReconciler }
 
-// +kubebuilder:rbac:groups=billing.bdaya-dev.com,resources=billingcustomers,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=billing.bdaya-dev.com,resources=billingcustomers/status,verbs=get;update;patch
-// +kubebuilder:rbac:groups=billing.bdaya-dev.com,resources=billingcustomers/finalizers,verbs=update
+// +kubebuilder:rbac:groups=billing.invora.app,resources=billingcustomers,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=billing.invora.app,resources=billingcustomers/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=billing.invora.app,resources=billingcustomers/finalizers,verbs=update
 
 func (r *InvoraBillingCustomerReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	logger := log.FromContext(ctx)

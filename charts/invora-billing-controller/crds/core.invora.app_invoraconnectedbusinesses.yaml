@@ -70,8 +70,7 @@ spec:
                   (ISO 4217).
                 type: string
               instanceRef:
-                description: InstanceRef references the InvoraBillingInstance (gateway
-                  connection).
+                description: InstanceRef references the InvoraInstance (gateway connection).
                 properties:
                   name:
                     type: string

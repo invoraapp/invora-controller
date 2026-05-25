@@ -6,7 +6,7 @@ import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 // Each regulation plugin (ZATCA, ETA Egypt, Peppol) has its own enrollment
 // requirements and credentials.
 type InvoraInvoicingRegulationSpec struct {
-	// InstanceRef references the InvoraBillingInstance (gateway connection).
+	// InstanceRef references the InvoraInstance (gateway connection).
 	InstanceRef ResourceRef `json:"instanceRef"`
 
 	// BranchRef references the InvoraBranch this regulation applies to.

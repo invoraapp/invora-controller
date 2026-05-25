@@ -46,6 +46,32 @@ rules:
       - invorabillingcustomers/finalizers
       - invorabillingsubscriptions/finalizers
       - invorabillingwebhookendpoints/finalizers
+      - invorabillingtapproviders/finalizers
+      - invorabillingstripeproviders/finalizers
+      - invorabillingadyenproviders/finalizers
+      - invorabillinggocardlessproviders/finalizers
+      - invorabillingpaymentproviders/finalizers
+      - invorabillingwallets/finalizers
+    verbs: ["update"]
+  # core.invora.app — InvoraInstance, InvoraBranch, InvoraConnectedBusiness
+  - apiGroups: ["core.invora.app"]
+    resources: ["*"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["core.invora.app"]
+    resources: ["*/status"]
+    verbs: ["get", "update", "patch"]
+  - apiGroups: ["core.invora.app"]
+    resources: ["*/finalizers"]
+    verbs: ["update"]
+  # invoicing.invora.app — InvoraInvoicingRegulation, InvoraInvoicingSettings
+  - apiGroups: ["invoicing.invora.app"]
+    resources: ["*"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["invoicing.invora.app"]
+    resources: ["*/status"]
+    verbs: ["get", "update", "patch"]
+  - apiGroups: ["invoicing.invora.app"]
+    resources: ["*/finalizers"]
     verbs: ["update"]
   - apiGroups: [""]
     resources: ["secrets"]

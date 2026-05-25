@@ -37,10 +37,10 @@ func (r *InvoraBranchReconciler) Reconcile(ctx context.Context, req ctrl.Request
 	branch.Status.LastSyncedAt = &now
 	meta.SetStatusCondition(&branch.Status.Conditions, metav1.Condition{
 		Type:               "Ready",
-		Status:             metav1.ConditionTrue,
+		Status:             metav1.ConditionFalse,
 		ObservedGeneration: branch.Generation,
-		Reason:             "Reconciled",
-		Message:            "branch reconciled",
+		Reason:             "NotImplemented",
+		Message:            "branch not yet implemented — controller stub",
 	})
 	if err := r.Status().Update(ctx, &branch); err != nil {
 		return ctrl.Result{}, err

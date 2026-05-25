@@ -16,9 +16,9 @@ import (
 
 type InvoraBillingWebhookEndpointReconciler struct{ BaseReconciler }
 
-// +kubebuilder:rbac:groups=billing.bdaya-dev.com,resources=billingwebhookendpoints,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=billing.bdaya-dev.com,resources=billingwebhookendpoints/status,verbs=get;update;patch
-// +kubebuilder:rbac:groups=billing.bdaya-dev.com,resources=billingwebhookendpoints/finalizers,verbs=update
+// +kubebuilder:rbac:groups=billing.invora.app,resources=billingwebhookendpoints,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=billing.invora.app,resources=billingwebhookendpoints/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=billing.invora.app,resources=billingwebhookendpoints/finalizers,verbs=update
 
 func (r *InvoraBillingWebhookEndpointReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	logger := log.FromContext(ctx)

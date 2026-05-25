@@ -39,10 +39,10 @@ func (r *InvoraInvoicingSettingsReconciler) Reconcile(ctx context.Context, req c
 	settings.Status.LastSyncedAt = &now
 	meta.SetStatusCondition(&settings.Status.Conditions, metav1.Condition{
 		Type:               "Ready",
-		Status:             metav1.ConditionTrue,
+		Status:             metav1.ConditionFalse,
 		ObservedGeneration: settings.Generation,
-		Reason:             "Reconciled",
-		Message:            "invoicing settings reconciled",
+		Reason:             "NotImplemented",
+		Message:            "invoicing settings not yet implemented — controller stub",
 	})
 	if err := r.Status().Update(ctx, &settings); err != nil {
 		return ctrl.Result{}, err

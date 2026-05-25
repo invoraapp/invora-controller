@@ -18,9 +18,9 @@ type InvoraBillingMetricReconciler struct {
 	BaseReconciler
 }
 
-// +kubebuilder:rbac:groups=billing.bdaya-dev.com,resources=billingbillablemetrics,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=billing.bdaya-dev.com,resources=billingbillablemetrics/status,verbs=get;update;patch
-// +kubebuilder:rbac:groups=billing.bdaya-dev.com,resources=billingbillablemetrics/finalizers,verbs=update
+// +kubebuilder:rbac:groups=billing.invora.app,resources=billingbillablemetrics,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=billing.invora.app,resources=billingbillablemetrics/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=billing.invora.app,resources=billingbillablemetrics/finalizers,verbs=update
 
 func (r *InvoraBillingMetricReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	logger := log.FromContext(ctx)

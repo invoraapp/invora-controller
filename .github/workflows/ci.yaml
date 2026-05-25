@@ -63,10 +63,10 @@ jobs:
       - name: Generate deepcopy
         run: |
           go install sigs.k8s.io/controller-tools/cmd/controller-gen@v0.17.2
-          controller-gen object paths="./api/v1alpha1"
+          controller-gen object paths="./..."
 
       - name: Generate CRD manifests
-        run: controller-gen crd paths="./api/v1alpha1" output:crd:dir=config/crd/bases
+        run: controller-gen crd paths="./..." output:crd:dir=config/crd/bases
 
       - name: Check for uncommitted changes
         run: |

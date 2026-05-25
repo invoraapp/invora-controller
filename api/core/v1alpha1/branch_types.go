@@ -6,7 +6,7 @@ import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 // Branches represent distinct business locations or trade names, each with
 // their own regulation config, document prefixes, and party information.
 type InvoraBranchSpec struct {
-	// InstanceRef references the InvoraBillingInstance (gateway connection).
+	// InstanceRef references the InvoraInstance (gateway connection).
 	InstanceRef ResourceRef `json:"instanceRef"`
 
 	// Name is the branch display name.

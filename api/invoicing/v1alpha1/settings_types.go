@@ -4,7 +4,7 @@ import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 // InvoraInvoicingSettingsSpec defines tenant-level invoicing settings.
 type InvoraInvoicingSettingsSpec struct {
-	// InstanceRef references the InvoraBillingInstance (gateway connection).
+	// InstanceRef references the InvoraInstance (gateway connection).
 	InstanceRef ResourceRef `json:"instanceRef"`
 
 	// DefaultCurrency is the default currency for new documents (ISO 4217).

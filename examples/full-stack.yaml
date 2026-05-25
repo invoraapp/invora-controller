@@ -2,7 +2,7 @@
 # Deploy these in order (the controller handles dependency resolution via requeue).
 ---
 # 1. billingInstance — connection to the billing deployment
-apiVersion: billing.bdaya-dev.com/v1alpha1
+apiVersion: billing.invora.app/v1alpha1
 kind: billingInstance
 metadata:
   name: billing-main
@@ -14,7 +14,7 @@ spec:
     key: token
 ---
 # 2. billingOrganization — creates org + writes API key to Secret
-apiVersion: billing.bdaya-dev.com/v1alpha1
+apiVersion: billing.invora.app/v1alpha1
 kind: billingOrganization
 metadata:
   name: invora
@@ -32,7 +32,7 @@ spec:
       app.kubernetes.io/part-of: invora
 ---
 # 3. billingTax — VAT definition
-apiVersion: billing.bdaya-dev.com/v1alpha1
+apiVersion: billing.invora.app/v1alpha1
 kind: billingTax
 metadata:
   name: vat-15
@@ -46,7 +46,7 @@ spec:
   description: "Saudi Arabia VAT"
 ---
 # 4. billingBillableMetric — track API calls
-apiVersion: billing.bdaya-dev.com/v1alpha1
+apiVersion: billing.invora.app/v1alpha1
 kind: billingBillableMetric
 metadata:
   name: api-calls
@@ -60,7 +60,7 @@ spec:
   aggregationType: count_agg
 ---
 # 5. billingBillableMetric — track storage usage
-apiVersion: billing.bdaya-dev.com/v1alpha1
+apiVersion: billing.invora.app/v1alpha1
 kind: billingBillableMetric
 metadata:
   name: storage-gb
@@ -75,7 +75,7 @@ spec:
   fieldName: gb_used
 ---
 # 6. billingFeature — entitlement for premium support
-apiVersion: billing.bdaya-dev.com/v1alpha1
+apiVersion: billing.invora.app/v1alpha1
 kind: billingFeature
 metadata:
   name: premium-support
@@ -88,7 +88,7 @@ spec:
   description: "24/7 priority support channel access"
 ---
 # 7. billingPlan — starter plan with usage-based charges
-apiVersion: billing.bdaya-dev.com/v1alpha1
+apiVersion: billing.invora.app/v1alpha1
 kind: billingPlan
 metadata:
   name: starter
@@ -124,7 +124,7 @@ spec:
             flat_amount: "0"
 ---
 # 8. billingAddOn — one-time setup fee
-apiVersion: billing.bdaya-dev.com/v1alpha1
+apiVersion: billing.invora.app/v1alpha1
 kind: billingAddOn
 metadata:
   name: setup-fee
@@ -141,7 +141,7 @@ spec:
     - vat_15
 ---
 # 9. billingCoupon — launch discount
-apiVersion: billing.bdaya-dev.com/v1alpha1
+apiVersion: billing.invora.app/v1alpha1
 kind: billingCoupon
 metadata:
   name: launch-discount
@@ -159,7 +159,7 @@ spec:
   reusable: true
 ---
 # 10. billingWebhookEndpoint — receive billing events
-apiVersion: billing.bdaya-dev.com/v1alpha1
+apiVersion: billing.invora.app/v1alpha1
 kind: billingWebhookEndpoint
 metadata:
   name: invora-webhooks
@@ -171,7 +171,7 @@ spec:
   signatureAlgo: jwt
 ---
 # 11. billingCustomer — first customer
-apiVersion: billing.bdaya-dev.com/v1alpha1
+apiVersion: billing.invora.app/v1alpha1
 kind: billingCustomer
 metadata:
   name: acme-corp
@@ -189,7 +189,7 @@ spec:
     - vat_15
 ---
 # 12. billingSubscription — subscribe customer to plan (using CR refs)
-apiVersion: billing.bdaya-dev.com/v1alpha1
+apiVersion: billing.invora.app/v1alpha1
 kind: billingSubscription
 metadata:
   name: acme-starter
@@ -209,7 +209,7 @@ spec:
 # The Tap secret API key is read from a Kubernetes Secret at reconcile time
 # and forwarded to billing via the addTapPaymentProvider GraphQL mutation. The
 # org's API key is resolved automatically from invora's writeSecretToRef.
-apiVersion: billing.bdaya-dev.com/v1alpha1
+apiVersion: billing.invora.app/v1alpha1
 kind: billingTapPaymentProvider
 metadata:
   name: invora-tap

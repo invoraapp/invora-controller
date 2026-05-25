@@ -18,10 +18,10 @@ type InvoraBillingOrganizationReconciler struct {
 	BaseReconciler
 }
 
-// +kubebuilder:rbac:groups=billing.bdaya-dev.com,resources=billingorganizations,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=billing.bdaya-dev.com,resources=billingorganizations/status,verbs=get;update;patch
-// +kubebuilder:rbac:groups=billing.bdaya-dev.com,resources=billingorganizations/finalizers,verbs=update
-// +kubebuilder:rbac:groups=billing.bdaya-dev.com,resources=billinginstances,verbs=get;list;watch
+// +kubebuilder:rbac:groups=billing.invora.app,resources=billingorganizations,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=billing.invora.app,resources=billingorganizations/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=billing.invora.app,resources=billingorganizations/finalizers,verbs=update
+// +kubebuilder:rbac:groups=billing.invora.app,resources=billinginstances,verbs=get;list;watch
 // +kubebuilder:rbac:groups="",resources=secrets,verbs=get;list;watch;create;update;patch
 
 // parentDualWriteEnabled reports whether parent dual-write should be active

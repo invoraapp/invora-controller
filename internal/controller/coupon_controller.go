@@ -16,9 +16,9 @@ import (
 
 type InvoraBillingCouponReconciler struct{ BaseReconciler }
 
-// +kubebuilder:rbac:groups=billing.bdaya-dev.com,resources=billingcoupons,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=billing.bdaya-dev.com,resources=billingcoupons/status,verbs=get;update;patch
-// +kubebuilder:rbac:groups=billing.bdaya-dev.com,resources=billingcoupons/finalizers,verbs=update
+// +kubebuilder:rbac:groups=billing.invora.app,resources=billingcoupons,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=billing.invora.app,resources=billingcoupons/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=billing.invora.app,resources=billingcoupons/finalizers,verbs=update
 
 func (r *InvoraBillingCouponReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	logger := log.FromContext(ctx)

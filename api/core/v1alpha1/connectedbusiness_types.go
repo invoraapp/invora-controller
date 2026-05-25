@@ -5,7 +5,7 @@ import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 // InvoraConnectedBusinessSpec defines a connected business (tenant) within Invora.
 // Connected businesses are downstream organizations that use your Invora instance.
 type InvoraConnectedBusinessSpec struct {
-	// InstanceRef references the InvoraBillingInstance (gateway connection).
+	// InstanceRef references the InvoraInstance (gateway connection).
 	InstanceRef ResourceRef `json:"instanceRef"`
 
 	// Name is the business display name.

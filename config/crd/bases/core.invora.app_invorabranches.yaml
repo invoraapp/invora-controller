@@ -62,8 +62,7 @@ spec:
                   from this branch.
                 type: string
               instanceRef:
-                description: InstanceRef references the InvoraBillingInstance (gateway
-                  connection).
+                description: InstanceRef references the InvoraInstance (gateway connection).
                 properties:
                   name:
                     type: string

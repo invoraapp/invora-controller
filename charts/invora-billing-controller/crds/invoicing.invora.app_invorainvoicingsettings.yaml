@@ -76,8 +76,7 @@ spec:
                 description: DocumentNumberFormat defines the number format pattern.
                 type: string
               instanceRef:
-                description: InstanceRef references the InvoraBillingInstance (gateway
-                  connection).
+                description: InstanceRef references the InvoraInstance (gateway connection).
                 properties:
                   name:
                     type: string
