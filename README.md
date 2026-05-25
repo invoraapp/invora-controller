@@ -26,7 +26,7 @@ kubectl apply -f https://raw.githubusercontent.com/invoraapp/invora-controller/m
 ### Install via Helm
 
 ```bash
-helm install invora-controller oci://ghcr.io/invoraapp/invora-controller/charts/invora-billing-controller \
+helm install invora-controller oci://ghcr.io/invoraapp/invora-controller/charts/invora-controller \
   --set image.tag=latest \
   --set watchNamespace=my-billing-namespace
 ```

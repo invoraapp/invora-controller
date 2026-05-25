@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "invora-billing-controller.fullname" . }}
+  name: {{ include "invora-controller.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "invora-billing-controller.labels" . | nindent 4 }}
+    {{- include "invora-controller.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "invora-billing-controller.selectorLabels" . | nindent 6 }}
+      {{- include "invora-controller.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "invora-billing-controller.selectorLabels" . | nindent 8 }}
+        {{- include "invora-controller.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ .Values.serviceAccount.name }}
       securityContext:

@@ -6,9 +6,11 @@ import (
 	"time"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -75,6 +77,14 @@ func (r *BaseReconciler) resolveOrgDependencies(
 	SetCondition(conditions, billingv1alpha1.ConditionDependencyReady,
 		metav1.ConditionTrue, "DependenciesReady", "All referenced resources are available", generation)
 
+	// Resolve the org's API key for gRPC auth
+	secretRef := org.Spec.WriteSecretToRef
+	secretNS := secretRef.Namespace
+	if secretNS == "" {
+		secretNS = obj.GetNamespace()
+	}
+	apiKey, _ := billingclient.ResolveSecretValue(ctx, r.Client, secretRef.Name, secretNS, "apiKey", org.Namespace)
+
 	// Resolve gRPC conn from the org's parent instance
 	instance := &billingv1alpha1.InvoraBillingInstance{}
 	instRef := org.Spec.InstanceRef
@@ -87,12 +97,12 @@ func (r *BaseReconciler) resolveOrgDependencies(
 		if dialErr == nil {
 			return &orgResourceContext{
 				billingClient: client, org: org,
-				conn: conn, token: "", orgID: string(org.Status.OrganizationID),
+				conn: conn, token: apiKey, orgID: string(org.Status.OrganizationID),
 			}, nil
 		}
 	}
 
-	return &orgResourceContext{billingClient: client, org: org}, nil
+	return &orgResourceContext{billingClient: client, org: org, token: apiKey, orgID: string(org.Status.OrganizationID)}, nil
 }
 
 // handleCodeBasedDeletion handles deletion for resources identified by code.
@@ -138,6 +148,59 @@ func (r *BaseReconciler) handleCodeBasedDeletion(
 		return ctrl.Result{}, fmt.Errorf("removing finalizer: %w", err)
 	}
 	return ctrl.Result{}, nil
+}
+
+// handleGrpcDeletion handles deletion for resources using gRPC clients.
+func (r *BaseReconciler) handleGrpcDeletion(
+	ctx context.Context,
+	obj client.Object,
+	orgRef billingv1alpha1.ResourceRef,
+	deletionPolicy billingv1alpha1.DeletionPolicy,
+	resourceID string,
+	conditions *[]metav1.Condition,
+	generation int64,
+	deleteFn func(ctx context.Context, orc *orgResourceContext) error,
+) (ctrl.Result, error) {
+	logger := log.FromContext(ctx)
+
+	switch deletionPolicy {
+	case billingv1alpha1.DeletionPolicyOrphan:
+		logger.Info("orphaning resource (deletionPolicy=Orphan)")
+
+	case billingv1alpha1.DeletionPolicyDelete, "":
+		if resourceID != "" {
+			orc, result := r.resolveOrgDependencies(ctx, orgRef, obj, conditions, generation)
+			if result != nil {
+				return *result, nil
+			}
+
+			if err := deleteFn(ctx, orc); err != nil {
+				if !isGrpcNotFound(err) {
+					SetCondition(conditions, billingv1alpha1.ConditionDeletionBlocked,
+						metav1.ConditionTrue, "DeleteFailed", err.Error(), generation)
+					_ = r.Status().Update(ctx, obj)
+					return ctrl.Result{RequeueAfter: 15 * time.Second}, nil
+				}
+			}
+		}
+	}
+
+	if err := r.RemoveFinalizer(ctx, obj); err != nil {
+		return ctrl.Result{}, fmt.Errorf("removing finalizer: %w", err)
+	}
+	return ctrl.Result{}, nil
+}
+
+// isGrpcNotFound reports whether the error is a gRPC NOT_FOUND status.
+func isGrpcNotFound(err error) bool {
+	if err == nil {
+		return false
+	}
+	st, ok := status.FromError(err)
+	if !ok {
+		return false
+	}
+	return st.Code() == codes.NotFound
 }
 
 // setSuccessStatus sets the standard success conditions and status fields.

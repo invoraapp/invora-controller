@@ -7,13 +7,17 @@ import (
 	"strconv"
 	"time"
 
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
-	"github.com/invoraapp/invora-controller/internal/billingclient"
+	commonpb "github.com/invoraapp/invora-controller/gen/invora/billing/common/v2"
+	planspb "github.com/invoraapp/invora-controller/gen/invora/billing/plans/v2"
+	"github.com/invoraapp/invora-controller/internal/convert"
 )
 
 type InvoraBillingPlanReconciler struct{ BaseReconciler }
@@ -31,11 +35,15 @@ func (r *InvoraBillingPlanReconciler) Reconcile(ctx context.Context, req ctrl.Re
 	}
 
 	if !plan.DeletionTimestamp.IsZero() {
-		return r.handleCodeBasedDeletion(ctx, &plan,
+		return r.handleGrpcDeletion(ctx, &plan,
 			plan.Spec.OrganizationRef, plan.Spec.DeletionPolicy,
 			plan.Status.ExternalID, &plan.Status.Conditions, plan.Generation,
-			func(ctx context.Context, c *billingclient.Client) error {
-				return c.DeletePlan(ctx, plan.Spec.Code)
+			func(ctx context.Context, orc *orgResourceContext) error {
+				svc := planspb.NewPlanServiceClient(orc.Conn())
+				_, err := svc.Delete(orc.GrpcCtx(ctx), &planspb.DeleteRequest{
+					Input: &planspb.DestroyPlanInput{Id: plan.Status.ExternalID},
+				})
+				return err
 			})
 	}
 
@@ -63,12 +71,13 @@ func (r *InvoraBillingPlanReconciler) Reconcile(ctx context.Context, req ctrl.Re
 		return SuccessResult(&plan), nil
 	}
 
-	apiPlan := r.buildAPIPlan(&plan)
+	svc := planspb.NewPlanServiceClient(orc.Conn())
+	grpcCtx := orc.GrpcCtx(ctx)
 
 	if plan.Status.ExternalID != "" {
-		_, err := orc.billingClient.GetPlan(ctx, plan.Spec.Code)
+		_, err := svc.Get(grpcCtx, &planspb.GetRequest{Id: plan.Status.ExternalID})
 		if err != nil {
-			if billingclient.IsNotFound(err) {
+			if status.Code(err) == codes.NotFound {
 				plan.Status.ExternalID = ""
 			} else {
 				SetCondition(&plan.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "GetFailed", err.Error(), plan.Generation)
@@ -77,7 +86,23 @@ func (r *InvoraBillingPlanReconciler) Reconcile(ctx context.Context, req ctrl.Re
 			}
 		}
 		if plan.Status.ExternalID != "" {
-			if _, err := orc.billingClient.UpdatePlan(ctx, plan.Spec.Code, apiPlan); err != nil {
+			trialPeriod := parseTrialPeriod(plan.Spec.TrialPeriod)
+			_, err := svc.Update(grpcCtx, &planspb.UpdateRequest{
+				Input: &planspb.UpdatePlanInput{
+					Id:             plan.Status.ExternalID,
+					Code:           plan.Spec.Code,
+					Name:           plan.Spec.Name,
+					Description:    strPtr(plan.Spec.Description),
+					AmountCents:    plan.Spec.AmountCents,
+					AmountCurrency: convert.Currency(plan.Spec.AmountCurrency),
+					Interval:       convert.PlanInterval(plan.Spec.Interval),
+					PayInAdvance:   plan.Spec.PayInAdvance,
+					TrialPeriod:    &trialPeriod,
+					TaxCodes:       plan.Spec.TaxCodes,
+					Charges:        r.buildChargeInputs(&plan),
+				},
+			})
+			if err != nil {
 				SetCondition(&plan.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "UpdateFailed", err.Error(), plan.Generation)
 				_ = r.Status().Update(ctx, &plan)
 				return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
@@ -89,14 +114,28 @@ func (r *InvoraBillingPlanReconciler) Reconcile(ctx context.Context, req ctrl.Re
 	}
 
 	logger.Info("creating plan", "code", plan.Spec.Code)
-	created, err := orc.billingClient.CreatePlan(ctx, apiPlan)
+	trialPeriod := parseTrialPeriod(plan.Spec.TrialPeriod)
+	created, err := svc.Create(grpcCtx, &planspb.CreateRequest{
+		Input: &planspb.CreatePlanInput{
+			Code:           plan.Spec.Code,
+			Name:           plan.Spec.Name,
+			Description:    strPtr(plan.Spec.Description),
+			AmountCents:    plan.Spec.AmountCents,
+			AmountCurrency: convert.Currency(plan.Spec.AmountCurrency),
+			Interval:       convert.PlanInterval(plan.Spec.Interval),
+			PayInAdvance:   plan.Spec.PayInAdvance,
+			TrialPeriod:    &trialPeriod,
+			TaxCodes:       plan.Spec.TaxCodes,
+			Charges:        r.buildChargeInputs(&plan),
+		},
+	})
 	if err != nil {
 		SetCondition(&plan.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "CreateFailed", err.Error(), plan.Generation)
 		_ = r.Status().Update(ctx, &plan)
 		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 	}
-	plan.Status.ExternalID = created.ID
-	plan.Status.ID = created.ID
+	plan.Status.ExternalID = created.GetPlan().GetId()
+	plan.Status.ID = created.GetPlan().GetId()
 	setSuccessStatus(&plan.Status.Conditions, &plan.Status.LastSyncedAt, &plan.Status.ObservedGeneration, plan.Generation, "Created")
 	if err := r.Status().Update(ctx, &plan); err != nil {
 		return ctrl.Result{}, fmt.Errorf("updating status: %w", err)
@@ -104,47 +143,38 @@ func (r *InvoraBillingPlanReconciler) Reconcile(ctx context.Context, req ctrl.Re
 	return SuccessResult(&plan), nil
 }
 
-func (r *InvoraBillingPlanReconciler) buildAPIPlan(plan *billingv1alpha1.InvoraBillingPlan) billingclient.Plan {
-	p := billingclient.Plan{
-		Code:           plan.Spec.Code,
-		Name:           plan.Spec.Name,
-		Description:    plan.Spec.Description,
-		AmountCents:    plan.Spec.AmountCents,
-		AmountCurrency: plan.Spec.AmountCurrency,
-		Interval:       plan.Spec.Interval,
-		PayInAdvance:   plan.Spec.PayInAdvance,
-		TrialPeriod:    parseTrialPeriod(plan.Spec.TrialPeriod),
-		TaxCodes:       plan.Spec.TaxCodes,
+func (r *InvoraBillingPlanReconciler) buildChargeInputs(plan *billingv1alpha1.InvoraBillingPlan) []*planspb.ChargeInput {
+	if len(plan.Spec.Charges) == 0 {
+		return nil
 	}
 
-	if len(plan.Spec.Charges) > 0 {
-		type apiCharge struct {
-			BillableMetricCode string          `json:"billable_metric_code"`
-			ChargeModel        string          `json:"charge_model"`
-			InvoiceDisplayName string          `json:"invoice_display_name,omitempty"`
-			PayInAdvance       bool            `json:"pay_in_advance,omitempty"`
-			Prorated           bool            `json:"prorated,omitempty"`
-			Properties         json.RawMessage `json:"properties,omitempty"`
+	charges := make([]*planspb.ChargeInput, len(plan.Spec.Charges))
+	for i, c := range plan.Spec.Charges {
+		charge := &planspb.ChargeInput{
+			BillableMetricId: c.BillableMetricCode, // gateway resolves code as ID
+			ChargeModel:      chargeModelEnum(c.ChargeModel),
+			PayInAdvance:     boolPtr(c.PayInAdvance),
+			Prorated:         boolPtr(c.Prorated),
 		}
-
-		charges := make([]apiCharge, len(plan.Spec.Charges))
-		for i, c := range plan.Spec.Charges {
-			charges[i] = apiCharge{
-				BillableMetricCode: c.BillableMetricCode,
-				ChargeModel:        c.ChargeModel,
-				InvoiceDisplayName: c.InvoiceDisplayName,
-				PayInAdvance:       c.PayInAdvance,
-				Prorated:           c.Prorated,
-			}
-			if c.Properties != nil {
-				charges[i].Properties = c.Properties.Raw
-			}
+		if c.InvoiceDisplayName != "" {
+			charge.InvoiceDisplayName = &c.InvoiceDisplayName
 		}
-		chargesJSON, _ := json.Marshal(charges)
-		p.Charges = chargesJSON
+		if c.Properties != nil {
+			var props commonpb.PropertiesInput
+			_ = json.Unmarshal(c.Properties.Raw, &props)
+			charge.Properties = &props
+		}
+		charges[i] = charge
 	}
+	return charges
+}
 
-	return p
+func chargeModelEnum(s string) commonpb.ChargeModelEnum {
+	key := "CHARGE_MODEL_ENUM_" + s
+	if v, ok := commonpb.ChargeModelEnum_value[key]; ok {
+		return commonpb.ChargeModelEnum(v)
+	}
+	return commonpb.ChargeModelEnum_CHARGE_MODEL_ENUM_UNSPECIFIED
 }
 
 func parseTrialPeriod(s string) float64 {
@@ -153,6 +183,17 @@ func parseTrialPeriod(s string) float64 {
 	}
 	v, _ := strconv.ParseFloat(s, 64)
 	return v
+}
+
+func strPtr(s string) *string {
+	if s == "" {
+		return nil
+	}
+	return &s
+}
+
+func boolPtr(b bool) *bool {
+	return &b
 }
 
 func (r *InvoraBillingPlanReconciler) SetupWithManager(mgr ctrl.Manager) error {

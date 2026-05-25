@@ -1,8 +1,8 @@
-{{- define "invora-billing-controller.name" -}}
+{{- define "invora-controller.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{- define "invora-billing-controller.fullname" -}}
+{{- define "invora-controller.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -15,15 +15,15 @@
 {{- end }}
 {{- end }}
 
-{{- define "invora-billing-controller.labels" -}}
+{{- define "invora-controller.labels" -}}
 helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-app.kubernetes.io/name: {{ include "invora-billing-controller.name" . }}
+app.kubernetes.io/name: {{ include "invora-controller.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
-{{- define "invora-billing-controller.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "invora-billing-controller.name" . }}
+{{- define "invora-controller.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "invora-controller.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}

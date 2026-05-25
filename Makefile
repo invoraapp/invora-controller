@@ -66,7 +66,7 @@ undeploy: ## Undeploy controller from the cluster
 
 .PHONY: helm-crds
 helm-crds: manifests ## Copy CRD manifests into Helm chart crds/ directory
-	cp config/crd/bases/*.yaml charts/invora-billing-controller/crds/
+	cp config/crd/bases/*.yaml charts/invora-controller/crds/
 
 ##@ Tools
 

@@ -1,9 +1,9 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ include "invora-billing-controller.fullname" . }}-manager
+  name: {{ include "invora-controller.fullname" . }}-manager
   labels:
-    {{- include "invora-billing-controller.labels" . | nindent 4 }}
+    {{- include "invora-controller.labels" . | nindent 4 }}
 rules:
   - apiGroups: ["billing.invora.app"]
     resources:
@@ -94,13 +94,13 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ include "invora-billing-controller.fullname" . }}-manager
+  name: {{ include "invora-controller.fullname" . }}-manager
   labels:
-    {{- include "invora-billing-controller.labels" . | nindent 4 }}
+    {{- include "invora-controller.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: {{ include "invora-billing-controller.fullname" . }}-manager
+  name: {{ include "invora-controller.fullname" . }}-manager
 subjects:
   - kind: ServiceAccount
     name: {{ .Values.serviceAccount.name }}
