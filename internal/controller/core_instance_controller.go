@@ -17,8 +17,7 @@ import (
 
 type InvoraInstanceReconciler struct {
 	client.Client
-	Scheme      *runtime.Scheme
-	ClientCache *billingclient.Cache
+	Scheme *runtime.Scheme
 }
 
 func (r *InvoraInstanceReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
@@ -36,8 +35,7 @@ func (r *InvoraInstanceReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 	if tokenNS == "" {
 		tokenNS = instance.Namespace
 	}
-	token, err := billingclient.ResolveSecretValue(ctx, r.Client, ref.Name, tokenNS, ref.Key, instance.Namespace)
-	if err != nil {
+	if _, err := billingclient.ResolveSecretValue(ctx, r.Client, ref.Name, tokenNS, ref.Key, instance.Namespace); err != nil {
 		meta.SetStatusCondition(&instance.Status.Conditions, metav1.Condition{
 			Type:               "Ready",
 			Status:             metav1.ConditionFalse,
@@ -49,23 +47,7 @@ func (r *InvoraInstanceReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 	}
 
-	c, err := r.ClientCache.GetOrCreateInstanceClient(instance.Namespace, instance.Name, billingclient.Config{
-		GatewayURL: instance.Spec.GatewayURL,
-		Token:      token,
-	})
-	if err != nil {
-		meta.SetStatusCondition(&instance.Status.Conditions, metav1.Condition{
-			Type:               "Ready",
-			Status:             metav1.ConditionFalse,
-			ObservedGeneration: instance.Generation,
-			Reason:             "ClientCreateFailed",
-			Message:            err.Error(),
-		})
-		_ = r.Status().Update(ctx, &instance)
-		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
-	}
-
-	if err := c.CheckConnectivity(ctx); err != nil {
+	if err := checkGatewayConnectivity(ctx, instance.Spec.GatewayURL); err != nil {
 		instance.Status.Connected = false
 		meta.SetStatusCondition(&instance.Status.Conditions, metav1.Condition{
 			Type:               "Ready",

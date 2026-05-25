@@ -11,6 +11,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
+	customerspb "github.com/invoraapp/invora-controller/gen/invora/billing/customers/v2"
 	"github.com/invoraapp/invora-controller/internal/billingclient"
 )
 
@@ -66,8 +67,8 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 		return ctrl.Result{Requeue: true}, nil
 	}
 
-	// Resolve instance -> super-admin client
-	client, _, err := r.ResolveInstance(ctx, org.Spec.InstanceRef, org.Namespace)
+	// Resolve instance -> super-admin admin client + gRPC connection
+	instCtx, err := r.ResolveInstanceAdmin(ctx, org.Spec.InstanceRef, org.Namespace)
 	if err != nil {
 		logger.Error(err, "failed to resolve instanceRef")
 		SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionDependencyReady,
@@ -92,7 +93,7 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 		}
 
 		// Ensure API key is written
-		if err := r.ensureApiKey(ctx, client, &org); err != nil {
+		if err := r.ensureApiKey(ctx, instCtx, &org); err != nil {
 			SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
 				metav1.ConditionFalse, "ApiKeyFailed", err.Error(), org.Generation)
 			_ = r.Status().Update(ctx, &org)
@@ -107,7 +108,7 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 		logger.V(1).Info("checking existing organization", "id", org.Status.OrganizationID)
 
 		// Ensure API key Secret still exists
-		if err := r.ensureApiKey(ctx, client, &org); err != nil {
+		if err := r.ensureApiKey(ctx, instCtx, &org); err != nil {
 			SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
 				metav1.ConditionFalse, "ApiKeyFailed", err.Error(), org.Generation)
 			_ = r.Status().Update(ctx, &org)
@@ -117,11 +118,11 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 		return r.updateOrgStatusSuccess(ctx, &org, "InSync")
 	}
 
-	// No org ID -> create via GraphQL
+	// No org ID -> create via billing admin API
 	logger.Info("creating organization in billing", "name", org.Spec.Name)
 
 	// Search for existing org by name
-	orgs, err := client.ListOrganizations(ctx)
+	orgs, err := instCtx.admin.ListOrganizations(ctx)
 	if err != nil {
 		SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
 			metav1.ConditionFalse, "SearchFailed", err.Error(), org.Generation)
@@ -134,7 +135,7 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 			logger.Info("found existing org, adopting", "id", existing.ID)
 			org.Status.OrganizationID = existing.ID
 
-			if err := r.ensureApiKey(ctx, client, &org); err != nil {
+			if err := r.ensureApiKey(ctx, instCtx, &org); err != nil {
 				SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
 					metav1.ConditionFalse, "ApiKeyFailed", err.Error(), org.Generation)
 				_ = r.Status().Update(ctx, &org)
@@ -146,7 +147,7 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 	}
 
 	// Create new org
-	created, err := client.CreateOrganization(ctx, billingclient.CreateOrganizationInput{
+	created, err := instCtx.admin.CreateOrganization(ctx, billingclient.CreateOrganizationInput{
 		Name:              org.Spec.Name,
 		Email:             org.Spec.Email,
 		Timezone:          org.Spec.Timezone,
@@ -161,7 +162,7 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 	org.Status.OrganizationID = created.ID
 
 	// Generate and store API key
-	if err := r.ensureApiKey(ctx, client, &org); err != nil {
+	if err := r.ensureApiKey(ctx, instCtx, &org); err != nil {
 		SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
 			metav1.ConditionFalse, "ApiKeyFailed", err.Error(), org.Generation)
 		_ = r.Status().Update(ctx, &org)
@@ -175,7 +176,7 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 // If the org has no apiKeyId yet, it fetches the key list and regenerates.
 func (r *InvoraBillingOrganizationReconciler) ensureApiKey(
 	ctx context.Context,
-	superAdminClient *billingclient.Client,
+	instCtx *instanceAdminContext,
 	org *billingv1alpha1.InvoraBillingOrganization,
 ) error {
 	logger := log.FromContext(ctx)
@@ -201,7 +202,7 @@ func (r *InvoraBillingOrganizationReconciler) ensureApiKey(
 	logger.Info("generating API key for organization", "orgID", org.Status.OrganizationID)
 
 	// Get the org's API key IDs
-	apiKeys, err := superAdminClient.GetOrganizationApiKeys(ctx, org.Status.OrganizationID)
+	apiKeys, err := instCtx.admin.GetOrganizationApiKeys(ctx, org.Status.OrganizationID)
 	if err != nil {
 		return fmt.Errorf("getting org API keys: %w", err)
 	}
@@ -213,7 +214,7 @@ func (r *InvoraBillingOrganizationReconciler) ensureApiKey(
 	org.Status.ApiKeyID = apiKeyID
 
 	// Regenerate the key to get the plaintext value
-	keyValue, err := superAdminClient.RegenerateOrganizationApiKey(ctx, org.Status.OrganizationID, apiKeyID)
+	keyValue, err := instCtx.admin.RegenerateOrganizationApiKey(ctx, org.Status.OrganizationID, apiKeyID)
 	if err != nil {
 		return fmt.Errorf("regenerating API key: %w", err)
 	}
@@ -224,9 +225,6 @@ func (r *InvoraBillingOrganizationReconciler) ensureApiKey(
 	}); err != nil {
 		return fmt.Errorf("writing API key Secret: %w", err)
 	}
-
-	// Invalidate any cached org client so it picks up the new key
-	r.ClientCache.InvalidateOrg(org.Namespace, org.Name)
 
 	SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionCredentialsWritten,
 		metav1.ConditionTrue, "SecretWritten", "API key written to Secret", org.Generation)
@@ -300,19 +298,22 @@ func (r *InvoraBillingOrganizationReconciler) reconcileParentDualWrite(
 	}
 
 	parentRef := *org.Spec.ParentOrgRef
-	parentClient, parentOrg, err := r.ResolveOrganization(ctx, parentRef, org.Namespace)
-	if err != nil {
-		return fmt.Errorf("resolving parent org %s/%s: %w", parentRef.Namespace, parentRef.Name, err)
+	parentOrc, result := r.resolveOrgDependencies(ctx, parentRef, org, &org.Status.Conditions, org.Generation)
+	if result != nil {
+		return fmt.Errorf("resolving parent org %s/%s: dependencies not ready", parentRef.Namespace, parentRef.Name)
 	}
-	_ = parentOrg // reserved for future label propagation
 
-	cust := billingclient.Customer{
-		ExternalID: orgExternalID(org),
-		Name:       org.Spec.Name,
-	}
+	externalID := orgExternalID(org)
+	name := org.Spec.Name
 	logger.V(1).Info("upserting tenant customer in parent org",
-		"parent", parentRef.Name, "externalId", cust.ID)
-	created, err := parentClient.CreateOrUpdateCustomer(ctx, cust)
+		"parent", parentRef.Name, "externalId", externalID)
+	svc := customerspb.NewCustomerServiceClient(parentOrc.Conn())
+	created, err := svc.Create(parentOrc.GrpcCtx(ctx), &customerspb.CreateRequest{
+		Input: &customerspb.CreateCustomerInput{
+			ExternalId: externalID,
+			Name:       &name,
+		},
+	})
 	if err != nil {
 		return fmt.Errorf("upserting customer in parent org: %w", err)
 	}
@@ -320,7 +321,7 @@ func (r *InvoraBillingOrganizationReconciler) reconcileParentDualWrite(
 	// Snapshot ref into status. Take a copy so the spec pointer isn't shared.
 	refCopy := parentRef
 	org.Status.ParentOrgRef = &refCopy
-	custID := created.ID
+	custID := created.GetCustomer().GetId()
 	org.Status.ParentCustomerID = &custID
 
 	return nil
@@ -335,14 +336,24 @@ func (r *InvoraBillingOrganizationReconciler) deleteParentCustomer(
 	externalID string,
 ) error {
 	logger := log.FromContext(ctx)
-	parentClient, _, err := r.ResolveOrganization(ctx, parentRef, defaultNamespace)
-	if err != nil {
-		// Cannot resolve parent during cleanup; treat as transient — caller
-		// requeues. Return the error so dependency-not-ready bubbles up.
-		return err
+	ns := parentRef.Namespace
+	if ns == "" {
+		ns = defaultNamespace
 	}
-	if err := parentClient.DeleteCustomer(ctx, externalID); err != nil {
-		if billingclient.IsNotFound(err) {
+	dummy := &billingv1alpha1.InvoraBillingOrganization{}
+	dummy.SetNamespace(ns)
+	dummy.SetName(parentRef.Name)
+	var conds []metav1.Condition
+	parentOrc, result := r.resolveOrgDependencies(ctx, parentRef, dummy, &conds, 0)
+	if result != nil {
+		return fmt.Errorf("resolving parent org %s/%s: not ready", ns, parentRef.Name)
+	}
+	svc := customerspb.NewCustomerServiceClient(parentOrc.Conn())
+	_, err := svc.Delete(parentOrc.GrpcCtx(ctx), &customerspb.DeleteRequest{
+		Input: &customerspb.DestroyCustomerInput{Id: externalID},
+	})
+	if err != nil {
+		if isGrpcNotFound(err) {
 			logger.V(1).Info("parent customer already absent", "externalId", externalID)
 			return nil
 		}
@@ -379,7 +390,7 @@ func (r *InvoraBillingOrganizationReconciler) handleDeletion(
 		if org.Status.OrganizationID != "" {
 			logger.Info("deleting organization from billing", "id", org.Status.OrganizationID)
 
-			client, _, err := r.ResolveInstance(ctx, org.Spec.InstanceRef, org.Namespace)
+			instCtx, err := r.ResolveInstanceAdmin(ctx, org.Spec.InstanceRef, org.Namespace)
 			if err != nil {
 				logger.Error(err, "cannot resolve instance for deletion, will retry")
 				SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionDeletionBlocked,
@@ -388,7 +399,7 @@ func (r *InvoraBillingOrganizationReconciler) handleDeletion(
 				return ctrl.Result{RequeueAfter: 15 * time.Second}, nil
 			}
 
-			if err := client.DestroyOrganization(ctx, org.Status.OrganizationID); err != nil {
+			if err := instCtx.admin.DestroyOrganization(ctx, org.Status.OrganizationID); err != nil {
 				SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionDeletionBlocked,
 					metav1.ConditionTrue, "DeleteFailed", err.Error(), org.Generation)
 				_ = r.Status().Update(ctx, org)
@@ -396,8 +407,6 @@ func (r *InvoraBillingOrganizationReconciler) handleDeletion(
 			}
 		}
 	}
-
-	r.ClientCache.InvalidateOrg(org.Namespace, org.Name)
 
 	if err := r.RemoveFinalizer(ctx, org); err != nil {
 		return ctrl.Result{}, fmt.Errorf("removing finalizer: %w", err)

@@ -12,6 +12,7 @@ import (
 
 	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
 	"github.com/invoraapp/invora-controller/internal/billingclient"
+	paymentproviderspb "github.com/invoraapp/invora-controller/gen/invora/billing/payment_providers/v2"
 )
 
 type InvoraBillingTapProviderReconciler struct{ BaseReconciler }
@@ -30,10 +31,6 @@ func (r *InvoraBillingTapProviderReconciler) Reconcile(ctx context.Context, req 
 	}
 
 	if !tap.DeletionTimestamp.IsZero() {
-		// billing does not currently expose a Tap destroy mutation, so the
-		// best we can do is drop the finalizer (Orphan-style) regardless
-		// of policy. Future support: when upstream adds a destroy
-		// mutation, branch on DeletionPolicy here.
 		logger.Info("removing finalizer (billing has no Tap destroy endpoint)",
 			"providerCode", tap.Spec.Code)
 		if err := r.RemoveFinalizer(ctx, &tap); err != nil {
@@ -54,7 +51,6 @@ func (r *InvoraBillingTapProviderReconciler) Reconcile(ctx context.Context, req 
 		return *result, nil
 	}
 
-	// Resolve the Tap API key from the referenced Secret.
 	apiKeyNS := tap.Spec.TapApiKeyRef.Namespace
 	if apiKeyNS == "" {
 		apiKeyNS = tap.Namespace
@@ -82,28 +78,37 @@ func (r *InvoraBillingTapProviderReconciler) Reconcile(ctx context.Context, req 
 		return SuccessResult(&tap), nil
 	}
 
-	// Adopt by code if no ProviderID stored yet.
+	svc := paymentproviderspb.NewPaymentProviderServiceClient(orc.Conn())
+	grpcCtx := orc.GrpcCtx(ctx)
+
 	if tap.Status.ProviderID == "" {
-		existing, err := orc.billingClient.FindTapPaymentProviderByCode(ctx, tap.Spec.Code)
-		if err != nil {
+		code := tap.Spec.Code
+		resp, err := svc.Get(grpcCtx, &paymentproviderspb.GetRequest{Code: &code})
+		if err != nil && !isGrpcNotFound(err) {
 			SetCondition(&tap.Status.Conditions, billingv1alpha1.ConditionSynced,
 				metav1.ConditionFalse, "LookupFailed", err.Error(), tap.Generation)
 			_ = r.Status().Update(ctx, &tap)
 			return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 		}
-		if existing != nil {
-			logger.Info("adopting existing Tap provider", "id", existing.ID)
-			tap.Status.ProviderID = existing.ID
+		if err == nil {
+			if tp := resp.GetPaymentProvider().GetTapProvider(); tp != nil {
+				logger.Info("adopting existing Tap provider", "id", tp.GetId())
+				tap.Status.ProviderID = tp.GetId()
+			}
 		}
 	}
 
-	// Update path.
 	if tap.Status.ProviderID != "" {
-		updated, err := orc.billingClient.UpdateTapPaymentProvider(ctx, billingclient.UpdateTapPaymentProviderInput{
-			ID:                 tap.Status.ProviderID,
-			Code:               tap.Spec.Code,
-			Name:               tap.Spec.Name,
-			SuccessRedirectURL: tap.Spec.SuccessRedirectUrl,
+		name := tap.Spec.Name
+		code := tap.Spec.Code
+		redirect := tap.Spec.SuccessRedirectUrl
+		updated, err := svc.UpdateTapPaymentProvider(grpcCtx, &paymentproviderspb.UpdateTapPaymentProviderRequest{
+			Input: &paymentproviderspb.UpdateTapPaymentProviderInput{
+				Id:                 tap.Status.ProviderID,
+				Code:               &code,
+				Name:               &name,
+				SuccessRedirectUrl: &redirect,
+			},
 		})
 		if err != nil {
 			SetCondition(&tap.Status.Conditions, billingv1alpha1.ConditionSynced,
@@ -111,9 +116,9 @@ func (r *InvoraBillingTapProviderReconciler) Reconcile(ctx context.Context, req 
 			_ = r.Status().Update(ctx, &tap)
 			return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 		}
-		tap.Status.ProviderID = updated.ID
-		tap.Status.ProviderCode = updated.Code
-		tap.Status.ID = updated.ID
+		tap.Status.ProviderID = updated.GetTapProvider().GetId()
+		tap.Status.ProviderCode = updated.GetTapProvider().GetCode()
+		tap.Status.ID = updated.GetTapProvider().GetId()
 		setSuccessStatus(&tap.Status.Conditions, &tap.Status.LastSyncedAt,
 			&tap.Status.ObservedGeneration, tap.Generation, "InSync")
 		if err := r.Status().Update(ctx, &tap); err != nil {
@@ -122,13 +127,14 @@ func (r *InvoraBillingTapProviderReconciler) Reconcile(ctx context.Context, req 
 		return SuccessResult(&tap), nil
 	}
 
-	// Create path.
 	logger.Info("adding Tap payment provider", "code", tap.Spec.Code)
-	created, err := orc.billingClient.AddTapPaymentProvider(ctx, billingclient.AddTapPaymentProviderInput{
-		Code:               tap.Spec.Code,
-		Name:               tap.Spec.Name,
-		APIKey:             apiKey,
-		SuccessRedirectURL: tap.Spec.SuccessRedirectUrl,
+	created, err := svc.CreateTapPaymentProvider(grpcCtx, &paymentproviderspb.CreateTapPaymentProviderRequest{
+		Input: &paymentproviderspb.AddTapPaymentProviderInput{
+			Code:               tap.Spec.Code,
+			Name:               tap.Spec.Name,
+			ApiKey:             &apiKey,
+			SuccessRedirectUrl: &tap.Spec.SuccessRedirectUrl,
+		},
 	})
 	if err != nil {
 		SetCondition(&tap.Status.Conditions, billingv1alpha1.ConditionSynced,
@@ -136,9 +142,9 @@ func (r *InvoraBillingTapProviderReconciler) Reconcile(ctx context.Context, req 
 		_ = r.Status().Update(ctx, &tap)
 		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 	}
-	tap.Status.ProviderID = created.ID
-	tap.Status.ProviderCode = created.Code
-	tap.Status.ID = created.ID
+	tap.Status.ProviderID = created.GetTapProvider().GetId()
+	tap.Status.ProviderCode = created.GetTapProvider().GetCode()
+	tap.Status.ID = created.GetTapProvider().GetId()
 	setSuccessStatus(&tap.Status.Conditions, &tap.Status.LastSyncedAt,
 		&tap.Status.ObservedGeneration, tap.Generation, "Created")
 	if err := r.Status().Update(ctx, &tap); err != nil {

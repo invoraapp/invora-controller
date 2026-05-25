@@ -11,7 +11,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
-	"github.com/invoraapp/invora-controller/internal/billingclient"
+	taxespb "github.com/invoraapp/invora-controller/gen/invora/billing/taxes/v2"
+	"github.com/invoraapp/invora-controller/internal/convert"
 )
 
 type InvoraBillingTaxReconciler struct{ BaseReconciler }
@@ -29,11 +30,15 @@ func (r *InvoraBillingTaxReconciler) Reconcile(ctx context.Context, req ctrl.Req
 	}
 
 	if !tax.DeletionTimestamp.IsZero() {
-		return r.handleCodeBasedDeletion(ctx, &tax,
+		return r.handleGrpcDeletion(ctx, &tax,
 			tax.Spec.OrganizationRef, tax.Spec.DeletionPolicy,
 			tax.Status.ExternalID, &tax.Status.Conditions, tax.Generation,
-			func(ctx context.Context, c *billingclient.Client) error {
-				return c.DeleteTax(ctx, tax.Spec.Code)
+			func(ctx context.Context, orc *orgResourceContext) error {
+				svc := taxespb.NewTaxServiceClient(orc.Conn())
+				_, err := svc.Delete(orc.GrpcCtx(ctx), &taxespb.DeleteRequest{
+					Input: &taxespb.DestroyTaxInput{Id: tax.Status.ExternalID},
+				})
+				return err
 			})
 	}
 
@@ -61,17 +66,13 @@ func (r *InvoraBillingTaxReconciler) Reconcile(ctx context.Context, req ctrl.Req
 		return SuccessResult(&tax), nil
 	}
 
-	apiTax := billingclient.Tax{
-		Code:        tax.Spec.Code,
-		Name:        tax.Spec.Name,
-		Rate:        tax.Spec.Rate,
-		Description: tax.Spec.Description,
-	}
+	svc := taxespb.NewTaxServiceClient(orc.Conn())
+	grpcCtx := orc.GrpcCtx(ctx)
 
 	if tax.Status.ExternalID != "" {
-		remote, err := orc.billingClient.GetTax(ctx, tax.Spec.Code)
+		_, err := svc.Get(grpcCtx, &taxespb.GetRequest{Id: tax.Status.ExternalID})
 		if err != nil {
-			if billingclient.IsNotFound(err) {
+			if isGrpcNotFound(err) {
 				tax.Status.ExternalID = ""
 			} else {
 				SetCondition(&tax.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "GetFailed", err.Error(), tax.Generation)
@@ -79,14 +80,14 @@ func (r *InvoraBillingTaxReconciler) Reconcile(ctx context.Context, req ctrl.Req
 				return ctrl.Result{RequeueAfter: 10 * time.Second}, nil
 			}
 		}
-
 		if tax.Status.ExternalID != "" {
-			if remote.Name != tax.Spec.Name || remote.Rate != tax.Spec.Rate || remote.Description != tax.Spec.Description {
-				if _, err := orc.billingClient.UpdateTax(ctx, tax.Spec.Code, apiTax); err != nil {
-					SetCondition(&tax.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "UpdateFailed", err.Error(), tax.Generation)
-					_ = r.Status().Update(ctx, &tax)
-					return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
-				}
+			_, err := svc.Update(grpcCtx, &taxespb.UpdateRequest{
+				Input: buildTaxUpdateInput(&tax),
+			})
+			if err != nil {
+				SetCondition(&tax.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "UpdateFailed", err.Error(), tax.Generation)
+				_ = r.Status().Update(ctx, &tax)
+				return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 			}
 			setSuccessStatus(&tax.Status.Conditions, &tax.Status.LastSyncedAt, &tax.Status.ObservedGeneration, tax.Generation, "InSync")
 			_ = r.Status().Update(ctx, &tax)
@@ -95,19 +96,47 @@ func (r *InvoraBillingTaxReconciler) Reconcile(ctx context.Context, req ctrl.Req
 	}
 
 	logger.Info("creating tax", "code", tax.Spec.Code)
-	created, err := orc.billingClient.CreateTax(ctx, apiTax)
+	created, err := svc.Create(grpcCtx, &taxespb.CreateRequest{
+		Input: buildTaxCreateInput(&tax),
+	})
 	if err != nil {
 		SetCondition(&tax.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "CreateFailed", err.Error(), tax.Generation)
 		_ = r.Status().Update(ctx, &tax)
 		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 	}
-	tax.Status.ExternalID = created.ID
-	tax.Status.ID = created.ID
+	tax.Status.ExternalID = created.GetTax().GetId()
+	tax.Status.ID = created.GetTax().GetId()
 	setSuccessStatus(&tax.Status.Conditions, &tax.Status.LastSyncedAt, &tax.Status.ObservedGeneration, tax.Generation, "Created")
 	if err := r.Status().Update(ctx, &tax); err != nil {
 		return ctrl.Result{}, fmt.Errorf("updating status: %w", err)
 	}
 	return SuccessResult(&tax), nil
+}
+
+func buildTaxCreateInput(tax *billingv1alpha1.InvoraBillingTax) *taxespb.TaxCreateInput {
+	in := &taxespb.TaxCreateInput{
+		Code: tax.Spec.Code,
+		Name: tax.Spec.Name,
+		Rate: convert.TaxRate(tax.Spec.Rate),
+	}
+	if tax.Spec.Description != "" {
+		in.Description = &tax.Spec.Description
+	}
+	return in
+}
+
+func buildTaxUpdateInput(tax *billingv1alpha1.InvoraBillingTax) *taxespb.TaxUpdateInput {
+	rate := convert.TaxRate(tax.Spec.Rate)
+	in := &taxespb.TaxUpdateInput{
+		Id:   tax.Status.ExternalID,
+		Code: &tax.Spec.Code,
+		Name: &tax.Spec.Name,
+		Rate: &rate,
+	}
+	if tax.Spec.Description != "" {
+		in.Description = &tax.Spec.Description
+	}
+	return in
 }
 
 func (r *InvoraBillingTaxReconciler) SetupWithManager(mgr ctrl.Manager) error {

@@ -13,7 +13,6 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 
 	corev1alpha1 "github.com/invoraapp/invora-controller/api/core/v1alpha1"
-	"github.com/invoraapp/invora-controller/internal/billingclient"
 )
 
 func newCoreScheme(t *testing.T) *runtime.Scheme {
@@ -31,9 +30,8 @@ func newCoreScheme(t *testing.T) *runtime.Scheme {
 func TestInvoraInstance_NotFound_NoError(t *testing.T) {
 	s := newCoreScheme(t)
 	r := &InvoraInstanceReconciler{
-		Client:      fake.NewClientBuilder().WithScheme(s).Build(),
-		Scheme:      s,
-		ClientCache: billingclient.NewCache(),
+		Client: fake.NewClientBuilder().WithScheme(s).Build(),
+		Scheme: s,
 	}
 
 	result, err := r.Reconcile(context.Background(), ctrl.Request{
@@ -66,8 +64,7 @@ func TestInvoraInstance_MissingTokenSecret_SetsNotReady(t *testing.T) {
 			WithObjects(inst).
 			WithStatusSubresource(inst).
 			Build(),
-		Scheme:      s,
-		ClientCache: billingclient.NewCache(),
+		Scheme: s,
 	}
 
 	result, err := r.Reconcile(context.Background(), ctrl.Request{
@@ -112,8 +109,7 @@ func TestInvoraInstance_ValidToken_ConnectivityFails_SetsNotReady(t *testing.T) 
 			WithObjects(inst, secret).
 			WithStatusSubresource(inst).
 			Build(),
-		Scheme:      s,
-		ClientCache: billingclient.NewCache(),
+		Scheme: s,
 	}
 
 	result, err := r.Reconcile(context.Background(), ctrl.Request{

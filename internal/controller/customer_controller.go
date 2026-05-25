@@ -11,7 +11,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
-	"github.com/invoraapp/invora-controller/internal/billingclient"
+	customerspb "github.com/invoraapp/invora-controller/gen/invora/billing/customers/v2"
+	"github.com/invoraapp/invora-controller/internal/convert"
 )
 
 type InvoraBillingCustomerReconciler struct{ BaseReconciler }
@@ -29,11 +30,15 @@ func (r *InvoraBillingCustomerReconciler) Reconcile(ctx context.Context, req ctr
 	}
 
 	if !customer.DeletionTimestamp.IsZero() {
-		return r.handleCodeBasedDeletion(ctx, &customer,
+		return r.handleGrpcDeletion(ctx, &customer,
 			customer.Spec.OrganizationRef, customer.Spec.DeletionPolicy,
 			customer.Status.ExternalID, &customer.Status.Conditions, customer.Generation,
-			func(ctx context.Context, c *billingclient.Client) error {
-				return c.DeleteCustomer(ctx, customer.Spec.ExternalID)
+			func(ctx context.Context, orc *orgResourceContext) error {
+				svc := customerspb.NewCustomerServiceClient(orc.Conn())
+				_, err := svc.Delete(orc.GrpcCtx(ctx), &customerspb.DeleteRequest{
+					Input: &customerspb.DestroyCustomerInput{Id: customer.Status.ExternalID},
+				})
+				return err
 			})
 	}
 
@@ -61,30 +66,14 @@ func (r *InvoraBillingCustomerReconciler) Reconcile(ctx context.Context, req ctr
 		return SuccessResult(&customer), nil
 	}
 
-	apiCustomer := billingclient.Customer{
-		ExternalID:   customer.Spec.ExternalID,
-		Name:         customer.Spec.Name,
-		Email:        customer.Spec.Email,
-		Currency:     customer.Spec.Currency,
-		AddressLine1: customer.Spec.AddressLine1,
-		AddressLine2: customer.Spec.AddressLine2,
-		City:         customer.Spec.City,
-		Country:      customer.Spec.Country,
-		State:        customer.Spec.State,
-		Zipcode:      customer.Spec.Zipcode,
-		LegalName:    customer.Spec.LegalName,
-		LegalNumber:  customer.Spec.LegalNumber,
-		Phone:        customer.Spec.Phone,
-		Timezone:     customer.Spec.Timezone,
-		TaxCodes:     customer.Spec.TaxCodes,
-	}
+	svc := customerspb.NewCustomerServiceClient(orc.Conn())
+	grpcCtx := orc.GrpcCtx(ctx)
 
-	// billing's POST /customers is an upsert — it creates or updates by external_id.
-	// We always call CreateOrUpdate regardless of whether we have a ExternalID.
 	if customer.Status.ExternalID != "" {
-		_, err := orc.billingClient.GetCustomer(ctx, customer.Spec.ExternalID)
+		extID := customer.Spec.ExternalID
+		_, err := svc.Get(grpcCtx, &customerspb.GetRequest{ExternalId: &extID})
 		if err != nil {
-			if billingclient.IsNotFound(err) {
+			if isGrpcNotFound(err) {
 				customer.Status.ExternalID = ""
 			} else {
 				SetCondition(&customer.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "GetFailed", err.Error(), customer.Generation)
@@ -93,8 +82,10 @@ func (r *InvoraBillingCustomerReconciler) Reconcile(ctx context.Context, req ctr
 			}
 		}
 		if customer.Status.ExternalID != "" {
-			// Upsert to sync any drift
-			if _, err := orc.billingClient.CreateOrUpdateCustomer(ctx, apiCustomer); err != nil {
+			_, err := svc.Create(grpcCtx, &customerspb.CreateRequest{
+				Input: buildCreateCustomerInput(&customer),
+			})
+			if err != nil {
 				SetCondition(&customer.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "UpdateFailed", err.Error(), customer.Generation)
 				_ = r.Status().Update(ctx, &customer)
 				return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
@@ -106,19 +97,63 @@ func (r *InvoraBillingCustomerReconciler) Reconcile(ctx context.Context, req ctr
 	}
 
 	logger.Info("creating customer", "externalId", customer.Spec.ExternalID)
-	created, err := orc.billingClient.CreateOrUpdateCustomer(ctx, apiCustomer)
+	created, err := svc.Create(grpcCtx, &customerspb.CreateRequest{
+		Input: buildCreateCustomerInput(&customer),
+	})
 	if err != nil {
 		SetCondition(&customer.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "CreateFailed", err.Error(), customer.Generation)
 		_ = r.Status().Update(ctx, &customer)
 		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 	}
-	customer.Status.ExternalID = created.ID
-	customer.Status.ID = created.ID
+	customer.Status.ExternalID = created.GetCustomer().GetId()
+	customer.Status.ID = created.GetCustomer().GetId()
 	setSuccessStatus(&customer.Status.Conditions, &customer.Status.LastSyncedAt, &customer.Status.ObservedGeneration, customer.Generation, "Created")
 	if err := r.Status().Update(ctx, &customer); err != nil {
 		return ctrl.Result{}, fmt.Errorf("updating status: %w", err)
 	}
 	return SuccessResult(&customer), nil
+}
+
+func buildCreateCustomerInput(customer *billingv1alpha1.InvoraBillingCustomer) *customerspb.CreateCustomerInput {
+	in := &customerspb.CreateCustomerInput{
+		ExternalId: customer.Spec.ExternalID,
+		TaxCodes:   customer.Spec.TaxCodes,
+	}
+	if customer.Spec.Name != "" {
+		in.Name = &customer.Spec.Name
+	}
+	if customer.Spec.Email != "" {
+		in.Email = &customer.Spec.Email
+	}
+	if customer.Spec.Currency != "" {
+		cur := convert.Currency(customer.Spec.Currency)
+		in.Currency = &cur
+	}
+	if customer.Spec.AddressLine1 != "" {
+		in.AddressLine1 = &customer.Spec.AddressLine1
+	}
+	if customer.Spec.AddressLine2 != "" {
+		in.AddressLine2 = &customer.Spec.AddressLine2
+	}
+	if customer.Spec.City != "" {
+		in.City = &customer.Spec.City
+	}
+	if customer.Spec.State != "" {
+		in.State = &customer.Spec.State
+	}
+	if customer.Spec.Zipcode != "" {
+		in.Zipcode = &customer.Spec.Zipcode
+	}
+	if customer.Spec.LegalName != "" {
+		in.LegalName = &customer.Spec.LegalName
+	}
+	if customer.Spec.LegalNumber != "" {
+		in.LegalNumber = &customer.Spec.LegalNumber
+	}
+	if customer.Spec.Phone != "" {
+		in.Phone = &customer.Spec.Phone
+	}
+	return in
 }
 
 func (r *InvoraBillingCustomerReconciler) SetupWithManager(mgr ctrl.Manager) error {

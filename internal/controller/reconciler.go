@@ -30,13 +30,13 @@ type BaseReconciler struct {
 	ClientCache *billingclient.Cache
 }
 
-// ResolveInstance looks up the InvoraBillingInstance referenced by instanceRef and
-// returns a cached super-admin billing API client.
-func (r *BaseReconciler) ResolveInstance(
+// ResolveInstanceAdmin looks up the InvoraBillingInstance referenced by instanceRef and
+// returns a cached super-admin billing client plus a gRPC connection to the gateway.
+func (r *BaseReconciler) ResolveInstanceAdmin(
 	ctx context.Context,
 	instanceRef billingv1alpha1.ResourceRef,
 	defaultNamespace string,
-) (*billingclient.Client, *billingv1alpha1.InvoraBillingInstance, error) {
+) (*instanceAdminContext, error) {
 	ns := instanceRef.Namespace
 	if ns == "" {
 		ns = defaultNamespace
@@ -47,15 +47,14 @@ func (r *BaseReconciler) ResolveInstance(
 		Namespace: ns,
 		Name:      instanceRef.Name,
 	}, instance); err != nil {
-		return nil, nil, fmt.Errorf("getting InvoraBillingInstance %s/%s: %w", ns, instanceRef.Name, err)
+		return nil, fmt.Errorf("getting InvoraBillingInstance %s/%s: %w", ns, instanceRef.Name, err)
 	}
 
 	readyCond := meta.FindStatusCondition(instance.Status.Conditions, billingv1alpha1.ConditionReady)
 	if readyCond == nil || readyCond.Status != metav1.ConditionTrue {
-		return nil, instance, fmt.Errorf("InvoraBillingInstance %s/%s is not Ready", ns, instanceRef.Name)
+		return nil, fmt.Errorf("InvoraBillingInstance %s/%s is not Ready", ns, instanceRef.Name)
 	}
 
-	// Resolve super-admin token from Secret
 	ref := instance.Spec.TokenRef
 	tokenNS := ref.Namespace
 	if tokenNS == "" {
@@ -63,27 +62,35 @@ func (r *BaseReconciler) ResolveInstance(
 	}
 	token, err := billingclient.ResolveSecretValue(ctx, r.Client, ref.Name, tokenNS, ref.Key, instance.Namespace)
 	if err != nil {
-		return nil, instance, fmt.Errorf("resolving super-admin token: %w", err)
+		return nil, fmt.Errorf("resolving super-admin token: %w", err)
 	}
 
-	client, err := r.ClientCache.GetOrCreateInstanceClient(ns, instanceRef.Name, billingclient.Config{
+	admin, err := r.ClientCache.GetOrCreateInstanceAdmin(ns, instanceRef.Name, billingclient.AdminConfig{
 		GatewayURL: instance.Spec.GatewayURL,
 		Token:      token,
 	})
 	if err != nil {
-		return nil, instance, fmt.Errorf("creating billing client: %w", err)
+		return nil, fmt.Errorf("creating billing admin client: %w", err)
 	}
 
-	return client, instance, nil
+	conn, err := dialGateway(instance.Spec.GatewayURL)
+	if err != nil {
+		return nil, fmt.Errorf("dialing gateway: %w", err)
+	}
+
+	return &instanceAdminContext{
+		instance: instance,
+		admin:    admin,
+		conn:     conn,
+		token:    token,
+	}, nil
 }
 
-// ResolveOrganization looks up a InvoraBillingOrganization CR, checks it is Ready,
-// reads its API key from the Secret, and returns an org-scoped REST client.
-func (r *BaseReconciler) ResolveOrganization(
+func (r *BaseReconciler) getReadyBillingOrganization(
 	ctx context.Context,
 	orgRef billingv1alpha1.ResourceRef,
 	defaultNamespace string,
-) (*billingclient.Client, *billingv1alpha1.InvoraBillingOrganization, error) {
+) (*billingv1alpha1.InvoraBillingOrganization, error) {
 	ns := orgRef.Namespace
 	if ns == "" {
 		ns = defaultNamespace
@@ -94,49 +101,15 @@ func (r *BaseReconciler) ResolveOrganization(
 		Namespace: ns,
 		Name:      orgRef.Name,
 	}, org); err != nil {
-		return nil, nil, fmt.Errorf("getting InvoraBillingOrganization %s/%s: %w", ns, orgRef.Name, err)
+		return nil, fmt.Errorf("getting InvoraBillingOrganization %s/%s: %w", ns, orgRef.Name, err)
 	}
 
 	readyCond := meta.FindStatusCondition(org.Status.Conditions, billingv1alpha1.ConditionReady)
 	if readyCond == nil || readyCond.Status != metav1.ConditionTrue {
-		return nil, org, fmt.Errorf("InvoraBillingOrganization %s/%s is not Ready", ns, orgRef.Name)
+		return nil, fmt.Errorf("InvoraBillingOrganization %s/%s is not Ready", ns, orgRef.Name)
 	}
 
-	// Read the org's API key from the Secret written by the org controller
-	secretRef := org.Spec.WriteSecretToRef
-	secretNS := secretRef.Namespace
-	if secretNS == "" {
-		secretNS = ns
-	}
-	apiKey, err := billingclient.ResolveSecretValue(ctx, r.Client, secretRef.Name, secretNS, "apiKey", org.Namespace)
-	if err != nil {
-		return nil, org, fmt.Errorf("resolving org API key: %w", err)
-	}
-
-	// We need the instance host to construct the client
-	instance := &billingv1alpha1.InvoraBillingInstance{}
-	instRef := org.Spec.InstanceRef
-	instNS := instRef.Namespace
-	if instNS == "" {
-		instNS = ns
-	}
-	if err := r.Get(ctx, types.NamespacedName{
-		Namespace: instNS,
-		Name:      instRef.Name,
-	}, instance); err != nil {
-		return nil, org, fmt.Errorf("getting InvoraBillingInstance for org: %w", err)
-	}
-
-	client, err := r.ClientCache.GetOrCreateOrgClient(ns, orgRef.Name, billingclient.Config{
-		GatewayURL: instance.Spec.GatewayURL,
-		Token:      apiKey,
-		OrgID:      string(org.Status.OrganizationID),
-	})
-	if err != nil {
-		return nil, org, fmt.Errorf("creating org billing client: %w", err)
-	}
-
-	return client, org, nil
+	return org, nil
 }
 
 // EnsureFinalizer adds the billing finalizer if not present.
@@ -184,10 +157,6 @@ func (r *BaseReconciler) WriteSecret(
 		for k, v := range data {
 			secret.Data[k] = v
 		}
-		// SetOwnerReference requires owner and owned object in same namespace.
-		// For cross-namespace writes (e.g. InvoraBillingOrganization in billing-controller
-		// writing to invora-dev), skip the ownerRef — GC won't apply anyway
-		// across namespaces. Labels carry the lineage instead.
 		if owner.GetNamespace() == ns {
 			return controllerutil.SetOwnerReference(owner, secret, r.Scheme)
 		}

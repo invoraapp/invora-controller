@@ -11,7 +11,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
-	"github.com/invoraapp/invora-controller/internal/billingclient"
+	meteringpb "github.com/invoraapp/invora-controller/gen/invora/billing/metering/v2"
+	"github.com/invoraapp/invora-controller/internal/convert"
 )
 
 type InvoraBillingMetricReconciler struct {
@@ -31,11 +32,15 @@ func (r *InvoraBillingMetricReconciler) Reconcile(ctx context.Context, req ctrl.
 	}
 
 	if !metric.DeletionTimestamp.IsZero() {
-		return r.BaseReconciler.handleCodeBasedDeletion(ctx, &metric,
+		return r.handleGrpcDeletion(ctx, &metric,
 			metric.Spec.OrganizationRef, metric.Spec.DeletionPolicy,
 			metric.Status.ExternalID, &metric.Status.Conditions, metric.Generation,
-			func(ctx context.Context, c *billingclient.Client) error {
-				return c.DeleteBillableMetric(ctx, metric.Spec.Code)
+			func(ctx context.Context, orc *orgResourceContext) error {
+				svc := meteringpb.NewBillableMetricServiceClient(orc.Conn())
+				_, err := svc.Delete(orc.GrpcCtx(ctx), &meteringpb.DeleteRequest{
+					Input: &meteringpb.DestroyBillableMetricInput{Id: metric.Status.ExternalID},
+				})
+				return err
 			})
 	}
 
@@ -53,7 +58,6 @@ func (r *InvoraBillingMetricReconciler) Reconcile(ctx context.Context, req ctrl.
 		return *result, nil
 	}
 
-	// Import
 	if importID := GetImportID(&metric); importID != "" {
 		metric.Status.ExternalID = importID
 		metric.Status.ID = importID
@@ -71,30 +75,13 @@ func (r *InvoraBillingMetricReconciler) Reconcile(ctx context.Context, req ctrl.
 		return SuccessResult(&metric), nil
 	}
 
-	var apiFilters []billingclient.BillableMetricFilter
-	for _, f := range metric.Spec.Filters {
-		apiFilters = append(apiFilters, billingclient.BillableMetricFilter{
-			Key:    f.Key,
-			Values: f.Values,
-		})
-	}
-
-	apiMetric := billingclient.BillableMetric{
-		Code:             metric.Spec.Code,
-		Name:             metric.Spec.Name,
-		Description:      metric.Spec.Description,
-		AggregationType:  metric.Spec.AggregationType,
-		FieldName:        metric.Spec.FieldName,
-		WeightedInterval: metric.Spec.WeightedInterval,
-		Recurring:        metric.Spec.Recurring,
-		Filters:          apiFilters,
-	}
+	svc := meteringpb.NewBillableMetricServiceClient(orc.Conn())
+	grpcCtx := orc.GrpcCtx(ctx)
 
 	if metric.Status.ExternalID != "" {
-		// GET and update if drifted
-		remote, err := orc.billingClient.GetBillableMetric(ctx, metric.Spec.Code)
+		_, err := svc.Get(grpcCtx, &meteringpb.GetRequest{Id: metric.Status.ExternalID})
 		if err != nil {
-			if billingclient.IsNotFound(err) {
+			if isGrpcNotFound(err) {
 				logger.Info("metric not found in billing, will recreate", "code", metric.Spec.Code)
 				metric.Status.ExternalID = ""
 			} else {
@@ -104,23 +91,16 @@ func (r *InvoraBillingMetricReconciler) Reconcile(ctx context.Context, req ctrl.
 				return ctrl.Result{RequeueAfter: 10 * time.Second}, nil
 			}
 		}
-
 		if metric.Status.ExternalID != "" {
-			needsUpdate := remote.Name != metric.Spec.Name ||
-				remote.Description != metric.Spec.Description ||
-				remote.AggregationType != metric.Spec.AggregationType ||
-				remote.FieldName != metric.Spec.FieldName
-
-			if needsUpdate {
-				logger.Info("metric drifted, updating", "code", metric.Spec.Code)
-				if _, err := orc.billingClient.UpdateBillableMetric(ctx, metric.Spec.Code, apiMetric); err != nil {
-					SetCondition(&metric.Status.Conditions, billingv1alpha1.ConditionSynced,
-						metav1.ConditionFalse, "UpdateFailed", err.Error(), metric.Generation)
-					_ = r.Status().Update(ctx, &metric)
-					return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
-				}
+			_, err := svc.Update(grpcCtx, &meteringpb.UpdateRequest{
+				Input: buildUpdateBillableMetricInput(&metric),
+			})
+			if err != nil {
+				SetCondition(&metric.Status.Conditions, billingv1alpha1.ConditionSynced,
+					metav1.ConditionFalse, "UpdateFailed", err.Error(), metric.Generation)
+				_ = r.Status().Update(ctx, &metric)
+				return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 			}
-
 			setSuccessStatus(&metric.Status.Conditions, &metric.Status.LastSyncedAt,
 				&metric.Status.ObservedGeneration, metric.Generation, "InSync")
 			if err := r.Status().Update(ctx, &metric); err != nil {
@@ -130,17 +110,18 @@ func (r *InvoraBillingMetricReconciler) Reconcile(ctx context.Context, req ctrl.
 		}
 	}
 
-	// Create
 	logger.Info("creating billable metric", "code", metric.Spec.Code)
-	created, err := orc.billingClient.CreateBillableMetric(ctx, apiMetric)
+	created, err := svc.Create(grpcCtx, &meteringpb.CreateRequest{
+		Input: buildCreateBillableMetricInput(&metric),
+	})
 	if err != nil {
 		SetCondition(&metric.Status.Conditions, billingv1alpha1.ConditionSynced,
 			metav1.ConditionFalse, "CreateFailed", err.Error(), metric.Generation)
 		_ = r.Status().Update(ctx, &metric)
 		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 	}
-	metric.Status.ExternalID = created.ID
-	metric.Status.ID = created.ID
+	metric.Status.ExternalID = created.GetBillableMetric().GetId()
+	metric.Status.ID = created.GetBillableMetric().GetId()
 
 	setSuccessStatus(&metric.Status.Conditions, &metric.Status.LastSyncedAt,
 		&metric.Status.ObservedGeneration, metric.Generation, "Created")
@@ -148,6 +129,65 @@ func (r *InvoraBillingMetricReconciler) Reconcile(ctx context.Context, req ctrl.
 		return ctrl.Result{}, err
 	}
 	return SuccessResult(&metric), nil
+}
+
+func buildBillableMetricFilters(metric *billingv1alpha1.InvoraBillingMetric) []*meteringpb.BillableMetricFiltersInput {
+	if len(metric.Spec.Filters) == 0 {
+		return nil
+	}
+	out := make([]*meteringpb.BillableMetricFiltersInput, len(metric.Spec.Filters))
+	for i, f := range metric.Spec.Filters {
+		out[i] = &meteringpb.BillableMetricFiltersInput{
+			Key:    f.Key,
+			Values: f.Values,
+		}
+	}
+	return out
+}
+
+func buildCreateBillableMetricInput(metric *billingv1alpha1.InvoraBillingMetric) *meteringpb.CreateBillableMetricInput {
+	in := &meteringpb.CreateBillableMetricInput{
+		Code:            metric.Spec.Code,
+		Name:            metric.Spec.Name,
+		Description:     metric.Spec.Description,
+		AggregationType: convert.AggregationType(metric.Spec.AggregationType),
+		Filters:         buildBillableMetricFilters(metric),
+	}
+	if metric.Spec.FieldName != "" {
+		in.FieldName = &metric.Spec.FieldName
+	}
+	if metric.Spec.WeightedInterval != "" {
+		wi := convert.WeightedInterval(metric.Spec.WeightedInterval)
+		in.WeightedInterval = &wi
+	}
+	if metric.Spec.Recurring {
+		recurring := true
+		in.Recurring = &recurring
+	}
+	return in
+}
+
+func buildUpdateBillableMetricInput(metric *billingv1alpha1.InvoraBillingMetric) *meteringpb.UpdateBillableMetricInput {
+	in := &meteringpb.UpdateBillableMetricInput{
+		Id:              metric.Status.ExternalID,
+		Code:            metric.Spec.Code,
+		Name:            metric.Spec.Name,
+		Description:     metric.Spec.Description,
+		AggregationType: convert.AggregationType(metric.Spec.AggregationType),
+		Filters:         buildBillableMetricFilters(metric),
+	}
+	if metric.Spec.FieldName != "" {
+		in.FieldName = &metric.Spec.FieldName
+	}
+	if metric.Spec.WeightedInterval != "" {
+		wi := convert.WeightedInterval(metric.Spec.WeightedInterval)
+		in.WeightedInterval = &wi
+	}
+	if metric.Spec.Recurring {
+		recurring := true
+		in.Recurring = &recurring
+	}
+	return in
 }
 
 func (r *InvoraBillingMetricReconciler) SetupWithManager(mgr ctrl.Manager) error {

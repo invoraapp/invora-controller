@@ -100,7 +100,7 @@ func main() {
 		{"InvoraBillingWebhookEndpoint", &controller.InvoraBillingWebhookEndpointReconciler{BaseReconciler: base}},
 		{"InvoraBillingTapProvider", &controller.InvoraBillingTapProviderReconciler{BaseReconciler: base}},
 		// Core controllers
-		{"InvoraInstance", &controller.InvoraInstanceReconciler{Client: mgr.GetClient(), Scheme: mgr.GetScheme(), ClientCache: clientCache}},
+		{"InvoraInstance", &controller.InvoraInstanceReconciler{Client: mgr.GetClient(), Scheme: mgr.GetScheme()}},
 		{"InvoraBranch", &controller.InvoraBranchReconciler{Client: mgr.GetClient(), Scheme: mgr.GetScheme(), ClientCache: clientCache}},
 		{"InvoraConnectedBusiness", &controller.InvoraConnectedBusinessReconciler{Client: mgr.GetClient(), Scheme: mgr.GetScheme(), ClientCache: clientCache}},
 		// Invoicing controllers

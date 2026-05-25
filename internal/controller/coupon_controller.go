@@ -11,7 +11,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
-	"github.com/invoraapp/invora-controller/internal/billingclient"
+	couponspb "github.com/invoraapp/invora-controller/gen/invora/billing/coupons/v2"
+	"github.com/invoraapp/invora-controller/internal/convert"
 )
 
 type InvoraBillingCouponReconciler struct{ BaseReconciler }
@@ -29,11 +30,15 @@ func (r *InvoraBillingCouponReconciler) Reconcile(ctx context.Context, req ctrl.
 	}
 
 	if !coupon.DeletionTimestamp.IsZero() {
-		return r.handleCodeBasedDeletion(ctx, &coupon,
+		return r.handleGrpcDeletion(ctx, &coupon,
 			coupon.Spec.OrganizationRef, coupon.Spec.DeletionPolicy,
 			coupon.Status.ExternalID, &coupon.Status.Conditions, coupon.Generation,
-			func(ctx context.Context, c *billingclient.Client) error {
-				return c.DeleteCoupon(ctx, coupon.Spec.Code)
+			func(ctx context.Context, orc *orgResourceContext) error {
+				svc := couponspb.NewCouponServiceClient(orc.Conn())
+				_, err := svc.Delete(orc.GrpcCtx(ctx), &couponspb.DeleteRequest{
+					Input: &couponspb.DestroyCouponInput{Id: coupon.Status.ExternalID},
+				})
+				return err
 			})
 	}
 
@@ -61,23 +66,13 @@ func (r *InvoraBillingCouponReconciler) Reconcile(ctx context.Context, req ctrl.
 		return SuccessResult(&coupon), nil
 	}
 
-	apiCoupon := billingclient.Coupon{
-		Code:           coupon.Spec.Code,
-		Name:           coupon.Spec.Name,
-		CouponType:     coupon.Spec.CouponType,
-		Frequency:      coupon.Spec.Frequency,
-		Expiration:     coupon.Spec.Expiration,
-		AmountCents:    coupon.Spec.AmountCents,
-		AmountCurrency: coupon.Spec.AmountCurrency,
-		PercentageRate: coupon.Spec.PercentageRate,
-		ExpirationAt:   coupon.Spec.ExpirationAt,
-		Reusable:       coupon.Spec.Reusable,
-	}
+	svc := couponspb.NewCouponServiceClient(orc.Conn())
+	grpcCtx := orc.GrpcCtx(ctx)
 
 	if coupon.Status.ExternalID != "" {
-		_, err := orc.billingClient.GetCoupon(ctx, coupon.Spec.Code)
+		_, err := svc.Get(grpcCtx, &couponspb.GetRequest{Id: coupon.Status.ExternalID})
 		if err != nil {
-			if billingclient.IsNotFound(err) {
+			if isGrpcNotFound(err) {
 				coupon.Status.ExternalID = ""
 			} else {
 				SetCondition(&coupon.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "GetFailed", err.Error(), coupon.Generation)
@@ -86,8 +81,10 @@ func (r *InvoraBillingCouponReconciler) Reconcile(ctx context.Context, req ctrl.
 			}
 		}
 		if coupon.Status.ExternalID != "" {
-			// Update unconditionally (coupon has many fields)
-			if _, err := orc.billingClient.UpdateCoupon(ctx, coupon.Spec.Code, apiCoupon); err != nil {
+			_, err := svc.Update(grpcCtx, &couponspb.UpdateRequest{
+				Input: buildUpdateCouponInput(&coupon),
+			})
+			if err != nil {
 				SetCondition(&coupon.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "UpdateFailed", err.Error(), coupon.Generation)
 				_ = r.Status().Update(ctx, &coupon)
 				return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
@@ -99,19 +96,87 @@ func (r *InvoraBillingCouponReconciler) Reconcile(ctx context.Context, req ctrl.
 	}
 
 	logger.Info("creating coupon", "code", coupon.Spec.Code)
-	created, err := orc.billingClient.CreateCoupon(ctx, apiCoupon)
+	created, err := svc.Create(grpcCtx, &couponspb.CreateRequest{
+		Input: buildCreateCouponInput(&coupon),
+	})
 	if err != nil {
 		SetCondition(&coupon.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "CreateFailed", err.Error(), coupon.Generation)
 		_ = r.Status().Update(ctx, &coupon)
 		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 	}
-	coupon.Status.ExternalID = created.ID
-	coupon.Status.ID = created.ID
+	coupon.Status.ExternalID = created.GetCoupon().GetId()
+	coupon.Status.ID = created.GetCoupon().GetId()
 	setSuccessStatus(&coupon.Status.Conditions, &coupon.Status.LastSyncedAt, &coupon.Status.ObservedGeneration, coupon.Generation, "Created")
 	if err := r.Status().Update(ctx, &coupon); err != nil {
 		return ctrl.Result{}, fmt.Errorf("updating status: %w", err)
 	}
 	return SuccessResult(&coupon), nil
+}
+
+func buildCreateCouponInput(coupon *billingv1alpha1.InvoraBillingCoupon) *couponspb.CreateCouponInput {
+	in := &couponspb.CreateCouponInput{
+		Name:       coupon.Spec.Name,
+		CouponType: convert.CouponType(coupon.Spec.CouponType),
+		Frequency:  convert.CouponFrequency(coupon.Spec.Frequency),
+		Expiration: convert.CouponExpiration(coupon.Spec.Expiration),
+	}
+	if coupon.Spec.Code != "" {
+		in.Code = &coupon.Spec.Code
+	}
+	if coupon.Spec.AmountCents != nil {
+		in.AmountCents = coupon.Spec.AmountCents
+	}
+	if coupon.Spec.AmountCurrency != nil {
+		cur := convert.Currency(*coupon.Spec.AmountCurrency)
+		in.AmountCurrency = &cur
+	}
+	if rate, ok := convert.PercentageRate(ptrStr(coupon.Spec.PercentageRate)); ok {
+		in.PercentageRate = &rate
+	}
+	if ts := convert.Timestamp(ptrStr(coupon.Spec.ExpirationAt)); ts != nil {
+		in.ExpirationAt = ts
+	}
+	if coupon.Spec.Reusable {
+		reusable := true
+		in.Reusable = &reusable
+	}
+	return in
+}
+
+func buildUpdateCouponInput(coupon *billingv1alpha1.InvoraBillingCoupon) *couponspb.UpdateCouponInput {
+	in := &couponspb.UpdateCouponInput{
+		Id:         coupon.Status.ExternalID,
+		Name:       coupon.Spec.Name,
+		CouponType: convert.CouponType(coupon.Spec.CouponType),
+		Frequency:  convert.CouponFrequency(coupon.Spec.Frequency),
+		Expiration: convert.CouponExpiration(coupon.Spec.Expiration),
+	}
+	if coupon.Spec.Code != "" {
+		in.Code = &coupon.Spec.Code
+	}
+	if coupon.Spec.AmountCents != nil {
+		in.AmountCents = coupon.Spec.AmountCents
+	}
+	if coupon.Spec.AmountCurrency != nil {
+		cur := convert.Currency(*coupon.Spec.AmountCurrency)
+		in.AmountCurrency = &cur
+	}
+	if rate, ok := convert.PercentageRate(ptrStr(coupon.Spec.PercentageRate)); ok {
+		in.PercentageRate = &rate
+	}
+	if ts := convert.Timestamp(ptrStr(coupon.Spec.ExpirationAt)); ts != nil {
+		in.ExpirationAt = ts
+	}
+	reusable := coupon.Spec.Reusable
+	in.Reusable = &reusable
+	return in
+}
+
+func ptrStr(s *string) string {
+	if s == nil {
+		return ""
+	}
+	return *s
 }
 
 func (r *InvoraBillingCouponReconciler) SetupWithManager(mgr ctrl.Manager) error {

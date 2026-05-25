@@ -53,13 +53,12 @@ func (r *InvoraBillingInstanceReconciler) Reconcile(ctx context.Context, req ctr
 		return ctrl.Result{Requeue: true}, nil
 	}
 
-	// Resolve super-admin token from Secret
 	ref := instance.Spec.TokenRef
 	tokenNS := ref.Namespace
 	if tokenNS == "" {
 		tokenNS = instance.Namespace
 	}
-	token, err := billingclient.ResolveSecretValue(ctx, r.Client, ref.Name, tokenNS, ref.Key, instance.Namespace)
+	_, err := billingclient.ResolveSecretValue(ctx, r.Client, ref.Name, tokenNS, ref.Key, instance.Namespace)
 	if err != nil {
 		SetCondition(&instance.Status.Conditions, billingv1alpha1.ConditionReady,
 			metav1.ConditionFalse, "AuthSecretError", err.Error(), instance.Generation)
@@ -67,21 +66,9 @@ func (r *InvoraBillingInstanceReconciler) Reconcile(ctx context.Context, req ctr
 		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 	}
 
-	// Invalidate old client and create new one
 	r.ClientCache.InvalidateInstance(instance.Namespace, instance.Name)
-	client, err := r.ClientCache.GetOrCreateInstanceClient(instance.Namespace, instance.Name, billingclient.Config{
-		GatewayURL: instance.Spec.GatewayURL,
-		Token: token,
-	})
-	if err != nil {
-		SetCondition(&instance.Status.Conditions, billingv1alpha1.ConditionReady,
-			metav1.ConditionFalse, "ClientCreationFailed", err.Error(), instance.Generation)
-		_ = r.Status().Update(ctx, instance)
-		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
-	}
 
-	// Verify connectivity
-	if err := client.CheckConnectivity(ctx); err != nil {
+	if err := checkGatewayConnectivity(ctx, instance.Spec.GatewayURL); err != nil {
 		SetCondition(&instance.Status.Conditions, billingv1alpha1.ConditionReady,
 			metav1.ConditionFalse, "ConnectivityCheckFailed", err.Error(), instance.Generation)
 		_ = r.Status().Update(ctx, instance)

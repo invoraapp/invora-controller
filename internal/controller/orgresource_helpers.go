@@ -23,11 +23,18 @@ import (
 
 // orgResourceContext holds the resolved dependencies for an org-scoped resource.
 type orgResourceContext struct {
-	billingClient *billingclient.Client
-	org           *billingv1alpha1.InvoraBillingOrganization
-	conn          *grpc.ClientConn
-	token         string
-	orgID         string
+	org   *billingv1alpha1.InvoraBillingOrganization
+	conn  *grpc.ClientConn
+	token string
+	orgID string
+}
+
+// instanceAdminContext holds super-admin gateway access for billing instance operations.
+type instanceAdminContext struct {
+	instance *billingv1alpha1.InvoraBillingInstance
+	admin    *billingclient.AdminClient
+	conn     *grpc.ClientConn
+	token    string
 }
 
 // GrpcCtx returns a context with auth metadata for gRPC calls.
@@ -41,6 +48,14 @@ func (o *orgResourceContext) GrpcCtx(ctx context.Context) context.Context {
 
 // Conn returns the gRPC connection to the gateway.
 func (o *orgResourceContext) Conn() *grpc.ClientConn { return o.conn }
+
+// GrpcCtx returns a context with super-admin auth metadata for gRPC calls.
+func (i *instanceAdminContext) GrpcCtx(ctx context.Context) context.Context {
+	return metadata.AppendToOutgoingContext(ctx, "authorization", "Bearer "+i.token)
+}
+
+// Conn returns the gRPC connection to the gateway.
+func (i *instanceAdminContext) Conn() *grpc.ClientConn { return i.conn }
 
 // dialGateway creates a gRPC connection to the given gateway URL.
 func dialGateway(url string) (*grpc.ClientConn, error) {
@@ -64,7 +79,7 @@ func (r *BaseReconciler) resolveOrgDependencies(
 ) (*orgResourceContext, *ctrl.Result) {
 	logger := log.FromContext(ctx)
 
-	client, org, err := r.ResolveOrganization(ctx, orgRef, obj.GetNamespace())
+	org, err := r.getReadyBillingOrganization(ctx, orgRef, obj.GetNamespace())
 	if err != nil {
 		logger.Error(err, "failed to resolve organizationRef")
 		SetCondition(conditions, billingv1alpha1.ConditionDependencyReady,
@@ -77,7 +92,6 @@ func (r *BaseReconciler) resolveOrgDependencies(
 	SetCondition(conditions, billingv1alpha1.ConditionDependencyReady,
 		metav1.ConditionTrue, "DependenciesReady", "All referenced resources are available", generation)
 
-	// Resolve the org's API key for gRPC auth
 	secretRef := org.Spec.WriteSecretToRef
 	secretNS := secretRef.Namespace
 	if secretNS == "" {
@@ -85,7 +99,6 @@ func (r *BaseReconciler) resolveOrgDependencies(
 	}
 	apiKey, _ := billingclient.ResolveSecretValue(ctx, r.Client, secretRef.Name, secretNS, "apiKey", org.Namespace)
 
-	// Resolve gRPC conn from the org's parent instance
 	instance := &billingv1alpha1.InvoraBillingInstance{}
 	instRef := org.Spec.InstanceRef
 	instNS := instRef.Namespace
@@ -96,58 +109,12 @@ func (r *BaseReconciler) resolveOrgDependencies(
 		conn, dialErr := dialGateway(instance.Spec.GatewayURL)
 		if dialErr == nil {
 			return &orgResourceContext{
-				billingClient: client, org: org,
-				conn: conn, token: apiKey, orgID: string(org.Status.OrganizationID),
+				org: org, conn: conn, token: apiKey, orgID: string(org.Status.OrganizationID),
 			}, nil
 		}
 	}
 
-	return &orgResourceContext{billingClient: client, org: org, token: apiKey, orgID: string(org.Status.OrganizationID)}, nil
-}
-
-// handleCodeBasedDeletion handles deletion for resources identified by code.
-func (r *BaseReconciler) handleCodeBasedDeletion(
-	ctx context.Context,
-	obj client.Object,
-	orgRef billingv1alpha1.ResourceRef,
-	deletionPolicy billingv1alpha1.DeletionPolicy,
-	resourceID string,
-	conditions *[]metav1.Condition,
-	generation int64,
-	deleteFn func(ctx context.Context, client *billingclient.Client) error,
-) (ctrl.Result, error) {
-	logger := log.FromContext(ctx)
-
-	switch deletionPolicy {
-	case billingv1alpha1.DeletionPolicyOrphan:
-		logger.Info("orphaning resource (deletionPolicy=Orphan)")
-
-	case billingv1alpha1.DeletionPolicyDelete, "":
-		if resourceID != "" {
-			client, _, err := r.ResolveOrganization(ctx, orgRef, obj.GetNamespace())
-			if err != nil {
-				logger.Error(err, "cannot resolve org for deletion, will retry")
-				SetCondition(conditions, billingv1alpha1.ConditionDeletionBlocked,
-					metav1.ConditionTrue, "OrganizationUnavailable", err.Error(), generation)
-				_ = r.Status().Update(ctx, obj)
-				return ctrl.Result{RequeueAfter: 15 * time.Second}, nil
-			}
-
-			if err := deleteFn(ctx, client); err != nil {
-				if !billingclient.IsNotFound(err) {
-					SetCondition(conditions, billingv1alpha1.ConditionDeletionBlocked,
-						metav1.ConditionTrue, "DeleteFailed", err.Error(), generation)
-					_ = r.Status().Update(ctx, obj)
-					return ctrl.Result{RequeueAfter: 15 * time.Second}, nil
-				}
-			}
-		}
-	}
-
-	if err := r.RemoveFinalizer(ctx, obj); err != nil {
-		return ctrl.Result{}, fmt.Errorf("removing finalizer: %w", err)
-	}
-	return ctrl.Result{}, nil
+	return &orgResourceContext{org: org, token: apiKey, orgID: string(org.Status.OrganizationID)}, nil
 }
 
 // handleGrpcDeletion handles deletion for resources using gRPC clients.

@@ -11,7 +11,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
-	"github.com/invoraapp/invora-controller/internal/billingclient"
+	entitlementspb "github.com/invoraapp/invora-controller/gen/invora/billing/entitlements/v2"
+	"github.com/invoraapp/invora-controller/internal/convert"
 )
 
 type InvoraBillingFeatureReconciler struct{ BaseReconciler }
@@ -29,11 +30,15 @@ func (r *InvoraBillingFeatureReconciler) Reconcile(ctx context.Context, req ctrl
 	}
 
 	if !feature.DeletionTimestamp.IsZero() {
-		return r.handleCodeBasedDeletion(ctx, &feature,
+		return r.handleGrpcDeletion(ctx, &feature,
 			feature.Spec.OrganizationRef, feature.Spec.DeletionPolicy,
 			feature.Status.ExternalID, &feature.Status.Conditions, feature.Generation,
-			func(ctx context.Context, c *billingclient.Client) error {
-				return c.DeleteFeature(ctx, feature.Spec.Code)
+			func(ctx context.Context, orc *orgResourceContext) error {
+				svc := entitlementspb.NewFeatureServiceClient(orc.Conn())
+				_, err := svc.Delete(orc.GrpcCtx(ctx), &entitlementspb.DeleteRequest{
+					Input: &entitlementspb.DestroyFeatureInput{Id: feature.Status.ExternalID},
+				})
+				return err
 			})
 	}
 
@@ -61,17 +66,14 @@ func (r *InvoraBillingFeatureReconciler) Reconcile(ctx context.Context, req ctrl
 		return SuccessResult(&feature), nil
 	}
 
-	apiFeature := billingclient.Feature{
-		Code:        feature.Spec.Code,
-		Name:        feature.Spec.Name,
-		Description: feature.Spec.Description,
-		Metadata:    feature.Spec.Metadata,
-	}
+	svc := entitlementspb.NewFeatureServiceClient(orc.Conn())
+	grpcCtx := orc.GrpcCtx(ctx)
 
 	if feature.Status.ExternalID != "" {
-		remote, err := orc.billingClient.GetFeature(ctx, feature.Spec.Code)
+		featureID := feature.Status.ExternalID
+		_, err := svc.Get(grpcCtx, &entitlementspb.GetRequest{Id: &featureID})
 		if err != nil {
-			if billingclient.IsNotFound(err) {
+			if isGrpcNotFound(err) {
 				feature.Status.ExternalID = ""
 			} else {
 				SetCondition(&feature.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "GetFailed", err.Error(), feature.Generation)
@@ -80,12 +82,13 @@ func (r *InvoraBillingFeatureReconciler) Reconcile(ctx context.Context, req ctrl
 			}
 		}
 		if feature.Status.ExternalID != "" {
-			if remote.Name != feature.Spec.Name || remote.Description != feature.Spec.Description || !mapsEqual(remote.Metadata, feature.Spec.Metadata) {
-				if _, err := orc.billingClient.UpdateFeature(ctx, feature.Spec.Code, apiFeature); err != nil {
-					SetCondition(&feature.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "UpdateFailed", err.Error(), feature.Generation)
-					_ = r.Status().Update(ctx, &feature)
-					return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
-				}
+			_, err := svc.Update(grpcCtx, &entitlementspb.UpdateRequest{
+				Input: buildUpdateFeatureInput(&feature),
+			})
+			if err != nil {
+				SetCondition(&feature.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "UpdateFailed", err.Error(), feature.Generation)
+				_ = r.Status().Update(ctx, &feature)
+				return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 			}
 			setSuccessStatus(&feature.Status.Conditions, &feature.Status.LastSyncedAt, &feature.Status.ObservedGeneration, feature.Generation, "InSync")
 			_ = r.Status().Update(ctx, &feature)
@@ -94,19 +97,49 @@ func (r *InvoraBillingFeatureReconciler) Reconcile(ctx context.Context, req ctrl
 	}
 
 	logger.Info("creating feature", "code", feature.Spec.Code)
-	created, err := orc.billingClient.CreateFeature(ctx, apiFeature)
+	created, err := svc.Create(grpcCtx, &entitlementspb.CreateRequest{
+		Input: buildCreateFeatureInput(&feature),
+	})
 	if err != nil {
 		SetCondition(&feature.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "CreateFailed", err.Error(), feature.Generation)
 		_ = r.Status().Update(ctx, &feature)
 		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 	}
-	feature.Status.ExternalID = created.ID
-	feature.Status.ID = created.ID
+	feature.Status.ExternalID = created.GetFeatureObject().GetId()
+	feature.Status.ID = created.GetFeatureObject().GetId()
 	setSuccessStatus(&feature.Status.Conditions, &feature.Status.LastSyncedAt, &feature.Status.ObservedGeneration, feature.Generation, "Created")
 	if err := r.Status().Update(ctx, &feature); err != nil {
 		return ctrl.Result{}, fmt.Errorf("updating status: %w", err)
 	}
 	return SuccessResult(&feature), nil
+}
+
+func buildCreateFeatureInput(feature *billingv1alpha1.InvoraBillingFeature) *entitlementspb.CreateFeatureInput {
+	in := &entitlementspb.CreateFeatureInput{
+		Code:     feature.Spec.Code,
+		Metadata: convert.MetadataInputs(feature.Spec.Metadata),
+	}
+	if feature.Spec.Name != "" {
+		in.Name = &feature.Spec.Name
+	}
+	if feature.Spec.Description != "" {
+		in.Description = &feature.Spec.Description
+	}
+	return in
+}
+
+func buildUpdateFeatureInput(feature *billingv1alpha1.InvoraBillingFeature) *entitlementspb.UpdateFeatureInput {
+	in := &entitlementspb.UpdateFeatureInput{
+		Id:       feature.Status.ExternalID,
+		Metadata: convert.MetadataInputs(feature.Spec.Metadata),
+	}
+	if feature.Spec.Name != "" {
+		in.Name = &feature.Spec.Name
+	}
+	if feature.Spec.Description != "" {
+		in.Description = &feature.Spec.Description
+	}
+	return in
 }
 
 func (r *InvoraBillingFeatureReconciler) SetupWithManager(mgr ctrl.Manager) error {
