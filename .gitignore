@@ -31,3 +31,7 @@ vendor/
 # Helm
 charts/*/charts/
 charts/**/tmpcharts/
+
+# Release tooling
+node_modules/
+dist/

@@ -204,17 +204,44 @@ zitadelSubscriber:
 
 ## Release & Deployment
 
-### Tag → GitHub Actions → artifacts
+### Conventional commits → semantic-release
 
-Push a semver tag (`v0.1.0`) to trigger [`.github/workflows/release.yaml`](.github/workflows/release.yaml). The pipeline:
+Releases are **fully automated** from [Conventional Commits](https://www.conventionalcommits.org/) on `main`. Do **not** push manual `v*` tags.
 
-1. Runs tests and Helm lint
-2. Builds and pushes a **multi-arch** image (`linux/amd64`, `linux/arm64`) to GHCR
-3. Syncs CRDs from `config/crd/bases/` into the Helm chart, packages the chart, and pushes it to **GHCR OCI**
-4. Creates a **GitHub Release** with:
-   - `invora-controller-<version>.tgz` — Helm chart (also on OCI)
-   - `invora-controller-crds-<version>.yaml` — single-file CRD bundle for `kubectl apply -f`
-   - `invora-controller-crds-<version>.tar.gz` — per-CRD tarball
+| Commit prefix | Version bump |
+|---------------|--------------|
+| `fix:` | patch (0.0.x) |
+| `feat:` | minor (0.x.0) |
+| `BREAKING CHANGE:` in footer or `feat!:` / `fix!:` | major (x.0.0) |
+| `chore:`, `docs:`, `ci:`, `refactor:`, `test:` | no release |
+
+Examples:
+
+```text
+feat(billing): add InvoraBillingWallet CRD
+fix(reconcile): retry on gateway 503
+feat!: drop deprecated v1alpha1 API
+
+BREAKING CHANGE: remove InvoraBillingEntity CRD
+```
+
+Flow:
+
+1. Merge conventional commits to `main` → **CI** runs (build, test, lint, verify-codegen, Helm lint)
+2. On CI success → **Release** workflow runs [semantic-release](https://semantic-release.gitbook.io/) (Node.js + `@semantic-release/exec`)
+3. If commits warrant a release, semantic-release:
+   - Bumps `package.json` / `Chart.yaml` version
+   - Writes `CHANGELOG.md`
+   - Creates git tag `vX.Y.Z` and **GitHub Release** with assets
+   - Pushes multi-arch image to GHCR (`ghcr.io/invoraapp/invora-controller:X.Y.Z`)
+   - Pushes OCI Helm chart to GHCR
+4. Release commit uses `[skip ci]` to avoid loops
+
+Published artifacts per release:
+
+- `invora-controller-<version>.tgz` — Helm chart (also on OCI)
+- `invora-controller-crds-<version>.yaml` — single-file CRD bundle for `kubectl apply -f`
+- `invora-controller-crds-<version>.tar.gz` — per-CRD tarball
 
 ```bash
 # Install CRDs from a release
@@ -226,7 +253,7 @@ helm install invora-controller oci://ghcr.io/invoraapp/invora-controller/charts/
   --namespace invora-controller --create-namespace
 ```
 
-Chart `version` and `appVersion` are both set to the semver tag (without `v`). The packaged chart defaults `image.repository` to GHCR and `image.tag` to the release version.
+Chart `version` and `appVersion` are both set to the release semver (without `v`). The packaged chart defaults `image.repository` to GHCR and `image.tag` to the release version.
 
 ### Config Sync consumer pattern (invora/devops)
 
@@ -242,9 +269,9 @@ GKE Config Sync reconciles from Git — it does **not** fetch GitHub Release ass
 
 Optional upgrade path: deploy the operator via a Config Sync **Helm RootSync** (`sourceType: helm`, `includeCRDs: true`) pointing at `oci://ghcr.io/invoraapp/invora-controller/charts/invora-controller` with an exact chart version. Keep tenant CR manifests in Git either way.
 
-Suggested bump flow when cutting `vX.Y.Z`:
+Suggested bump flow when semantic-release publishes `vX.Y.Z`:
 
-1. Tag and push in `invora-controller` — CI publishes GHCR image, OCI chart, and CRD release assets
+1. semantic-release on `main` publishes GHCR image `ghcr.io/invoraapp/invora-controller:X.Y.Z`, OCI chart, and CRD release assets
 2. In `invora/devops`, update `config-sync/invora-controller/crds.yaml` from the release bundle and pin `deployment.yaml` image to `ghcr.io/invoraapp/invora-controller:X.Y.Z`
 3. Merge devops → Config Sync reconciles
 
