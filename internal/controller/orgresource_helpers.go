@@ -5,7 +5,12 @@ import (
 	"fmt"
 	"time"
 
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/metadata"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
@@ -17,7 +22,33 @@ import (
 // orgResourceContext holds the resolved dependencies for an org-scoped resource.
 type orgResourceContext struct {
 	billingClient *billingclient.Client
-	org        *billingv1alpha1.InvoraBillingOrganization
+	org           *billingv1alpha1.InvoraBillingOrganization
+	conn          *grpc.ClientConn
+	token         string
+	orgID         string
+}
+
+// GrpcCtx returns a context with auth metadata for gRPC calls.
+func (o *orgResourceContext) GrpcCtx(ctx context.Context) context.Context {
+	pairs := []string{"authorization", "Bearer " + o.token}
+	if o.orgID != "" {
+		pairs = append(pairs, "x-invora-org-id", o.orgID)
+	}
+	return metadata.AppendToOutgoingContext(ctx, pairs...)
+}
+
+// Conn returns the gRPC connection to the gateway.
+func (o *orgResourceContext) Conn() *grpc.ClientConn { return o.conn }
+
+// dialGateway creates a gRPC connection to the given gateway URL.
+func dialGateway(url string) (*grpc.ClientConn, error) {
+	var cred grpc.DialOption
+	if len(url) >= 5 && url[:5] == "https" {
+		cred = grpc.WithTransportCredentials(credentials.NewClientTLSFromCert(nil, ""))
+	} else {
+		cred = grpc.WithTransportCredentials(insecure.NewCredentials())
+	}
+	return grpc.NewClient(url, cred)
 }
 
 // resolveOrgDependencies resolves the organization reference and sets
@@ -43,6 +74,23 @@ func (r *BaseReconciler) resolveOrgDependencies(
 
 	SetCondition(conditions, billingv1alpha1.ConditionDependencyReady,
 		metav1.ConditionTrue, "DependenciesReady", "All referenced resources are available", generation)
+
+	// Resolve gRPC conn from the org's parent instance
+	instance := &billingv1alpha1.InvoraBillingInstance{}
+	instRef := org.Spec.InstanceRef
+	instNS := instRef.Namespace
+	if instNS == "" {
+		instNS = obj.GetNamespace()
+	}
+	if err := r.Get(ctx, types.NamespacedName{Namespace: instNS, Name: instRef.Name}, instance); err == nil {
+		conn, dialErr := dialGateway(instance.Spec.GatewayURL)
+		if dialErr == nil {
+			return &orgResourceContext{
+				billingClient: client, org: org,
+				conn: conn, token: "", orgID: string(org.Status.OrganizationID),
+			}, nil
+		}
+	}
 
 	return &orgResourceContext{billingClient: client, org: org}, nil
 }
