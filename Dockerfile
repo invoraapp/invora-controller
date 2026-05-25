@@ -6,9 +6,10 @@ WORKDIR /workspace
 COPY go.mod go.sum ./
 RUN go mod download
 
-# Build
+# Build (TARGETARCH is set by docker buildx for multi-platform builds)
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o manager ./cmd/main.go
+ARG TARGETARCH
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -a -o manager ./cmd/main.go
 
 FROM gcr.io/distroless/static-debian12:nonroot
 WORKDIR /
