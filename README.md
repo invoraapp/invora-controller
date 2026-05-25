@@ -34,10 +34,10 @@ helm install invora-controller oci://ghcr.io/invoraapp/invora-controller/charts/
 ### Define Your Billing
 
 ```yaml
-apiVersion: billing.invora.app/v1alpha1
-kind: InvoraBillingInstance
+apiVersion: core.invora.app/v1alpha1
+kind: InvoraInstance
 metadata:
-  name: my-billing
+  name: my-invora
   namespace: billing
 spec:
   gatewayUrl: "https://gateway.invora.app"
@@ -52,7 +52,7 @@ metadata:
   namespace: billing
 spec:
   instanceRef:
-    name: my-billing
+    name: my-invora
   name: "My Company"
   email: "billing@mycompany.com"
   currency: "USD"
@@ -96,9 +96,18 @@ spec:
 
 ## CRD Types
 
+### core.invora.app/v1alpha1
+
 | Kind | Short | Description |
 |------|-------|-------------|
-| `InvoraBillingInstance` | — | Connection to an Invora gateway |
+| `InvoraInstance` | `iinst` | Universal gateway connection (shared by all groups) |
+| `InvoraBranch` | `ibranch` | Branch with regulation config, party info, DBA |
+| `InvoraConnectedBusiness` | `icb` | Downstream tenant business |
+
+### billing.invora.app/v1alpha1
+
+| Kind | Short | Description |
+|------|-------|-------------|
 | `InvoraBillingOrganization` | — | Billing tenant/organization |
 | `InvoraBillingPlan` | — | Subscription plan definition |
 | `InvoraBillingCustomer` | — | Billing customer |
@@ -109,13 +118,19 @@ spec:
 | `InvoraBillingFeature` | — | Plan entitlement feature |
 | `InvoraBillingMetric` | — | Usage-based billable metric |
 | `InvoraBillingWebhookEndpoint` | — | Webhook delivery endpoint |
-| `InvoraBillingEntity` | — | Legal billing entity |
 | `InvoraBillingWallet` | `iwallet` | Prepaid credit wallet |
 | `InvoraBillingTapProvider` | `ltap` | Tap Payments provider |
 | `InvoraBillingStripeProvider` | `istripe` | Stripe provider |
 | `InvoraBillingAdyenProvider` | `iadyen` | Adyen provider |
 | `InvoraBillingGoCardlessProvider` | `igc` | GoCardless provider |
 | `InvoraBillingPaymentProvider` | `ipay` | Generic payment provider |
+
+### invoicing.invora.app/v1alpha1
+
+| Kind | Short | Description |
+|------|-------|-------------|
+| `InvoraInvoicingRegulation` | `ireg` | Per-branch regulation enrollment (ZATCA, Peppol, ETA) |
+| `InvoraInvoicingSettings` | `iset` | Tenant-level invoicing configuration |
 
 ## Architecture
 
