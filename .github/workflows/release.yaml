@@ -4,19 +4,61 @@ on:
   push:
     tags: ["v*"]
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
   packages: write
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE: ghcr.io/${{ github.repository }}
+  CHART_OCI: oci://ghcr.io/${{ github.repository }}/charts
 
 jobs:
-  docker:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Test
+        run: go test ./... -race
+
+      - uses: azure/setup-helm@v4
+
+      - name: Lint Helm chart
+        run: helm lint charts/invora-controller
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve release version
+        id: version
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "semver=${VERSION}" >> "${GITHUB_OUTPUT}"
+          echo "Release version: ${VERSION}"
+
+      - name: Sync CRDs into Helm chart
+        run: |
+          rsync -a --delete config/crd/bases/ charts/invora-controller/crds/
+
+      - name: Bundle CRD release artifacts
+        run: |
+          VERSION="${{ steps.version.outputs.semver }}"
+          mkdir -p dist
+          tar -czf "dist/invora-controller-crds-${VERSION}.tar.gz" -C config/crd/bases .
+          cat config/crd/bases/*.yaml > "dist/invora-controller-crds-${VERSION}.yaml"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -28,58 +70,51 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata
+      - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.IMAGE }}
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
-            type=sha
+            type=semver,pattern={{major}}
+            type=raw,value=latest
 
-      - name: Build and push
+      - name: Build and push multi-arch image
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          platforms: linux/amd64,linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          platforms: linux/amd64,linux/arm64
 
-  helm:
-    runs-on: ubuntu-latest
-    needs: docker
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
+      - uses: azure/setup-helm@v4
 
-      - name: Package Helm chart
+      - name: Log in to GHCR for Helm OCI
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ${{ env.REGISTRY }} --username "${{ github.actor }}" --password-stdin
+
+      - name: Package and push Helm chart
         run: |
-          VERSION=${GITHUB_REF_NAME#v}
-          sed -i "s/^version:.*/version: $VERSION/" charts/invora-billing-controller/Chart.yaml
-          sed -i "s/^appVersion:.*/appVersion: \"$VERSION\"/" charts/invora-billing-controller/Chart.yaml
-          helm package charts/invora-billing-controller
+          VERSION="${{ steps.version.outputs.semver }}"
+          CHART_DIR="charts/invora-controller"
 
-      - name: Upload Helm chart as release asset
-        uses: softprops/action-gh-release@v2
-        with:
-          files: invora-billing-controller-*.tgz
+          sed -i "s/^version:.*/version: ${VERSION}/" "${CHART_DIR}/Chart.yaml"
+          sed -i "s/^appVersion:.*/appVersion: \"${VERSION}\"/" "${CHART_DIR}/Chart.yaml"
+          sed -i "s|^\([[:space:]]*repository:\).*|\1 ${IMAGE}|" "${CHART_DIR}/values.yaml"
+          sed -i "s|^\([[:space:]]*tag:\).*|\1 \"${VERSION}\"|" "${CHART_DIR}/values.yaml"
 
-  release-notes:
-    runs-on: ubuntu-latest
-    needs: [docker, helm]
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+          helm package "${CHART_DIR}" --destination dist
+          helm push "dist/invora-controller-${VERSION}.tgz" "${{ env.CHART_OCI }}"
 
-      - name: Generate release notes
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
+          files: |
+            dist/invora-controller-crds-*.tar.gz
+            dist/invora-controller-crds-*.yaml
+            dist/invora-controller-*.tgz

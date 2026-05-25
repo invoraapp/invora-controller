@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: europe-west1-docker.pkg.dev/inpro-invora/invora-tools/invora-billing-controller
+  repository: ghcr.io/invoraapp/invora-controller
   tag: latest
   pullPolicy: IfNotPresent
 
