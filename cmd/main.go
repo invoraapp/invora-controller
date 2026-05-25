@@ -99,6 +99,13 @@ func main() {
 		{"InvoraBillingSubscription", &controller.InvoraBillingSubscriptionReconciler{BaseReconciler: base}},
 		{"InvoraBillingWebhookEndpoint", &controller.InvoraBillingWebhookEndpointReconciler{BaseReconciler: base}},
 		{"InvoraBillingTapProvider", &controller.InvoraBillingTapProviderReconciler{BaseReconciler: base}},
+		// Core controllers
+		{"InvoraInstance", &controller.InvoraInstanceReconciler{Client: mgr.GetClient(), Scheme: mgr.GetScheme(), ClientCache: clientCache}},
+		{"InvoraBranch", &controller.InvoraBranchReconciler{Client: mgr.GetClient(), Scheme: mgr.GetScheme(), ClientCache: clientCache}},
+		{"InvoraConnectedBusiness", &controller.InvoraConnectedBusinessReconciler{Client: mgr.GetClient(), Scheme: mgr.GetScheme(), ClientCache: clientCache}},
+		// Invoicing controllers
+		{"InvoraInvoicingRegulation", &controller.InvoraInvoicingRegulationReconciler{Client: mgr.GetClient(), Scheme: mgr.GetScheme(), ClientCache: clientCache}},
+		{"InvoraInvoicingSettings", &controller.InvoraInvoicingSettingsReconciler{Client: mgr.GetClient(), Scheme: mgr.GetScheme(), ClientCache: clientCache}},
 	}
 
 	for _, c := range controllers {
