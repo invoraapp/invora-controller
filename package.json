@@ -1,7 +1,7 @@
 {
   "name": "invora-controller-release",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "semantic-release tooling for invora-controller",
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
