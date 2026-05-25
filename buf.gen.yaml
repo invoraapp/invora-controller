@@ -1,0 +1,62 @@
+version: v2
+managed:
+  enabled: true
+  override:
+    - file_option: go_package_prefix
+      value: github.com/invoraapp/invora-controller/gen
+    - file_option: go_package_prefix
+      module: buf.build/googleapis/googleapis
+      value: google.golang.org/genproto/googleapis
+    - file_option: go_package
+      path: google/protobuf/any.proto
+      value: google.golang.org/protobuf/types/known/anypb
+    - file_option: go_package
+      path: google/protobuf/timestamp.proto
+      value: google.golang.org/protobuf/types/known/timestamppb
+    - file_option: go_package
+      path: google/protobuf/duration.proto
+      value: google.golang.org/protobuf/types/known/durationpb
+    - file_option: go_package
+      path: google/protobuf/struct.proto
+      value: google.golang.org/protobuf/types/known/structpb
+    - file_option: go_package
+      path: google/protobuf/wrappers.proto
+      value: google.golang.org/protobuf/types/known/wrapperspb
+    - file_option: go_package
+      path: google/protobuf/field_mask.proto
+      value: google.golang.org/protobuf/types/known/fieldmaskpb
+    - file_option: go_package
+      path: google/protobuf/empty.proto
+      value: google.golang.org/protobuf/types/known/emptypb
+    - file_option: go_package
+      path: google/api/annotations.proto
+      value: google.golang.org/genproto/googleapis/api/annotations;annotations
+    - file_option: go_package
+      path: google/api/http.proto
+      value: google.golang.org/genproto/googleapis/api/annotations;annotations
+    - file_option: go_package
+      path: google/type/date.proto
+      value: google.golang.org/genproto/googleapis/type/date;date
+    - file_option: go_package
+      path: google/type/timeofday.proto
+      value: google.golang.org/genproto/googleapis/type/timeofday;timeofday
+    - file_option: go_package
+      path: google/type/money.proto
+      value: google.golang.org/genproto/googleapis/type/money;money
+plugins:
+  - remote: buf.build/protocolbuffers/go
+    out: gen
+    opt:
+      - paths=source_relative
+  - remote: buf.build/grpc/go
+    out: gen
+    opt:
+      - paths=source_relative
+inputs:
+  - module: buf.build/invora/invoicing
+  - module: buf.build/invora/identity
+  - module: buf.build/invora/common
+  - module: buf.build/invora/billing
+  - module: buf.build/invora/ubl-2-1
+  - module: buf.build/bdaya-dev/common
+  - module: buf.build/bdaya-dev/entity-localization
