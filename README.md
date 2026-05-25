@@ -1,6 +1,7 @@
 # Invora Controller
 
 [![CI](https://github.com/invoraapp/invora-controller/actions/workflows/ci.yaml/badge.svg)](https://github.com/invoraapp/invora-controller/actions/workflows/ci.yaml)
+[![Release](https://github.com/invoraapp/invora-controller/actions/workflows/release.yaml/badge.svg)](https://github.com/invoraapp/invora-controller/actions/workflows/release.yaml)
 
 Kubernetes operator that manages [Invora](https://invora.app) billing resources declaratively via Custom Resource Definitions (CRDs). Define your billing configuration as YAML — plans, customers, subscriptions, payment providers — and let the controller reconcile it against the Invora platform.
 
