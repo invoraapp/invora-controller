@@ -71,7 +71,20 @@ jobs:
       - name: Check for uncommitted changes
         run: |
           if [ -n "$(git status --porcelain)" ]; then
-            echo "::error::Generated files are out of date. Run 'make generate manifests' and commit."
+            echo "::error::Generated files are out of date. Run controller-gen and commit."
             git diff
             exit 1
           fi
+
+  helm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/setup-helm@v4
+
+      - name: Lint Helm chart
+        run: helm lint charts/invora-controller
+
+      - name: Render Helm chart
+        run: helm template invora-controller charts/invora-controller > /dev/null
