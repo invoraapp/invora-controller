@@ -8,14 +8,13 @@ package eventsv2
 
 import (
 	v2 "github.com/invoraapp/invora-controller/gen/invora/billing/common/v2"
-	_ "github.com/invoraapp/invora-controller/gen/kernel"
+	kernel "github.com/invoraapp/invora-controller/gen/kernel"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
 	structpb "google.golang.org/protobuf/types/known/structpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
-	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -28,64 +27,14 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Controls response detail level for List and Get operations.
-type View int32
-
-const (
-	View_VIEW_UNSPECIFIED View = 0
-	View_VIEW_BASIC       View = 1
-	View_VIEW_FULL        View = 2
-)
-
-// Enum value maps for View.
-var (
-	View_name = map[int32]string{
-		0: "VIEW_UNSPECIFIED",
-		1: "VIEW_BASIC",
-		2: "VIEW_FULL",
-	}
-	View_value = map[string]int32{
-		"VIEW_UNSPECIFIED": 0,
-		"VIEW_BASIC":       1,
-		"VIEW_FULL":        2,
-	}
-)
-
-func (x View) Enum() *View {
-	p := new(View)
-	*p = x
-	return p
-}
-
-func (x View) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (View) Descriptor() protoreflect.EnumDescriptor {
-	return file_invora_billing_events_v2_service_proto_enumTypes[0].Descriptor()
-}
-
-func (View) Type() protoreflect.EnumType {
-	return &file_invora_billing_events_v2_service_proto_enumTypes[0]
-}
-
-func (x View) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use View.Descriptor instead.
-func (View) EnumDescriptor() ([]byte, []int) {
-	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{0}
-}
-
 type GetRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Transaction ID of the event
-	TransactionId string `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
+	// Unique ID of the event (transaction_id).
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Fields to return in the response.
 	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.events.v2.View" json:"view,omitempty"`
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -120,9 +69,9 @@ func (*GetRequest) Descriptor() ([]byte, []int) {
 	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *GetRequest) GetTransactionId() string {
+func (x *GetRequest) GetId() string {
 	if x != nil {
-		return x.TransactionId
+		return x.Id
 	}
 	return ""
 }
@@ -134,11 +83,11 @@ func (x *GetRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	return nil
 }
 
-func (x *GetRequest) GetView() View {
+func (x *GetRequest) GetView() v2.View {
 	if x != nil {
 		return x.View
 	}
-	return View_VIEW_UNSPECIFIED
+	return v2.View(0)
 }
 
 type GetResponse struct {
@@ -185,15 +134,323 @@ func (x *GetResponse) GetEvent() *Event {
 	return nil
 }
 
-type ListRequest struct {
+// Structured filter for listing events.
+type ListFilter struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Part  *ListFilterPart        `protobuf:"bytes,1,opt,name=part,proto3" json:"part,omitempty"`
+	// Fuzzy text search.
+	TextSearch    string `protobuf:"bytes,2,opt,name=text_search,json=textSearch,proto3" json:"text_search,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListFilter) Reset() {
+	*x = ListFilter{}
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListFilter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListFilter) ProtoMessage() {}
+
+func (x *ListFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListFilter.ProtoReflect.Descriptor instead.
+func (*ListFilter) Descriptor() ([]byte, []int) {
+	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *ListFilter) GetPart() *ListFilterPart {
+	if x != nil {
+		return x.Part
+	}
+	return nil
+}
+
+func (x *ListFilter) GetTextSearch() string {
+	if x != nil {
+		return x.TextSearch
+	}
+	return ""
+}
+
+// A single filter condition for events.
+type ListFilterPart struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Type:
+	//
+	//	*ListFilterPart_Code
+	//	*ListFilterPart_ExternalSubscriptionId
+	//	*ListFilterPart_Timestamp
+	//	*ListFilterPart_ReceivedAt
+	Type          isListFilterPart_Type `protobuf_oneof:"type"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListFilterPart) Reset() {
+	*x = ListFilterPart{}
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListFilterPart) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListFilterPart) ProtoMessage() {}
+
+func (x *ListFilterPart) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListFilterPart.ProtoReflect.Descriptor instead.
+func (*ListFilterPart) Descriptor() ([]byte, []int) {
+	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *ListFilterPart) GetType() isListFilterPart_Type {
+	if x != nil {
+		return x.Type
+	}
+	return nil
+}
+
+func (x *ListFilterPart) GetCode() string {
+	if x != nil {
+		if x, ok := x.Type.(*ListFilterPart_Code); ok {
+			return x.Code
+		}
+	}
+	return ""
+}
+
+func (x *ListFilterPart) GetExternalSubscriptionId() string {
+	if x != nil {
+		if x, ok := x.Type.(*ListFilterPart_ExternalSubscriptionId); ok {
+			return x.ExternalSubscriptionId
+		}
+	}
+	return ""
+}
+
+func (x *ListFilterPart) GetTimestamp() *kernel.ListRequestFilterPartDate {
+	if x != nil {
+		if x, ok := x.Type.(*ListFilterPart_Timestamp); ok {
+			return x.Timestamp
+		}
+	}
+	return nil
+}
+
+func (x *ListFilterPart) GetReceivedAt() *kernel.ListRequestFilterPartDate {
+	if x != nil {
+		if x, ok := x.Type.(*ListFilterPart_ReceivedAt); ok {
+			return x.ReceivedAt
+		}
+	}
+	return nil
+}
+
+type isListFilterPart_Type interface {
+	isListFilterPart_Type()
+}
+
+type ListFilterPart_Code struct {
+	// Filter by billable metric code.
+	Code string `protobuf:"bytes,1,opt,name=code,proto3,oneof"`
+}
+
+type ListFilterPart_ExternalSubscriptionId struct {
+	// Filter by external subscription ID.
+	ExternalSubscriptionId string `protobuf:"bytes,2,opt,name=external_subscription_id,json=externalSubscriptionId,proto3,oneof"`
+}
+
+type ListFilterPart_Timestamp struct {
+	// Filter by event timestamp range.
+	Timestamp *kernel.ListRequestFilterPartDate `protobuf:"bytes,3,opt,name=timestamp,proto3,oneof"`
+}
+
+type ListFilterPart_ReceivedAt struct {
+	// Filter by received-at date range.
+	ReceivedAt *kernel.ListRequestFilterPartDate `protobuf:"bytes,4,opt,name=received_at,json=receivedAt,proto3,oneof"`
+}
+
+func (*ListFilterPart_Code) isListFilterPart_Type() {}
+
+func (*ListFilterPart_ExternalSubscriptionId) isListFilterPart_Type() {}
+
+func (*ListFilterPart_Timestamp) isListFilterPart_Type() {}
+
+func (*ListFilterPart_ReceivedAt) isListFilterPart_Type() {}
+
+// Sort configuration for event lists.
+type ListSort struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	Rules         []*ListSortRule        `protobuf:"bytes,1,rep,name=rules,proto3" json:"rules,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSort) Reset() {
+	*x = ListSort{}
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSort) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSort) ProtoMessage() {}
+
+func (x *ListSort) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSort.ProtoReflect.Descriptor instead.
+func (*ListSort) Descriptor() ([]byte, []int) {
+	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ListSort) GetRules() []*ListSortRule {
+	if x != nil {
+		return x.Rules
+	}
+	return nil
+}
+
+// A single sort rule for events.
+type ListSortRule struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Type:
+	//
+	//	*ListSortRule_Timestamp
+	//	*ListSortRule_ReceivedAt
+	Type          isListSortRule_Type `protobuf_oneof:"type"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSortRule) Reset() {
+	*x = ListSortRule{}
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSortRule) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSortRule) ProtoMessage() {}
+
+func (x *ListSortRule) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSortRule.ProtoReflect.Descriptor instead.
+func (*ListSortRule) Descriptor() ([]byte, []int) {
+	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ListSortRule) GetType() isListSortRule_Type {
+	if x != nil {
+		return x.Type
+	}
+	return nil
+}
+
+func (x *ListSortRule) GetTimestamp() kernel.SortDirection {
+	if x != nil {
+		if x, ok := x.Type.(*ListSortRule_Timestamp); ok {
+			return x.Timestamp
+		}
+	}
+	return kernel.SortDirection(0)
+}
+
+func (x *ListSortRule) GetReceivedAt() kernel.SortDirection {
+	if x != nil {
+		if x, ok := x.Type.(*ListSortRule_ReceivedAt); ok {
+			return x.ReceivedAt
+		}
+	}
+	return kernel.SortDirection(0)
+}
+
+type isListSortRule_Type interface {
+	isListSortRule_Type()
+}
+
+type ListSortRule_Timestamp struct {
+	Timestamp kernel.SortDirection `protobuf:"varint,1,opt,name=timestamp,proto3,enum=kernel.SortDirection,oneof"`
+}
+
+type ListSortRule_ReceivedAt struct {
+	ReceivedAt kernel.SortDirection `protobuf:"varint,2,opt,name=received_at,json=receivedAt,proto3,enum=kernel.SortDirection,oneof"`
+}
+
+func (*ListSortRule_Timestamp) isListSortRule_Type() {}
+
+func (*ListSortRule_ReceivedAt) isListSortRule_Type() {}
+
+type ListRequest struct {
+	state      protoimpl.MessageState `protogen:"open.v1"`
+	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
+	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
+	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// Fields to return in the response.
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	// Response detail level.
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListRequest) Reset() {
 	*x = ListRequest{}
-	mi := &file_invora_billing_events_v2_service_proto_msgTypes[2]
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -205,7 +462,7 @@ func (x *ListRequest) String() string {
 func (*ListRequest) ProtoMessage() {}
 
 func (x *ListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_events_v2_service_proto_msgTypes[2]
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -218,21 +475,56 @@ func (x *ListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRequest.ProtoReflect.Descriptor instead.
 func (*ListRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{2}
+	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ListRequest) GetFilter() *ListFilter {
+	if x != nil {
+		return x.Filter
+	}
+	return nil
+}
+
+func (x *ListRequest) GetSort() *ListSort {
+	if x != nil {
+		return x.Sort
+	}
+	return nil
+}
+
+func (x *ListRequest) GetPagination() *kernel.PaginationInfo {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *ListRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
+	}
+	return nil
+}
+
+func (x *ListRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
 }
 
 type ListResponse struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Items          []*Event                `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Items          []*Event               `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
 func (x *ListResponse) Reset() {
 	*x = ListResponse{}
-	mi := &file_invora_billing_events_v2_service_proto_msgTypes[3]
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -244,7 +536,7 @@ func (x *ListResponse) String() string {
 func (*ListResponse) ProtoMessage() {}
 
 func (x *ListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_events_v2_service_proto_msgTypes[3]
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -257,7 +549,7 @@ func (x *ListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListResponse.ProtoReflect.Descriptor instead.
 func (*ListResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{3}
+	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ListResponse) GetItems() []*Event {
@@ -274,23 +566,32 @@ func (x *ListResponse) GetTotalCount() uint64 {
 	return 0
 }
 
-func (x *ListResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
+func (x *ListResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
 	}
-	return nil
+	return ""
 }
 
 type CreateRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Event         *UsageEventInput       `protobuf:"bytes,1,opt,name=event,proto3" json:"event,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Client-defined unique transaction ID for idempotency.
+	TransactionId string `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
+	// External ID of the subscription this event applies to.
+	ExternalSubscriptionId string `protobuf:"bytes,2,opt,name=external_subscription_id,json=externalSubscriptionId,proto3" json:"external_subscription_id,omitempty"`
+	// Billable metric code to match.
+	Code string `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
+	// Event properties (dimensions for metric aggregation).
+	Properties *structpb.Struct `protobuf:"bytes,4,opt,name=properties,proto3" json:"properties,omitempty"`
+	// Event timestamp; defaults to server receipt time if omitted.
+	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=timestamp,proto3,oneof" json:"timestamp,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateRequest) Reset() {
 	*x = CreateRequest{}
-	mi := &file_invora_billing_events_v2_service_proto_msgTypes[4]
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -302,7 +603,7 @@ func (x *CreateRequest) String() string {
 func (*CreateRequest) ProtoMessage() {}
 
 func (x *CreateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_events_v2_service_proto_msgTypes[4]
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -315,12 +616,40 @@ func (x *CreateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateRequest.ProtoReflect.Descriptor instead.
 func (*CreateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{4}
+	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *CreateRequest) GetEvent() *UsageEventInput {
+func (x *CreateRequest) GetTransactionId() string {
 	if x != nil {
-		return x.Event
+		return x.TransactionId
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetExternalSubscriptionId() string {
+	if x != nil {
+		return x.ExternalSubscriptionId
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetProperties() *structpb.Struct {
+	if x != nil {
+		return x.Properties
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetTimestamp() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Timestamp
 	}
 	return nil
 }
@@ -333,7 +662,7 @@ type CreateResponse struct {
 
 func (x *CreateResponse) Reset() {
 	*x = CreateResponse{}
-	mi := &file_invora_billing_events_v2_service_proto_msgTypes[5]
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -345,7 +674,7 @@ func (x *CreateResponse) String() string {
 func (*CreateResponse) ProtoMessage() {}
 
 func (x *CreateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_events_v2_service_proto_msgTypes[5]
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -358,19 +687,20 @@ func (x *CreateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateResponse.ProtoReflect.Descriptor instead.
 func (*CreateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{5}
+	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{9}
 }
 
 type BatchCreateRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Events        []*UsageEventInput     `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Batch of usage events to ingest.
+	Events        []*BatchCreateEvent `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *BatchCreateRequest) Reset() {
 	*x = BatchCreateRequest{}
-	mi := &file_invora_billing_events_v2_service_proto_msgTypes[6]
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -382,7 +712,7 @@ func (x *BatchCreateRequest) String() string {
 func (*BatchCreateRequest) ProtoMessage() {}
 
 func (x *BatchCreateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_events_v2_service_proto_msgTypes[6]
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -395,12 +725,94 @@ func (x *BatchCreateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BatchCreateRequest.ProtoReflect.Descriptor instead.
 func (*BatchCreateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{6}
+	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *BatchCreateRequest) GetEvents() []*UsageEventInput {
+func (x *BatchCreateRequest) GetEvents() []*BatchCreateEvent {
 	if x != nil {
 		return x.Events
+	}
+	return nil
+}
+
+// A single event within a batch-create request.
+type BatchCreateEvent struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Client-defined unique transaction ID for idempotency.
+	TransactionId string `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
+	// External ID of the subscription this event applies to.
+	ExternalSubscriptionId string `protobuf:"bytes,2,opt,name=external_subscription_id,json=externalSubscriptionId,proto3" json:"external_subscription_id,omitempty"`
+	// Billable metric code to match.
+	Code string `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
+	// Event properties (dimensions for metric aggregation).
+	Properties *structpb.Struct `protobuf:"bytes,4,opt,name=properties,proto3" json:"properties,omitempty"`
+	// Event timestamp; defaults to server receipt time if omitted.
+	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=timestamp,proto3,oneof" json:"timestamp,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BatchCreateEvent) Reset() {
+	*x = BatchCreateEvent{}
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BatchCreateEvent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BatchCreateEvent) ProtoMessage() {}
+
+func (x *BatchCreateEvent) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BatchCreateEvent.ProtoReflect.Descriptor instead.
+func (*BatchCreateEvent) Descriptor() ([]byte, []int) {
+	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *BatchCreateEvent) GetTransactionId() string {
+	if x != nil {
+		return x.TransactionId
+	}
+	return ""
+}
+
+func (x *BatchCreateEvent) GetExternalSubscriptionId() string {
+	if x != nil {
+		return x.ExternalSubscriptionId
+	}
+	return ""
+}
+
+func (x *BatchCreateEvent) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *BatchCreateEvent) GetProperties() *structpb.Struct {
+	if x != nil {
+		return x.Properties
+	}
+	return nil
+}
+
+func (x *BatchCreateEvent) GetTimestamp() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Timestamp
 	}
 	return nil
 }
@@ -413,7 +825,7 @@ type BatchCreateResponse struct {
 
 func (x *BatchCreateResponse) Reset() {
 	*x = BatchCreateResponse{}
-	mi := &file_invora_billing_events_v2_service_proto_msgTypes[7]
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -425,7 +837,7 @@ func (x *BatchCreateResponse) String() string {
 func (*BatchCreateResponse) ProtoMessage() {}
 
 func (x *BatchCreateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_events_v2_service_proto_msgTypes[7]
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -438,91 +850,16 @@ func (x *BatchCreateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BatchCreateResponse.ProtoReflect.Descriptor instead.
 func (*BatchCreateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{7}
+	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{12}
 }
 
-type UsageEventInput struct {
-	state                  protoimpl.MessageState `protogen:"open.v1"`
-	TransactionId          string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
-	ExternalSubscriptionId string                 `protobuf:"bytes,2,opt,name=external_subscription_id,json=externalSubscriptionId,proto3" json:"external_subscription_id,omitempty"`
-	Code                   string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
-	Properties             *structpb.Struct       `protobuf:"bytes,4,opt,name=properties,proto3" json:"properties,omitempty"`
-	Timestamp              *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=timestamp,proto3,oneof" json:"timestamp,omitempty"`
-	unknownFields          protoimpl.UnknownFields
-	sizeCache              protoimpl.SizeCache
-}
-
-func (x *UsageEventInput) Reset() {
-	*x = UsageEventInput{}
-	mi := &file_invora_billing_events_v2_service_proto_msgTypes[8]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UsageEventInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UsageEventInput) ProtoMessage() {}
-
-func (x *UsageEventInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_events_v2_service_proto_msgTypes[8]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UsageEventInput.ProtoReflect.Descriptor instead.
-func (*UsageEventInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{8}
-}
-
-func (x *UsageEventInput) GetTransactionId() string {
-	if x != nil {
-		return x.TransactionId
-	}
-	return ""
-}
-
-func (x *UsageEventInput) GetExternalSubscriptionId() string {
-	if x != nil {
-		return x.ExternalSubscriptionId
-	}
-	return ""
-}
-
-func (x *UsageEventInput) GetCode() string {
-	if x != nil {
-		return x.Code
-	}
-	return ""
-}
-
-func (x *UsageEventInput) GetProperties() *structpb.Struct {
-	if x != nil {
-		return x.Properties
-	}
-	return nil
-}
-
-func (x *UsageEventInput) GetTimestamp() *timestamppb.Timestamp {
-	if x != nil {
-		return x.Timestamp
-	}
-	return nil
-}
-
+// A usage event record.
 type Event struct {
 	state                  protoimpl.MessageState `protogen:"open.v1"`
 	ApiClient              *string                `protobuf:"bytes,1,opt,name=api_client,json=apiClient,proto3,oneof" json:"api_client,omitempty"`
 	BillableMetricName     *string                `protobuf:"bytes,2,opt,name=billable_metric_name,json=billableMetricName,proto3,oneof" json:"billable_metric_name,omitempty"`
 	Code                   string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
-	CustomerTimezone       v2.TimezoneEnum        `protobuf:"varint,4,opt,name=customer_timezone,json=customerTimezone,proto3,enum=invora.billing.common.v2.TimezoneEnum" json:"customer_timezone,omitempty"`
+	CustomerTimezone       v2.Timezone            `protobuf:"varint,4,opt,name=customer_timezone,json=customerTimezone,proto3,enum=invora.billing.common.v2.Timezone" json:"customer_timezone,omitempty"`
 	DeletedAt              *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=deleted_at,json=deletedAt,proto3,oneof" json:"deleted_at,omitempty"`
 	ExternalSubscriptionId *string                `protobuf:"bytes,6,opt,name=external_subscription_id,json=externalSubscriptionId,proto3,oneof" json:"external_subscription_id,omitempty"`
 	Id                     string                 `protobuf:"bytes,7,opt,name=id,proto3" json:"id,omitempty"`
@@ -541,7 +878,7 @@ type Event struct {
 
 func (x *Event) Reset() {
 	*x = Event{}
-	mi := &file_invora_billing_events_v2_service_proto_msgTypes[9]
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -553,7 +890,7 @@ func (x *Event) String() string {
 func (*Event) ProtoMessage() {}
 
 func (x *Event) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_events_v2_service_proto_msgTypes[9]
+	mi := &file_invora_billing_events_v2_service_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -566,7 +903,7 @@ func (x *Event) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Event.ProtoReflect.Descriptor instead.
 func (*Event) Descriptor() ([]byte, []int) {
-	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{9}
+	return file_invora_billing_events_v2_service_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *Event) GetApiClient() string {
@@ -590,11 +927,11 @@ func (x *Event) GetCode() string {
 	return ""
 }
 
-func (x *Event) GetCustomerTimezone() v2.TimezoneEnum {
+func (x *Event) GetCustomerTimezone() v2.Timezone {
 	if x != nil {
 		return x.CustomerTimezone
 	}
-	return v2.TimezoneEnum(0)
+	return v2.Timezone(0)
 }
 
 func (x *Event) GetDeletedAt() *timestamppb.Timestamp {
@@ -685,28 +1022,50 @@ var File_invora_billing_events_v2_service_proto protoreflect.FileDescriptor
 
 const file_invora_billing_events_v2_service_proto_rawDesc = "" +
 	"\n" +
-	"&invora/billing/events/v2/service.proto\x12\x18invora.billing.events.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\"\xa0\x01\n" +
+	"&invora/billing/events/v2/service.proto\x12\x18invora.billing.events.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\x89\x01\n" +
 	"\n" +
-	"GetRequest\x12%\n" +
-	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x127\n" +
+	"GetRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
 	"\tread_mask\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
-	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.events.v2.ViewR\x04view\"D\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"D\n" +
 	"\vGetResponse\x125\n" +
-	"\x05event\x18\x01 \x01(\v2\x1f.invora.billing.events.v2.EventR\x05event\"\r\n" +
-	"\vListRequest\"\xae\x01\n" +
+	"\x05event\x18\x01 \x01(\v2\x1f.invora.billing.events.v2.EventR\x05event\"k\n" +
+	"\n" +
+	"ListFilter\x12<\n" +
+	"\x04part\x18\x01 \x01(\v2(.invora.billing.events.v2.ListFilterPartR\x04part\x12\x1f\n" +
+	"\vtext_search\x18\x02 \x01(\tR\n" +
+	"textSearch\"\xf3\x01\n" +
+	"\x0eListFilterPart\x12\x14\n" +
+	"\x04code\x18\x01 \x01(\tH\x00R\x04code\x12:\n" +
+	"\x18external_subscription_id\x18\x02 \x01(\tH\x00R\x16externalSubscriptionId\x12A\n" +
+	"\ttimestamp\x18\x03 \x01(\v2!.kernel.ListRequestFilterPartDateH\x00R\ttimestamp\x12D\n" +
+	"\vreceived_at\x18\x04 \x01(\v2!.kernel.ListRequestFilterPartDateH\x00R\n" +
+	"receivedAtB\x06\n" +
+	"\x04type\"H\n" +
+	"\bListSort\x12<\n" +
+	"\x05rules\x18\x01 \x03(\v2&.invora.billing.events.v2.ListSortRuleR\x05rules\"\x87\x01\n" +
+	"\fListSortRule\x125\n" +
+	"\ttimestamp\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\ttimestamp\x128\n" +
+	"\vreceived_at\x18\x02 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\n" +
+	"receivedAtB\x06\n" +
+	"\x04type\"\xa8\x02\n" +
+	"\vListRequest\x12<\n" +
+	"\x06filter\x18\x01 \x01(\v2$.invora.billing.events.v2.ListFilterR\x06filter\x126\n" +
+	"\x04sort\x18\x02 \x01(\v2\".invora.billing.events.v2.ListSortR\x04sort\x126\n" +
+	"\n" +
+	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
+	"pagination\x127\n" +
+	"\tread_mask\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xaa\x01\n" +
 	"\fListResponse\x125\n" +
 	"\x05items\x18\x01 \x03(\v2\x1f.invora.billing.events.v2.EventR\x05items\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"P\n" +
-	"\rCreateRequest\x12?\n" +
-	"\x05event\x18\x01 \x01(\v2).invora.billing.events.v2.UsageEventInputR\x05event\"\x10\n" +
-	"\x0eCreateResponse\"W\n" +
-	"\x12BatchCreateRequest\x12A\n" +
-	"\x06events\x18\x01 \x03(\v2).invora.billing.events.v2.UsageEventInputR\x06events\"\x15\n" +
-	"\x13BatchCreateResponse\"\x8c\x02\n" +
-	"\x0fUsageEventInput\x12%\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"\x8a\x02\n" +
+	"\rCreateRequest\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x128\n" +
 	"\x18external_subscription_id\x18\x02 \x01(\tR\x16externalSubscriptionId\x12\x12\n" +
 	"\x04code\x18\x03 \x01(\tR\x04code\x127\n" +
@@ -715,13 +1074,27 @@ const file_invora_billing_events_v2_service_proto_rawDesc = "" +
 	"properties\x12=\n" +
 	"\ttimestamp\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\ttimestamp\x88\x01\x01B\f\n" +
 	"\n" +
-	"_timestamp\"\x99\b\n" +
+	"_timestamp\"\x10\n" +
+	"\x0eCreateResponse\"X\n" +
+	"\x12BatchCreateRequest\x12B\n" +
+	"\x06events\x18\x01 \x03(\v2*.invora.billing.events.v2.BatchCreateEventR\x06events\"\x8d\x02\n" +
+	"\x10BatchCreateEvent\x12%\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x128\n" +
+	"\x18external_subscription_id\x18\x02 \x01(\tR\x16externalSubscriptionId\x12\x12\n" +
+	"\x04code\x18\x03 \x01(\tR\x04code\x127\n" +
+	"\n" +
+	"properties\x18\x04 \x01(\v2\x17.google.protobuf.StructR\n" +
+	"properties\x12=\n" +
+	"\ttimestamp\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\ttimestamp\x88\x01\x01B\f\n" +
+	"\n" +
+	"_timestamp\"\x15\n" +
+	"\x13BatchCreateResponse\"\x95\b\n" +
 	"\x05Event\x12\"\n" +
 	"\n" +
 	"api_client\x18\x01 \x01(\tH\x00R\tapiClient\x88\x01\x01\x125\n" +
 	"\x14billable_metric_name\x18\x02 \x01(\tH\x01R\x12billableMetricName\x88\x01\x01\x12\x12\n" +
-	"\x04code\x18\x03 \x01(\tR\x04code\x12S\n" +
-	"\x11customer_timezone\x18\x04 \x01(\x0e2&.invora.billing.common.v2.TimezoneEnumR\x10customerTimezone\x12>\n" +
+	"\x04code\x18\x03 \x01(\tR\x04code\x12O\n" +
+	"\x11customer_timezone\x18\x04 \x01(\x0e2\".invora.billing.common.v2.TimezoneR\x10customerTimezone\x12>\n" +
 	"\n" +
 	"deleted_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampH\x02R\tdeletedAt\x88\x01\x01\x12=\n" +
 	"\x18external_subscription_id\x18\x06 \x01(\tH\x03R\x16externalSubscriptionId\x88\x01\x01\x12\x0e\n" +
@@ -751,21 +1124,16 @@ const file_invora_billing_events_v2_service_proto_rawDesc = "" +
 	"\f_received_atB\f\n" +
 	"\n" +
 	"_timestampB\x11\n" +
-	"\x0f_transaction_id*;\n" +
-	"\x04View\x12\x14\n" +
-	"\x10VIEW_UNSPECIFIED\x10\x00\x12\x0e\n" +
-	"\n" +
-	"VIEW_BASIC\x10\x01\x12\r\n" +
-	"\tVIEW_FULL\x10\x022\xbd\x05\n" +
-	"\fEventService\x12\xa5\x01\n" +
-	"\x03Get\x12$.invora.billing.events.v2.GetRequest\x1a%.invora.billing.events.v2.GetResponse\"Q\xe2\xf2\x19\x1e\n" +
-	"\x1cInvora.Billing.Events.v2.Get\x82\xd3\xe4\x93\x02)\x12'/api/v2/billing/events/{transaction_id}\x12\x98\x01\n" +
-	"\x04List\x12%.invora.billing.events.v2.ListRequest\x1a&.invora.billing.events.v2.ListResponse\"A\xe2\xf2\x19\x1f\n" +
-	"\x1dInvora.Billing.Events.v2.List\x82\xd3\xe4\x93\x02\x18\x12\x16/api/v2/billing/events\x12\xa3\x01\n" +
-	"\x06Create\x12'.invora.billing.events.v2.CreateRequest\x1a(.invora.billing.events.v2.CreateResponse\"F\xe2\xf2\x19!\n" +
-	"\x1fInvora.Billing.Events.v2.Create\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/api/v2/billing/events\x12\xc3\x01\n" +
-	"\vBatchCreate\x12,.invora.billing.events.v2.BatchCreateRequest\x1a-.invora.billing.events.v2.BatchCreateResponse\"W\xe2\xf2\x19&\n" +
-	"$Invora.Billing.Events.v2.BatchCreate\x82\xd3\xe4\x93\x02':\x01*\"\"/api/v2/billing/events:batchCreateB\xfd\x01\n" +
+	"\x0f_transaction_id2\xc9\x05\n" +
+	"\rEventsService\x12\xa0\x01\n" +
+	"\x04List\x12%.invora.billing.events.v2.ListRequest\x1a&.invora.billing.events.v2.ListResponse\"I\xe2\xf2\x19\x1f\n" +
+	"\x1dInvora.Billing.Events.v2.List\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/api/billing/v2/events/list\x12\x99\x01\n" +
+	"\x03Get\x12$.invora.billing.events.v2.GetRequest\x1a%.invora.billing.events.v2.GetResponse\"E\xe2\xf2\x19\x1e\n" +
+	"\x1cInvora.Billing.Events.v2.Get\x82\xd3\xe4\x93\x02\x1d\x12\x1b/api/billing/v2/events/{id}\x12\xaa\x01\n" +
+	"\x06Create\x12'.invora.billing.events.v2.CreateRequest\x1a(.invora.billing.events.v2.CreateResponse\"M\xe2\xf2\x19(\n" +
+	"&Invora.Billing.Events.v2.Modify.Create\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/api/billing/v2/events\x12\xcb\x01\n" +
+	"\vBatchCreate\x12,.invora.billing.events.v2.BatchCreateRequest\x1a-.invora.billing.events.v2.BatchCreateResponse\"_\xe2\xf2\x19-\n" +
+	"+Invora.Billing.Events.v2.Modify.BatchCreate\x82\xd3\xe4\x93\x02(:\x01*\"#/api/billing/v2/events/batch-createB\xfd\x01\n" +
 	"\x1ccom.invora.billing.events.v2B\fServiceProtoP\x01ZLgithub.com/invoraapp/invora-controller/gen/invora/billing/events/v2;eventsv2\xa2\x02\x03IBE\xaa\x02\x18Invora.Billing.Events.V2\xca\x02\x18Invora\\Billing\\Events\\V2\xe2\x02$Invora\\Billing\\Events\\V2\\GPBMetadata\xea\x02\x1bInvora::Billing::Events::V2b\x06proto3"
 
 var (
@@ -780,54 +1148,70 @@ func file_invora_billing_events_v2_service_proto_rawDescGZIP() []byte {
 	return file_invora_billing_events_v2_service_proto_rawDescData
 }
 
-var file_invora_billing_events_v2_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_invora_billing_events_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_invora_billing_events_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_invora_billing_events_v2_service_proto_goTypes = []any{
-	(View)(0),                      // 0: invora.billing.events.v2.View
-	(*GetRequest)(nil),             // 1: invora.billing.events.v2.GetRequest
-	(*GetResponse)(nil),            // 2: invora.billing.events.v2.GetResponse
-	(*ListRequest)(nil),            // 3: invora.billing.events.v2.ListRequest
-	(*ListResponse)(nil),           // 4: invora.billing.events.v2.ListResponse
-	(*CreateRequest)(nil),          // 5: invora.billing.events.v2.CreateRequest
-	(*CreateResponse)(nil),         // 6: invora.billing.events.v2.CreateResponse
-	(*BatchCreateRequest)(nil),     // 7: invora.billing.events.v2.BatchCreateRequest
-	(*BatchCreateResponse)(nil),    // 8: invora.billing.events.v2.BatchCreateResponse
-	(*UsageEventInput)(nil),        // 9: invora.billing.events.v2.UsageEventInput
-	(*Event)(nil),                  // 10: invora.billing.events.v2.Event
-	(*fieldmaskpb.FieldMask)(nil),  // 11: google.protobuf.FieldMask
-	(*wrapperspb.StringValue)(nil), // 12: google.protobuf.StringValue
-	(*structpb.Struct)(nil),        // 13: google.protobuf.Struct
-	(*timestamppb.Timestamp)(nil),  // 14: google.protobuf.Timestamp
-	(v2.TimezoneEnum)(0),           // 15: invora.billing.common.v2.TimezoneEnum
+	(*GetRequest)(nil),                       // 0: invora.billing.events.v2.GetRequest
+	(*GetResponse)(nil),                      // 1: invora.billing.events.v2.GetResponse
+	(*ListFilter)(nil),                       // 2: invora.billing.events.v2.ListFilter
+	(*ListFilterPart)(nil),                   // 3: invora.billing.events.v2.ListFilterPart
+	(*ListSort)(nil),                         // 4: invora.billing.events.v2.ListSort
+	(*ListSortRule)(nil),                     // 5: invora.billing.events.v2.ListSortRule
+	(*ListRequest)(nil),                      // 6: invora.billing.events.v2.ListRequest
+	(*ListResponse)(nil),                     // 7: invora.billing.events.v2.ListResponse
+	(*CreateRequest)(nil),                    // 8: invora.billing.events.v2.CreateRequest
+	(*CreateResponse)(nil),                   // 9: invora.billing.events.v2.CreateResponse
+	(*BatchCreateRequest)(nil),               // 10: invora.billing.events.v2.BatchCreateRequest
+	(*BatchCreateEvent)(nil),                 // 11: invora.billing.events.v2.BatchCreateEvent
+	(*BatchCreateResponse)(nil),              // 12: invora.billing.events.v2.BatchCreateResponse
+	(*Event)(nil),                            // 13: invora.billing.events.v2.Event
+	(*fieldmaskpb.FieldMask)(nil),            // 14: google.protobuf.FieldMask
+	(v2.View)(0),                             // 15: invora.billing.common.v2.View
+	(*kernel.ListRequestFilterPartDate)(nil), // 16: kernel.ListRequestFilterPartDate
+	(kernel.SortDirection)(0),                // 17: kernel.SortDirection
+	(*kernel.PaginationInfo)(nil),            // 18: kernel.PaginationInfo
+	(*structpb.Struct)(nil),                  // 19: google.protobuf.Struct
+	(*timestamppb.Timestamp)(nil),            // 20: google.protobuf.Timestamp
+	(v2.Timezone)(0),                         // 21: invora.billing.common.v2.Timezone
 }
 var file_invora_billing_events_v2_service_proto_depIdxs = []int32{
-	11, // 0: invora.billing.events.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 1: invora.billing.events.v2.GetRequest.view:type_name -> invora.billing.events.v2.View
-	10, // 2: invora.billing.events.v2.GetResponse.event:type_name -> invora.billing.events.v2.Event
-	10, // 3: invora.billing.events.v2.ListResponse.items:type_name -> invora.billing.events.v2.Event
-	12, // 4: invora.billing.events.v2.ListResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	9,  // 5: invora.billing.events.v2.CreateRequest.event:type_name -> invora.billing.events.v2.UsageEventInput
-	9,  // 6: invora.billing.events.v2.BatchCreateRequest.events:type_name -> invora.billing.events.v2.UsageEventInput
-	13, // 7: invora.billing.events.v2.UsageEventInput.properties:type_name -> google.protobuf.Struct
-	14, // 8: invora.billing.events.v2.UsageEventInput.timestamp:type_name -> google.protobuf.Timestamp
-	15, // 9: invora.billing.events.v2.Event.customer_timezone:type_name -> invora.billing.common.v2.TimezoneEnum
-	14, // 10: invora.billing.events.v2.Event.deleted_at:type_name -> google.protobuf.Timestamp
-	13, // 11: invora.billing.events.v2.Event.payload:type_name -> google.protobuf.Struct
-	14, // 12: invora.billing.events.v2.Event.received_at:type_name -> google.protobuf.Timestamp
-	14, // 13: invora.billing.events.v2.Event.timestamp:type_name -> google.protobuf.Timestamp
-	1,  // 14: invora.billing.events.v2.EventService.Get:input_type -> invora.billing.events.v2.GetRequest
-	3,  // 15: invora.billing.events.v2.EventService.List:input_type -> invora.billing.events.v2.ListRequest
-	5,  // 16: invora.billing.events.v2.EventService.Create:input_type -> invora.billing.events.v2.CreateRequest
-	7,  // 17: invora.billing.events.v2.EventService.BatchCreate:input_type -> invora.billing.events.v2.BatchCreateRequest
-	2,  // 18: invora.billing.events.v2.EventService.Get:output_type -> invora.billing.events.v2.GetResponse
-	4,  // 19: invora.billing.events.v2.EventService.List:output_type -> invora.billing.events.v2.ListResponse
-	6,  // 20: invora.billing.events.v2.EventService.Create:output_type -> invora.billing.events.v2.CreateResponse
-	8,  // 21: invora.billing.events.v2.EventService.BatchCreate:output_type -> invora.billing.events.v2.BatchCreateResponse
-	18, // [18:22] is the sub-list for method output_type
-	14, // [14:18] is the sub-list for method input_type
-	14, // [14:14] is the sub-list for extension type_name
-	14, // [14:14] is the sub-list for extension extendee
-	0,  // [0:14] is the sub-list for field type_name
+	14, // 0: invora.billing.events.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
+	15, // 1: invora.billing.events.v2.GetRequest.view:type_name -> invora.billing.common.v2.View
+	13, // 2: invora.billing.events.v2.GetResponse.event:type_name -> invora.billing.events.v2.Event
+	3,  // 3: invora.billing.events.v2.ListFilter.part:type_name -> invora.billing.events.v2.ListFilterPart
+	16, // 4: invora.billing.events.v2.ListFilterPart.timestamp:type_name -> kernel.ListRequestFilterPartDate
+	16, // 5: invora.billing.events.v2.ListFilterPart.received_at:type_name -> kernel.ListRequestFilterPartDate
+	5,  // 6: invora.billing.events.v2.ListSort.rules:type_name -> invora.billing.events.v2.ListSortRule
+	17, // 7: invora.billing.events.v2.ListSortRule.timestamp:type_name -> kernel.SortDirection
+	17, // 8: invora.billing.events.v2.ListSortRule.received_at:type_name -> kernel.SortDirection
+	2,  // 9: invora.billing.events.v2.ListRequest.filter:type_name -> invora.billing.events.v2.ListFilter
+	4,  // 10: invora.billing.events.v2.ListRequest.sort:type_name -> invora.billing.events.v2.ListSort
+	18, // 11: invora.billing.events.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
+	14, // 12: invora.billing.events.v2.ListRequest.read_mask:type_name -> google.protobuf.FieldMask
+	15, // 13: invora.billing.events.v2.ListRequest.view:type_name -> invora.billing.common.v2.View
+	13, // 14: invora.billing.events.v2.ListResponse.items:type_name -> invora.billing.events.v2.Event
+	19, // 15: invora.billing.events.v2.CreateRequest.properties:type_name -> google.protobuf.Struct
+	20, // 16: invora.billing.events.v2.CreateRequest.timestamp:type_name -> google.protobuf.Timestamp
+	11, // 17: invora.billing.events.v2.BatchCreateRequest.events:type_name -> invora.billing.events.v2.BatchCreateEvent
+	19, // 18: invora.billing.events.v2.BatchCreateEvent.properties:type_name -> google.protobuf.Struct
+	20, // 19: invora.billing.events.v2.BatchCreateEvent.timestamp:type_name -> google.protobuf.Timestamp
+	21, // 20: invora.billing.events.v2.Event.customer_timezone:type_name -> invora.billing.common.v2.Timezone
+	20, // 21: invora.billing.events.v2.Event.deleted_at:type_name -> google.protobuf.Timestamp
+	19, // 22: invora.billing.events.v2.Event.payload:type_name -> google.protobuf.Struct
+	20, // 23: invora.billing.events.v2.Event.received_at:type_name -> google.protobuf.Timestamp
+	20, // 24: invora.billing.events.v2.Event.timestamp:type_name -> google.protobuf.Timestamp
+	6,  // 25: invora.billing.events.v2.EventsService.List:input_type -> invora.billing.events.v2.ListRequest
+	0,  // 26: invora.billing.events.v2.EventsService.Get:input_type -> invora.billing.events.v2.GetRequest
+	8,  // 27: invora.billing.events.v2.EventsService.Create:input_type -> invora.billing.events.v2.CreateRequest
+	10, // 28: invora.billing.events.v2.EventsService.BatchCreate:input_type -> invora.billing.events.v2.BatchCreateRequest
+	7,  // 29: invora.billing.events.v2.EventsService.List:output_type -> invora.billing.events.v2.ListResponse
+	1,  // 30: invora.billing.events.v2.EventsService.Get:output_type -> invora.billing.events.v2.GetResponse
+	9,  // 31: invora.billing.events.v2.EventsService.Create:output_type -> invora.billing.events.v2.CreateResponse
+	12, // 32: invora.billing.events.v2.EventsService.BatchCreate:output_type -> invora.billing.events.v2.BatchCreateResponse
+	29, // [29:33] is the sub-list for method output_type
+	25, // [25:29] is the sub-list for method input_type
+	25, // [25:25] is the sub-list for extension type_name
+	25, // [25:25] is the sub-list for extension extendee
+	0,  // [0:25] is the sub-list for field type_name
 }
 
 func init() { file_invora_billing_events_v2_service_proto_init() }
@@ -835,21 +1219,32 @@ func file_invora_billing_events_v2_service_proto_init() {
 	if File_invora_billing_events_v2_service_proto != nil {
 		return
 	}
+	file_invora_billing_events_v2_service_proto_msgTypes[3].OneofWrappers = []any{
+		(*ListFilterPart_Code)(nil),
+		(*ListFilterPart_ExternalSubscriptionId)(nil),
+		(*ListFilterPart_Timestamp)(nil),
+		(*ListFilterPart_ReceivedAt)(nil),
+	}
+	file_invora_billing_events_v2_service_proto_msgTypes[5].OneofWrappers = []any{
+		(*ListSortRule_Timestamp)(nil),
+		(*ListSortRule_ReceivedAt)(nil),
+	}
+	file_invora_billing_events_v2_service_proto_msgTypes[7].OneofWrappers = []any{}
 	file_invora_billing_events_v2_service_proto_msgTypes[8].OneofWrappers = []any{}
-	file_invora_billing_events_v2_service_proto_msgTypes[9].OneofWrappers = []any{}
+	file_invora_billing_events_v2_service_proto_msgTypes[11].OneofWrappers = []any{}
+	file_invora_billing_events_v2_service_proto_msgTypes[13].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_billing_events_v2_service_proto_rawDesc), len(file_invora_billing_events_v2_service_proto_rawDesc)),
-			NumEnums:      1,
-			NumMessages:   10,
+			NumEnums:      0,
+			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_invora_billing_events_v2_service_proto_goTypes,
 		DependencyIndexes: file_invora_billing_events_v2_service_proto_depIdxs,
-		EnumInfos:         file_invora_billing_events_v2_service_proto_enumTypes,
 		MessageInfos:      file_invora_billing_events_v2_service_proto_msgTypes,
 	}.Build()
 	File_invora_billing_events_v2_service_proto = out.File

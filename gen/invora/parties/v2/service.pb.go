@@ -11,6 +11,7 @@ import (
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -207,11 +208,411 @@ func (x *UnlinkBillingCustomerResponse) GetParty() *Party {
 	return nil
 }
 
+// A single item in a bulk billing config update.
+type BulkUpdateBillingConfigItem struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The party key to update.
+	PartyKey string `protobuf:"bytes,1,opt,name=party_key,json=partyKey,proto3" json:"party_key,omitempty"`
+	// Fields to update. Only fields present in the mask are written.
+	BillingConfig *BillingCustomerConfig `protobuf:"bytes,2,opt,name=billing_config,json=billingConfig,proto3" json:"billing_config,omitempty"`
+	// Field mask scoping which BillingCustomerConfig fields to write.
+	Mask          *fieldmaskpb.FieldMask `protobuf:"bytes,3,opt,name=mask,proto3" json:"mask,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BulkUpdateBillingConfigItem) Reset() {
+	*x = BulkUpdateBillingConfigItem{}
+	mi := &file_invora_parties_v2_service_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BulkUpdateBillingConfigItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BulkUpdateBillingConfigItem) ProtoMessage() {}
+
+func (x *BulkUpdateBillingConfigItem) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_parties_v2_service_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BulkUpdateBillingConfigItem.ProtoReflect.Descriptor instead.
+func (*BulkUpdateBillingConfigItem) Descriptor() ([]byte, []int) {
+	return file_invora_parties_v2_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *BulkUpdateBillingConfigItem) GetPartyKey() string {
+	if x != nil {
+		return x.PartyKey
+	}
+	return ""
+}
+
+func (x *BulkUpdateBillingConfigItem) GetBillingConfig() *BillingCustomerConfig {
+	if x != nil {
+		return x.BillingConfig
+	}
+	return nil
+}
+
+func (x *BulkUpdateBillingConfigItem) GetMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.Mask
+	}
+	return nil
+}
+
+type BulkUpdateBillingConfigRequest struct {
+	state         protoimpl.MessageState         `protogen:"open.v1"`
+	Items         []*BulkUpdateBillingConfigItem `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BulkUpdateBillingConfigRequest) Reset() {
+	*x = BulkUpdateBillingConfigRequest{}
+	mi := &file_invora_parties_v2_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BulkUpdateBillingConfigRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BulkUpdateBillingConfigRequest) ProtoMessage() {}
+
+func (x *BulkUpdateBillingConfigRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_parties_v2_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BulkUpdateBillingConfigRequest.ProtoReflect.Descriptor instead.
+func (*BulkUpdateBillingConfigRequest) Descriptor() ([]byte, []int) {
+	return file_invora_parties_v2_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *BulkUpdateBillingConfigRequest) GetItems() []*BulkUpdateBillingConfigItem {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+type BulkUpdateBillingConfigResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// One result per input item, in the same order.
+	Items         []*BulkItemResult `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BulkUpdateBillingConfigResponse) Reset() {
+	*x = BulkUpdateBillingConfigResponse{}
+	mi := &file_invora_parties_v2_service_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BulkUpdateBillingConfigResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BulkUpdateBillingConfigResponse) ProtoMessage() {}
+
+func (x *BulkUpdateBillingConfigResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_parties_v2_service_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BulkUpdateBillingConfigResponse.ProtoReflect.Descriptor instead.
+func (*BulkUpdateBillingConfigResponse) Descriptor() ([]byte, []int) {
+	return file_invora_parties_v2_service_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *BulkUpdateBillingConfigResponse) GetItems() []*BulkItemResult {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+// Result of a single item in a bulk operation. Defined locally to avoid a
+// cross-module import of invora.documents.v2.BulkItemResult (which lives in the
+// `common` buf module); kept structurally compatible with that definition.
+type BulkItemResult struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Index uint32                 `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty"`
+	// Types that are valid to be assigned to Result:
+	//
+	//	*BulkItemResult_SuccessKey
+	//	*BulkItemResult_Error
+	Result        isBulkItemResult_Result `protobuf_oneof:"result"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BulkItemResult) Reset() {
+	*x = BulkItemResult{}
+	mi := &file_invora_parties_v2_service_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BulkItemResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BulkItemResult) ProtoMessage() {}
+
+func (x *BulkItemResult) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_parties_v2_service_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BulkItemResult.ProtoReflect.Descriptor instead.
+func (*BulkItemResult) Descriptor() ([]byte, []int) {
+	return file_invora_parties_v2_service_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *BulkItemResult) GetIndex() uint32 {
+	if x != nil {
+		return x.Index
+	}
+	return 0
+}
+
+func (x *BulkItemResult) GetResult() isBulkItemResult_Result {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
+func (x *BulkItemResult) GetSuccessKey() string {
+	if x != nil {
+		if x, ok := x.Result.(*BulkItemResult_SuccessKey); ok {
+			return x.SuccessKey
+		}
+	}
+	return ""
+}
+
+func (x *BulkItemResult) GetError() *BulkItemError {
+	if x != nil {
+		if x, ok := x.Result.(*BulkItemResult_Error); ok {
+			return x.Error
+		}
+	}
+	return nil
+}
+
+type isBulkItemResult_Result interface {
+	isBulkItemResult_Result()
+}
+
+type BulkItemResult_SuccessKey struct {
+	SuccessKey string `protobuf:"bytes,2,opt,name=success_key,json=successKey,proto3,oneof"`
+}
+
+type BulkItemResult_Error struct {
+	Error *BulkItemError `protobuf:"bytes,3,opt,name=error,proto3,oneof"`
+}
+
+func (*BulkItemResult_SuccessKey) isBulkItemResult_Result() {}
+
+func (*BulkItemResult_Error) isBulkItemResult_Result() {}
+
+// Error detail for a failed bulk item.
+type BulkItemError struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BulkItemError) Reset() {
+	*x = BulkItemError{}
+	mi := &file_invora_parties_v2_service_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BulkItemError) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BulkItemError) ProtoMessage() {}
+
+func (x *BulkItemError) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_parties_v2_service_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BulkItemError.ProtoReflect.Descriptor instead.
+func (*BulkItemError) Descriptor() ([]byte, []int) {
+	return file_invora_parties_v2_service_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *BulkItemError) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *BulkItemError) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type ListDunningCandidatesRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Maximum number of past dunning attempts to consider eligible.
+	// Parties with last_dunning_campaign_attempt >= max_attempts are excluded.
+	MaxAttempts int32 `protobuf:"varint,1,opt,name=max_attempts,json=maxAttempts,proto3" json:"max_attempts,omitempty"`
+	// Optional: restrict to parties assigned this specific dunning campaign ID.
+	// If empty, returns candidates for any campaign.
+	DunningCampaignId *string `protobuf:"bytes,2,opt,name=dunning_campaign_id,json=dunningCampaignId,proto3,oneof" json:"dunning_campaign_id,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *ListDunningCandidatesRequest) Reset() {
+	*x = ListDunningCandidatesRequest{}
+	mi := &file_invora_parties_v2_service_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListDunningCandidatesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListDunningCandidatesRequest) ProtoMessage() {}
+
+func (x *ListDunningCandidatesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_parties_v2_service_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListDunningCandidatesRequest.ProtoReflect.Descriptor instead.
+func (*ListDunningCandidatesRequest) Descriptor() ([]byte, []int) {
+	return file_invora_parties_v2_service_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *ListDunningCandidatesRequest) GetMaxAttempts() int32 {
+	if x != nil {
+		return x.MaxAttempts
+	}
+	return 0
+}
+
+func (x *ListDunningCandidatesRequest) GetDunningCampaignId() string {
+	if x != nil && x.DunningCampaignId != nil {
+		return *x.DunningCampaignId
+	}
+	return ""
+}
+
+type ListDunningCandidatesResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Party keys that are dunning-eligible.
+	PartyKeys     []string `protobuf:"bytes,1,rep,name=party_keys,json=partyKeys,proto3" json:"party_keys,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListDunningCandidatesResponse) Reset() {
+	*x = ListDunningCandidatesResponse{}
+	mi := &file_invora_parties_v2_service_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListDunningCandidatesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListDunningCandidatesResponse) ProtoMessage() {}
+
+func (x *ListDunningCandidatesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_parties_v2_service_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListDunningCandidatesResponse.ProtoReflect.Descriptor instead.
+func (*ListDunningCandidatesResponse) Descriptor() ([]byte, []int) {
+	return file_invora_parties_v2_service_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ListDunningCandidatesResponse) GetPartyKeys() []string {
+	if x != nil {
+		return x.PartyKeys
+	}
+	return nil
+}
+
 var File_invora_parties_v2_service_proto protoreflect.FileDescriptor
 
 const file_invora_parties_v2_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1finvora/parties/v2/service.proto\x12\x11invora.parties.v2\x1a\x1cgoogle/api/annotations.proto\x1a\x1einvora/parties/v2/models.proto\x1a\x14kernel/options.proto\"x\n" +
+	"\x1finvora/parties/v2/service.proto\x12\x11invora.parties.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1einvora/parties/v2/models.proto\x1a\x14kernel/options.proto\"x\n" +
 	"\x1aLinkBillingCustomerRequest\x12\x19\n" +
 	"\bparty_id\x18\x01 \x01(\tR\apartyId\x12?\n" +
 	"\x1cbilling_customer_external_id\x18\x02 \x01(\tR\x19billingCustomerExternalId\"M\n" +
@@ -220,7 +621,31 @@ const file_invora_parties_v2_service_proto_rawDesc = "" +
 	"\x1cUnlinkBillingCustomerRequest\x12\x19\n" +
 	"\bparty_id\x18\x01 \x01(\tR\apartyId\"O\n" +
 	"\x1dUnlinkBillingCustomerResponse\x12.\n" +
-	"\x05party\x18\x01 \x01(\v2\x18.invora.parties.v2.PartyR\x05party2\xba\v\n" +
+	"\x05party\x18\x01 \x01(\v2\x18.invora.parties.v2.PartyR\x05party\"\xbb\x01\n" +
+	"\x1bBulkUpdateBillingConfigItem\x12\x1b\n" +
+	"\tparty_key\x18\x01 \x01(\tR\bpartyKey\x12O\n" +
+	"\x0ebilling_config\x18\x02 \x01(\v2(.invora.parties.v2.BillingCustomerConfigR\rbillingConfig\x12.\n" +
+	"\x04mask\x18\x03 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04mask\"f\n" +
+	"\x1eBulkUpdateBillingConfigRequest\x12D\n" +
+	"\x05items\x18\x01 \x03(\v2..invora.parties.v2.BulkUpdateBillingConfigItemR\x05items\"Z\n" +
+	"\x1fBulkUpdateBillingConfigResponse\x127\n" +
+	"\x05items\x18\x01 \x03(\v2!.invora.parties.v2.BulkItemResultR\x05items\"\x8d\x01\n" +
+	"\x0eBulkItemResult\x12\x14\n" +
+	"\x05index\x18\x01 \x01(\rR\x05index\x12!\n" +
+	"\vsuccess_key\x18\x02 \x01(\tH\x00R\n" +
+	"successKey\x128\n" +
+	"\x05error\x18\x03 \x01(\v2 .invora.parties.v2.BulkItemErrorH\x00R\x05errorB\b\n" +
+	"\x06result\"=\n" +
+	"\rBulkItemError\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\tR\x04code\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\x8e\x01\n" +
+	"\x1cListDunningCandidatesRequest\x12!\n" +
+	"\fmax_attempts\x18\x01 \x01(\x05R\vmaxAttempts\x123\n" +
+	"\x13dunning_campaign_id\x18\x02 \x01(\tH\x00R\x11dunningCampaignId\x88\x01\x01B\x16\n" +
+	"\x14_dunning_campaign_id\">\n" +
+	"\x1dListDunningCandidatesResponse\x12\x1d\n" +
+	"\n" +
+	"party_keys\x18\x01 \x03(\tR\tpartyKeys2\xfa\x0e\n" +
 	"\x0ePartiesService\x12\x84\x01\n" +
 	"\x04List\x12\x1e.invora.parties.v2.ListRequest\x1a\x1f.invora.parties.v2.ListResponse\";\xe2\xf2\x19\x18\n" +
 	"\x16Invora.Parties.v2.List\x82\xd3\xe4\x93\x02\x19:\x01*\"\x14/api/v2/parties/list\x12~\n" +
@@ -239,7 +664,11 @@ const file_invora_parties_v2_service_proto_rawDesc = "" +
 	"\x13LinkBillingCustomer\x12-.invora.parties.v2.LinkBillingCustomerRequest\x1a..invora.parties.v2.LinkBillingCustomerResponse\"_\xe2\xf2\x19 \n" +
 	"\x1eInvora.Parties.v2.Billing.Link\x82\xd3\xe4\x93\x025:\x01*\"0/api/v2/parties/{party_id}/link-billing-customer\x12\xdf\x01\n" +
 	"\x15UnlinkBillingCustomer\x12/.invora.parties.v2.UnlinkBillingCustomerRequest\x1a0.invora.parties.v2.UnlinkBillingCustomerResponse\"c\xe2\xf2\x19\"\n" +
-	" Invora.Parties.v2.Billing.Unlink\x82\xd3\xe4\x93\x027:\x01*\"2/api/v2/parties/{party_id}/unlink-billing-customerB\xd3\x01\n" +
+	" Invora.Parties.v2.Billing.Unlink\x82\xd3\xe4\x93\x027:\x01*\"2/api/v2/parties/{party_id}/unlink-billing-customer\x12\xe1\x01\n" +
+	"\x17BulkUpdateBillingConfig\x121.invora.parties.v2.BulkUpdateBillingConfigRequest\x1a2.invora.parties.v2.BulkUpdateBillingConfigResponse\"_\xe2\xf2\x19&\n" +
+	"$Invora.Parties.v2.Billing.BulkUpdate\x82\xd3\xe4\x93\x02/:\x01*\"*/api/v2/parties/bulk-update-billing-config\x12\xd9\x01\n" +
+	"\x15ListDunningCandidates\x12/.invora.parties.v2.ListDunningCandidatesRequest\x1a0.invora.parties.v2.ListDunningCandidatesResponse\"]\xe2\xf2\x19'\n" +
+	"%Invora.Parties.v2.Billing.ListDunning\x82\xd3\xe4\x93\x02,:\x01*\"'/api/v2/parties/list-dunning-candidatesB\xd3\x01\n" +
 	"\x15com.invora.parties.v2B\fServiceProtoP\x01ZFgithub.com/invoraapp/invora-controller/gen/invora/parties/v2;partiesv2\xa2\x02\x03IPX\xaa\x02\x11Invora.Parties.V2\xca\x02\x11Invora\\Parties\\V2\xe2\x02\x1dInvora\\Parties\\V2\\GPBMetadata\xea\x02\x13Invora::Parties::V2b\x06proto3"
 
 var (
@@ -254,54 +683,72 @@ func file_invora_parties_v2_service_proto_rawDescGZIP() []byte {
 	return file_invora_parties_v2_service_proto_rawDescData
 }
 
-var file_invora_parties_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_invora_parties_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_invora_parties_v2_service_proto_goTypes = []any{
-	(*LinkBillingCustomerRequest)(nil),    // 0: invora.parties.v2.LinkBillingCustomerRequest
-	(*LinkBillingCustomerResponse)(nil),   // 1: invora.parties.v2.LinkBillingCustomerResponse
-	(*UnlinkBillingCustomerRequest)(nil),  // 2: invora.parties.v2.UnlinkBillingCustomerRequest
-	(*UnlinkBillingCustomerResponse)(nil), // 3: invora.parties.v2.UnlinkBillingCustomerResponse
-	(*Party)(nil),                         // 4: invora.parties.v2.Party
-	(*ListRequest)(nil),                   // 5: invora.parties.v2.ListRequest
-	(*GetRequest)(nil),                    // 6: invora.parties.v2.GetRequest
-	(*CreateRequest)(nil),                 // 7: invora.parties.v2.CreateRequest
-	(*UpdateRequest)(nil),                 // 8: invora.parties.v2.UpdateRequest
-	(*DeleteRequest)(nil),                 // 9: invora.parties.v2.DeleteRequest
-	(*ImportRequest)(nil),                 // 10: invora.parties.v2.ImportRequest
-	(*ExportRequest)(nil),                 // 11: invora.parties.v2.ExportRequest
-	(*ListResponse)(nil),                  // 12: invora.parties.v2.ListResponse
-	(*GetResponse)(nil),                   // 13: invora.parties.v2.GetResponse
-	(*CreateResponse)(nil),                // 14: invora.parties.v2.CreateResponse
-	(*UpdateResponse)(nil),                // 15: invora.parties.v2.UpdateResponse
-	(*DeleteResponse)(nil),                // 16: invora.parties.v2.DeleteResponse
-	(*ImportResponse)(nil),                // 17: invora.parties.v2.ImportResponse
-	(*ExportResponse)(nil),                // 18: invora.parties.v2.ExportResponse
+	(*LinkBillingCustomerRequest)(nil),      // 0: invora.parties.v2.LinkBillingCustomerRequest
+	(*LinkBillingCustomerResponse)(nil),     // 1: invora.parties.v2.LinkBillingCustomerResponse
+	(*UnlinkBillingCustomerRequest)(nil),    // 2: invora.parties.v2.UnlinkBillingCustomerRequest
+	(*UnlinkBillingCustomerResponse)(nil),   // 3: invora.parties.v2.UnlinkBillingCustomerResponse
+	(*BulkUpdateBillingConfigItem)(nil),     // 4: invora.parties.v2.BulkUpdateBillingConfigItem
+	(*BulkUpdateBillingConfigRequest)(nil),  // 5: invora.parties.v2.BulkUpdateBillingConfigRequest
+	(*BulkUpdateBillingConfigResponse)(nil), // 6: invora.parties.v2.BulkUpdateBillingConfigResponse
+	(*BulkItemResult)(nil),                  // 7: invora.parties.v2.BulkItemResult
+	(*BulkItemError)(nil),                   // 8: invora.parties.v2.BulkItemError
+	(*ListDunningCandidatesRequest)(nil),    // 9: invora.parties.v2.ListDunningCandidatesRequest
+	(*ListDunningCandidatesResponse)(nil),   // 10: invora.parties.v2.ListDunningCandidatesResponse
+	(*Party)(nil),                           // 11: invora.parties.v2.Party
+	(*BillingCustomerConfig)(nil),           // 12: invora.parties.v2.BillingCustomerConfig
+	(*fieldmaskpb.FieldMask)(nil),           // 13: google.protobuf.FieldMask
+	(*ListRequest)(nil),                     // 14: invora.parties.v2.ListRequest
+	(*GetRequest)(nil),                      // 15: invora.parties.v2.GetRequest
+	(*CreateRequest)(nil),                   // 16: invora.parties.v2.CreateRequest
+	(*UpdateRequest)(nil),                   // 17: invora.parties.v2.UpdateRequest
+	(*DeleteRequest)(nil),                   // 18: invora.parties.v2.DeleteRequest
+	(*ImportRequest)(nil),                   // 19: invora.parties.v2.ImportRequest
+	(*ExportRequest)(nil),                   // 20: invora.parties.v2.ExportRequest
+	(*ListResponse)(nil),                    // 21: invora.parties.v2.ListResponse
+	(*GetResponse)(nil),                     // 22: invora.parties.v2.GetResponse
+	(*CreateResponse)(nil),                  // 23: invora.parties.v2.CreateResponse
+	(*UpdateResponse)(nil),                  // 24: invora.parties.v2.UpdateResponse
+	(*DeleteResponse)(nil),                  // 25: invora.parties.v2.DeleteResponse
+	(*ImportResponse)(nil),                  // 26: invora.parties.v2.ImportResponse
+	(*ExportResponse)(nil),                  // 27: invora.parties.v2.ExportResponse
 }
 var file_invora_parties_v2_service_proto_depIdxs = []int32{
-	4,  // 0: invora.parties.v2.LinkBillingCustomerResponse.party:type_name -> invora.parties.v2.Party
-	4,  // 1: invora.parties.v2.UnlinkBillingCustomerResponse.party:type_name -> invora.parties.v2.Party
-	5,  // 2: invora.parties.v2.PartiesService.List:input_type -> invora.parties.v2.ListRequest
-	6,  // 3: invora.parties.v2.PartiesService.Get:input_type -> invora.parties.v2.GetRequest
-	7,  // 4: invora.parties.v2.PartiesService.Create:input_type -> invora.parties.v2.CreateRequest
-	8,  // 5: invora.parties.v2.PartiesService.Update:input_type -> invora.parties.v2.UpdateRequest
-	9,  // 6: invora.parties.v2.PartiesService.Delete:input_type -> invora.parties.v2.DeleteRequest
-	10, // 7: invora.parties.v2.PartiesService.Import:input_type -> invora.parties.v2.ImportRequest
-	11, // 8: invora.parties.v2.PartiesService.Export:input_type -> invora.parties.v2.ExportRequest
-	0,  // 9: invora.parties.v2.PartiesService.LinkBillingCustomer:input_type -> invora.parties.v2.LinkBillingCustomerRequest
-	2,  // 10: invora.parties.v2.PartiesService.UnlinkBillingCustomer:input_type -> invora.parties.v2.UnlinkBillingCustomerRequest
-	12, // 11: invora.parties.v2.PartiesService.List:output_type -> invora.parties.v2.ListResponse
-	13, // 12: invora.parties.v2.PartiesService.Get:output_type -> invora.parties.v2.GetResponse
-	14, // 13: invora.parties.v2.PartiesService.Create:output_type -> invora.parties.v2.CreateResponse
-	15, // 14: invora.parties.v2.PartiesService.Update:output_type -> invora.parties.v2.UpdateResponse
-	16, // 15: invora.parties.v2.PartiesService.Delete:output_type -> invora.parties.v2.DeleteResponse
-	17, // 16: invora.parties.v2.PartiesService.Import:output_type -> invora.parties.v2.ImportResponse
-	18, // 17: invora.parties.v2.PartiesService.Export:output_type -> invora.parties.v2.ExportResponse
-	1,  // 18: invora.parties.v2.PartiesService.LinkBillingCustomer:output_type -> invora.parties.v2.LinkBillingCustomerResponse
-	3,  // 19: invora.parties.v2.PartiesService.UnlinkBillingCustomer:output_type -> invora.parties.v2.UnlinkBillingCustomerResponse
-	11, // [11:20] is the sub-list for method output_type
-	2,  // [2:11] is the sub-list for method input_type
-	2,  // [2:2] is the sub-list for extension type_name
-	2,  // [2:2] is the sub-list for extension extendee
-	0,  // [0:2] is the sub-list for field type_name
+	11, // 0: invora.parties.v2.LinkBillingCustomerResponse.party:type_name -> invora.parties.v2.Party
+	11, // 1: invora.parties.v2.UnlinkBillingCustomerResponse.party:type_name -> invora.parties.v2.Party
+	12, // 2: invora.parties.v2.BulkUpdateBillingConfigItem.billing_config:type_name -> invora.parties.v2.BillingCustomerConfig
+	13, // 3: invora.parties.v2.BulkUpdateBillingConfigItem.mask:type_name -> google.protobuf.FieldMask
+	4,  // 4: invora.parties.v2.BulkUpdateBillingConfigRequest.items:type_name -> invora.parties.v2.BulkUpdateBillingConfigItem
+	7,  // 5: invora.parties.v2.BulkUpdateBillingConfigResponse.items:type_name -> invora.parties.v2.BulkItemResult
+	8,  // 6: invora.parties.v2.BulkItemResult.error:type_name -> invora.parties.v2.BulkItemError
+	14, // 7: invora.parties.v2.PartiesService.List:input_type -> invora.parties.v2.ListRequest
+	15, // 8: invora.parties.v2.PartiesService.Get:input_type -> invora.parties.v2.GetRequest
+	16, // 9: invora.parties.v2.PartiesService.Create:input_type -> invora.parties.v2.CreateRequest
+	17, // 10: invora.parties.v2.PartiesService.Update:input_type -> invora.parties.v2.UpdateRequest
+	18, // 11: invora.parties.v2.PartiesService.Delete:input_type -> invora.parties.v2.DeleteRequest
+	19, // 12: invora.parties.v2.PartiesService.Import:input_type -> invora.parties.v2.ImportRequest
+	20, // 13: invora.parties.v2.PartiesService.Export:input_type -> invora.parties.v2.ExportRequest
+	0,  // 14: invora.parties.v2.PartiesService.LinkBillingCustomer:input_type -> invora.parties.v2.LinkBillingCustomerRequest
+	2,  // 15: invora.parties.v2.PartiesService.UnlinkBillingCustomer:input_type -> invora.parties.v2.UnlinkBillingCustomerRequest
+	5,  // 16: invora.parties.v2.PartiesService.BulkUpdateBillingConfig:input_type -> invora.parties.v2.BulkUpdateBillingConfigRequest
+	9,  // 17: invora.parties.v2.PartiesService.ListDunningCandidates:input_type -> invora.parties.v2.ListDunningCandidatesRequest
+	21, // 18: invora.parties.v2.PartiesService.List:output_type -> invora.parties.v2.ListResponse
+	22, // 19: invora.parties.v2.PartiesService.Get:output_type -> invora.parties.v2.GetResponse
+	23, // 20: invora.parties.v2.PartiesService.Create:output_type -> invora.parties.v2.CreateResponse
+	24, // 21: invora.parties.v2.PartiesService.Update:output_type -> invora.parties.v2.UpdateResponse
+	25, // 22: invora.parties.v2.PartiesService.Delete:output_type -> invora.parties.v2.DeleteResponse
+	26, // 23: invora.parties.v2.PartiesService.Import:output_type -> invora.parties.v2.ImportResponse
+	27, // 24: invora.parties.v2.PartiesService.Export:output_type -> invora.parties.v2.ExportResponse
+	1,  // 25: invora.parties.v2.PartiesService.LinkBillingCustomer:output_type -> invora.parties.v2.LinkBillingCustomerResponse
+	3,  // 26: invora.parties.v2.PartiesService.UnlinkBillingCustomer:output_type -> invora.parties.v2.UnlinkBillingCustomerResponse
+	6,  // 27: invora.parties.v2.PartiesService.BulkUpdateBillingConfig:output_type -> invora.parties.v2.BulkUpdateBillingConfigResponse
+	10, // 28: invora.parties.v2.PartiesService.ListDunningCandidates:output_type -> invora.parties.v2.ListDunningCandidatesResponse
+	18, // [18:29] is the sub-list for method output_type
+	7,  // [7:18] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_invora_parties_v2_service_proto_init() }
@@ -310,13 +757,18 @@ func file_invora_parties_v2_service_proto_init() {
 		return
 	}
 	file_invora_parties_v2_models_proto_init()
+	file_invora_parties_v2_service_proto_msgTypes[7].OneofWrappers = []any{
+		(*BulkItemResult_SuccessKey)(nil),
+		(*BulkItemResult_Error)(nil),
+	}
+	file_invora_parties_v2_service_proto_msgTypes[9].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_parties_v2_service_proto_rawDesc), len(file_invora_parties_v2_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

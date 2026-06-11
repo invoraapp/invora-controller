@@ -14,7 +14,6 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
-	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -27,376 +26,105 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Controls response detail level for List and Get operations.
-type View int32
+type CreditNoteExportType int32
 
 const (
-	View_VIEW_UNSPECIFIED View = 0
-	View_VIEW_BASIC       View = 1
-	View_VIEW_FULL        View = 2
+	CreditNoteExportType_CREDIT_NOTE_EXPORT_TYPE_UNSPECIFIED       CreditNoteExportType = 0
+	CreditNoteExportType_CREDIT_NOTE_EXPORT_TYPE_CREDIT_NOTE_ITEMS CreditNoteExportType = 1
+	CreditNoteExportType_CREDIT_NOTE_EXPORT_TYPE_CREDIT_NOTES      CreditNoteExportType = 2
 )
 
-// Enum value maps for View.
+// Enum value maps for CreditNoteExportType.
 var (
-	View_name = map[int32]string{
-		0: "VIEW_UNSPECIFIED",
-		1: "VIEW_BASIC",
-		2: "VIEW_FULL",
+	CreditNoteExportType_name = map[int32]string{
+		0: "CREDIT_NOTE_EXPORT_TYPE_UNSPECIFIED",
+		1: "CREDIT_NOTE_EXPORT_TYPE_CREDIT_NOTE_ITEMS",
+		2: "CREDIT_NOTE_EXPORT_TYPE_CREDIT_NOTES",
 	}
-	View_value = map[string]int32{
-		"VIEW_UNSPECIFIED": 0,
-		"VIEW_BASIC":       1,
-		"VIEW_FULL":        2,
+	CreditNoteExportType_value = map[string]int32{
+		"CREDIT_NOTE_EXPORT_TYPE_UNSPECIFIED":       0,
+		"CREDIT_NOTE_EXPORT_TYPE_CREDIT_NOTE_ITEMS": 1,
+		"CREDIT_NOTE_EXPORT_TYPE_CREDIT_NOTES":      2,
 	}
 )
 
-func (x View) Enum() *View {
-	p := new(View)
+func (x CreditNoteExportType) Enum() *CreditNoteExportType {
+	p := new(CreditNoteExportType)
 	*p = x
 	return p
 }
 
-func (x View) String() string {
+func (x CreditNoteExportType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (View) Descriptor() protoreflect.EnumDescriptor {
+func (CreditNoteExportType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_credit_notes_v2_service_proto_enumTypes[0].Descriptor()
 }
 
-func (View) Type() protoreflect.EnumType {
+func (CreditNoteExportType) Type() protoreflect.EnumType {
 	return &file_invora_billing_credit_notes_v2_service_proto_enumTypes[0]
 }
 
-func (x View) Number() protoreflect.EnumNumber {
+func (x CreditNoteExportType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use View.Descriptor instead.
-func (View) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use CreditNoteExportType.Descriptor instead.
+func (CreditNoteExportType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{0}
 }
 
-type CreditNoteExportTypeEnum int32
+type CreditNoteType int32
 
 const (
-	CreditNoteExportTypeEnum_CREDIT_NOTE_EXPORT_TYPE_ENUM_UNSPECIFIED       CreditNoteExportTypeEnum = 0
-	CreditNoteExportTypeEnum_CREDIT_NOTE_EXPORT_TYPE_ENUM_CREDIT_NOTE_ITEMS CreditNoteExportTypeEnum = 1
-	CreditNoteExportTypeEnum_CREDIT_NOTE_EXPORT_TYPE_ENUM_CREDIT_NOTES      CreditNoteExportTypeEnum = 2
+	CreditNoteType_CREDIT_NOTE_TYPE_UNSPECIFIED CreditNoteType = 0
+	CreditNoteType_CREDIT_NOTE_TYPE_CREDIT      CreditNoteType = 1
+	CreditNoteType_CREDIT_NOTE_TYPE_OFFSET      CreditNoteType = 2
+	CreditNoteType_CREDIT_NOTE_TYPE_REFUND      CreditNoteType = 3
 )
 
-// Enum value maps for CreditNoteExportTypeEnum.
+// Enum value maps for CreditNoteType.
 var (
-	CreditNoteExportTypeEnum_name = map[int32]string{
-		0: "CREDIT_NOTE_EXPORT_TYPE_ENUM_UNSPECIFIED",
-		1: "CREDIT_NOTE_EXPORT_TYPE_ENUM_CREDIT_NOTE_ITEMS",
-		2: "CREDIT_NOTE_EXPORT_TYPE_ENUM_CREDIT_NOTES",
+	CreditNoteType_name = map[int32]string{
+		0: "CREDIT_NOTE_TYPE_UNSPECIFIED",
+		1: "CREDIT_NOTE_TYPE_CREDIT",
+		2: "CREDIT_NOTE_TYPE_OFFSET",
+		3: "CREDIT_NOTE_TYPE_REFUND",
 	}
-	CreditNoteExportTypeEnum_value = map[string]int32{
-		"CREDIT_NOTE_EXPORT_TYPE_ENUM_UNSPECIFIED":       0,
-		"CREDIT_NOTE_EXPORT_TYPE_ENUM_CREDIT_NOTE_ITEMS": 1,
-		"CREDIT_NOTE_EXPORT_TYPE_ENUM_CREDIT_NOTES":      2,
+	CreditNoteType_value = map[string]int32{
+		"CREDIT_NOTE_TYPE_UNSPECIFIED": 0,
+		"CREDIT_NOTE_TYPE_CREDIT":      1,
+		"CREDIT_NOTE_TYPE_OFFSET":      2,
+		"CREDIT_NOTE_TYPE_REFUND":      3,
 	}
 )
 
-func (x CreditNoteExportTypeEnum) Enum() *CreditNoteExportTypeEnum {
-	p := new(CreditNoteExportTypeEnum)
+func (x CreditNoteType) Enum() *CreditNoteType {
+	p := new(CreditNoteType)
 	*p = x
 	return p
 }
 
-func (x CreditNoteExportTypeEnum) String() string {
+func (x CreditNoteType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (CreditNoteExportTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (CreditNoteType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_credit_notes_v2_service_proto_enumTypes[1].Descriptor()
 }
 
-func (CreditNoteExportTypeEnum) Type() protoreflect.EnumType {
+func (CreditNoteType) Type() protoreflect.EnumType {
 	return &file_invora_billing_credit_notes_v2_service_proto_enumTypes[1]
 }
 
-func (x CreditNoteExportTypeEnum) Number() protoreflect.EnumNumber {
+func (x CreditNoteType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use CreditNoteExportTypeEnum.Descriptor instead.
-func (CreditNoteExportTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use CreditNoteType.Descriptor instead.
+func (CreditNoteType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{1}
-}
-
-type CreditNoteTypeEnum int32
-
-const (
-	CreditNoteTypeEnum_CREDIT_NOTE_TYPE_ENUM_UNSPECIFIED CreditNoteTypeEnum = 0
-	CreditNoteTypeEnum_CREDIT_NOTE_TYPE_ENUM_CREDIT      CreditNoteTypeEnum = 1
-	CreditNoteTypeEnum_CREDIT_NOTE_TYPE_ENUM_OFFSET      CreditNoteTypeEnum = 2
-	CreditNoteTypeEnum_CREDIT_NOTE_TYPE_ENUM_REFUND      CreditNoteTypeEnum = 3
-)
-
-// Enum value maps for CreditNoteTypeEnum.
-var (
-	CreditNoteTypeEnum_name = map[int32]string{
-		0: "CREDIT_NOTE_TYPE_ENUM_UNSPECIFIED",
-		1: "CREDIT_NOTE_TYPE_ENUM_CREDIT",
-		2: "CREDIT_NOTE_TYPE_ENUM_OFFSET",
-		3: "CREDIT_NOTE_TYPE_ENUM_REFUND",
-	}
-	CreditNoteTypeEnum_value = map[string]int32{
-		"CREDIT_NOTE_TYPE_ENUM_UNSPECIFIED": 0,
-		"CREDIT_NOTE_TYPE_ENUM_CREDIT":      1,
-		"CREDIT_NOTE_TYPE_ENUM_OFFSET":      2,
-		"CREDIT_NOTE_TYPE_ENUM_REFUND":      3,
-	}
-)
-
-func (x CreditNoteTypeEnum) Enum() *CreditNoteTypeEnum {
-	p := new(CreditNoteTypeEnum)
-	*p = x
-	return p
-}
-
-func (x CreditNoteTypeEnum) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (CreditNoteTypeEnum) Descriptor() protoreflect.EnumDescriptor {
-	return file_invora_billing_credit_notes_v2_service_proto_enumTypes[2].Descriptor()
-}
-
-func (CreditNoteTypeEnum) Type() protoreflect.EnumType {
-	return &file_invora_billing_credit_notes_v2_service_proto_enumTypes[2]
-}
-
-func (x CreditNoteTypeEnum) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use CreditNoteTypeEnum.Descriptor instead.
-func (CreditNoteTypeEnum) EnumDescriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{2}
-}
-
-type GetRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Uniq ID of the credit note
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.credit_notes.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetRequest) Reset() {
-	*x = GetRequest{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetRequest) ProtoMessage() {}
-
-func (x *GetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
-func (*GetRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *GetRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *GetRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *GetRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type GetResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CreditNote    *v2.BillingCreditNote  `protobuf:"bytes,1,opt,name=credit_note,json=creditNote,proto3" json:"credit_note,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetResponse) Reset() {
-	*x = GetResponse{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetResponse) ProtoMessage() {}
-
-func (x *GetResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
-func (*GetResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *GetResponse) GetCreditNote() *v2.BillingCreditNote {
-	if x != nil {
-		return x.CreditNote
-	}
-	return nil
-}
-
-type GetEstimateRequest struct {
-	state     protoimpl.MessageState `protogen:"open.v1"`
-	InvoiceId string                 `protobuf:"bytes,1,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
-	Items     []*CreditNoteItemInput `protobuf:"bytes,2,rep,name=items,proto3" json:"items,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.credit_notes.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetEstimateRequest) Reset() {
-	*x = GetEstimateRequest{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetEstimateRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetEstimateRequest) ProtoMessage() {}
-
-func (x *GetEstimateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetEstimateRequest.ProtoReflect.Descriptor instead.
-func (*GetEstimateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *GetEstimateRequest) GetInvoiceId() string {
-	if x != nil {
-		return x.InvoiceId
-	}
-	return ""
-}
-
-func (x *GetEstimateRequest) GetItems() []*CreditNoteItemInput {
-	if x != nil {
-		return x.Items
-	}
-	return nil
-}
-
-func (x *GetEstimateRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *GetEstimateRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type GetEstimateResponse struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	CreditNoteEstimate *CreditNoteEstimate    `protobuf:"bytes,1,opt,name=credit_note_estimate,json=creditNoteEstimate,proto3" json:"credit_note_estimate,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *GetEstimateResponse) Reset() {
-	*x = GetEstimateResponse{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetEstimateResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetEstimateResponse) ProtoMessage() {}
-
-func (x *GetEstimateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetEstimateResponse.ProtoReflect.Descriptor instead.
-func (*GetEstimateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *GetEstimateResponse) GetCreditNoteEstimate() *CreditNoteEstimate {
-	if x != nil {
-		return x.CreditNoteEstimate
-	}
-	return nil
 }
 
 type ListRequest struct {
@@ -407,14 +135,14 @@ type ListRequest struct {
 	// Fields to return in the response.
 	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.credit_notes.v2.View" json:"view,omitempty"`
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListRequest) Reset() {
 	*x = ListRequest{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[4]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -426,7 +154,7 @@ func (x *ListRequest) String() string {
 func (*ListRequest) ProtoMessage() {}
 
 func (x *ListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[4]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -439,7 +167,7 @@ func (x *ListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRequest.ProtoReflect.Descriptor instead.
 func (*ListRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{4}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *ListRequest) GetFilter() *ListFilter {
@@ -470,25 +198,25 @@ func (x *ListRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	return nil
 }
 
-func (x *ListRequest) GetView() View {
+func (x *ListRequest) GetView() v2.View {
 	if x != nil {
 		return x.View
 	}
-	return View_VIEW_UNSPECIFIED
+	return v2.View(0)
 }
 
 type ListResponse struct {
 	state          protoimpl.MessageState  `protogen:"open.v1"`
 	Items          []*v2.BillingCreditNote `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
 	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
+	NextPageCursor *string                 `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
 func (x *ListResponse) Reset() {
 	*x = ListResponse{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[5]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -500,7 +228,7 @@ func (x *ListResponse) String() string {
 func (*ListResponse) ProtoMessage() {}
 
 func (x *ListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[5]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -513,7 +241,7 @@ func (x *ListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListResponse.ProtoReflect.Descriptor instead.
 func (*ListResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{5}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *ListResponse) GetItems() []*v2.BillingCreditNote {
@@ -530,11 +258,11 @@ func (x *ListResponse) GetTotalCount() uint64 {
 	return 0
 }
 
-func (x *ListResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
+func (x *ListResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
 	}
-	return nil
+	return ""
 }
 
 type ListFilter struct {
@@ -548,7 +276,7 @@ type ListFilter struct {
 
 func (x *ListFilter) Reset() {
 	*x = ListFilter{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[6]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -560,7 +288,7 @@ func (x *ListFilter) String() string {
 func (*ListFilter) ProtoMessage() {}
 
 func (x *ListFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[6]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -573,7 +301,7 @@ func (x *ListFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListFilter.ProtoReflect.Descriptor instead.
 func (*ListFilter) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{6}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *ListFilter) GetPart() *ListFilterPart {
@@ -591,15 +319,15 @@ func (x *ListFilter) GetTextSearch() string {
 }
 
 type ListCreditStatusFilter struct {
-	state         protoimpl.MessageState          `protogen:"open.v1"`
-	InValues      []v2.CreditNoteCreditStatusEnum `protobuf:"varint,1,rep,packed,name=in_values,json=inValues,proto3,enum=invora.billing.common.v2.CreditNoteCreditStatusEnum" json:"in_values,omitempty"`
+	state         protoimpl.MessageState      `protogen:"open.v1"`
+	InValues      []v2.CreditNoteCreditStatus `protobuf:"varint,1,rep,packed,name=in_values,json=inValues,proto3,enum=invora.billing.common.v2.CreditNoteCreditStatus" json:"in_values,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListCreditStatusFilter) Reset() {
 	*x = ListCreditStatusFilter{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[7]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -611,7 +339,7 @@ func (x *ListCreditStatusFilter) String() string {
 func (*ListCreditStatusFilter) ProtoMessage() {}
 
 func (x *ListCreditStatusFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[7]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -624,10 +352,10 @@ func (x *ListCreditStatusFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCreditStatusFilter.ProtoReflect.Descriptor instead.
 func (*ListCreditStatusFilter) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{7}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *ListCreditStatusFilter) GetInValues() []v2.CreditNoteCreditStatusEnum {
+func (x *ListCreditStatusFilter) GetInValues() []v2.CreditNoteCreditStatus {
 	if x != nil {
 		return x.InValues
 	}
@@ -635,15 +363,15 @@ func (x *ListCreditStatusFilter) GetInValues() []v2.CreditNoteCreditStatusEnum {
 }
 
 type ListReasonFilter struct {
-	state         protoimpl.MessageState    `protogen:"open.v1"`
-	InValues      []v2.CreditNoteReasonEnum `protobuf:"varint,1,rep,packed,name=in_values,json=inValues,proto3,enum=invora.billing.common.v2.CreditNoteReasonEnum" json:"in_values,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	InValues      []v2.CreditNoteReason  `protobuf:"varint,1,rep,packed,name=in_values,json=inValues,proto3,enum=invora.billing.common.v2.CreditNoteReason" json:"in_values,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListReasonFilter) Reset() {
 	*x = ListReasonFilter{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[8]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -655,7 +383,7 @@ func (x *ListReasonFilter) String() string {
 func (*ListReasonFilter) ProtoMessage() {}
 
 func (x *ListReasonFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[8]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -668,10 +396,10 @@ func (x *ListReasonFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListReasonFilter.ProtoReflect.Descriptor instead.
 func (*ListReasonFilter) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{8}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *ListReasonFilter) GetInValues() []v2.CreditNoteReasonEnum {
+func (x *ListReasonFilter) GetInValues() []v2.CreditNoteReason {
 	if x != nil {
 		return x.InValues
 	}
@@ -679,15 +407,15 @@ func (x *ListReasonFilter) GetInValues() []v2.CreditNoteReasonEnum {
 }
 
 type ListRefundStatusFilter struct {
-	state         protoimpl.MessageState          `protogen:"open.v1"`
-	InValues      []v2.CreditNoteRefundStatusEnum `protobuf:"varint,1,rep,packed,name=in_values,json=inValues,proto3,enum=invora.billing.common.v2.CreditNoteRefundStatusEnum" json:"in_values,omitempty"`
+	state         protoimpl.MessageState      `protogen:"open.v1"`
+	InValues      []v2.CreditNoteRefundStatus `protobuf:"varint,1,rep,packed,name=in_values,json=inValues,proto3,enum=invora.billing.common.v2.CreditNoteRefundStatus" json:"in_values,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListRefundStatusFilter) Reset() {
 	*x = ListRefundStatusFilter{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[9]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -699,7 +427,7 @@ func (x *ListRefundStatusFilter) String() string {
 func (*ListRefundStatusFilter) ProtoMessage() {}
 
 func (x *ListRefundStatusFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[9]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -712,10 +440,10 @@ func (x *ListRefundStatusFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRefundStatusFilter.ProtoReflect.Descriptor instead.
 func (*ListRefundStatusFilter) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{9}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *ListRefundStatusFilter) GetInValues() []v2.CreditNoteRefundStatusEnum {
+func (x *ListRefundStatusFilter) GetInValues() []v2.CreditNoteRefundStatus {
 	if x != nil {
 		return x.InValues
 	}
@@ -724,14 +452,14 @@ func (x *ListRefundStatusFilter) GetInValues() []v2.CreditNoteRefundStatusEnum {
 
 type ListTypesFilter struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	InValues      []CreditNoteTypeEnum   `protobuf:"varint,1,rep,packed,name=in_values,json=inValues,proto3,enum=invora.billing.credit_notes.v2.CreditNoteTypeEnum" json:"in_values,omitempty"`
+	InValues      []CreditNoteType       `protobuf:"varint,1,rep,packed,name=in_values,json=inValues,proto3,enum=invora.billing.credit_notes.v2.CreditNoteType" json:"in_values,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListTypesFilter) Reset() {
 	*x = ListTypesFilter{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[10]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -743,7 +471,7 @@ func (x *ListTypesFilter) String() string {
 func (*ListTypesFilter) ProtoMessage() {}
 
 func (x *ListTypesFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[10]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -756,10 +484,10 @@ func (x *ListTypesFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListTypesFilter.ProtoReflect.Descriptor instead.
 func (*ListTypesFilter) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{10}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *ListTypesFilter) GetInValues() []CreditNoteTypeEnum {
+func (x *ListTypesFilter) GetInValues() []CreditNoteType {
 	if x != nil {
 		return x.InValues
 	}
@@ -790,7 +518,7 @@ type ListFilterPart struct {
 
 func (x *ListFilterPart) Reset() {
 	*x = ListFilterPart{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[11]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -802,7 +530,7 @@ func (x *ListFilterPart) String() string {
 func (*ListFilterPart) ProtoMessage() {}
 
 func (x *ListFilterPart) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[11]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -815,7 +543,7 @@ func (x *ListFilterPart) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListFilterPart.ProtoReflect.Descriptor instead.
 func (*ListFilterPart) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{11}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ListFilterPart) GetType() isListFilterPart_Type {
@@ -1033,7 +761,7 @@ type ListSort struct {
 
 func (x *ListSort) Reset() {
 	*x = ListSort{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[12]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1045,7 +773,7 @@ func (x *ListSort) String() string {
 func (*ListSort) ProtoMessage() {}
 
 func (x *ListSort) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[12]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1058,7 +786,7 @@ func (x *ListSort) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSort.ProtoReflect.Descriptor instead.
 func (*ListSort) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{12}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ListSort) GetRules() []*ListSortRule {
@@ -1081,7 +809,7 @@ type ListSortRule struct {
 
 func (x *ListSortRule) Reset() {
 	*x = ListSortRule{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[13]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1093,7 +821,7 @@ func (x *ListSortRule) String() string {
 func (*ListSortRule) ProtoMessage() {}
 
 func (x *ListSortRule) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[13]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1106,7 +834,7 @@ func (x *ListSortRule) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSortRule.ProtoReflect.Descriptor instead.
 func (*ListSortRule) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{13}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ListSortRule) GetType() isListSortRule_Type {
@@ -1150,34 +878,32 @@ func (*ListSortRule_CreatedAt) isListSortRule_Type() {}
 
 func (*ListSortRule_IssuingDate) isListSortRule_Type() {}
 
-type InvoiceCreditNotesRequest struct {
-	state      protoimpl.MessageState `protogen:"open.v1"`
-	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
-	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
-	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
+type GetRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Id    string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Fields to return in the response.
 	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.credit_notes.v2.View" json:"view,omitempty"`
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *InvoiceCreditNotesRequest) Reset() {
-	*x = InvoiceCreditNotesRequest{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[14]
+func (x *GetRequest) Reset() {
+	*x = GetRequest{}
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *InvoiceCreditNotesRequest) String() string {
+func (x *GetRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*InvoiceCreditNotesRequest) ProtoMessage() {}
+func (*GetRequest) ProtoMessage() {}
 
-func (x *InvoiceCreditNotesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[14]
+func (x *GetRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1188,70 +914,54 @@ func (x *InvoiceCreditNotesRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use InvoiceCreditNotesRequest.ProtoReflect.Descriptor instead.
-func (*InvoiceCreditNotesRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{14}
+// Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
+func (*GetRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *InvoiceCreditNotesRequest) GetFilter() *ListFilter {
+func (x *GetRequest) GetId() string {
 	if x != nil {
-		return x.Filter
+		return x.Id
 	}
-	return nil
+	return ""
 }
 
-func (x *InvoiceCreditNotesRequest) GetSort() *ListSort {
-	if x != nil {
-		return x.Sort
-	}
-	return nil
-}
-
-func (x *InvoiceCreditNotesRequest) GetPagination() *kernel.PaginationInfo {
-	if x != nil {
-		return x.Pagination
-	}
-	return nil
-}
-
-func (x *InvoiceCreditNotesRequest) GetReadMask() *fieldmaskpb.FieldMask {
+func (x *GetRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
 	return nil
 }
 
-func (x *InvoiceCreditNotesRequest) GetView() View {
+func (x *GetRequest) GetView() v2.View {
 	if x != nil {
 		return x.View
 	}
-	return View_VIEW_UNSPECIFIED
+	return v2.View(0)
 }
 
-type InvoiceCreditNotesResponse struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Items          []*v2.BillingCreditNote `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+type GetResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CreditNote    *v2.BillingCreditNote  `protobuf:"bytes,1,opt,name=credit_note,json=creditNote,proto3" json:"credit_note,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
-func (x *InvoiceCreditNotesResponse) Reset() {
-	*x = InvoiceCreditNotesResponse{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[15]
+func (x *GetResponse) Reset() {
+	*x = GetResponse{}
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *InvoiceCreditNotesResponse) String() string {
+func (x *GetResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*InvoiceCreditNotesResponse) ProtoMessage() {}
+func (*GetResponse) ProtoMessage() {}
 
-func (x *InvoiceCreditNotesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[15]
+func (x *GetResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1262,42 +972,35 @@ func (x *InvoiceCreditNotesResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use InvoiceCreditNotesResponse.ProtoReflect.Descriptor instead.
-func (*InvoiceCreditNotesResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{15}
+// Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
+func (*GetResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *InvoiceCreditNotesResponse) GetItems() []*v2.BillingCreditNote {
+func (x *GetResponse) GetCreditNote() *v2.BillingCreditNote {
 	if x != nil {
-		return x.Items
-	}
-	return nil
-}
-
-func (x *InvoiceCreditNotesResponse) GetTotalCount() uint64 {
-	if x != nil {
-		return x.TotalCount
-	}
-	return 0
-}
-
-func (x *InvoiceCreditNotesResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
+		return x.CreditNote
 	}
 	return nil
 }
 
 type CreateRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *CreateCreditNoteInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	CreditAmountCents *int64                 `protobuf:"varint,1,opt,name=credit_amount_cents,json=creditAmountCents,proto3,oneof" json:"credit_amount_cents,omitempty"`
+	Description       *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	InvoiceId         string                 `protobuf:"bytes,3,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
+	Items             []*CreditNoteItemInput `protobuf:"bytes,4,rep,name=items,proto3" json:"items,omitempty"`
+	Metadata          []*v2.MetadataInput    `protobuf:"bytes,5,rep,name=metadata,proto3" json:"metadata,omitempty"`
+	OffsetAmountCents *int64                 `protobuf:"varint,6,opt,name=offset_amount_cents,json=offsetAmountCents,proto3,oneof" json:"offset_amount_cents,omitempty"`
+	Reason            v2.CreditNoteReason    `protobuf:"varint,7,opt,name=reason,proto3,enum=invora.billing.common.v2.CreditNoteReason" json:"reason,omitempty"`
+	RefundAmountCents *int64                 `protobuf:"varint,8,opt,name=refund_amount_cents,json=refundAmountCents,proto3,oneof" json:"refund_amount_cents,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *CreateRequest) Reset() {
 	*x = CreateRequest{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[16]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1309,7 +1012,7 @@ func (x *CreateRequest) String() string {
 func (*CreateRequest) ProtoMessage() {}
 
 func (x *CreateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[16]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1322,14 +1025,63 @@ func (x *CreateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateRequest.ProtoReflect.Descriptor instead.
 func (*CreateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{16}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *CreateRequest) GetInput() *CreateCreditNoteInput {
+func (x *CreateRequest) GetCreditAmountCents() int64 {
+	if x != nil && x.CreditAmountCents != nil {
+		return *x.CreditAmountCents
+	}
+	return 0
+}
+
+func (x *CreateRequest) GetDescription() string {
+	if x != nil && x.Description != nil {
+		return *x.Description
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetInvoiceId() string {
 	if x != nil {
-		return x.Input
+		return x.InvoiceId
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetItems() []*CreditNoteItemInput {
+	if x != nil {
+		return x.Items
 	}
 	return nil
+}
+
+func (x *CreateRequest) GetMetadata() []*v2.MetadataInput {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetOffsetAmountCents() int64 {
+	if x != nil && x.OffsetAmountCents != nil {
+		return *x.OffsetAmountCents
+	}
+	return 0
+}
+
+func (x *CreateRequest) GetReason() v2.CreditNoteReason {
+	if x != nil {
+		return x.Reason
+	}
+	return v2.CreditNoteReason(0)
+}
+
+func (x *CreateRequest) GetRefundAmountCents() int64 {
+	if x != nil && x.RefundAmountCents != nil {
+		return *x.RefundAmountCents
+	}
+	return 0
 }
 
 type CreateResponse struct {
@@ -1341,7 +1093,7 @@ type CreateResponse struct {
 
 func (x *CreateResponse) Reset() {
 	*x = CreateResponse{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[17]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1353,7 +1105,7 @@ func (x *CreateResponse) String() string {
 func (*CreateResponse) ProtoMessage() {}
 
 func (x *CreateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[17]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1366,7 +1118,7 @@ func (x *CreateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateResponse.ProtoReflect.Descriptor instead.
 func (*CreateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{17}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *CreateResponse) GetCreditNote() *v2.BillingCreditNote {
@@ -1376,544 +1128,19 @@ func (x *CreateResponse) GetCreditNote() *v2.BillingCreditNote {
 	return nil
 }
 
-type CreatesDataExportRequest struct {
-	state         protoimpl.MessageState             `protogen:"open.v1"`
-	Input         *CreateDataExportsCreditNotesInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreatesDataExportRequest) Reset() {
-	*x = CreatesDataExportRequest{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[18]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreatesDataExportRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreatesDataExportRequest) ProtoMessage() {}
-
-func (x *CreatesDataExportRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[18]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreatesDataExportRequest.ProtoReflect.Descriptor instead.
-func (*CreatesDataExportRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{18}
-}
-
-func (x *CreatesDataExportRequest) GetInput() *CreateDataExportsCreditNotesInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type CreatesDataExportResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DataExport    *v2.DataExport         `protobuf:"bytes,1,opt,name=data_export,json=dataExport,proto3" json:"data_export,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreatesDataExportResponse) Reset() {
-	*x = CreatesDataExportResponse{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[19]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreatesDataExportResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreatesDataExportResponse) ProtoMessage() {}
-
-func (x *CreatesDataExportResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[19]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreatesDataExportResponse.ProtoReflect.Descriptor instead.
-func (*CreatesDataExportResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{19}
-}
-
-func (x *CreatesDataExportResponse) GetDataExport() *v2.DataExport {
-	if x != nil {
-		return x.DataExport
-	}
-	return nil
-}
-
-type DownloadCreditNoteRequest struct {
-	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Input         *DownloadCreditNoteInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DownloadCreditNoteRequest) Reset() {
-	*x = DownloadCreditNoteRequest{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[20]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DownloadCreditNoteRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DownloadCreditNoteRequest) ProtoMessage() {}
-
-func (x *DownloadCreditNoteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[20]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DownloadCreditNoteRequest.ProtoReflect.Descriptor instead.
-func (*DownloadCreditNoteRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{20}
-}
-
-func (x *DownloadCreditNoteRequest) GetInput() *DownloadCreditNoteInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type DownloadCreditNoteResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CreditNote    *v2.BillingCreditNote  `protobuf:"bytes,1,opt,name=credit_note,json=creditNote,proto3" json:"credit_note,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DownloadCreditNoteResponse) Reset() {
-	*x = DownloadCreditNoteResponse{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[21]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DownloadCreditNoteResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DownloadCreditNoteResponse) ProtoMessage() {}
-
-func (x *DownloadCreditNoteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[21]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DownloadCreditNoteResponse.ProtoReflect.Descriptor instead.
-func (*DownloadCreditNoteResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{21}
-}
-
-func (x *DownloadCreditNoteResponse) GetCreditNote() *v2.BillingCreditNote {
-	if x != nil {
-		return x.CreditNote
-	}
-	return nil
-}
-
-type DownloadXmlCreditNoteRequest struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	Input         *DownloadXmlCreditNoteInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DownloadXmlCreditNoteRequest) Reset() {
-	*x = DownloadXmlCreditNoteRequest{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[22]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DownloadXmlCreditNoteRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DownloadXmlCreditNoteRequest) ProtoMessage() {}
-
-func (x *DownloadXmlCreditNoteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[22]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DownloadXmlCreditNoteRequest.ProtoReflect.Descriptor instead.
-func (*DownloadXmlCreditNoteRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{22}
-}
-
-func (x *DownloadXmlCreditNoteRequest) GetInput() *DownloadXmlCreditNoteInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type DownloadXmlCreditNoteResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CreditNote    *v2.BillingCreditNote  `protobuf:"bytes,1,opt,name=credit_note,json=creditNote,proto3" json:"credit_note,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DownloadXmlCreditNoteResponse) Reset() {
-	*x = DownloadXmlCreditNoteResponse{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[23]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DownloadXmlCreditNoteResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DownloadXmlCreditNoteResponse) ProtoMessage() {}
-
-func (x *DownloadXmlCreditNoteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[23]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DownloadXmlCreditNoteResponse.ProtoReflect.Descriptor instead.
-func (*DownloadXmlCreditNoteResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{23}
-}
-
-func (x *DownloadXmlCreditNoteResponse) GetCreditNote() *v2.BillingCreditNote {
-	if x != nil {
-		return x.CreditNote
-	}
-	return nil
-}
-
-type ResendCreditNoteEmailRequest struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	Input         *ResendCreditNoteEmailInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ResendCreditNoteEmailRequest) Reset() {
-	*x = ResendCreditNoteEmailRequest{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[24]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ResendCreditNoteEmailRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ResendCreditNoteEmailRequest) ProtoMessage() {}
-
-func (x *ResendCreditNoteEmailRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[24]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ResendCreditNoteEmailRequest.ProtoReflect.Descriptor instead.
-func (*ResendCreditNoteEmailRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{24}
-}
-
-func (x *ResendCreditNoteEmailRequest) GetInput() *ResendCreditNoteEmailInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type ResendCreditNoteEmailResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CreditNote    *v2.BillingCreditNote  `protobuf:"bytes,1,opt,name=credit_note,json=creditNote,proto3" json:"credit_note,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ResendCreditNoteEmailResponse) Reset() {
-	*x = ResendCreditNoteEmailResponse{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[25]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ResendCreditNoteEmailResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ResendCreditNoteEmailResponse) ProtoMessage() {}
-
-func (x *ResendCreditNoteEmailResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[25]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ResendCreditNoteEmailResponse.ProtoReflect.Descriptor instead.
-func (*ResendCreditNoteEmailResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{25}
-}
-
-func (x *ResendCreditNoteEmailResponse) GetCreditNote() *v2.BillingCreditNote {
-	if x != nil {
-		return x.CreditNote
-	}
-	return nil
-}
-
-type RetryTaxReportingRequest struct {
-	state         protoimpl.MessageState  `protogen:"open.v1"`
-	Input         *RetryTaxReportingInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RetryTaxReportingRequest) Reset() {
-	*x = RetryTaxReportingRequest{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[26]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RetryTaxReportingRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RetryTaxReportingRequest) ProtoMessage() {}
-
-func (x *RetryTaxReportingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[26]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RetryTaxReportingRequest.ProtoReflect.Descriptor instead.
-func (*RetryTaxReportingRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{26}
-}
-
-func (x *RetryTaxReportingRequest) GetInput() *RetryTaxReportingInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type RetryTaxReportingResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CreditNote    *v2.BillingCreditNote  `protobuf:"bytes,1,opt,name=credit_note,json=creditNote,proto3" json:"credit_note,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RetryTaxReportingResponse) Reset() {
-	*x = RetryTaxReportingResponse{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[27]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RetryTaxReportingResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RetryTaxReportingResponse) ProtoMessage() {}
-
-func (x *RetryTaxReportingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[27]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RetryTaxReportingResponse.ProtoReflect.Descriptor instead.
-func (*RetryTaxReportingResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{27}
-}
-
-func (x *RetryTaxReportingResponse) GetCreditNote() *v2.BillingCreditNote {
-	if x != nil {
-		return x.CreditNote
-	}
-	return nil
-}
-
-type SyncIntegrationCreditNoteRequest struct {
-	state         protoimpl.MessageState          `protogen:"open.v1"`
-	Input         *SyncIntegrationCreditNoteInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SyncIntegrationCreditNoteRequest) Reset() {
-	*x = SyncIntegrationCreditNoteRequest{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[28]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SyncIntegrationCreditNoteRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SyncIntegrationCreditNoteRequest) ProtoMessage() {}
-
-func (x *SyncIntegrationCreditNoteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[28]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SyncIntegrationCreditNoteRequest.ProtoReflect.Descriptor instead.
-func (*SyncIntegrationCreditNoteRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{28}
-}
-
-func (x *SyncIntegrationCreditNoteRequest) GetInput() *SyncIntegrationCreditNoteInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type SyncIntegrationCreditNoteResponse struct {
-	state                            protoimpl.MessageState            `protogen:"open.v1"`
-	SyncIntegrationCreditNotePayload *SyncIntegrationCreditNotePayload `protobuf:"bytes,1,opt,name=sync_integration_credit_note_payload,json=syncIntegrationCreditNotePayload,proto3" json:"sync_integration_credit_note_payload,omitempty"`
-	unknownFields                    protoimpl.UnknownFields
-	sizeCache                        protoimpl.SizeCache
-}
-
-func (x *SyncIntegrationCreditNoteResponse) Reset() {
-	*x = SyncIntegrationCreditNoteResponse{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[29]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SyncIntegrationCreditNoteResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SyncIntegrationCreditNoteResponse) ProtoMessage() {}
-
-func (x *SyncIntegrationCreditNoteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[29]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SyncIntegrationCreditNoteResponse.ProtoReflect.Descriptor instead.
-func (*SyncIntegrationCreditNoteResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{29}
-}
-
-func (x *SyncIntegrationCreditNoteResponse) GetSyncIntegrationCreditNotePayload() *SyncIntegrationCreditNotePayload {
-	if x != nil {
-		return x.SyncIntegrationCreditNotePayload
-	}
-	return nil
-}
-
 type UpdateRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *UpdateCreditNoteInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	Id            string                     `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Metadata      []*v2.MetadataInput        `protobuf:"bytes,2,rep,name=metadata,proto3" json:"metadata,omitempty"`
+	RefundStatus  *v2.CreditNoteRefundStatus `protobuf:"varint,3,opt,name=refund_status,json=refundStatus,proto3,enum=invora.billing.common.v2.CreditNoteRefundStatus,oneof" json:"refund_status,omitempty"`
+	UpdateMask    *fieldmaskpb.FieldMask     `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *UpdateRequest) Reset() {
 	*x = UpdateRequest{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[30]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1925,7 +1152,7 @@ func (x *UpdateRequest) String() string {
 func (*UpdateRequest) ProtoMessage() {}
 
 func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[30]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1938,12 +1165,33 @@ func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateRequest.ProtoReflect.Descriptor instead.
 func (*UpdateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{30}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{14}
 }
 
-func (x *UpdateRequest) GetInput() *UpdateCreditNoteInput {
+func (x *UpdateRequest) GetId() string {
 	if x != nil {
-		return x.Input
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetMetadata() []*v2.MetadataInput {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetRefundStatus() v2.CreditNoteRefundStatus {
+	if x != nil && x.RefundStatus != nil {
+		return *x.RefundStatus
+	}
+	return v2.CreditNoteRefundStatus(0)
+}
+
+func (x *UpdateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
 	}
 	return nil
 }
@@ -1957,7 +1205,7 @@ type UpdateResponse struct {
 
 func (x *UpdateResponse) Reset() {
 	*x = UpdateResponse{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[31]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1969,7 +1217,7 @@ func (x *UpdateResponse) String() string {
 func (*UpdateResponse) ProtoMessage() {}
 
 func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[31]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1982,7 +1230,7 @@ func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateResponse.ProtoReflect.Descriptor instead.
 func (*UpdateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{31}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *UpdateResponse) GetCreditNote() *v2.BillingCreditNote {
@@ -1992,16 +1240,452 @@ func (x *UpdateResponse) GetCreditNote() *v2.BillingCreditNote {
 	return nil
 }
 
+type GetEstimateRequest struct {
+	state     protoimpl.MessageState `protogen:"open.v1"`
+	InvoiceId string                 `protobuf:"bytes,1,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
+	Items     []*CreditNoteItemInput `protobuf:"bytes,2,rep,name=items,proto3" json:"items,omitempty"`
+	// Fields to return in the response.
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	// Response detail level.
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetEstimateRequest) Reset() {
+	*x = GetEstimateRequest{}
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetEstimateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetEstimateRequest) ProtoMessage() {}
+
+func (x *GetEstimateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetEstimateRequest.ProtoReflect.Descriptor instead.
+func (*GetEstimateRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *GetEstimateRequest) GetInvoiceId() string {
+	if x != nil {
+		return x.InvoiceId
+	}
+	return ""
+}
+
+func (x *GetEstimateRequest) GetItems() []*CreditNoteItemInput {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+func (x *GetEstimateRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
+	}
+	return nil
+}
+
+func (x *GetEstimateRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
+}
+
+type GetEstimateResponse struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	CreditNoteEstimate *CreditNoteEstimate    `protobuf:"bytes,1,opt,name=credit_note_estimate,json=creditNoteEstimate,proto3" json:"credit_note_estimate,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *GetEstimateResponse) Reset() {
+	*x = GetEstimateResponse{}
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetEstimateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetEstimateResponse) ProtoMessage() {}
+
+func (x *GetEstimateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetEstimateResponse.ProtoReflect.Descriptor instead.
+func (*GetEstimateResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *GetEstimateResponse) GetCreditNoteEstimate() *CreditNoteEstimate {
+	if x != nil {
+		return x.CreditNoteEstimate
+	}
+	return nil
+}
+
+type ListInvoiceCreditNotesRequest struct {
+	state      protoimpl.MessageState `protogen:"open.v1"`
+	InvoiceId  string                 `protobuf:"bytes,1,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
+	Filter     *ListFilter            `protobuf:"bytes,2,opt,name=filter,proto3" json:"filter,omitempty"`
+	Sort       *ListSort              `protobuf:"bytes,3,opt,name=sort,proto3" json:"sort,omitempty"`
+	Pagination *kernel.PaginationInfo `protobuf:"bytes,4,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// Fields to return in the response.
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	// Response detail level.
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListInvoiceCreditNotesRequest) Reset() {
+	*x = ListInvoiceCreditNotesRequest{}
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListInvoiceCreditNotesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListInvoiceCreditNotesRequest) ProtoMessage() {}
+
+func (x *ListInvoiceCreditNotesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListInvoiceCreditNotesRequest.ProtoReflect.Descriptor instead.
+func (*ListInvoiceCreditNotesRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *ListInvoiceCreditNotesRequest) GetInvoiceId() string {
+	if x != nil {
+		return x.InvoiceId
+	}
+	return ""
+}
+
+func (x *ListInvoiceCreditNotesRequest) GetFilter() *ListFilter {
+	if x != nil {
+		return x.Filter
+	}
+	return nil
+}
+
+func (x *ListInvoiceCreditNotesRequest) GetSort() *ListSort {
+	if x != nil {
+		return x.Sort
+	}
+	return nil
+}
+
+func (x *ListInvoiceCreditNotesRequest) GetPagination() *kernel.PaginationInfo {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *ListInvoiceCreditNotesRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
+	}
+	return nil
+}
+
+func (x *ListInvoiceCreditNotesRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
+}
+
+type ListInvoiceCreditNotesResponse struct {
+	state          protoimpl.MessageState  `protogen:"open.v1"`
+	Items          []*v2.BillingCreditNote `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                 `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ListInvoiceCreditNotesResponse) Reset() {
+	*x = ListInvoiceCreditNotesResponse{}
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListInvoiceCreditNotesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListInvoiceCreditNotesResponse) ProtoMessage() {}
+
+func (x *ListInvoiceCreditNotesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListInvoiceCreditNotesResponse.ProtoReflect.Descriptor instead.
+func (*ListInvoiceCreditNotesResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *ListInvoiceCreditNotesResponse) GetItems() []*v2.BillingCreditNote {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+func (x *ListInvoiceCreditNotesResponse) GetTotalCount() uint64 {
+	if x != nil {
+		return x.TotalCount
+	}
+	return 0
+}
+
+func (x *ListInvoiceCreditNotesResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
+	}
+	return ""
+}
+
+type DownloadRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DownloadRequest) Reset() {
+	*x = DownloadRequest{}
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DownloadRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DownloadRequest) ProtoMessage() {}
+
+func (x *DownloadRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DownloadRequest.ProtoReflect.Descriptor instead.
+func (*DownloadRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *DownloadRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type DownloadResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CreditNote    *v2.BillingCreditNote  `protobuf:"bytes,1,opt,name=credit_note,json=creditNote,proto3" json:"credit_note,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DownloadResponse) Reset() {
+	*x = DownloadResponse{}
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DownloadResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DownloadResponse) ProtoMessage() {}
+
+func (x *DownloadResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DownloadResponse.ProtoReflect.Descriptor instead.
+func (*DownloadResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *DownloadResponse) GetCreditNote() *v2.BillingCreditNote {
+	if x != nil {
+		return x.CreditNote
+	}
+	return nil
+}
+
+type DownloadXmlRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DownloadXmlRequest) Reset() {
+	*x = DownloadXmlRequest{}
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DownloadXmlRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DownloadXmlRequest) ProtoMessage() {}
+
+func (x *DownloadXmlRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DownloadXmlRequest.ProtoReflect.Descriptor instead.
+func (*DownloadXmlRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *DownloadXmlRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type DownloadXmlResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CreditNote    *v2.BillingCreditNote  `protobuf:"bytes,1,opt,name=credit_note,json=creditNote,proto3" json:"credit_note,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DownloadXmlResponse) Reset() {
+	*x = DownloadXmlResponse{}
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DownloadXmlResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DownloadXmlResponse) ProtoMessage() {}
+
+func (x *DownloadXmlResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DownloadXmlResponse.ProtoReflect.Descriptor instead.
+func (*DownloadXmlResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *DownloadXmlResponse) GetCreditNote() *v2.BillingCreditNote {
+	if x != nil {
+		return x.CreditNote
+	}
+	return nil
+}
+
 type VoidCreditNoteRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *VoidCreditNoteInput   `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *VoidCreditNoteRequest) Reset() {
 	*x = VoidCreditNoteRequest{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[32]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2013,7 +1697,7 @@ func (x *VoidCreditNoteRequest) String() string {
 func (*VoidCreditNoteRequest) ProtoMessage() {}
 
 func (x *VoidCreditNoteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[32]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2026,14 +1710,14 @@ func (x *VoidCreditNoteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VoidCreditNoteRequest.ProtoReflect.Descriptor instead.
 func (*VoidCreditNoteRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{32}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{24}
 }
 
-func (x *VoidCreditNoteRequest) GetInput() *VoidCreditNoteInput {
+func (x *VoidCreditNoteRequest) GetId() string {
 	if x != nil {
-		return x.Input
+		return x.Id
 	}
-	return nil
+	return ""
 }
 
 type VoidCreditNoteResponse struct {
@@ -2045,7 +1729,7 @@ type VoidCreditNoteResponse struct {
 
 func (x *VoidCreditNoteResponse) Reset() {
 	*x = VoidCreditNoteResponse{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[33]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2057,7 +1741,7 @@ func (x *VoidCreditNoteResponse) String() string {
 func (*VoidCreditNoteResponse) ProtoMessage() {}
 
 func (x *VoidCreditNoteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[33]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2070,7 +1754,7 @@ func (x *VoidCreditNoteResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VoidCreditNoteResponse.ProtoReflect.Descriptor instead.
 func (*VoidCreditNoteResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{33}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *VoidCreditNoteResponse) GetCreditNote() *v2.BillingCreditNote {
@@ -2080,277 +1764,35 @@ func (x *VoidCreditNoteResponse) GetCreditNote() *v2.BillingCreditNote {
 	return nil
 }
 
-// Autogenerated input type of VoidCreditNote
-type VoidCreditNoteInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *VoidCreditNoteInput) Reset() {
-	*x = VoidCreditNoteInput{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[34]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *VoidCreditNoteInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*VoidCreditNoteInput) ProtoMessage() {}
-
-func (x *VoidCreditNoteInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[34]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use VoidCreditNoteInput.ProtoReflect.Descriptor instead.
-func (*VoidCreditNoteInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{34}
-}
-
-func (x *VoidCreditNoteInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-// Update Credit Note input arguments
-type UpdateCreditNoteInput struct {
-	state         protoimpl.MessageState         `protogen:"open.v1"`
-	Id            string                         `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Metadata      []*v2.MetadataInput            `protobuf:"bytes,2,rep,name=metadata,proto3" json:"metadata,omitempty"`
-	RefundStatus  *v2.CreditNoteRefundStatusEnum `protobuf:"varint,3,opt,name=refund_status,json=refundStatus,proto3,enum=invora.billing.common.v2.CreditNoteRefundStatusEnum,oneof" json:"refund_status,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateCreditNoteInput) Reset() {
-	*x = UpdateCreditNoteInput{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[35]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateCreditNoteInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateCreditNoteInput) ProtoMessage() {}
-
-func (x *UpdateCreditNoteInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[35]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateCreditNoteInput.ProtoReflect.Descriptor instead.
-func (*UpdateCreditNoteInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{35}
-}
-
-func (x *UpdateCreditNoteInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *UpdateCreditNoteInput) GetMetadata() []*v2.MetadataInput {
-	if x != nil {
-		return x.Metadata
-	}
-	return nil
-}
-
-func (x *UpdateCreditNoteInput) GetRefundStatus() v2.CreditNoteRefundStatusEnum {
-	if x != nil && x.RefundStatus != nil {
-		return *x.RefundStatus
-	}
-	return v2.CreditNoteRefundStatusEnum(0)
-}
-
-// Autogenerated input type of SyncIntegrationCreditNote
-type SyncIntegrationCreditNoteInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CreditNoteId  string                 `protobuf:"bytes,1,opt,name=credit_note_id,json=creditNoteId,proto3" json:"credit_note_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SyncIntegrationCreditNoteInput) Reset() {
-	*x = SyncIntegrationCreditNoteInput{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[36]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SyncIntegrationCreditNoteInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SyncIntegrationCreditNoteInput) ProtoMessage() {}
-
-func (x *SyncIntegrationCreditNoteInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[36]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SyncIntegrationCreditNoteInput.ProtoReflect.Descriptor instead.
-func (*SyncIntegrationCreditNoteInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{36}
-}
-
-func (x *SyncIntegrationCreditNoteInput) GetCreditNoteId() string {
-	if x != nil {
-		return x.CreditNoteId
-	}
-	return ""
-}
-
-// Autogenerated return type of SyncIntegrationCreditNote.
-type SyncIntegrationCreditNotePayload struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CreditNoteId  *string                `protobuf:"bytes,1,opt,name=credit_note_id,json=creditNoteId,proto3,oneof" json:"credit_note_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SyncIntegrationCreditNotePayload) Reset() {
-	*x = SyncIntegrationCreditNotePayload{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[37]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SyncIntegrationCreditNotePayload) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SyncIntegrationCreditNotePayload) ProtoMessage() {}
-
-func (x *SyncIntegrationCreditNotePayload) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[37]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SyncIntegrationCreditNotePayload.ProtoReflect.Descriptor instead.
-func (*SyncIntegrationCreditNotePayload) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{37}
-}
-
-func (x *SyncIntegrationCreditNotePayload) GetCreditNoteId() string {
-	if x != nil && x.CreditNoteId != nil {
-		return *x.CreditNoteId
-	}
-	return ""
-}
-
-// Autogenerated input type of RetryTaxReporting
-type RetryTaxReportingInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RetryTaxReportingInput) Reset() {
-	*x = RetryTaxReportingInput{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[38]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RetryTaxReportingInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RetryTaxReportingInput) ProtoMessage() {}
-
-func (x *RetryTaxReportingInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[38]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RetryTaxReportingInput.ProtoReflect.Descriptor instead.
-func (*RetryTaxReportingInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{38}
-}
-
-func (x *RetryTaxReportingInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-// Resend email input arguments
-type ResendCreditNoteEmailInput struct {
+type ResendEmailRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// BCC recipients
-	Bcc []string `protobuf:"bytes,1,rep,name=bcc,proto3" json:"bcc,omitempty"`
-	// CC recipients
-	Cc []string `protobuf:"bytes,2,rep,name=cc,proto3" json:"cc,omitempty"`
-	// Document ID
-	Id string `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	// Custom recipients (defaults to customer email)
-	To            []string `protobuf:"bytes,4,rep,name=to,proto3" json:"to,omitempty"`
+	// Document ID.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Custom recipients (defaults to customer email).
+	To []string `protobuf:"bytes,2,rep,name=to,proto3" json:"to,omitempty"`
+	// CC recipients.
+	Cc []string `protobuf:"bytes,3,rep,name=cc,proto3" json:"cc,omitempty"`
+	// BCC recipients.
+	Bcc           []string `protobuf:"bytes,4,rep,name=bcc,proto3" json:"bcc,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ResendCreditNoteEmailInput) Reset() {
-	*x = ResendCreditNoteEmailInput{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[39]
+func (x *ResendEmailRequest) Reset() {
+	*x = ResendEmailRequest{}
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ResendCreditNoteEmailInput) String() string {
+func (x *ResendEmailRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ResendCreditNoteEmailInput) ProtoMessage() {}
+func (*ResendEmailRequest) ProtoMessage() {}
 
-func (x *ResendCreditNoteEmailInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[39]
+func (x *ResendEmailRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2361,62 +1803,61 @@ func (x *ResendCreditNoteEmailInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ResendCreditNoteEmailInput.ProtoReflect.Descriptor instead.
-func (*ResendCreditNoteEmailInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{39}
+// Deprecated: Use ResendEmailRequest.ProtoReflect.Descriptor instead.
+func (*ResendEmailRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{26}
 }
 
-func (x *ResendCreditNoteEmailInput) GetBcc() []string {
-	if x != nil {
-		return x.Bcc
-	}
-	return nil
-}
-
-func (x *ResendCreditNoteEmailInput) GetCc() []string {
-	if x != nil {
-		return x.Cc
-	}
-	return nil
-}
-
-func (x *ResendCreditNoteEmailInput) GetId() string {
+func (x *ResendEmailRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-func (x *ResendCreditNoteEmailInput) GetTo() []string {
+func (x *ResendEmailRequest) GetTo() []string {
 	if x != nil {
 		return x.To
 	}
 	return nil
 }
 
-// Autogenerated input type of DownloadXmlCreditNote
-type DownloadXmlCreditNoteInput struct {
+func (x *ResendEmailRequest) GetCc() []string {
+	if x != nil {
+		return x.Cc
+	}
+	return nil
+}
+
+func (x *ResendEmailRequest) GetBcc() []string {
+	if x != nil {
+		return x.Bcc
+	}
+	return nil
+}
+
+type ResendEmailResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	CreditNote    *v2.BillingCreditNote  `protobuf:"bytes,1,opt,name=credit_note,json=creditNote,proto3" json:"credit_note,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DownloadXmlCreditNoteInput) Reset() {
-	*x = DownloadXmlCreditNoteInput{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[40]
+func (x *ResendEmailResponse) Reset() {
+	*x = ResendEmailResponse{}
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DownloadXmlCreditNoteInput) String() string {
+func (x *ResendEmailResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DownloadXmlCreditNoteInput) ProtoMessage() {}
+func (*ResendEmailResponse) ProtoMessage() {}
 
-func (x *DownloadXmlCreditNoteInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[40]
+func (x *ResendEmailResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2427,41 +1868,40 @@ func (x *DownloadXmlCreditNoteInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DownloadXmlCreditNoteInput.ProtoReflect.Descriptor instead.
-func (*DownloadXmlCreditNoteInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{40}
+// Deprecated: Use ResendEmailResponse.ProtoReflect.Descriptor instead.
+func (*ResendEmailResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{27}
 }
 
-func (x *DownloadXmlCreditNoteInput) GetId() string {
+func (x *ResendEmailResponse) GetCreditNote() *v2.BillingCreditNote {
 	if x != nil {
-		return x.Id
+		return x.CreditNote
 	}
-	return ""
+	return nil
 }
 
-// Autogenerated input type of DownloadCreditNote
-type DownloadCreditNoteInput struct {
+type RetryTaxReportingRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DownloadCreditNoteInput) Reset() {
-	*x = DownloadCreditNoteInput{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[41]
+func (x *RetryTaxReportingRequest) Reset() {
+	*x = RetryTaxReportingRequest{}
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DownloadCreditNoteInput) String() string {
+func (x *RetryTaxReportingRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DownloadCreditNoteInput) ProtoMessage() {}
+func (*RetryTaxReportingRequest) ProtoMessage() {}
 
-func (x *DownloadCreditNoteInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[41]
+func (x *RetryTaxReportingRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2472,43 +1912,174 @@ func (x *DownloadCreditNoteInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DownloadCreditNoteInput.ProtoReflect.Descriptor instead.
-func (*DownloadCreditNoteInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{41}
+// Deprecated: Use RetryTaxReportingRequest.ProtoReflect.Descriptor instead.
+func (*RetryTaxReportingRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{28}
 }
 
-func (x *DownloadCreditNoteInput) GetId() string {
+func (x *RetryTaxReportingRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-// Autogenerated input type of CreateCreditNotesDataExport
-type CreateDataExportsCreditNotesInput struct {
+type RetryTaxReportingResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CreditNote    *v2.BillingCreditNote  `protobuf:"bytes,1,opt,name=credit_note,json=creditNote,proto3" json:"credit_note,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RetryTaxReportingResponse) Reset() {
+	*x = RetryTaxReportingResponse{}
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RetryTaxReportingResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RetryTaxReportingResponse) ProtoMessage() {}
+
+func (x *RetryTaxReportingResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RetryTaxReportingResponse.ProtoReflect.Descriptor instead.
+func (*RetryTaxReportingResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *RetryTaxReportingResponse) GetCreditNote() *v2.BillingCreditNote {
+	if x != nil {
+		return x.CreditNote
+	}
+	return nil
+}
+
+type SyncIntegrationRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncIntegrationRequest) Reset() {
+	*x = SyncIntegrationRequest{}
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncIntegrationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncIntegrationRequest) ProtoMessage() {}
+
+func (x *SyncIntegrationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncIntegrationRequest.ProtoReflect.Descriptor instead.
+func (*SyncIntegrationRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *SyncIntegrationRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type SyncIntegrationResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CreditNoteId  *string                `protobuf:"bytes,1,opt,name=credit_note_id,json=creditNoteId,proto3,oneof" json:"credit_note_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncIntegrationResponse) Reset() {
+	*x = SyncIntegrationResponse{}
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncIntegrationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncIntegrationResponse) ProtoMessage() {}
+
+func (x *SyncIntegrationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncIntegrationResponse.ProtoReflect.Descriptor instead.
+func (*SyncIntegrationResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *SyncIntegrationResponse) GetCreditNoteId() string {
+	if x != nil && x.CreditNoteId != nil {
+		return *x.CreditNoteId
+	}
+	return ""
+}
+
+type CreateDataExportRequest struct {
 	state         protoimpl.MessageState            `protogen:"open.v1"`
 	Filters       *DataExportCreditNoteFiltersInput `protobuf:"bytes,1,opt,name=filters,proto3" json:"filters,omitempty"`
-	Format        v2.DataExportFormatTypeEnum       `protobuf:"varint,2,opt,name=format,proto3,enum=invora.billing.common.v2.DataExportFormatTypeEnum" json:"format,omitempty"`
-	ResourceType  CreditNoteExportTypeEnum          `protobuf:"varint,3,opt,name=resource_type,json=resourceType,proto3,enum=invora.billing.credit_notes.v2.CreditNoteExportTypeEnum" json:"resource_type,omitempty"`
+	Format        v2.DataExportFormatType           `protobuf:"varint,2,opt,name=format,proto3,enum=invora.billing.common.v2.DataExportFormatType" json:"format,omitempty"`
+	ResourceType  CreditNoteExportType              `protobuf:"varint,3,opt,name=resource_type,json=resourceType,proto3,enum=invora.billing.credit_notes.v2.CreditNoteExportType" json:"resource_type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateDataExportsCreditNotesInput) Reset() {
-	*x = CreateDataExportsCreditNotesInput{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[42]
+func (x *CreateDataExportRequest) Reset() {
+	*x = CreateDataExportRequest{}
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateDataExportsCreditNotesInput) String() string {
+func (x *CreateDataExportRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateDataExportsCreditNotesInput) ProtoMessage() {}
+func (*CreateDataExportRequest) ProtoMessage() {}
 
-func (x *CreateDataExportsCreditNotesInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[42]
+func (x *CreateDataExportRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2519,58 +2090,101 @@ func (x *CreateDataExportsCreditNotesInput) ProtoReflect() protoreflect.Message 
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateDataExportsCreditNotesInput.ProtoReflect.Descriptor instead.
-func (*CreateDataExportsCreditNotesInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{42}
+// Deprecated: Use CreateDataExportRequest.ProtoReflect.Descriptor instead.
+func (*CreateDataExportRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{32}
 }
 
-func (x *CreateDataExportsCreditNotesInput) GetFilters() *DataExportCreditNoteFiltersInput {
+func (x *CreateDataExportRequest) GetFilters() *DataExportCreditNoteFiltersInput {
 	if x != nil {
 		return x.Filters
 	}
 	return nil
 }
 
-func (x *CreateDataExportsCreditNotesInput) GetFormat() v2.DataExportFormatTypeEnum {
+func (x *CreateDataExportRequest) GetFormat() v2.DataExportFormatType {
 	if x != nil {
 		return x.Format
 	}
-	return v2.DataExportFormatTypeEnum(0)
+	return v2.DataExportFormatType(0)
 }
 
-func (x *CreateDataExportsCreditNotesInput) GetResourceType() CreditNoteExportTypeEnum {
+func (x *CreateDataExportRequest) GetResourceType() CreditNoteExportType {
 	if x != nil {
 		return x.ResourceType
 	}
-	return CreditNoteExportTypeEnum_CREDIT_NOTE_EXPORT_TYPE_ENUM_UNSPECIFIED
+	return CreditNoteExportType_CREDIT_NOTE_EXPORT_TYPE_UNSPECIFIED
 }
 
-// Export credit notes search query and filters input argument
+type CreateDataExportResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DataExport    *v2.DataExport         `protobuf:"bytes,1,opt,name=data_export,json=dataExport,proto3" json:"data_export,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateDataExportResponse) Reset() {
+	*x = CreateDataExportResponse{}
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateDataExportResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateDataExportResponse) ProtoMessage() {}
+
+func (x *CreateDataExportResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateDataExportResponse.ProtoReflect.Descriptor instead.
+func (*CreateDataExportResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *CreateDataExportResponse) GetDataExport() *v2.DataExport {
+	if x != nil {
+		return x.DataExport
+	}
+	return nil
+}
+
+// Export credit notes search query and filters.
 type DataExportCreditNoteFiltersInput struct {
-	state              protoimpl.MessageState          `protogen:"open.v1"`
-	AmountFrom         *int32                          `protobuf:"varint,1,opt,name=amount_from,json=amountFrom,proto3,oneof" json:"amount_from,omitempty"`
-	AmountTo           *int32                          `protobuf:"varint,2,opt,name=amount_to,json=amountTo,proto3,oneof" json:"amount_to,omitempty"`
-	BillingEntityIds   []string                        `protobuf:"bytes,3,rep,name=billing_entity_ids,json=billingEntityIds,proto3" json:"billing_entity_ids,omitempty"`
-	CreditStatus       []v2.CreditNoteCreditStatusEnum `protobuf:"varint,4,rep,packed,name=credit_status,json=creditStatus,proto3,enum=invora.billing.common.v2.CreditNoteCreditStatusEnum" json:"credit_status,omitempty"`
-	Currency           *v2.CurrencyEnum                `protobuf:"varint,5,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"currency,omitempty"`
-	CustomerExternalId *string                         `protobuf:"bytes,6,opt,name=customer_external_id,json=customerExternalId,proto3,oneof" json:"customer_external_id,omitempty"`
-	// Uniq ID of the customer
-	CustomerId      *string                         `protobuf:"bytes,7,opt,name=customer_id,json=customerId,proto3,oneof" json:"customer_id,omitempty"`
-	InvoiceNumber   *string                         `protobuf:"bytes,8,opt,name=invoice_number,json=invoiceNumber,proto3,oneof" json:"invoice_number,omitempty"`
-	IssuingDateFrom *date.Date                      `protobuf:"bytes,9,opt,name=issuing_date_from,json=issuingDateFrom,proto3,oneof" json:"issuing_date_from,omitempty"`
-	IssuingDateTo   *date.Date                      `protobuf:"bytes,10,opt,name=issuing_date_to,json=issuingDateTo,proto3,oneof" json:"issuing_date_to,omitempty"`
-	Reason          []v2.CreditNoteReasonEnum       `protobuf:"varint,11,rep,packed,name=reason,proto3,enum=invora.billing.common.v2.CreditNoteReasonEnum" json:"reason,omitempty"`
-	RefundStatus    []v2.CreditNoteRefundStatusEnum `protobuf:"varint,12,rep,packed,name=refund_status,json=refundStatus,proto3,enum=invora.billing.common.v2.CreditNoteRefundStatusEnum" json:"refund_status,omitempty"`
-	SearchTerm      *string                         `protobuf:"bytes,13,opt,name=search_term,json=searchTerm,proto3,oneof" json:"search_term,omitempty"`
-	SelfBilled      *bool                           `protobuf:"varint,14,opt,name=self_billed,json=selfBilled,proto3,oneof" json:"self_billed,omitempty"`
-	Types           []CreditNoteTypeEnum            `protobuf:"varint,15,rep,packed,name=types,proto3,enum=invora.billing.credit_notes.v2.CreditNoteTypeEnum" json:"types,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state              protoimpl.MessageState      `protogen:"open.v1"`
+	AmountFrom         *int32                      `protobuf:"varint,1,opt,name=amount_from,json=amountFrom,proto3,oneof" json:"amount_from,omitempty"`
+	AmountTo           *int32                      `protobuf:"varint,2,opt,name=amount_to,json=amountTo,proto3,oneof" json:"amount_to,omitempty"`
+	BillingEntityIds   []string                    `protobuf:"bytes,3,rep,name=billing_entity_ids,json=billingEntityIds,proto3" json:"billing_entity_ids,omitempty"`
+	CreditStatus       []v2.CreditNoteCreditStatus `protobuf:"varint,4,rep,packed,name=credit_status,json=creditStatus,proto3,enum=invora.billing.common.v2.CreditNoteCreditStatus" json:"credit_status,omitempty"`
+	Currency           *v2.CurrencyEnum            `protobuf:"varint,5,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"currency,omitempty"`
+	CustomerExternalId *string                     `protobuf:"bytes,6,opt,name=customer_external_id,json=customerExternalId,proto3,oneof" json:"customer_external_id,omitempty"`
+	CustomerId         *string                     `protobuf:"bytes,7,opt,name=customer_id,json=customerId,proto3,oneof" json:"customer_id,omitempty"`
+	InvoiceNumber      *string                     `protobuf:"bytes,8,opt,name=invoice_number,json=invoiceNumber,proto3,oneof" json:"invoice_number,omitempty"`
+	IssuingDateFrom    *date.Date                  `protobuf:"bytes,9,opt,name=issuing_date_from,json=issuingDateFrom,proto3,oneof" json:"issuing_date_from,omitempty"`
+	IssuingDateTo      *date.Date                  `protobuf:"bytes,10,opt,name=issuing_date_to,json=issuingDateTo,proto3,oneof" json:"issuing_date_to,omitempty"`
+	Reason             []v2.CreditNoteReason       `protobuf:"varint,11,rep,packed,name=reason,proto3,enum=invora.billing.common.v2.CreditNoteReason" json:"reason,omitempty"`
+	RefundStatus       []v2.CreditNoteRefundStatus `protobuf:"varint,12,rep,packed,name=refund_status,json=refundStatus,proto3,enum=invora.billing.common.v2.CreditNoteRefundStatus" json:"refund_status,omitempty"`
+	SearchTerm         *string                     `protobuf:"bytes,13,opt,name=search_term,json=searchTerm,proto3,oneof" json:"search_term,omitempty"`
+	SelfBilled         *bool                       `protobuf:"varint,14,opt,name=self_billed,json=selfBilled,proto3,oneof" json:"self_billed,omitempty"`
+	Types              []CreditNoteType            `protobuf:"varint,15,rep,packed,name=types,proto3,enum=invora.billing.credit_notes.v2.CreditNoteType" json:"types,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *DataExportCreditNoteFiltersInput) Reset() {
 	*x = DataExportCreditNoteFiltersInput{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[43]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2582,7 +2196,7 @@ func (x *DataExportCreditNoteFiltersInput) String() string {
 func (*DataExportCreditNoteFiltersInput) ProtoMessage() {}
 
 func (x *DataExportCreditNoteFiltersInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[43]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2595,7 +2209,7 @@ func (x *DataExportCreditNoteFiltersInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DataExportCreditNoteFiltersInput.ProtoReflect.Descriptor instead.
 func (*DataExportCreditNoteFiltersInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{43}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *DataExportCreditNoteFiltersInput) GetAmountFrom() int32 {
@@ -2619,7 +2233,7 @@ func (x *DataExportCreditNoteFiltersInput) GetBillingEntityIds() []string {
 	return nil
 }
 
-func (x *DataExportCreditNoteFiltersInput) GetCreditStatus() []v2.CreditNoteCreditStatusEnum {
+func (x *DataExportCreditNoteFiltersInput) GetCreditStatus() []v2.CreditNoteCreditStatus {
 	if x != nil {
 		return x.CreditStatus
 	}
@@ -2668,14 +2282,14 @@ func (x *DataExportCreditNoteFiltersInput) GetIssuingDateTo() *date.Date {
 	return nil
 }
 
-func (x *DataExportCreditNoteFiltersInput) GetReason() []v2.CreditNoteReasonEnum {
+func (x *DataExportCreditNoteFiltersInput) GetReason() []v2.CreditNoteReason {
 	if x != nil {
 		return x.Reason
 	}
 	return nil
 }
 
-func (x *DataExportCreditNoteFiltersInput) GetRefundStatus() []v2.CreditNoteRefundStatusEnum {
+func (x *DataExportCreditNoteFiltersInput) GetRefundStatus() []v2.CreditNoteRefundStatus {
 	if x != nil {
 		return x.RefundStatus
 	}
@@ -2696,112 +2310,11 @@ func (x *DataExportCreditNoteFiltersInput) GetSelfBilled() bool {
 	return false
 }
 
-func (x *DataExportCreditNoteFiltersInput) GetTypes() []CreditNoteTypeEnum {
+func (x *DataExportCreditNoteFiltersInput) GetTypes() []CreditNoteType {
 	if x != nil {
 		return x.Types
 	}
 	return nil
-}
-
-// Autogenerated input type of CreateCreditNote
-type CreateCreditNoteInput struct {
-	state             protoimpl.MessageState  `protogen:"open.v1"`
-	CreditAmountCents *int64                  `protobuf:"varint,1,opt,name=credit_amount_cents,json=creditAmountCents,proto3,oneof" json:"credit_amount_cents,omitempty"`
-	Description       *string                 `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
-	InvoiceId         string                  `protobuf:"bytes,3,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
-	Items             []*CreditNoteItemInput  `protobuf:"bytes,4,rep,name=items,proto3" json:"items,omitempty"`
-	Metadata          []*v2.MetadataInput     `protobuf:"bytes,5,rep,name=metadata,proto3" json:"metadata,omitempty"`
-	OffsetAmountCents *int64                  `protobuf:"varint,6,opt,name=offset_amount_cents,json=offsetAmountCents,proto3,oneof" json:"offset_amount_cents,omitempty"`
-	Reason            v2.CreditNoteReasonEnum `protobuf:"varint,7,opt,name=reason,proto3,enum=invora.billing.common.v2.CreditNoteReasonEnum" json:"reason,omitempty"`
-	RefundAmountCents *int64                  `protobuf:"varint,8,opt,name=refund_amount_cents,json=refundAmountCents,proto3,oneof" json:"refund_amount_cents,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
-}
-
-func (x *CreateCreditNoteInput) Reset() {
-	*x = CreateCreditNoteInput{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[44]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateCreditNoteInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateCreditNoteInput) ProtoMessage() {}
-
-func (x *CreateCreditNoteInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[44]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateCreditNoteInput.ProtoReflect.Descriptor instead.
-func (*CreateCreditNoteInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{44}
-}
-
-func (x *CreateCreditNoteInput) GetCreditAmountCents() int64 {
-	if x != nil && x.CreditAmountCents != nil {
-		return *x.CreditAmountCents
-	}
-	return 0
-}
-
-func (x *CreateCreditNoteInput) GetDescription() string {
-	if x != nil && x.Description != nil {
-		return *x.Description
-	}
-	return ""
-}
-
-func (x *CreateCreditNoteInput) GetInvoiceId() string {
-	if x != nil {
-		return x.InvoiceId
-	}
-	return ""
-}
-
-func (x *CreateCreditNoteInput) GetItems() []*CreditNoteItemInput {
-	if x != nil {
-		return x.Items
-	}
-	return nil
-}
-
-func (x *CreateCreditNoteInput) GetMetadata() []*v2.MetadataInput {
-	if x != nil {
-		return x.Metadata
-	}
-	return nil
-}
-
-func (x *CreateCreditNoteInput) GetOffsetAmountCents() int64 {
-	if x != nil && x.OffsetAmountCents != nil {
-		return *x.OffsetAmountCents
-	}
-	return 0
-}
-
-func (x *CreateCreditNoteInput) GetReason() v2.CreditNoteReasonEnum {
-	if x != nil {
-		return x.Reason
-	}
-	return v2.CreditNoteReasonEnum(0)
-}
-
-func (x *CreateCreditNoteInput) GetRefundAmountCents() int64 {
-	if x != nil && x.RefundAmountCents != nil {
-		return *x.RefundAmountCents
-	}
-	return 0
 }
 
 type CreditNoteItemInput struct {
@@ -2814,7 +2327,7 @@ type CreditNoteItemInput struct {
 
 func (x *CreditNoteItemInput) Reset() {
 	*x = CreditNoteItemInput{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[45]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2826,7 +2339,7 @@ func (x *CreditNoteItemInput) String() string {
 func (*CreditNoteItemInput) ProtoMessage() {}
 
 func (x *CreditNoteItemInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[45]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2839,7 +2352,7 @@ func (x *CreditNoteItemInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreditNoteItemInput.ProtoReflect.Descriptor instead.
 func (*CreditNoteItemInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{45}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *CreditNoteItemInput) GetAmountCents() int64 {
@@ -2856,7 +2369,7 @@ func (x *CreditNoteItemInput) GetFeeId() string {
 	return ""
 }
 
-// Estimate amounts for credit note creation
+// Estimate amounts for credit note creation.
 type CreditNoteEstimate struct {
 	state                               protoimpl.MessageState     `protogen:"open.v1"`
 	AppliedTaxes                        []*v2.CreditNoteAppliedTax `protobuf:"bytes,1,rep,name=applied_taxes,json=appliedTaxes,proto3" json:"applied_taxes,omitempty"`
@@ -2866,18 +2379,18 @@ type CreditNoteEstimate struct {
 	MaxCreditableAmountCents            int64                      `protobuf:"varint,5,opt,name=max_creditable_amount_cents,json=maxCreditableAmountCents,proto3" json:"max_creditable_amount_cents,omitempty"`
 	MaxOffsettableAmountCents           int64                      `protobuf:"varint,6,opt,name=max_offsettable_amount_cents,json=maxOffsettableAmountCents,proto3" json:"max_offsettable_amount_cents,omitempty"`
 	MaxRefundableAmountCents            int64                      `protobuf:"varint,7,opt,name=max_refundable_amount_cents,json=maxRefundableAmountCents,proto3" json:"max_refundable_amount_cents,omitempty"`
-	PreciseCouponsAdjustmentAmountCents float64                    `protobuf:"fixed64,8,opt,name=precise_coupons_adjustment_amount_cents,json=preciseCouponsAdjustmentAmountCents,proto3" json:"precise_coupons_adjustment_amount_cents,omitempty"`
-	PreciseTaxesAmountCents             float64                    `protobuf:"fixed64,9,opt,name=precise_taxes_amount_cents,json=preciseTaxesAmountCents,proto3" json:"precise_taxes_amount_cents,omitempty"`
+	PreciseCouponsAdjustmentAmountCents *kernel.DecimalValue       `protobuf:"bytes,8,opt,name=precise_coupons_adjustment_amount_cents,json=preciseCouponsAdjustmentAmountCents,proto3" json:"precise_coupons_adjustment_amount_cents,omitempty"`
+	PreciseTaxesAmountCents             *kernel.DecimalValue       `protobuf:"bytes,9,opt,name=precise_taxes_amount_cents,json=preciseTaxesAmountCents,proto3" json:"precise_taxes_amount_cents,omitempty"`
 	SubTotalExcludingTaxesAmountCents   int64                      `protobuf:"varint,10,opt,name=sub_total_excluding_taxes_amount_cents,json=subTotalExcludingTaxesAmountCents,proto3" json:"sub_total_excluding_taxes_amount_cents,omitempty"`
 	TaxesAmountCents                    int64                      `protobuf:"varint,11,opt,name=taxes_amount_cents,json=taxesAmountCents,proto3" json:"taxes_amount_cents,omitempty"`
-	TaxesRate                           float64                    `protobuf:"fixed64,12,opt,name=taxes_rate,json=taxesRate,proto3" json:"taxes_rate,omitempty"`
+	TaxesRate                           *kernel.DecimalValue       `protobuf:"bytes,12,opt,name=taxes_rate,json=taxesRate,proto3" json:"taxes_rate,omitempty"`
 	unknownFields                       protoimpl.UnknownFields
 	sizeCache                           protoimpl.SizeCache
 }
 
 func (x *CreditNoteEstimate) Reset() {
 	*x = CreditNoteEstimate{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[46]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2889,7 +2402,7 @@ func (x *CreditNoteEstimate) String() string {
 func (*CreditNoteEstimate) ProtoMessage() {}
 
 func (x *CreditNoteEstimate) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[46]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2902,7 +2415,7 @@ func (x *CreditNoteEstimate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreditNoteEstimate.ProtoReflect.Descriptor instead.
 func (*CreditNoteEstimate) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{46}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *CreditNoteEstimate) GetAppliedTaxes() []*v2.CreditNoteAppliedTax {
@@ -2954,18 +2467,18 @@ func (x *CreditNoteEstimate) GetMaxRefundableAmountCents() int64 {
 	return 0
 }
 
-func (x *CreditNoteEstimate) GetPreciseCouponsAdjustmentAmountCents() float64 {
+func (x *CreditNoteEstimate) GetPreciseCouponsAdjustmentAmountCents() *kernel.DecimalValue {
 	if x != nil {
 		return x.PreciseCouponsAdjustmentAmountCents
 	}
-	return 0
+	return nil
 }
 
-func (x *CreditNoteEstimate) GetPreciseTaxesAmountCents() float64 {
+func (x *CreditNoteEstimate) GetPreciseTaxesAmountCents() *kernel.DecimalValue {
 	if x != nil {
 		return x.PreciseTaxesAmountCents
 	}
-	return 0
+	return nil
 }
 
 func (x *CreditNoteEstimate) GetSubTotalExcludingTaxesAmountCents() int64 {
@@ -2982,11 +2495,11 @@ func (x *CreditNoteEstimate) GetTaxesAmountCents() int64 {
 	return 0
 }
 
-func (x *CreditNoteEstimate) GetTaxesRate() float64 {
+func (x *CreditNoteEstimate) GetTaxesRate() *kernel.DecimalValue {
 	if x != nil {
 		return x.TaxesRate
 	}
-	return 0
+	return nil
 }
 
 type CreditNoteItemEstimate struct {
@@ -2999,7 +2512,7 @@ type CreditNoteItemEstimate struct {
 
 func (x *CreditNoteItemEstimate) Reset() {
 	*x = CreditNoteItemEstimate{}
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[47]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3011,7 +2524,7 @@ func (x *CreditNoteItemEstimate) String() string {
 func (*CreditNoteItemEstimate) ProtoMessage() {}
 
 func (x *CreditNoteItemEstimate) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[47]
+	mi := &file_invora_billing_credit_notes_v2_service_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3024,7 +2537,7 @@ func (x *CreditNoteItemEstimate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreditNoteItemEstimate.ProtoReflect.Descriptor instead.
 func (*CreditNoteItemEstimate) Descriptor() ([]byte, []int) {
-	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{47}
+	return file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *CreditNoteItemEstimate) GetAmountCents() int64 {
@@ -3045,25 +2558,7 @@ var File_invora_billing_credit_notes_v2_service_proto protoreflect.FileDescripto
 
 const file_invora_billing_credit_notes_v2_service_proto_rawDesc = "" +
 	"\n" +
-	",invora/billing/credit_notes/v2/service.proto\x12\x1einvora.billing.credit_notes.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x16google/type/date.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\x8f\x01\n" +
-	"\n" +
-	"GetRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x128\n" +
-	"\x04view\x18\v \x01(\x0e2$.invora.billing.credit_notes.v2.ViewR\x04view\"[\n" +
-	"\vGetResponse\x12L\n" +
-	"\vcredit_note\x18\x01 \x01(\v2+.invora.billing.common.v2.BillingCreditNoteR\n" +
-	"creditNote\"\xf1\x01\n" +
-	"\x12GetEstimateRequest\x12\x1d\n" +
-	"\n" +
-	"invoice_id\x18\x01 \x01(\tR\tinvoiceId\x12I\n" +
-	"\x05items\x18\x02 \x03(\v23.invora.billing.credit_notes.v2.CreditNoteItemInputR\x05items\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x128\n" +
-	"\x04view\x18\v \x01(\x0e2$.invora.billing.credit_notes.v2.ViewR\x04view\"{\n" +
-	"\x13GetEstimateResponse\x12d\n" +
-	"\x14credit_note_estimate\x18\x01 \x01(\v22.invora.billing.credit_notes.v2.CreditNoteEstimateR\x12creditNoteEstimate\"\xba\x02\n" +
+	",invora/billing/credit_notes/v2/service.proto\x12\x1einvora.billing.credit_notes.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x16google/type/date.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/decimal.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\xb4\x02\n" +
 	"\vListRequest\x12B\n" +
 	"\x06filter\x18\x01 \x01(\v2*.invora.billing.credit_notes.v2.ListFilterR\x06filter\x12<\n" +
 	"\x04sort\x18\x02 \x01(\v2(.invora.billing.credit_notes.v2.ListSortR\x04sort\x126\n" +
@@ -3071,26 +2566,27 @@ const file_invora_billing_credit_notes_v2_service_proto_rawDesc = "" +
 	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
 	"pagination\x127\n" +
 	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x128\n" +
-	"\x04view\x18\v \x01(\x0e2$.invora.billing.credit_notes.v2.ViewR\x04view\"\xba\x01\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xb6\x01\n" +
 	"\fListResponse\x12A\n" +
 	"\x05items\x18\x01 \x03(\v2+.invora.billing.common.v2.BillingCreditNoteR\x05items\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"q\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"q\n" +
 	"\n" +
 	"ListFilter\x12B\n" +
 	"\x04part\x18\x01 \x01(\v2..invora.billing.credit_notes.v2.ListFilterPartR\x04part\x12\x1f\n" +
 	"\vtext_search\x18\x02 \x01(\tR\n" +
-	"textSearch\"k\n" +
-	"\x16ListCreditStatusFilter\x12Q\n" +
-	"\tin_values\x18\x01 \x03(\x0e24.invora.billing.common.v2.CreditNoteCreditStatusEnumR\binValues\"_\n" +
-	"\x10ListReasonFilter\x12K\n" +
-	"\tin_values\x18\x01 \x03(\x0e2..invora.billing.common.v2.CreditNoteReasonEnumR\binValues\"k\n" +
-	"\x16ListRefundStatusFilter\x12Q\n" +
-	"\tin_values\x18\x01 \x03(\x0e24.invora.billing.common.v2.CreditNoteRefundStatusEnumR\binValues\"b\n" +
-	"\x0fListTypesFilter\x12O\n" +
-	"\tin_values\x18\x01 \x03(\x0e22.invora.billing.credit_notes.v2.CreditNoteTypeEnumR\binValues\"\xad\x06\n" +
+	"textSearch\"g\n" +
+	"\x16ListCreditStatusFilter\x12M\n" +
+	"\tin_values\x18\x01 \x03(\x0e20.invora.billing.common.v2.CreditNoteCreditStatusR\binValues\"[\n" +
+	"\x10ListReasonFilter\x12G\n" +
+	"\tin_values\x18\x01 \x03(\x0e2*.invora.billing.common.v2.CreditNoteReasonR\binValues\"g\n" +
+	"\x16ListRefundStatusFilter\x12M\n" +
+	"\tin_values\x18\x01 \x03(\x0e20.invora.billing.common.v2.CreditNoteRefundStatusR\binValues\"^\n" +
+	"\x0fListTypesFilter\x12K\n" +
+	"\tin_values\x18\x01 \x03(\x0e2..invora.billing.credit_notes.v2.CreditNoteTypeR\binValues\"\xad\x06\n" +
 	"\x0eListFilterPart\x12!\n" +
 	"\vamount_from\x18\x01 \x01(\x05H\x00R\n" +
 	"amountFrom\x12\x1d\n" +
@@ -3116,98 +2612,115 @@ const file_invora_billing_credit_notes_v2_service_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAt\x12:\n" +
 	"\fissuing_date\x18\x02 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\vissuingDateB\x06\n" +
-	"\x04type\"\xc8\x02\n" +
-	"\x19InvoiceCreditNotesRequest\x12B\n" +
-	"\x06filter\x18\x01 \x01(\v2*.invora.billing.credit_notes.v2.ListFilterR\x06filter\x12<\n" +
-	"\x04sort\x18\x02 \x01(\v2(.invora.billing.credit_notes.v2.ListSortR\x04sort\x126\n" +
+	"\x04type\"\x89\x01\n" +
 	"\n" +
-	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
-	"pagination\x127\n" +
+	"GetRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
 	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x128\n" +
-	"\x04view\x18\v \x01(\x0e2$.invora.billing.credit_notes.v2.ViewR\x04view\"\xc8\x01\n" +
-	"\x1aInvoiceCreditNotesResponse\x12A\n" +
-	"\x05items\x18\x01 \x03(\v2+.invora.billing.common.v2.BillingCreditNoteR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"\\\n" +
-	"\rCreateRequest\x12K\n" +
-	"\x05input\x18\x01 \x01(\v25.invora.billing.credit_notes.v2.CreateCreditNoteInputR\x05input\"^\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"[\n" +
+	"\vGetResponse\x12L\n" +
+	"\vcredit_note\x18\x01 \x01(\v2+.invora.billing.common.v2.BillingCreditNoteR\n" +
+	"creditNote\"\xa0\x04\n" +
+	"\rCreateRequest\x123\n" +
+	"\x13credit_amount_cents\x18\x01 \x01(\x03H\x00R\x11creditAmountCents\x88\x01\x01\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x01R\vdescription\x88\x01\x01\x12\x1d\n" +
+	"\n" +
+	"invoice_id\x18\x03 \x01(\tR\tinvoiceId\x12I\n" +
+	"\x05items\x18\x04 \x03(\v23.invora.billing.credit_notes.v2.CreditNoteItemInputR\x05items\x12C\n" +
+	"\bmetadata\x18\x05 \x03(\v2'.invora.billing.common.v2.MetadataInputR\bmetadata\x123\n" +
+	"\x13offset_amount_cents\x18\x06 \x01(\x03H\x02R\x11offsetAmountCents\x88\x01\x01\x12B\n" +
+	"\x06reason\x18\a \x01(\x0e2*.invora.billing.common.v2.CreditNoteReasonR\x06reason\x123\n" +
+	"\x13refund_amount_cents\x18\b \x01(\x03H\x03R\x11refundAmountCents\x88\x01\x01B\x16\n" +
+	"\x14_credit_amount_centsB\x0e\n" +
+	"\f_descriptionB\x16\n" +
+	"\x14_offset_amount_centsB\x16\n" +
+	"\x14_refund_amount_cents\"^\n" +
 	"\x0eCreateResponse\x12L\n" +
 	"\vcredit_note\x18\x01 \x01(\v2+.invora.billing.common.v2.BillingCreditNoteR\n" +
-	"creditNote\"s\n" +
-	"\x18CreatesDataExportRequest\x12W\n" +
-	"\x05input\x18\x01 \x01(\v2A.invora.billing.credit_notes.v2.CreateDataExportsCreditNotesInputR\x05input\"b\n" +
-	"\x19CreatesDataExportResponse\x12E\n" +
-	"\vdata_export\x18\x01 \x01(\v2$.invora.billing.common.v2.DataExportR\n" +
-	"dataExport\"j\n" +
-	"\x19DownloadCreditNoteRequest\x12M\n" +
-	"\x05input\x18\x01 \x01(\v27.invora.billing.credit_notes.v2.DownloadCreditNoteInputR\x05input\"j\n" +
-	"\x1aDownloadCreditNoteResponse\x12L\n" +
-	"\vcredit_note\x18\x01 \x01(\v2+.invora.billing.common.v2.BillingCreditNoteR\n" +
-	"creditNote\"p\n" +
-	"\x1cDownloadXmlCreditNoteRequest\x12P\n" +
-	"\x05input\x18\x01 \x01(\v2:.invora.billing.credit_notes.v2.DownloadXmlCreditNoteInputR\x05input\"m\n" +
-	"\x1dDownloadXmlCreditNoteResponse\x12L\n" +
-	"\vcredit_note\x18\x01 \x01(\v2+.invora.billing.common.v2.BillingCreditNoteR\n" +
-	"creditNote\"p\n" +
-	"\x1cResendCreditNoteEmailRequest\x12P\n" +
-	"\x05input\x18\x01 \x01(\v2:.invora.billing.credit_notes.v2.ResendCreditNoteEmailInputR\x05input\"m\n" +
-	"\x1dResendCreditNoteEmailResponse\x12L\n" +
-	"\vcredit_note\x18\x01 \x01(\v2+.invora.billing.common.v2.BillingCreditNoteR\n" +
-	"creditNote\"h\n" +
-	"\x18RetryTaxReportingRequest\x12L\n" +
-	"\x05input\x18\x01 \x01(\v26.invora.billing.credit_notes.v2.RetryTaxReportingInputR\x05input\"i\n" +
-	"\x19RetryTaxReportingResponse\x12L\n" +
-	"\vcredit_note\x18\x01 \x01(\v2+.invora.billing.common.v2.BillingCreditNoteR\n" +
-	"creditNote\"x\n" +
-	" SyncIntegrationCreditNoteRequest\x12T\n" +
-	"\x05input\x18\x01 \x01(\v2>.invora.billing.credit_notes.v2.SyncIntegrationCreditNoteInputR\x05input\"\xb6\x01\n" +
-	"!SyncIntegrationCreditNoteResponse\x12\x90\x01\n" +
-	"$sync_integration_credit_note_payload\x18\x01 \x01(\v2@.invora.billing.credit_notes.v2.SyncIntegrationCreditNotePayloadR syncIntegrationCreditNotePayload\"\\\n" +
-	"\rUpdateRequest\x12K\n" +
-	"\x05input\x18\x01 \x01(\v25.invora.billing.credit_notes.v2.UpdateCreditNoteInputR\x05input\"^\n" +
+	"creditNote\"\x8f\x02\n" +
+	"\rUpdateRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12C\n" +
+	"\bmetadata\x18\x02 \x03(\v2'.invora.billing.common.v2.MetadataInputR\bmetadata\x12Z\n" +
+	"\rrefund_status\x18\x03 \x01(\x0e20.invora.billing.common.v2.CreditNoteRefundStatusH\x00R\frefundStatus\x88\x01\x01\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\x10\n" +
+	"\x0e_refund_status\"^\n" +
 	"\x0eUpdateResponse\x12L\n" +
 	"\vcredit_note\x18\x01 \x01(\v2+.invora.billing.common.v2.BillingCreditNoteR\n" +
-	"creditNote\"b\n" +
-	"\x15VoidCreditNoteRequest\x12I\n" +
-	"\x05input\x18\x01 \x01(\v23.invora.billing.credit_notes.v2.VoidCreditNoteInputR\x05input\"f\n" +
+	"creditNote\"\xeb\x01\n" +
+	"\x12GetEstimateRequest\x12\x1d\n" +
+	"\n" +
+	"invoice_id\x18\x01 \x01(\tR\tinvoiceId\x12I\n" +
+	"\x05items\x18\x02 \x03(\v23.invora.billing.credit_notes.v2.CreditNoteItemInputR\x05items\x127\n" +
+	"\tread_mask\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"{\n" +
+	"\x13GetEstimateResponse\x12d\n" +
+	"\x14credit_note_estimate\x18\x01 \x01(\v22.invora.billing.credit_notes.v2.CreditNoteEstimateR\x12creditNoteEstimate\"\xe5\x02\n" +
+	"\x1dListInvoiceCreditNotesRequest\x12\x1d\n" +
+	"\n" +
+	"invoice_id\x18\x01 \x01(\tR\tinvoiceId\x12B\n" +
+	"\x06filter\x18\x02 \x01(\v2*.invora.billing.credit_notes.v2.ListFilterR\x06filter\x12<\n" +
+	"\x04sort\x18\x03 \x01(\v2(.invora.billing.credit_notes.v2.ListSortR\x04sort\x126\n" +
+	"\n" +
+	"pagination\x18\x04 \x01(\v2\x16.kernel.PaginationInfoR\n" +
+	"pagination\x127\n" +
+	"\tread_mask\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xc8\x01\n" +
+	"\x1eListInvoiceCreditNotesResponse\x12A\n" +
+	"\x05items\x18\x01 \x03(\v2+.invora.billing.common.v2.BillingCreditNoteR\x05items\x12\x1f\n" +
+	"\vtotal_count\x18\x02 \x01(\x04R\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"!\n" +
+	"\x0fDownloadRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"`\n" +
+	"\x10DownloadResponse\x12L\n" +
+	"\vcredit_note\x18\x01 \x01(\v2+.invora.billing.common.v2.BillingCreditNoteR\n" +
+	"creditNote\"$\n" +
+	"\x12DownloadXmlRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"c\n" +
+	"\x13DownloadXmlResponse\x12L\n" +
+	"\vcredit_note\x18\x01 \x01(\v2+.invora.billing.common.v2.BillingCreditNoteR\n" +
+	"creditNote\"'\n" +
+	"\x15VoidCreditNoteRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"f\n" +
 	"\x16VoidCreditNoteResponse\x12L\n" +
 	"\vcredit_note\x18\x01 \x01(\v2+.invora.billing.common.v2.BillingCreditNoteR\n" +
-	"creditNote\"%\n" +
-	"\x13VoidCreditNoteInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\xde\x01\n" +
-	"\x15UpdateCreditNoteInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12C\n" +
-	"\bmetadata\x18\x02 \x03(\v2'.invora.billing.common.v2.MetadataInputR\bmetadata\x12^\n" +
-	"\rrefund_status\x18\x03 \x01(\x0e24.invora.billing.common.v2.CreditNoteRefundStatusEnumH\x00R\frefundStatus\x88\x01\x01B\x10\n" +
-	"\x0e_refund_status\"F\n" +
-	"\x1eSyncIntegrationCreditNoteInput\x12$\n" +
-	"\x0ecredit_note_id\x18\x01 \x01(\tR\fcreditNoteId\"`\n" +
-	" SyncIntegrationCreditNotePayload\x12)\n" +
+	"creditNote\"V\n" +
+	"\x12ResendEmailRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x0e\n" +
+	"\x02to\x18\x02 \x03(\tR\x02to\x12\x0e\n" +
+	"\x02cc\x18\x03 \x03(\tR\x02cc\x12\x10\n" +
+	"\x03bcc\x18\x04 \x03(\tR\x03bcc\"c\n" +
+	"\x13ResendEmailResponse\x12L\n" +
+	"\vcredit_note\x18\x01 \x01(\v2+.invora.billing.common.v2.BillingCreditNoteR\n" +
+	"creditNote\"*\n" +
+	"\x18RetryTaxReportingRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"i\n" +
+	"\x19RetryTaxReportingResponse\x12L\n" +
+	"\vcredit_note\x18\x01 \x01(\v2+.invora.billing.common.v2.BillingCreditNoteR\n" +
+	"creditNote\"(\n" +
+	"\x16SyncIntegrationRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"W\n" +
+	"\x17SyncIntegrationResponse\x12)\n" +
 	"\x0ecredit_note_id\x18\x01 \x01(\tH\x00R\fcreditNoteId\x88\x01\x01B\x11\n" +
-	"\x0f_credit_note_id\"(\n" +
-	"\x16RetryTaxReportingInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"^\n" +
-	"\x1aResendCreditNoteEmailInput\x12\x10\n" +
-	"\x03bcc\x18\x01 \x03(\tR\x03bcc\x12\x0e\n" +
-	"\x02cc\x18\x02 \x03(\tR\x02cc\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\x12\x0e\n" +
-	"\x02to\x18\x04 \x03(\tR\x02to\",\n" +
-	"\x1aDownloadXmlCreditNoteInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\")\n" +
-	"\x17DownloadCreditNoteInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\xaa\x02\n" +
-	"!CreateDataExportsCreditNotesInput\x12Z\n" +
-	"\afilters\x18\x01 \x01(\v2@.invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInputR\afilters\x12J\n" +
-	"\x06format\x18\x02 \x01(\x0e22.invora.billing.common.v2.DataExportFormatTypeEnumR\x06format\x12]\n" +
-	"\rresource_type\x18\x03 \x01(\x0e28.invora.billing.credit_notes.v2.CreditNoteExportTypeEnumR\fresourceType\"\xb3\b\n" +
+	"\x0f_credit_note_id\"\x98\x02\n" +
+	"\x17CreateDataExportRequest\x12Z\n" +
+	"\afilters\x18\x01 \x01(\v2@.invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInputR\afilters\x12F\n" +
+	"\x06format\x18\x02 \x01(\x0e2..invora.billing.common.v2.DataExportFormatTypeR\x06format\x12Y\n" +
+	"\rresource_type\x18\x03 \x01(\x0e24.invora.billing.credit_notes.v2.CreditNoteExportTypeR\fresourceType\"a\n" +
+	"\x18CreateDataExportResponse\x12E\n" +
+	"\vdata_export\x18\x01 \x01(\v2$.invora.billing.common.v2.DataExportR\n" +
+	"dataExport\"\xa3\b\n" +
 	" DataExportCreditNoteFiltersInput\x12$\n" +
 	"\vamount_from\x18\x01 \x01(\x05H\x00R\n" +
 	"amountFrom\x88\x01\x01\x12 \n" +
 	"\tamount_to\x18\x02 \x01(\x05H\x01R\bamountTo\x88\x01\x01\x12,\n" +
-	"\x12billing_entity_ids\x18\x03 \x03(\tR\x10billingEntityIds\x12Y\n" +
-	"\rcredit_status\x18\x04 \x03(\x0e24.invora.billing.common.v2.CreditNoteCreditStatusEnumR\fcreditStatus\x12G\n" +
+	"\x12billing_entity_ids\x18\x03 \x03(\tR\x10billingEntityIds\x12U\n" +
+	"\rcredit_status\x18\x04 \x03(\x0e20.invora.billing.common.v2.CreditNoteCreditStatusR\fcreditStatus\x12G\n" +
 	"\bcurrency\x18\x05 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\x02R\bcurrency\x88\x01\x01\x125\n" +
 	"\x14customer_external_id\x18\x06 \x01(\tH\x03R\x12customerExternalId\x88\x01\x01\x12$\n" +
 	"\vcustomer_id\x18\a \x01(\tH\x04R\n" +
@@ -3215,14 +2728,14 @@ const file_invora_billing_credit_notes_v2_service_proto_rawDesc = "" +
 	"\x0einvoice_number\x18\b \x01(\tH\x05R\rinvoiceNumber\x88\x01\x01\x12B\n" +
 	"\x11issuing_date_from\x18\t \x01(\v2\x11.google.type.DateH\x06R\x0fissuingDateFrom\x88\x01\x01\x12>\n" +
 	"\x0fissuing_date_to\x18\n" +
-	" \x01(\v2\x11.google.type.DateH\aR\rissuingDateTo\x88\x01\x01\x12F\n" +
-	"\x06reason\x18\v \x03(\x0e2..invora.billing.common.v2.CreditNoteReasonEnumR\x06reason\x12Y\n" +
-	"\rrefund_status\x18\f \x03(\x0e24.invora.billing.common.v2.CreditNoteRefundStatusEnumR\frefundStatus\x12$\n" +
+	" \x01(\v2\x11.google.type.DateH\aR\rissuingDateTo\x88\x01\x01\x12B\n" +
+	"\x06reason\x18\v \x03(\x0e2*.invora.billing.common.v2.CreditNoteReasonR\x06reason\x12U\n" +
+	"\rrefund_status\x18\f \x03(\x0e20.invora.billing.common.v2.CreditNoteRefundStatusR\frefundStatus\x12$\n" +
 	"\vsearch_term\x18\r \x01(\tH\bR\n" +
 	"searchTerm\x88\x01\x01\x12$\n" +
 	"\vself_billed\x18\x0e \x01(\bH\tR\n" +
-	"selfBilled\x88\x01\x01\x12H\n" +
-	"\x05types\x18\x0f \x03(\x0e22.invora.billing.credit_notes.v2.CreditNoteTypeEnumR\x05typesB\x0e\n" +
+	"selfBilled\x88\x01\x01\x12D\n" +
+	"\x05types\x18\x0f \x03(\x0e2..invora.billing.credit_notes.v2.CreditNoteTypeR\x05typesB\x0e\n" +
 	"\f_amount_fromB\f\n" +
 	"\n" +
 	"_amount_toB\v\n" +
@@ -3233,24 +2746,10 @@ const file_invora_billing_credit_notes_v2_service_proto_rawDesc = "" +
 	"\x12_issuing_date_fromB\x12\n" +
 	"\x10_issuing_date_toB\x0e\n" +
 	"\f_search_termB\x0e\n" +
-	"\f_self_billed\"\xac\x04\n" +
-	"\x15CreateCreditNoteInput\x123\n" +
-	"\x13credit_amount_cents\x18\x01 \x01(\x03H\x00R\x11creditAmountCents\x88\x01\x01\x12%\n" +
-	"\vdescription\x18\x02 \x01(\tH\x01R\vdescription\x88\x01\x01\x12\x1d\n" +
-	"\n" +
-	"invoice_id\x18\x03 \x01(\tR\tinvoiceId\x12I\n" +
-	"\x05items\x18\x04 \x03(\v23.invora.billing.credit_notes.v2.CreditNoteItemInputR\x05items\x12C\n" +
-	"\bmetadata\x18\x05 \x03(\v2'.invora.billing.common.v2.MetadataInputR\bmetadata\x123\n" +
-	"\x13offset_amount_cents\x18\x06 \x01(\x03H\x02R\x11offsetAmountCents\x88\x01\x01\x12F\n" +
-	"\x06reason\x18\a \x01(\x0e2..invora.billing.common.v2.CreditNoteReasonEnumR\x06reason\x123\n" +
-	"\x13refund_amount_cents\x18\b \x01(\x03H\x03R\x11refundAmountCents\x88\x01\x01B\x16\n" +
-	"\x14_credit_amount_centsB\x0e\n" +
-	"\f_descriptionB\x16\n" +
-	"\x14_offset_amount_centsB\x16\n" +
-	"\x14_refund_amount_cents\"O\n" +
+	"\f_self_billed\"O\n" +
 	"\x13CreditNoteItemInput\x12!\n" +
 	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12\x15\n" +
-	"\x06fee_id\x18\x02 \x01(\tR\x05feeId\"\xb4\x06\n" +
+	"\x06fee_id\x18\x02 \x01(\tR\x05feeId\"\xf6\x06\n" +
 	"\x12CreditNoteEstimate\x12S\n" +
 	"\rapplied_taxes\x18\x01 \x03(\v2..invora.billing.common.v2.CreditNoteAppliedTaxR\fappliedTaxes\x12E\n" +
 	"\x1fcoupons_adjustment_amount_cents\x18\x02 \x01(\x03R\x1ccouponsAdjustmentAmountCents\x12B\n" +
@@ -3258,58 +2757,53 @@ const file_invora_billing_credit_notes_v2_service_proto_rawDesc = "" +
 	"\x05items\x18\x04 \x03(\v26.invora.billing.credit_notes.v2.CreditNoteItemEstimateR\x05items\x12=\n" +
 	"\x1bmax_creditable_amount_cents\x18\x05 \x01(\x03R\x18maxCreditableAmountCents\x12?\n" +
 	"\x1cmax_offsettable_amount_cents\x18\x06 \x01(\x03R\x19maxOffsettableAmountCents\x12=\n" +
-	"\x1bmax_refundable_amount_cents\x18\a \x01(\x03R\x18maxRefundableAmountCents\x12T\n" +
-	"'precise_coupons_adjustment_amount_cents\x18\b \x01(\x01R#preciseCouponsAdjustmentAmountCents\x12;\n" +
-	"\x1aprecise_taxes_amount_cents\x18\t \x01(\x01R\x17preciseTaxesAmountCents\x12Q\n" +
+	"\x1bmax_refundable_amount_cents\x18\a \x01(\x03R\x18maxRefundableAmountCents\x12j\n" +
+	"'precise_coupons_adjustment_amount_cents\x18\b \x01(\v2\x14.kernel.DecimalValueR#preciseCouponsAdjustmentAmountCents\x12Q\n" +
+	"\x1aprecise_taxes_amount_cents\x18\t \x01(\v2\x14.kernel.DecimalValueR\x17preciseTaxesAmountCents\x12Q\n" +
 	"&sub_total_excluding_taxes_amount_cents\x18\n" +
 	" \x01(\x03R!subTotalExcludingTaxesAmountCents\x12,\n" +
-	"\x12taxes_amount_cents\x18\v \x01(\x03R\x10taxesAmountCents\x12\x1d\n" +
+	"\x12taxes_amount_cents\x18\v \x01(\x03R\x10taxesAmountCents\x123\n" +
 	"\n" +
-	"taxes_rate\x18\f \x01(\x01R\ttaxesRate\"s\n" +
+	"taxes_rate\x18\f \x01(\v2\x14.kernel.DecimalValueR\ttaxesRate\"s\n" +
 	"\x16CreditNoteItemEstimate\x12!\n" +
 	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x126\n" +
-	"\x03fee\x18\x02 \x01(\v2$.invora.billing.common.v2.BillingFeeR\x03fee*;\n" +
-	"\x04View\x12\x14\n" +
-	"\x10VIEW_UNSPECIFIED\x10\x00\x12\x0e\n" +
-	"\n" +
-	"VIEW_BASIC\x10\x01\x12\r\n" +
-	"\tVIEW_FULL\x10\x02*\xab\x01\n" +
-	"\x18CreditNoteExportTypeEnum\x12,\n" +
-	"(CREDIT_NOTE_EXPORT_TYPE_ENUM_UNSPECIFIED\x10\x00\x122\n" +
-	".CREDIT_NOTE_EXPORT_TYPE_ENUM_CREDIT_NOTE_ITEMS\x10\x01\x12-\n" +
-	")CREDIT_NOTE_EXPORT_TYPE_ENUM_CREDIT_NOTES\x10\x02*\xa1\x01\n" +
-	"\x12CreditNoteTypeEnum\x12%\n" +
-	"!CREDIT_NOTE_TYPE_ENUM_UNSPECIFIED\x10\x00\x12 \n" +
-	"\x1cCREDIT_NOTE_TYPE_ENUM_CREDIT\x10\x01\x12 \n" +
-	"\x1cCREDIT_NOTE_TYPE_ENUM_OFFSET\x10\x02\x12 \n" +
-	"\x1cCREDIT_NOTE_TYPE_ENUM_REFUND\x10\x032\xd8\x17\n" +
-	"\x11CreditNoteService\x12\xba\x01\n" +
-	"\x06Create\x12-.invora.billing.credit_notes.v2.CreateRequest\x1a..invora.billing.credit_notes.v2.CreateResponse\"Q\xe2\xf2\x19&\n" +
-	"$Invora.Billing.CreditNotes.v2.Create\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/api/v2/billing/credit-notes\x12\xb0\x01\n" +
+	"\x03fee\x18\x02 \x01(\v2$.invora.billing.common.v2.BillingFeeR\x03fee*\x98\x01\n" +
+	"\x14CreditNoteExportType\x12'\n" +
+	"#CREDIT_NOTE_EXPORT_TYPE_UNSPECIFIED\x10\x00\x12-\n" +
+	")CREDIT_NOTE_EXPORT_TYPE_CREDIT_NOTE_ITEMS\x10\x01\x12(\n" +
+	"$CREDIT_NOTE_EXPORT_TYPE_CREDIT_NOTES\x10\x02*\x89\x01\n" +
+	"\x0eCreditNoteType\x12 \n" +
+	"\x1cCREDIT_NOTE_TYPE_UNSPECIFIED\x10\x00\x12\x1b\n" +
+	"\x17CREDIT_NOTE_TYPE_CREDIT\x10\x01\x12\x1b\n" +
+	"\x17CREDIT_NOTE_TYPE_OFFSET\x10\x02\x12\x1b\n" +
+	"\x17CREDIT_NOTE_TYPE_REFUND\x10\x032\xd6\x16\n" +
+	"\x12CreditNotesService\x12\xb7\x01\n" +
+	"\x04List\x12+.invora.billing.credit_notes.v2.ListRequest\x1a,.invora.billing.credit_notes.v2.ListResponse\"T\xe2\xf2\x19$\n" +
+	"\"Invora.Billing.CreditNotes.v2.List\x82\xd3\xe4\x93\x02&:\x01*\"!/api/billing/v2/credit-notes/list\x12\xb0\x01\n" +
 	"\x03Get\x12*.invora.billing.credit_notes.v2.GetRequest\x1a+.invora.billing.credit_notes.v2.GetResponse\"P\xe2\xf2\x19#\n" +
-	"!Invora.Billing.CreditNotes.v2.Get\x82\xd3\xe4\x93\x02#\x12!/api/v2/billing/credit-notes/{id}\x12\xaf\x01\n" +
-	"\x04List\x12+.invora.billing.credit_notes.v2.ListRequest\x1a,.invora.billing.credit_notes.v2.ListResponse\"L\xe2\xf2\x19$\n" +
-	"\"Invora.Billing.CreditNotes.v2.List\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/v2/billing/credit-notes\x12\xba\x01\n" +
-	"\x06Update\x12-.invora.billing.credit_notes.v2.UpdateRequest\x1a..invora.billing.credit_notes.v2.UpdateResponse\"Q\xe2\xf2\x19&\n" +
-	"$Invora.Billing.CreditNotes.v2.Update\x82\xd3\xe4\x93\x02!:\x01*2\x1c/api/v2/billing/credit-notes\x12\xe6\x01\n" +
-	"\x11CreatesDataExport\x128.invora.billing.credit_notes.v2.CreatesDataExportRequest\x1a9.invora.billing.credit_notes.v2.CreatesDataExportResponse\"\\\xe2\xf2\x191\n" +
-	"/Invora.Billing.CreditNotes.v2.CreatesDataExport\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/api/v2/billing/credit-notes\x12\xff\x01\n" +
-	"\x12DownloadCreditNote\x129.invora.billing.credit_notes.v2.DownloadCreditNoteRequest\x1a:.invora.billing.credit_notes.v2.DownloadCreditNoteResponse\"r\xe2\xf2\x192\n" +
-	"0Invora.Billing.CreditNotes.v2.DownloadCreditNote\x82\xd3\xe4\x93\x026:\x01*\"1/api/v2/billing/credit-notes:download-credit-note\x12\x8f\x02\n" +
-	"\x15DownloadXmlCreditNote\x12<.invora.billing.credit_notes.v2.DownloadXmlCreditNoteRequest\x1a=.invora.billing.credit_notes.v2.DownloadXmlCreditNoteResponse\"y\xe2\xf2\x195\n" +
-	"3Invora.Billing.CreditNotes.v2.DownloadXmlCreditNote\x82\xd3\xe4\x93\x02::\x01*\"5/api/v2/billing/credit-notes:download-xml-credit-note\x12\xd8\x01\n" +
-	"\vGetEstimate\x122.invora.billing.credit_notes.v2.GetEstimateRequest\x1a3.invora.billing.credit_notes.v2.GetEstimateResponse\"`\xe2\xf2\x19+\n" +
-	")Invora.Billing.CreditNotes.v2.GetEstimate\x82\xd3\xe4\x93\x02+\x12)/api/v2/billing/credit-notes/{invoice_id}\x12\xe7\x01\n" +
-	"\x12InvoiceCreditNotes\x129.invora.billing.credit_notes.v2.InvoiceCreditNotesRequest\x1a:.invora.billing.credit_notes.v2.InvoiceCreditNotesResponse\"Z\xe2\xf2\x192\n" +
-	"0Invora.Billing.CreditNotes.v2.InvoiceCreditNotes\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/v2/billing/credit-notes\x12\x8f\x02\n" +
-	"\x15ResendCreditNoteEmail\x12<.invora.billing.credit_notes.v2.ResendCreditNoteEmailRequest\x1a=.invora.billing.credit_notes.v2.ResendCreditNoteEmailResponse\"y\xe2\xf2\x195\n" +
-	"3Invora.Billing.CreditNotes.v2.ResendCreditNoteEmail\x82\xd3\xe4\x93\x02::\x01*\"5/api/v2/billing/credit-notes:resend-credit-note-email\x12\xfa\x01\n" +
-	"\x11RetryTaxReporting\x128.invora.billing.credit_notes.v2.RetryTaxReportingRequest\x1a9.invora.billing.credit_notes.v2.RetryTaxReportingResponse\"p\xe2\xf2\x191\n" +
-	"/Invora.Billing.CreditNotes.v2.RetryTaxReporting\x82\xd3\xe4\x93\x025:\x01*\"0/api/v2/billing/credit-notes:retry-tax-reporting\x12\xa4\x02\n" +
-	"\x19SyncIntegrationCreditNote\x12@.invora.billing.credit_notes.v2.SyncIntegrationCreditNoteRequest\x1aA.invora.billing.credit_notes.v2.SyncIntegrationCreditNoteResponse\"\x81\x01\xe2\xf2\x199\n" +
-	"7Invora.Billing.CreditNotes.v2.SyncIntegrationCreditNote\x82\xd3\xe4\x93\x02>:\x01*\"9/api/v2/billing/credit-notes:sync-integration-credit-note\x12\xeb\x01\n" +
-	"\x0eVoidCreditNote\x125.invora.billing.credit_notes.v2.VoidCreditNoteRequest\x1a6.invora.billing.credit_notes.v2.VoidCreditNoteResponse\"j\xe2\xf2\x19.\n" +
-	",Invora.Billing.CreditNotes.v2.VoidCreditNote\x82\xd3\xe4\x93\x022:\x01*\"-/api/v2/billing/credit-notes:void-credit-noteB\xa3\x02\n" +
+	"!Invora.Billing.CreditNotes.v2.Get\x82\xd3\xe4\x93\x02#\x12!/api/billing/v2/credit-notes/{id}\x12\xc1\x01\n" +
+	"\x06Create\x12-.invora.billing.credit_notes.v2.CreateRequest\x1a..invora.billing.credit_notes.v2.CreateResponse\"X\xe2\xf2\x19-\n" +
+	"+Invora.Billing.CreditNotes.v2.Modify.Create\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/api/billing/v2/credit-notes\x12\xc6\x01\n" +
+	"\x06Update\x12-.invora.billing.credit_notes.v2.UpdateRequest\x1a..invora.billing.credit_notes.v2.UpdateResponse\"]\xe2\xf2\x19-\n" +
+	"+Invora.Billing.CreditNotes.v2.Modify.Update\x82\xd3\xe4\x93\x02&:\x01*\x1a!/api/billing/v2/credit-notes/{id}\x12\xcf\x01\n" +
+	"\vGetEstimate\x122.invora.billing.credit_notes.v2.GetEstimateRequest\x1a3.invora.billing.credit_notes.v2.GetEstimateResponse\"W\xe2\xf2\x19#\n" +
+	"!Invora.Billing.CreditNotes.v2.Get\x82\xd3\xe4\x93\x02*:\x01*\"%/api/billing/v2/credit-notes/estimate\x12\x80\x02\n" +
+	"\x16ListInvoiceCreditNotes\x12=.invora.billing.credit_notes.v2.ListInvoiceCreditNotesRequest\x1a>.invora.billing.credit_notes.v2.ListInvoiceCreditNotesResponse\"g\xe2\xf2\x19$\n" +
+	"\"Invora.Billing.CreditNotes.v2.List\x82\xd3\xe4\x93\x029:\x01*\"4/api/billing/v2/credit-notes/{invoice_id}/by-invoice\x12\xc8\x01\n" +
+	"\bDownload\x12/.invora.billing.credit_notes.v2.DownloadRequest\x1a0.invora.billing.credit_notes.v2.DownloadResponse\"Y\xe2\xf2\x19(\n" +
+	"&Invora.Billing.CreditNotes.v2.Download\x82\xd3\xe4\x93\x02'\x12%/api/billing/v2/credit-notes/{id}/pdf\x12\xd1\x01\n" +
+	"\vDownloadXml\x122.invora.billing.credit_notes.v2.DownloadXmlRequest\x1a3.invora.billing.credit_notes.v2.DownloadXmlResponse\"Y\xe2\xf2\x19(\n" +
+	"&Invora.Billing.CreditNotes.v2.Download\x82\xd3\xe4\x93\x02'\x12%/api/billing/v2/credit-notes/{id}/xml\x12\xe1\x01\n" +
+	"\x0eVoidCreditNote\x125.invora.billing.credit_notes.v2.VoidCreditNoteRequest\x1a6.invora.billing.credit_notes.v2.VoidCreditNoteResponse\"`\xe2\xf2\x19+\n" +
+	")Invora.Billing.CreditNotes.v2.Modify.Void\x82\xd3\xe4\x93\x02+:\x01*\"&/api/billing/v2/credit-notes/{id}/void\x12\xe7\x01\n" +
+	"\vResendEmail\x122.invora.billing.credit_notes.v2.ResendEmailRequest\x1a3.invora.billing.credit_notes.v2.ResendEmailResponse\"o\xe2\xf2\x192\n" +
+	"0Invora.Billing.CreditNotes.v2.Modify.ResendEmail\x82\xd3\xe4\x93\x023:\x01*\"./api/billing/v2/credit-notes/{id}/resend-email\x12\x86\x02\n" +
+	"\x11RetryTaxReporting\x128.invora.billing.credit_notes.v2.RetryTaxReportingRequest\x1a9.invora.billing.credit_notes.v2.RetryTaxReportingResponse\"|\xe2\xf2\x198\n" +
+	"6Invora.Billing.CreditNotes.v2.Modify.RetryTaxReporting\x82\xd3\xe4\x93\x02::\x01*\"5/api/billing/v2/credit-notes/{id}/retry-tax-reporting\x12\xfb\x01\n" +
+	"\x0fSyncIntegration\x126.invora.billing.credit_notes.v2.SyncIntegrationRequest\x1a7.invora.billing.credit_notes.v2.SyncIntegrationResponse\"w\xe2\xf2\x196\n" +
+	"4Invora.Billing.CreditNotes.v2.Modify.SyncIntegration\x82\xd3\xe4\x93\x027:\x01*\"2/api/billing/v2/credit-notes/{id}/sync-integration\x12\xfc\x01\n" +
+	"\x10CreateDataExport\x127.invora.billing.credit_notes.v2.CreateDataExportRequest\x1a8.invora.billing.credit_notes.v2.CreateDataExportResponse\"u\xe2\xf2\x197\n" +
+	"5Invora.Billing.CreditNotes.v2.Modify.CreateDataExport\x82\xd3\xe4\x93\x024:\x01*\"//api/billing/v2/credit-notes/create-data-exportB\xa3\x02\n" +
 	"\"com.invora.billing.credit_notes.v2B\fServiceProtoP\x01ZXgithub.com/invoraapp/invora-controller/gen/invora/billing/credit_notes/v2;credit_notesv2\xa2\x02\x03IBC\xaa\x02\x1dInvora.Billing.CreditNotes.V2\xca\x02\x1dInvora\\Billing\\CreditNotes\\V2\xe2\x02)Invora\\Billing\\CreditNotes\\V2\\GPBMetadata\xea\x02 Invora::Billing::CreditNotes::V2b\x06proto3"
 
 var (
@@ -3324,183 +2818,165 @@ func file_invora_billing_credit_notes_v2_service_proto_rawDescGZIP() []byte {
 	return file_invora_billing_credit_notes_v2_service_proto_rawDescData
 }
 
-var file_invora_billing_credit_notes_v2_service_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_invora_billing_credit_notes_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 48)
+var file_invora_billing_credit_notes_v2_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_invora_billing_credit_notes_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 38)
 var file_invora_billing_credit_notes_v2_service_proto_goTypes = []any{
-	(View)(0),                                 // 0: invora.billing.credit_notes.v2.View
-	(CreditNoteExportTypeEnum)(0),             // 1: invora.billing.credit_notes.v2.CreditNoteExportTypeEnum
-	(CreditNoteTypeEnum)(0),                   // 2: invora.billing.credit_notes.v2.CreditNoteTypeEnum
-	(*GetRequest)(nil),                        // 3: invora.billing.credit_notes.v2.GetRequest
-	(*GetResponse)(nil),                       // 4: invora.billing.credit_notes.v2.GetResponse
-	(*GetEstimateRequest)(nil),                // 5: invora.billing.credit_notes.v2.GetEstimateRequest
-	(*GetEstimateResponse)(nil),               // 6: invora.billing.credit_notes.v2.GetEstimateResponse
-	(*ListRequest)(nil),                       // 7: invora.billing.credit_notes.v2.ListRequest
-	(*ListResponse)(nil),                      // 8: invora.billing.credit_notes.v2.ListResponse
-	(*ListFilter)(nil),                        // 9: invora.billing.credit_notes.v2.ListFilter
-	(*ListCreditStatusFilter)(nil),            // 10: invora.billing.credit_notes.v2.ListCreditStatusFilter
-	(*ListReasonFilter)(nil),                  // 11: invora.billing.credit_notes.v2.ListReasonFilter
-	(*ListRefundStatusFilter)(nil),            // 12: invora.billing.credit_notes.v2.ListRefundStatusFilter
-	(*ListTypesFilter)(nil),                   // 13: invora.billing.credit_notes.v2.ListTypesFilter
-	(*ListFilterPart)(nil),                    // 14: invora.billing.credit_notes.v2.ListFilterPart
-	(*ListSort)(nil),                          // 15: invora.billing.credit_notes.v2.ListSort
-	(*ListSortRule)(nil),                      // 16: invora.billing.credit_notes.v2.ListSortRule
-	(*InvoiceCreditNotesRequest)(nil),         // 17: invora.billing.credit_notes.v2.InvoiceCreditNotesRequest
-	(*InvoiceCreditNotesResponse)(nil),        // 18: invora.billing.credit_notes.v2.InvoiceCreditNotesResponse
-	(*CreateRequest)(nil),                     // 19: invora.billing.credit_notes.v2.CreateRequest
-	(*CreateResponse)(nil),                    // 20: invora.billing.credit_notes.v2.CreateResponse
-	(*CreatesDataExportRequest)(nil),          // 21: invora.billing.credit_notes.v2.CreatesDataExportRequest
-	(*CreatesDataExportResponse)(nil),         // 22: invora.billing.credit_notes.v2.CreatesDataExportResponse
-	(*DownloadCreditNoteRequest)(nil),         // 23: invora.billing.credit_notes.v2.DownloadCreditNoteRequest
-	(*DownloadCreditNoteResponse)(nil),        // 24: invora.billing.credit_notes.v2.DownloadCreditNoteResponse
-	(*DownloadXmlCreditNoteRequest)(nil),      // 25: invora.billing.credit_notes.v2.DownloadXmlCreditNoteRequest
-	(*DownloadXmlCreditNoteResponse)(nil),     // 26: invora.billing.credit_notes.v2.DownloadXmlCreditNoteResponse
-	(*ResendCreditNoteEmailRequest)(nil),      // 27: invora.billing.credit_notes.v2.ResendCreditNoteEmailRequest
-	(*ResendCreditNoteEmailResponse)(nil),     // 28: invora.billing.credit_notes.v2.ResendCreditNoteEmailResponse
-	(*RetryTaxReportingRequest)(nil),          // 29: invora.billing.credit_notes.v2.RetryTaxReportingRequest
-	(*RetryTaxReportingResponse)(nil),         // 30: invora.billing.credit_notes.v2.RetryTaxReportingResponse
-	(*SyncIntegrationCreditNoteRequest)(nil),  // 31: invora.billing.credit_notes.v2.SyncIntegrationCreditNoteRequest
-	(*SyncIntegrationCreditNoteResponse)(nil), // 32: invora.billing.credit_notes.v2.SyncIntegrationCreditNoteResponse
-	(*UpdateRequest)(nil),                     // 33: invora.billing.credit_notes.v2.UpdateRequest
-	(*UpdateResponse)(nil),                    // 34: invora.billing.credit_notes.v2.UpdateResponse
-	(*VoidCreditNoteRequest)(nil),             // 35: invora.billing.credit_notes.v2.VoidCreditNoteRequest
-	(*VoidCreditNoteResponse)(nil),            // 36: invora.billing.credit_notes.v2.VoidCreditNoteResponse
-	(*VoidCreditNoteInput)(nil),               // 37: invora.billing.credit_notes.v2.VoidCreditNoteInput
-	(*UpdateCreditNoteInput)(nil),             // 38: invora.billing.credit_notes.v2.UpdateCreditNoteInput
-	(*SyncIntegrationCreditNoteInput)(nil),    // 39: invora.billing.credit_notes.v2.SyncIntegrationCreditNoteInput
-	(*SyncIntegrationCreditNotePayload)(nil),  // 40: invora.billing.credit_notes.v2.SyncIntegrationCreditNotePayload
-	(*RetryTaxReportingInput)(nil),            // 41: invora.billing.credit_notes.v2.RetryTaxReportingInput
-	(*ResendCreditNoteEmailInput)(nil),        // 42: invora.billing.credit_notes.v2.ResendCreditNoteEmailInput
-	(*DownloadXmlCreditNoteInput)(nil),        // 43: invora.billing.credit_notes.v2.DownloadXmlCreditNoteInput
-	(*DownloadCreditNoteInput)(nil),           // 44: invora.billing.credit_notes.v2.DownloadCreditNoteInput
-	(*CreateDataExportsCreditNotesInput)(nil), // 45: invora.billing.credit_notes.v2.CreateDataExportsCreditNotesInput
-	(*DataExportCreditNoteFiltersInput)(nil),  // 46: invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInput
-	(*CreateCreditNoteInput)(nil),             // 47: invora.billing.credit_notes.v2.CreateCreditNoteInput
-	(*CreditNoteItemInput)(nil),               // 48: invora.billing.credit_notes.v2.CreditNoteItemInput
-	(*CreditNoteEstimate)(nil),                // 49: invora.billing.credit_notes.v2.CreditNoteEstimate
-	(*CreditNoteItemEstimate)(nil),            // 50: invora.billing.credit_notes.v2.CreditNoteItemEstimate
-	(*fieldmaskpb.FieldMask)(nil),             // 51: google.protobuf.FieldMask
-	(*v2.BillingCreditNote)(nil),              // 52: invora.billing.common.v2.BillingCreditNote
-	(*kernel.PaginationInfo)(nil),             // 53: kernel.PaginationInfo
-	(*wrapperspb.StringValue)(nil),            // 54: google.protobuf.StringValue
-	(v2.CreditNoteCreditStatusEnum)(0),        // 55: invora.billing.common.v2.CreditNoteCreditStatusEnum
-	(v2.CreditNoteReasonEnum)(0),              // 56: invora.billing.common.v2.CreditNoteReasonEnum
-	(v2.CreditNoteRefundStatusEnum)(0),        // 57: invora.billing.common.v2.CreditNoteRefundStatusEnum
-	(*kernel.ListRequestFilterPartId)(nil),    // 58: kernel.ListRequestFilterPartId
-	(v2.CurrencyEnum)(0),                      // 59: invora.billing.common.v2.CurrencyEnum
-	(*kernel.ListRequestFilterPartDate)(nil),  // 60: kernel.ListRequestFilterPartDate
-	(kernel.SortDirection)(0),                 // 61: kernel.SortDirection
-	(*v2.DataExport)(nil),                     // 62: invora.billing.common.v2.DataExport
-	(*v2.MetadataInput)(nil),                  // 63: invora.billing.common.v2.MetadataInput
-	(v2.DataExportFormatTypeEnum)(0),          // 64: invora.billing.common.v2.DataExportFormatTypeEnum
-	(*date.Date)(nil),                         // 65: google.type.Date
-	(*v2.CreditNoteAppliedTax)(nil),           // 66: invora.billing.common.v2.CreditNoteAppliedTax
-	(*v2.BillingFee)(nil),                     // 67: invora.billing.common.v2.BillingFee
+	(CreditNoteExportType)(0),                // 0: invora.billing.credit_notes.v2.CreditNoteExportType
+	(CreditNoteType)(0),                      // 1: invora.billing.credit_notes.v2.CreditNoteType
+	(*ListRequest)(nil),                      // 2: invora.billing.credit_notes.v2.ListRequest
+	(*ListResponse)(nil),                     // 3: invora.billing.credit_notes.v2.ListResponse
+	(*ListFilter)(nil),                       // 4: invora.billing.credit_notes.v2.ListFilter
+	(*ListCreditStatusFilter)(nil),           // 5: invora.billing.credit_notes.v2.ListCreditStatusFilter
+	(*ListReasonFilter)(nil),                 // 6: invora.billing.credit_notes.v2.ListReasonFilter
+	(*ListRefundStatusFilter)(nil),           // 7: invora.billing.credit_notes.v2.ListRefundStatusFilter
+	(*ListTypesFilter)(nil),                  // 8: invora.billing.credit_notes.v2.ListTypesFilter
+	(*ListFilterPart)(nil),                   // 9: invora.billing.credit_notes.v2.ListFilterPart
+	(*ListSort)(nil),                         // 10: invora.billing.credit_notes.v2.ListSort
+	(*ListSortRule)(nil),                     // 11: invora.billing.credit_notes.v2.ListSortRule
+	(*GetRequest)(nil),                       // 12: invora.billing.credit_notes.v2.GetRequest
+	(*GetResponse)(nil),                      // 13: invora.billing.credit_notes.v2.GetResponse
+	(*CreateRequest)(nil),                    // 14: invora.billing.credit_notes.v2.CreateRequest
+	(*CreateResponse)(nil),                   // 15: invora.billing.credit_notes.v2.CreateResponse
+	(*UpdateRequest)(nil),                    // 16: invora.billing.credit_notes.v2.UpdateRequest
+	(*UpdateResponse)(nil),                   // 17: invora.billing.credit_notes.v2.UpdateResponse
+	(*GetEstimateRequest)(nil),               // 18: invora.billing.credit_notes.v2.GetEstimateRequest
+	(*GetEstimateResponse)(nil),              // 19: invora.billing.credit_notes.v2.GetEstimateResponse
+	(*ListInvoiceCreditNotesRequest)(nil),    // 20: invora.billing.credit_notes.v2.ListInvoiceCreditNotesRequest
+	(*ListInvoiceCreditNotesResponse)(nil),   // 21: invora.billing.credit_notes.v2.ListInvoiceCreditNotesResponse
+	(*DownloadRequest)(nil),                  // 22: invora.billing.credit_notes.v2.DownloadRequest
+	(*DownloadResponse)(nil),                 // 23: invora.billing.credit_notes.v2.DownloadResponse
+	(*DownloadXmlRequest)(nil),               // 24: invora.billing.credit_notes.v2.DownloadXmlRequest
+	(*DownloadXmlResponse)(nil),              // 25: invora.billing.credit_notes.v2.DownloadXmlResponse
+	(*VoidCreditNoteRequest)(nil),            // 26: invora.billing.credit_notes.v2.VoidCreditNoteRequest
+	(*VoidCreditNoteResponse)(nil),           // 27: invora.billing.credit_notes.v2.VoidCreditNoteResponse
+	(*ResendEmailRequest)(nil),               // 28: invora.billing.credit_notes.v2.ResendEmailRequest
+	(*ResendEmailResponse)(nil),              // 29: invora.billing.credit_notes.v2.ResendEmailResponse
+	(*RetryTaxReportingRequest)(nil),         // 30: invora.billing.credit_notes.v2.RetryTaxReportingRequest
+	(*RetryTaxReportingResponse)(nil),        // 31: invora.billing.credit_notes.v2.RetryTaxReportingResponse
+	(*SyncIntegrationRequest)(nil),           // 32: invora.billing.credit_notes.v2.SyncIntegrationRequest
+	(*SyncIntegrationResponse)(nil),          // 33: invora.billing.credit_notes.v2.SyncIntegrationResponse
+	(*CreateDataExportRequest)(nil),          // 34: invora.billing.credit_notes.v2.CreateDataExportRequest
+	(*CreateDataExportResponse)(nil),         // 35: invora.billing.credit_notes.v2.CreateDataExportResponse
+	(*DataExportCreditNoteFiltersInput)(nil), // 36: invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInput
+	(*CreditNoteItemInput)(nil),              // 37: invora.billing.credit_notes.v2.CreditNoteItemInput
+	(*CreditNoteEstimate)(nil),               // 38: invora.billing.credit_notes.v2.CreditNoteEstimate
+	(*CreditNoteItemEstimate)(nil),           // 39: invora.billing.credit_notes.v2.CreditNoteItemEstimate
+	(*kernel.PaginationInfo)(nil),            // 40: kernel.PaginationInfo
+	(*fieldmaskpb.FieldMask)(nil),            // 41: google.protobuf.FieldMask
+	(v2.View)(0),                             // 42: invora.billing.common.v2.View
+	(*v2.BillingCreditNote)(nil),             // 43: invora.billing.common.v2.BillingCreditNote
+	(v2.CreditNoteCreditStatus)(0),           // 44: invora.billing.common.v2.CreditNoteCreditStatus
+	(v2.CreditNoteReason)(0),                 // 45: invora.billing.common.v2.CreditNoteReason
+	(v2.CreditNoteRefundStatus)(0),           // 46: invora.billing.common.v2.CreditNoteRefundStatus
+	(*kernel.ListRequestFilterPartId)(nil),   // 47: kernel.ListRequestFilterPartId
+	(v2.CurrencyEnum)(0),                     // 48: invora.billing.common.v2.CurrencyEnum
+	(*kernel.ListRequestFilterPartDate)(nil), // 49: kernel.ListRequestFilterPartDate
+	(kernel.SortDirection)(0),                // 50: kernel.SortDirection
+	(*v2.MetadataInput)(nil),                 // 51: invora.billing.common.v2.MetadataInput
+	(v2.DataExportFormatType)(0),             // 52: invora.billing.common.v2.DataExportFormatType
+	(*v2.DataExport)(nil),                    // 53: invora.billing.common.v2.DataExport
+	(*date.Date)(nil),                        // 54: google.type.Date
+	(*v2.CreditNoteAppliedTax)(nil),          // 55: invora.billing.common.v2.CreditNoteAppliedTax
+	(*kernel.DecimalValue)(nil),              // 56: kernel.DecimalValue
+	(*v2.BillingFee)(nil),                    // 57: invora.billing.common.v2.BillingFee
 }
 var file_invora_billing_credit_notes_v2_service_proto_depIdxs = []int32{
-	51, // 0: invora.billing.credit_notes.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 1: invora.billing.credit_notes.v2.GetRequest.view:type_name -> invora.billing.credit_notes.v2.View
-	52, // 2: invora.billing.credit_notes.v2.GetResponse.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
-	48, // 3: invora.billing.credit_notes.v2.GetEstimateRequest.items:type_name -> invora.billing.credit_notes.v2.CreditNoteItemInput
-	51, // 4: invora.billing.credit_notes.v2.GetEstimateRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 5: invora.billing.credit_notes.v2.GetEstimateRequest.view:type_name -> invora.billing.credit_notes.v2.View
-	49, // 6: invora.billing.credit_notes.v2.GetEstimateResponse.credit_note_estimate:type_name -> invora.billing.credit_notes.v2.CreditNoteEstimate
-	9,  // 7: invora.billing.credit_notes.v2.ListRequest.filter:type_name -> invora.billing.credit_notes.v2.ListFilter
-	15, // 8: invora.billing.credit_notes.v2.ListRequest.sort:type_name -> invora.billing.credit_notes.v2.ListSort
-	53, // 9: invora.billing.credit_notes.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
-	51, // 10: invora.billing.credit_notes.v2.ListRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 11: invora.billing.credit_notes.v2.ListRequest.view:type_name -> invora.billing.credit_notes.v2.View
-	52, // 12: invora.billing.credit_notes.v2.ListResponse.items:type_name -> invora.billing.common.v2.BillingCreditNote
-	54, // 13: invora.billing.credit_notes.v2.ListResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	14, // 14: invora.billing.credit_notes.v2.ListFilter.part:type_name -> invora.billing.credit_notes.v2.ListFilterPart
-	55, // 15: invora.billing.credit_notes.v2.ListCreditStatusFilter.in_values:type_name -> invora.billing.common.v2.CreditNoteCreditStatusEnum
-	56, // 16: invora.billing.credit_notes.v2.ListReasonFilter.in_values:type_name -> invora.billing.common.v2.CreditNoteReasonEnum
-	57, // 17: invora.billing.credit_notes.v2.ListRefundStatusFilter.in_values:type_name -> invora.billing.common.v2.CreditNoteRefundStatusEnum
-	2,  // 18: invora.billing.credit_notes.v2.ListTypesFilter.in_values:type_name -> invora.billing.credit_notes.v2.CreditNoteTypeEnum
-	58, // 19: invora.billing.credit_notes.v2.ListFilterPart.billing_entity_id:type_name -> kernel.ListRequestFilterPartId
-	10, // 20: invora.billing.credit_notes.v2.ListFilterPart.credit_status:type_name -> invora.billing.credit_notes.v2.ListCreditStatusFilter
-	59, // 21: invora.billing.credit_notes.v2.ListFilterPart.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	60, // 22: invora.billing.credit_notes.v2.ListFilterPart.issuing_date:type_name -> kernel.ListRequestFilterPartDate
-	11, // 23: invora.billing.credit_notes.v2.ListFilterPart.reason:type_name -> invora.billing.credit_notes.v2.ListReasonFilter
-	12, // 24: invora.billing.credit_notes.v2.ListFilterPart.refund_status:type_name -> invora.billing.credit_notes.v2.ListRefundStatusFilter
-	13, // 25: invora.billing.credit_notes.v2.ListFilterPart.types:type_name -> invora.billing.credit_notes.v2.ListTypesFilter
-	16, // 26: invora.billing.credit_notes.v2.ListSort.rules:type_name -> invora.billing.credit_notes.v2.ListSortRule
-	61, // 27: invora.billing.credit_notes.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
-	61, // 28: invora.billing.credit_notes.v2.ListSortRule.issuing_date:type_name -> kernel.SortDirection
-	9,  // 29: invora.billing.credit_notes.v2.InvoiceCreditNotesRequest.filter:type_name -> invora.billing.credit_notes.v2.ListFilter
-	15, // 30: invora.billing.credit_notes.v2.InvoiceCreditNotesRequest.sort:type_name -> invora.billing.credit_notes.v2.ListSort
-	53, // 31: invora.billing.credit_notes.v2.InvoiceCreditNotesRequest.pagination:type_name -> kernel.PaginationInfo
-	51, // 32: invora.billing.credit_notes.v2.InvoiceCreditNotesRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 33: invora.billing.credit_notes.v2.InvoiceCreditNotesRequest.view:type_name -> invora.billing.credit_notes.v2.View
-	52, // 34: invora.billing.credit_notes.v2.InvoiceCreditNotesResponse.items:type_name -> invora.billing.common.v2.BillingCreditNote
-	54, // 35: invora.billing.credit_notes.v2.InvoiceCreditNotesResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	47, // 36: invora.billing.credit_notes.v2.CreateRequest.input:type_name -> invora.billing.credit_notes.v2.CreateCreditNoteInput
-	52, // 37: invora.billing.credit_notes.v2.CreateResponse.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
-	45, // 38: invora.billing.credit_notes.v2.CreatesDataExportRequest.input:type_name -> invora.billing.credit_notes.v2.CreateDataExportsCreditNotesInput
-	62, // 39: invora.billing.credit_notes.v2.CreatesDataExportResponse.data_export:type_name -> invora.billing.common.v2.DataExport
-	44, // 40: invora.billing.credit_notes.v2.DownloadCreditNoteRequest.input:type_name -> invora.billing.credit_notes.v2.DownloadCreditNoteInput
-	52, // 41: invora.billing.credit_notes.v2.DownloadCreditNoteResponse.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
-	43, // 42: invora.billing.credit_notes.v2.DownloadXmlCreditNoteRequest.input:type_name -> invora.billing.credit_notes.v2.DownloadXmlCreditNoteInput
-	52, // 43: invora.billing.credit_notes.v2.DownloadXmlCreditNoteResponse.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
-	42, // 44: invora.billing.credit_notes.v2.ResendCreditNoteEmailRequest.input:type_name -> invora.billing.credit_notes.v2.ResendCreditNoteEmailInput
-	52, // 45: invora.billing.credit_notes.v2.ResendCreditNoteEmailResponse.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
-	41, // 46: invora.billing.credit_notes.v2.RetryTaxReportingRequest.input:type_name -> invora.billing.credit_notes.v2.RetryTaxReportingInput
-	52, // 47: invora.billing.credit_notes.v2.RetryTaxReportingResponse.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
-	39, // 48: invora.billing.credit_notes.v2.SyncIntegrationCreditNoteRequest.input:type_name -> invora.billing.credit_notes.v2.SyncIntegrationCreditNoteInput
-	40, // 49: invora.billing.credit_notes.v2.SyncIntegrationCreditNoteResponse.sync_integration_credit_note_payload:type_name -> invora.billing.credit_notes.v2.SyncIntegrationCreditNotePayload
-	38, // 50: invora.billing.credit_notes.v2.UpdateRequest.input:type_name -> invora.billing.credit_notes.v2.UpdateCreditNoteInput
-	52, // 51: invora.billing.credit_notes.v2.UpdateResponse.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
-	37, // 52: invora.billing.credit_notes.v2.VoidCreditNoteRequest.input:type_name -> invora.billing.credit_notes.v2.VoidCreditNoteInput
-	52, // 53: invora.billing.credit_notes.v2.VoidCreditNoteResponse.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
-	63, // 54: invora.billing.credit_notes.v2.UpdateCreditNoteInput.metadata:type_name -> invora.billing.common.v2.MetadataInput
-	57, // 55: invora.billing.credit_notes.v2.UpdateCreditNoteInput.refund_status:type_name -> invora.billing.common.v2.CreditNoteRefundStatusEnum
-	46, // 56: invora.billing.credit_notes.v2.CreateDataExportsCreditNotesInput.filters:type_name -> invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInput
-	64, // 57: invora.billing.credit_notes.v2.CreateDataExportsCreditNotesInput.format:type_name -> invora.billing.common.v2.DataExportFormatTypeEnum
-	1,  // 58: invora.billing.credit_notes.v2.CreateDataExportsCreditNotesInput.resource_type:type_name -> invora.billing.credit_notes.v2.CreditNoteExportTypeEnum
-	55, // 59: invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInput.credit_status:type_name -> invora.billing.common.v2.CreditNoteCreditStatusEnum
-	59, // 60: invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInput.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	65, // 61: invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInput.issuing_date_from:type_name -> google.type.Date
-	65, // 62: invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInput.issuing_date_to:type_name -> google.type.Date
-	56, // 63: invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInput.reason:type_name -> invora.billing.common.v2.CreditNoteReasonEnum
-	57, // 64: invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInput.refund_status:type_name -> invora.billing.common.v2.CreditNoteRefundStatusEnum
-	2,  // 65: invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInput.types:type_name -> invora.billing.credit_notes.v2.CreditNoteTypeEnum
-	48, // 66: invora.billing.credit_notes.v2.CreateCreditNoteInput.items:type_name -> invora.billing.credit_notes.v2.CreditNoteItemInput
-	63, // 67: invora.billing.credit_notes.v2.CreateCreditNoteInput.metadata:type_name -> invora.billing.common.v2.MetadataInput
-	56, // 68: invora.billing.credit_notes.v2.CreateCreditNoteInput.reason:type_name -> invora.billing.common.v2.CreditNoteReasonEnum
-	66, // 69: invora.billing.credit_notes.v2.CreditNoteEstimate.applied_taxes:type_name -> invora.billing.common.v2.CreditNoteAppliedTax
-	59, // 70: invora.billing.credit_notes.v2.CreditNoteEstimate.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	50, // 71: invora.billing.credit_notes.v2.CreditNoteEstimate.items:type_name -> invora.billing.credit_notes.v2.CreditNoteItemEstimate
-	67, // 72: invora.billing.credit_notes.v2.CreditNoteItemEstimate.fee:type_name -> invora.billing.common.v2.BillingFee
-	19, // 73: invora.billing.credit_notes.v2.CreditNoteService.Create:input_type -> invora.billing.credit_notes.v2.CreateRequest
-	3,  // 74: invora.billing.credit_notes.v2.CreditNoteService.Get:input_type -> invora.billing.credit_notes.v2.GetRequest
-	7,  // 75: invora.billing.credit_notes.v2.CreditNoteService.List:input_type -> invora.billing.credit_notes.v2.ListRequest
-	33, // 76: invora.billing.credit_notes.v2.CreditNoteService.Update:input_type -> invora.billing.credit_notes.v2.UpdateRequest
-	21, // 77: invora.billing.credit_notes.v2.CreditNoteService.CreatesDataExport:input_type -> invora.billing.credit_notes.v2.CreatesDataExportRequest
-	23, // 78: invora.billing.credit_notes.v2.CreditNoteService.DownloadCreditNote:input_type -> invora.billing.credit_notes.v2.DownloadCreditNoteRequest
-	25, // 79: invora.billing.credit_notes.v2.CreditNoteService.DownloadXmlCreditNote:input_type -> invora.billing.credit_notes.v2.DownloadXmlCreditNoteRequest
-	5,  // 80: invora.billing.credit_notes.v2.CreditNoteService.GetEstimate:input_type -> invora.billing.credit_notes.v2.GetEstimateRequest
-	17, // 81: invora.billing.credit_notes.v2.CreditNoteService.InvoiceCreditNotes:input_type -> invora.billing.credit_notes.v2.InvoiceCreditNotesRequest
-	27, // 82: invora.billing.credit_notes.v2.CreditNoteService.ResendCreditNoteEmail:input_type -> invora.billing.credit_notes.v2.ResendCreditNoteEmailRequest
-	29, // 83: invora.billing.credit_notes.v2.CreditNoteService.RetryTaxReporting:input_type -> invora.billing.credit_notes.v2.RetryTaxReportingRequest
-	31, // 84: invora.billing.credit_notes.v2.CreditNoteService.SyncIntegrationCreditNote:input_type -> invora.billing.credit_notes.v2.SyncIntegrationCreditNoteRequest
-	35, // 85: invora.billing.credit_notes.v2.CreditNoteService.VoidCreditNote:input_type -> invora.billing.credit_notes.v2.VoidCreditNoteRequest
-	20, // 86: invora.billing.credit_notes.v2.CreditNoteService.Create:output_type -> invora.billing.credit_notes.v2.CreateResponse
-	4,  // 87: invora.billing.credit_notes.v2.CreditNoteService.Get:output_type -> invora.billing.credit_notes.v2.GetResponse
-	8,  // 88: invora.billing.credit_notes.v2.CreditNoteService.List:output_type -> invora.billing.credit_notes.v2.ListResponse
-	34, // 89: invora.billing.credit_notes.v2.CreditNoteService.Update:output_type -> invora.billing.credit_notes.v2.UpdateResponse
-	22, // 90: invora.billing.credit_notes.v2.CreditNoteService.CreatesDataExport:output_type -> invora.billing.credit_notes.v2.CreatesDataExportResponse
-	24, // 91: invora.billing.credit_notes.v2.CreditNoteService.DownloadCreditNote:output_type -> invora.billing.credit_notes.v2.DownloadCreditNoteResponse
-	26, // 92: invora.billing.credit_notes.v2.CreditNoteService.DownloadXmlCreditNote:output_type -> invora.billing.credit_notes.v2.DownloadXmlCreditNoteResponse
-	6,  // 93: invora.billing.credit_notes.v2.CreditNoteService.GetEstimate:output_type -> invora.billing.credit_notes.v2.GetEstimateResponse
-	18, // 94: invora.billing.credit_notes.v2.CreditNoteService.InvoiceCreditNotes:output_type -> invora.billing.credit_notes.v2.InvoiceCreditNotesResponse
-	28, // 95: invora.billing.credit_notes.v2.CreditNoteService.ResendCreditNoteEmail:output_type -> invora.billing.credit_notes.v2.ResendCreditNoteEmailResponse
-	30, // 96: invora.billing.credit_notes.v2.CreditNoteService.RetryTaxReporting:output_type -> invora.billing.credit_notes.v2.RetryTaxReportingResponse
-	32, // 97: invora.billing.credit_notes.v2.CreditNoteService.SyncIntegrationCreditNote:output_type -> invora.billing.credit_notes.v2.SyncIntegrationCreditNoteResponse
-	36, // 98: invora.billing.credit_notes.v2.CreditNoteService.VoidCreditNote:output_type -> invora.billing.credit_notes.v2.VoidCreditNoteResponse
-	86, // [86:99] is the sub-list for method output_type
-	73, // [73:86] is the sub-list for method input_type
-	73, // [73:73] is the sub-list for extension type_name
-	73, // [73:73] is the sub-list for extension extendee
-	0,  // [0:73] is the sub-list for field type_name
+	4,  // 0: invora.billing.credit_notes.v2.ListRequest.filter:type_name -> invora.billing.credit_notes.v2.ListFilter
+	10, // 1: invora.billing.credit_notes.v2.ListRequest.sort:type_name -> invora.billing.credit_notes.v2.ListSort
+	40, // 2: invora.billing.credit_notes.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
+	41, // 3: invora.billing.credit_notes.v2.ListRequest.read_mask:type_name -> google.protobuf.FieldMask
+	42, // 4: invora.billing.credit_notes.v2.ListRequest.view:type_name -> invora.billing.common.v2.View
+	43, // 5: invora.billing.credit_notes.v2.ListResponse.items:type_name -> invora.billing.common.v2.BillingCreditNote
+	9,  // 6: invora.billing.credit_notes.v2.ListFilter.part:type_name -> invora.billing.credit_notes.v2.ListFilterPart
+	44, // 7: invora.billing.credit_notes.v2.ListCreditStatusFilter.in_values:type_name -> invora.billing.common.v2.CreditNoteCreditStatus
+	45, // 8: invora.billing.credit_notes.v2.ListReasonFilter.in_values:type_name -> invora.billing.common.v2.CreditNoteReason
+	46, // 9: invora.billing.credit_notes.v2.ListRefundStatusFilter.in_values:type_name -> invora.billing.common.v2.CreditNoteRefundStatus
+	1,  // 10: invora.billing.credit_notes.v2.ListTypesFilter.in_values:type_name -> invora.billing.credit_notes.v2.CreditNoteType
+	47, // 11: invora.billing.credit_notes.v2.ListFilterPart.billing_entity_id:type_name -> kernel.ListRequestFilterPartId
+	5,  // 12: invora.billing.credit_notes.v2.ListFilterPart.credit_status:type_name -> invora.billing.credit_notes.v2.ListCreditStatusFilter
+	48, // 13: invora.billing.credit_notes.v2.ListFilterPart.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	49, // 14: invora.billing.credit_notes.v2.ListFilterPart.issuing_date:type_name -> kernel.ListRequestFilterPartDate
+	6,  // 15: invora.billing.credit_notes.v2.ListFilterPart.reason:type_name -> invora.billing.credit_notes.v2.ListReasonFilter
+	7,  // 16: invora.billing.credit_notes.v2.ListFilterPart.refund_status:type_name -> invora.billing.credit_notes.v2.ListRefundStatusFilter
+	8,  // 17: invora.billing.credit_notes.v2.ListFilterPart.types:type_name -> invora.billing.credit_notes.v2.ListTypesFilter
+	11, // 18: invora.billing.credit_notes.v2.ListSort.rules:type_name -> invora.billing.credit_notes.v2.ListSortRule
+	50, // 19: invora.billing.credit_notes.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
+	50, // 20: invora.billing.credit_notes.v2.ListSortRule.issuing_date:type_name -> kernel.SortDirection
+	41, // 21: invora.billing.credit_notes.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
+	42, // 22: invora.billing.credit_notes.v2.GetRequest.view:type_name -> invora.billing.common.v2.View
+	43, // 23: invora.billing.credit_notes.v2.GetResponse.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
+	37, // 24: invora.billing.credit_notes.v2.CreateRequest.items:type_name -> invora.billing.credit_notes.v2.CreditNoteItemInput
+	51, // 25: invora.billing.credit_notes.v2.CreateRequest.metadata:type_name -> invora.billing.common.v2.MetadataInput
+	45, // 26: invora.billing.credit_notes.v2.CreateRequest.reason:type_name -> invora.billing.common.v2.CreditNoteReason
+	43, // 27: invora.billing.credit_notes.v2.CreateResponse.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
+	51, // 28: invora.billing.credit_notes.v2.UpdateRequest.metadata:type_name -> invora.billing.common.v2.MetadataInput
+	46, // 29: invora.billing.credit_notes.v2.UpdateRequest.refund_status:type_name -> invora.billing.common.v2.CreditNoteRefundStatus
+	41, // 30: invora.billing.credit_notes.v2.UpdateRequest.update_mask:type_name -> google.protobuf.FieldMask
+	43, // 31: invora.billing.credit_notes.v2.UpdateResponse.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
+	37, // 32: invora.billing.credit_notes.v2.GetEstimateRequest.items:type_name -> invora.billing.credit_notes.v2.CreditNoteItemInput
+	41, // 33: invora.billing.credit_notes.v2.GetEstimateRequest.read_mask:type_name -> google.protobuf.FieldMask
+	42, // 34: invora.billing.credit_notes.v2.GetEstimateRequest.view:type_name -> invora.billing.common.v2.View
+	38, // 35: invora.billing.credit_notes.v2.GetEstimateResponse.credit_note_estimate:type_name -> invora.billing.credit_notes.v2.CreditNoteEstimate
+	4,  // 36: invora.billing.credit_notes.v2.ListInvoiceCreditNotesRequest.filter:type_name -> invora.billing.credit_notes.v2.ListFilter
+	10, // 37: invora.billing.credit_notes.v2.ListInvoiceCreditNotesRequest.sort:type_name -> invora.billing.credit_notes.v2.ListSort
+	40, // 38: invora.billing.credit_notes.v2.ListInvoiceCreditNotesRequest.pagination:type_name -> kernel.PaginationInfo
+	41, // 39: invora.billing.credit_notes.v2.ListInvoiceCreditNotesRequest.read_mask:type_name -> google.protobuf.FieldMask
+	42, // 40: invora.billing.credit_notes.v2.ListInvoiceCreditNotesRequest.view:type_name -> invora.billing.common.v2.View
+	43, // 41: invora.billing.credit_notes.v2.ListInvoiceCreditNotesResponse.items:type_name -> invora.billing.common.v2.BillingCreditNote
+	43, // 42: invora.billing.credit_notes.v2.DownloadResponse.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
+	43, // 43: invora.billing.credit_notes.v2.DownloadXmlResponse.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
+	43, // 44: invora.billing.credit_notes.v2.VoidCreditNoteResponse.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
+	43, // 45: invora.billing.credit_notes.v2.ResendEmailResponse.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
+	43, // 46: invora.billing.credit_notes.v2.RetryTaxReportingResponse.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
+	36, // 47: invora.billing.credit_notes.v2.CreateDataExportRequest.filters:type_name -> invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInput
+	52, // 48: invora.billing.credit_notes.v2.CreateDataExportRequest.format:type_name -> invora.billing.common.v2.DataExportFormatType
+	0,  // 49: invora.billing.credit_notes.v2.CreateDataExportRequest.resource_type:type_name -> invora.billing.credit_notes.v2.CreditNoteExportType
+	53, // 50: invora.billing.credit_notes.v2.CreateDataExportResponse.data_export:type_name -> invora.billing.common.v2.DataExport
+	44, // 51: invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInput.credit_status:type_name -> invora.billing.common.v2.CreditNoteCreditStatus
+	48, // 52: invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInput.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	54, // 53: invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInput.issuing_date_from:type_name -> google.type.Date
+	54, // 54: invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInput.issuing_date_to:type_name -> google.type.Date
+	45, // 55: invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInput.reason:type_name -> invora.billing.common.v2.CreditNoteReason
+	46, // 56: invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInput.refund_status:type_name -> invora.billing.common.v2.CreditNoteRefundStatus
+	1,  // 57: invora.billing.credit_notes.v2.DataExportCreditNoteFiltersInput.types:type_name -> invora.billing.credit_notes.v2.CreditNoteType
+	55, // 58: invora.billing.credit_notes.v2.CreditNoteEstimate.applied_taxes:type_name -> invora.billing.common.v2.CreditNoteAppliedTax
+	48, // 59: invora.billing.credit_notes.v2.CreditNoteEstimate.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	39, // 60: invora.billing.credit_notes.v2.CreditNoteEstimate.items:type_name -> invora.billing.credit_notes.v2.CreditNoteItemEstimate
+	56, // 61: invora.billing.credit_notes.v2.CreditNoteEstimate.precise_coupons_adjustment_amount_cents:type_name -> kernel.DecimalValue
+	56, // 62: invora.billing.credit_notes.v2.CreditNoteEstimate.precise_taxes_amount_cents:type_name -> kernel.DecimalValue
+	56, // 63: invora.billing.credit_notes.v2.CreditNoteEstimate.taxes_rate:type_name -> kernel.DecimalValue
+	57, // 64: invora.billing.credit_notes.v2.CreditNoteItemEstimate.fee:type_name -> invora.billing.common.v2.BillingFee
+	2,  // 65: invora.billing.credit_notes.v2.CreditNotesService.List:input_type -> invora.billing.credit_notes.v2.ListRequest
+	12, // 66: invora.billing.credit_notes.v2.CreditNotesService.Get:input_type -> invora.billing.credit_notes.v2.GetRequest
+	14, // 67: invora.billing.credit_notes.v2.CreditNotesService.Create:input_type -> invora.billing.credit_notes.v2.CreateRequest
+	16, // 68: invora.billing.credit_notes.v2.CreditNotesService.Update:input_type -> invora.billing.credit_notes.v2.UpdateRequest
+	18, // 69: invora.billing.credit_notes.v2.CreditNotesService.GetEstimate:input_type -> invora.billing.credit_notes.v2.GetEstimateRequest
+	20, // 70: invora.billing.credit_notes.v2.CreditNotesService.ListInvoiceCreditNotes:input_type -> invora.billing.credit_notes.v2.ListInvoiceCreditNotesRequest
+	22, // 71: invora.billing.credit_notes.v2.CreditNotesService.Download:input_type -> invora.billing.credit_notes.v2.DownloadRequest
+	24, // 72: invora.billing.credit_notes.v2.CreditNotesService.DownloadXml:input_type -> invora.billing.credit_notes.v2.DownloadXmlRequest
+	26, // 73: invora.billing.credit_notes.v2.CreditNotesService.VoidCreditNote:input_type -> invora.billing.credit_notes.v2.VoidCreditNoteRequest
+	28, // 74: invora.billing.credit_notes.v2.CreditNotesService.ResendEmail:input_type -> invora.billing.credit_notes.v2.ResendEmailRequest
+	30, // 75: invora.billing.credit_notes.v2.CreditNotesService.RetryTaxReporting:input_type -> invora.billing.credit_notes.v2.RetryTaxReportingRequest
+	32, // 76: invora.billing.credit_notes.v2.CreditNotesService.SyncIntegration:input_type -> invora.billing.credit_notes.v2.SyncIntegrationRequest
+	34, // 77: invora.billing.credit_notes.v2.CreditNotesService.CreateDataExport:input_type -> invora.billing.credit_notes.v2.CreateDataExportRequest
+	3,  // 78: invora.billing.credit_notes.v2.CreditNotesService.List:output_type -> invora.billing.credit_notes.v2.ListResponse
+	13, // 79: invora.billing.credit_notes.v2.CreditNotesService.Get:output_type -> invora.billing.credit_notes.v2.GetResponse
+	15, // 80: invora.billing.credit_notes.v2.CreditNotesService.Create:output_type -> invora.billing.credit_notes.v2.CreateResponse
+	17, // 81: invora.billing.credit_notes.v2.CreditNotesService.Update:output_type -> invora.billing.credit_notes.v2.UpdateResponse
+	19, // 82: invora.billing.credit_notes.v2.CreditNotesService.GetEstimate:output_type -> invora.billing.credit_notes.v2.GetEstimateResponse
+	21, // 83: invora.billing.credit_notes.v2.CreditNotesService.ListInvoiceCreditNotes:output_type -> invora.billing.credit_notes.v2.ListInvoiceCreditNotesResponse
+	23, // 84: invora.billing.credit_notes.v2.CreditNotesService.Download:output_type -> invora.billing.credit_notes.v2.DownloadResponse
+	25, // 85: invora.billing.credit_notes.v2.CreditNotesService.DownloadXml:output_type -> invora.billing.credit_notes.v2.DownloadXmlResponse
+	27, // 86: invora.billing.credit_notes.v2.CreditNotesService.VoidCreditNote:output_type -> invora.billing.credit_notes.v2.VoidCreditNoteResponse
+	29, // 87: invora.billing.credit_notes.v2.CreditNotesService.ResendEmail:output_type -> invora.billing.credit_notes.v2.ResendEmailResponse
+	31, // 88: invora.billing.credit_notes.v2.CreditNotesService.RetryTaxReporting:output_type -> invora.billing.credit_notes.v2.RetryTaxReportingResponse
+	33, // 89: invora.billing.credit_notes.v2.CreditNotesService.SyncIntegration:output_type -> invora.billing.credit_notes.v2.SyncIntegrationResponse
+	35, // 90: invora.billing.credit_notes.v2.CreditNotesService.CreateDataExport:output_type -> invora.billing.credit_notes.v2.CreateDataExportResponse
+	78, // [78:91] is the sub-list for method output_type
+	65, // [65:78] is the sub-list for method input_type
+	65, // [65:65] is the sub-list for extension type_name
+	65, // [65:65] is the sub-list for extension extendee
+	0,  // [0:65] is the sub-list for field type_name
 }
 
 func init() { file_invora_billing_credit_notes_v2_service_proto_init() }
@@ -3508,7 +2984,8 @@ func file_invora_billing_credit_notes_v2_service_proto_init() {
 	if File_invora_billing_credit_notes_v2_service_proto != nil {
 		return
 	}
-	file_invora_billing_credit_notes_v2_service_proto_msgTypes[11].OneofWrappers = []any{
+	file_invora_billing_credit_notes_v2_service_proto_msgTypes[1].OneofWrappers = []any{}
+	file_invora_billing_credit_notes_v2_service_proto_msgTypes[7].OneofWrappers = []any{
 		(*ListFilterPart_AmountFrom)(nil),
 		(*ListFilterPart_AmountTo)(nil),
 		(*ListFilterPart_BillingEntityId)(nil),
@@ -3523,21 +3000,22 @@ func file_invora_billing_credit_notes_v2_service_proto_init() {
 		(*ListFilterPart_SelfBilled)(nil),
 		(*ListFilterPart_Types)(nil),
 	}
-	file_invora_billing_credit_notes_v2_service_proto_msgTypes[13].OneofWrappers = []any{
+	file_invora_billing_credit_notes_v2_service_proto_msgTypes[9].OneofWrappers = []any{
 		(*ListSortRule_CreatedAt)(nil),
 		(*ListSortRule_IssuingDate)(nil),
 	}
-	file_invora_billing_credit_notes_v2_service_proto_msgTypes[35].OneofWrappers = []any{}
-	file_invora_billing_credit_notes_v2_service_proto_msgTypes[37].OneofWrappers = []any{}
-	file_invora_billing_credit_notes_v2_service_proto_msgTypes[43].OneofWrappers = []any{}
-	file_invora_billing_credit_notes_v2_service_proto_msgTypes[44].OneofWrappers = []any{}
+	file_invora_billing_credit_notes_v2_service_proto_msgTypes[12].OneofWrappers = []any{}
+	file_invora_billing_credit_notes_v2_service_proto_msgTypes[14].OneofWrappers = []any{}
+	file_invora_billing_credit_notes_v2_service_proto_msgTypes[19].OneofWrappers = []any{}
+	file_invora_billing_credit_notes_v2_service_proto_msgTypes[31].OneofWrappers = []any{}
+	file_invora_billing_credit_notes_v2_service_proto_msgTypes[34].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_billing_credit_notes_v2_service_proto_rawDesc), len(file_invora_billing_credit_notes_v2_service_proto_rawDesc)),
-			NumEnums:      3,
-			NumMessages:   48,
+			NumEnums:      2,
+			NumMessages:   38,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

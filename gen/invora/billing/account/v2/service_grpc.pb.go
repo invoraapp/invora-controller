@@ -19,503 +19,511 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AccountService_GetCustomerProjectedUsage_FullMethodName = "/invora.billing.account.v2.AccountService/GetCustomerProjectedUsage"
-	AccountService_GetCustomerUsage_FullMethodName          = "/invora.billing.account.v2.AccountService/GetCustomerUsage"
-	AccountService_GetOrganization_FullMethodName           = "/invora.billing.account.v2.AccountService/GetOrganization"
-	AccountService_GetSubscription_FullMethodName           = "/invora.billing.account.v2.AccountService/GetSubscription"
-	AccountService_GetUser_FullMethodName                   = "/invora.billing.account.v2.AccountService/GetUser"
-	AccountService_GetWallet_FullMethodName                 = "/invora.billing.account.v2.AccountService/GetWallet"
-	AccountService_ListInvoiceCollections_FullMethodName    = "/invora.billing.account.v2.AccountService/ListInvoiceCollections"
-	AccountService_ListInvoices_FullMethodName              = "/invora.billing.account.v2.AccountService/ListInvoices"
-	AccountService_ListOverdueBalances_FullMethodName       = "/invora.billing.account.v2.AccountService/ListOverdueBalances"
-	AccountService_ListSubscriptions_FullMethodName         = "/invora.billing.account.v2.AccountService/ListSubscriptions"
-	AccountService_ListWallets_FullMethodName               = "/invora.billing.account.v2.AccountService/ListWallets"
+	AccountsService_GetOrganization_FullMethodName           = "/invora.billing.account.v2.AccountsService/GetOrganization"
+	AccountsService_GetUser_FullMethodName                   = "/invora.billing.account.v2.AccountsService/GetUser"
+	AccountsService_GetCustomerProjectedUsage_FullMethodName = "/invora.billing.account.v2.AccountsService/GetCustomerProjectedUsage"
+	AccountsService_GetCustomerUsage_FullMethodName          = "/invora.billing.account.v2.AccountsService/GetCustomerUsage"
+	AccountsService_GetSubscription_FullMethodName           = "/invora.billing.account.v2.AccountsService/GetSubscription"
+	AccountsService_GetWallet_FullMethodName                 = "/invora.billing.account.v2.AccountsService/GetWallet"
+	AccountsService_ListInvoices_FullMethodName              = "/invora.billing.account.v2.AccountsService/ListInvoices"
+	AccountsService_ListInvoiceCollections_FullMethodName    = "/invora.billing.account.v2.AccountsService/ListInvoiceCollections"
+	AccountsService_ListOverdueBalances_FullMethodName       = "/invora.billing.account.v2.AccountsService/ListOverdueBalances"
+	AccountsService_ListSubscriptions_FullMethodName         = "/invora.billing.account.v2.AccountsService/ListSubscriptions"
+	AccountsService_ListWallets_FullMethodName               = "/invora.billing.account.v2.AccountsService/ListWallets"
 )
 
-// AccountServiceClient is the client API for AccountService service.
+// AccountsServiceClient is the client API for AccountsService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AccountServiceClient interface {
-	// Query the projected usage of the customer on the current billing period
-	GetCustomerProjectedUsage(ctx context.Context, in *GetCustomerProjectedUsageRequest, opts ...grpc.CallOption) (*GetCustomerProjectedUsageResponse, error)
-	// Query the usage of the customer on the current billing period
-	GetCustomerUsage(ctx context.Context, in *GetCustomerUsageRequest, opts ...grpc.CallOption) (*GetCustomerUsageResponse, error)
-	// Query customer portal organization
+//
+// Customer-portal billing account service. Provides read-only access to
+// the authenticated customer's billing data: organization details, usage,
+// invoices, subscriptions, wallets, and overdue balances.
+type AccountsServiceClient interface {
+	// Get the billing organization for the current customer portal session.
 	GetOrganization(ctx context.Context, in *GetOrganizationRequest, opts ...grpc.CallOption) (*GetOrganizationResponse, error)
-	// Query a single subscription from the customer portal
-	GetSubscription(ctx context.Context, in *GetSubscriptionRequest, opts ...grpc.CallOption) (*GetSubscriptionResponse, error)
-	// Query a customer portal user
+	// Get the current customer portal user profile.
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
-	// Query a single wallet from the customer portal
+	// Get projected usage for a subscription in the current billing period.
+	GetCustomerProjectedUsage(ctx context.Context, in *GetCustomerProjectedUsageRequest, opts ...grpc.CallOption) (*GetCustomerProjectedUsageResponse, error)
+	// Get actual usage for a subscription in the current billing period.
+	GetCustomerUsage(ctx context.Context, in *GetCustomerUsageRequest, opts ...grpc.CallOption) (*GetCustomerUsageResponse, error)
+	// Get a single subscription by ID.
+	GetSubscription(ctx context.Context, in *GetSubscriptionRequest, opts ...grpc.CallOption) (*GetSubscriptionResponse, error)
+	// Get a single wallet by ID.
 	GetWallet(ctx context.Context, in *GetWalletRequest, opts ...grpc.CallOption) (*GetWalletResponse, error)
-	// Query invoice collections of a customer portal user
-	ListInvoiceCollections(ctx context.Context, in *ListInvoiceCollectionsRequest, opts ...grpc.CallOption) (*ListInvoiceCollectionsResponse, error)
-	// Query invoices of a customer
+	// List invoices for the current customer.
 	ListInvoices(ctx context.Context, in *ListInvoicesRequest, opts ...grpc.CallOption) (*ListInvoicesResponse, error)
-	// Query overdue balances of a customer portal user
+	// List finalized invoice collections for the current customer.
+	ListInvoiceCollections(ctx context.Context, in *ListInvoiceCollectionsRequest, opts ...grpc.CallOption) (*ListInvoiceCollectionsResponse, error)
+	// List overdue balances for the current customer.
 	ListOverdueBalances(ctx context.Context, in *ListOverdueBalancesRequest, opts ...grpc.CallOption) (*ListOverdueBalancesResponse, error)
-	// Query customer portal subscriptions
+	// List subscriptions for the current customer.
 	ListSubscriptions(ctx context.Context, in *ListSubscriptionsRequest, opts ...grpc.CallOption) (*ListSubscriptionsResponse, error)
-	// Query wallets
+	// List wallets for the current customer.
 	ListWallets(ctx context.Context, in *ListWalletsRequest, opts ...grpc.CallOption) (*ListWalletsResponse, error)
 }
 
-type accountServiceClient struct {
+type accountsServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAccountServiceClient(cc grpc.ClientConnInterface) AccountServiceClient {
-	return &accountServiceClient{cc}
+func NewAccountsServiceClient(cc grpc.ClientConnInterface) AccountsServiceClient {
+	return &accountsServiceClient{cc}
 }
 
-func (c *accountServiceClient) GetCustomerProjectedUsage(ctx context.Context, in *GetCustomerProjectedUsageRequest, opts ...grpc.CallOption) (*GetCustomerProjectedUsageResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetCustomerProjectedUsageResponse)
-	err := c.cc.Invoke(ctx, AccountService_GetCustomerProjectedUsage_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *accountServiceClient) GetCustomerUsage(ctx context.Context, in *GetCustomerUsageRequest, opts ...grpc.CallOption) (*GetCustomerUsageResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetCustomerUsageResponse)
-	err := c.cc.Invoke(ctx, AccountService_GetCustomerUsage_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *accountServiceClient) GetOrganization(ctx context.Context, in *GetOrganizationRequest, opts ...grpc.CallOption) (*GetOrganizationResponse, error) {
+func (c *accountsServiceClient) GetOrganization(ctx context.Context, in *GetOrganizationRequest, opts ...grpc.CallOption) (*GetOrganizationResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetOrganizationResponse)
-	err := c.cc.Invoke(ctx, AccountService_GetOrganization_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, AccountsService_GetOrganization_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *accountServiceClient) GetSubscription(ctx context.Context, in *GetSubscriptionRequest, opts ...grpc.CallOption) (*GetSubscriptionResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetSubscriptionResponse)
-	err := c.cc.Invoke(ctx, AccountService_GetSubscription_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *accountServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error) {
+func (c *accountsServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetUserResponse)
-	err := c.cc.Invoke(ctx, AccountService_GetUser_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, AccountsService_GetUser_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *accountServiceClient) GetWallet(ctx context.Context, in *GetWalletRequest, opts ...grpc.CallOption) (*GetWalletResponse, error) {
+func (c *accountsServiceClient) GetCustomerProjectedUsage(ctx context.Context, in *GetCustomerProjectedUsageRequest, opts ...grpc.CallOption) (*GetCustomerProjectedUsageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCustomerProjectedUsageResponse)
+	err := c.cc.Invoke(ctx, AccountsService_GetCustomerProjectedUsage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountsServiceClient) GetCustomerUsage(ctx context.Context, in *GetCustomerUsageRequest, opts ...grpc.CallOption) (*GetCustomerUsageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCustomerUsageResponse)
+	err := c.cc.Invoke(ctx, AccountsService_GetCustomerUsage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountsServiceClient) GetSubscription(ctx context.Context, in *GetSubscriptionRequest, opts ...grpc.CallOption) (*GetSubscriptionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSubscriptionResponse)
+	err := c.cc.Invoke(ctx, AccountsService_GetSubscription_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountsServiceClient) GetWallet(ctx context.Context, in *GetWalletRequest, opts ...grpc.CallOption) (*GetWalletResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetWalletResponse)
-	err := c.cc.Invoke(ctx, AccountService_GetWallet_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, AccountsService_GetWallet_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *accountServiceClient) ListInvoiceCollections(ctx context.Context, in *ListInvoiceCollectionsRequest, opts ...grpc.CallOption) (*ListInvoiceCollectionsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListInvoiceCollectionsResponse)
-	err := c.cc.Invoke(ctx, AccountService_ListInvoiceCollections_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *accountServiceClient) ListInvoices(ctx context.Context, in *ListInvoicesRequest, opts ...grpc.CallOption) (*ListInvoicesResponse, error) {
+func (c *accountsServiceClient) ListInvoices(ctx context.Context, in *ListInvoicesRequest, opts ...grpc.CallOption) (*ListInvoicesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListInvoicesResponse)
-	err := c.cc.Invoke(ctx, AccountService_ListInvoices_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, AccountsService_ListInvoices_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *accountServiceClient) ListOverdueBalances(ctx context.Context, in *ListOverdueBalancesRequest, opts ...grpc.CallOption) (*ListOverdueBalancesResponse, error) {
+func (c *accountsServiceClient) ListInvoiceCollections(ctx context.Context, in *ListInvoiceCollectionsRequest, opts ...grpc.CallOption) (*ListInvoiceCollectionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListInvoiceCollectionsResponse)
+	err := c.cc.Invoke(ctx, AccountsService_ListInvoiceCollections_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountsServiceClient) ListOverdueBalances(ctx context.Context, in *ListOverdueBalancesRequest, opts ...grpc.CallOption) (*ListOverdueBalancesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListOverdueBalancesResponse)
-	err := c.cc.Invoke(ctx, AccountService_ListOverdueBalances_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, AccountsService_ListOverdueBalances_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *accountServiceClient) ListSubscriptions(ctx context.Context, in *ListSubscriptionsRequest, opts ...grpc.CallOption) (*ListSubscriptionsResponse, error) {
+func (c *accountsServiceClient) ListSubscriptions(ctx context.Context, in *ListSubscriptionsRequest, opts ...grpc.CallOption) (*ListSubscriptionsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListSubscriptionsResponse)
-	err := c.cc.Invoke(ctx, AccountService_ListSubscriptions_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, AccountsService_ListSubscriptions_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *accountServiceClient) ListWallets(ctx context.Context, in *ListWalletsRequest, opts ...grpc.CallOption) (*ListWalletsResponse, error) {
+func (c *accountsServiceClient) ListWallets(ctx context.Context, in *ListWalletsRequest, opts ...grpc.CallOption) (*ListWalletsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListWalletsResponse)
-	err := c.cc.Invoke(ctx, AccountService_ListWallets_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, AccountsService_ListWallets_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AccountServiceServer is the server API for AccountService service.
-// All implementations must embed UnimplementedAccountServiceServer
+// AccountsServiceServer is the server API for AccountsService service.
+// All implementations must embed UnimplementedAccountsServiceServer
 // for forward compatibility.
-type AccountServiceServer interface {
-	// Query the projected usage of the customer on the current billing period
-	GetCustomerProjectedUsage(context.Context, *GetCustomerProjectedUsageRequest) (*GetCustomerProjectedUsageResponse, error)
-	// Query the usage of the customer on the current billing period
-	GetCustomerUsage(context.Context, *GetCustomerUsageRequest) (*GetCustomerUsageResponse, error)
-	// Query customer portal organization
+//
+// Customer-portal billing account service. Provides read-only access to
+// the authenticated customer's billing data: organization details, usage,
+// invoices, subscriptions, wallets, and overdue balances.
+type AccountsServiceServer interface {
+	// Get the billing organization for the current customer portal session.
 	GetOrganization(context.Context, *GetOrganizationRequest) (*GetOrganizationResponse, error)
-	// Query a single subscription from the customer portal
-	GetSubscription(context.Context, *GetSubscriptionRequest) (*GetSubscriptionResponse, error)
-	// Query a customer portal user
+	// Get the current customer portal user profile.
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
-	// Query a single wallet from the customer portal
+	// Get projected usage for a subscription in the current billing period.
+	GetCustomerProjectedUsage(context.Context, *GetCustomerProjectedUsageRequest) (*GetCustomerProjectedUsageResponse, error)
+	// Get actual usage for a subscription in the current billing period.
+	GetCustomerUsage(context.Context, *GetCustomerUsageRequest) (*GetCustomerUsageResponse, error)
+	// Get a single subscription by ID.
+	GetSubscription(context.Context, *GetSubscriptionRequest) (*GetSubscriptionResponse, error)
+	// Get a single wallet by ID.
 	GetWallet(context.Context, *GetWalletRequest) (*GetWalletResponse, error)
-	// Query invoice collections of a customer portal user
-	ListInvoiceCollections(context.Context, *ListInvoiceCollectionsRequest) (*ListInvoiceCollectionsResponse, error)
-	// Query invoices of a customer
+	// List invoices for the current customer.
 	ListInvoices(context.Context, *ListInvoicesRequest) (*ListInvoicesResponse, error)
-	// Query overdue balances of a customer portal user
+	// List finalized invoice collections for the current customer.
+	ListInvoiceCollections(context.Context, *ListInvoiceCollectionsRequest) (*ListInvoiceCollectionsResponse, error)
+	// List overdue balances for the current customer.
 	ListOverdueBalances(context.Context, *ListOverdueBalancesRequest) (*ListOverdueBalancesResponse, error)
-	// Query customer portal subscriptions
+	// List subscriptions for the current customer.
 	ListSubscriptions(context.Context, *ListSubscriptionsRequest) (*ListSubscriptionsResponse, error)
-	// Query wallets
+	// List wallets for the current customer.
 	ListWallets(context.Context, *ListWalletsRequest) (*ListWalletsResponse, error)
-	mustEmbedUnimplementedAccountServiceServer()
+	mustEmbedUnimplementedAccountsServiceServer()
 }
 
-// UnimplementedAccountServiceServer must be embedded to have
+// UnimplementedAccountsServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedAccountServiceServer struct{}
+type UnimplementedAccountsServiceServer struct{}
 
-func (UnimplementedAccountServiceServer) GetCustomerProjectedUsage(context.Context, *GetCustomerProjectedUsageRequest) (*GetCustomerProjectedUsageResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetCustomerProjectedUsage not implemented")
-}
-func (UnimplementedAccountServiceServer) GetCustomerUsage(context.Context, *GetCustomerUsageRequest) (*GetCustomerUsageResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetCustomerUsage not implemented")
-}
-func (UnimplementedAccountServiceServer) GetOrganization(context.Context, *GetOrganizationRequest) (*GetOrganizationResponse, error) {
+func (UnimplementedAccountsServiceServer) GetOrganization(context.Context, *GetOrganizationRequest) (*GetOrganizationResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetOrganization not implemented")
 }
-func (UnimplementedAccountServiceServer) GetSubscription(context.Context, *GetSubscriptionRequest) (*GetSubscriptionResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetSubscription not implemented")
-}
-func (UnimplementedAccountServiceServer) GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error) {
+func (UnimplementedAccountsServiceServer) GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetUser not implemented")
 }
-func (UnimplementedAccountServiceServer) GetWallet(context.Context, *GetWalletRequest) (*GetWalletResponse, error) {
+func (UnimplementedAccountsServiceServer) GetCustomerProjectedUsage(context.Context, *GetCustomerProjectedUsageRequest) (*GetCustomerProjectedUsageResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetCustomerProjectedUsage not implemented")
+}
+func (UnimplementedAccountsServiceServer) GetCustomerUsage(context.Context, *GetCustomerUsageRequest) (*GetCustomerUsageResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetCustomerUsage not implemented")
+}
+func (UnimplementedAccountsServiceServer) GetSubscription(context.Context, *GetSubscriptionRequest) (*GetSubscriptionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetSubscription not implemented")
+}
+func (UnimplementedAccountsServiceServer) GetWallet(context.Context, *GetWalletRequest) (*GetWalletResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetWallet not implemented")
 }
-func (UnimplementedAccountServiceServer) ListInvoiceCollections(context.Context, *ListInvoiceCollectionsRequest) (*ListInvoiceCollectionsResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method ListInvoiceCollections not implemented")
-}
-func (UnimplementedAccountServiceServer) ListInvoices(context.Context, *ListInvoicesRequest) (*ListInvoicesResponse, error) {
+func (UnimplementedAccountsServiceServer) ListInvoices(context.Context, *ListInvoicesRequest) (*ListInvoicesResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListInvoices not implemented")
 }
-func (UnimplementedAccountServiceServer) ListOverdueBalances(context.Context, *ListOverdueBalancesRequest) (*ListOverdueBalancesResponse, error) {
+func (UnimplementedAccountsServiceServer) ListInvoiceCollections(context.Context, *ListInvoiceCollectionsRequest) (*ListInvoiceCollectionsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListInvoiceCollections not implemented")
+}
+func (UnimplementedAccountsServiceServer) ListOverdueBalances(context.Context, *ListOverdueBalancesRequest) (*ListOverdueBalancesResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListOverdueBalances not implemented")
 }
-func (UnimplementedAccountServiceServer) ListSubscriptions(context.Context, *ListSubscriptionsRequest) (*ListSubscriptionsResponse, error) {
+func (UnimplementedAccountsServiceServer) ListSubscriptions(context.Context, *ListSubscriptionsRequest) (*ListSubscriptionsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListSubscriptions not implemented")
 }
-func (UnimplementedAccountServiceServer) ListWallets(context.Context, *ListWalletsRequest) (*ListWalletsResponse, error) {
+func (UnimplementedAccountsServiceServer) ListWallets(context.Context, *ListWalletsRequest) (*ListWalletsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListWallets not implemented")
 }
-func (UnimplementedAccountServiceServer) mustEmbedUnimplementedAccountServiceServer() {}
-func (UnimplementedAccountServiceServer) testEmbeddedByValue()                        {}
+func (UnimplementedAccountsServiceServer) mustEmbedUnimplementedAccountsServiceServer() {}
+func (UnimplementedAccountsServiceServer) testEmbeddedByValue()                         {}
 
-// UnsafeAccountServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AccountServiceServer will
+// UnsafeAccountsServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AccountsServiceServer will
 // result in compilation errors.
-type UnsafeAccountServiceServer interface {
-	mustEmbedUnimplementedAccountServiceServer()
+type UnsafeAccountsServiceServer interface {
+	mustEmbedUnimplementedAccountsServiceServer()
 }
 
-func RegisterAccountServiceServer(s grpc.ServiceRegistrar, srv AccountServiceServer) {
-	// If the following call panics, it indicates UnimplementedAccountServiceServer was
+func RegisterAccountsServiceServer(s grpc.ServiceRegistrar, srv AccountsServiceServer) {
+	// If the following call panics, it indicates UnimplementedAccountsServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&AccountService_ServiceDesc, srv)
+	s.RegisterService(&AccountsService_ServiceDesc, srv)
 }
 
-func _AccountService_GetCustomerProjectedUsage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetCustomerProjectedUsageRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AccountServiceServer).GetCustomerProjectedUsage(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AccountService_GetCustomerProjectedUsage_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServiceServer).GetCustomerProjectedUsage(ctx, req.(*GetCustomerProjectedUsageRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AccountService_GetCustomerUsage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetCustomerUsageRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AccountServiceServer).GetCustomerUsage(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AccountService_GetCustomerUsage_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServiceServer).GetCustomerUsage(ctx, req.(*GetCustomerUsageRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AccountService_GetOrganization_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AccountsService_GetOrganization_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetOrganizationRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountServiceServer).GetOrganization(ctx, in)
+		return srv.(AccountsServiceServer).GetOrganization(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AccountService_GetOrganization_FullMethodName,
+		FullMethod: AccountsService_GetOrganization_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServiceServer).GetOrganization(ctx, req.(*GetOrganizationRequest))
+		return srv.(AccountsServiceServer).GetOrganization(ctx, req.(*GetOrganizationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AccountService_GetSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetSubscriptionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AccountServiceServer).GetSubscription(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AccountService_GetSubscription_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServiceServer).GetSubscription(ctx, req.(*GetSubscriptionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AccountService_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AccountsService_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountServiceServer).GetUser(ctx, in)
+		return srv.(AccountsServiceServer).GetUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AccountService_GetUser_FullMethodName,
+		FullMethod: AccountsService_GetUser_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServiceServer).GetUser(ctx, req.(*GetUserRequest))
+		return srv.(AccountsServiceServer).GetUser(ctx, req.(*GetUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AccountService_GetWallet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AccountsService_GetCustomerProjectedUsage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCustomerProjectedUsageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountsServiceServer).GetCustomerProjectedUsage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccountsService_GetCustomerProjectedUsage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountsServiceServer).GetCustomerProjectedUsage(ctx, req.(*GetCustomerProjectedUsageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AccountsService_GetCustomerUsage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCustomerUsageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountsServiceServer).GetCustomerUsage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccountsService_GetCustomerUsage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountsServiceServer).GetCustomerUsage(ctx, req.(*GetCustomerUsageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AccountsService_GetSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSubscriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountsServiceServer).GetSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccountsService_GetSubscription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountsServiceServer).GetSubscription(ctx, req.(*GetSubscriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AccountsService_GetWallet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetWalletRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountServiceServer).GetWallet(ctx, in)
+		return srv.(AccountsServiceServer).GetWallet(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AccountService_GetWallet_FullMethodName,
+		FullMethod: AccountsService_GetWallet_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServiceServer).GetWallet(ctx, req.(*GetWalletRequest))
+		return srv.(AccountsServiceServer).GetWallet(ctx, req.(*GetWalletRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AccountService_ListInvoiceCollections_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListInvoiceCollectionsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AccountServiceServer).ListInvoiceCollections(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AccountService_ListInvoiceCollections_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServiceServer).ListInvoiceCollections(ctx, req.(*ListInvoiceCollectionsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AccountService_ListInvoices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AccountsService_ListInvoices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListInvoicesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountServiceServer).ListInvoices(ctx, in)
+		return srv.(AccountsServiceServer).ListInvoices(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AccountService_ListInvoices_FullMethodName,
+		FullMethod: AccountsService_ListInvoices_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServiceServer).ListInvoices(ctx, req.(*ListInvoicesRequest))
+		return srv.(AccountsServiceServer).ListInvoices(ctx, req.(*ListInvoicesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AccountService_ListOverdueBalances_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AccountsService_ListInvoiceCollections_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListInvoiceCollectionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountsServiceServer).ListInvoiceCollections(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AccountsService_ListInvoiceCollections_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountsServiceServer).ListInvoiceCollections(ctx, req.(*ListInvoiceCollectionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AccountsService_ListOverdueBalances_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListOverdueBalancesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountServiceServer).ListOverdueBalances(ctx, in)
+		return srv.(AccountsServiceServer).ListOverdueBalances(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AccountService_ListOverdueBalances_FullMethodName,
+		FullMethod: AccountsService_ListOverdueBalances_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServiceServer).ListOverdueBalances(ctx, req.(*ListOverdueBalancesRequest))
+		return srv.(AccountsServiceServer).ListOverdueBalances(ctx, req.(*ListOverdueBalancesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AccountService_ListSubscriptions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AccountsService_ListSubscriptions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListSubscriptionsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountServiceServer).ListSubscriptions(ctx, in)
+		return srv.(AccountsServiceServer).ListSubscriptions(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AccountService_ListSubscriptions_FullMethodName,
+		FullMethod: AccountsService_ListSubscriptions_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServiceServer).ListSubscriptions(ctx, req.(*ListSubscriptionsRequest))
+		return srv.(AccountsServiceServer).ListSubscriptions(ctx, req.(*ListSubscriptionsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AccountService_ListWallets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AccountsService_ListWallets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListWalletsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountServiceServer).ListWallets(ctx, in)
+		return srv.(AccountsServiceServer).ListWallets(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AccountService_ListWallets_FullMethodName,
+		FullMethod: AccountsService_ListWallets_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServiceServer).ListWallets(ctx, req.(*ListWalletsRequest))
+		return srv.(AccountsServiceServer).ListWallets(ctx, req.(*ListWalletsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// AccountService_ServiceDesc is the grpc.ServiceDesc for AccountService service.
+// AccountsService_ServiceDesc is the grpc.ServiceDesc for AccountsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var AccountService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "invora.billing.account.v2.AccountService",
-	HandlerType: (*AccountServiceServer)(nil),
+var AccountsService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "invora.billing.account.v2.AccountsService",
+	HandlerType: (*AccountsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetCustomerProjectedUsage",
-			Handler:    _AccountService_GetCustomerProjectedUsage_Handler,
-		},
-		{
-			MethodName: "GetCustomerUsage",
-			Handler:    _AccountService_GetCustomerUsage_Handler,
-		},
-		{
 			MethodName: "GetOrganization",
-			Handler:    _AccountService_GetOrganization_Handler,
-		},
-		{
-			MethodName: "GetSubscription",
-			Handler:    _AccountService_GetSubscription_Handler,
+			Handler:    _AccountsService_GetOrganization_Handler,
 		},
 		{
 			MethodName: "GetUser",
-			Handler:    _AccountService_GetUser_Handler,
+			Handler:    _AccountsService_GetUser_Handler,
+		},
+		{
+			MethodName: "GetCustomerProjectedUsage",
+			Handler:    _AccountsService_GetCustomerProjectedUsage_Handler,
+		},
+		{
+			MethodName: "GetCustomerUsage",
+			Handler:    _AccountsService_GetCustomerUsage_Handler,
+		},
+		{
+			MethodName: "GetSubscription",
+			Handler:    _AccountsService_GetSubscription_Handler,
 		},
 		{
 			MethodName: "GetWallet",
-			Handler:    _AccountService_GetWallet_Handler,
-		},
-		{
-			MethodName: "ListInvoiceCollections",
-			Handler:    _AccountService_ListInvoiceCollections_Handler,
+			Handler:    _AccountsService_GetWallet_Handler,
 		},
 		{
 			MethodName: "ListInvoices",
-			Handler:    _AccountService_ListInvoices_Handler,
+			Handler:    _AccountsService_ListInvoices_Handler,
+		},
+		{
+			MethodName: "ListInvoiceCollections",
+			Handler:    _AccountsService_ListInvoiceCollections_Handler,
 		},
 		{
 			MethodName: "ListOverdueBalances",
-			Handler:    _AccountService_ListOverdueBalances_Handler,
+			Handler:    _AccountsService_ListOverdueBalances_Handler,
 		},
 		{
 			MethodName: "ListSubscriptions",
-			Handler:    _AccountService_ListSubscriptions_Handler,
+			Handler:    _AccountsService_ListSubscriptions_Handler,
 		},
 		{
 			MethodName: "ListWallets",
-			Handler:    _AccountService_ListWallets_Handler,
+			Handler:    _AccountsService_ListWallets_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

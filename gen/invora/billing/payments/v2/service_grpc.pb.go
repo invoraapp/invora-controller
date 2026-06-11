@@ -19,263 +19,673 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	PaymentService_Create_FullMethodName                = "/invora.billing.payments.v2.PaymentService/Create"
-	PaymentService_Get_FullMethodName                   = "/invora.billing.payments.v2.PaymentService/Get"
-	PaymentService_List_FullMethodName                  = "/invora.billing.payments.v2.PaymentService/List"
-	PaymentService_DeletePaymentProvider_FullMethodName = "/invora.billing.payments.v2.PaymentService/DeletePaymentProvider"
-	PaymentService_GetPaymentUrl_FullMethodName         = "/invora.billing.payments.v2.PaymentService/GetPaymentUrl"
+	PaymentsService_List_FullMethodName                      = "/invora.billing.payments.v2.PaymentsService/List"
+	PaymentsService_Get_FullMethodName                       = "/invora.billing.payments.v2.PaymentsService/Get"
+	PaymentsService_Create_FullMethodName                    = "/invora.billing.payments.v2.PaymentsService/Create"
+	PaymentsService_GetPaymentUrl_FullMethodName             = "/invora.billing.payments.v2.PaymentsService/GetPaymentUrl"
+	PaymentsService_ListPaymentRequests_FullMethodName       = "/invora.billing.payments.v2.PaymentsService/ListPaymentRequests"
+	PaymentsService_CreatePaymentRequest_FullMethodName      = "/invora.billing.payments.v2.PaymentsService/CreatePaymentRequest"
+	PaymentsService_DownloadPaymentReceipt_FullMethodName    = "/invora.billing.payments.v2.PaymentsService/DownloadPaymentReceipt"
+	PaymentsService_DownloadXmlPaymentReceipt_FullMethodName = "/invora.billing.payments.v2.PaymentsService/DownloadXmlPaymentReceipt"
+	PaymentsService_ResendPaymentReceiptEmail_FullMethodName = "/invora.billing.payments.v2.PaymentsService/ResendPaymentReceiptEmail"
+	PaymentsService_ListPaymentMethods_FullMethodName        = "/invora.billing.payments.v2.PaymentsService/ListPaymentMethods"
+	PaymentsService_SetPaymentMethodAsDefault_FullMethodName = "/invora.billing.payments.v2.PaymentsService/SetPaymentMethodAsDefault"
+	PaymentsService_DeletePaymentMethod_FullMethodName       = "/invora.billing.payments.v2.PaymentsService/DeletePaymentMethod"
+	PaymentsService_CreateAdjustedFee_FullMethodName         = "/invora.billing.payments.v2.PaymentsService/CreateAdjustedFee"
+	PaymentsService_DeleteAdjustedFee_FullMethodName         = "/invora.billing.payments.v2.PaymentsService/DeleteAdjustedFee"
+	PaymentsService_PreviewAdjustedFee_FullMethodName        = "/invora.billing.payments.v2.PaymentsService/PreviewAdjustedFee"
 )
 
-// PaymentServiceClient is the client API for PaymentService service.
+// PaymentsServiceClient is the client API for PaymentsService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type PaymentServiceClient interface {
-	// Creates a manual payment
-	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
-	// Query a single Payment
-	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
-	// Query payments of an organization
+//
+// Manage manual payments recorded against invoices.
+// Payments track money received from customers and are applied to outstanding
+// invoices. Use Create to record a manual payment; automated payments from
+// payment providers are created automatically.
+type PaymentsServiceClient interface {
+	// List payments with optional filtering.
 	List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error)
-	// Destroy a payment provider
-	DeletePaymentProvider(ctx context.Context, in *DeletePaymentProviderRequest, opts ...grpc.CallOption) (*DeletePaymentProviderResponse, error)
-	// Generates a payment URL for an invoice
+	// Retrieve a single payment by ID.
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
+	// Record a manual payment against an invoice.
+	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
+	// Generate a payment URL for an invoice.
 	GetPaymentUrl(ctx context.Context, in *GetPaymentUrlRequest, opts ...grpc.CallOption) (*GetPaymentUrlResponse, error)
+	// List payment requests with optional filtering.
+	ListPaymentRequests(ctx context.Context, in *ListPaymentRequestsRequest, opts ...grpc.CallOption) (*ListPaymentRequestsResponse, error)
+	// Create a payment request for one or more invoices.
+	CreatePaymentRequest(ctx context.Context, in *CreatePaymentRequestRequest, opts ...grpc.CallOption) (*CreatePaymentRequestResponse, error)
+	// Download a payment receipt as PDF.
+	DownloadPaymentReceipt(ctx context.Context, in *DownloadPaymentReceiptRequest, opts ...grpc.CallOption) (*DownloadPaymentReceiptResponse, error)
+	// Download a payment receipt as XML.
+	DownloadXmlPaymentReceipt(ctx context.Context, in *DownloadXmlPaymentReceiptRequest, opts ...grpc.CallOption) (*DownloadXmlPaymentReceiptResponse, error)
+	// Resend payment receipt email.
+	ResendPaymentReceiptEmail(ctx context.Context, in *ResendPaymentReceiptEmailRequest, opts ...grpc.CallOption) (*ResendPaymentReceiptEmailResponse, error)
+	// List payment methods for a customer.
+	ListPaymentMethods(ctx context.Context, in *ListPaymentMethodsRequest, opts ...grpc.CallOption) (*ListPaymentMethodsResponse, error)
+	// Set a payment method as the default for a customer.
+	SetPaymentMethodAsDefault(ctx context.Context, in *SetPaymentMethodAsDefaultRequest, opts ...grpc.CallOption) (*SetPaymentMethodAsDefaultResponse, error)
+	// Delete a payment method.
+	DeletePaymentMethod(ctx context.Context, in *DeletePaymentMethodRequest, opts ...grpc.CallOption) (*DeletePaymentMethodResponse, error)
+	// Create an adjusted fee on a draft invoice.
+	CreateAdjustedFee(ctx context.Context, in *CreateAdjustedFeeRequest, opts ...grpc.CallOption) (*CreateAdjustedFeeResponse, error)
+	// Delete an adjusted fee from a draft invoice.
+	DeleteAdjustedFee(ctx context.Context, in *DeleteAdjustedFeeRequest, opts ...grpc.CallOption) (*DeleteAdjustedFeeResponse, error)
+	// Preview the effect of an adjusted fee without persisting it.
+	PreviewAdjustedFee(ctx context.Context, in *PreviewAdjustedFeeRequest, opts ...grpc.CallOption) (*PreviewAdjustedFeeResponse, error)
 }
 
-type paymentServiceClient struct {
+type paymentsServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewPaymentServiceClient(cc grpc.ClientConnInterface) PaymentServiceClient {
-	return &paymentServiceClient{cc}
+func NewPaymentsServiceClient(cc grpc.ClientConnInterface) PaymentsServiceClient {
+	return &paymentsServiceClient{cc}
 }
 
-func (c *paymentServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateResponse)
-	err := c.cc.Invoke(ctx, PaymentService_Create_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *paymentServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetResponse)
-	err := c.cc.Invoke(ctx, PaymentService_Get_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *paymentServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
+func (c *paymentsServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListResponse)
-	err := c.cc.Invoke(ctx, PaymentService_List_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, PaymentsService_List_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *paymentServiceClient) DeletePaymentProvider(ctx context.Context, in *DeletePaymentProviderRequest, opts ...grpc.CallOption) (*DeletePaymentProviderResponse, error) {
+func (c *paymentsServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DeletePaymentProviderResponse)
-	err := c.cc.Invoke(ctx, PaymentService_DeletePaymentProvider_FullMethodName, in, out, cOpts...)
+	out := new(GetResponse)
+	err := c.cc.Invoke(ctx, PaymentsService_Get_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *paymentServiceClient) GetPaymentUrl(ctx context.Context, in *GetPaymentUrlRequest, opts ...grpc.CallOption) (*GetPaymentUrlResponse, error) {
+func (c *paymentsServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateResponse)
+	err := c.cc.Invoke(ctx, PaymentsService_Create_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentsServiceClient) GetPaymentUrl(ctx context.Context, in *GetPaymentUrlRequest, opts ...grpc.CallOption) (*GetPaymentUrlResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetPaymentUrlResponse)
-	err := c.cc.Invoke(ctx, PaymentService_GetPaymentUrl_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, PaymentsService_GetPaymentUrl_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// PaymentServiceServer is the server API for PaymentService service.
-// All implementations must embed UnimplementedPaymentServiceServer
-// for forward compatibility.
-type PaymentServiceServer interface {
-	// Creates a manual payment
-	Create(context.Context, *CreateRequest) (*CreateResponse, error)
-	// Query a single Payment
-	Get(context.Context, *GetRequest) (*GetResponse, error)
-	// Query payments of an organization
-	List(context.Context, *ListRequest) (*ListResponse, error)
-	// Destroy a payment provider
-	DeletePaymentProvider(context.Context, *DeletePaymentProviderRequest) (*DeletePaymentProviderResponse, error)
-	// Generates a payment URL for an invoice
-	GetPaymentUrl(context.Context, *GetPaymentUrlRequest) (*GetPaymentUrlResponse, error)
-	mustEmbedUnimplementedPaymentServiceServer()
+func (c *paymentsServiceClient) ListPaymentRequests(ctx context.Context, in *ListPaymentRequestsRequest, opts ...grpc.CallOption) (*ListPaymentRequestsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPaymentRequestsResponse)
+	err := c.cc.Invoke(ctx, PaymentsService_ListPaymentRequests_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// UnimplementedPaymentServiceServer must be embedded to have
+func (c *paymentsServiceClient) CreatePaymentRequest(ctx context.Context, in *CreatePaymentRequestRequest, opts ...grpc.CallOption) (*CreatePaymentRequestResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreatePaymentRequestResponse)
+	err := c.cc.Invoke(ctx, PaymentsService_CreatePaymentRequest_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentsServiceClient) DownloadPaymentReceipt(ctx context.Context, in *DownloadPaymentReceiptRequest, opts ...grpc.CallOption) (*DownloadPaymentReceiptResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DownloadPaymentReceiptResponse)
+	err := c.cc.Invoke(ctx, PaymentsService_DownloadPaymentReceipt_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentsServiceClient) DownloadXmlPaymentReceipt(ctx context.Context, in *DownloadXmlPaymentReceiptRequest, opts ...grpc.CallOption) (*DownloadXmlPaymentReceiptResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DownloadXmlPaymentReceiptResponse)
+	err := c.cc.Invoke(ctx, PaymentsService_DownloadXmlPaymentReceipt_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentsServiceClient) ResendPaymentReceiptEmail(ctx context.Context, in *ResendPaymentReceiptEmailRequest, opts ...grpc.CallOption) (*ResendPaymentReceiptEmailResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ResendPaymentReceiptEmailResponse)
+	err := c.cc.Invoke(ctx, PaymentsService_ResendPaymentReceiptEmail_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentsServiceClient) ListPaymentMethods(ctx context.Context, in *ListPaymentMethodsRequest, opts ...grpc.CallOption) (*ListPaymentMethodsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPaymentMethodsResponse)
+	err := c.cc.Invoke(ctx, PaymentsService_ListPaymentMethods_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentsServiceClient) SetPaymentMethodAsDefault(ctx context.Context, in *SetPaymentMethodAsDefaultRequest, opts ...grpc.CallOption) (*SetPaymentMethodAsDefaultResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SetPaymentMethodAsDefaultResponse)
+	err := c.cc.Invoke(ctx, PaymentsService_SetPaymentMethodAsDefault_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentsServiceClient) DeletePaymentMethod(ctx context.Context, in *DeletePaymentMethodRequest, opts ...grpc.CallOption) (*DeletePaymentMethodResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeletePaymentMethodResponse)
+	err := c.cc.Invoke(ctx, PaymentsService_DeletePaymentMethod_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentsServiceClient) CreateAdjustedFee(ctx context.Context, in *CreateAdjustedFeeRequest, opts ...grpc.CallOption) (*CreateAdjustedFeeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateAdjustedFeeResponse)
+	err := c.cc.Invoke(ctx, PaymentsService_CreateAdjustedFee_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentsServiceClient) DeleteAdjustedFee(ctx context.Context, in *DeleteAdjustedFeeRequest, opts ...grpc.CallOption) (*DeleteAdjustedFeeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteAdjustedFeeResponse)
+	err := c.cc.Invoke(ctx, PaymentsService_DeleteAdjustedFee_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentsServiceClient) PreviewAdjustedFee(ctx context.Context, in *PreviewAdjustedFeeRequest, opts ...grpc.CallOption) (*PreviewAdjustedFeeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PreviewAdjustedFeeResponse)
+	err := c.cc.Invoke(ctx, PaymentsService_PreviewAdjustedFee_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// PaymentsServiceServer is the server API for PaymentsService service.
+// All implementations must embed UnimplementedPaymentsServiceServer
+// for forward compatibility.
+//
+// Manage manual payments recorded against invoices.
+// Payments track money received from customers and are applied to outstanding
+// invoices. Use Create to record a manual payment; automated payments from
+// payment providers are created automatically.
+type PaymentsServiceServer interface {
+	// List payments with optional filtering.
+	List(context.Context, *ListRequest) (*ListResponse, error)
+	// Retrieve a single payment by ID.
+	Get(context.Context, *GetRequest) (*GetResponse, error)
+	// Record a manual payment against an invoice.
+	Create(context.Context, *CreateRequest) (*CreateResponse, error)
+	// Generate a payment URL for an invoice.
+	GetPaymentUrl(context.Context, *GetPaymentUrlRequest) (*GetPaymentUrlResponse, error)
+	// List payment requests with optional filtering.
+	ListPaymentRequests(context.Context, *ListPaymentRequestsRequest) (*ListPaymentRequestsResponse, error)
+	// Create a payment request for one or more invoices.
+	CreatePaymentRequest(context.Context, *CreatePaymentRequestRequest) (*CreatePaymentRequestResponse, error)
+	// Download a payment receipt as PDF.
+	DownloadPaymentReceipt(context.Context, *DownloadPaymentReceiptRequest) (*DownloadPaymentReceiptResponse, error)
+	// Download a payment receipt as XML.
+	DownloadXmlPaymentReceipt(context.Context, *DownloadXmlPaymentReceiptRequest) (*DownloadXmlPaymentReceiptResponse, error)
+	// Resend payment receipt email.
+	ResendPaymentReceiptEmail(context.Context, *ResendPaymentReceiptEmailRequest) (*ResendPaymentReceiptEmailResponse, error)
+	// List payment methods for a customer.
+	ListPaymentMethods(context.Context, *ListPaymentMethodsRequest) (*ListPaymentMethodsResponse, error)
+	// Set a payment method as the default for a customer.
+	SetPaymentMethodAsDefault(context.Context, *SetPaymentMethodAsDefaultRequest) (*SetPaymentMethodAsDefaultResponse, error)
+	// Delete a payment method.
+	DeletePaymentMethod(context.Context, *DeletePaymentMethodRequest) (*DeletePaymentMethodResponse, error)
+	// Create an adjusted fee on a draft invoice.
+	CreateAdjustedFee(context.Context, *CreateAdjustedFeeRequest) (*CreateAdjustedFeeResponse, error)
+	// Delete an adjusted fee from a draft invoice.
+	DeleteAdjustedFee(context.Context, *DeleteAdjustedFeeRequest) (*DeleteAdjustedFeeResponse, error)
+	// Preview the effect of an adjusted fee without persisting it.
+	PreviewAdjustedFee(context.Context, *PreviewAdjustedFeeRequest) (*PreviewAdjustedFeeResponse, error)
+	mustEmbedUnimplementedPaymentsServiceServer()
+}
+
+// UnimplementedPaymentsServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedPaymentServiceServer struct{}
+type UnimplementedPaymentsServiceServer struct{}
 
-func (UnimplementedPaymentServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
-}
-func (UnimplementedPaymentServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
-}
-func (UnimplementedPaymentServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
+func (UnimplementedPaymentsServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method List not implemented")
 }
-func (UnimplementedPaymentServiceServer) DeletePaymentProvider(context.Context, *DeletePaymentProviderRequest) (*DeletePaymentProviderResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method DeletePaymentProvider not implemented")
+func (UnimplementedPaymentsServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
 }
-func (UnimplementedPaymentServiceServer) GetPaymentUrl(context.Context, *GetPaymentUrlRequest) (*GetPaymentUrlResponse, error) {
+func (UnimplementedPaymentsServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedPaymentsServiceServer) GetPaymentUrl(context.Context, *GetPaymentUrlRequest) (*GetPaymentUrlResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetPaymentUrl not implemented")
 }
-func (UnimplementedPaymentServiceServer) mustEmbedUnimplementedPaymentServiceServer() {}
-func (UnimplementedPaymentServiceServer) testEmbeddedByValue()                        {}
+func (UnimplementedPaymentsServiceServer) ListPaymentRequests(context.Context, *ListPaymentRequestsRequest) (*ListPaymentRequestsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListPaymentRequests not implemented")
+}
+func (UnimplementedPaymentsServiceServer) CreatePaymentRequest(context.Context, *CreatePaymentRequestRequest) (*CreatePaymentRequestResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreatePaymentRequest not implemented")
+}
+func (UnimplementedPaymentsServiceServer) DownloadPaymentReceipt(context.Context, *DownloadPaymentReceiptRequest) (*DownloadPaymentReceiptResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DownloadPaymentReceipt not implemented")
+}
+func (UnimplementedPaymentsServiceServer) DownloadXmlPaymentReceipt(context.Context, *DownloadXmlPaymentReceiptRequest) (*DownloadXmlPaymentReceiptResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DownloadXmlPaymentReceipt not implemented")
+}
+func (UnimplementedPaymentsServiceServer) ResendPaymentReceiptEmail(context.Context, *ResendPaymentReceiptEmailRequest) (*ResendPaymentReceiptEmailResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ResendPaymentReceiptEmail not implemented")
+}
+func (UnimplementedPaymentsServiceServer) ListPaymentMethods(context.Context, *ListPaymentMethodsRequest) (*ListPaymentMethodsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListPaymentMethods not implemented")
+}
+func (UnimplementedPaymentsServiceServer) SetPaymentMethodAsDefault(context.Context, *SetPaymentMethodAsDefaultRequest) (*SetPaymentMethodAsDefaultResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SetPaymentMethodAsDefault not implemented")
+}
+func (UnimplementedPaymentsServiceServer) DeletePaymentMethod(context.Context, *DeletePaymentMethodRequest) (*DeletePaymentMethodResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeletePaymentMethod not implemented")
+}
+func (UnimplementedPaymentsServiceServer) CreateAdjustedFee(context.Context, *CreateAdjustedFeeRequest) (*CreateAdjustedFeeResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateAdjustedFee not implemented")
+}
+func (UnimplementedPaymentsServiceServer) DeleteAdjustedFee(context.Context, *DeleteAdjustedFeeRequest) (*DeleteAdjustedFeeResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteAdjustedFee not implemented")
+}
+func (UnimplementedPaymentsServiceServer) PreviewAdjustedFee(context.Context, *PreviewAdjustedFeeRequest) (*PreviewAdjustedFeeResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method PreviewAdjustedFee not implemented")
+}
+func (UnimplementedPaymentsServiceServer) mustEmbedUnimplementedPaymentsServiceServer() {}
+func (UnimplementedPaymentsServiceServer) testEmbeddedByValue()                         {}
 
-// UnsafePaymentServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to PaymentServiceServer will
+// UnsafePaymentsServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to PaymentsServiceServer will
 // result in compilation errors.
-type UnsafePaymentServiceServer interface {
-	mustEmbedUnimplementedPaymentServiceServer()
+type UnsafePaymentsServiceServer interface {
+	mustEmbedUnimplementedPaymentsServiceServer()
 }
 
-func RegisterPaymentServiceServer(s grpc.ServiceRegistrar, srv PaymentServiceServer) {
-	// If the following call panics, it indicates UnimplementedPaymentServiceServer was
+func RegisterPaymentsServiceServer(s grpc.ServiceRegistrar, srv PaymentsServiceServer) {
+	// If the following call panics, it indicates UnimplementedPaymentsServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&PaymentService_ServiceDesc, srv)
+	s.RegisterService(&PaymentsService_ServiceDesc, srv)
 }
 
-func _PaymentService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PaymentServiceServer).Create(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: PaymentService_Create_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentServiceServer).Create(ctx, req.(*CreateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PaymentService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PaymentServiceServer).Get(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: PaymentService_Get_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentServiceServer).Get(ctx, req.(*GetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PaymentService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PaymentsService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentServiceServer).List(ctx, in)
+		return srv.(PaymentsServiceServer).List(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PaymentService_List_FullMethodName,
+		FullMethod: PaymentsService_List_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentServiceServer).List(ctx, req.(*ListRequest))
+		return srv.(PaymentsServiceServer).List(ctx, req.(*ListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentService_DeletePaymentProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeletePaymentProviderRequest)
+func _PaymentsService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentServiceServer).DeletePaymentProvider(ctx, in)
+		return srv.(PaymentsServiceServer).Get(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PaymentService_DeletePaymentProvider_FullMethodName,
+		FullMethod: PaymentsService_Get_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentServiceServer).DeletePaymentProvider(ctx, req.(*DeletePaymentProviderRequest))
+		return srv.(PaymentsServiceServer).Get(ctx, req.(*GetRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentService_GetPaymentUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PaymentsService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentsServiceServer).Create(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentsService_Create_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentsServiceServer).Create(ctx, req.(*CreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentsService_GetPaymentUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetPaymentUrlRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentServiceServer).GetPaymentUrl(ctx, in)
+		return srv.(PaymentsServiceServer).GetPaymentUrl(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PaymentService_GetPaymentUrl_FullMethodName,
+		FullMethod: PaymentsService_GetPaymentUrl_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentServiceServer).GetPaymentUrl(ctx, req.(*GetPaymentUrlRequest))
+		return srv.(PaymentsServiceServer).GetPaymentUrl(ctx, req.(*GetPaymentUrlRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// PaymentService_ServiceDesc is the grpc.ServiceDesc for PaymentService service.
+func _PaymentsService_ListPaymentRequests_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPaymentRequestsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentsServiceServer).ListPaymentRequests(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentsService_ListPaymentRequests_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentsServiceServer).ListPaymentRequests(ctx, req.(*ListPaymentRequestsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentsService_CreatePaymentRequest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreatePaymentRequestRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentsServiceServer).CreatePaymentRequest(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentsService_CreatePaymentRequest_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentsServiceServer).CreatePaymentRequest(ctx, req.(*CreatePaymentRequestRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentsService_DownloadPaymentReceipt_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DownloadPaymentReceiptRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentsServiceServer).DownloadPaymentReceipt(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentsService_DownloadPaymentReceipt_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentsServiceServer).DownloadPaymentReceipt(ctx, req.(*DownloadPaymentReceiptRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentsService_DownloadXmlPaymentReceipt_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DownloadXmlPaymentReceiptRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentsServiceServer).DownloadXmlPaymentReceipt(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentsService_DownloadXmlPaymentReceipt_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentsServiceServer).DownloadXmlPaymentReceipt(ctx, req.(*DownloadXmlPaymentReceiptRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentsService_ResendPaymentReceiptEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResendPaymentReceiptEmailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentsServiceServer).ResendPaymentReceiptEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentsService_ResendPaymentReceiptEmail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentsServiceServer).ResendPaymentReceiptEmail(ctx, req.(*ResendPaymentReceiptEmailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentsService_ListPaymentMethods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPaymentMethodsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentsServiceServer).ListPaymentMethods(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentsService_ListPaymentMethods_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentsServiceServer).ListPaymentMethods(ctx, req.(*ListPaymentMethodsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentsService_SetPaymentMethodAsDefault_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetPaymentMethodAsDefaultRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentsServiceServer).SetPaymentMethodAsDefault(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentsService_SetPaymentMethodAsDefault_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentsServiceServer).SetPaymentMethodAsDefault(ctx, req.(*SetPaymentMethodAsDefaultRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentsService_DeletePaymentMethod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeletePaymentMethodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentsServiceServer).DeletePaymentMethod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentsService_DeletePaymentMethod_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentsServiceServer).DeletePaymentMethod(ctx, req.(*DeletePaymentMethodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentsService_CreateAdjustedFee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateAdjustedFeeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentsServiceServer).CreateAdjustedFee(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentsService_CreateAdjustedFee_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentsServiceServer).CreateAdjustedFee(ctx, req.(*CreateAdjustedFeeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentsService_DeleteAdjustedFee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAdjustedFeeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentsServiceServer).DeleteAdjustedFee(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentsService_DeleteAdjustedFee_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentsServiceServer).DeleteAdjustedFee(ctx, req.(*DeleteAdjustedFeeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentsService_PreviewAdjustedFee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PreviewAdjustedFeeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentsServiceServer).PreviewAdjustedFee(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentsService_PreviewAdjustedFee_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentsServiceServer).PreviewAdjustedFee(ctx, req.(*PreviewAdjustedFeeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// PaymentsService_ServiceDesc is the grpc.ServiceDesc for PaymentsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var PaymentService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "invora.billing.payments.v2.PaymentService",
-	HandlerType: (*PaymentServiceServer)(nil),
+var PaymentsService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "invora.billing.payments.v2.PaymentsService",
+	HandlerType: (*PaymentsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Create",
-			Handler:    _PaymentService_Create_Handler,
+			MethodName: "List",
+			Handler:    _PaymentsService_List_Handler,
 		},
 		{
 			MethodName: "Get",
-			Handler:    _PaymentService_Get_Handler,
+			Handler:    _PaymentsService_Get_Handler,
 		},
 		{
-			MethodName: "List",
-			Handler:    _PaymentService_List_Handler,
-		},
-		{
-			MethodName: "DeletePaymentProvider",
-			Handler:    _PaymentService_DeletePaymentProvider_Handler,
+			MethodName: "Create",
+			Handler:    _PaymentsService_Create_Handler,
 		},
 		{
 			MethodName: "GetPaymentUrl",
-			Handler:    _PaymentService_GetPaymentUrl_Handler,
+			Handler:    _PaymentsService_GetPaymentUrl_Handler,
+		},
+		{
+			MethodName: "ListPaymentRequests",
+			Handler:    _PaymentsService_ListPaymentRequests_Handler,
+		},
+		{
+			MethodName: "CreatePaymentRequest",
+			Handler:    _PaymentsService_CreatePaymentRequest_Handler,
+		},
+		{
+			MethodName: "DownloadPaymentReceipt",
+			Handler:    _PaymentsService_DownloadPaymentReceipt_Handler,
+		},
+		{
+			MethodName: "DownloadXmlPaymentReceipt",
+			Handler:    _PaymentsService_DownloadXmlPaymentReceipt_Handler,
+		},
+		{
+			MethodName: "ResendPaymentReceiptEmail",
+			Handler:    _PaymentsService_ResendPaymentReceiptEmail_Handler,
+		},
+		{
+			MethodName: "ListPaymentMethods",
+			Handler:    _PaymentsService_ListPaymentMethods_Handler,
+		},
+		{
+			MethodName: "SetPaymentMethodAsDefault",
+			Handler:    _PaymentsService_SetPaymentMethodAsDefault_Handler,
+		},
+		{
+			MethodName: "DeletePaymentMethod",
+			Handler:    _PaymentsService_DeletePaymentMethod_Handler,
+		},
+		{
+			MethodName: "CreateAdjustedFee",
+			Handler:    _PaymentsService_CreateAdjustedFee_Handler,
+		},
+		{
+			MethodName: "DeleteAdjustedFee",
+			Handler:    _PaymentsService_DeleteAdjustedFee_Handler,
+		},
+		{
+			MethodName: "PreviewAdjustedFee",
+			Handler:    _PaymentsService_PreviewAdjustedFee_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

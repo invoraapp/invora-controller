@@ -19,1263 +19,1273 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	InvoiceService_Create_FullMethodName                        = "/invora.billing.invoices.v2.InvoiceService/Create"
-	InvoiceService_Get_FullMethodName                           = "/invora.billing.invoices.v2.InvoiceService/Get"
-	InvoiceService_List_FullMethodName                          = "/invora.billing.invoices.v2.InvoiceService/List"
-	InvoiceService_Update_FullMethodName                        = "/invora.billing.invoices.v2.InvoiceService/Update"
-	InvoiceService_CreateCustomSection_FullMethodName           = "/invora.billing.invoices.v2.InvoiceService/CreateCustomSection"
-	InvoiceService_CreatesDataExport_FullMethodName             = "/invora.billing.invoices.v2.InvoiceService/CreatesDataExport"
-	InvoiceService_CustomerInvoices_FullMethodName              = "/invora.billing.invoices.v2.InvoiceService/CustomerInvoices"
-	InvoiceService_DeleteInvoiceCustomSection_FullMethodName    = "/invora.billing.invoices.v2.InvoiceService/DeleteInvoiceCustomSection"
-	InvoiceService_DownloadCustomerPortalInvoice_FullMethodName = "/invora.billing.invoices.v2.InvoiceService/DownloadCustomerPortalInvoice"
-	InvoiceService_DownloadInvoice_FullMethodName               = "/invora.billing.invoices.v2.InvoiceService/DownloadInvoice"
-	InvoiceService_DownloadInvoiceXml_FullMethodName            = "/invora.billing.invoices.v2.InvoiceService/DownloadInvoiceXml"
-	InvoiceService_FetchDraftInvoiceTaxes_FullMethodName        = "/invora.billing.invoices.v2.InvoiceService/FetchDraftInvoiceTaxes"
-	InvoiceService_Finalize_FullMethodName                      = "/invora.billing.invoices.v2.InvoiceService/Finalize"
-	InvoiceService_FinalizeAllInvoices_FullMethodName           = "/invora.billing.invoices.v2.InvoiceService/FinalizeAllInvoices"
-	InvoiceService_GetCustomSection_FullMethodName              = "/invora.billing.invoices.v2.InvoiceService/GetCustomSection"
-	InvoiceService_ListCustomSections_FullMethodName            = "/invora.billing.invoices.v2.InvoiceService/ListCustomSections"
-	InvoiceService_LoseInvoiceDispute_FullMethodName            = "/invora.billing.invoices.v2.InvoiceService/LoseInvoiceDispute"
-	InvoiceService_RefreshInvoice_FullMethodName                = "/invora.billing.invoices.v2.InvoiceService/RefreshInvoice"
-	InvoiceService_RegenerateFromVoided_FullMethodName          = "/invora.billing.invoices.v2.InvoiceService/RegenerateFromVoided"
-	InvoiceService_ResendInvoiceEmail_FullMethodName            = "/invora.billing.invoices.v2.InvoiceService/ResendInvoiceEmail"
-	InvoiceService_RetryAllInvoicePayments_FullMethodName       = "/invora.billing.invoices.v2.InvoiceService/RetryAllInvoicePayments"
-	InvoiceService_RetryAllInvoices_FullMethodName              = "/invora.billing.invoices.v2.InvoiceService/RetryAllInvoices"
-	InvoiceService_RetryInvoice_FullMethodName                  = "/invora.billing.invoices.v2.InvoiceService/RetryInvoice"
-	InvoiceService_RetryInvoicePayment_FullMethodName           = "/invora.billing.invoices.v2.InvoiceService/RetryInvoicePayment"
-	InvoiceService_RetryTaxProviderVoiding_FullMethodName       = "/invora.billing.invoices.v2.InvoiceService/RetryTaxProviderVoiding"
-	InvoiceService_SyncHubspotIntegrationInvoice_FullMethodName = "/invora.billing.invoices.v2.InvoiceService/SyncHubspotIntegrationInvoice"
-	InvoiceService_SyncIntegrationInvoice_FullMethodName        = "/invora.billing.invoices.v2.InvoiceService/SyncIntegrationInvoice"
-	InvoiceService_SyncSalesforceInvoice_FullMethodName         = "/invora.billing.invoices.v2.InvoiceService/SyncSalesforceInvoice"
-	InvoiceService_UpdateInvoiceCustomSection_FullMethodName    = "/invora.billing.invoices.v2.InvoiceService/UpdateInvoiceCustomSection"
-	InvoiceService_VoidInvoice_FullMethodName                   = "/invora.billing.invoices.v2.InvoiceService/VoidInvoice"
+	InvoicesService_List_FullMethodName                          = "/invora.billing.invoices.v2.InvoicesService/List"
+	InvoicesService_Get_FullMethodName                           = "/invora.billing.invoices.v2.InvoicesService/Get"
+	InvoicesService_Create_FullMethodName                        = "/invora.billing.invoices.v2.InvoicesService/Create"
+	InvoicesService_Update_FullMethodName                        = "/invora.billing.invoices.v2.InvoicesService/Update"
+	InvoicesService_CustomerInvoices_FullMethodName              = "/invora.billing.invoices.v2.InvoicesService/CustomerInvoices"
+	InvoicesService_FetchDraftInvoiceTaxes_FullMethodName        = "/invora.billing.invoices.v2.InvoicesService/FetchDraftInvoiceTaxes"
+	InvoicesService_Finalize_FullMethodName                      = "/invora.billing.invoices.v2.InvoicesService/Finalize"
+	InvoicesService_FinalizeAllInvoices_FullMethodName           = "/invora.billing.invoices.v2.InvoicesService/FinalizeAllInvoices"
+	InvoicesService_VoidInvoice_FullMethodName                   = "/invora.billing.invoices.v2.InvoicesService/VoidInvoice"
+	InvoicesService_LoseInvoiceDispute_FullMethodName            = "/invora.billing.invoices.v2.InvoicesService/LoseInvoiceDispute"
+	InvoicesService_RefreshInvoice_FullMethodName                = "/invora.billing.invoices.v2.InvoicesService/RefreshInvoice"
+	InvoicesService_RegenerateFromVoided_FullMethodName          = "/invora.billing.invoices.v2.InvoicesService/RegenerateFromVoided"
+	InvoicesService_ResendInvoiceEmail_FullMethodName            = "/invora.billing.invoices.v2.InvoicesService/ResendInvoiceEmail"
+	InvoicesService_RetryInvoice_FullMethodName                  = "/invora.billing.invoices.v2.InvoicesService/RetryInvoice"
+	InvoicesService_RetryInvoicePayment_FullMethodName           = "/invora.billing.invoices.v2.InvoicesService/RetryInvoicePayment"
+	InvoicesService_RetryAllInvoices_FullMethodName              = "/invora.billing.invoices.v2.InvoicesService/RetryAllInvoices"
+	InvoicesService_RetryAllInvoicePayments_FullMethodName       = "/invora.billing.invoices.v2.InvoicesService/RetryAllInvoicePayments"
+	InvoicesService_RetryTaxProviderVoiding_FullMethodName       = "/invora.billing.invoices.v2.InvoicesService/RetryTaxProviderVoiding"
+	InvoicesService_DownloadInvoice_FullMethodName               = "/invora.billing.invoices.v2.InvoicesService/DownloadInvoice"
+	InvoicesService_DownloadInvoiceXml_FullMethodName            = "/invora.billing.invoices.v2.InvoicesService/DownloadInvoiceXml"
+	InvoicesService_DownloadCustomerPortalInvoice_FullMethodName = "/invora.billing.invoices.v2.InvoicesService/DownloadCustomerPortalInvoice"
+	InvoicesService_CreateDataExport_FullMethodName              = "/invora.billing.invoices.v2.InvoicesService/CreateDataExport"
+	InvoicesService_SyncIntegrationInvoice_FullMethodName        = "/invora.billing.invoices.v2.InvoicesService/SyncIntegrationInvoice"
+	InvoicesService_SyncHubspotIntegrationInvoice_FullMethodName = "/invora.billing.invoices.v2.InvoicesService/SyncHubspotIntegrationInvoice"
+	InvoicesService_SyncSalesforceInvoice_FullMethodName         = "/invora.billing.invoices.v2.InvoicesService/SyncSalesforceInvoice"
+	InvoicesService_ListCustomSections_FullMethodName            = "/invora.billing.invoices.v2.InvoicesService/ListCustomSections"
+	InvoicesService_GetCustomSection_FullMethodName              = "/invora.billing.invoices.v2.InvoicesService/GetCustomSection"
+	InvoicesService_CreateCustomSection_FullMethodName           = "/invora.billing.invoices.v2.InvoicesService/CreateCustomSection"
+	InvoicesService_UpdateCustomSection_FullMethodName           = "/invora.billing.invoices.v2.InvoicesService/UpdateCustomSection"
+	InvoicesService_DeleteCustomSection_FullMethodName           = "/invora.billing.invoices.v2.InvoicesService/DeleteCustomSection"
 )
 
-// InvoiceServiceClient is the client API for InvoiceService service.
+// InvoicesServiceClient is the client API for InvoicesService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type InvoiceServiceClient interface {
-	// Creates a new Invoice
-	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
-	// Query a single Invoice of an organization
-	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
-	// Query invoices
+//
+// Manage invoices for a billing organization. Supports one-off and
+// subscription invoices, draft tax preview, finalization, voiding,
+// payment retry, PDF/XML download, custom sections, integration sync,
+// and data export.
+type InvoicesServiceClient interface {
+	// List invoices with filtering and pagination.
 	List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error)
-	// Update an existing invoice
+	// Get a single invoice by ID.
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
+	// Create a new one-off invoice.
+	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
+	// Update an existing draft invoice.
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
-	// Creates a new InvoiceCustomSection
-	CreateCustomSection(ctx context.Context, in *CreateCustomSectionRequest, opts ...grpc.CallOption) (*CreateCustomSectionResponse, error)
-	// Request data export of invoices
-	CreatesDataExport(ctx context.Context, in *CreatesDataExportRequest, opts ...grpc.CallOption) (*CreatesDataExportResponse, error)
-	// Query invoices of a customer
+	// List invoices for a specific customer.
 	CustomerInvoices(ctx context.Context, in *CustomerInvoicesRequest, opts ...grpc.CallOption) (*CustomerInvoicesResponse, error)
-	// Deletes an invoice_custom_section
-	DeleteInvoiceCustomSection(ctx context.Context, in *DeleteInvoiceCustomSectionRequest, opts ...grpc.CallOption) (*DeleteInvoiceCustomSectionResponse, error)
-	// Download customer portal invoice PDF
-	DownloadCustomerPortalInvoice(ctx context.Context, in *DownloadCustomerPortalInvoiceRequest, opts ...grpc.CallOption) (*DownloadCustomerPortalInvoiceResponse, error)
-	// Download an Invoice PDF
-	DownloadInvoice(ctx context.Context, in *DownloadInvoiceRequest, opts ...grpc.CallOption) (*DownloadInvoiceResponse, error)
-	// Download an Invoice XML
-	DownloadInvoiceXml(ctx context.Context, in *DownloadInvoiceXmlRequest, opts ...grpc.CallOption) (*DownloadInvoiceXmlResponse, error)
-	// Fetches taxes for one-off invoice
+	// Fetch tax breakdown for a draft one-off invoice before finalization.
 	FetchDraftInvoiceTaxes(ctx context.Context, in *FetchDraftInvoiceTaxesRequest, opts ...grpc.CallOption) (*FetchDraftInvoiceTaxesResponse, error)
-	// Finalize a draft invoice
+	// Finalize a single draft invoice.
 	Finalize(ctx context.Context, in *FinalizeRequest, opts ...grpc.CallOption) (*FinalizeResponse, error)
-	// Finalize all draft invoices
+	// Finalize all draft invoices.
 	FinalizeAllInvoices(ctx context.Context, in *FinalizeAllInvoicesRequest, opts ...grpc.CallOption) (*FinalizeAllInvoicesResponse, error)
-	// Query a single invoice_custom_section of an organization
-	GetCustomSection(ctx context.Context, in *GetCustomSectionRequest, opts ...grpc.CallOption) (*GetCustomSectionResponse, error)
-	// Query invoice_custom_sections
-	ListCustomSections(ctx context.Context, in *ListCustomSectionsRequest, opts ...grpc.CallOption) (*ListCustomSectionsResponse, error)
-	// Mark payment dispute as lost
-	LoseInvoiceDispute(ctx context.Context, in *LoseInvoiceDisputeRequest, opts ...grpc.CallOption) (*LoseInvoiceDisputeResponse, error)
-	// Refresh a draft invoice
-	RefreshInvoice(ctx context.Context, in *RefreshInvoiceRequest, opts ...grpc.CallOption) (*RefreshInvoiceResponse, error)
-	// Regenerate an invoice from a voided invoice
-	RegenerateFromVoided(ctx context.Context, in *RegenerateFromVoidedRequest, opts ...grpc.CallOption) (*RegenerateFromVoidedResponse, error)
-	// Resend invoice email with optional custom recipients
-	ResendInvoiceEmail(ctx context.Context, in *ResendInvoiceEmailRequest, opts ...grpc.CallOption) (*ResendInvoiceEmailResponse, error)
-	// Retry all invoice payments
-	RetryAllInvoicePayments(ctx context.Context, in *RetryAllInvoicePaymentsRequest, opts ...grpc.CallOption) (*RetryAllInvoicePaymentsResponse, error)
-	// Retry all failed invoices
-	RetryAllInvoices(ctx context.Context, in *RetryAllInvoicesRequest, opts ...grpc.CallOption) (*RetryAllInvoicesResponse, error)
-	// Retry failed invoice
-	RetryInvoice(ctx context.Context, in *RetryInvoiceRequest, opts ...grpc.CallOption) (*RetryInvoiceResponse, error)
-	// Retry invoice payment
-	RetryInvoicePayment(ctx context.Context, in *RetryInvoicePaymentRequest, opts ...grpc.CallOption) (*RetryInvoicePaymentResponse, error)
-	// Retry voided invoice sync
-	RetryTaxProviderVoiding(ctx context.Context, in *RetryTaxProviderVoidingRequest, opts ...grpc.CallOption) (*RetryTaxProviderVoidingResponse, error)
-	// Sync hubspot integration invoice
-	SyncHubspotIntegrationInvoice(ctx context.Context, in *SyncHubspotIntegrationInvoiceRequest, opts ...grpc.CallOption) (*SyncHubspotIntegrationInvoiceResponse, error)
-	// Sync integration invoice
-	SyncIntegrationInvoice(ctx context.Context, in *SyncIntegrationInvoiceRequest, opts ...grpc.CallOption) (*SyncIntegrationInvoiceResponse, error)
-	// Sync Salesforce integration invoice
-	SyncSalesforceInvoice(ctx context.Context, in *SyncSalesforceInvoiceRequest, opts ...grpc.CallOption) (*SyncSalesforceInvoiceResponse, error)
-	// Updates an InvoiceCustomSection
-	UpdateInvoiceCustomSection(ctx context.Context, in *UpdateInvoiceCustomSectionRequest, opts ...grpc.CallOption) (*UpdateInvoiceCustomSectionResponse, error)
-	// Void an invoice
+	// Void an invoice, optionally generating a credit note and/or refund.
 	VoidInvoice(ctx context.Context, in *VoidInvoiceRequest, opts ...grpc.CallOption) (*VoidInvoiceResponse, error)
+	// Mark a payment dispute as lost.
+	LoseInvoiceDispute(ctx context.Context, in *LoseInvoiceDisputeRequest, opts ...grpc.CallOption) (*LoseInvoiceDisputeResponse, error)
+	// Refresh a draft invoice to recalculate charges.
+	RefreshInvoice(ctx context.Context, in *RefreshInvoiceRequest, opts ...grpc.CallOption) (*RefreshInvoiceResponse, error)
+	// Regenerate an invoice from a previously voided invoice.
+	RegenerateFromVoided(ctx context.Context, in *RegenerateFromVoidedRequest, opts ...grpc.CallOption) (*RegenerateFromVoidedResponse, error)
+	// Resend an invoice email with optional custom recipients.
+	ResendInvoiceEmail(ctx context.Context, in *ResendInvoiceEmailRequest, opts ...grpc.CallOption) (*ResendInvoiceEmailResponse, error)
+	// Retry a single failed invoice.
+	RetryInvoice(ctx context.Context, in *RetryInvoiceRequest, opts ...grpc.CallOption) (*RetryInvoiceResponse, error)
+	// Retry payment for a single invoice.
+	RetryInvoicePayment(ctx context.Context, in *RetryInvoicePaymentRequest, opts ...grpc.CallOption) (*RetryInvoicePaymentResponse, error)
+	// Retry all failed invoices.
+	RetryAllInvoices(ctx context.Context, in *RetryAllInvoicesRequest, opts ...grpc.CallOption) (*RetryAllInvoicesResponse, error)
+	// Retry payments for all eligible invoices.
+	RetryAllInvoicePayments(ctx context.Context, in *RetryAllInvoicePaymentsRequest, opts ...grpc.CallOption) (*RetryAllInvoicePaymentsResponse, error)
+	// Retry tax provider voiding sync for an invoice.
+	RetryTaxProviderVoiding(ctx context.Context, in *RetryTaxProviderVoidingRequest, opts ...grpc.CallOption) (*RetryTaxProviderVoidingResponse, error)
+	// Download an invoice PDF.
+	DownloadInvoice(ctx context.Context, in *DownloadInvoiceRequest, opts ...grpc.CallOption) (*DownloadInvoiceResponse, error)
+	// Download an invoice XML.
+	DownloadInvoiceXml(ctx context.Context, in *DownloadInvoiceXmlRequest, opts ...grpc.CallOption) (*DownloadInvoiceXmlResponse, error)
+	// Download a customer-portal invoice PDF.
+	DownloadCustomerPortalInvoice(ctx context.Context, in *DownloadCustomerPortalInvoiceRequest, opts ...grpc.CallOption) (*DownloadCustomerPortalInvoiceResponse, error)
+	// Request a data export of invoices.
+	CreateDataExport(ctx context.Context, in *CreateDataExportRequest, opts ...grpc.CallOption) (*CreateDataExportResponse, error)
+	// Sync an invoice to a generic integration.
+	SyncIntegrationInvoice(ctx context.Context, in *SyncIntegrationInvoiceRequest, opts ...grpc.CallOption) (*SyncIntegrationInvoiceResponse, error)
+	// Sync an invoice to HubSpot.
+	SyncHubspotIntegrationInvoice(ctx context.Context, in *SyncHubspotIntegrationInvoiceRequest, opts ...grpc.CallOption) (*SyncHubspotIntegrationInvoiceResponse, error)
+	// Sync an invoice to Salesforce.
+	SyncSalesforceInvoice(ctx context.Context, in *SyncSalesforceInvoiceRequest, opts ...grpc.CallOption) (*SyncSalesforceInvoiceResponse, error)
+	// List custom sections for an invoice.
+	ListCustomSections(ctx context.Context, in *ListCustomSectionsRequest, opts ...grpc.CallOption) (*ListCustomSectionsResponse, error)
+	// Get a single custom section by ID.
+	GetCustomSection(ctx context.Context, in *GetCustomSectionRequest, opts ...grpc.CallOption) (*GetCustomSectionResponse, error)
+	// Create a new invoice custom section.
+	CreateCustomSection(ctx context.Context, in *CreateCustomSectionRequest, opts ...grpc.CallOption) (*CreateCustomSectionResponse, error)
+	// Update an existing invoice custom section.
+	UpdateCustomSection(ctx context.Context, in *UpdateCustomSectionRequest, opts ...grpc.CallOption) (*UpdateCustomSectionResponse, error)
+	// Delete an invoice custom section.
+	DeleteCustomSection(ctx context.Context, in *DeleteCustomSectionRequest, opts ...grpc.CallOption) (*DeleteCustomSectionResponse, error)
 }
 
-type invoiceServiceClient struct {
+type invoicesServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewInvoiceServiceClient(cc grpc.ClientConnInterface) InvoiceServiceClient {
-	return &invoiceServiceClient{cc}
+func NewInvoicesServiceClient(cc grpc.ClientConnInterface) InvoicesServiceClient {
+	return &invoicesServiceClient{cc}
 }
 
-func (c *invoiceServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_Create_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_Get_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
+func (c *invoicesServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_List_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, InvoicesService_List_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *invoiceServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
+func (c *invoicesServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_Get_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_Create_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UpdateResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_Update_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, InvoicesService_Update_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *invoiceServiceClient) CreateCustomSection(ctx context.Context, in *CreateCustomSectionRequest, opts ...grpc.CallOption) (*CreateCustomSectionResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateCustomSectionResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_CreateCustomSection_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) CreatesDataExport(ctx context.Context, in *CreatesDataExportRequest, opts ...grpc.CallOption) (*CreatesDataExportResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreatesDataExportResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_CreatesDataExport_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) CustomerInvoices(ctx context.Context, in *CustomerInvoicesRequest, opts ...grpc.CallOption) (*CustomerInvoicesResponse, error) {
+func (c *invoicesServiceClient) CustomerInvoices(ctx context.Context, in *CustomerInvoicesRequest, opts ...grpc.CallOption) (*CustomerInvoicesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CustomerInvoicesResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_CustomerInvoices_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, InvoicesService_CustomerInvoices_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *invoiceServiceClient) DeleteInvoiceCustomSection(ctx context.Context, in *DeleteInvoiceCustomSectionRequest, opts ...grpc.CallOption) (*DeleteInvoiceCustomSectionResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DeleteInvoiceCustomSectionResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_DeleteInvoiceCustomSection_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) DownloadCustomerPortalInvoice(ctx context.Context, in *DownloadCustomerPortalInvoiceRequest, opts ...grpc.CallOption) (*DownloadCustomerPortalInvoiceResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DownloadCustomerPortalInvoiceResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_DownloadCustomerPortalInvoice_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) DownloadInvoice(ctx context.Context, in *DownloadInvoiceRequest, opts ...grpc.CallOption) (*DownloadInvoiceResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DownloadInvoiceResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_DownloadInvoice_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) DownloadInvoiceXml(ctx context.Context, in *DownloadInvoiceXmlRequest, opts ...grpc.CallOption) (*DownloadInvoiceXmlResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DownloadInvoiceXmlResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_DownloadInvoiceXml_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) FetchDraftInvoiceTaxes(ctx context.Context, in *FetchDraftInvoiceTaxesRequest, opts ...grpc.CallOption) (*FetchDraftInvoiceTaxesResponse, error) {
+func (c *invoicesServiceClient) FetchDraftInvoiceTaxes(ctx context.Context, in *FetchDraftInvoiceTaxesRequest, opts ...grpc.CallOption) (*FetchDraftInvoiceTaxesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(FetchDraftInvoiceTaxesResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_FetchDraftInvoiceTaxes_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, InvoicesService_FetchDraftInvoiceTaxes_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *invoiceServiceClient) Finalize(ctx context.Context, in *FinalizeRequest, opts ...grpc.CallOption) (*FinalizeResponse, error) {
+func (c *invoicesServiceClient) Finalize(ctx context.Context, in *FinalizeRequest, opts ...grpc.CallOption) (*FinalizeResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(FinalizeResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_Finalize_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, InvoicesService_Finalize_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *invoiceServiceClient) FinalizeAllInvoices(ctx context.Context, in *FinalizeAllInvoicesRequest, opts ...grpc.CallOption) (*FinalizeAllInvoicesResponse, error) {
+func (c *invoicesServiceClient) FinalizeAllInvoices(ctx context.Context, in *FinalizeAllInvoicesRequest, opts ...grpc.CallOption) (*FinalizeAllInvoicesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(FinalizeAllInvoicesResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_FinalizeAllInvoices_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, InvoicesService_FinalizeAllInvoices_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *invoiceServiceClient) GetCustomSection(ctx context.Context, in *GetCustomSectionRequest, opts ...grpc.CallOption) (*GetCustomSectionResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetCustomSectionResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_GetCustomSection_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) ListCustomSections(ctx context.Context, in *ListCustomSectionsRequest, opts ...grpc.CallOption) (*ListCustomSectionsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListCustomSectionsResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_ListCustomSections_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) LoseInvoiceDispute(ctx context.Context, in *LoseInvoiceDisputeRequest, opts ...grpc.CallOption) (*LoseInvoiceDisputeResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(LoseInvoiceDisputeResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_LoseInvoiceDispute_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) RefreshInvoice(ctx context.Context, in *RefreshInvoiceRequest, opts ...grpc.CallOption) (*RefreshInvoiceResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RefreshInvoiceResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_RefreshInvoice_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) RegenerateFromVoided(ctx context.Context, in *RegenerateFromVoidedRequest, opts ...grpc.CallOption) (*RegenerateFromVoidedResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RegenerateFromVoidedResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_RegenerateFromVoided_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) ResendInvoiceEmail(ctx context.Context, in *ResendInvoiceEmailRequest, opts ...grpc.CallOption) (*ResendInvoiceEmailResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ResendInvoiceEmailResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_ResendInvoiceEmail_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) RetryAllInvoicePayments(ctx context.Context, in *RetryAllInvoicePaymentsRequest, opts ...grpc.CallOption) (*RetryAllInvoicePaymentsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RetryAllInvoicePaymentsResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_RetryAllInvoicePayments_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) RetryAllInvoices(ctx context.Context, in *RetryAllInvoicesRequest, opts ...grpc.CallOption) (*RetryAllInvoicesResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RetryAllInvoicesResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_RetryAllInvoices_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) RetryInvoice(ctx context.Context, in *RetryInvoiceRequest, opts ...grpc.CallOption) (*RetryInvoiceResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RetryInvoiceResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_RetryInvoice_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) RetryInvoicePayment(ctx context.Context, in *RetryInvoicePaymentRequest, opts ...grpc.CallOption) (*RetryInvoicePaymentResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RetryInvoicePaymentResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_RetryInvoicePayment_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) RetryTaxProviderVoiding(ctx context.Context, in *RetryTaxProviderVoidingRequest, opts ...grpc.CallOption) (*RetryTaxProviderVoidingResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RetryTaxProviderVoidingResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_RetryTaxProviderVoiding_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) SyncHubspotIntegrationInvoice(ctx context.Context, in *SyncHubspotIntegrationInvoiceRequest, opts ...grpc.CallOption) (*SyncHubspotIntegrationInvoiceResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SyncHubspotIntegrationInvoiceResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_SyncHubspotIntegrationInvoice_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) SyncIntegrationInvoice(ctx context.Context, in *SyncIntegrationInvoiceRequest, opts ...grpc.CallOption) (*SyncIntegrationInvoiceResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SyncIntegrationInvoiceResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_SyncIntegrationInvoice_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) SyncSalesforceInvoice(ctx context.Context, in *SyncSalesforceInvoiceRequest, opts ...grpc.CallOption) (*SyncSalesforceInvoiceResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SyncSalesforceInvoiceResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_SyncSalesforceInvoice_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) UpdateInvoiceCustomSection(ctx context.Context, in *UpdateInvoiceCustomSectionRequest, opts ...grpc.CallOption) (*UpdateInvoiceCustomSectionResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateInvoiceCustomSectionResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_UpdateInvoiceCustomSection_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *invoiceServiceClient) VoidInvoice(ctx context.Context, in *VoidInvoiceRequest, opts ...grpc.CallOption) (*VoidInvoiceResponse, error) {
+func (c *invoicesServiceClient) VoidInvoice(ctx context.Context, in *VoidInvoiceRequest, opts ...grpc.CallOption) (*VoidInvoiceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(VoidInvoiceResponse)
-	err := c.cc.Invoke(ctx, InvoiceService_VoidInvoice_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, InvoicesService_VoidInvoice_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// InvoiceServiceServer is the server API for InvoiceService service.
-// All implementations must embed UnimplementedInvoiceServiceServer
-// for forward compatibility.
-type InvoiceServiceServer interface {
-	// Creates a new Invoice
-	Create(context.Context, *CreateRequest) (*CreateResponse, error)
-	// Query a single Invoice of an organization
-	Get(context.Context, *GetRequest) (*GetResponse, error)
-	// Query invoices
-	List(context.Context, *ListRequest) (*ListResponse, error)
-	// Update an existing invoice
-	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
-	// Creates a new InvoiceCustomSection
-	CreateCustomSection(context.Context, *CreateCustomSectionRequest) (*CreateCustomSectionResponse, error)
-	// Request data export of invoices
-	CreatesDataExport(context.Context, *CreatesDataExportRequest) (*CreatesDataExportResponse, error)
-	// Query invoices of a customer
-	CustomerInvoices(context.Context, *CustomerInvoicesRequest) (*CustomerInvoicesResponse, error)
-	// Deletes an invoice_custom_section
-	DeleteInvoiceCustomSection(context.Context, *DeleteInvoiceCustomSectionRequest) (*DeleteInvoiceCustomSectionResponse, error)
-	// Download customer portal invoice PDF
-	DownloadCustomerPortalInvoice(context.Context, *DownloadCustomerPortalInvoiceRequest) (*DownloadCustomerPortalInvoiceResponse, error)
-	// Download an Invoice PDF
-	DownloadInvoice(context.Context, *DownloadInvoiceRequest) (*DownloadInvoiceResponse, error)
-	// Download an Invoice XML
-	DownloadInvoiceXml(context.Context, *DownloadInvoiceXmlRequest) (*DownloadInvoiceXmlResponse, error)
-	// Fetches taxes for one-off invoice
-	FetchDraftInvoiceTaxes(context.Context, *FetchDraftInvoiceTaxesRequest) (*FetchDraftInvoiceTaxesResponse, error)
-	// Finalize a draft invoice
-	Finalize(context.Context, *FinalizeRequest) (*FinalizeResponse, error)
-	// Finalize all draft invoices
-	FinalizeAllInvoices(context.Context, *FinalizeAllInvoicesRequest) (*FinalizeAllInvoicesResponse, error)
-	// Query a single invoice_custom_section of an organization
-	GetCustomSection(context.Context, *GetCustomSectionRequest) (*GetCustomSectionResponse, error)
-	// Query invoice_custom_sections
-	ListCustomSections(context.Context, *ListCustomSectionsRequest) (*ListCustomSectionsResponse, error)
-	// Mark payment dispute as lost
-	LoseInvoiceDispute(context.Context, *LoseInvoiceDisputeRequest) (*LoseInvoiceDisputeResponse, error)
-	// Refresh a draft invoice
-	RefreshInvoice(context.Context, *RefreshInvoiceRequest) (*RefreshInvoiceResponse, error)
-	// Regenerate an invoice from a voided invoice
-	RegenerateFromVoided(context.Context, *RegenerateFromVoidedRequest) (*RegenerateFromVoidedResponse, error)
-	// Resend invoice email with optional custom recipients
-	ResendInvoiceEmail(context.Context, *ResendInvoiceEmailRequest) (*ResendInvoiceEmailResponse, error)
-	// Retry all invoice payments
-	RetryAllInvoicePayments(context.Context, *RetryAllInvoicePaymentsRequest) (*RetryAllInvoicePaymentsResponse, error)
-	// Retry all failed invoices
-	RetryAllInvoices(context.Context, *RetryAllInvoicesRequest) (*RetryAllInvoicesResponse, error)
-	// Retry failed invoice
-	RetryInvoice(context.Context, *RetryInvoiceRequest) (*RetryInvoiceResponse, error)
-	// Retry invoice payment
-	RetryInvoicePayment(context.Context, *RetryInvoicePaymentRequest) (*RetryInvoicePaymentResponse, error)
-	// Retry voided invoice sync
-	RetryTaxProviderVoiding(context.Context, *RetryTaxProviderVoidingRequest) (*RetryTaxProviderVoidingResponse, error)
-	// Sync hubspot integration invoice
-	SyncHubspotIntegrationInvoice(context.Context, *SyncHubspotIntegrationInvoiceRequest) (*SyncHubspotIntegrationInvoiceResponse, error)
-	// Sync integration invoice
-	SyncIntegrationInvoice(context.Context, *SyncIntegrationInvoiceRequest) (*SyncIntegrationInvoiceResponse, error)
-	// Sync Salesforce integration invoice
-	SyncSalesforceInvoice(context.Context, *SyncSalesforceInvoiceRequest) (*SyncSalesforceInvoiceResponse, error)
-	// Updates an InvoiceCustomSection
-	UpdateInvoiceCustomSection(context.Context, *UpdateInvoiceCustomSectionRequest) (*UpdateInvoiceCustomSectionResponse, error)
-	// Void an invoice
-	VoidInvoice(context.Context, *VoidInvoiceRequest) (*VoidInvoiceResponse, error)
-	mustEmbedUnimplementedInvoiceServiceServer()
+func (c *invoicesServiceClient) LoseInvoiceDispute(ctx context.Context, in *LoseInvoiceDisputeRequest, opts ...grpc.CallOption) (*LoseInvoiceDisputeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LoseInvoiceDisputeResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_LoseInvoiceDispute_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// UnimplementedInvoiceServiceServer must be embedded to have
+func (c *invoicesServiceClient) RefreshInvoice(ctx context.Context, in *RefreshInvoiceRequest, opts ...grpc.CallOption) (*RefreshInvoiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RefreshInvoiceResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_RefreshInvoice_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) RegenerateFromVoided(ctx context.Context, in *RegenerateFromVoidedRequest, opts ...grpc.CallOption) (*RegenerateFromVoidedResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RegenerateFromVoidedResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_RegenerateFromVoided_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) ResendInvoiceEmail(ctx context.Context, in *ResendInvoiceEmailRequest, opts ...grpc.CallOption) (*ResendInvoiceEmailResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ResendInvoiceEmailResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_ResendInvoiceEmail_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) RetryInvoice(ctx context.Context, in *RetryInvoiceRequest, opts ...grpc.CallOption) (*RetryInvoiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RetryInvoiceResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_RetryInvoice_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) RetryInvoicePayment(ctx context.Context, in *RetryInvoicePaymentRequest, opts ...grpc.CallOption) (*RetryInvoicePaymentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RetryInvoicePaymentResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_RetryInvoicePayment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) RetryAllInvoices(ctx context.Context, in *RetryAllInvoicesRequest, opts ...grpc.CallOption) (*RetryAllInvoicesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RetryAllInvoicesResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_RetryAllInvoices_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) RetryAllInvoicePayments(ctx context.Context, in *RetryAllInvoicePaymentsRequest, opts ...grpc.CallOption) (*RetryAllInvoicePaymentsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RetryAllInvoicePaymentsResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_RetryAllInvoicePayments_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) RetryTaxProviderVoiding(ctx context.Context, in *RetryTaxProviderVoidingRequest, opts ...grpc.CallOption) (*RetryTaxProviderVoidingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RetryTaxProviderVoidingResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_RetryTaxProviderVoiding_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) DownloadInvoice(ctx context.Context, in *DownloadInvoiceRequest, opts ...grpc.CallOption) (*DownloadInvoiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DownloadInvoiceResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_DownloadInvoice_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) DownloadInvoiceXml(ctx context.Context, in *DownloadInvoiceXmlRequest, opts ...grpc.CallOption) (*DownloadInvoiceXmlResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DownloadInvoiceXmlResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_DownloadInvoiceXml_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) DownloadCustomerPortalInvoice(ctx context.Context, in *DownloadCustomerPortalInvoiceRequest, opts ...grpc.CallOption) (*DownloadCustomerPortalInvoiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DownloadCustomerPortalInvoiceResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_DownloadCustomerPortalInvoice_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) CreateDataExport(ctx context.Context, in *CreateDataExportRequest, opts ...grpc.CallOption) (*CreateDataExportResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateDataExportResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_CreateDataExport_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) SyncIntegrationInvoice(ctx context.Context, in *SyncIntegrationInvoiceRequest, opts ...grpc.CallOption) (*SyncIntegrationInvoiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SyncIntegrationInvoiceResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_SyncIntegrationInvoice_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) SyncHubspotIntegrationInvoice(ctx context.Context, in *SyncHubspotIntegrationInvoiceRequest, opts ...grpc.CallOption) (*SyncHubspotIntegrationInvoiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SyncHubspotIntegrationInvoiceResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_SyncHubspotIntegrationInvoice_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) SyncSalesforceInvoice(ctx context.Context, in *SyncSalesforceInvoiceRequest, opts ...grpc.CallOption) (*SyncSalesforceInvoiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SyncSalesforceInvoiceResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_SyncSalesforceInvoice_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) ListCustomSections(ctx context.Context, in *ListCustomSectionsRequest, opts ...grpc.CallOption) (*ListCustomSectionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListCustomSectionsResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_ListCustomSections_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) GetCustomSection(ctx context.Context, in *GetCustomSectionRequest, opts ...grpc.CallOption) (*GetCustomSectionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCustomSectionResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_GetCustomSection_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) CreateCustomSection(ctx context.Context, in *CreateCustomSectionRequest, opts ...grpc.CallOption) (*CreateCustomSectionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateCustomSectionResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_CreateCustomSection_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) UpdateCustomSection(ctx context.Context, in *UpdateCustomSectionRequest, opts ...grpc.CallOption) (*UpdateCustomSectionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateCustomSectionResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_UpdateCustomSection_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicesServiceClient) DeleteCustomSection(ctx context.Context, in *DeleteCustomSectionRequest, opts ...grpc.CallOption) (*DeleteCustomSectionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteCustomSectionResponse)
+	err := c.cc.Invoke(ctx, InvoicesService_DeleteCustomSection_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// InvoicesServiceServer is the server API for InvoicesService service.
+// All implementations must embed UnimplementedInvoicesServiceServer
+// for forward compatibility.
+//
+// Manage invoices for a billing organization. Supports one-off and
+// subscription invoices, draft tax preview, finalization, voiding,
+// payment retry, PDF/XML download, custom sections, integration sync,
+// and data export.
+type InvoicesServiceServer interface {
+	// List invoices with filtering and pagination.
+	List(context.Context, *ListRequest) (*ListResponse, error)
+	// Get a single invoice by ID.
+	Get(context.Context, *GetRequest) (*GetResponse, error)
+	// Create a new one-off invoice.
+	Create(context.Context, *CreateRequest) (*CreateResponse, error)
+	// Update an existing draft invoice.
+	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
+	// List invoices for a specific customer.
+	CustomerInvoices(context.Context, *CustomerInvoicesRequest) (*CustomerInvoicesResponse, error)
+	// Fetch tax breakdown for a draft one-off invoice before finalization.
+	FetchDraftInvoiceTaxes(context.Context, *FetchDraftInvoiceTaxesRequest) (*FetchDraftInvoiceTaxesResponse, error)
+	// Finalize a single draft invoice.
+	Finalize(context.Context, *FinalizeRequest) (*FinalizeResponse, error)
+	// Finalize all draft invoices.
+	FinalizeAllInvoices(context.Context, *FinalizeAllInvoicesRequest) (*FinalizeAllInvoicesResponse, error)
+	// Void an invoice, optionally generating a credit note and/or refund.
+	VoidInvoice(context.Context, *VoidInvoiceRequest) (*VoidInvoiceResponse, error)
+	// Mark a payment dispute as lost.
+	LoseInvoiceDispute(context.Context, *LoseInvoiceDisputeRequest) (*LoseInvoiceDisputeResponse, error)
+	// Refresh a draft invoice to recalculate charges.
+	RefreshInvoice(context.Context, *RefreshInvoiceRequest) (*RefreshInvoiceResponse, error)
+	// Regenerate an invoice from a previously voided invoice.
+	RegenerateFromVoided(context.Context, *RegenerateFromVoidedRequest) (*RegenerateFromVoidedResponse, error)
+	// Resend an invoice email with optional custom recipients.
+	ResendInvoiceEmail(context.Context, *ResendInvoiceEmailRequest) (*ResendInvoiceEmailResponse, error)
+	// Retry a single failed invoice.
+	RetryInvoice(context.Context, *RetryInvoiceRequest) (*RetryInvoiceResponse, error)
+	// Retry payment for a single invoice.
+	RetryInvoicePayment(context.Context, *RetryInvoicePaymentRequest) (*RetryInvoicePaymentResponse, error)
+	// Retry all failed invoices.
+	RetryAllInvoices(context.Context, *RetryAllInvoicesRequest) (*RetryAllInvoicesResponse, error)
+	// Retry payments for all eligible invoices.
+	RetryAllInvoicePayments(context.Context, *RetryAllInvoicePaymentsRequest) (*RetryAllInvoicePaymentsResponse, error)
+	// Retry tax provider voiding sync for an invoice.
+	RetryTaxProviderVoiding(context.Context, *RetryTaxProviderVoidingRequest) (*RetryTaxProviderVoidingResponse, error)
+	// Download an invoice PDF.
+	DownloadInvoice(context.Context, *DownloadInvoiceRequest) (*DownloadInvoiceResponse, error)
+	// Download an invoice XML.
+	DownloadInvoiceXml(context.Context, *DownloadInvoiceXmlRequest) (*DownloadInvoiceXmlResponse, error)
+	// Download a customer-portal invoice PDF.
+	DownloadCustomerPortalInvoice(context.Context, *DownloadCustomerPortalInvoiceRequest) (*DownloadCustomerPortalInvoiceResponse, error)
+	// Request a data export of invoices.
+	CreateDataExport(context.Context, *CreateDataExportRequest) (*CreateDataExportResponse, error)
+	// Sync an invoice to a generic integration.
+	SyncIntegrationInvoice(context.Context, *SyncIntegrationInvoiceRequest) (*SyncIntegrationInvoiceResponse, error)
+	// Sync an invoice to HubSpot.
+	SyncHubspotIntegrationInvoice(context.Context, *SyncHubspotIntegrationInvoiceRequest) (*SyncHubspotIntegrationInvoiceResponse, error)
+	// Sync an invoice to Salesforce.
+	SyncSalesforceInvoice(context.Context, *SyncSalesforceInvoiceRequest) (*SyncSalesforceInvoiceResponse, error)
+	// List custom sections for an invoice.
+	ListCustomSections(context.Context, *ListCustomSectionsRequest) (*ListCustomSectionsResponse, error)
+	// Get a single custom section by ID.
+	GetCustomSection(context.Context, *GetCustomSectionRequest) (*GetCustomSectionResponse, error)
+	// Create a new invoice custom section.
+	CreateCustomSection(context.Context, *CreateCustomSectionRequest) (*CreateCustomSectionResponse, error)
+	// Update an existing invoice custom section.
+	UpdateCustomSection(context.Context, *UpdateCustomSectionRequest) (*UpdateCustomSectionResponse, error)
+	// Delete an invoice custom section.
+	DeleteCustomSection(context.Context, *DeleteCustomSectionRequest) (*DeleteCustomSectionResponse, error)
+	mustEmbedUnimplementedInvoicesServiceServer()
+}
+
+// UnimplementedInvoicesServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedInvoiceServiceServer struct{}
+type UnimplementedInvoicesServiceServer struct{}
 
-func (UnimplementedInvoiceServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
-}
-func (UnimplementedInvoiceServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
-}
-func (UnimplementedInvoiceServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
+func (UnimplementedInvoicesServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method List not implemented")
 }
-func (UnimplementedInvoiceServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
+func (UnimplementedInvoicesServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
+}
+func (UnimplementedInvoicesServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedInvoicesServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedInvoiceServiceServer) CreateCustomSection(context.Context, *CreateCustomSectionRequest) (*CreateCustomSectionResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method CreateCustomSection not implemented")
-}
-func (UnimplementedInvoiceServiceServer) CreatesDataExport(context.Context, *CreatesDataExportRequest) (*CreatesDataExportResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method CreatesDataExport not implemented")
-}
-func (UnimplementedInvoiceServiceServer) CustomerInvoices(context.Context, *CustomerInvoicesRequest) (*CustomerInvoicesResponse, error) {
+func (UnimplementedInvoicesServiceServer) CustomerInvoices(context.Context, *CustomerInvoicesRequest) (*CustomerInvoicesResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CustomerInvoices not implemented")
 }
-func (UnimplementedInvoiceServiceServer) DeleteInvoiceCustomSection(context.Context, *DeleteInvoiceCustomSectionRequest) (*DeleteInvoiceCustomSectionResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method DeleteInvoiceCustomSection not implemented")
-}
-func (UnimplementedInvoiceServiceServer) DownloadCustomerPortalInvoice(context.Context, *DownloadCustomerPortalInvoiceRequest) (*DownloadCustomerPortalInvoiceResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method DownloadCustomerPortalInvoice not implemented")
-}
-func (UnimplementedInvoiceServiceServer) DownloadInvoice(context.Context, *DownloadInvoiceRequest) (*DownloadInvoiceResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method DownloadInvoice not implemented")
-}
-func (UnimplementedInvoiceServiceServer) DownloadInvoiceXml(context.Context, *DownloadInvoiceXmlRequest) (*DownloadInvoiceXmlResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method DownloadInvoiceXml not implemented")
-}
-func (UnimplementedInvoiceServiceServer) FetchDraftInvoiceTaxes(context.Context, *FetchDraftInvoiceTaxesRequest) (*FetchDraftInvoiceTaxesResponse, error) {
+func (UnimplementedInvoicesServiceServer) FetchDraftInvoiceTaxes(context.Context, *FetchDraftInvoiceTaxesRequest) (*FetchDraftInvoiceTaxesResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method FetchDraftInvoiceTaxes not implemented")
 }
-func (UnimplementedInvoiceServiceServer) Finalize(context.Context, *FinalizeRequest) (*FinalizeResponse, error) {
+func (UnimplementedInvoicesServiceServer) Finalize(context.Context, *FinalizeRequest) (*FinalizeResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Finalize not implemented")
 }
-func (UnimplementedInvoiceServiceServer) FinalizeAllInvoices(context.Context, *FinalizeAllInvoicesRequest) (*FinalizeAllInvoicesResponse, error) {
+func (UnimplementedInvoicesServiceServer) FinalizeAllInvoices(context.Context, *FinalizeAllInvoicesRequest) (*FinalizeAllInvoicesResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method FinalizeAllInvoices not implemented")
 }
-func (UnimplementedInvoiceServiceServer) GetCustomSection(context.Context, *GetCustomSectionRequest) (*GetCustomSectionResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetCustomSection not implemented")
-}
-func (UnimplementedInvoiceServiceServer) ListCustomSections(context.Context, *ListCustomSectionsRequest) (*ListCustomSectionsResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method ListCustomSections not implemented")
-}
-func (UnimplementedInvoiceServiceServer) LoseInvoiceDispute(context.Context, *LoseInvoiceDisputeRequest) (*LoseInvoiceDisputeResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method LoseInvoiceDispute not implemented")
-}
-func (UnimplementedInvoiceServiceServer) RefreshInvoice(context.Context, *RefreshInvoiceRequest) (*RefreshInvoiceResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method RefreshInvoice not implemented")
-}
-func (UnimplementedInvoiceServiceServer) RegenerateFromVoided(context.Context, *RegenerateFromVoidedRequest) (*RegenerateFromVoidedResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method RegenerateFromVoided not implemented")
-}
-func (UnimplementedInvoiceServiceServer) ResendInvoiceEmail(context.Context, *ResendInvoiceEmailRequest) (*ResendInvoiceEmailResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method ResendInvoiceEmail not implemented")
-}
-func (UnimplementedInvoiceServiceServer) RetryAllInvoicePayments(context.Context, *RetryAllInvoicePaymentsRequest) (*RetryAllInvoicePaymentsResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method RetryAllInvoicePayments not implemented")
-}
-func (UnimplementedInvoiceServiceServer) RetryAllInvoices(context.Context, *RetryAllInvoicesRequest) (*RetryAllInvoicesResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method RetryAllInvoices not implemented")
-}
-func (UnimplementedInvoiceServiceServer) RetryInvoice(context.Context, *RetryInvoiceRequest) (*RetryInvoiceResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method RetryInvoice not implemented")
-}
-func (UnimplementedInvoiceServiceServer) RetryInvoicePayment(context.Context, *RetryInvoicePaymentRequest) (*RetryInvoicePaymentResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method RetryInvoicePayment not implemented")
-}
-func (UnimplementedInvoiceServiceServer) RetryTaxProviderVoiding(context.Context, *RetryTaxProviderVoidingRequest) (*RetryTaxProviderVoidingResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method RetryTaxProviderVoiding not implemented")
-}
-func (UnimplementedInvoiceServiceServer) SyncHubspotIntegrationInvoice(context.Context, *SyncHubspotIntegrationInvoiceRequest) (*SyncHubspotIntegrationInvoiceResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method SyncHubspotIntegrationInvoice not implemented")
-}
-func (UnimplementedInvoiceServiceServer) SyncIntegrationInvoice(context.Context, *SyncIntegrationInvoiceRequest) (*SyncIntegrationInvoiceResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method SyncIntegrationInvoice not implemented")
-}
-func (UnimplementedInvoiceServiceServer) SyncSalesforceInvoice(context.Context, *SyncSalesforceInvoiceRequest) (*SyncSalesforceInvoiceResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method SyncSalesforceInvoice not implemented")
-}
-func (UnimplementedInvoiceServiceServer) UpdateInvoiceCustomSection(context.Context, *UpdateInvoiceCustomSectionRequest) (*UpdateInvoiceCustomSectionResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method UpdateInvoiceCustomSection not implemented")
-}
-func (UnimplementedInvoiceServiceServer) VoidInvoice(context.Context, *VoidInvoiceRequest) (*VoidInvoiceResponse, error) {
+func (UnimplementedInvoicesServiceServer) VoidInvoice(context.Context, *VoidInvoiceRequest) (*VoidInvoiceResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method VoidInvoice not implemented")
 }
-func (UnimplementedInvoiceServiceServer) mustEmbedUnimplementedInvoiceServiceServer() {}
-func (UnimplementedInvoiceServiceServer) testEmbeddedByValue()                        {}
+func (UnimplementedInvoicesServiceServer) LoseInvoiceDispute(context.Context, *LoseInvoiceDisputeRequest) (*LoseInvoiceDisputeResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method LoseInvoiceDispute not implemented")
+}
+func (UnimplementedInvoicesServiceServer) RefreshInvoice(context.Context, *RefreshInvoiceRequest) (*RefreshInvoiceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RefreshInvoice not implemented")
+}
+func (UnimplementedInvoicesServiceServer) RegenerateFromVoided(context.Context, *RegenerateFromVoidedRequest) (*RegenerateFromVoidedResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RegenerateFromVoided not implemented")
+}
+func (UnimplementedInvoicesServiceServer) ResendInvoiceEmail(context.Context, *ResendInvoiceEmailRequest) (*ResendInvoiceEmailResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ResendInvoiceEmail not implemented")
+}
+func (UnimplementedInvoicesServiceServer) RetryInvoice(context.Context, *RetryInvoiceRequest) (*RetryInvoiceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RetryInvoice not implemented")
+}
+func (UnimplementedInvoicesServiceServer) RetryInvoicePayment(context.Context, *RetryInvoicePaymentRequest) (*RetryInvoicePaymentResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RetryInvoicePayment not implemented")
+}
+func (UnimplementedInvoicesServiceServer) RetryAllInvoices(context.Context, *RetryAllInvoicesRequest) (*RetryAllInvoicesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RetryAllInvoices not implemented")
+}
+func (UnimplementedInvoicesServiceServer) RetryAllInvoicePayments(context.Context, *RetryAllInvoicePaymentsRequest) (*RetryAllInvoicePaymentsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RetryAllInvoicePayments not implemented")
+}
+func (UnimplementedInvoicesServiceServer) RetryTaxProviderVoiding(context.Context, *RetryTaxProviderVoidingRequest) (*RetryTaxProviderVoidingResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RetryTaxProviderVoiding not implemented")
+}
+func (UnimplementedInvoicesServiceServer) DownloadInvoice(context.Context, *DownloadInvoiceRequest) (*DownloadInvoiceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DownloadInvoice not implemented")
+}
+func (UnimplementedInvoicesServiceServer) DownloadInvoiceXml(context.Context, *DownloadInvoiceXmlRequest) (*DownloadInvoiceXmlResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DownloadInvoiceXml not implemented")
+}
+func (UnimplementedInvoicesServiceServer) DownloadCustomerPortalInvoice(context.Context, *DownloadCustomerPortalInvoiceRequest) (*DownloadCustomerPortalInvoiceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DownloadCustomerPortalInvoice not implemented")
+}
+func (UnimplementedInvoicesServiceServer) CreateDataExport(context.Context, *CreateDataExportRequest) (*CreateDataExportResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateDataExport not implemented")
+}
+func (UnimplementedInvoicesServiceServer) SyncIntegrationInvoice(context.Context, *SyncIntegrationInvoiceRequest) (*SyncIntegrationInvoiceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SyncIntegrationInvoice not implemented")
+}
+func (UnimplementedInvoicesServiceServer) SyncHubspotIntegrationInvoice(context.Context, *SyncHubspotIntegrationInvoiceRequest) (*SyncHubspotIntegrationInvoiceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SyncHubspotIntegrationInvoice not implemented")
+}
+func (UnimplementedInvoicesServiceServer) SyncSalesforceInvoice(context.Context, *SyncSalesforceInvoiceRequest) (*SyncSalesforceInvoiceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SyncSalesforceInvoice not implemented")
+}
+func (UnimplementedInvoicesServiceServer) ListCustomSections(context.Context, *ListCustomSectionsRequest) (*ListCustomSectionsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListCustomSections not implemented")
+}
+func (UnimplementedInvoicesServiceServer) GetCustomSection(context.Context, *GetCustomSectionRequest) (*GetCustomSectionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetCustomSection not implemented")
+}
+func (UnimplementedInvoicesServiceServer) CreateCustomSection(context.Context, *CreateCustomSectionRequest) (*CreateCustomSectionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateCustomSection not implemented")
+}
+func (UnimplementedInvoicesServiceServer) UpdateCustomSection(context.Context, *UpdateCustomSectionRequest) (*UpdateCustomSectionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateCustomSection not implemented")
+}
+func (UnimplementedInvoicesServiceServer) DeleteCustomSection(context.Context, *DeleteCustomSectionRequest) (*DeleteCustomSectionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteCustomSection not implemented")
+}
+func (UnimplementedInvoicesServiceServer) mustEmbedUnimplementedInvoicesServiceServer() {}
+func (UnimplementedInvoicesServiceServer) testEmbeddedByValue()                         {}
 
-// UnsafeInvoiceServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to InvoiceServiceServer will
+// UnsafeInvoicesServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to InvoicesServiceServer will
 // result in compilation errors.
-type UnsafeInvoiceServiceServer interface {
-	mustEmbedUnimplementedInvoiceServiceServer()
+type UnsafeInvoicesServiceServer interface {
+	mustEmbedUnimplementedInvoicesServiceServer()
 }
 
-func RegisterInvoiceServiceServer(s grpc.ServiceRegistrar, srv InvoiceServiceServer) {
-	// If the following call panics, it indicates UnimplementedInvoiceServiceServer was
+func RegisterInvoicesServiceServer(s grpc.ServiceRegistrar, srv InvoicesServiceServer) {
+	// If the following call panics, it indicates UnimplementedInvoicesServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&InvoiceService_ServiceDesc, srv)
+	s.RegisterService(&InvoicesService_ServiceDesc, srv)
 }
 
-func _InvoiceService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).Create(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_Create_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).Create(ctx, req.(*CreateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).Get(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_Get_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).Get(ctx, req.(*GetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _InvoicesService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(InvoiceServiceServer).List(ctx, in)
+		return srv.(InvoicesServiceServer).List(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: InvoiceService_List_FullMethodName,
+		FullMethod: InvoicesService_List_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).List(ctx, req.(*ListRequest))
+		return srv.(InvoicesServiceServer).List(ctx, req.(*ListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _InvoiceService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _InvoicesService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_Get_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).Get(ctx, req.(*GetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).Create(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_Create_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).Create(ctx, req.(*CreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(InvoiceServiceServer).Update(ctx, in)
+		return srv.(InvoicesServiceServer).Update(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: InvoiceService_Update_FullMethodName,
+		FullMethod: InvoicesService_Update_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).Update(ctx, req.(*UpdateRequest))
+		return srv.(InvoicesServiceServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _InvoiceService_CreateCustomSection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateCustomSectionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).CreateCustomSection(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_CreateCustomSection_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).CreateCustomSection(ctx, req.(*CreateCustomSectionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_CreatesDataExport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreatesDataExportRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).CreatesDataExport(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_CreatesDataExport_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).CreatesDataExport(ctx, req.(*CreatesDataExportRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_CustomerInvoices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _InvoicesService_CustomerInvoices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CustomerInvoicesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(InvoiceServiceServer).CustomerInvoices(ctx, in)
+		return srv.(InvoicesServiceServer).CustomerInvoices(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: InvoiceService_CustomerInvoices_FullMethodName,
+		FullMethod: InvoicesService_CustomerInvoices_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).CustomerInvoices(ctx, req.(*CustomerInvoicesRequest))
+		return srv.(InvoicesServiceServer).CustomerInvoices(ctx, req.(*CustomerInvoicesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _InvoiceService_DeleteInvoiceCustomSection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteInvoiceCustomSectionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).DeleteInvoiceCustomSection(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_DeleteInvoiceCustomSection_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).DeleteInvoiceCustomSection(ctx, req.(*DeleteInvoiceCustomSectionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_DownloadCustomerPortalInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DownloadCustomerPortalInvoiceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).DownloadCustomerPortalInvoice(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_DownloadCustomerPortalInvoice_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).DownloadCustomerPortalInvoice(ctx, req.(*DownloadCustomerPortalInvoiceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_DownloadInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DownloadInvoiceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).DownloadInvoice(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_DownloadInvoice_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).DownloadInvoice(ctx, req.(*DownloadInvoiceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_DownloadInvoiceXml_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DownloadInvoiceXmlRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).DownloadInvoiceXml(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_DownloadInvoiceXml_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).DownloadInvoiceXml(ctx, req.(*DownloadInvoiceXmlRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_FetchDraftInvoiceTaxes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _InvoicesService_FetchDraftInvoiceTaxes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FetchDraftInvoiceTaxesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(InvoiceServiceServer).FetchDraftInvoiceTaxes(ctx, in)
+		return srv.(InvoicesServiceServer).FetchDraftInvoiceTaxes(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: InvoiceService_FetchDraftInvoiceTaxes_FullMethodName,
+		FullMethod: InvoicesService_FetchDraftInvoiceTaxes_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).FetchDraftInvoiceTaxes(ctx, req.(*FetchDraftInvoiceTaxesRequest))
+		return srv.(InvoicesServiceServer).FetchDraftInvoiceTaxes(ctx, req.(*FetchDraftInvoiceTaxesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _InvoiceService_Finalize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _InvoicesService_Finalize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FinalizeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(InvoiceServiceServer).Finalize(ctx, in)
+		return srv.(InvoicesServiceServer).Finalize(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: InvoiceService_Finalize_FullMethodName,
+		FullMethod: InvoicesService_Finalize_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).Finalize(ctx, req.(*FinalizeRequest))
+		return srv.(InvoicesServiceServer).Finalize(ctx, req.(*FinalizeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _InvoiceService_FinalizeAllInvoices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _InvoicesService_FinalizeAllInvoices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FinalizeAllInvoicesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(InvoiceServiceServer).FinalizeAllInvoices(ctx, in)
+		return srv.(InvoicesServiceServer).FinalizeAllInvoices(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: InvoiceService_FinalizeAllInvoices_FullMethodName,
+		FullMethod: InvoicesService_FinalizeAllInvoices_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).FinalizeAllInvoices(ctx, req.(*FinalizeAllInvoicesRequest))
+		return srv.(InvoicesServiceServer).FinalizeAllInvoices(ctx, req.(*FinalizeAllInvoicesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _InvoiceService_GetCustomSection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetCustomSectionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).GetCustomSection(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_GetCustomSection_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).GetCustomSection(ctx, req.(*GetCustomSectionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_ListCustomSections_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListCustomSectionsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).ListCustomSections(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_ListCustomSections_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).ListCustomSections(ctx, req.(*ListCustomSectionsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_LoseInvoiceDispute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LoseInvoiceDisputeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).LoseInvoiceDispute(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_LoseInvoiceDispute_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).LoseInvoiceDispute(ctx, req.(*LoseInvoiceDisputeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_RefreshInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RefreshInvoiceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).RefreshInvoice(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_RefreshInvoice_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).RefreshInvoice(ctx, req.(*RefreshInvoiceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_RegenerateFromVoided_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegenerateFromVoidedRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).RegenerateFromVoided(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_RegenerateFromVoided_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).RegenerateFromVoided(ctx, req.(*RegenerateFromVoidedRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_ResendInvoiceEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ResendInvoiceEmailRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).ResendInvoiceEmail(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_ResendInvoiceEmail_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).ResendInvoiceEmail(ctx, req.(*ResendInvoiceEmailRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_RetryAllInvoicePayments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RetryAllInvoicePaymentsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).RetryAllInvoicePayments(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_RetryAllInvoicePayments_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).RetryAllInvoicePayments(ctx, req.(*RetryAllInvoicePaymentsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_RetryAllInvoices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RetryAllInvoicesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).RetryAllInvoices(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_RetryAllInvoices_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).RetryAllInvoices(ctx, req.(*RetryAllInvoicesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_RetryInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RetryInvoiceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).RetryInvoice(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_RetryInvoice_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).RetryInvoice(ctx, req.(*RetryInvoiceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_RetryInvoicePayment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RetryInvoicePaymentRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).RetryInvoicePayment(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_RetryInvoicePayment_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).RetryInvoicePayment(ctx, req.(*RetryInvoicePaymentRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_RetryTaxProviderVoiding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RetryTaxProviderVoidingRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).RetryTaxProviderVoiding(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_RetryTaxProviderVoiding_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).RetryTaxProviderVoiding(ctx, req.(*RetryTaxProviderVoidingRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_SyncHubspotIntegrationInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SyncHubspotIntegrationInvoiceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).SyncHubspotIntegrationInvoice(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_SyncHubspotIntegrationInvoice_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).SyncHubspotIntegrationInvoice(ctx, req.(*SyncHubspotIntegrationInvoiceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_SyncIntegrationInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SyncIntegrationInvoiceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).SyncIntegrationInvoice(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_SyncIntegrationInvoice_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).SyncIntegrationInvoice(ctx, req.(*SyncIntegrationInvoiceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_SyncSalesforceInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SyncSalesforceInvoiceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).SyncSalesforceInvoice(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_SyncSalesforceInvoice_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).SyncSalesforceInvoice(ctx, req.(*SyncSalesforceInvoiceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_UpdateInvoiceCustomSection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateInvoiceCustomSectionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InvoiceServiceServer).UpdateInvoiceCustomSection(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InvoiceService_UpdateInvoiceCustomSection_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).UpdateInvoiceCustomSection(ctx, req.(*UpdateInvoiceCustomSectionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InvoiceService_VoidInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _InvoicesService_VoidInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(VoidInvoiceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(InvoiceServiceServer).VoidInvoice(ctx, in)
+		return srv.(InvoicesServiceServer).VoidInvoice(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: InvoiceService_VoidInvoice_FullMethodName,
+		FullMethod: InvoicesService_VoidInvoice_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InvoiceServiceServer).VoidInvoice(ctx, req.(*VoidInvoiceRequest))
+		return srv.(InvoicesServiceServer).VoidInvoice(ctx, req.(*VoidInvoiceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// InvoiceService_ServiceDesc is the grpc.ServiceDesc for InvoiceService service.
+func _InvoicesService_LoseInvoiceDispute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoseInvoiceDisputeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).LoseInvoiceDispute(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_LoseInvoiceDispute_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).LoseInvoiceDispute(ctx, req.(*LoseInvoiceDisputeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_RefreshInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RefreshInvoiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).RefreshInvoice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_RefreshInvoice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).RefreshInvoice(ctx, req.(*RefreshInvoiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_RegenerateFromVoided_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegenerateFromVoidedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).RegenerateFromVoided(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_RegenerateFromVoided_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).RegenerateFromVoided(ctx, req.(*RegenerateFromVoidedRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_ResendInvoiceEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResendInvoiceEmailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).ResendInvoiceEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_ResendInvoiceEmail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).ResendInvoiceEmail(ctx, req.(*ResendInvoiceEmailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_RetryInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RetryInvoiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).RetryInvoice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_RetryInvoice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).RetryInvoice(ctx, req.(*RetryInvoiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_RetryInvoicePayment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RetryInvoicePaymentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).RetryInvoicePayment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_RetryInvoicePayment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).RetryInvoicePayment(ctx, req.(*RetryInvoicePaymentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_RetryAllInvoices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RetryAllInvoicesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).RetryAllInvoices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_RetryAllInvoices_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).RetryAllInvoices(ctx, req.(*RetryAllInvoicesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_RetryAllInvoicePayments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RetryAllInvoicePaymentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).RetryAllInvoicePayments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_RetryAllInvoicePayments_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).RetryAllInvoicePayments(ctx, req.(*RetryAllInvoicePaymentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_RetryTaxProviderVoiding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RetryTaxProviderVoidingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).RetryTaxProviderVoiding(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_RetryTaxProviderVoiding_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).RetryTaxProviderVoiding(ctx, req.(*RetryTaxProviderVoidingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_DownloadInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DownloadInvoiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).DownloadInvoice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_DownloadInvoice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).DownloadInvoice(ctx, req.(*DownloadInvoiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_DownloadInvoiceXml_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DownloadInvoiceXmlRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).DownloadInvoiceXml(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_DownloadInvoiceXml_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).DownloadInvoiceXml(ctx, req.(*DownloadInvoiceXmlRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_DownloadCustomerPortalInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DownloadCustomerPortalInvoiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).DownloadCustomerPortalInvoice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_DownloadCustomerPortalInvoice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).DownloadCustomerPortalInvoice(ctx, req.(*DownloadCustomerPortalInvoiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_CreateDataExport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateDataExportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).CreateDataExport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_CreateDataExport_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).CreateDataExport(ctx, req.(*CreateDataExportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_SyncIntegrationInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SyncIntegrationInvoiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).SyncIntegrationInvoice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_SyncIntegrationInvoice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).SyncIntegrationInvoice(ctx, req.(*SyncIntegrationInvoiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_SyncHubspotIntegrationInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SyncHubspotIntegrationInvoiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).SyncHubspotIntegrationInvoice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_SyncHubspotIntegrationInvoice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).SyncHubspotIntegrationInvoice(ctx, req.(*SyncHubspotIntegrationInvoiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_SyncSalesforceInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SyncSalesforceInvoiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).SyncSalesforceInvoice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_SyncSalesforceInvoice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).SyncSalesforceInvoice(ctx, req.(*SyncSalesforceInvoiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_ListCustomSections_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCustomSectionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).ListCustomSections(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_ListCustomSections_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).ListCustomSections(ctx, req.(*ListCustomSectionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_GetCustomSection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCustomSectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).GetCustomSection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_GetCustomSection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).GetCustomSection(ctx, req.(*GetCustomSectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_CreateCustomSection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCustomSectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).CreateCustomSection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_CreateCustomSection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).CreateCustomSection(ctx, req.(*CreateCustomSectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_UpdateCustomSection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCustomSectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).UpdateCustomSection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_UpdateCustomSection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).UpdateCustomSection(ctx, req.(*UpdateCustomSectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InvoicesService_DeleteCustomSection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCustomSectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicesServiceServer).DeleteCustomSection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InvoicesService_DeleteCustomSection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicesServiceServer).DeleteCustomSection(ctx, req.(*DeleteCustomSectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// InvoicesService_ServiceDesc is the grpc.ServiceDesc for InvoicesService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var InvoiceService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "invora.billing.invoices.v2.InvoiceService",
-	HandlerType: (*InvoiceServiceServer)(nil),
+var InvoicesService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "invora.billing.invoices.v2.InvoicesService",
+	HandlerType: (*InvoicesServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Create",
-			Handler:    _InvoiceService_Create_Handler,
+			MethodName: "List",
+			Handler:    _InvoicesService_List_Handler,
 		},
 		{
 			MethodName: "Get",
-			Handler:    _InvoiceService_Get_Handler,
+			Handler:    _InvoicesService_Get_Handler,
 		},
 		{
-			MethodName: "List",
-			Handler:    _InvoiceService_List_Handler,
+			MethodName: "Create",
+			Handler:    _InvoicesService_Create_Handler,
 		},
 		{
 			MethodName: "Update",
-			Handler:    _InvoiceService_Update_Handler,
-		},
-		{
-			MethodName: "CreateCustomSection",
-			Handler:    _InvoiceService_CreateCustomSection_Handler,
-		},
-		{
-			MethodName: "CreatesDataExport",
-			Handler:    _InvoiceService_CreatesDataExport_Handler,
+			Handler:    _InvoicesService_Update_Handler,
 		},
 		{
 			MethodName: "CustomerInvoices",
-			Handler:    _InvoiceService_CustomerInvoices_Handler,
-		},
-		{
-			MethodName: "DeleteInvoiceCustomSection",
-			Handler:    _InvoiceService_DeleteInvoiceCustomSection_Handler,
-		},
-		{
-			MethodName: "DownloadCustomerPortalInvoice",
-			Handler:    _InvoiceService_DownloadCustomerPortalInvoice_Handler,
-		},
-		{
-			MethodName: "DownloadInvoice",
-			Handler:    _InvoiceService_DownloadInvoice_Handler,
-		},
-		{
-			MethodName: "DownloadInvoiceXml",
-			Handler:    _InvoiceService_DownloadInvoiceXml_Handler,
+			Handler:    _InvoicesService_CustomerInvoices_Handler,
 		},
 		{
 			MethodName: "FetchDraftInvoiceTaxes",
-			Handler:    _InvoiceService_FetchDraftInvoiceTaxes_Handler,
+			Handler:    _InvoicesService_FetchDraftInvoiceTaxes_Handler,
 		},
 		{
 			MethodName: "Finalize",
-			Handler:    _InvoiceService_Finalize_Handler,
+			Handler:    _InvoicesService_Finalize_Handler,
 		},
 		{
 			MethodName: "FinalizeAllInvoices",
-			Handler:    _InvoiceService_FinalizeAllInvoices_Handler,
-		},
-		{
-			MethodName: "GetCustomSection",
-			Handler:    _InvoiceService_GetCustomSection_Handler,
-		},
-		{
-			MethodName: "ListCustomSections",
-			Handler:    _InvoiceService_ListCustomSections_Handler,
-		},
-		{
-			MethodName: "LoseInvoiceDispute",
-			Handler:    _InvoiceService_LoseInvoiceDispute_Handler,
-		},
-		{
-			MethodName: "RefreshInvoice",
-			Handler:    _InvoiceService_RefreshInvoice_Handler,
-		},
-		{
-			MethodName: "RegenerateFromVoided",
-			Handler:    _InvoiceService_RegenerateFromVoided_Handler,
-		},
-		{
-			MethodName: "ResendInvoiceEmail",
-			Handler:    _InvoiceService_ResendInvoiceEmail_Handler,
-		},
-		{
-			MethodName: "RetryAllInvoicePayments",
-			Handler:    _InvoiceService_RetryAllInvoicePayments_Handler,
-		},
-		{
-			MethodName: "RetryAllInvoices",
-			Handler:    _InvoiceService_RetryAllInvoices_Handler,
-		},
-		{
-			MethodName: "RetryInvoice",
-			Handler:    _InvoiceService_RetryInvoice_Handler,
-		},
-		{
-			MethodName: "RetryInvoicePayment",
-			Handler:    _InvoiceService_RetryInvoicePayment_Handler,
-		},
-		{
-			MethodName: "RetryTaxProviderVoiding",
-			Handler:    _InvoiceService_RetryTaxProviderVoiding_Handler,
-		},
-		{
-			MethodName: "SyncHubspotIntegrationInvoice",
-			Handler:    _InvoiceService_SyncHubspotIntegrationInvoice_Handler,
-		},
-		{
-			MethodName: "SyncIntegrationInvoice",
-			Handler:    _InvoiceService_SyncIntegrationInvoice_Handler,
-		},
-		{
-			MethodName: "SyncSalesforceInvoice",
-			Handler:    _InvoiceService_SyncSalesforceInvoice_Handler,
-		},
-		{
-			MethodName: "UpdateInvoiceCustomSection",
-			Handler:    _InvoiceService_UpdateInvoiceCustomSection_Handler,
+			Handler:    _InvoicesService_FinalizeAllInvoices_Handler,
 		},
 		{
 			MethodName: "VoidInvoice",
-			Handler:    _InvoiceService_VoidInvoice_Handler,
+			Handler:    _InvoicesService_VoidInvoice_Handler,
+		},
+		{
+			MethodName: "LoseInvoiceDispute",
+			Handler:    _InvoicesService_LoseInvoiceDispute_Handler,
+		},
+		{
+			MethodName: "RefreshInvoice",
+			Handler:    _InvoicesService_RefreshInvoice_Handler,
+		},
+		{
+			MethodName: "RegenerateFromVoided",
+			Handler:    _InvoicesService_RegenerateFromVoided_Handler,
+		},
+		{
+			MethodName: "ResendInvoiceEmail",
+			Handler:    _InvoicesService_ResendInvoiceEmail_Handler,
+		},
+		{
+			MethodName: "RetryInvoice",
+			Handler:    _InvoicesService_RetryInvoice_Handler,
+		},
+		{
+			MethodName: "RetryInvoicePayment",
+			Handler:    _InvoicesService_RetryInvoicePayment_Handler,
+		},
+		{
+			MethodName: "RetryAllInvoices",
+			Handler:    _InvoicesService_RetryAllInvoices_Handler,
+		},
+		{
+			MethodName: "RetryAllInvoicePayments",
+			Handler:    _InvoicesService_RetryAllInvoicePayments_Handler,
+		},
+		{
+			MethodName: "RetryTaxProviderVoiding",
+			Handler:    _InvoicesService_RetryTaxProviderVoiding_Handler,
+		},
+		{
+			MethodName: "DownloadInvoice",
+			Handler:    _InvoicesService_DownloadInvoice_Handler,
+		},
+		{
+			MethodName: "DownloadInvoiceXml",
+			Handler:    _InvoicesService_DownloadInvoiceXml_Handler,
+		},
+		{
+			MethodName: "DownloadCustomerPortalInvoice",
+			Handler:    _InvoicesService_DownloadCustomerPortalInvoice_Handler,
+		},
+		{
+			MethodName: "CreateDataExport",
+			Handler:    _InvoicesService_CreateDataExport_Handler,
+		},
+		{
+			MethodName: "SyncIntegrationInvoice",
+			Handler:    _InvoicesService_SyncIntegrationInvoice_Handler,
+		},
+		{
+			MethodName: "SyncHubspotIntegrationInvoice",
+			Handler:    _InvoicesService_SyncHubspotIntegrationInvoice_Handler,
+		},
+		{
+			MethodName: "SyncSalesforceInvoice",
+			Handler:    _InvoicesService_SyncSalesforceInvoice_Handler,
+		},
+		{
+			MethodName: "ListCustomSections",
+			Handler:    _InvoicesService_ListCustomSections_Handler,
+		},
+		{
+			MethodName: "GetCustomSection",
+			Handler:    _InvoicesService_GetCustomSection_Handler,
+		},
+		{
+			MethodName: "CreateCustomSection",
+			Handler:    _InvoicesService_CreateCustomSection_Handler,
+		},
+		{
+			MethodName: "UpdateCustomSection",
+			Handler:    _InvoicesService_UpdateCustomSection_Handler,
+		},
+		{
+			MethodName: "DeleteCustomSection",
+			Handler:    _InvoicesService_DeleteCustomSection_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

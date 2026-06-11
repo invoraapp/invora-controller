@@ -19,263 +19,272 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	BillableMetricService_Create_FullMethodName = "/invora.billing.metering.v2.BillableMetricService/Create"
-	BillableMetricService_Get_FullMethodName    = "/invora.billing.metering.v2.BillableMetricService/Get"
-	BillableMetricService_List_FullMethodName   = "/invora.billing.metering.v2.BillableMetricService/List"
-	BillableMetricService_Update_FullMethodName = "/invora.billing.metering.v2.BillableMetricService/Update"
-	BillableMetricService_Delete_FullMethodName = "/invora.billing.metering.v2.BillableMetricService/Delete"
+	BillableMetricsService_List_FullMethodName   = "/invora.billing.metering.v2.BillableMetricsService/List"
+	BillableMetricsService_Get_FullMethodName    = "/invora.billing.metering.v2.BillableMetricsService/Get"
+	BillableMetricsService_Create_FullMethodName = "/invora.billing.metering.v2.BillableMetricsService/Create"
+	BillableMetricsService_Update_FullMethodName = "/invora.billing.metering.v2.BillableMetricsService/Update"
+	BillableMetricsService_Delete_FullMethodName = "/invora.billing.metering.v2.BillableMetricsService/Delete"
 )
 
-// BillableMetricServiceClient is the client API for BillableMetricService service.
+// BillableMetricsServiceClient is the client API for BillableMetricsService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type BillableMetricServiceClient interface {
-	// Creates a new Billable metric
-	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
-	// Query a single billable metric of an organization
-	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
-	// Query billable metrics of an organization
+//
+// Manage billable metrics that define how usage events are aggregated
+// for metered billing. Each metric maps an event code to an aggregation
+// strategy (count, sum, max, unique count, weighted sum, custom expression).
+type BillableMetricsServiceClient interface {
+	// List billable metrics with filtering and pagination.
 	List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error)
-	// Updates an existing Billable metric
+	// Get a single billable metric by ID.
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
+	// Create a new billable metric.
+	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
+	// Update an existing billable metric.
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
-	// Deletes a Billable metric
+	// Delete a billable metric.
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
 }
 
-type billableMetricServiceClient struct {
+type billableMetricsServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewBillableMetricServiceClient(cc grpc.ClientConnInterface) BillableMetricServiceClient {
-	return &billableMetricServiceClient{cc}
+func NewBillableMetricsServiceClient(cc grpc.ClientConnInterface) BillableMetricsServiceClient {
+	return &billableMetricsServiceClient{cc}
 }
 
-func (c *billableMetricServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateResponse)
-	err := c.cc.Invoke(ctx, BillableMetricService_Create_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *billableMetricServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetResponse)
-	err := c.cc.Invoke(ctx, BillableMetricService_Get_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *billableMetricServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
+func (c *billableMetricsServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListResponse)
-	err := c.cc.Invoke(ctx, BillableMetricService_List_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, BillableMetricsService_List_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *billableMetricServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
+func (c *billableMetricsServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetResponse)
+	err := c.cc.Invoke(ctx, BillableMetricsService_Get_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billableMetricsServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateResponse)
+	err := c.cc.Invoke(ctx, BillableMetricsService_Create_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billableMetricsServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UpdateResponse)
-	err := c.cc.Invoke(ctx, BillableMetricService_Update_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, BillableMetricsService_Update_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *billableMetricServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
+func (c *billableMetricsServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DeleteResponse)
-	err := c.cc.Invoke(ctx, BillableMetricService_Delete_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, BillableMetricsService_Delete_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// BillableMetricServiceServer is the server API for BillableMetricService service.
-// All implementations must embed UnimplementedBillableMetricServiceServer
+// BillableMetricsServiceServer is the server API for BillableMetricsService service.
+// All implementations must embed UnimplementedBillableMetricsServiceServer
 // for forward compatibility.
-type BillableMetricServiceServer interface {
-	// Creates a new Billable metric
-	Create(context.Context, *CreateRequest) (*CreateResponse, error)
-	// Query a single billable metric of an organization
-	Get(context.Context, *GetRequest) (*GetResponse, error)
-	// Query billable metrics of an organization
+//
+// Manage billable metrics that define how usage events are aggregated
+// for metered billing. Each metric maps an event code to an aggregation
+// strategy (count, sum, max, unique count, weighted sum, custom expression).
+type BillableMetricsServiceServer interface {
+	// List billable metrics with filtering and pagination.
 	List(context.Context, *ListRequest) (*ListResponse, error)
-	// Updates an existing Billable metric
+	// Get a single billable metric by ID.
+	Get(context.Context, *GetRequest) (*GetResponse, error)
+	// Create a new billable metric.
+	Create(context.Context, *CreateRequest) (*CreateResponse, error)
+	// Update an existing billable metric.
 	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
-	// Deletes a Billable metric
+	// Delete a billable metric.
 	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
-	mustEmbedUnimplementedBillableMetricServiceServer()
+	mustEmbedUnimplementedBillableMetricsServiceServer()
 }
 
-// UnimplementedBillableMetricServiceServer must be embedded to have
+// UnimplementedBillableMetricsServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedBillableMetricServiceServer struct{}
+type UnimplementedBillableMetricsServiceServer struct{}
 
-func (UnimplementedBillableMetricServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
-}
-func (UnimplementedBillableMetricServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
-}
-func (UnimplementedBillableMetricServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
+func (UnimplementedBillableMetricsServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method List not implemented")
 }
-func (UnimplementedBillableMetricServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
+func (UnimplementedBillableMetricsServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
+}
+func (UnimplementedBillableMetricsServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedBillableMetricsServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedBillableMetricServiceServer) Delete(context.Context, *DeleteRequest) (*DeleteResponse, error) {
+func (UnimplementedBillableMetricsServiceServer) Delete(context.Context, *DeleteRequest) (*DeleteResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedBillableMetricServiceServer) mustEmbedUnimplementedBillableMetricServiceServer() {}
-func (UnimplementedBillableMetricServiceServer) testEmbeddedByValue()                               {}
+func (UnimplementedBillableMetricsServiceServer) mustEmbedUnimplementedBillableMetricsServiceServer() {
+}
+func (UnimplementedBillableMetricsServiceServer) testEmbeddedByValue() {}
 
-// UnsafeBillableMetricServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to BillableMetricServiceServer will
+// UnsafeBillableMetricsServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to BillableMetricsServiceServer will
 // result in compilation errors.
-type UnsafeBillableMetricServiceServer interface {
-	mustEmbedUnimplementedBillableMetricServiceServer()
+type UnsafeBillableMetricsServiceServer interface {
+	mustEmbedUnimplementedBillableMetricsServiceServer()
 }
 
-func RegisterBillableMetricServiceServer(s grpc.ServiceRegistrar, srv BillableMetricServiceServer) {
-	// If the following call panics, it indicates UnimplementedBillableMetricServiceServer was
+func RegisterBillableMetricsServiceServer(s grpc.ServiceRegistrar, srv BillableMetricsServiceServer) {
+	// If the following call panics, it indicates UnimplementedBillableMetricsServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&BillableMetricService_ServiceDesc, srv)
+	s.RegisterService(&BillableMetricsService_ServiceDesc, srv)
 }
 
-func _BillableMetricService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BillableMetricServiceServer).Create(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BillableMetricService_Create_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillableMetricServiceServer).Create(ctx, req.(*CreateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _BillableMetricService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BillableMetricServiceServer).Get(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BillableMetricService_Get_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillableMetricServiceServer).Get(ctx, req.(*GetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _BillableMetricService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _BillableMetricsService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BillableMetricServiceServer).List(ctx, in)
+		return srv.(BillableMetricsServiceServer).List(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: BillableMetricService_List_FullMethodName,
+		FullMethod: BillableMetricsService_List_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillableMetricServiceServer).List(ctx, req.(*ListRequest))
+		return srv.(BillableMetricsServiceServer).List(ctx, req.(*ListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BillableMetricService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _BillableMetricsService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillableMetricsServiceServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillableMetricsService_Get_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillableMetricsServiceServer).Get(ctx, req.(*GetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillableMetricsService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillableMetricsServiceServer).Create(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillableMetricsService_Create_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillableMetricsServiceServer).Create(ctx, req.(*CreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillableMetricsService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BillableMetricServiceServer).Update(ctx, in)
+		return srv.(BillableMetricsServiceServer).Update(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: BillableMetricService_Update_FullMethodName,
+		FullMethod: BillableMetricsService_Update_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillableMetricServiceServer).Update(ctx, req.(*UpdateRequest))
+		return srv.(BillableMetricsServiceServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BillableMetricService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _BillableMetricsService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BillableMetricServiceServer).Delete(ctx, in)
+		return srv.(BillableMetricsServiceServer).Delete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: BillableMetricService_Delete_FullMethodName,
+		FullMethod: BillableMetricsService_Delete_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillableMetricServiceServer).Delete(ctx, req.(*DeleteRequest))
+		return srv.(BillableMetricsServiceServer).Delete(ctx, req.(*DeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// BillableMetricService_ServiceDesc is the grpc.ServiceDesc for BillableMetricService service.
+// BillableMetricsService_ServiceDesc is the grpc.ServiceDesc for BillableMetricsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var BillableMetricService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "invora.billing.metering.v2.BillableMetricService",
-	HandlerType: (*BillableMetricServiceServer)(nil),
+var BillableMetricsService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "invora.billing.metering.v2.BillableMetricsService",
+	HandlerType: (*BillableMetricsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Create",
-			Handler:    _BillableMetricService_Create_Handler,
+			MethodName: "List",
+			Handler:    _BillableMetricsService_List_Handler,
 		},
 		{
 			MethodName: "Get",
-			Handler:    _BillableMetricService_Get_Handler,
+			Handler:    _BillableMetricsService_Get_Handler,
 		},
 		{
-			MethodName: "List",
-			Handler:    _BillableMetricService_List_Handler,
+			MethodName: "Create",
+			Handler:    _BillableMetricsService_Create_Handler,
 		},
 		{
 			MethodName: "Update",
-			Handler:    _BillableMetricService_Update_Handler,
+			Handler:    _BillableMetricsService_Update_Handler,
 		},
 		{
 			MethodName: "Delete",
-			Handler:    _BillableMetricService_Delete_Handler,
+			Handler:    _BillableMetricsService_Delete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -19,223 +19,231 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	EventService_Get_FullMethodName         = "/invora.billing.events.v2.EventService/Get"
-	EventService_List_FullMethodName        = "/invora.billing.events.v2.EventService/List"
-	EventService_Create_FullMethodName      = "/invora.billing.events.v2.EventService/Create"
-	EventService_BatchCreate_FullMethodName = "/invora.billing.events.v2.EventService/BatchCreate"
+	EventsService_List_FullMethodName        = "/invora.billing.events.v2.EventsService/List"
+	EventsService_Get_FullMethodName         = "/invora.billing.events.v2.EventsService/Get"
+	EventsService_Create_FullMethodName      = "/invora.billing.events.v2.EventsService/Create"
+	EventsService_BatchCreate_FullMethodName = "/invora.billing.events.v2.EventsService/BatchCreate"
 )
 
-// EventServiceClient is the client API for EventService service.
+// EventsServiceClient is the client API for EventsService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type EventServiceClient interface {
-	// Query a single event of an organization
-	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
-	// Query events of an organization
+//
+// Ingest and query usage events for metered billing.
+// Events record customer activity (API calls, storage, compute minutes, etc.)
+// that is aggregated by billable metrics and applied to subscriptions.
+type EventsServiceClient interface {
+	// List usage events with filtering and pagination.
 	List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error)
-	// Ingest a single usage event
+	// Get a single usage event by ID.
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
+	// Ingest a single usage event.
 	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
-	// Ingest a batch of usage events
+	// Ingest a batch of usage events.
 	BatchCreate(ctx context.Context, in *BatchCreateRequest, opts ...grpc.CallOption) (*BatchCreateResponse, error)
 }
 
-type eventServiceClient struct {
+type eventsServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewEventServiceClient(cc grpc.ClientConnInterface) EventServiceClient {
-	return &eventServiceClient{cc}
+func NewEventsServiceClient(cc grpc.ClientConnInterface) EventsServiceClient {
+	return &eventsServiceClient{cc}
 }
 
-func (c *eventServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetResponse)
-	err := c.cc.Invoke(ctx, EventService_Get_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *eventServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
+func (c *eventsServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListResponse)
-	err := c.cc.Invoke(ctx, EventService_List_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, EventsService_List_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *eventServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
+func (c *eventsServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetResponse)
+	err := c.cc.Invoke(ctx, EventsService_Get_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *eventsServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreateResponse)
-	err := c.cc.Invoke(ctx, EventService_Create_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, EventsService_Create_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *eventServiceClient) BatchCreate(ctx context.Context, in *BatchCreateRequest, opts ...grpc.CallOption) (*BatchCreateResponse, error) {
+func (c *eventsServiceClient) BatchCreate(ctx context.Context, in *BatchCreateRequest, opts ...grpc.CallOption) (*BatchCreateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(BatchCreateResponse)
-	err := c.cc.Invoke(ctx, EventService_BatchCreate_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, EventsService_BatchCreate_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// EventServiceServer is the server API for EventService service.
-// All implementations must embed UnimplementedEventServiceServer
+// EventsServiceServer is the server API for EventsService service.
+// All implementations must embed UnimplementedEventsServiceServer
 // for forward compatibility.
-type EventServiceServer interface {
-	// Query a single event of an organization
-	Get(context.Context, *GetRequest) (*GetResponse, error)
-	// Query events of an organization
+//
+// Ingest and query usage events for metered billing.
+// Events record customer activity (API calls, storage, compute minutes, etc.)
+// that is aggregated by billable metrics and applied to subscriptions.
+type EventsServiceServer interface {
+	// List usage events with filtering and pagination.
 	List(context.Context, *ListRequest) (*ListResponse, error)
-	// Ingest a single usage event
+	// Get a single usage event by ID.
+	Get(context.Context, *GetRequest) (*GetResponse, error)
+	// Ingest a single usage event.
 	Create(context.Context, *CreateRequest) (*CreateResponse, error)
-	// Ingest a batch of usage events
+	// Ingest a batch of usage events.
 	BatchCreate(context.Context, *BatchCreateRequest) (*BatchCreateResponse, error)
-	mustEmbedUnimplementedEventServiceServer()
+	mustEmbedUnimplementedEventsServiceServer()
 }
 
-// UnimplementedEventServiceServer must be embedded to have
+// UnimplementedEventsServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedEventServiceServer struct{}
+type UnimplementedEventsServiceServer struct{}
 
-func (UnimplementedEventServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
-}
-func (UnimplementedEventServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
+func (UnimplementedEventsServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method List not implemented")
 }
-func (UnimplementedEventServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
+func (UnimplementedEventsServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
+}
+func (UnimplementedEventsServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedEventServiceServer) BatchCreate(context.Context, *BatchCreateRequest) (*BatchCreateResponse, error) {
+func (UnimplementedEventsServiceServer) BatchCreate(context.Context, *BatchCreateRequest) (*BatchCreateResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method BatchCreate not implemented")
 }
-func (UnimplementedEventServiceServer) mustEmbedUnimplementedEventServiceServer() {}
-func (UnimplementedEventServiceServer) testEmbeddedByValue()                      {}
+func (UnimplementedEventsServiceServer) mustEmbedUnimplementedEventsServiceServer() {}
+func (UnimplementedEventsServiceServer) testEmbeddedByValue()                       {}
 
-// UnsafeEventServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to EventServiceServer will
+// UnsafeEventsServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to EventsServiceServer will
 // result in compilation errors.
-type UnsafeEventServiceServer interface {
-	mustEmbedUnimplementedEventServiceServer()
+type UnsafeEventsServiceServer interface {
+	mustEmbedUnimplementedEventsServiceServer()
 }
 
-func RegisterEventServiceServer(s grpc.ServiceRegistrar, srv EventServiceServer) {
-	// If the following call panics, it indicates UnimplementedEventServiceServer was
+func RegisterEventsServiceServer(s grpc.ServiceRegistrar, srv EventsServiceServer) {
+	// If the following call panics, it indicates UnimplementedEventsServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&EventService_ServiceDesc, srv)
+	s.RegisterService(&EventsService_ServiceDesc, srv)
 }
 
-func _EventService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EventServiceServer).Get(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: EventService_Get_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EventServiceServer).Get(ctx, req.(*GetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _EventService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _EventsService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(EventServiceServer).List(ctx, in)
+		return srv.(EventsServiceServer).List(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: EventService_List_FullMethodName,
+		FullMethod: EventsService_List_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EventServiceServer).List(ctx, req.(*ListRequest))
+		return srv.(EventsServiceServer).List(ctx, req.(*ListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _EventService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _EventsService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EventsServiceServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: EventsService_Get_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EventsServiceServer).Get(ctx, req.(*GetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _EventsService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(EventServiceServer).Create(ctx, in)
+		return srv.(EventsServiceServer).Create(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: EventService_Create_FullMethodName,
+		FullMethod: EventsService_Create_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EventServiceServer).Create(ctx, req.(*CreateRequest))
+		return srv.(EventsServiceServer).Create(ctx, req.(*CreateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _EventService_BatchCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _EventsService_BatchCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(BatchCreateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(EventServiceServer).BatchCreate(ctx, in)
+		return srv.(EventsServiceServer).BatchCreate(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: EventService_BatchCreate_FullMethodName,
+		FullMethod: EventsService_BatchCreate_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EventServiceServer).BatchCreate(ctx, req.(*BatchCreateRequest))
+		return srv.(EventsServiceServer).BatchCreate(ctx, req.(*BatchCreateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// EventService_ServiceDesc is the grpc.ServiceDesc for EventService service.
+// EventsService_ServiceDesc is the grpc.ServiceDesc for EventsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var EventService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "invora.billing.events.v2.EventService",
-	HandlerType: (*EventServiceServer)(nil),
+var EventsService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "invora.billing.events.v2.EventsService",
+	HandlerType: (*EventsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Get",
-			Handler:    _EventService_Get_Handler,
+			MethodName: "List",
+			Handler:    _EventsService_List_Handler,
 		},
 		{
-			MethodName: "List",
-			Handler:    _EventService_List_Handler,
+			MethodName: "Get",
+			Handler:    _EventsService_Get_Handler,
 		},
 		{
 			MethodName: "Create",
-			Handler:    _EventService_Create_Handler,
+			Handler:    _EventsService_Create_Handler,
 		},
 		{
 			MethodName: "BatchCreate",
-			Handler:    _EventService_BatchCreate_Handler,
+			Handler:    _EventsService_BatchCreate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

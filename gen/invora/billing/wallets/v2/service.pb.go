@@ -14,7 +14,6 @@ import (
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
-	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -27,920 +26,22 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Controls response detail level for List and Get operations.
-type View int32
-
-const (
-	View_VIEW_UNSPECIFIED View = 0
-	View_VIEW_BASIC       View = 1
-	View_VIEW_FULL        View = 2
-)
-
-// Enum value maps for View.
-var (
-	View_name = map[int32]string{
-		0: "VIEW_UNSPECIFIED",
-		1: "VIEW_BASIC",
-		2: "VIEW_FULL",
-	}
-	View_value = map[string]int32{
-		"VIEW_UNSPECIFIED": 0,
-		"VIEW_BASIC":       1,
-		"VIEW_FULL":        2,
-	}
-)
-
-func (x View) Enum() *View {
-	p := new(View)
-	*p = x
-	return p
-}
-
-func (x View) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (View) Descriptor() protoreflect.EnumDescriptor {
-	return file_invora_billing_wallets_v2_service_proto_enumTypes[0].Descriptor()
-}
-
-func (View) Type() protoreflect.EnumType {
-	return &file_invora_billing_wallets_v2_service_proto_enumTypes[0]
-}
-
-func (x View) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use View.Descriptor instead.
-func (View) EnumDescriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{0}
-}
-
-type GetRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Uniq ID of the wallet
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.wallets.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetRequest) Reset() {
-	*x = GetRequest{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetRequest) ProtoMessage() {}
-
-func (x *GetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
-func (*GetRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *GetRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *GetRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *GetRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type GetResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Wallet        *v2.BillingWallet      `protobuf:"bytes,1,opt,name=wallet,proto3" json:"wallet,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetResponse) Reset() {
-	*x = GetResponse{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetResponse) ProtoMessage() {}
-
-func (x *GetResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
-func (*GetResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *GetResponse) GetWallet() *v2.BillingWallet {
-	if x != nil {
-		return x.Wallet
-	}
-	return nil
-}
-
-type GetTransactionRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Unique ID of the wallet transaction
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.wallets.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetTransactionRequest) Reset() {
-	*x = GetTransactionRequest{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetTransactionRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetTransactionRequest) ProtoMessage() {}
-
-func (x *GetTransactionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetTransactionRequest.ProtoReflect.Descriptor instead.
-func (*GetTransactionRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *GetTransactionRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *GetTransactionRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *GetTransactionRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type GetTransactionResponse struct {
-	state             protoimpl.MessageState       `protogen:"open.v1"`
-	WalletTransaction *v2.BillingWalletTransaction `protobuf:"bytes,1,opt,name=wallet_transaction,json=walletTransaction,proto3" json:"wallet_transaction,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
-}
-
-func (x *GetTransactionResponse) Reset() {
-	*x = GetTransactionResponse{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetTransactionResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetTransactionResponse) ProtoMessage() {}
-
-func (x *GetTransactionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetTransactionResponse.ProtoReflect.Descriptor instead.
-func (*GetTransactionResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *GetTransactionResponse) GetWalletTransaction() *v2.BillingWalletTransaction {
-	if x != nil {
-		return x.WalletTransaction
-	}
-	return nil
-}
-
-type ListTransactionConsumptionsRequest struct {
-	state      protoimpl.MessageState `protogen:"open.v1"`
-	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
-	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
-	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.wallets.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListTransactionConsumptionsRequest) Reset() {
-	*x = ListTransactionConsumptionsRequest{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListTransactionConsumptionsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListTransactionConsumptionsRequest) ProtoMessage() {}
-
-func (x *ListTransactionConsumptionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[4]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListTransactionConsumptionsRequest.ProtoReflect.Descriptor instead.
-func (*ListTransactionConsumptionsRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *ListTransactionConsumptionsRequest) GetFilter() *ListFilter {
-	if x != nil {
-		return x.Filter
-	}
-	return nil
-}
-
-func (x *ListTransactionConsumptionsRequest) GetSort() *ListSort {
-	if x != nil {
-		return x.Sort
-	}
-	return nil
-}
-
-func (x *ListTransactionConsumptionsRequest) GetPagination() *kernel.PaginationInfo {
-	if x != nil {
-		return x.Pagination
-	}
-	return nil
-}
-
-func (x *ListTransactionConsumptionsRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *ListTransactionConsumptionsRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type ListTransactionConsumptionsResponse struct {
-	state          protoimpl.MessageState          `protogen:"open.v1"`
-	Items          []*WalletTransactionConsumption `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                          `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue         `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *ListTransactionConsumptionsResponse) Reset() {
-	*x = ListTransactionConsumptionsResponse{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListTransactionConsumptionsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListTransactionConsumptionsResponse) ProtoMessage() {}
-
-func (x *ListTransactionConsumptionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[5]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListTransactionConsumptionsResponse.ProtoReflect.Descriptor instead.
-func (*ListTransactionConsumptionsResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *ListTransactionConsumptionsResponse) GetItems() []*WalletTransactionConsumption {
-	if x != nil {
-		return x.Items
-	}
-	return nil
-}
-
-func (x *ListTransactionConsumptionsResponse) GetTotalCount() uint64 {
-	if x != nil {
-		return x.TotalCount
-	}
-	return 0
-}
-
-func (x *ListTransactionConsumptionsResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
-	}
-	return nil
-}
-
-type ListFilter struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Part          *ListFilterPart        `protobuf:"bytes,1,opt,name=part,proto3" json:"part,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListFilter) Reset() {
-	*x = ListFilter{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[6]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListFilter) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListFilter) ProtoMessage() {}
-
-func (x *ListFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[6]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListFilter.ProtoReflect.Descriptor instead.
-func (*ListFilter) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{6}
-}
-
-func (x *ListFilter) GetPart() *ListFilterPart {
-	if x != nil {
-		return x.Part
-	}
-	return nil
-}
-
-type ListFilterPart struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Types that are valid to be assigned to Type:
-	//
-	//	*ListFilterPart_WalletTransactionId
-	Type          isListFilterPart_Type `protobuf_oneof:"type"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListFilterPart) Reset() {
-	*x = ListFilterPart{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[7]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListFilterPart) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListFilterPart) ProtoMessage() {}
-
-func (x *ListFilterPart) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[7]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListFilterPart.ProtoReflect.Descriptor instead.
-func (*ListFilterPart) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{7}
-}
-
-func (x *ListFilterPart) GetType() isListFilterPart_Type {
-	if x != nil {
-		return x.Type
-	}
-	return nil
-}
-
-func (x *ListFilterPart) GetWalletTransactionId() string {
-	if x != nil {
-		if x, ok := x.Type.(*ListFilterPart_WalletTransactionId); ok {
-			return x.WalletTransactionId
-		}
-	}
-	return ""
-}
-
-type isListFilterPart_Type interface {
-	isListFilterPart_Type()
-}
-
-type ListFilterPart_WalletTransactionId struct {
-	WalletTransactionId string `protobuf:"bytes,1,opt,name=wallet_transaction_id,json=walletTransactionId,proto3,oneof"`
-}
-
-func (*ListFilterPart_WalletTransactionId) isListFilterPart_Type() {}
-
-type ListSort struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Rules         []*ListSortRule        `protobuf:"bytes,1,rep,name=rules,proto3" json:"rules,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListSort) Reset() {
-	*x = ListSort{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[8]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListSort) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListSort) ProtoMessage() {}
-
-func (x *ListSort) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[8]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListSort.ProtoReflect.Descriptor instead.
-func (*ListSort) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{8}
-}
-
-func (x *ListSort) GetRules() []*ListSortRule {
-	if x != nil {
-		return x.Rules
-	}
-	return nil
-}
-
-type ListSortRule struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Types that are valid to be assigned to Type:
-	//
-	//	*ListSortRule_CreatedAt
-	Type          isListSortRule_Type `protobuf_oneof:"type"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListSortRule) Reset() {
-	*x = ListSortRule{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[9]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListSortRule) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListSortRule) ProtoMessage() {}
-
-func (x *ListSortRule) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[9]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListSortRule.ProtoReflect.Descriptor instead.
-func (*ListSortRule) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{9}
-}
-
-func (x *ListSortRule) GetType() isListSortRule_Type {
-	if x != nil {
-		return x.Type
-	}
-	return nil
-}
-
-func (x *ListSortRule) GetCreatedAt() kernel.SortDirection {
-	if x != nil {
-		if x, ok := x.Type.(*ListSortRule_CreatedAt); ok {
-			return x.CreatedAt
-		}
-	}
-	return kernel.SortDirection(0)
-}
-
-type isListSortRule_Type interface {
-	isListSortRule_Type()
-}
-
-type ListSortRule_CreatedAt struct {
-	CreatedAt kernel.SortDirection `protobuf:"varint,1,opt,name=created_at,json=createdAt,proto3,enum=kernel.SortDirection,oneof"`
-}
-
-func (*ListSortRule_CreatedAt) isListSortRule_Type() {}
-
-type ListTransactionFundingsRequest struct {
-	state      protoimpl.MessageState `protogen:"open.v1"`
-	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
-	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
-	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.wallets.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListTransactionFundingsRequest) Reset() {
-	*x = ListTransactionFundingsRequest{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[10]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListTransactionFundingsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListTransactionFundingsRequest) ProtoMessage() {}
-
-func (x *ListTransactionFundingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[10]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListTransactionFundingsRequest.ProtoReflect.Descriptor instead.
-func (*ListTransactionFundingsRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{10}
-}
-
-func (x *ListTransactionFundingsRequest) GetFilter() *ListFilter {
-	if x != nil {
-		return x.Filter
-	}
-	return nil
-}
-
-func (x *ListTransactionFundingsRequest) GetSort() *ListSort {
-	if x != nil {
-		return x.Sort
-	}
-	return nil
-}
-
-func (x *ListTransactionFundingsRequest) GetPagination() *kernel.PaginationInfo {
-	if x != nil {
-		return x.Pagination
-	}
-	return nil
-}
-
-func (x *ListTransactionFundingsRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *ListTransactionFundingsRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type ListTransactionFundingsResponse struct {
-	state          protoimpl.MessageState      `protogen:"open.v1"`
-	Items          []*WalletTransactionFunding `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                      `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue     `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *ListTransactionFundingsResponse) Reset() {
-	*x = ListTransactionFundingsResponse{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[11]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListTransactionFundingsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListTransactionFundingsResponse) ProtoMessage() {}
-
-func (x *ListTransactionFundingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[11]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListTransactionFundingsResponse.ProtoReflect.Descriptor instead.
-func (*ListTransactionFundingsResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{11}
-}
-
-func (x *ListTransactionFundingsResponse) GetItems() []*WalletTransactionFunding {
-	if x != nil {
-		return x.Items
-	}
-	return nil
-}
-
-func (x *ListTransactionFundingsResponse) GetTotalCount() uint64 {
-	if x != nil {
-		return x.TotalCount
-	}
-	return 0
-}
-
-func (x *ListTransactionFundingsResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
-	}
-	return nil
-}
-
-type ListTransactionsRequest struct {
-	state      protoimpl.MessageState `protogen:"open.v1"`
-	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
-	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
-	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.wallets.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListTransactionsRequest) Reset() {
-	*x = ListTransactionsRequest{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[12]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListTransactionsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListTransactionsRequest) ProtoMessage() {}
-
-func (x *ListTransactionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[12]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListTransactionsRequest.ProtoReflect.Descriptor instead.
-func (*ListTransactionsRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{12}
-}
-
-func (x *ListTransactionsRequest) GetFilter() *ListFilter {
-	if x != nil {
-		return x.Filter
-	}
-	return nil
-}
-
-func (x *ListTransactionsRequest) GetSort() *ListSort {
-	if x != nil {
-		return x.Sort
-	}
-	return nil
-}
-
-func (x *ListTransactionsRequest) GetPagination() *kernel.PaginationInfo {
-	if x != nil {
-		return x.Pagination
-	}
-	return nil
-}
-
-func (x *ListTransactionsRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *ListTransactionsRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type ListTransactionsResponse struct {
-	state          protoimpl.MessageState         `protogen:"open.v1"`
-	Items          []*v2.BillingWalletTransaction `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                         `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue        `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *ListTransactionsResponse) Reset() {
-	*x = ListTransactionsResponse{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[13]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListTransactionsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListTransactionsResponse) ProtoMessage() {}
-
-func (x *ListTransactionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[13]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListTransactionsResponse.ProtoReflect.Descriptor instead.
-func (*ListTransactionsResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{13}
-}
-
-func (x *ListTransactionsResponse) GetItems() []*v2.BillingWalletTransaction {
-	if x != nil {
-		return x.Items
-	}
-	return nil
-}
-
-func (x *ListTransactionsResponse) GetTotalCount() uint64 {
-	if x != nil {
-		return x.TotalCount
-	}
-	return 0
-}
-
-func (x *ListTransactionsResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
-	}
-	return nil
-}
-
 type ListRequest struct {
 	state      protoimpl.MessageState `protogen:"open.v1"`
-	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
-	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
+	Filter     *ListWalletFilter      `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
+	Sort       *ListWalletSort        `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
 	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	// Fields to return in the response.
 	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.wallets.v2.View" json:"view,omitempty"`
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListRequest) Reset() {
 	*x = ListRequest{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[14]
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -952,7 +53,7 @@ func (x *ListRequest) String() string {
 func (*ListRequest) ProtoMessage() {}
 
 func (x *ListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[14]
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -965,17 +66,17 @@ func (x *ListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRequest.ProtoReflect.Descriptor instead.
 func (*ListRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{14}
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *ListRequest) GetFilter() *ListFilter {
+func (x *ListRequest) GetFilter() *ListWalletFilter {
 	if x != nil {
 		return x.Filter
 	}
 	return nil
 }
 
-func (x *ListRequest) GetSort() *ListSort {
+func (x *ListRequest) GetSort() *ListWalletSort {
 	if x != nil {
 		return x.Sort
 	}
@@ -996,25 +97,25 @@ func (x *ListRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	return nil
 }
 
-func (x *ListRequest) GetView() View {
+func (x *ListRequest) GetView() v2.View {
 	if x != nil {
 		return x.View
 	}
-	return View_VIEW_UNSPECIFIED
+	return v2.View(0)
 }
 
 type ListResponse struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Items          []*v2.BillingWallet     `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Items          []*v2.BillingWallet    `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
 func (x *ListResponse) Reset() {
 	*x = ListResponse{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[15]
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1026,7 +127,7 @@ func (x *ListResponse) String() string {
 func (*ListResponse) ProtoMessage() {}
 
 func (x *ListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[15]
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1039,7 +140,7 @@ func (x *ListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListResponse.ProtoReflect.Descriptor instead.
 func (*ListResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{15}
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *ListResponse) GetItems() []*v2.BillingWallet {
@@ -1056,79 +157,37 @@ func (x *ListResponse) GetTotalCount() uint64 {
 	return 0
 }
 
-func (x *ListResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
+func (x *ListResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
 	}
-	return nil
+	return ""
 }
 
-type CreateCustomerWalletRequest struct {
-	state         protoimpl.MessageState     `protogen:"open.v1"`
-	Input         *CreateCustomerWalletInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateCustomerWalletRequest) Reset() {
-	*x = CreateCustomerWalletRequest{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[16]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateCustomerWalletRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateCustomerWalletRequest) ProtoMessage() {}
-
-func (x *CreateCustomerWalletRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[16]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateCustomerWalletRequest.ProtoReflect.Descriptor instead.
-func (*CreateCustomerWalletRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{16}
-}
-
-func (x *CreateCustomerWalletRequest) GetInput() *CreateCustomerWalletInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type CreateCustomerWalletResponse struct {
+// Structured filter for listing wallets.
+type ListWalletFilter struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Wallet        *v2.BillingWallet      `protobuf:"bytes,1,opt,name=wallet,proto3" json:"wallet,omitempty"`
+	Part          *ListWalletFilterPart  `protobuf:"bytes,1,opt,name=part,proto3" json:"part,omitempty"`
+	TextSearch    string                 `protobuf:"bytes,2,opt,name=text_search,json=textSearch,proto3" json:"text_search,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateCustomerWalletResponse) Reset() {
-	*x = CreateCustomerWalletResponse{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[17]
+func (x *ListWalletFilter) Reset() {
+	*x = ListWalletFilter{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateCustomerWalletResponse) String() string {
+func (x *ListWalletFilter) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateCustomerWalletResponse) ProtoMessage() {}
+func (*ListWalletFilter) ProtoMessage() {}
 
-func (x *CreateCustomerWalletResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[17]
+func (x *ListWalletFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1139,46 +198,249 @@ func (x *CreateCustomerWalletResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateCustomerWalletResponse.ProtoReflect.Descriptor instead.
-func (*CreateCustomerWalletResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{17}
+// Deprecated: Use ListWalletFilter.ProtoReflect.Descriptor instead.
+func (*ListWalletFilter) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *CreateCustomerWalletResponse) GetWallet() *v2.BillingWallet {
+func (x *ListWalletFilter) GetPart() *ListWalletFilterPart {
 	if x != nil {
-		return x.Wallet
+		return x.Part
 	}
 	return nil
 }
 
-type CreateCustomerWalletTransactionRequest struct {
-	state      protoimpl.MessageState `protogen:"open.v1"`
-	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
-	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
-	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
+func (x *ListWalletFilter) GetTextSearch() string {
+	if x != nil {
+		return x.TextSearch
+	}
+	return ""
+}
+
+// A single filter condition for wallets.
+type ListWalletFilterPart struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Type:
+	//
+	//	*ListWalletFilterPart_CustomerId
+	//	*ListWalletFilterPart_Currency
+	Type          isListWalletFilterPart_Type `protobuf_oneof:"type"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListWalletFilterPart) Reset() {
+	*x = ListWalletFilterPart{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListWalletFilterPart) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListWalletFilterPart) ProtoMessage() {}
+
+func (x *ListWalletFilterPart) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListWalletFilterPart.ProtoReflect.Descriptor instead.
+func (*ListWalletFilterPart) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *ListWalletFilterPart) GetType() isListWalletFilterPart_Type {
+	if x != nil {
+		return x.Type
+	}
+	return nil
+}
+
+func (x *ListWalletFilterPart) GetCustomerId() string {
+	if x != nil {
+		if x, ok := x.Type.(*ListWalletFilterPart_CustomerId); ok {
+			return x.CustomerId
+		}
+	}
+	return ""
+}
+
+func (x *ListWalletFilterPart) GetCurrency() v2.CurrencyEnum {
+	if x != nil {
+		if x, ok := x.Type.(*ListWalletFilterPart_Currency); ok {
+			return x.Currency
+		}
+	}
+	return v2.CurrencyEnum(0)
+}
+
+type isListWalletFilterPart_Type interface {
+	isListWalletFilterPart_Type()
+}
+
+type ListWalletFilterPart_CustomerId struct {
+	// Filter by owning customer ID.
+	CustomerId string `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3,oneof"`
+}
+
+type ListWalletFilterPart_Currency struct {
+	// Filter by wallet currency.
+	Currency v2.CurrencyEnum `protobuf:"varint,2,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof"`
+}
+
+func (*ListWalletFilterPart_CustomerId) isListWalletFilterPart_Type() {}
+
+func (*ListWalletFilterPart_Currency) isListWalletFilterPart_Type() {}
+
+// Sort configuration for wallet lists.
+type ListWalletSort struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Rules         []*ListWalletSortRule  `protobuf:"bytes,1,rep,name=rules,proto3" json:"rules,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListWalletSort) Reset() {
+	*x = ListWalletSort{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListWalletSort) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListWalletSort) ProtoMessage() {}
+
+func (x *ListWalletSort) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListWalletSort.ProtoReflect.Descriptor instead.
+func (*ListWalletSort) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ListWalletSort) GetRules() []*ListWalletSortRule {
+	if x != nil {
+		return x.Rules
+	}
+	return nil
+}
+
+// A single sort rule for wallets.
+type ListWalletSortRule struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Type:
+	//
+	//	*ListWalletSortRule_CreatedAt
+	Type          isListWalletSortRule_Type `protobuf_oneof:"type"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListWalletSortRule) Reset() {
+	*x = ListWalletSortRule{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListWalletSortRule) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListWalletSortRule) ProtoMessage() {}
+
+func (x *ListWalletSortRule) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListWalletSortRule.ProtoReflect.Descriptor instead.
+func (*ListWalletSortRule) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ListWalletSortRule) GetType() isListWalletSortRule_Type {
+	if x != nil {
+		return x.Type
+	}
+	return nil
+}
+
+func (x *ListWalletSortRule) GetCreatedAt() kernel.SortDirection {
+	if x != nil {
+		if x, ok := x.Type.(*ListWalletSortRule_CreatedAt); ok {
+			return x.CreatedAt
+		}
+	}
+	return kernel.SortDirection(0)
+}
+
+type isListWalletSortRule_Type interface {
+	isListWalletSortRule_Type()
+}
+
+type ListWalletSortRule_CreatedAt struct {
+	CreatedAt kernel.SortDirection `protobuf:"varint,1,opt,name=created_at,json=createdAt,proto3,enum=kernel.SortDirection,oneof"`
+}
+
+func (*ListWalletSortRule_CreatedAt) isListWalletSortRule_Type() {}
+
+type GetRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique ID of the wallet.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Fields to return in the response.
 	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.wallets.v2.View" json:"view,omitempty"`
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateCustomerWalletTransactionRequest) Reset() {
-	*x = CreateCustomerWalletTransactionRequest{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[18]
+func (x *GetRequest) Reset() {
+	*x = GetRequest{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateCustomerWalletTransactionRequest) String() string {
+func (x *GetRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateCustomerWalletTransactionRequest) ProtoMessage() {}
+func (*GetRequest) ProtoMessage() {}
 
-func (x *CreateCustomerWalletTransactionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[18]
+func (x *GetRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1189,172 +451,54 @@ func (x *CreateCustomerWalletTransactionRequest) ProtoReflect() protoreflect.Mes
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateCustomerWalletTransactionRequest.ProtoReflect.Descriptor instead.
-func (*CreateCustomerWalletTransactionRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{18}
+// Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
+func (*GetRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *CreateCustomerWalletTransactionRequest) GetFilter() *ListFilter {
+func (x *GetRequest) GetId() string {
 	if x != nil {
-		return x.Filter
+		return x.Id
 	}
-	return nil
+	return ""
 }
 
-func (x *CreateCustomerWalletTransactionRequest) GetSort() *ListSort {
-	if x != nil {
-		return x.Sort
-	}
-	return nil
-}
-
-func (x *CreateCustomerWalletTransactionRequest) GetPagination() *kernel.PaginationInfo {
-	if x != nil {
-		return x.Pagination
-	}
-	return nil
-}
-
-func (x *CreateCustomerWalletTransactionRequest) GetReadMask() *fieldmaskpb.FieldMask {
+func (x *GetRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
 	return nil
 }
 
-func (x *CreateCustomerWalletTransactionRequest) GetView() View {
+func (x *GetRequest) GetView() v2.View {
 	if x != nil {
 		return x.View
 	}
-	return View_VIEW_UNSPECIFIED
+	return v2.View(0)
 }
 
-type CreateCustomerWalletTransactionResponse struct {
-	state          protoimpl.MessageState         `protogen:"open.v1"`
-	Items          []*v2.BillingWalletTransaction `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                         `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue        `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *CreateCustomerWalletTransactionResponse) Reset() {
-	*x = CreateCustomerWalletTransactionResponse{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[19]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateCustomerWalletTransactionResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateCustomerWalletTransactionResponse) ProtoMessage() {}
-
-func (x *CreateCustomerWalletTransactionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[19]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateCustomerWalletTransactionResponse.ProtoReflect.Descriptor instead.
-func (*CreateCustomerWalletTransactionResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{19}
-}
-
-func (x *CreateCustomerWalletTransactionResponse) GetItems() []*v2.BillingWalletTransaction {
-	if x != nil {
-		return x.Items
-	}
-	return nil
-}
-
-func (x *CreateCustomerWalletTransactionResponse) GetTotalCount() uint64 {
-	if x != nil {
-		return x.TotalCount
-	}
-	return 0
-}
-
-func (x *CreateCustomerWalletTransactionResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
-	}
-	return nil
-}
-
-type TerminateCustomerWalletRequest struct {
-	state         protoimpl.MessageState        `protogen:"open.v1"`
-	Input         *TerminateCustomerWalletInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *TerminateCustomerWalletRequest) Reset() {
-	*x = TerminateCustomerWalletRequest{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[20]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *TerminateCustomerWalletRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TerminateCustomerWalletRequest) ProtoMessage() {}
-
-func (x *TerminateCustomerWalletRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[20]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TerminateCustomerWalletRequest.ProtoReflect.Descriptor instead.
-func (*TerminateCustomerWalletRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{20}
-}
-
-func (x *TerminateCustomerWalletRequest) GetInput() *TerminateCustomerWalletInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type TerminateCustomerWalletResponse struct {
+type GetResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Wallet        *v2.BillingWallet      `protobuf:"bytes,1,opt,name=wallet,proto3" json:"wallet,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *TerminateCustomerWalletResponse) Reset() {
-	*x = TerminateCustomerWalletResponse{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[21]
+func (x *GetResponse) Reset() {
+	*x = GetResponse{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *TerminateCustomerWalletResponse) String() string {
+func (x *GetResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*TerminateCustomerWalletResponse) ProtoMessage() {}
+func (*GetResponse) ProtoMessage() {}
 
-func (x *TerminateCustomerWalletResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[21]
+func (x *GetResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1365,794 +509,19 @@ func (x *TerminateCustomerWalletResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use TerminateCustomerWalletResponse.ProtoReflect.Descriptor instead.
-func (*TerminateCustomerWalletResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{21}
+// Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
+func (*GetResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *TerminateCustomerWalletResponse) GetWallet() *v2.BillingWallet {
+func (x *GetResponse) GetWallet() *v2.BillingWallet {
 	if x != nil {
 		return x.Wallet
 	}
 	return nil
 }
 
-type UpdateCustomerWalletRequest struct {
-	state         protoimpl.MessageState     `protogen:"open.v1"`
-	Input         *UpdateCustomerWalletInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateCustomerWalletRequest) Reset() {
-	*x = UpdateCustomerWalletRequest{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[22]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateCustomerWalletRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateCustomerWalletRequest) ProtoMessage() {}
-
-func (x *UpdateCustomerWalletRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[22]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateCustomerWalletRequest.ProtoReflect.Descriptor instead.
-func (*UpdateCustomerWalletRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{22}
-}
-
-func (x *UpdateCustomerWalletRequest) GetInput() *UpdateCustomerWalletInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type UpdateCustomerWalletResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Wallet        *v2.BillingWallet      `protobuf:"bytes,1,opt,name=wallet,proto3" json:"wallet,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateCustomerWalletResponse) Reset() {
-	*x = UpdateCustomerWalletResponse{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[23]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateCustomerWalletResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateCustomerWalletResponse) ProtoMessage() {}
-
-func (x *UpdateCustomerWalletResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[23]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateCustomerWalletResponse.ProtoReflect.Descriptor instead.
-func (*UpdateCustomerWalletResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{23}
-}
-
-func (x *UpdateCustomerWalletResponse) GetWallet() *v2.BillingWallet {
-	if x != nil {
-		return x.Wallet
-	}
-	return nil
-}
-
-// Update Wallet Input
-type UpdateCustomerWalletInput struct {
-	state                            protoimpl.MessageState                  `protogen:"open.v1"`
-	AppliesTo                        *AppliesToInput                         `protobuf:"bytes,1,opt,name=applies_to,json=appliesTo,proto3,oneof" json:"applies_to,omitempty"`
-	Code                             *string                                 `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
-	ExpirationAt                     *timestamppb.Timestamp                  `protobuf:"bytes,3,opt,name=expiration_at,json=expirationAt,proto3,oneof" json:"expiration_at,omitempty"`
-	Id                               string                                  `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
-	InvoiceCustomSection             *v2.InvoiceCustomSectionsReferenceInput `protobuf:"bytes,5,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3,oneof" json:"invoice_custom_section,omitempty"`
-	InvoiceRequiresSuccessfulPayment *bool                                   `protobuf:"varint,6,opt,name=invoice_requires_successful_payment,json=invoiceRequiresSuccessfulPayment,proto3,oneof" json:"invoice_requires_successful_payment,omitempty"`
-	Metadata                         []*v2.MetadataInput                     `protobuf:"bytes,7,rep,name=metadata,proto3" json:"metadata,omitempty"`
-	Name                             *string                                 `protobuf:"bytes,8,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	PaidTopUpMaxAmountCents          *int64                                  `protobuf:"varint,9,opt,name=paid_top_up_max_amount_cents,json=paidTopUpMaxAmountCents,proto3,oneof" json:"paid_top_up_max_amount_cents,omitempty"`
-	PaidTopUpMinAmountCents          *int64                                  `protobuf:"varint,10,opt,name=paid_top_up_min_amount_cents,json=paidTopUpMinAmountCents,proto3,oneof" json:"paid_top_up_min_amount_cents,omitempty"`
-	PaymentMethod                    *v2.PaymentMethodReferenceInput         `protobuf:"bytes,11,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
-	Priority                         int32                                   `protobuf:"varint,12,opt,name=priority,proto3" json:"priority,omitempty"`
-	RecurringTransactionRules        []*UpdateRecurringTransactionRuleInput  `protobuf:"bytes,13,rep,name=recurring_transaction_rules,json=recurringTransactionRules,proto3" json:"recurring_transaction_rules,omitempty"`
-	unknownFields                    protoimpl.UnknownFields
-	sizeCache                        protoimpl.SizeCache
-}
-
-func (x *UpdateCustomerWalletInput) Reset() {
-	*x = UpdateCustomerWalletInput{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[24]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateCustomerWalletInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateCustomerWalletInput) ProtoMessage() {}
-
-func (x *UpdateCustomerWalletInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[24]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateCustomerWalletInput.ProtoReflect.Descriptor instead.
-func (*UpdateCustomerWalletInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{24}
-}
-
-func (x *UpdateCustomerWalletInput) GetAppliesTo() *AppliesToInput {
-	if x != nil {
-		return x.AppliesTo
-	}
-	return nil
-}
-
-func (x *UpdateCustomerWalletInput) GetCode() string {
-	if x != nil && x.Code != nil {
-		return *x.Code
-	}
-	return ""
-}
-
-func (x *UpdateCustomerWalletInput) GetExpirationAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.ExpirationAt
-	}
-	return nil
-}
-
-func (x *UpdateCustomerWalletInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *UpdateCustomerWalletInput) GetInvoiceCustomSection() *v2.InvoiceCustomSectionsReferenceInput {
-	if x != nil {
-		return x.InvoiceCustomSection
-	}
-	return nil
-}
-
-func (x *UpdateCustomerWalletInput) GetInvoiceRequiresSuccessfulPayment() bool {
-	if x != nil && x.InvoiceRequiresSuccessfulPayment != nil {
-		return *x.InvoiceRequiresSuccessfulPayment
-	}
-	return false
-}
-
-func (x *UpdateCustomerWalletInput) GetMetadata() []*v2.MetadataInput {
-	if x != nil {
-		return x.Metadata
-	}
-	return nil
-}
-
-func (x *UpdateCustomerWalletInput) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
-	}
-	return ""
-}
-
-func (x *UpdateCustomerWalletInput) GetPaidTopUpMaxAmountCents() int64 {
-	if x != nil && x.PaidTopUpMaxAmountCents != nil {
-		return *x.PaidTopUpMaxAmountCents
-	}
-	return 0
-}
-
-func (x *UpdateCustomerWalletInput) GetPaidTopUpMinAmountCents() int64 {
-	if x != nil && x.PaidTopUpMinAmountCents != nil {
-		return *x.PaidTopUpMinAmountCents
-	}
-	return 0
-}
-
-func (x *UpdateCustomerWalletInput) GetPaymentMethod() *v2.PaymentMethodReferenceInput {
-	if x != nil {
-		return x.PaymentMethod
-	}
-	return nil
-}
-
-func (x *UpdateCustomerWalletInput) GetPriority() int32 {
-	if x != nil {
-		return x.Priority
-	}
-	return 0
-}
-
-func (x *UpdateCustomerWalletInput) GetRecurringTransactionRules() []*UpdateRecurringTransactionRuleInput {
-	if x != nil {
-		return x.RecurringTransactionRules
-	}
-	return nil
-}
-
-type UpdateRecurringTransactionRuleInput struct {
-	state                            protoimpl.MessageState                  `protogen:"open.v1"`
-	ExpirationAt                     *timestamppb.Timestamp                  `protobuf:"bytes,1,opt,name=expiration_at,json=expirationAt,proto3,oneof" json:"expiration_at,omitempty"`
-	GrantedCredits                   *string                                 `protobuf:"bytes,2,opt,name=granted_credits,json=grantedCredits,proto3,oneof" json:"granted_credits,omitempty"`
-	IgnorePaidTopUpLimits            *bool                                   `protobuf:"varint,3,opt,name=ignore_paid_top_up_limits,json=ignorePaidTopUpLimits,proto3,oneof" json:"ignore_paid_top_up_limits,omitempty"`
-	Interval                         *v2.RecurringTransactionIntervalEnum    `protobuf:"varint,4,opt,name=interval,proto3,enum=invora.billing.common.v2.RecurringTransactionIntervalEnum,oneof" json:"interval,omitempty"`
-	InvoiceCustomSection             *v2.InvoiceCustomSectionsReferenceInput `protobuf:"bytes,5,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3,oneof" json:"invoice_custom_section,omitempty"`
-	InvoiceRequiresSuccessfulPayment *bool                                   `protobuf:"varint,6,opt,name=invoice_requires_successful_payment,json=invoiceRequiresSuccessfulPayment,proto3,oneof" json:"invoice_requires_successful_payment,omitempty"`
-	BillingProviderId                *string                                 `protobuf:"bytes,7,opt,name=billing_provider_id,json=billingProviderId,proto3,oneof" json:"billing_provider_id,omitempty"`
-	Method                           *v2.RecurringTransactionMethodEnum      `protobuf:"varint,8,opt,name=method,proto3,enum=invora.billing.common.v2.RecurringTransactionMethodEnum,oneof" json:"method,omitempty"`
-	PaidCredits                      *string                                 `protobuf:"bytes,9,opt,name=paid_credits,json=paidCredits,proto3,oneof" json:"paid_credits,omitempty"`
-	PaymentMethod                    *v2.PaymentMethodReferenceInput         `protobuf:"bytes,10,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
-	StartedAt                        *timestamppb.Timestamp                  `protobuf:"bytes,11,opt,name=started_at,json=startedAt,proto3,oneof" json:"started_at,omitempty"`
-	TargetOngoingBalance             *string                                 `protobuf:"bytes,12,opt,name=target_ongoing_balance,json=targetOngoingBalance,proto3,oneof" json:"target_ongoing_balance,omitempty"`
-	ThresholdCredits                 *string                                 `protobuf:"bytes,13,opt,name=threshold_credits,json=thresholdCredits,proto3,oneof" json:"threshold_credits,omitempty"`
-	TransactionMetadata              []*CreateTransactionMetadataInput       `protobuf:"bytes,14,rep,name=transaction_metadata,json=transactionMetadata,proto3" json:"transaction_metadata,omitempty"`
-	TransactionName                  *string                                 `protobuf:"bytes,15,opt,name=transaction_name,json=transactionName,proto3,oneof" json:"transaction_name,omitempty"`
-	Trigger                          *v2.RecurringTransactionTriggerEnum     `protobuf:"varint,16,opt,name=trigger,proto3,enum=invora.billing.common.v2.RecurringTransactionTriggerEnum,oneof" json:"trigger,omitempty"`
-	unknownFields                    protoimpl.UnknownFields
-	sizeCache                        protoimpl.SizeCache
-}
-
-func (x *UpdateRecurringTransactionRuleInput) Reset() {
-	*x = UpdateRecurringTransactionRuleInput{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[25]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateRecurringTransactionRuleInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateRecurringTransactionRuleInput) ProtoMessage() {}
-
-func (x *UpdateRecurringTransactionRuleInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[25]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateRecurringTransactionRuleInput.ProtoReflect.Descriptor instead.
-func (*UpdateRecurringTransactionRuleInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{25}
-}
-
-func (x *UpdateRecurringTransactionRuleInput) GetExpirationAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.ExpirationAt
-	}
-	return nil
-}
-
-func (x *UpdateRecurringTransactionRuleInput) GetGrantedCredits() string {
-	if x != nil && x.GrantedCredits != nil {
-		return *x.GrantedCredits
-	}
-	return ""
-}
-
-func (x *UpdateRecurringTransactionRuleInput) GetIgnorePaidTopUpLimits() bool {
-	if x != nil && x.IgnorePaidTopUpLimits != nil {
-		return *x.IgnorePaidTopUpLimits
-	}
-	return false
-}
-
-func (x *UpdateRecurringTransactionRuleInput) GetInterval() v2.RecurringTransactionIntervalEnum {
-	if x != nil && x.Interval != nil {
-		return *x.Interval
-	}
-	return v2.RecurringTransactionIntervalEnum(0)
-}
-
-func (x *UpdateRecurringTransactionRuleInput) GetInvoiceCustomSection() *v2.InvoiceCustomSectionsReferenceInput {
-	if x != nil {
-		return x.InvoiceCustomSection
-	}
-	return nil
-}
-
-func (x *UpdateRecurringTransactionRuleInput) GetInvoiceRequiresSuccessfulPayment() bool {
-	if x != nil && x.InvoiceRequiresSuccessfulPayment != nil {
-		return *x.InvoiceRequiresSuccessfulPayment
-	}
-	return false
-}
-
-func (x *UpdateRecurringTransactionRuleInput) GetBillingProviderId() string {
-	if x != nil && x.BillingProviderId != nil {
-		return *x.BillingProviderId
-	}
-	return ""
-}
-
-func (x *UpdateRecurringTransactionRuleInput) GetMethod() v2.RecurringTransactionMethodEnum {
-	if x != nil && x.Method != nil {
-		return *x.Method
-	}
-	return v2.RecurringTransactionMethodEnum(0)
-}
-
-func (x *UpdateRecurringTransactionRuleInput) GetPaidCredits() string {
-	if x != nil && x.PaidCredits != nil {
-		return *x.PaidCredits
-	}
-	return ""
-}
-
-func (x *UpdateRecurringTransactionRuleInput) GetPaymentMethod() *v2.PaymentMethodReferenceInput {
-	if x != nil {
-		return x.PaymentMethod
-	}
-	return nil
-}
-
-func (x *UpdateRecurringTransactionRuleInput) GetStartedAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.StartedAt
-	}
-	return nil
-}
-
-func (x *UpdateRecurringTransactionRuleInput) GetTargetOngoingBalance() string {
-	if x != nil && x.TargetOngoingBalance != nil {
-		return *x.TargetOngoingBalance
-	}
-	return ""
-}
-
-func (x *UpdateRecurringTransactionRuleInput) GetThresholdCredits() string {
-	if x != nil && x.ThresholdCredits != nil {
-		return *x.ThresholdCredits
-	}
-	return ""
-}
-
-func (x *UpdateRecurringTransactionRuleInput) GetTransactionMetadata() []*CreateTransactionMetadataInput {
-	if x != nil {
-		return x.TransactionMetadata
-	}
-	return nil
-}
-
-func (x *UpdateRecurringTransactionRuleInput) GetTransactionName() string {
-	if x != nil && x.TransactionName != nil {
-		return *x.TransactionName
-	}
-	return ""
-}
-
-func (x *UpdateRecurringTransactionRuleInput) GetTrigger() v2.RecurringTransactionTriggerEnum {
-	if x != nil && x.Trigger != nil {
-		return *x.Trigger
-	}
-	return v2.RecurringTransactionTriggerEnum(0)
-}
-
-type CreateTransactionMetadataInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Key           string                 `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
-	Value         string                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateTransactionMetadataInput) Reset() {
-	*x = CreateTransactionMetadataInput{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[26]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateTransactionMetadataInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateTransactionMetadataInput) ProtoMessage() {}
-
-func (x *CreateTransactionMetadataInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[26]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateTransactionMetadataInput.ProtoReflect.Descriptor instead.
-func (*CreateTransactionMetadataInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{26}
-}
-
-func (x *CreateTransactionMetadataInput) GetKey() string {
-	if x != nil {
-		return x.Key
-	}
-	return ""
-}
-
-func (x *CreateTransactionMetadataInput) GetValue() string {
-	if x != nil {
-		return x.Value
-	}
-	return ""
-}
-
-type AppliesToInput struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	BillableMetricIds []string               `protobuf:"bytes,1,rep,name=billable_metric_ids,json=billableMetricIds,proto3" json:"billable_metric_ids,omitempty"`
-	FeeTypes          []v2.FeeTypesEnum      `protobuf:"varint,2,rep,packed,name=fee_types,json=feeTypes,proto3,enum=invora.billing.common.v2.FeeTypesEnum" json:"fee_types,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
-}
-
-func (x *AppliesToInput) Reset() {
-	*x = AppliesToInput{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[27]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AppliesToInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AppliesToInput) ProtoMessage() {}
-
-func (x *AppliesToInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[27]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AppliesToInput.ProtoReflect.Descriptor instead.
-func (*AppliesToInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{27}
-}
-
-func (x *AppliesToInput) GetBillableMetricIds() []string {
-	if x != nil {
-		return x.BillableMetricIds
-	}
-	return nil
-}
-
-func (x *AppliesToInput) GetFeeTypes() []v2.FeeTypesEnum {
-	if x != nil {
-		return x.FeeTypes
-	}
-	return nil
-}
-
-// Autogenerated input type of TerminateCustomerWallet
-type TerminateCustomerWalletInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *TerminateCustomerWalletInput) Reset() {
-	*x = TerminateCustomerWalletInput{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[28]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *TerminateCustomerWalletInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TerminateCustomerWalletInput) ProtoMessage() {}
-
-func (x *TerminateCustomerWalletInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[28]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TerminateCustomerWalletInput.ProtoReflect.Descriptor instead.
-func (*TerminateCustomerWalletInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{28}
-}
-
-func (x *TerminateCustomerWalletInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-// Autogenerated input type of CreateCustomerWalletTransaction
-type CreateCustomerWalletTransactionInput struct {
-	state                            protoimpl.MessageState                  `protogen:"open.v1"`
-	GrantedCredits                   *string                                 `protobuf:"bytes,1,opt,name=granted_credits,json=grantedCredits,proto3,oneof" json:"granted_credits,omitempty"`
-	IgnorePaidTopUpLimits            *bool                                   `protobuf:"varint,2,opt,name=ignore_paid_top_up_limits,json=ignorePaidTopUpLimits,proto3,oneof" json:"ignore_paid_top_up_limits,omitempty"`
-	InvoiceCustomSection             *v2.InvoiceCustomSectionsReferenceInput `protobuf:"bytes,3,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3,oneof" json:"invoice_custom_section,omitempty"`
-	InvoiceRequiresSuccessfulPayment *bool                                   `protobuf:"varint,4,opt,name=invoice_requires_successful_payment,json=invoiceRequiresSuccessfulPayment,proto3,oneof" json:"invoice_requires_successful_payment,omitempty"`
-	Metadata                         []*WalletTransactionMetadataInput       `protobuf:"bytes,5,rep,name=metadata,proto3" json:"metadata,omitempty"`
-	Name                             *string                                 `protobuf:"bytes,6,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	PaidCredits                      *string                                 `protobuf:"bytes,7,opt,name=paid_credits,json=paidCredits,proto3,oneof" json:"paid_credits,omitempty"`
-	PaymentMethod                    *v2.PaymentMethodReferenceInput         `protobuf:"bytes,8,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
-	Priority                         *int32                                  `protobuf:"varint,9,opt,name=priority,proto3,oneof" json:"priority,omitempty"`
-	VoidedCredits                    *string                                 `protobuf:"bytes,10,opt,name=voided_credits,json=voidedCredits,proto3,oneof" json:"voided_credits,omitempty"`
-	WalletId                         string                                  `protobuf:"bytes,11,opt,name=wallet_id,json=walletId,proto3" json:"wallet_id,omitempty"`
-	unknownFields                    protoimpl.UnknownFields
-	sizeCache                        protoimpl.SizeCache
-}
-
-func (x *CreateCustomerWalletTransactionInput) Reset() {
-	*x = CreateCustomerWalletTransactionInput{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[29]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateCustomerWalletTransactionInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateCustomerWalletTransactionInput) ProtoMessage() {}
-
-func (x *CreateCustomerWalletTransactionInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[29]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateCustomerWalletTransactionInput.ProtoReflect.Descriptor instead.
-func (*CreateCustomerWalletTransactionInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{29}
-}
-
-func (x *CreateCustomerWalletTransactionInput) GetGrantedCredits() string {
-	if x != nil && x.GrantedCredits != nil {
-		return *x.GrantedCredits
-	}
-	return ""
-}
-
-func (x *CreateCustomerWalletTransactionInput) GetIgnorePaidTopUpLimits() bool {
-	if x != nil && x.IgnorePaidTopUpLimits != nil {
-		return *x.IgnorePaidTopUpLimits
-	}
-	return false
-}
-
-func (x *CreateCustomerWalletTransactionInput) GetInvoiceCustomSection() *v2.InvoiceCustomSectionsReferenceInput {
-	if x != nil {
-		return x.InvoiceCustomSection
-	}
-	return nil
-}
-
-func (x *CreateCustomerWalletTransactionInput) GetInvoiceRequiresSuccessfulPayment() bool {
-	if x != nil && x.InvoiceRequiresSuccessfulPayment != nil {
-		return *x.InvoiceRequiresSuccessfulPayment
-	}
-	return false
-}
-
-func (x *CreateCustomerWalletTransactionInput) GetMetadata() []*WalletTransactionMetadataInput {
-	if x != nil {
-		return x.Metadata
-	}
-	return nil
-}
-
-func (x *CreateCustomerWalletTransactionInput) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
-	}
-	return ""
-}
-
-func (x *CreateCustomerWalletTransactionInput) GetPaidCredits() string {
-	if x != nil && x.PaidCredits != nil {
-		return *x.PaidCredits
-	}
-	return ""
-}
-
-func (x *CreateCustomerWalletTransactionInput) GetPaymentMethod() *v2.PaymentMethodReferenceInput {
-	if x != nil {
-		return x.PaymentMethod
-	}
-	return nil
-}
-
-func (x *CreateCustomerWalletTransactionInput) GetPriority() int32 {
-	if x != nil && x.Priority != nil {
-		return *x.Priority
-	}
-	return 0
-}
-
-func (x *CreateCustomerWalletTransactionInput) GetVoidedCredits() string {
-	if x != nil && x.VoidedCredits != nil {
-		return *x.VoidedCredits
-	}
-	return ""
-}
-
-func (x *CreateCustomerWalletTransactionInput) GetWalletId() string {
-	if x != nil {
-		return x.WalletId
-	}
-	return ""
-}
-
-type WalletTransactionMetadataInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Key           string                 `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
-	Value         string                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *WalletTransactionMetadataInput) Reset() {
-	*x = WalletTransactionMetadataInput{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[30]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *WalletTransactionMetadataInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*WalletTransactionMetadataInput) ProtoMessage() {}
-
-func (x *WalletTransactionMetadataInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[30]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use WalletTransactionMetadataInput.ProtoReflect.Descriptor instead.
-func (*WalletTransactionMetadataInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{30}
-}
-
-func (x *WalletTransactionMetadataInput) GetKey() string {
-	if x != nil {
-		return x.Key
-	}
-	return ""
-}
-
-func (x *WalletTransactionMetadataInput) GetValue() string {
-	if x != nil {
-		return x.Value
-	}
-	return ""
-}
-
-// WalletTransactionCollection type
-type WalletTransactionCollection struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// A collection of paginated WalletTransactionCollection
-	Collection []*v2.BillingWalletTransaction `protobuf:"bytes,1,rep,name=collection,proto3" json:"collection,omitempty"`
-	// Pagination Metadata for navigating the Pagination
-	Metadata      *v2.CollectionMetadata `protobuf:"bytes,2,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *WalletTransactionCollection) Reset() {
-	*x = WalletTransactionCollection{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[31]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *WalletTransactionCollection) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*WalletTransactionCollection) ProtoMessage() {}
-
-func (x *WalletTransactionCollection) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[31]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use WalletTransactionCollection.ProtoReflect.Descriptor instead.
-func (*WalletTransactionCollection) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{31}
-}
-
-func (x *WalletTransactionCollection) GetCollection() []*v2.BillingWalletTransaction {
-	if x != nil {
-		return x.Collection
-	}
-	return nil
-}
-
-func (x *WalletTransactionCollection) GetMetadata() *v2.CollectionMetadata {
-	if x != nil {
-		return x.Metadata
-	}
-	return nil
-}
-
-// Create Wallet Input
-type CreateCustomerWalletInput struct {
+type CreateRequest struct {
 	state                            protoimpl.MessageState                  `protogen:"open.v1"`
 	AppliesTo                        *AppliesToInput                         `protobuf:"bytes,1,opt,name=applies_to,json=appliesTo,proto3,oneof" json:"applies_to,omitempty"`
 	Code                             *string                                 `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
@@ -2177,21 +546,21 @@ type CreateCustomerWalletInput struct {
 	sizeCache                        protoimpl.SizeCache
 }
 
-func (x *CreateCustomerWalletInput) Reset() {
-	*x = CreateCustomerWalletInput{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[32]
+func (x *CreateRequest) Reset() {
+	*x = CreateRequest{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateCustomerWalletInput) String() string {
+func (x *CreateRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateCustomerWalletInput) ProtoMessage() {}
+func (*CreateRequest) ProtoMessage() {}
 
-func (x *CreateCustomerWalletInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[32]
+func (x *CreateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2202,168 +571,1620 @@ func (x *CreateCustomerWalletInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateCustomerWalletInput.ProtoReflect.Descriptor instead.
-func (*CreateCustomerWalletInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{32}
+// Deprecated: Use CreateRequest.ProtoReflect.Descriptor instead.
+func (*CreateRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *CreateCustomerWalletInput) GetAppliesTo() *AppliesToInput {
+func (x *CreateRequest) GetAppliesTo() *AppliesToInput {
 	if x != nil {
 		return x.AppliesTo
 	}
 	return nil
 }
 
-func (x *CreateCustomerWalletInput) GetCode() string {
+func (x *CreateRequest) GetCode() string {
 	if x != nil && x.Code != nil {
 		return *x.Code
 	}
 	return ""
 }
 
-func (x *CreateCustomerWalletInput) GetCurrency() v2.CurrencyEnum {
+func (x *CreateRequest) GetCurrency() v2.CurrencyEnum {
 	if x != nil {
 		return x.Currency
 	}
 	return v2.CurrencyEnum(0)
 }
 
-func (x *CreateCustomerWalletInput) GetCustomerId() string {
+func (x *CreateRequest) GetCustomerId() string {
 	if x != nil {
 		return x.CustomerId
 	}
 	return ""
 }
 
-func (x *CreateCustomerWalletInput) GetExpirationAt() *timestamppb.Timestamp {
+func (x *CreateRequest) GetExpirationAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.ExpirationAt
 	}
 	return nil
 }
 
-func (x *CreateCustomerWalletInput) GetGrantedCredits() string {
+func (x *CreateRequest) GetGrantedCredits() string {
 	if x != nil {
 		return x.GrantedCredits
 	}
 	return ""
 }
 
-func (x *CreateCustomerWalletInput) GetIgnorePaidTopUpLimitsOnCreation() bool {
+func (x *CreateRequest) GetIgnorePaidTopUpLimitsOnCreation() bool {
 	if x != nil && x.IgnorePaidTopUpLimitsOnCreation != nil {
 		return *x.IgnorePaidTopUpLimitsOnCreation
 	}
 	return false
 }
 
-func (x *CreateCustomerWalletInput) GetInvoiceCustomSection() *v2.InvoiceCustomSectionsReferenceInput {
+func (x *CreateRequest) GetInvoiceCustomSection() *v2.InvoiceCustomSectionsReferenceInput {
 	if x != nil {
 		return x.InvoiceCustomSection
 	}
 	return nil
 }
 
-func (x *CreateCustomerWalletInput) GetInvoiceRequiresSuccessfulPayment() bool {
+func (x *CreateRequest) GetInvoiceRequiresSuccessfulPayment() bool {
 	if x != nil && x.InvoiceRequiresSuccessfulPayment != nil {
 		return *x.InvoiceRequiresSuccessfulPayment
 	}
 	return false
 }
 
-func (x *CreateCustomerWalletInput) GetMetadata() []*v2.MetadataInput {
+func (x *CreateRequest) GetMetadata() []*v2.MetadataInput {
 	if x != nil {
 		return x.Metadata
 	}
 	return nil
 }
 
-func (x *CreateCustomerWalletInput) GetName() string {
+func (x *CreateRequest) GetName() string {
 	if x != nil && x.Name != nil {
 		return *x.Name
 	}
 	return ""
 }
 
-func (x *CreateCustomerWalletInput) GetPaidCredits() string {
+func (x *CreateRequest) GetPaidCredits() string {
 	if x != nil {
 		return x.PaidCredits
 	}
 	return ""
 }
 
-func (x *CreateCustomerWalletInput) GetPaidTopUpMaxAmountCents() int64 {
+func (x *CreateRequest) GetPaidTopUpMaxAmountCents() int64 {
 	if x != nil && x.PaidTopUpMaxAmountCents != nil {
 		return *x.PaidTopUpMaxAmountCents
 	}
 	return 0
 }
 
-func (x *CreateCustomerWalletInput) GetPaidTopUpMinAmountCents() int64 {
+func (x *CreateRequest) GetPaidTopUpMinAmountCents() int64 {
 	if x != nil && x.PaidTopUpMinAmountCents != nil {
 		return *x.PaidTopUpMinAmountCents
 	}
 	return 0
 }
 
-func (x *CreateCustomerWalletInput) GetPaymentMethod() *v2.PaymentMethodReferenceInput {
+func (x *CreateRequest) GetPaymentMethod() *v2.PaymentMethodReferenceInput {
 	if x != nil {
 		return x.PaymentMethod
 	}
 	return nil
 }
 
-func (x *CreateCustomerWalletInput) GetPriority() int32 {
+func (x *CreateRequest) GetPriority() int32 {
 	if x != nil {
 		return x.Priority
 	}
 	return 0
 }
 
-func (x *CreateCustomerWalletInput) GetRateAmount() string {
+func (x *CreateRequest) GetRateAmount() string {
 	if x != nil {
 		return x.RateAmount
 	}
 	return ""
 }
 
-func (x *CreateCustomerWalletInput) GetRecurringTransactionRules() []*CreateRecurringTransactionRuleInput {
+func (x *CreateRequest) GetRecurringTransactionRules() []*CreateRecurringTransactionRuleInput {
 	if x != nil {
 		return x.RecurringTransactionRules
 	}
 	return nil
 }
 
-func (x *CreateCustomerWalletInput) GetTransactionName() string {
+func (x *CreateRequest) GetTransactionName() string {
 	if x != nil && x.TransactionName != nil {
 		return *x.TransactionName
 	}
 	return ""
 }
 
+type CreateResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Wallet        *v2.BillingWallet      `protobuf:"bytes,1,opt,name=wallet,proto3" json:"wallet,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateResponse) Reset() {
+	*x = CreateResponse{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateResponse) ProtoMessage() {}
+
+func (x *CreateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateResponse.ProtoReflect.Descriptor instead.
+func (*CreateResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *CreateResponse) GetWallet() *v2.BillingWallet {
+	if x != nil {
+		return x.Wallet
+	}
+	return nil
+}
+
+type UpdateRequest struct {
+	state                            protoimpl.MessageState                  `protogen:"open.v1"`
+	Id                               string                                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	AppliesTo                        *AppliesToInput                         `protobuf:"bytes,2,opt,name=applies_to,json=appliesTo,proto3,oneof" json:"applies_to,omitempty"`
+	Code                             *string                                 `protobuf:"bytes,3,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	ExpirationAt                     *timestamppb.Timestamp                  `protobuf:"bytes,4,opt,name=expiration_at,json=expirationAt,proto3,oneof" json:"expiration_at,omitempty"`
+	InvoiceCustomSection             *v2.InvoiceCustomSectionsReferenceInput `protobuf:"bytes,5,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3,oneof" json:"invoice_custom_section,omitempty"`
+	InvoiceRequiresSuccessfulPayment *bool                                   `protobuf:"varint,6,opt,name=invoice_requires_successful_payment,json=invoiceRequiresSuccessfulPayment,proto3,oneof" json:"invoice_requires_successful_payment,omitempty"`
+	Metadata                         []*v2.MetadataInput                     `protobuf:"bytes,7,rep,name=metadata,proto3" json:"metadata,omitempty"`
+	Name                             *string                                 `protobuf:"bytes,8,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	PaidTopUpMaxAmountCents          *int64                                  `protobuf:"varint,9,opt,name=paid_top_up_max_amount_cents,json=paidTopUpMaxAmountCents,proto3,oneof" json:"paid_top_up_max_amount_cents,omitempty"`
+	PaidTopUpMinAmountCents          *int64                                  `protobuf:"varint,10,opt,name=paid_top_up_min_amount_cents,json=paidTopUpMinAmountCents,proto3,oneof" json:"paid_top_up_min_amount_cents,omitempty"`
+	PaymentMethod                    *v2.PaymentMethodReferenceInput         `protobuf:"bytes,11,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
+	Priority                         int32                                   `protobuf:"varint,12,opt,name=priority,proto3" json:"priority,omitempty"`
+	RecurringTransactionRules        []*UpdateRecurringTransactionRuleInput  `protobuf:"bytes,13,rep,name=recurring_transaction_rules,json=recurringTransactionRules,proto3" json:"recurring_transaction_rules,omitempty"`
+	UpdateMask                       *fieldmaskpb.FieldMask                  `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields                    protoimpl.UnknownFields
+	sizeCache                        protoimpl.SizeCache
+}
+
+func (x *UpdateRequest) Reset() {
+	*x = UpdateRequest{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateRequest) ProtoMessage() {}
+
+func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateRequest.ProtoReflect.Descriptor instead.
+func (*UpdateRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *UpdateRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetAppliesTo() *AppliesToInput {
+	if x != nil {
+		return x.AppliesTo
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetExpirationAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ExpirationAt
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetInvoiceCustomSection() *v2.InvoiceCustomSectionsReferenceInput {
+	if x != nil {
+		return x.InvoiceCustomSection
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetInvoiceRequiresSuccessfulPayment() bool {
+	if x != nil && x.InvoiceRequiresSuccessfulPayment != nil {
+		return *x.InvoiceRequiresSuccessfulPayment
+	}
+	return false
+}
+
+func (x *UpdateRequest) GetMetadata() []*v2.MetadataInput {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetPaidTopUpMaxAmountCents() int64 {
+	if x != nil && x.PaidTopUpMaxAmountCents != nil {
+		return *x.PaidTopUpMaxAmountCents
+	}
+	return 0
+}
+
+func (x *UpdateRequest) GetPaidTopUpMinAmountCents() int64 {
+	if x != nil && x.PaidTopUpMinAmountCents != nil {
+		return *x.PaidTopUpMinAmountCents
+	}
+	return 0
+}
+
+func (x *UpdateRequest) GetPaymentMethod() *v2.PaymentMethodReferenceInput {
+	if x != nil {
+		return x.PaymentMethod
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetPriority() int32 {
+	if x != nil {
+		return x.Priority
+	}
+	return 0
+}
+
+func (x *UpdateRequest) GetRecurringTransactionRules() []*UpdateRecurringTransactionRuleInput {
+	if x != nil {
+		return x.RecurringTransactionRules
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+type UpdateResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Wallet        *v2.BillingWallet      `protobuf:"bytes,1,opt,name=wallet,proto3" json:"wallet,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateResponse) Reset() {
+	*x = UpdateResponse{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateResponse) ProtoMessage() {}
+
+func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateResponse.ProtoReflect.Descriptor instead.
+func (*UpdateResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *UpdateResponse) GetWallet() *v2.BillingWallet {
+	if x != nil {
+		return x.Wallet
+	}
+	return nil
+}
+
+type TerminateRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the wallet to terminate.
+	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TerminateRequest) Reset() {
+	*x = TerminateRequest{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TerminateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TerminateRequest) ProtoMessage() {}
+
+func (x *TerminateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TerminateRequest.ProtoReflect.Descriptor instead.
+func (*TerminateRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *TerminateRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type TerminateResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Wallet        *v2.BillingWallet      `protobuf:"bytes,1,opt,name=wallet,proto3" json:"wallet,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TerminateResponse) Reset() {
+	*x = TerminateResponse{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TerminateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TerminateResponse) ProtoMessage() {}
+
+func (x *TerminateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TerminateResponse.ProtoReflect.Descriptor instead.
+func (*TerminateResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *TerminateResponse) GetWallet() *v2.BillingWallet {
+	if x != nil {
+		return x.Wallet
+	}
+	return nil
+}
+
+type CreateTransactionRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the parent wallet.
+	WalletId                         string                                  `protobuf:"bytes,1,opt,name=wallet_id,json=walletId,proto3" json:"wallet_id,omitempty"`
+	GrantedCredits                   *string                                 `protobuf:"bytes,2,opt,name=granted_credits,json=grantedCredits,proto3,oneof" json:"granted_credits,omitempty"`
+	IgnorePaidTopUpLimits            *bool                                   `protobuf:"varint,3,opt,name=ignore_paid_top_up_limits,json=ignorePaidTopUpLimits,proto3,oneof" json:"ignore_paid_top_up_limits,omitempty"`
+	InvoiceCustomSection             *v2.InvoiceCustomSectionsReferenceInput `protobuf:"bytes,4,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3,oneof" json:"invoice_custom_section,omitempty"`
+	InvoiceRequiresSuccessfulPayment *bool                                   `protobuf:"varint,5,opt,name=invoice_requires_successful_payment,json=invoiceRequiresSuccessfulPayment,proto3,oneof" json:"invoice_requires_successful_payment,omitempty"`
+	Metadata                         []*TransactionMetadataInput             `protobuf:"bytes,6,rep,name=metadata,proto3" json:"metadata,omitempty"`
+	Name                             *string                                 `protobuf:"bytes,7,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	PaidCredits                      *string                                 `protobuf:"bytes,8,opt,name=paid_credits,json=paidCredits,proto3,oneof" json:"paid_credits,omitempty"`
+	PaymentMethod                    *v2.PaymentMethodReferenceInput         `protobuf:"bytes,9,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
+	Priority                         *int32                                  `protobuf:"varint,10,opt,name=priority,proto3,oneof" json:"priority,omitempty"`
+	VoidedCredits                    *string                                 `protobuf:"bytes,11,opt,name=voided_credits,json=voidedCredits,proto3,oneof" json:"voided_credits,omitempty"`
+	unknownFields                    protoimpl.UnknownFields
+	sizeCache                        protoimpl.SizeCache
+}
+
+func (x *CreateTransactionRequest) Reset() {
+	*x = CreateTransactionRequest{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateTransactionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTransactionRequest) ProtoMessage() {}
+
+func (x *CreateTransactionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTransactionRequest.ProtoReflect.Descriptor instead.
+func (*CreateTransactionRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *CreateTransactionRequest) GetWalletId() string {
+	if x != nil {
+		return x.WalletId
+	}
+	return ""
+}
+
+func (x *CreateTransactionRequest) GetGrantedCredits() string {
+	if x != nil && x.GrantedCredits != nil {
+		return *x.GrantedCredits
+	}
+	return ""
+}
+
+func (x *CreateTransactionRequest) GetIgnorePaidTopUpLimits() bool {
+	if x != nil && x.IgnorePaidTopUpLimits != nil {
+		return *x.IgnorePaidTopUpLimits
+	}
+	return false
+}
+
+func (x *CreateTransactionRequest) GetInvoiceCustomSection() *v2.InvoiceCustomSectionsReferenceInput {
+	if x != nil {
+		return x.InvoiceCustomSection
+	}
+	return nil
+}
+
+func (x *CreateTransactionRequest) GetInvoiceRequiresSuccessfulPayment() bool {
+	if x != nil && x.InvoiceRequiresSuccessfulPayment != nil {
+		return *x.InvoiceRequiresSuccessfulPayment
+	}
+	return false
+}
+
+func (x *CreateTransactionRequest) GetMetadata() []*TransactionMetadataInput {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *CreateTransactionRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *CreateTransactionRequest) GetPaidCredits() string {
+	if x != nil && x.PaidCredits != nil {
+		return *x.PaidCredits
+	}
+	return ""
+}
+
+func (x *CreateTransactionRequest) GetPaymentMethod() *v2.PaymentMethodReferenceInput {
+	if x != nil {
+		return x.PaymentMethod
+	}
+	return nil
+}
+
+func (x *CreateTransactionRequest) GetPriority() int32 {
+	if x != nil && x.Priority != nil {
+		return *x.Priority
+	}
+	return 0
+}
+
+func (x *CreateTransactionRequest) GetVoidedCredits() string {
+	if x != nil && x.VoidedCredits != nil {
+		return *x.VoidedCredits
+	}
+	return ""
+}
+
+type CreateTransactionResponse struct {
+	state         protoimpl.MessageState       `protogen:"open.v1"`
+	Transaction   *v2.BillingWalletTransaction `protobuf:"bytes,1,opt,name=transaction,proto3" json:"transaction,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateTransactionResponse) Reset() {
+	*x = CreateTransactionResponse{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateTransactionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTransactionResponse) ProtoMessage() {}
+
+func (x *CreateTransactionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTransactionResponse.ProtoReflect.Descriptor instead.
+func (*CreateTransactionResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *CreateTransactionResponse) GetTransaction() *v2.BillingWalletTransaction {
+	if x != nil {
+		return x.Transaction
+	}
+	return nil
+}
+
+type GetTransactionRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the parent wallet.
+	WalletId string `protobuf:"bytes,1,opt,name=wallet_id,json=walletId,proto3" json:"wallet_id,omitempty"`
+	// Unique ID of the wallet transaction.
+	Id string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	// Fields to return in the response.
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	// Response detail level.
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTransactionRequest) Reset() {
+	*x = GetTransactionRequest{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTransactionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTransactionRequest) ProtoMessage() {}
+
+func (x *GetTransactionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTransactionRequest.ProtoReflect.Descriptor instead.
+func (*GetTransactionRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *GetTransactionRequest) GetWalletId() string {
+	if x != nil {
+		return x.WalletId
+	}
+	return ""
+}
+
+func (x *GetTransactionRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *GetTransactionRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
+	}
+	return nil
+}
+
+func (x *GetTransactionRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
+}
+
+type GetTransactionResponse struct {
+	state         protoimpl.MessageState       `protogen:"open.v1"`
+	Transaction   *v2.BillingWalletTransaction `protobuf:"bytes,1,opt,name=transaction,proto3" json:"transaction,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTransactionResponse) Reset() {
+	*x = GetTransactionResponse{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTransactionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTransactionResponse) ProtoMessage() {}
+
+func (x *GetTransactionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTransactionResponse.ProtoReflect.Descriptor instead.
+func (*GetTransactionResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *GetTransactionResponse) GetTransaction() *v2.BillingWalletTransaction {
+	if x != nil {
+		return x.Transaction
+	}
+	return nil
+}
+
+type ListTransactionsRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the parent wallet.
+	WalletId   string                 `protobuf:"bytes,1,opt,name=wallet_id,json=walletId,proto3" json:"wallet_id,omitempty"`
+	Filter     *ListTransactionFilter `protobuf:"bytes,2,opt,name=filter,proto3" json:"filter,omitempty"`
+	Sort       *ListTransactionSort   `protobuf:"bytes,3,opt,name=sort,proto3" json:"sort,omitempty"`
+	Pagination *kernel.PaginationInfo `protobuf:"bytes,4,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// Fields to return in the response.
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	// Response detail level.
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTransactionsRequest) Reset() {
+	*x = ListTransactionsRequest{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTransactionsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTransactionsRequest) ProtoMessage() {}
+
+func (x *ListTransactionsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTransactionsRequest.ProtoReflect.Descriptor instead.
+func (*ListTransactionsRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *ListTransactionsRequest) GetWalletId() string {
+	if x != nil {
+		return x.WalletId
+	}
+	return ""
+}
+
+func (x *ListTransactionsRequest) GetFilter() *ListTransactionFilter {
+	if x != nil {
+		return x.Filter
+	}
+	return nil
+}
+
+func (x *ListTransactionsRequest) GetSort() *ListTransactionSort {
+	if x != nil {
+		return x.Sort
+	}
+	return nil
+}
+
+func (x *ListTransactionsRequest) GetPagination() *kernel.PaginationInfo {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *ListTransactionsRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
+	}
+	return nil
+}
+
+func (x *ListTransactionsRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
+}
+
+type ListTransactionsResponse struct {
+	state          protoimpl.MessageState         `protogen:"open.v1"`
+	Items          []*v2.BillingWalletTransaction `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                         `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                        `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ListTransactionsResponse) Reset() {
+	*x = ListTransactionsResponse{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTransactionsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTransactionsResponse) ProtoMessage() {}
+
+func (x *ListTransactionsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTransactionsResponse.ProtoReflect.Descriptor instead.
+func (*ListTransactionsResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *ListTransactionsResponse) GetItems() []*v2.BillingWalletTransaction {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+func (x *ListTransactionsResponse) GetTotalCount() uint64 {
+	if x != nil {
+		return x.TotalCount
+	}
+	return 0
+}
+
+func (x *ListTransactionsResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
+	}
+	return ""
+}
+
+// Structured filter for listing wallet transactions.
+type ListTransactionFilter struct {
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	Part          *ListTransactionFilterPart `protobuf:"bytes,1,opt,name=part,proto3" json:"part,omitempty"`
+	TextSearch    string                     `protobuf:"bytes,2,opt,name=text_search,json=textSearch,proto3" json:"text_search,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTransactionFilter) Reset() {
+	*x = ListTransactionFilter{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTransactionFilter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTransactionFilter) ProtoMessage() {}
+
+func (x *ListTransactionFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTransactionFilter.ProtoReflect.Descriptor instead.
+func (*ListTransactionFilter) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *ListTransactionFilter) GetPart() *ListTransactionFilterPart {
+	if x != nil {
+		return x.Part
+	}
+	return nil
+}
+
+func (x *ListTransactionFilter) GetTextSearch() string {
+	if x != nil {
+		return x.TextSearch
+	}
+	return ""
+}
+
+// A single filter condition for wallet transactions.
+type ListTransactionFilterPart struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Type:
+	//
+	//	*ListTransactionFilterPart_CreatedAt
+	Type          isListTransactionFilterPart_Type `protobuf_oneof:"type"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTransactionFilterPart) Reset() {
+	*x = ListTransactionFilterPart{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTransactionFilterPart) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTransactionFilterPart) ProtoMessage() {}
+
+func (x *ListTransactionFilterPart) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTransactionFilterPart.ProtoReflect.Descriptor instead.
+func (*ListTransactionFilterPart) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *ListTransactionFilterPart) GetType() isListTransactionFilterPart_Type {
+	if x != nil {
+		return x.Type
+	}
+	return nil
+}
+
+func (x *ListTransactionFilterPart) GetCreatedAt() *kernel.ListRequestFilterPartDate {
+	if x != nil {
+		if x, ok := x.Type.(*ListTransactionFilterPart_CreatedAt); ok {
+			return x.CreatedAt
+		}
+	}
+	return nil
+}
+
+type isListTransactionFilterPart_Type interface {
+	isListTransactionFilterPart_Type()
+}
+
+type ListTransactionFilterPart_CreatedAt struct {
+	// Filter by creation date range.
+	CreatedAt *kernel.ListRequestFilterPartDate `protobuf:"bytes,1,opt,name=created_at,json=createdAt,proto3,oneof"`
+}
+
+func (*ListTransactionFilterPart_CreatedAt) isListTransactionFilterPart_Type() {}
+
+// Sort configuration for transaction lists.
+type ListTransactionSort struct {
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	Rules         []*ListTransactionSortRule `protobuf:"bytes,1,rep,name=rules,proto3" json:"rules,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTransactionSort) Reset() {
+	*x = ListTransactionSort{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTransactionSort) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTransactionSort) ProtoMessage() {}
+
+func (x *ListTransactionSort) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTransactionSort.ProtoReflect.Descriptor instead.
+func (*ListTransactionSort) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *ListTransactionSort) GetRules() []*ListTransactionSortRule {
+	if x != nil {
+		return x.Rules
+	}
+	return nil
+}
+
+// A single sort rule for transactions.
+type ListTransactionSortRule struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Type:
+	//
+	//	*ListTransactionSortRule_CreatedAt
+	Type          isListTransactionSortRule_Type `protobuf_oneof:"type"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTransactionSortRule) Reset() {
+	*x = ListTransactionSortRule{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTransactionSortRule) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTransactionSortRule) ProtoMessage() {}
+
+func (x *ListTransactionSortRule) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTransactionSortRule.ProtoReflect.Descriptor instead.
+func (*ListTransactionSortRule) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *ListTransactionSortRule) GetType() isListTransactionSortRule_Type {
+	if x != nil {
+		return x.Type
+	}
+	return nil
+}
+
+func (x *ListTransactionSortRule) GetCreatedAt() kernel.SortDirection {
+	if x != nil {
+		if x, ok := x.Type.(*ListTransactionSortRule_CreatedAt); ok {
+			return x.CreatedAt
+		}
+	}
+	return kernel.SortDirection(0)
+}
+
+type isListTransactionSortRule_Type interface {
+	isListTransactionSortRule_Type()
+}
+
+type ListTransactionSortRule_CreatedAt struct {
+	CreatedAt kernel.SortDirection `protobuf:"varint,1,opt,name=created_at,json=createdAt,proto3,enum=kernel.SortDirection,oneof"`
+}
+
+func (*ListTransactionSortRule_CreatedAt) isListTransactionSortRule_Type() {}
+
+type ListTransactionConsumptionsRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the parent wallet.
+	WalletId string `protobuf:"bytes,1,opt,name=wallet_id,json=walletId,proto3" json:"wallet_id,omitempty"`
+	// ID of the inbound transaction.
+	TransactionId string                     `protobuf:"bytes,2,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
+	Sort          *ListTransactionDetailSort `protobuf:"bytes,3,opt,name=sort,proto3" json:"sort,omitempty"`
+	Pagination    *kernel.PaginationInfo     `protobuf:"bytes,4,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// Fields to return in the response.
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	// Response detail level.
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTransactionConsumptionsRequest) Reset() {
+	*x = ListTransactionConsumptionsRequest{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTransactionConsumptionsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTransactionConsumptionsRequest) ProtoMessage() {}
+
+func (x *ListTransactionConsumptionsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTransactionConsumptionsRequest.ProtoReflect.Descriptor instead.
+func (*ListTransactionConsumptionsRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *ListTransactionConsumptionsRequest) GetWalletId() string {
+	if x != nil {
+		return x.WalletId
+	}
+	return ""
+}
+
+func (x *ListTransactionConsumptionsRequest) GetTransactionId() string {
+	if x != nil {
+		return x.TransactionId
+	}
+	return ""
+}
+
+func (x *ListTransactionConsumptionsRequest) GetSort() *ListTransactionDetailSort {
+	if x != nil {
+		return x.Sort
+	}
+	return nil
+}
+
+func (x *ListTransactionConsumptionsRequest) GetPagination() *kernel.PaginationInfo {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *ListTransactionConsumptionsRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
+	}
+	return nil
+}
+
+func (x *ListTransactionConsumptionsRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
+}
+
+type ListTransactionConsumptionsResponse struct {
+	state          protoimpl.MessageState          `protogen:"open.v1"`
+	Items          []*WalletTransactionConsumption `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                          `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                         `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ListTransactionConsumptionsResponse) Reset() {
+	*x = ListTransactionConsumptionsResponse{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTransactionConsumptionsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTransactionConsumptionsResponse) ProtoMessage() {}
+
+func (x *ListTransactionConsumptionsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTransactionConsumptionsResponse.ProtoReflect.Descriptor instead.
+func (*ListTransactionConsumptionsResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *ListTransactionConsumptionsResponse) GetItems() []*WalletTransactionConsumption {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+func (x *ListTransactionConsumptionsResponse) GetTotalCount() uint64 {
+	if x != nil {
+		return x.TotalCount
+	}
+	return 0
+}
+
+func (x *ListTransactionConsumptionsResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
+	}
+	return ""
+}
+
+type ListTransactionFundingsRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the parent wallet.
+	WalletId string `protobuf:"bytes,1,opt,name=wallet_id,json=walletId,proto3" json:"wallet_id,omitempty"`
+	// ID of the outbound transaction.
+	TransactionId string                     `protobuf:"bytes,2,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
+	Sort          *ListTransactionDetailSort `protobuf:"bytes,3,opt,name=sort,proto3" json:"sort,omitempty"`
+	Pagination    *kernel.PaginationInfo     `protobuf:"bytes,4,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// Fields to return in the response.
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	// Response detail level.
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTransactionFundingsRequest) Reset() {
+	*x = ListTransactionFundingsRequest{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTransactionFundingsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTransactionFundingsRequest) ProtoMessage() {}
+
+func (x *ListTransactionFundingsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTransactionFundingsRequest.ProtoReflect.Descriptor instead.
+func (*ListTransactionFundingsRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *ListTransactionFundingsRequest) GetWalletId() string {
+	if x != nil {
+		return x.WalletId
+	}
+	return ""
+}
+
+func (x *ListTransactionFundingsRequest) GetTransactionId() string {
+	if x != nil {
+		return x.TransactionId
+	}
+	return ""
+}
+
+func (x *ListTransactionFundingsRequest) GetSort() *ListTransactionDetailSort {
+	if x != nil {
+		return x.Sort
+	}
+	return nil
+}
+
+func (x *ListTransactionFundingsRequest) GetPagination() *kernel.PaginationInfo {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *ListTransactionFundingsRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
+	}
+	return nil
+}
+
+func (x *ListTransactionFundingsRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
+}
+
+type ListTransactionFundingsResponse struct {
+	state          protoimpl.MessageState      `protogen:"open.v1"`
+	Items          []*WalletTransactionFunding `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                      `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                     `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ListTransactionFundingsResponse) Reset() {
+	*x = ListTransactionFundingsResponse{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTransactionFundingsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTransactionFundingsResponse) ProtoMessage() {}
+
+func (x *ListTransactionFundingsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTransactionFundingsResponse.ProtoReflect.Descriptor instead.
+func (*ListTransactionFundingsResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *ListTransactionFundingsResponse) GetItems() []*WalletTransactionFunding {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+func (x *ListTransactionFundingsResponse) GetTotalCount() uint64 {
+	if x != nil {
+		return x.TotalCount
+	}
+	return 0
+}
+
+func (x *ListTransactionFundingsResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
+	}
+	return ""
+}
+
+// Sort configuration for consumption/funding detail lists.
+type ListTransactionDetailSort struct {
+	state         protoimpl.MessageState           `protogen:"open.v1"`
+	Rules         []*ListTransactionDetailSortRule `protobuf:"bytes,1,rep,name=rules,proto3" json:"rules,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTransactionDetailSort) Reset() {
+	*x = ListTransactionDetailSort{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTransactionDetailSort) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTransactionDetailSort) ProtoMessage() {}
+
+func (x *ListTransactionDetailSort) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTransactionDetailSort.ProtoReflect.Descriptor instead.
+func (*ListTransactionDetailSort) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *ListTransactionDetailSort) GetRules() []*ListTransactionDetailSortRule {
+	if x != nil {
+		return x.Rules
+	}
+	return nil
+}
+
+// A single sort rule for consumption/funding details.
+type ListTransactionDetailSortRule struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Type:
+	//
+	//	*ListTransactionDetailSortRule_CreatedAt
+	Type          isListTransactionDetailSortRule_Type `protobuf_oneof:"type"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTransactionDetailSortRule) Reset() {
+	*x = ListTransactionDetailSortRule{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTransactionDetailSortRule) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTransactionDetailSortRule) ProtoMessage() {}
+
+func (x *ListTransactionDetailSortRule) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTransactionDetailSortRule.ProtoReflect.Descriptor instead.
+func (*ListTransactionDetailSortRule) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *ListTransactionDetailSortRule) GetType() isListTransactionDetailSortRule_Type {
+	if x != nil {
+		return x.Type
+	}
+	return nil
+}
+
+func (x *ListTransactionDetailSortRule) GetCreatedAt() kernel.SortDirection {
+	if x != nil {
+		if x, ok := x.Type.(*ListTransactionDetailSortRule_CreatedAt); ok {
+			return x.CreatedAt
+		}
+	}
+	return kernel.SortDirection(0)
+}
+
+type isListTransactionDetailSortRule_Type interface {
+	isListTransactionDetailSortRule_Type()
+}
+
+type ListTransactionDetailSortRule_CreatedAt struct {
+	CreatedAt kernel.SortDirection `protobuf:"varint,1,opt,name=created_at,json=createdAt,proto3,enum=kernel.SortDirection,oneof"`
+}
+
+func (*ListTransactionDetailSortRule_CreatedAt) isListTransactionDetailSortRule_Type() {}
+
+// Scope applicability — restricts wallet credits to specific metrics or fee types.
+type AppliesToInput struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	BillableMetricIds []string               `protobuf:"bytes,1,rep,name=billable_metric_ids,json=billableMetricIds,proto3" json:"billable_metric_ids,omitempty"`
+	FeeTypes          []v2.FeeTypes          `protobuf:"varint,2,rep,packed,name=fee_types,json=feeTypes,proto3,enum=invora.billing.common.v2.FeeTypes" json:"fee_types,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *AppliesToInput) Reset() {
+	*x = AppliesToInput{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AppliesToInput) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AppliesToInput) ProtoMessage() {}
+
+func (x *AppliesToInput) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AppliesToInput.ProtoReflect.Descriptor instead.
+func (*AppliesToInput) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *AppliesToInput) GetBillableMetricIds() []string {
+	if x != nil {
+		return x.BillableMetricIds
+	}
+	return nil
+}
+
+func (x *AppliesToInput) GetFeeTypes() []v2.FeeTypes {
+	if x != nil {
+		return x.FeeTypes
+	}
+	return nil
+}
+
+// Recurring transaction rule for automatic wallet top-ups.
 type CreateRecurringTransactionRuleInput struct {
 	state                            protoimpl.MessageState                  `protogen:"open.v1"`
 	ExpirationAt                     *timestamppb.Timestamp                  `protobuf:"bytes,1,opt,name=expiration_at,json=expirationAt,proto3,oneof" json:"expiration_at,omitempty"`
 	GrantedCredits                   *string                                 `protobuf:"bytes,2,opt,name=granted_credits,json=grantedCredits,proto3,oneof" json:"granted_credits,omitempty"`
 	IgnorePaidTopUpLimits            *bool                                   `protobuf:"varint,3,opt,name=ignore_paid_top_up_limits,json=ignorePaidTopUpLimits,proto3,oneof" json:"ignore_paid_top_up_limits,omitempty"`
-	Interval                         *v2.RecurringTransactionIntervalEnum    `protobuf:"varint,4,opt,name=interval,proto3,enum=invora.billing.common.v2.RecurringTransactionIntervalEnum,oneof" json:"interval,omitempty"`
+	Interval                         *v2.RecurringTransactionInterval        `protobuf:"varint,4,opt,name=interval,proto3,enum=invora.billing.common.v2.RecurringTransactionInterval,oneof" json:"interval,omitempty"`
 	InvoiceCustomSection             *v2.InvoiceCustomSectionsReferenceInput `protobuf:"bytes,5,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3,oneof" json:"invoice_custom_section,omitempty"`
 	InvoiceRequiresSuccessfulPayment *bool                                   `protobuf:"varint,6,opt,name=invoice_requires_successful_payment,json=invoiceRequiresSuccessfulPayment,proto3,oneof" json:"invoice_requires_successful_payment,omitempty"`
-	Method                           *v2.RecurringTransactionMethodEnum      `protobuf:"varint,7,opt,name=method,proto3,enum=invora.billing.common.v2.RecurringTransactionMethodEnum,oneof" json:"method,omitempty"`
+	Method                           *v2.RecurringTransactionMethod          `protobuf:"varint,7,opt,name=method,proto3,enum=invora.billing.common.v2.RecurringTransactionMethod,oneof" json:"method,omitempty"`
 	PaidCredits                      *string                                 `protobuf:"bytes,8,opt,name=paid_credits,json=paidCredits,proto3,oneof" json:"paid_credits,omitempty"`
 	PaymentMethod                    *v2.PaymentMethodReferenceInput         `protobuf:"bytes,9,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
 	StartedAt                        *timestamppb.Timestamp                  `protobuf:"bytes,10,opt,name=started_at,json=startedAt,proto3,oneof" json:"started_at,omitempty"`
 	TargetOngoingBalance             *string                                 `protobuf:"bytes,11,opt,name=target_ongoing_balance,json=targetOngoingBalance,proto3,oneof" json:"target_ongoing_balance,omitempty"`
 	ThresholdCredits                 *string                                 `protobuf:"bytes,12,opt,name=threshold_credits,json=thresholdCredits,proto3,oneof" json:"threshold_credits,omitempty"`
-	TransactionMetadata              []*CreateTransactionMetadataInput       `protobuf:"bytes,13,rep,name=transaction_metadata,json=transactionMetadata,proto3" json:"transaction_metadata,omitempty"`
+	TransactionMetadata              []*TransactionMetadataInput             `protobuf:"bytes,13,rep,name=transaction_metadata,json=transactionMetadata,proto3" json:"transaction_metadata,omitempty"`
 	TransactionName                  *string                                 `protobuf:"bytes,14,opt,name=transaction_name,json=transactionName,proto3,oneof" json:"transaction_name,omitempty"`
-	Trigger                          v2.RecurringTransactionTriggerEnum      `protobuf:"varint,15,opt,name=trigger,proto3,enum=invora.billing.common.v2.RecurringTransactionTriggerEnum" json:"trigger,omitempty"`
+	Trigger                          v2.RecurringTransactionTrigger          `protobuf:"varint,15,opt,name=trigger,proto3,enum=invora.billing.common.v2.RecurringTransactionTrigger" json:"trigger,omitempty"`
 	unknownFields                    protoimpl.UnknownFields
 	sizeCache                        protoimpl.SizeCache
 }
 
 func (x *CreateRecurringTransactionRuleInput) Reset() {
 	*x = CreateRecurringTransactionRuleInput{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[33]
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2375,7 +2196,7 @@ func (x *CreateRecurringTransactionRuleInput) String() string {
 func (*CreateRecurringTransactionRuleInput) ProtoMessage() {}
 
 func (x *CreateRecurringTransactionRuleInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[33]
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2388,7 +2209,7 @@ func (x *CreateRecurringTransactionRuleInput) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use CreateRecurringTransactionRuleInput.ProtoReflect.Descriptor instead.
 func (*CreateRecurringTransactionRuleInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{33}
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *CreateRecurringTransactionRuleInput) GetExpirationAt() *timestamppb.Timestamp {
@@ -2412,11 +2233,11 @@ func (x *CreateRecurringTransactionRuleInput) GetIgnorePaidTopUpLimits() bool {
 	return false
 }
 
-func (x *CreateRecurringTransactionRuleInput) GetInterval() v2.RecurringTransactionIntervalEnum {
+func (x *CreateRecurringTransactionRuleInput) GetInterval() v2.RecurringTransactionInterval {
 	if x != nil && x.Interval != nil {
 		return *x.Interval
 	}
-	return v2.RecurringTransactionIntervalEnum(0)
+	return v2.RecurringTransactionInterval(0)
 }
 
 func (x *CreateRecurringTransactionRuleInput) GetInvoiceCustomSection() *v2.InvoiceCustomSectionsReferenceInput {
@@ -2433,11 +2254,11 @@ func (x *CreateRecurringTransactionRuleInput) GetInvoiceRequiresSuccessfulPaymen
 	return false
 }
 
-func (x *CreateRecurringTransactionRuleInput) GetMethod() v2.RecurringTransactionMethodEnum {
+func (x *CreateRecurringTransactionRuleInput) GetMethod() v2.RecurringTransactionMethod {
 	if x != nil && x.Method != nil {
 		return *x.Method
 	}
-	return v2.RecurringTransactionMethodEnum(0)
+	return v2.RecurringTransactionMethod(0)
 }
 
 func (x *CreateRecurringTransactionRuleInput) GetPaidCredits() string {
@@ -2475,7 +2296,7 @@ func (x *CreateRecurringTransactionRuleInput) GetThresholdCredits() string {
 	return ""
 }
 
-func (x *CreateRecurringTransactionRuleInput) GetTransactionMetadata() []*CreateTransactionMetadataInput {
+func (x *CreateRecurringTransactionRuleInput) GetTransactionMetadata() []*TransactionMetadataInput {
 	if x != nil {
 		return x.TransactionMetadata
 	}
@@ -2489,39 +2310,51 @@ func (x *CreateRecurringTransactionRuleInput) GetTransactionName() string {
 	return ""
 }
 
-func (x *CreateRecurringTransactionRuleInput) GetTrigger() v2.RecurringTransactionTriggerEnum {
+func (x *CreateRecurringTransactionRuleInput) GetTrigger() v2.RecurringTransactionTrigger {
 	if x != nil {
 		return x.Trigger
 	}
-	return v2.RecurringTransactionTriggerEnum(0)
+	return v2.RecurringTransactionTrigger(0)
 }
 
-type WalletTransactionFunding struct {
-	state             protoimpl.MessageState       `protogen:"open.v1"`
-	AmountCents       int64                        `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
-	CreatedAt         *timestamppb.Timestamp       `protobuf:"bytes,2,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	CreditAmount      string                       `protobuf:"bytes,3,opt,name=credit_amount,json=creditAmount,proto3" json:"credit_amount,omitempty"`
-	Id                string                       `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
-	WalletTransaction *v2.BillingWalletTransaction `protobuf:"bytes,5,opt,name=wallet_transaction,json=walletTransaction,proto3" json:"wallet_transaction,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+// Updated recurring transaction rule.
+type UpdateRecurringTransactionRuleInput struct {
+	state                            protoimpl.MessageState                  `protogen:"open.v1"`
+	ExpirationAt                     *timestamppb.Timestamp                  `protobuf:"bytes,1,opt,name=expiration_at,json=expirationAt,proto3,oneof" json:"expiration_at,omitempty"`
+	GrantedCredits                   *string                                 `protobuf:"bytes,2,opt,name=granted_credits,json=grantedCredits,proto3,oneof" json:"granted_credits,omitempty"`
+	IgnorePaidTopUpLimits            *bool                                   `protobuf:"varint,3,opt,name=ignore_paid_top_up_limits,json=ignorePaidTopUpLimits,proto3,oneof" json:"ignore_paid_top_up_limits,omitempty"`
+	Interval                         *v2.RecurringTransactionInterval        `protobuf:"varint,4,opt,name=interval,proto3,enum=invora.billing.common.v2.RecurringTransactionInterval,oneof" json:"interval,omitempty"`
+	InvoiceCustomSection             *v2.InvoiceCustomSectionsReferenceInput `protobuf:"bytes,5,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3,oneof" json:"invoice_custom_section,omitempty"`
+	InvoiceRequiresSuccessfulPayment *bool                                   `protobuf:"varint,6,opt,name=invoice_requires_successful_payment,json=invoiceRequiresSuccessfulPayment,proto3,oneof" json:"invoice_requires_successful_payment,omitempty"`
+	BillingProviderId                *string                                 `protobuf:"bytes,7,opt,name=billing_provider_id,json=billingProviderId,proto3,oneof" json:"billing_provider_id,omitempty"`
+	Method                           *v2.RecurringTransactionMethod          `protobuf:"varint,8,opt,name=method,proto3,enum=invora.billing.common.v2.RecurringTransactionMethod,oneof" json:"method,omitempty"`
+	PaidCredits                      *string                                 `protobuf:"bytes,9,opt,name=paid_credits,json=paidCredits,proto3,oneof" json:"paid_credits,omitempty"`
+	PaymentMethod                    *v2.PaymentMethodReferenceInput         `protobuf:"bytes,10,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
+	StartedAt                        *timestamppb.Timestamp                  `protobuf:"bytes,11,opt,name=started_at,json=startedAt,proto3,oneof" json:"started_at,omitempty"`
+	TargetOngoingBalance             *string                                 `protobuf:"bytes,12,opt,name=target_ongoing_balance,json=targetOngoingBalance,proto3,oneof" json:"target_ongoing_balance,omitempty"`
+	ThresholdCredits                 *string                                 `protobuf:"bytes,13,opt,name=threshold_credits,json=thresholdCredits,proto3,oneof" json:"threshold_credits,omitempty"`
+	TransactionMetadata              []*TransactionMetadataInput             `protobuf:"bytes,14,rep,name=transaction_metadata,json=transactionMetadata,proto3" json:"transaction_metadata,omitempty"`
+	TransactionName                  *string                                 `protobuf:"bytes,15,opt,name=transaction_name,json=transactionName,proto3,oneof" json:"transaction_name,omitempty"`
+	Trigger                          *v2.RecurringTransactionTrigger         `protobuf:"varint,16,opt,name=trigger,proto3,enum=invora.billing.common.v2.RecurringTransactionTrigger,oneof" json:"trigger,omitempty"`
+	unknownFields                    protoimpl.UnknownFields
+	sizeCache                        protoimpl.SizeCache
 }
 
-func (x *WalletTransactionFunding) Reset() {
-	*x = WalletTransactionFunding{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[34]
+func (x *UpdateRecurringTransactionRuleInput) Reset() {
+	*x = UpdateRecurringTransactionRuleInput{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *WalletTransactionFunding) String() string {
+func (x *UpdateRecurringTransactionRuleInput) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*WalletTransactionFunding) ProtoMessage() {}
+func (*UpdateRecurringTransactionRuleInput) ProtoMessage() {}
 
-func (x *WalletTransactionFunding) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[34]
+func (x *UpdateRecurringTransactionRuleInput) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2532,46 +2365,177 @@ func (x *WalletTransactionFunding) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use WalletTransactionFunding.ProtoReflect.Descriptor instead.
-func (*WalletTransactionFunding) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{34}
+// Deprecated: Use UpdateRecurringTransactionRuleInput.ProtoReflect.Descriptor instead.
+func (*UpdateRecurringTransactionRuleInput) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{32}
 }
 
-func (x *WalletTransactionFunding) GetAmountCents() int64 {
+func (x *UpdateRecurringTransactionRuleInput) GetExpirationAt() *timestamppb.Timestamp {
 	if x != nil {
-		return x.AmountCents
-	}
-	return 0
-}
-
-func (x *WalletTransactionFunding) GetCreatedAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.CreatedAt
+		return x.ExpirationAt
 	}
 	return nil
 }
 
-func (x *WalletTransactionFunding) GetCreditAmount() string {
-	if x != nil {
-		return x.CreditAmount
+func (x *UpdateRecurringTransactionRuleInput) GetGrantedCredits() string {
+	if x != nil && x.GrantedCredits != nil {
+		return *x.GrantedCredits
 	}
 	return ""
 }
 
-func (x *WalletTransactionFunding) GetId() string {
-	if x != nil {
-		return x.Id
+func (x *UpdateRecurringTransactionRuleInput) GetIgnorePaidTopUpLimits() bool {
+	if x != nil && x.IgnorePaidTopUpLimits != nil {
+		return *x.IgnorePaidTopUpLimits
 	}
-	return ""
+	return false
 }
 
-func (x *WalletTransactionFunding) GetWalletTransaction() *v2.BillingWalletTransaction {
+func (x *UpdateRecurringTransactionRuleInput) GetInterval() v2.RecurringTransactionInterval {
+	if x != nil && x.Interval != nil {
+		return *x.Interval
+	}
+	return v2.RecurringTransactionInterval(0)
+}
+
+func (x *UpdateRecurringTransactionRuleInput) GetInvoiceCustomSection() *v2.InvoiceCustomSectionsReferenceInput {
 	if x != nil {
-		return x.WalletTransaction
+		return x.InvoiceCustomSection
 	}
 	return nil
 }
 
+func (x *UpdateRecurringTransactionRuleInput) GetInvoiceRequiresSuccessfulPayment() bool {
+	if x != nil && x.InvoiceRequiresSuccessfulPayment != nil {
+		return *x.InvoiceRequiresSuccessfulPayment
+	}
+	return false
+}
+
+func (x *UpdateRecurringTransactionRuleInput) GetBillingProviderId() string {
+	if x != nil && x.BillingProviderId != nil {
+		return *x.BillingProviderId
+	}
+	return ""
+}
+
+func (x *UpdateRecurringTransactionRuleInput) GetMethod() v2.RecurringTransactionMethod {
+	if x != nil && x.Method != nil {
+		return *x.Method
+	}
+	return v2.RecurringTransactionMethod(0)
+}
+
+func (x *UpdateRecurringTransactionRuleInput) GetPaidCredits() string {
+	if x != nil && x.PaidCredits != nil {
+		return *x.PaidCredits
+	}
+	return ""
+}
+
+func (x *UpdateRecurringTransactionRuleInput) GetPaymentMethod() *v2.PaymentMethodReferenceInput {
+	if x != nil {
+		return x.PaymentMethod
+	}
+	return nil
+}
+
+func (x *UpdateRecurringTransactionRuleInput) GetStartedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.StartedAt
+	}
+	return nil
+}
+
+func (x *UpdateRecurringTransactionRuleInput) GetTargetOngoingBalance() string {
+	if x != nil && x.TargetOngoingBalance != nil {
+		return *x.TargetOngoingBalance
+	}
+	return ""
+}
+
+func (x *UpdateRecurringTransactionRuleInput) GetThresholdCredits() string {
+	if x != nil && x.ThresholdCredits != nil {
+		return *x.ThresholdCredits
+	}
+	return ""
+}
+
+func (x *UpdateRecurringTransactionRuleInput) GetTransactionMetadata() []*TransactionMetadataInput {
+	if x != nil {
+		return x.TransactionMetadata
+	}
+	return nil
+}
+
+func (x *UpdateRecurringTransactionRuleInput) GetTransactionName() string {
+	if x != nil && x.TransactionName != nil {
+		return *x.TransactionName
+	}
+	return ""
+}
+
+func (x *UpdateRecurringTransactionRuleInput) GetTrigger() v2.RecurringTransactionTrigger {
+	if x != nil && x.Trigger != nil {
+		return *x.Trigger
+	}
+	return v2.RecurringTransactionTrigger(0)
+}
+
+// Key-value metadata for a transaction.
+type TransactionMetadataInput struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Key           string                 `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Value         string                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TransactionMetadataInput) Reset() {
+	*x = TransactionMetadataInput{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TransactionMetadataInput) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TransactionMetadataInput) ProtoMessage() {}
+
+func (x *TransactionMetadataInput) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TransactionMetadataInput.ProtoReflect.Descriptor instead.
+func (*TransactionMetadataInput) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *TransactionMetadataInput) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *TransactionMetadataInput) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+// A single credit consumption record within a wallet transaction.
 type WalletTransactionConsumption struct {
 	state             protoimpl.MessageState       `protogen:"open.v1"`
 	AmountCents       int64                        `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
@@ -2585,7 +2549,7 @@ type WalletTransactionConsumption struct {
 
 func (x *WalletTransactionConsumption) Reset() {
 	*x = WalletTransactionConsumption{}
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[35]
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2597,7 +2561,7 @@ func (x *WalletTransactionConsumption) String() string {
 func (*WalletTransactionConsumption) ProtoMessage() {}
 
 func (x *WalletTransactionConsumption) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[35]
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2610,7 +2574,7 @@ func (x *WalletTransactionConsumption) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WalletTransactionConsumption.ProtoReflect.Descriptor instead.
 func (*WalletTransactionConsumption) Descriptor() ([]byte, []int) {
-	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{35}
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *WalletTransactionConsumption) GetAmountCents() int64 {
@@ -2648,220 +2612,127 @@ func (x *WalletTransactionConsumption) GetWalletTransaction() *v2.BillingWalletT
 	return nil
 }
 
+// A single credit funding record within a wallet transaction.
+type WalletTransactionFunding struct {
+	state             protoimpl.MessageState       `protogen:"open.v1"`
+	AmountCents       int64                        `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
+	CreatedAt         *timestamppb.Timestamp       `protobuf:"bytes,2,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	CreditAmount      string                       `protobuf:"bytes,3,opt,name=credit_amount,json=creditAmount,proto3" json:"credit_amount,omitempty"`
+	Id                string                       `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
+	WalletTransaction *v2.BillingWalletTransaction `protobuf:"bytes,5,opt,name=wallet_transaction,json=walletTransaction,proto3" json:"wallet_transaction,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *WalletTransactionFunding) Reset() {
+	*x = WalletTransactionFunding{}
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WalletTransactionFunding) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WalletTransactionFunding) ProtoMessage() {}
+
+func (x *WalletTransactionFunding) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_wallets_v2_service_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WalletTransactionFunding.ProtoReflect.Descriptor instead.
+func (*WalletTransactionFunding) Descriptor() ([]byte, []int) {
+	return file_invora_billing_wallets_v2_service_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *WalletTransactionFunding) GetAmountCents() int64 {
+	if x != nil {
+		return x.AmountCents
+	}
+	return 0
+}
+
+func (x *WalletTransactionFunding) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+func (x *WalletTransactionFunding) GetCreditAmount() string {
+	if x != nil {
+		return x.CreditAmount
+	}
+	return ""
+}
+
+func (x *WalletTransactionFunding) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *WalletTransactionFunding) GetWalletTransaction() *v2.BillingWalletTransaction {
+	if x != nil {
+		return x.WalletTransaction
+	}
+	return nil
+}
+
 var File_invora_billing_wallets_v2_service_proto protoreflect.FileDescriptor
 
 const file_invora_billing_wallets_v2_service_proto_rawDesc = "" +
 	"\n" +
-	"'invora/billing/wallets/v2/service.proto\x12\x19invora.billing.wallets.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\x8a\x01\n" +
+	"'invora/billing/wallets/v2/service.proto\x12\x19invora.billing.wallets.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\xb6\x02\n" +
+	"\vListRequest\x12C\n" +
+	"\x06filter\x18\x01 \x01(\v2+.invora.billing.wallets.v2.ListWalletFilterR\x06filter\x12=\n" +
+	"\x04sort\x18\x02 \x01(\v2).invora.billing.wallets.v2.ListWalletSortR\x04sort\x126\n" +
+	"\n" +
+	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
+	"pagination\x127\n" +
+	"\tread_mask\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xb2\x01\n" +
+	"\fListResponse\x12=\n" +
+	"\x05items\x18\x01 \x03(\v2'.invora.billing.common.v2.BillingWalletR\x05items\x12\x1f\n" +
+	"\vtotal_count\x18\x02 \x01(\x04R\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"x\n" +
+	"\x10ListWalletFilter\x12C\n" +
+	"\x04part\x18\x01 \x01(\v2/.invora.billing.wallets.v2.ListWalletFilterPartR\x04part\x12\x1f\n" +
+	"\vtext_search\x18\x02 \x01(\tR\n" +
+	"textSearch\"\x87\x01\n" +
+	"\x14ListWalletFilterPart\x12!\n" +
+	"\vcustomer_id\x18\x01 \x01(\tH\x00R\n" +
+	"customerId\x12D\n" +
+	"\bcurrency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\x00R\bcurrencyB\x06\n" +
+	"\x04type\"U\n" +
+	"\x0eListWalletSort\x12C\n" +
+	"\x05rules\x18\x01 \x03(\v2-.invora.billing.wallets.v2.ListWalletSortRuleR\x05rules\"T\n" +
+	"\x12ListWalletSortRule\x126\n" +
+	"\n" +
+	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAtB\x06\n" +
+	"\x04type\"\x89\x01\n" +
 	"\n" +
 	"GetRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
 	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x123\n" +
-	"\x04view\x18\v \x01(\x0e2\x1f.invora.billing.wallets.v2.ViewR\x04view\"N\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"N\n" +
 	"\vGetResponse\x12?\n" +
-	"\x06wallet\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingWalletR\x06wallet\"\x95\x01\n" +
-	"\x15GetTransactionRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x123\n" +
-	"\x04view\x18\v \x01(\x0e2\x1f.invora.billing.wallets.v2.ViewR\x04view\"{\n" +
-	"\x16GetTransactionResponse\x12a\n" +
-	"\x12wallet_transaction\x18\x01 \x01(\v22.invora.billing.common.v2.BillingWalletTransactionR\x11walletTransaction\"\xc2\x02\n" +
-	"\"ListTransactionConsumptionsRequest\x12=\n" +
-	"\x06filter\x18\x01 \x01(\v2%.invora.billing.wallets.v2.ListFilterR\x06filter\x127\n" +
-	"\x04sort\x18\x02 \x01(\v2#.invora.billing.wallets.v2.ListSortR\x04sort\x126\n" +
-	"\n" +
-	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
-	"pagination\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x123\n" +
-	"\x04view\x18\v \x01(\x0e2\x1f.invora.billing.wallets.v2.ViewR\x04view\"\xdd\x01\n" +
-	"#ListTransactionConsumptionsResponse\x12M\n" +
-	"\x05items\x18\x01 \x03(\v27.invora.billing.wallets.v2.WalletTransactionConsumptionR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"K\n" +
-	"\n" +
-	"ListFilter\x12=\n" +
-	"\x04part\x18\x01 \x01(\v2).invora.billing.wallets.v2.ListFilterPartR\x04part\"N\n" +
-	"\x0eListFilterPart\x124\n" +
-	"\x15wallet_transaction_id\x18\x01 \x01(\tH\x00R\x13walletTransactionIdB\x06\n" +
-	"\x04type\"I\n" +
-	"\bListSort\x12=\n" +
-	"\x05rules\x18\x01 \x03(\v2'.invora.billing.wallets.v2.ListSortRuleR\x05rules\"N\n" +
-	"\fListSortRule\x126\n" +
-	"\n" +
-	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAtB\x06\n" +
-	"\x04type\"\xbe\x02\n" +
-	"\x1eListTransactionFundingsRequest\x12=\n" +
-	"\x06filter\x18\x01 \x01(\v2%.invora.billing.wallets.v2.ListFilterR\x06filter\x127\n" +
-	"\x04sort\x18\x02 \x01(\v2#.invora.billing.wallets.v2.ListSortR\x04sort\x126\n" +
-	"\n" +
-	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
-	"pagination\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x123\n" +
-	"\x04view\x18\v \x01(\x0e2\x1f.invora.billing.wallets.v2.ViewR\x04view\"\xd5\x01\n" +
-	"\x1fListTransactionFundingsResponse\x12I\n" +
-	"\x05items\x18\x01 \x03(\v23.invora.billing.wallets.v2.WalletTransactionFundingR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"\xb7\x02\n" +
-	"\x17ListTransactionsRequest\x12=\n" +
-	"\x06filter\x18\x01 \x01(\v2%.invora.billing.wallets.v2.ListFilterR\x06filter\x127\n" +
-	"\x04sort\x18\x02 \x01(\v2#.invora.billing.wallets.v2.ListSortR\x04sort\x126\n" +
-	"\n" +
-	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
-	"pagination\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x123\n" +
-	"\x04view\x18\v \x01(\x0e2\x1f.invora.billing.wallets.v2.ViewR\x04view\"\xcd\x01\n" +
-	"\x18ListTransactionsResponse\x12H\n" +
-	"\x05items\x18\x01 \x03(\v22.invora.billing.common.v2.BillingWalletTransactionR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"\xab\x02\n" +
-	"\vListRequest\x12=\n" +
-	"\x06filter\x18\x01 \x01(\v2%.invora.billing.wallets.v2.ListFilterR\x06filter\x127\n" +
-	"\x04sort\x18\x02 \x01(\v2#.invora.billing.wallets.v2.ListSortR\x04sort\x126\n" +
-	"\n" +
-	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
-	"pagination\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x123\n" +
-	"\x04view\x18\v \x01(\x0e2\x1f.invora.billing.wallets.v2.ViewR\x04view\"\xb6\x01\n" +
-	"\fListResponse\x12=\n" +
-	"\x05items\x18\x01 \x03(\v2'.invora.billing.common.v2.BillingWalletR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"i\n" +
-	"\x1bCreateCustomerWalletRequest\x12J\n" +
-	"\x05input\x18\x01 \x01(\v24.invora.billing.wallets.v2.CreateCustomerWalletInputR\x05input\"_\n" +
-	"\x1cCreateCustomerWalletResponse\x12?\n" +
-	"\x06wallet\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingWalletR\x06wallet\"\xc6\x02\n" +
-	"&CreateCustomerWalletTransactionRequest\x12=\n" +
-	"\x06filter\x18\x01 \x01(\v2%.invora.billing.wallets.v2.ListFilterR\x06filter\x127\n" +
-	"\x04sort\x18\x02 \x01(\v2#.invora.billing.wallets.v2.ListSortR\x04sort\x126\n" +
-	"\n" +
-	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
-	"pagination\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x123\n" +
-	"\x04view\x18\v \x01(\x0e2\x1f.invora.billing.wallets.v2.ViewR\x04view\"\xdc\x01\n" +
-	"'CreateCustomerWalletTransactionResponse\x12H\n" +
-	"\x05items\x18\x01 \x03(\v22.invora.billing.common.v2.BillingWalletTransactionR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"o\n" +
-	"\x1eTerminateCustomerWalletRequest\x12M\n" +
-	"\x05input\x18\x01 \x01(\v27.invora.billing.wallets.v2.TerminateCustomerWalletInputR\x05input\"b\n" +
-	"\x1fTerminateCustomerWalletResponse\x12?\n" +
-	"\x06wallet\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingWalletR\x06wallet\"i\n" +
-	"\x1bUpdateCustomerWalletRequest\x12J\n" +
-	"\x05input\x18\x01 \x01(\v24.invora.billing.wallets.v2.UpdateCustomerWalletInputR\x05input\"_\n" +
-	"\x1cUpdateCustomerWalletResponse\x12?\n" +
-	"\x06wallet\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingWalletR\x06wallet\"\xd7\b\n" +
-	"\x19UpdateCustomerWalletInput\x12M\n" +
-	"\n" +
-	"applies_to\x18\x01 \x01(\v2).invora.billing.wallets.v2.AppliesToInputH\x00R\tappliesTo\x88\x01\x01\x12\x17\n" +
-	"\x04code\x18\x02 \x01(\tH\x01R\x04code\x88\x01\x01\x12D\n" +
-	"\rexpiration_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampH\x02R\fexpirationAt\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x04 \x01(\tR\x02id\x12x\n" +
-	"\x16invoice_custom_section\x18\x05 \x01(\v2=.invora.billing.common.v2.InvoiceCustomSectionsReferenceInputH\x03R\x14invoiceCustomSection\x88\x01\x01\x12R\n" +
-	"#invoice_requires_successful_payment\x18\x06 \x01(\bH\x04R invoiceRequiresSuccessfulPayment\x88\x01\x01\x12C\n" +
-	"\bmetadata\x18\a \x03(\v2'.invora.billing.common.v2.MetadataInputR\bmetadata\x12\x17\n" +
-	"\x04name\x18\b \x01(\tH\x05R\x04name\x88\x01\x01\x12B\n" +
-	"\x1cpaid_top_up_max_amount_cents\x18\t \x01(\x03H\x06R\x17paidTopUpMaxAmountCents\x88\x01\x01\x12B\n" +
-	"\x1cpaid_top_up_min_amount_cents\x18\n" +
-	" \x01(\x03H\aR\x17paidTopUpMinAmountCents\x88\x01\x01\x12a\n" +
-	"\x0epayment_method\x18\v \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\bR\rpaymentMethod\x88\x01\x01\x12\x1a\n" +
-	"\bpriority\x18\f \x01(\x05R\bpriority\x12~\n" +
-	"\x1brecurring_transaction_rules\x18\r \x03(\v2>.invora.billing.wallets.v2.UpdateRecurringTransactionRuleInputR\x19recurringTransactionRulesB\r\n" +
-	"\v_applies_toB\a\n" +
-	"\x05_codeB\x10\n" +
-	"\x0e_expiration_atB\x19\n" +
-	"\x17_invoice_custom_sectionB&\n" +
-	"$_invoice_requires_successful_paymentB\a\n" +
-	"\x05_nameB\x1f\n" +
-	"\x1d_paid_top_up_max_amount_centsB\x1f\n" +
-	"\x1d_paid_top_up_min_amount_centsB\x11\n" +
-	"\x0f_payment_method\"\xfb\v\n" +
-	"#UpdateRecurringTransactionRuleInput\x12D\n" +
-	"\rexpiration_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\fexpirationAt\x88\x01\x01\x12,\n" +
-	"\x0fgranted_credits\x18\x02 \x01(\tH\x01R\x0egrantedCredits\x88\x01\x01\x12=\n" +
-	"\x19ignore_paid_top_up_limits\x18\x03 \x01(\bH\x02R\x15ignorePaidTopUpLimits\x88\x01\x01\x12[\n" +
-	"\binterval\x18\x04 \x01(\x0e2:.invora.billing.common.v2.RecurringTransactionIntervalEnumH\x03R\binterval\x88\x01\x01\x12x\n" +
-	"\x16invoice_custom_section\x18\x05 \x01(\v2=.invora.billing.common.v2.InvoiceCustomSectionsReferenceInputH\x04R\x14invoiceCustomSection\x88\x01\x01\x12R\n" +
-	"#invoice_requires_successful_payment\x18\x06 \x01(\bH\x05R invoiceRequiresSuccessfulPayment\x88\x01\x01\x123\n" +
-	"\x13billing_provider_id\x18\a \x01(\tH\x06R\x11billingProviderId\x88\x01\x01\x12U\n" +
-	"\x06method\x18\b \x01(\x0e28.invora.billing.common.v2.RecurringTransactionMethodEnumH\aR\x06method\x88\x01\x01\x12&\n" +
-	"\fpaid_credits\x18\t \x01(\tH\bR\vpaidCredits\x88\x01\x01\x12a\n" +
-	"\x0epayment_method\x18\n" +
-	" \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\tR\rpaymentMethod\x88\x01\x01\x12>\n" +
-	"\n" +
-	"started_at\x18\v \x01(\v2\x1a.google.protobuf.TimestampH\n" +
-	"R\tstartedAt\x88\x01\x01\x129\n" +
-	"\x16target_ongoing_balance\x18\f \x01(\tH\vR\x14targetOngoingBalance\x88\x01\x01\x120\n" +
-	"\x11threshold_credits\x18\r \x01(\tH\fR\x10thresholdCredits\x88\x01\x01\x12l\n" +
-	"\x14transaction_metadata\x18\x0e \x03(\v29.invora.billing.wallets.v2.CreateTransactionMetadataInputR\x13transactionMetadata\x12.\n" +
-	"\x10transaction_name\x18\x0f \x01(\tH\rR\x0ftransactionName\x88\x01\x01\x12X\n" +
-	"\atrigger\x18\x10 \x01(\x0e29.invora.billing.common.v2.RecurringTransactionTriggerEnumH\x0eR\atrigger\x88\x01\x01B\x10\n" +
-	"\x0e_expiration_atB\x12\n" +
-	"\x10_granted_creditsB\x1c\n" +
-	"\x1a_ignore_paid_top_up_limitsB\v\n" +
-	"\t_intervalB\x19\n" +
-	"\x17_invoice_custom_sectionB&\n" +
-	"$_invoice_requires_successful_paymentB\x16\n" +
-	"\x14_billing_provider_idB\t\n" +
-	"\a_methodB\x0f\n" +
-	"\r_paid_creditsB\x11\n" +
-	"\x0f_payment_methodB\r\n" +
-	"\v_started_atB\x19\n" +
-	"\x17_target_ongoing_balanceB\x14\n" +
-	"\x12_threshold_creditsB\x13\n" +
-	"\x11_transaction_nameB\n" +
-	"\n" +
-	"\b_trigger\"H\n" +
-	"\x1eCreateTransactionMetadataInput\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value\"\x85\x01\n" +
-	"\x0eAppliesToInput\x12.\n" +
-	"\x13billable_metric_ids\x18\x01 \x03(\tR\x11billableMetricIds\x12C\n" +
-	"\tfee_types\x18\x02 \x03(\x0e2&.invora.billing.common.v2.FeeTypesEnumR\bfeeTypes\".\n" +
-	"\x1cTerminateCustomerWalletInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\x88\a\n" +
-	"$CreateCustomerWalletTransactionInput\x12,\n" +
-	"\x0fgranted_credits\x18\x01 \x01(\tH\x00R\x0egrantedCredits\x88\x01\x01\x12=\n" +
-	"\x19ignore_paid_top_up_limits\x18\x02 \x01(\bH\x01R\x15ignorePaidTopUpLimits\x88\x01\x01\x12x\n" +
-	"\x16invoice_custom_section\x18\x03 \x01(\v2=.invora.billing.common.v2.InvoiceCustomSectionsReferenceInputH\x02R\x14invoiceCustomSection\x88\x01\x01\x12R\n" +
-	"#invoice_requires_successful_payment\x18\x04 \x01(\bH\x03R invoiceRequiresSuccessfulPayment\x88\x01\x01\x12U\n" +
-	"\bmetadata\x18\x05 \x03(\v29.invora.billing.wallets.v2.WalletTransactionMetadataInputR\bmetadata\x12\x17\n" +
-	"\x04name\x18\x06 \x01(\tH\x04R\x04name\x88\x01\x01\x12&\n" +
-	"\fpaid_credits\x18\a \x01(\tH\x05R\vpaidCredits\x88\x01\x01\x12a\n" +
-	"\x0epayment_method\x18\b \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\x06R\rpaymentMethod\x88\x01\x01\x12\x1f\n" +
-	"\bpriority\x18\t \x01(\x05H\aR\bpriority\x88\x01\x01\x12*\n" +
-	"\x0evoided_credits\x18\n" +
-	" \x01(\tH\bR\rvoidedCredits\x88\x01\x01\x12\x1b\n" +
-	"\twallet_id\x18\v \x01(\tR\bwalletIdB\x12\n" +
-	"\x10_granted_creditsB\x1c\n" +
-	"\x1a_ignore_paid_top_up_limitsB\x19\n" +
-	"\x17_invoice_custom_sectionB&\n" +
-	"$_invoice_requires_successful_paymentB\a\n" +
-	"\x05_nameB\x0f\n" +
-	"\r_paid_creditsB\x11\n" +
-	"\x0f_payment_methodB\v\n" +
-	"\t_priorityB\x11\n" +
-	"\x0f_voided_credits\"H\n" +
-	"\x1eWalletTransactionMetadataInput\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value\"\xbb\x01\n" +
-	"\x1bWalletTransactionCollection\x12R\n" +
-	"\n" +
-	"collection\x18\x01 \x03(\v22.invora.billing.common.v2.BillingWalletTransactionR\n" +
-	"collection\x12H\n" +
-	"\bmetadata\x18\x02 \x01(\v2,.invora.billing.common.v2.CollectionMetadataR\bmetadata\"\xdd\v\n" +
-	"\x19CreateCustomerWalletInput\x12M\n" +
+	"\x06wallet\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingWalletR\x06wallet\"\xd1\v\n" +
+	"\rCreateRequest\x12M\n" +
 	"\n" +
 	"applies_to\x18\x01 \x01(\v2).invora.billing.wallets.v2.AppliesToInputH\x00R\tappliesTo\x88\x01\x01\x12\x17\n" +
 	"\x04code\x18\x02 \x01(\tH\x01R\x04code\x88\x01\x01\x12B\n" +
@@ -2896,15 +2767,153 @@ const file_invora_billing_wallets_v2_service_proto_rawDesc = "" +
 	"\x1d_paid_top_up_max_amount_centsB\x1f\n" +
 	"\x1d_paid_top_up_min_amount_centsB\x11\n" +
 	"\x0f_payment_methodB\x13\n" +
-	"\x11_transaction_name\"\x9d\v\n" +
+	"\x11_transaction_name\"Q\n" +
+	"\x0eCreateResponse\x12?\n" +
+	"\x06wallet\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingWalletR\x06wallet\"\x88\t\n" +
+	"\rUpdateRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12M\n" +
+	"\n" +
+	"applies_to\x18\x02 \x01(\v2).invora.billing.wallets.v2.AppliesToInputH\x00R\tappliesTo\x88\x01\x01\x12\x17\n" +
+	"\x04code\x18\x03 \x01(\tH\x01R\x04code\x88\x01\x01\x12D\n" +
+	"\rexpiration_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampH\x02R\fexpirationAt\x88\x01\x01\x12x\n" +
+	"\x16invoice_custom_section\x18\x05 \x01(\v2=.invora.billing.common.v2.InvoiceCustomSectionsReferenceInputH\x03R\x14invoiceCustomSection\x88\x01\x01\x12R\n" +
+	"#invoice_requires_successful_payment\x18\x06 \x01(\bH\x04R invoiceRequiresSuccessfulPayment\x88\x01\x01\x12C\n" +
+	"\bmetadata\x18\a \x03(\v2'.invora.billing.common.v2.MetadataInputR\bmetadata\x12\x17\n" +
+	"\x04name\x18\b \x01(\tH\x05R\x04name\x88\x01\x01\x12B\n" +
+	"\x1cpaid_top_up_max_amount_cents\x18\t \x01(\x03H\x06R\x17paidTopUpMaxAmountCents\x88\x01\x01\x12B\n" +
+	"\x1cpaid_top_up_min_amount_cents\x18\n" +
+	" \x01(\x03H\aR\x17paidTopUpMinAmountCents\x88\x01\x01\x12a\n" +
+	"\x0epayment_method\x18\v \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\bR\rpaymentMethod\x88\x01\x01\x12\x1a\n" +
+	"\bpriority\x18\f \x01(\x05R\bpriority\x12~\n" +
+	"\x1brecurring_transaction_rules\x18\r \x03(\v2>.invora.billing.wallets.v2.UpdateRecurringTransactionRuleInputR\x19recurringTransactionRules\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\r\n" +
+	"\v_applies_toB\a\n" +
+	"\x05_codeB\x10\n" +
+	"\x0e_expiration_atB\x19\n" +
+	"\x17_invoice_custom_sectionB&\n" +
+	"$_invoice_requires_successful_paymentB\a\n" +
+	"\x05_nameB\x1f\n" +
+	"\x1d_paid_top_up_max_amount_centsB\x1f\n" +
+	"\x1d_paid_top_up_min_amount_centsB\x11\n" +
+	"\x0f_payment_method\"Q\n" +
+	"\x0eUpdateResponse\x12?\n" +
+	"\x06wallet\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingWalletR\x06wallet\"\"\n" +
+	"\x10TerminateRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"T\n" +
+	"\x11TerminateResponse\x12?\n" +
+	"\x06wallet\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingWalletR\x06wallet\"\xf6\x06\n" +
+	"\x18CreateTransactionRequest\x12\x1b\n" +
+	"\twallet_id\x18\x01 \x01(\tR\bwalletId\x12,\n" +
+	"\x0fgranted_credits\x18\x02 \x01(\tH\x00R\x0egrantedCredits\x88\x01\x01\x12=\n" +
+	"\x19ignore_paid_top_up_limits\x18\x03 \x01(\bH\x01R\x15ignorePaidTopUpLimits\x88\x01\x01\x12x\n" +
+	"\x16invoice_custom_section\x18\x04 \x01(\v2=.invora.billing.common.v2.InvoiceCustomSectionsReferenceInputH\x02R\x14invoiceCustomSection\x88\x01\x01\x12R\n" +
+	"#invoice_requires_successful_payment\x18\x05 \x01(\bH\x03R invoiceRequiresSuccessfulPayment\x88\x01\x01\x12O\n" +
+	"\bmetadata\x18\x06 \x03(\v23.invora.billing.wallets.v2.TransactionMetadataInputR\bmetadata\x12\x17\n" +
+	"\x04name\x18\a \x01(\tH\x04R\x04name\x88\x01\x01\x12&\n" +
+	"\fpaid_credits\x18\b \x01(\tH\x05R\vpaidCredits\x88\x01\x01\x12a\n" +
+	"\x0epayment_method\x18\t \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\x06R\rpaymentMethod\x88\x01\x01\x12\x1f\n" +
+	"\bpriority\x18\n" +
+	" \x01(\x05H\aR\bpriority\x88\x01\x01\x12*\n" +
+	"\x0evoided_credits\x18\v \x01(\tH\bR\rvoidedCredits\x88\x01\x01B\x12\n" +
+	"\x10_granted_creditsB\x1c\n" +
+	"\x1a_ignore_paid_top_up_limitsB\x19\n" +
+	"\x17_invoice_custom_sectionB&\n" +
+	"$_invoice_requires_successful_paymentB\a\n" +
+	"\x05_nameB\x0f\n" +
+	"\r_paid_creditsB\x11\n" +
+	"\x0f_payment_methodB\v\n" +
+	"\t_priorityB\x11\n" +
+	"\x0f_voided_credits\"q\n" +
+	"\x19CreateTransactionResponse\x12T\n" +
+	"\vtransaction\x18\x01 \x01(\v22.invora.billing.common.v2.BillingWalletTransactionR\vtransaction\"\xb1\x01\n" +
+	"\x15GetTransactionRequest\x12\x1b\n" +
+	"\twallet_id\x18\x01 \x01(\tR\bwalletId\x12\x0e\n" +
+	"\x02id\x18\x02 \x01(\tR\x02id\x127\n" +
+	"\tread_mask\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"n\n" +
+	"\x16GetTransactionResponse\x12T\n" +
+	"\vtransaction\x18\x01 \x01(\v22.invora.billing.common.v2.BillingWalletTransactionR\vtransaction\"\xe9\x02\n" +
+	"\x17ListTransactionsRequest\x12\x1b\n" +
+	"\twallet_id\x18\x01 \x01(\tR\bwalletId\x12H\n" +
+	"\x06filter\x18\x02 \x01(\v20.invora.billing.wallets.v2.ListTransactionFilterR\x06filter\x12B\n" +
+	"\x04sort\x18\x03 \x01(\v2..invora.billing.wallets.v2.ListTransactionSortR\x04sort\x126\n" +
+	"\n" +
+	"pagination\x18\x04 \x01(\v2\x16.kernel.PaginationInfoR\n" +
+	"pagination\x127\n" +
+	"\tread_mask\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xc9\x01\n" +
+	"\x18ListTransactionsResponse\x12H\n" +
+	"\x05items\x18\x01 \x03(\v22.invora.billing.common.v2.BillingWalletTransactionR\x05items\x12\x1f\n" +
+	"\vtotal_count\x18\x02 \x01(\x04R\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"\x82\x01\n" +
+	"\x15ListTransactionFilter\x12H\n" +
+	"\x04part\x18\x01 \x01(\v24.invora.billing.wallets.v2.ListTransactionFilterPartR\x04part\x12\x1f\n" +
+	"\vtext_search\x18\x02 \x01(\tR\n" +
+	"textSearch\"g\n" +
+	"\x19ListTransactionFilterPart\x12B\n" +
+	"\n" +
+	"created_at\x18\x01 \x01(\v2!.kernel.ListRequestFilterPartDateH\x00R\tcreatedAtB\x06\n" +
+	"\x04type\"_\n" +
+	"\x13ListTransactionSort\x12H\n" +
+	"\x05rules\x18\x01 \x03(\v22.invora.billing.wallets.v2.ListTransactionSortRuleR\x05rules\"Y\n" +
+	"\x17ListTransactionSortRule\x126\n" +
+	"\n" +
+	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAtB\x06\n" +
+	"\x04type\"\xd7\x02\n" +
+	"\"ListTransactionConsumptionsRequest\x12\x1b\n" +
+	"\twallet_id\x18\x01 \x01(\tR\bwalletId\x12%\n" +
+	"\x0etransaction_id\x18\x02 \x01(\tR\rtransactionId\x12H\n" +
+	"\x04sort\x18\x03 \x01(\v24.invora.billing.wallets.v2.ListTransactionDetailSortR\x04sort\x126\n" +
+	"\n" +
+	"pagination\x18\x04 \x01(\v2\x16.kernel.PaginationInfoR\n" +
+	"pagination\x127\n" +
+	"\tread_mask\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xd9\x01\n" +
+	"#ListTransactionConsumptionsResponse\x12M\n" +
+	"\x05items\x18\x01 \x03(\v27.invora.billing.wallets.v2.WalletTransactionConsumptionR\x05items\x12\x1f\n" +
+	"\vtotal_count\x18\x02 \x01(\x04R\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"\xd3\x02\n" +
+	"\x1eListTransactionFundingsRequest\x12\x1b\n" +
+	"\twallet_id\x18\x01 \x01(\tR\bwalletId\x12%\n" +
+	"\x0etransaction_id\x18\x02 \x01(\tR\rtransactionId\x12H\n" +
+	"\x04sort\x18\x03 \x01(\v24.invora.billing.wallets.v2.ListTransactionDetailSortR\x04sort\x126\n" +
+	"\n" +
+	"pagination\x18\x04 \x01(\v2\x16.kernel.PaginationInfoR\n" +
+	"pagination\x127\n" +
+	"\tread_mask\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xd1\x01\n" +
+	"\x1fListTransactionFundingsResponse\x12I\n" +
+	"\x05items\x18\x01 \x03(\v23.invora.billing.wallets.v2.WalletTransactionFundingR\x05items\x12\x1f\n" +
+	"\vtotal_count\x18\x02 \x01(\x04R\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"k\n" +
+	"\x19ListTransactionDetailSort\x12N\n" +
+	"\x05rules\x18\x01 \x03(\v28.invora.billing.wallets.v2.ListTransactionDetailSortRuleR\x05rules\"_\n" +
+	"\x1dListTransactionDetailSortRule\x126\n" +
+	"\n" +
+	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAtB\x06\n" +
+	"\x04type\"\x81\x01\n" +
+	"\x0eAppliesToInput\x12.\n" +
+	"\x13billable_metric_ids\x18\x01 \x03(\tR\x11billableMetricIds\x12?\n" +
+	"\tfee_types\x18\x02 \x03(\x0e2\".invora.billing.common.v2.FeeTypesR\bfeeTypes\"\x8b\v\n" +
 	"#CreateRecurringTransactionRuleInput\x12D\n" +
 	"\rexpiration_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\fexpirationAt\x88\x01\x01\x12,\n" +
 	"\x0fgranted_credits\x18\x02 \x01(\tH\x01R\x0egrantedCredits\x88\x01\x01\x12=\n" +
-	"\x19ignore_paid_top_up_limits\x18\x03 \x01(\bH\x02R\x15ignorePaidTopUpLimits\x88\x01\x01\x12[\n" +
-	"\binterval\x18\x04 \x01(\x0e2:.invora.billing.common.v2.RecurringTransactionIntervalEnumH\x03R\binterval\x88\x01\x01\x12x\n" +
+	"\x19ignore_paid_top_up_limits\x18\x03 \x01(\bH\x02R\x15ignorePaidTopUpLimits\x88\x01\x01\x12W\n" +
+	"\binterval\x18\x04 \x01(\x0e26.invora.billing.common.v2.RecurringTransactionIntervalH\x03R\binterval\x88\x01\x01\x12x\n" +
 	"\x16invoice_custom_section\x18\x05 \x01(\v2=.invora.billing.common.v2.InvoiceCustomSectionsReferenceInputH\x04R\x14invoiceCustomSection\x88\x01\x01\x12R\n" +
-	"#invoice_requires_successful_payment\x18\x06 \x01(\bH\x05R invoiceRequiresSuccessfulPayment\x88\x01\x01\x12U\n" +
-	"\x06method\x18\a \x01(\x0e28.invora.billing.common.v2.RecurringTransactionMethodEnumH\x06R\x06method\x88\x01\x01\x12&\n" +
+	"#invoice_requires_successful_payment\x18\x06 \x01(\bH\x05R invoiceRequiresSuccessfulPayment\x88\x01\x01\x12Q\n" +
+	"\x06method\x18\a \x01(\x0e24.invora.billing.common.v2.RecurringTransactionMethodH\x06R\x06method\x88\x01\x01\x12&\n" +
 	"\fpaid_credits\x18\b \x01(\tH\aR\vpaidCredits\x88\x01\x01\x12a\n" +
 	"\x0epayment_method\x18\t \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\bR\rpaymentMethod\x88\x01\x01\x12>\n" +
 	"\n" +
@@ -2912,10 +2921,10 @@ const file_invora_billing_wallets_v2_service_proto_rawDesc = "" +
 	" \x01(\v2\x1a.google.protobuf.TimestampH\tR\tstartedAt\x88\x01\x01\x129\n" +
 	"\x16target_ongoing_balance\x18\v \x01(\tH\n" +
 	"R\x14targetOngoingBalance\x88\x01\x01\x120\n" +
-	"\x11threshold_credits\x18\f \x01(\tH\vR\x10thresholdCredits\x88\x01\x01\x12l\n" +
-	"\x14transaction_metadata\x18\r \x03(\v29.invora.billing.wallets.v2.CreateTransactionMetadataInputR\x13transactionMetadata\x12.\n" +
-	"\x10transaction_name\x18\x0e \x01(\tH\fR\x0ftransactionName\x88\x01\x01\x12S\n" +
-	"\atrigger\x18\x0f \x01(\x0e29.invora.billing.common.v2.RecurringTransactionTriggerEnumR\atriggerB\x10\n" +
+	"\x11threshold_credits\x18\f \x01(\tH\vR\x10thresholdCredits\x88\x01\x01\x12f\n" +
+	"\x14transaction_metadata\x18\r \x03(\v23.invora.billing.wallets.v2.TransactionMetadataInputR\x13transactionMetadata\x12.\n" +
+	"\x10transaction_name\x18\x0e \x01(\tH\fR\x0ftransactionName\x88\x01\x01\x12O\n" +
+	"\atrigger\x18\x0f \x01(\x0e25.invora.billing.common.v2.RecurringTransactionTriggerR\atriggerB\x10\n" +
 	"\x0e_expiration_atB\x12\n" +
 	"\x10_granted_creditsB\x1c\n" +
 	"\x1a_ignore_paid_top_up_limitsB\v\n" +
@@ -2928,47 +2937,81 @@ const file_invora_billing_wallets_v2_service_proto_rawDesc = "" +
 	"\v_started_atB\x19\n" +
 	"\x17_target_ongoing_balanceB\x14\n" +
 	"\x12_threshold_creditsB\x13\n" +
-	"\x11_transaction_name\"\x90\x02\n" +
-	"\x18WalletTransactionFunding\x12!\n" +
-	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x129\n" +
+	"\x11_transaction_name\"\xe9\v\n" +
+	"#UpdateRecurringTransactionRuleInput\x12D\n" +
+	"\rexpiration_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\fexpirationAt\x88\x01\x01\x12,\n" +
+	"\x0fgranted_credits\x18\x02 \x01(\tH\x01R\x0egrantedCredits\x88\x01\x01\x12=\n" +
+	"\x19ignore_paid_top_up_limits\x18\x03 \x01(\bH\x02R\x15ignorePaidTopUpLimits\x88\x01\x01\x12W\n" +
+	"\binterval\x18\x04 \x01(\x0e26.invora.billing.common.v2.RecurringTransactionIntervalH\x03R\binterval\x88\x01\x01\x12x\n" +
+	"\x16invoice_custom_section\x18\x05 \x01(\v2=.invora.billing.common.v2.InvoiceCustomSectionsReferenceInputH\x04R\x14invoiceCustomSection\x88\x01\x01\x12R\n" +
+	"#invoice_requires_successful_payment\x18\x06 \x01(\bH\x05R invoiceRequiresSuccessfulPayment\x88\x01\x01\x123\n" +
+	"\x13billing_provider_id\x18\a \x01(\tH\x06R\x11billingProviderId\x88\x01\x01\x12Q\n" +
+	"\x06method\x18\b \x01(\x0e24.invora.billing.common.v2.RecurringTransactionMethodH\aR\x06method\x88\x01\x01\x12&\n" +
+	"\fpaid_credits\x18\t \x01(\tH\bR\vpaidCredits\x88\x01\x01\x12a\n" +
+	"\x0epayment_method\x18\n" +
+	" \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\tR\rpaymentMethod\x88\x01\x01\x12>\n" +
 	"\n" +
-	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12#\n" +
-	"\rcredit_amount\x18\x03 \x01(\tR\fcreditAmount\x12\x0e\n" +
-	"\x02id\x18\x04 \x01(\tR\x02id\x12a\n" +
-	"\x12wallet_transaction\x18\x05 \x01(\v22.invora.billing.common.v2.BillingWalletTransactionR\x11walletTransaction\"\x94\x02\n" +
+	"started_at\x18\v \x01(\v2\x1a.google.protobuf.TimestampH\n" +
+	"R\tstartedAt\x88\x01\x01\x129\n" +
+	"\x16target_ongoing_balance\x18\f \x01(\tH\vR\x14targetOngoingBalance\x88\x01\x01\x120\n" +
+	"\x11threshold_credits\x18\r \x01(\tH\fR\x10thresholdCredits\x88\x01\x01\x12f\n" +
+	"\x14transaction_metadata\x18\x0e \x03(\v23.invora.billing.wallets.v2.TransactionMetadataInputR\x13transactionMetadata\x12.\n" +
+	"\x10transaction_name\x18\x0f \x01(\tH\rR\x0ftransactionName\x88\x01\x01\x12T\n" +
+	"\atrigger\x18\x10 \x01(\x0e25.invora.billing.common.v2.RecurringTransactionTriggerH\x0eR\atrigger\x88\x01\x01B\x10\n" +
+	"\x0e_expiration_atB\x12\n" +
+	"\x10_granted_creditsB\x1c\n" +
+	"\x1a_ignore_paid_top_up_limitsB\v\n" +
+	"\t_intervalB\x19\n" +
+	"\x17_invoice_custom_sectionB&\n" +
+	"$_invoice_requires_successful_paymentB\x16\n" +
+	"\x14_billing_provider_idB\t\n" +
+	"\a_methodB\x0f\n" +
+	"\r_paid_creditsB\x11\n" +
+	"\x0f_payment_methodB\r\n" +
+	"\v_started_atB\x19\n" +
+	"\x17_target_ongoing_balanceB\x14\n" +
+	"\x12_threshold_creditsB\x13\n" +
+	"\x11_transaction_nameB\n" +
+	"\n" +
+	"\b_trigger\"B\n" +
+	"\x18TransactionMetadataInput\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value\"\x94\x02\n" +
 	"\x1cWalletTransactionConsumption\x12!\n" +
 	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x129\n" +
 	"\n" +
 	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12#\n" +
 	"\rcredit_amount\x18\x03 \x01(\tR\fcreditAmount\x12\x0e\n" +
 	"\x02id\x18\x04 \x01(\tR\x02id\x12a\n" +
-	"\x12wallet_transaction\x18\x05 \x01(\v22.invora.billing.common.v2.BillingWalletTransactionR\x11walletTransaction*;\n" +
-	"\x04View\x12\x14\n" +
-	"\x10VIEW_UNSPECIFIED\x10\x00\x12\x0e\n" +
+	"\x12wallet_transaction\x18\x05 \x01(\v22.invora.billing.common.v2.BillingWalletTransactionR\x11walletTransaction\"\x90\x02\n" +
+	"\x18WalletTransactionFunding\x12!\n" +
+	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x129\n" +
 	"\n" +
-	"VIEW_BASIC\x10\x01\x12\r\n" +
-	"\tVIEW_FULL\x10\x022\xa9\x11\n" +
-	"\rWalletService\x12\x9d\x01\n" +
+	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12#\n" +
+	"\rcredit_amount\x18\x03 \x01(\tR\fcreditAmount\x12\x0e\n" +
+	"\x02id\x18\x04 \x01(\tR\x02id\x12a\n" +
+	"\x12wallet_transaction\x18\x05 \x01(\v22.invora.billing.common.v2.BillingWalletTransactionR\x11walletTransaction2\xf5\x10\n" +
+	"\x0eWalletsService\x12\xa4\x01\n" +
+	"\x04List\x12&.invora.billing.wallets.v2.ListRequest\x1a'.invora.billing.wallets.v2.ListResponse\"K\xe2\xf2\x19 \n" +
+	"\x1eInvora.Billing.Wallets.v2.List\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/api/billing/v2/wallets/list\x12\x9d\x01\n" +
 	"\x03Get\x12%.invora.billing.wallets.v2.GetRequest\x1a&.invora.billing.wallets.v2.GetResponse\"G\xe2\xf2\x19\x1f\n" +
-	"\x1dInvora.Billing.Wallets.v2.Get\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/v2/billing/wallets/{id}\x12\x9c\x01\n" +
-	"\x04List\x12&.invora.billing.wallets.v2.ListRequest\x1a'.invora.billing.wallets.v2.ListResponse\"C\xe2\xf2\x19 \n" +
-	"\x1eInvora.Billing.Wallets.v2.List\x82\xd3\xe4\x93\x02\x19\x12\x17/api/v2/billing/wallets\x12\xdf\x01\n" +
-	"\x14CreateCustomerWallet\x126.invora.billing.wallets.v2.CreateCustomerWalletRequest\x1a7.invora.billing.wallets.v2.CreateCustomerWalletResponse\"V\xe2\xf2\x190\n" +
-	".Invora.Billing.Wallets.v2.CreateCustomerWallet\x82\xd3\xe4\x93\x02\x1c:\x01*\"\x17/api/v2/billing/wallets\x12\x8b\x02\n" +
-	"\x1fCreateCustomerWalletTransaction\x12A.invora.billing.wallets.v2.CreateCustomerWalletTransactionRequest\x1aB.invora.billing.wallets.v2.CreateCustomerWalletTransactionResponse\"a\xe2\xf2\x19;\n" +
-	"9Invora.Billing.Wallets.v2.CreateCustomerWalletTransaction\x82\xd3\xe4\x93\x02\x1c:\x01*\"\x17/api/v2/billing/wallets\x12\xc9\x01\n" +
-	"\x0eGetTransaction\x120.invora.billing.wallets.v2.GetTransactionRequest\x1a1.invora.billing.wallets.v2.GetTransactionResponse\"R\xe2\xf2\x19*\n" +
-	"(Invora.Billing.Wallets.v2.GetTransaction\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/v2/billing/wallets/{id}\x12\xf8\x01\n" +
-	"\x1bListTransactionConsumptions\x12=.invora.billing.wallets.v2.ListTransactionConsumptionsRequest\x1a>.invora.billing.wallets.v2.ListTransactionConsumptionsResponse\"Z\xe2\xf2\x197\n" +
-	"5Invora.Billing.Wallets.v2.ListTransactionConsumptions\x82\xd3\xe4\x93\x02\x19\x12\x17/api/v2/billing/wallets\x12\xe8\x01\n" +
-	"\x17ListTransactionFundings\x129.invora.billing.wallets.v2.ListTransactionFundingsRequest\x1a:.invora.billing.wallets.v2.ListTransactionFundingsResponse\"V\xe2\xf2\x193\n" +
-	"1Invora.Billing.Wallets.v2.ListTransactionFundings\x82\xd3\xe4\x93\x02\x19\x12\x17/api/v2/billing/wallets\x12\xcc\x01\n" +
-	"\x10ListTransactions\x122.invora.billing.wallets.v2.ListTransactionsRequest\x1a3.invora.billing.wallets.v2.ListTransactionsResponse\"O\xe2\xf2\x19,\n" +
-	"*Invora.Billing.Wallets.v2.ListTransactions\x82\xd3\xe4\x93\x02\x19\x12\x17/api/v2/billing/wallets\x12\x85\x02\n" +
-	"\x17TerminateCustomerWallet\x129.invora.billing.wallets.v2.TerminateCustomerWalletRequest\x1a:.invora.billing.wallets.v2.TerminateCustomerWalletResponse\"s\xe2\xf2\x193\n" +
-	"1Invora.Billing.Wallets.v2.TerminateCustomerWallet\x82\xd3\xe4\x93\x026:\x01*\"1/api/v2/billing/wallets:terminate-customer-wallet\x12\xdf\x01\n" +
-	"\x14UpdateCustomerWallet\x126.invora.billing.wallets.v2.UpdateCustomerWalletRequest\x1a7.invora.billing.wallets.v2.UpdateCustomerWalletResponse\"V\xe2\xf2\x190\n" +
-	".Invora.Billing.Wallets.v2.UpdateCustomerWallet\x82\xd3\xe4\x93\x02\x1c:\x01*2\x17/api/v2/billing/walletsB\x84\x02\n" +
+	"\x1dInvora.Billing.Wallets.v2.Get\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/billing/v2/wallets/{id}\x12\xae\x01\n" +
+	"\x06Create\x12(.invora.billing.wallets.v2.CreateRequest\x1a).invora.billing.wallets.v2.CreateResponse\"O\xe2\xf2\x19)\n" +
+	"'Invora.Billing.Wallets.v2.Modify.Create\x82\xd3\xe4\x93\x02\x1c:\x01*\"\x17/api/billing/v2/wallets\x12\xb3\x01\n" +
+	"\x06Update\x12(.invora.billing.wallets.v2.UpdateRequest\x1a).invora.billing.wallets.v2.UpdateResponse\"T\xe2\xf2\x19)\n" +
+	"'Invora.Billing.Wallets.v2.Modify.Update\x82\xd3\xe4\x93\x02!:\x01*\x1a\x1c/api/billing/v2/wallets/{id}\x12\xc9\x01\n" +
+	"\tTerminate\x12+.invora.billing.wallets.v2.TerminateRequest\x1a,.invora.billing.wallets.v2.TerminateResponse\"a\xe2\xf2\x19,\n" +
+	"*Invora.Billing.Wallets.v2.Modify.Terminate\x82\xd3\xe4\x93\x02+:\x01*\"&/api/billing/v2/wallets/{id}/terminate\x12\xf3\x01\n" +
+	"\x11CreateTransaction\x123.invora.billing.wallets.v2.CreateTransactionRequest\x1a4.invora.billing.wallets.v2.CreateTransactionResponse\"s\xe2\xf2\x194\n" +
+	"2Invora.Billing.Wallets.v2.Modify.CreateTransaction\x82\xd3\xe4\x93\x025:\x01*\"0/api/billing/v2/wallets/{wallet_id}/transactions\x12\xd7\x01\n" +
+	"\x0eGetTransaction\x120.invora.billing.wallets.v2.GetTransactionRequest\x1a1.invora.billing.wallets.v2.GetTransactionResponse\"`\xe2\xf2\x19\x1f\n" +
+	"\x1dInvora.Billing.Wallets.v2.Get\x82\xd3\xe4\x93\x027\x125/api/billing/v2/wallets/{wallet_id}/transactions/{id}\x12\xe1\x01\n" +
+	"\x10ListTransactions\x122.invora.billing.wallets.v2.ListTransactionsRequest\x1a3.invora.billing.wallets.v2.ListTransactionsResponse\"d\xe2\xf2\x19 \n" +
+	"\x1eInvora.Billing.Wallets.v2.List\x82\xd3\xe4\x93\x02::\x01*\"5/api/billing/v2/wallets/{wallet_id}/transactions/list\x12\xa1\x02\n" +
+	"\x1bListTransactionConsumptions\x12=.invora.billing.wallets.v2.ListTransactionConsumptionsRequest\x1a>.invora.billing.wallets.v2.ListTransactionConsumptionsResponse\"\x82\x01\xe2\xf2\x19 \n" +
+	"\x1eInvora.Billing.Wallets.v2.List\x82\xd3\xe4\x93\x02X:\x01*\"S/api/billing/v2/wallets/{wallet_id}/transactions/{transaction_id}/consumptions/list\x12\x90\x02\n" +
+	"\x17ListTransactionFundings\x129.invora.billing.wallets.v2.ListTransactionFundingsRequest\x1a:.invora.billing.wallets.v2.ListTransactionFundingsResponse\"~\xe2\xf2\x19 \n" +
+	"\x1eInvora.Billing.Wallets.v2.List\x82\xd3\xe4\x93\x02T:\x01*\"O/api/billing/v2/wallets/{wallet_id}/transactions/{transaction_id}/fundings/listB\x84\x02\n" +
 	"\x1dcom.invora.billing.wallets.v2B\fServiceProtoP\x01ZNgithub.com/invoraapp/invora-controller/gen/invora/billing/wallets/v2;walletsv2\xa2\x02\x03IBW\xaa\x02\x19Invora.Billing.Wallets.V2\xca\x02\x19Invora\\Billing\\Wallets\\V2\xe2\x02%Invora\\Billing\\Wallets\\V2\\GPBMetadata\xea\x02\x1cInvora::Billing::Wallets::V2b\x06proto3"
 
 var (
@@ -2983,178 +3026,167 @@ func file_invora_billing_wallets_v2_service_proto_rawDescGZIP() []byte {
 	return file_invora_billing_wallets_v2_service_proto_rawDescData
 }
 
-var file_invora_billing_wallets_v2_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_invora_billing_wallets_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 36)
 var file_invora_billing_wallets_v2_service_proto_goTypes = []any{
-	(View)(0),                                       // 0: invora.billing.wallets.v2.View
-	(*GetRequest)(nil),                              // 1: invora.billing.wallets.v2.GetRequest
-	(*GetResponse)(nil),                             // 2: invora.billing.wallets.v2.GetResponse
-	(*GetTransactionRequest)(nil),                   // 3: invora.billing.wallets.v2.GetTransactionRequest
-	(*GetTransactionResponse)(nil),                  // 4: invora.billing.wallets.v2.GetTransactionResponse
-	(*ListTransactionConsumptionsRequest)(nil),      // 5: invora.billing.wallets.v2.ListTransactionConsumptionsRequest
-	(*ListTransactionConsumptionsResponse)(nil),     // 6: invora.billing.wallets.v2.ListTransactionConsumptionsResponse
-	(*ListFilter)(nil),                              // 7: invora.billing.wallets.v2.ListFilter
-	(*ListFilterPart)(nil),                          // 8: invora.billing.wallets.v2.ListFilterPart
-	(*ListSort)(nil),                                // 9: invora.billing.wallets.v2.ListSort
-	(*ListSortRule)(nil),                            // 10: invora.billing.wallets.v2.ListSortRule
-	(*ListTransactionFundingsRequest)(nil),          // 11: invora.billing.wallets.v2.ListTransactionFundingsRequest
-	(*ListTransactionFundingsResponse)(nil),         // 12: invora.billing.wallets.v2.ListTransactionFundingsResponse
-	(*ListTransactionsRequest)(nil),                 // 13: invora.billing.wallets.v2.ListTransactionsRequest
-	(*ListTransactionsResponse)(nil),                // 14: invora.billing.wallets.v2.ListTransactionsResponse
-	(*ListRequest)(nil),                             // 15: invora.billing.wallets.v2.ListRequest
-	(*ListResponse)(nil),                            // 16: invora.billing.wallets.v2.ListResponse
-	(*CreateCustomerWalletRequest)(nil),             // 17: invora.billing.wallets.v2.CreateCustomerWalletRequest
-	(*CreateCustomerWalletResponse)(nil),            // 18: invora.billing.wallets.v2.CreateCustomerWalletResponse
-	(*CreateCustomerWalletTransactionRequest)(nil),  // 19: invora.billing.wallets.v2.CreateCustomerWalletTransactionRequest
-	(*CreateCustomerWalletTransactionResponse)(nil), // 20: invora.billing.wallets.v2.CreateCustomerWalletTransactionResponse
-	(*TerminateCustomerWalletRequest)(nil),          // 21: invora.billing.wallets.v2.TerminateCustomerWalletRequest
-	(*TerminateCustomerWalletResponse)(nil),         // 22: invora.billing.wallets.v2.TerminateCustomerWalletResponse
-	(*UpdateCustomerWalletRequest)(nil),             // 23: invora.billing.wallets.v2.UpdateCustomerWalletRequest
-	(*UpdateCustomerWalletResponse)(nil),            // 24: invora.billing.wallets.v2.UpdateCustomerWalletResponse
-	(*UpdateCustomerWalletInput)(nil),               // 25: invora.billing.wallets.v2.UpdateCustomerWalletInput
-	(*UpdateRecurringTransactionRuleInput)(nil),     // 26: invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput
-	(*CreateTransactionMetadataInput)(nil),          // 27: invora.billing.wallets.v2.CreateTransactionMetadataInput
-	(*AppliesToInput)(nil),                          // 28: invora.billing.wallets.v2.AppliesToInput
-	(*TerminateCustomerWalletInput)(nil),            // 29: invora.billing.wallets.v2.TerminateCustomerWalletInput
-	(*CreateCustomerWalletTransactionInput)(nil),    // 30: invora.billing.wallets.v2.CreateCustomerWalletTransactionInput
-	(*WalletTransactionMetadataInput)(nil),          // 31: invora.billing.wallets.v2.WalletTransactionMetadataInput
-	(*WalletTransactionCollection)(nil),             // 32: invora.billing.wallets.v2.WalletTransactionCollection
-	(*CreateCustomerWalletInput)(nil),               // 33: invora.billing.wallets.v2.CreateCustomerWalletInput
-	(*CreateRecurringTransactionRuleInput)(nil),     // 34: invora.billing.wallets.v2.CreateRecurringTransactionRuleInput
-	(*WalletTransactionFunding)(nil),                // 35: invora.billing.wallets.v2.WalletTransactionFunding
-	(*WalletTransactionConsumption)(nil),            // 36: invora.billing.wallets.v2.WalletTransactionConsumption
-	(*fieldmaskpb.FieldMask)(nil),                   // 37: google.protobuf.FieldMask
-	(*v2.BillingWallet)(nil),                        // 38: invora.billing.common.v2.BillingWallet
-	(*v2.BillingWalletTransaction)(nil),             // 39: invora.billing.common.v2.BillingWalletTransaction
-	(*kernel.PaginationInfo)(nil),                   // 40: kernel.PaginationInfo
-	(*wrapperspb.StringValue)(nil),                  // 41: google.protobuf.StringValue
-	(kernel.SortDirection)(0),                       // 42: kernel.SortDirection
-	(*timestamppb.Timestamp)(nil),                   // 43: google.protobuf.Timestamp
-	(*v2.InvoiceCustomSectionsReferenceInput)(nil),  // 44: invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
-	(*v2.MetadataInput)(nil),                        // 45: invora.billing.common.v2.MetadataInput
-	(*v2.PaymentMethodReferenceInput)(nil),          // 46: invora.billing.common.v2.PaymentMethodReferenceInput
-	(v2.RecurringTransactionIntervalEnum)(0),        // 47: invora.billing.common.v2.RecurringTransactionIntervalEnum
-	(v2.RecurringTransactionMethodEnum)(0),          // 48: invora.billing.common.v2.RecurringTransactionMethodEnum
-	(v2.RecurringTransactionTriggerEnum)(0),         // 49: invora.billing.common.v2.RecurringTransactionTriggerEnum
-	(v2.FeeTypesEnum)(0),                            // 50: invora.billing.common.v2.FeeTypesEnum
-	(*v2.CollectionMetadata)(nil),                   // 51: invora.billing.common.v2.CollectionMetadata
-	(v2.CurrencyEnum)(0),                            // 52: invora.billing.common.v2.CurrencyEnum
+	(*ListRequest)(nil),                            // 0: invora.billing.wallets.v2.ListRequest
+	(*ListResponse)(nil),                           // 1: invora.billing.wallets.v2.ListResponse
+	(*ListWalletFilter)(nil),                       // 2: invora.billing.wallets.v2.ListWalletFilter
+	(*ListWalletFilterPart)(nil),                   // 3: invora.billing.wallets.v2.ListWalletFilterPart
+	(*ListWalletSort)(nil),                         // 4: invora.billing.wallets.v2.ListWalletSort
+	(*ListWalletSortRule)(nil),                     // 5: invora.billing.wallets.v2.ListWalletSortRule
+	(*GetRequest)(nil),                             // 6: invora.billing.wallets.v2.GetRequest
+	(*GetResponse)(nil),                            // 7: invora.billing.wallets.v2.GetResponse
+	(*CreateRequest)(nil),                          // 8: invora.billing.wallets.v2.CreateRequest
+	(*CreateResponse)(nil),                         // 9: invora.billing.wallets.v2.CreateResponse
+	(*UpdateRequest)(nil),                          // 10: invora.billing.wallets.v2.UpdateRequest
+	(*UpdateResponse)(nil),                         // 11: invora.billing.wallets.v2.UpdateResponse
+	(*TerminateRequest)(nil),                       // 12: invora.billing.wallets.v2.TerminateRequest
+	(*TerminateResponse)(nil),                      // 13: invora.billing.wallets.v2.TerminateResponse
+	(*CreateTransactionRequest)(nil),               // 14: invora.billing.wallets.v2.CreateTransactionRequest
+	(*CreateTransactionResponse)(nil),              // 15: invora.billing.wallets.v2.CreateTransactionResponse
+	(*GetTransactionRequest)(nil),                  // 16: invora.billing.wallets.v2.GetTransactionRequest
+	(*GetTransactionResponse)(nil),                 // 17: invora.billing.wallets.v2.GetTransactionResponse
+	(*ListTransactionsRequest)(nil),                // 18: invora.billing.wallets.v2.ListTransactionsRequest
+	(*ListTransactionsResponse)(nil),               // 19: invora.billing.wallets.v2.ListTransactionsResponse
+	(*ListTransactionFilter)(nil),                  // 20: invora.billing.wallets.v2.ListTransactionFilter
+	(*ListTransactionFilterPart)(nil),              // 21: invora.billing.wallets.v2.ListTransactionFilterPart
+	(*ListTransactionSort)(nil),                    // 22: invora.billing.wallets.v2.ListTransactionSort
+	(*ListTransactionSortRule)(nil),                // 23: invora.billing.wallets.v2.ListTransactionSortRule
+	(*ListTransactionConsumptionsRequest)(nil),     // 24: invora.billing.wallets.v2.ListTransactionConsumptionsRequest
+	(*ListTransactionConsumptionsResponse)(nil),    // 25: invora.billing.wallets.v2.ListTransactionConsumptionsResponse
+	(*ListTransactionFundingsRequest)(nil),         // 26: invora.billing.wallets.v2.ListTransactionFundingsRequest
+	(*ListTransactionFundingsResponse)(nil),        // 27: invora.billing.wallets.v2.ListTransactionFundingsResponse
+	(*ListTransactionDetailSort)(nil),              // 28: invora.billing.wallets.v2.ListTransactionDetailSort
+	(*ListTransactionDetailSortRule)(nil),          // 29: invora.billing.wallets.v2.ListTransactionDetailSortRule
+	(*AppliesToInput)(nil),                         // 30: invora.billing.wallets.v2.AppliesToInput
+	(*CreateRecurringTransactionRuleInput)(nil),    // 31: invora.billing.wallets.v2.CreateRecurringTransactionRuleInput
+	(*UpdateRecurringTransactionRuleInput)(nil),    // 32: invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput
+	(*TransactionMetadataInput)(nil),               // 33: invora.billing.wallets.v2.TransactionMetadataInput
+	(*WalletTransactionConsumption)(nil),           // 34: invora.billing.wallets.v2.WalletTransactionConsumption
+	(*WalletTransactionFunding)(nil),               // 35: invora.billing.wallets.v2.WalletTransactionFunding
+	(*kernel.PaginationInfo)(nil),                  // 36: kernel.PaginationInfo
+	(*fieldmaskpb.FieldMask)(nil),                  // 37: google.protobuf.FieldMask
+	(v2.View)(0),                                   // 38: invora.billing.common.v2.View
+	(*v2.BillingWallet)(nil),                       // 39: invora.billing.common.v2.BillingWallet
+	(v2.CurrencyEnum)(0),                           // 40: invora.billing.common.v2.CurrencyEnum
+	(kernel.SortDirection)(0),                      // 41: kernel.SortDirection
+	(*timestamppb.Timestamp)(nil),                  // 42: google.protobuf.Timestamp
+	(*v2.InvoiceCustomSectionsReferenceInput)(nil), // 43: invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
+	(*v2.MetadataInput)(nil),                       // 44: invora.billing.common.v2.MetadataInput
+	(*v2.PaymentMethodReferenceInput)(nil),         // 45: invora.billing.common.v2.PaymentMethodReferenceInput
+	(*v2.BillingWalletTransaction)(nil),            // 46: invora.billing.common.v2.BillingWalletTransaction
+	(*kernel.ListRequestFilterPartDate)(nil),       // 47: kernel.ListRequestFilterPartDate
+	(v2.FeeTypes)(0),                               // 48: invora.billing.common.v2.FeeTypes
+	(v2.RecurringTransactionInterval)(0),           // 49: invora.billing.common.v2.RecurringTransactionInterval
+	(v2.RecurringTransactionMethod)(0),             // 50: invora.billing.common.v2.RecurringTransactionMethod
+	(v2.RecurringTransactionTrigger)(0),            // 51: invora.billing.common.v2.RecurringTransactionTrigger
 }
 var file_invora_billing_wallets_v2_service_proto_depIdxs = []int32{
-	37, // 0: invora.billing.wallets.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 1: invora.billing.wallets.v2.GetRequest.view:type_name -> invora.billing.wallets.v2.View
-	38, // 2: invora.billing.wallets.v2.GetResponse.wallet:type_name -> invora.billing.common.v2.BillingWallet
-	37, // 3: invora.billing.wallets.v2.GetTransactionRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 4: invora.billing.wallets.v2.GetTransactionRequest.view:type_name -> invora.billing.wallets.v2.View
-	39, // 5: invora.billing.wallets.v2.GetTransactionResponse.wallet_transaction:type_name -> invora.billing.common.v2.BillingWalletTransaction
-	7,  // 6: invora.billing.wallets.v2.ListTransactionConsumptionsRequest.filter:type_name -> invora.billing.wallets.v2.ListFilter
-	9,  // 7: invora.billing.wallets.v2.ListTransactionConsumptionsRequest.sort:type_name -> invora.billing.wallets.v2.ListSort
-	40, // 8: invora.billing.wallets.v2.ListTransactionConsumptionsRequest.pagination:type_name -> kernel.PaginationInfo
-	37, // 9: invora.billing.wallets.v2.ListTransactionConsumptionsRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 10: invora.billing.wallets.v2.ListTransactionConsumptionsRequest.view:type_name -> invora.billing.wallets.v2.View
-	36, // 11: invora.billing.wallets.v2.ListTransactionConsumptionsResponse.items:type_name -> invora.billing.wallets.v2.WalletTransactionConsumption
-	41, // 12: invora.billing.wallets.v2.ListTransactionConsumptionsResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	8,  // 13: invora.billing.wallets.v2.ListFilter.part:type_name -> invora.billing.wallets.v2.ListFilterPart
-	10, // 14: invora.billing.wallets.v2.ListSort.rules:type_name -> invora.billing.wallets.v2.ListSortRule
-	42, // 15: invora.billing.wallets.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
-	7,  // 16: invora.billing.wallets.v2.ListTransactionFundingsRequest.filter:type_name -> invora.billing.wallets.v2.ListFilter
-	9,  // 17: invora.billing.wallets.v2.ListTransactionFundingsRequest.sort:type_name -> invora.billing.wallets.v2.ListSort
-	40, // 18: invora.billing.wallets.v2.ListTransactionFundingsRequest.pagination:type_name -> kernel.PaginationInfo
-	37, // 19: invora.billing.wallets.v2.ListTransactionFundingsRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 20: invora.billing.wallets.v2.ListTransactionFundingsRequest.view:type_name -> invora.billing.wallets.v2.View
-	35, // 21: invora.billing.wallets.v2.ListTransactionFundingsResponse.items:type_name -> invora.billing.wallets.v2.WalletTransactionFunding
-	41, // 22: invora.billing.wallets.v2.ListTransactionFundingsResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	7,  // 23: invora.billing.wallets.v2.ListTransactionsRequest.filter:type_name -> invora.billing.wallets.v2.ListFilter
-	9,  // 24: invora.billing.wallets.v2.ListTransactionsRequest.sort:type_name -> invora.billing.wallets.v2.ListSort
-	40, // 25: invora.billing.wallets.v2.ListTransactionsRequest.pagination:type_name -> kernel.PaginationInfo
-	37, // 26: invora.billing.wallets.v2.ListTransactionsRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 27: invora.billing.wallets.v2.ListTransactionsRequest.view:type_name -> invora.billing.wallets.v2.View
-	39, // 28: invora.billing.wallets.v2.ListTransactionsResponse.items:type_name -> invora.billing.common.v2.BillingWalletTransaction
-	41, // 29: invora.billing.wallets.v2.ListTransactionsResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	7,  // 30: invora.billing.wallets.v2.ListRequest.filter:type_name -> invora.billing.wallets.v2.ListFilter
-	9,  // 31: invora.billing.wallets.v2.ListRequest.sort:type_name -> invora.billing.wallets.v2.ListSort
-	40, // 32: invora.billing.wallets.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
-	37, // 33: invora.billing.wallets.v2.ListRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 34: invora.billing.wallets.v2.ListRequest.view:type_name -> invora.billing.wallets.v2.View
-	38, // 35: invora.billing.wallets.v2.ListResponse.items:type_name -> invora.billing.common.v2.BillingWallet
-	41, // 36: invora.billing.wallets.v2.ListResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	33, // 37: invora.billing.wallets.v2.CreateCustomerWalletRequest.input:type_name -> invora.billing.wallets.v2.CreateCustomerWalletInput
-	38, // 38: invora.billing.wallets.v2.CreateCustomerWalletResponse.wallet:type_name -> invora.billing.common.v2.BillingWallet
-	7,  // 39: invora.billing.wallets.v2.CreateCustomerWalletTransactionRequest.filter:type_name -> invora.billing.wallets.v2.ListFilter
-	9,  // 40: invora.billing.wallets.v2.CreateCustomerWalletTransactionRequest.sort:type_name -> invora.billing.wallets.v2.ListSort
-	40, // 41: invora.billing.wallets.v2.CreateCustomerWalletTransactionRequest.pagination:type_name -> kernel.PaginationInfo
-	37, // 42: invora.billing.wallets.v2.CreateCustomerWalletTransactionRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 43: invora.billing.wallets.v2.CreateCustomerWalletTransactionRequest.view:type_name -> invora.billing.wallets.v2.View
-	39, // 44: invora.billing.wallets.v2.CreateCustomerWalletTransactionResponse.items:type_name -> invora.billing.common.v2.BillingWalletTransaction
-	41, // 45: invora.billing.wallets.v2.CreateCustomerWalletTransactionResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	29, // 46: invora.billing.wallets.v2.TerminateCustomerWalletRequest.input:type_name -> invora.billing.wallets.v2.TerminateCustomerWalletInput
-	38, // 47: invora.billing.wallets.v2.TerminateCustomerWalletResponse.wallet:type_name -> invora.billing.common.v2.BillingWallet
-	25, // 48: invora.billing.wallets.v2.UpdateCustomerWalletRequest.input:type_name -> invora.billing.wallets.v2.UpdateCustomerWalletInput
-	38, // 49: invora.billing.wallets.v2.UpdateCustomerWalletResponse.wallet:type_name -> invora.billing.common.v2.BillingWallet
-	28, // 50: invora.billing.wallets.v2.UpdateCustomerWalletInput.applies_to:type_name -> invora.billing.wallets.v2.AppliesToInput
-	43, // 51: invora.billing.wallets.v2.UpdateCustomerWalletInput.expiration_at:type_name -> google.protobuf.Timestamp
-	44, // 52: invora.billing.wallets.v2.UpdateCustomerWalletInput.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
-	45, // 53: invora.billing.wallets.v2.UpdateCustomerWalletInput.metadata:type_name -> invora.billing.common.v2.MetadataInput
-	46, // 54: invora.billing.wallets.v2.UpdateCustomerWalletInput.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
-	26, // 55: invora.billing.wallets.v2.UpdateCustomerWalletInput.recurring_transaction_rules:type_name -> invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput
-	43, // 56: invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput.expiration_at:type_name -> google.protobuf.Timestamp
-	47, // 57: invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput.interval:type_name -> invora.billing.common.v2.RecurringTransactionIntervalEnum
-	44, // 58: invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
-	48, // 59: invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput.method:type_name -> invora.billing.common.v2.RecurringTransactionMethodEnum
-	46, // 60: invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
-	43, // 61: invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput.started_at:type_name -> google.protobuf.Timestamp
-	27, // 62: invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput.transaction_metadata:type_name -> invora.billing.wallets.v2.CreateTransactionMetadataInput
-	49, // 63: invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput.trigger:type_name -> invora.billing.common.v2.RecurringTransactionTriggerEnum
-	50, // 64: invora.billing.wallets.v2.AppliesToInput.fee_types:type_name -> invora.billing.common.v2.FeeTypesEnum
-	44, // 65: invora.billing.wallets.v2.CreateCustomerWalletTransactionInput.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
-	31, // 66: invora.billing.wallets.v2.CreateCustomerWalletTransactionInput.metadata:type_name -> invora.billing.wallets.v2.WalletTransactionMetadataInput
-	46, // 67: invora.billing.wallets.v2.CreateCustomerWalletTransactionInput.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
-	39, // 68: invora.billing.wallets.v2.WalletTransactionCollection.collection:type_name -> invora.billing.common.v2.BillingWalletTransaction
-	51, // 69: invora.billing.wallets.v2.WalletTransactionCollection.metadata:type_name -> invora.billing.common.v2.CollectionMetadata
-	28, // 70: invora.billing.wallets.v2.CreateCustomerWalletInput.applies_to:type_name -> invora.billing.wallets.v2.AppliesToInput
-	52, // 71: invora.billing.wallets.v2.CreateCustomerWalletInput.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	43, // 72: invora.billing.wallets.v2.CreateCustomerWalletInput.expiration_at:type_name -> google.protobuf.Timestamp
-	44, // 73: invora.billing.wallets.v2.CreateCustomerWalletInput.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
-	45, // 74: invora.billing.wallets.v2.CreateCustomerWalletInput.metadata:type_name -> invora.billing.common.v2.MetadataInput
-	46, // 75: invora.billing.wallets.v2.CreateCustomerWalletInput.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
-	34, // 76: invora.billing.wallets.v2.CreateCustomerWalletInput.recurring_transaction_rules:type_name -> invora.billing.wallets.v2.CreateRecurringTransactionRuleInput
-	43, // 77: invora.billing.wallets.v2.CreateRecurringTransactionRuleInput.expiration_at:type_name -> google.protobuf.Timestamp
-	47, // 78: invora.billing.wallets.v2.CreateRecurringTransactionRuleInput.interval:type_name -> invora.billing.common.v2.RecurringTransactionIntervalEnum
-	44, // 79: invora.billing.wallets.v2.CreateRecurringTransactionRuleInput.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
-	48, // 80: invora.billing.wallets.v2.CreateRecurringTransactionRuleInput.method:type_name -> invora.billing.common.v2.RecurringTransactionMethodEnum
-	46, // 81: invora.billing.wallets.v2.CreateRecurringTransactionRuleInput.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
-	43, // 82: invora.billing.wallets.v2.CreateRecurringTransactionRuleInput.started_at:type_name -> google.protobuf.Timestamp
-	27, // 83: invora.billing.wallets.v2.CreateRecurringTransactionRuleInput.transaction_metadata:type_name -> invora.billing.wallets.v2.CreateTransactionMetadataInput
-	49, // 84: invora.billing.wallets.v2.CreateRecurringTransactionRuleInput.trigger:type_name -> invora.billing.common.v2.RecurringTransactionTriggerEnum
-	43, // 85: invora.billing.wallets.v2.WalletTransactionFunding.created_at:type_name -> google.protobuf.Timestamp
-	39, // 86: invora.billing.wallets.v2.WalletTransactionFunding.wallet_transaction:type_name -> invora.billing.common.v2.BillingWalletTransaction
-	43, // 87: invora.billing.wallets.v2.WalletTransactionConsumption.created_at:type_name -> google.protobuf.Timestamp
-	39, // 88: invora.billing.wallets.v2.WalletTransactionConsumption.wallet_transaction:type_name -> invora.billing.common.v2.BillingWalletTransaction
-	1,  // 89: invora.billing.wallets.v2.WalletService.Get:input_type -> invora.billing.wallets.v2.GetRequest
-	15, // 90: invora.billing.wallets.v2.WalletService.List:input_type -> invora.billing.wallets.v2.ListRequest
-	17, // 91: invora.billing.wallets.v2.WalletService.CreateCustomerWallet:input_type -> invora.billing.wallets.v2.CreateCustomerWalletRequest
-	19, // 92: invora.billing.wallets.v2.WalletService.CreateCustomerWalletTransaction:input_type -> invora.billing.wallets.v2.CreateCustomerWalletTransactionRequest
-	3,  // 93: invora.billing.wallets.v2.WalletService.GetTransaction:input_type -> invora.billing.wallets.v2.GetTransactionRequest
-	5,  // 94: invora.billing.wallets.v2.WalletService.ListTransactionConsumptions:input_type -> invora.billing.wallets.v2.ListTransactionConsumptionsRequest
-	11, // 95: invora.billing.wallets.v2.WalletService.ListTransactionFundings:input_type -> invora.billing.wallets.v2.ListTransactionFundingsRequest
-	13, // 96: invora.billing.wallets.v2.WalletService.ListTransactions:input_type -> invora.billing.wallets.v2.ListTransactionsRequest
-	21, // 97: invora.billing.wallets.v2.WalletService.TerminateCustomerWallet:input_type -> invora.billing.wallets.v2.TerminateCustomerWalletRequest
-	23, // 98: invora.billing.wallets.v2.WalletService.UpdateCustomerWallet:input_type -> invora.billing.wallets.v2.UpdateCustomerWalletRequest
-	2,  // 99: invora.billing.wallets.v2.WalletService.Get:output_type -> invora.billing.wallets.v2.GetResponse
-	16, // 100: invora.billing.wallets.v2.WalletService.List:output_type -> invora.billing.wallets.v2.ListResponse
-	18, // 101: invora.billing.wallets.v2.WalletService.CreateCustomerWallet:output_type -> invora.billing.wallets.v2.CreateCustomerWalletResponse
-	20, // 102: invora.billing.wallets.v2.WalletService.CreateCustomerWalletTransaction:output_type -> invora.billing.wallets.v2.CreateCustomerWalletTransactionResponse
-	4,  // 103: invora.billing.wallets.v2.WalletService.GetTransaction:output_type -> invora.billing.wallets.v2.GetTransactionResponse
-	6,  // 104: invora.billing.wallets.v2.WalletService.ListTransactionConsumptions:output_type -> invora.billing.wallets.v2.ListTransactionConsumptionsResponse
-	12, // 105: invora.billing.wallets.v2.WalletService.ListTransactionFundings:output_type -> invora.billing.wallets.v2.ListTransactionFundingsResponse
-	14, // 106: invora.billing.wallets.v2.WalletService.ListTransactions:output_type -> invora.billing.wallets.v2.ListTransactionsResponse
-	22, // 107: invora.billing.wallets.v2.WalletService.TerminateCustomerWallet:output_type -> invora.billing.wallets.v2.TerminateCustomerWalletResponse
-	24, // 108: invora.billing.wallets.v2.WalletService.UpdateCustomerWallet:output_type -> invora.billing.wallets.v2.UpdateCustomerWalletResponse
-	99, // [99:109] is the sub-list for method output_type
-	89, // [89:99] is the sub-list for method input_type
-	89, // [89:89] is the sub-list for extension type_name
-	89, // [89:89] is the sub-list for extension extendee
-	0,  // [0:89] is the sub-list for field type_name
+	2,  // 0: invora.billing.wallets.v2.ListRequest.filter:type_name -> invora.billing.wallets.v2.ListWalletFilter
+	4,  // 1: invora.billing.wallets.v2.ListRequest.sort:type_name -> invora.billing.wallets.v2.ListWalletSort
+	36, // 2: invora.billing.wallets.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
+	37, // 3: invora.billing.wallets.v2.ListRequest.read_mask:type_name -> google.protobuf.FieldMask
+	38, // 4: invora.billing.wallets.v2.ListRequest.view:type_name -> invora.billing.common.v2.View
+	39, // 5: invora.billing.wallets.v2.ListResponse.items:type_name -> invora.billing.common.v2.BillingWallet
+	3,  // 6: invora.billing.wallets.v2.ListWalletFilter.part:type_name -> invora.billing.wallets.v2.ListWalletFilterPart
+	40, // 7: invora.billing.wallets.v2.ListWalletFilterPart.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	5,  // 8: invora.billing.wallets.v2.ListWalletSort.rules:type_name -> invora.billing.wallets.v2.ListWalletSortRule
+	41, // 9: invora.billing.wallets.v2.ListWalletSortRule.created_at:type_name -> kernel.SortDirection
+	37, // 10: invora.billing.wallets.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
+	38, // 11: invora.billing.wallets.v2.GetRequest.view:type_name -> invora.billing.common.v2.View
+	39, // 12: invora.billing.wallets.v2.GetResponse.wallet:type_name -> invora.billing.common.v2.BillingWallet
+	30, // 13: invora.billing.wallets.v2.CreateRequest.applies_to:type_name -> invora.billing.wallets.v2.AppliesToInput
+	40, // 14: invora.billing.wallets.v2.CreateRequest.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	42, // 15: invora.billing.wallets.v2.CreateRequest.expiration_at:type_name -> google.protobuf.Timestamp
+	43, // 16: invora.billing.wallets.v2.CreateRequest.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
+	44, // 17: invora.billing.wallets.v2.CreateRequest.metadata:type_name -> invora.billing.common.v2.MetadataInput
+	45, // 18: invora.billing.wallets.v2.CreateRequest.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
+	31, // 19: invora.billing.wallets.v2.CreateRequest.recurring_transaction_rules:type_name -> invora.billing.wallets.v2.CreateRecurringTransactionRuleInput
+	39, // 20: invora.billing.wallets.v2.CreateResponse.wallet:type_name -> invora.billing.common.v2.BillingWallet
+	30, // 21: invora.billing.wallets.v2.UpdateRequest.applies_to:type_name -> invora.billing.wallets.v2.AppliesToInput
+	42, // 22: invora.billing.wallets.v2.UpdateRequest.expiration_at:type_name -> google.protobuf.Timestamp
+	43, // 23: invora.billing.wallets.v2.UpdateRequest.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
+	44, // 24: invora.billing.wallets.v2.UpdateRequest.metadata:type_name -> invora.billing.common.v2.MetadataInput
+	45, // 25: invora.billing.wallets.v2.UpdateRequest.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
+	32, // 26: invora.billing.wallets.v2.UpdateRequest.recurring_transaction_rules:type_name -> invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput
+	37, // 27: invora.billing.wallets.v2.UpdateRequest.update_mask:type_name -> google.protobuf.FieldMask
+	39, // 28: invora.billing.wallets.v2.UpdateResponse.wallet:type_name -> invora.billing.common.v2.BillingWallet
+	39, // 29: invora.billing.wallets.v2.TerminateResponse.wallet:type_name -> invora.billing.common.v2.BillingWallet
+	43, // 30: invora.billing.wallets.v2.CreateTransactionRequest.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
+	33, // 31: invora.billing.wallets.v2.CreateTransactionRequest.metadata:type_name -> invora.billing.wallets.v2.TransactionMetadataInput
+	45, // 32: invora.billing.wallets.v2.CreateTransactionRequest.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
+	46, // 33: invora.billing.wallets.v2.CreateTransactionResponse.transaction:type_name -> invora.billing.common.v2.BillingWalletTransaction
+	37, // 34: invora.billing.wallets.v2.GetTransactionRequest.read_mask:type_name -> google.protobuf.FieldMask
+	38, // 35: invora.billing.wallets.v2.GetTransactionRequest.view:type_name -> invora.billing.common.v2.View
+	46, // 36: invora.billing.wallets.v2.GetTransactionResponse.transaction:type_name -> invora.billing.common.v2.BillingWalletTransaction
+	20, // 37: invora.billing.wallets.v2.ListTransactionsRequest.filter:type_name -> invora.billing.wallets.v2.ListTransactionFilter
+	22, // 38: invora.billing.wallets.v2.ListTransactionsRequest.sort:type_name -> invora.billing.wallets.v2.ListTransactionSort
+	36, // 39: invora.billing.wallets.v2.ListTransactionsRequest.pagination:type_name -> kernel.PaginationInfo
+	37, // 40: invora.billing.wallets.v2.ListTransactionsRequest.read_mask:type_name -> google.protobuf.FieldMask
+	38, // 41: invora.billing.wallets.v2.ListTransactionsRequest.view:type_name -> invora.billing.common.v2.View
+	46, // 42: invora.billing.wallets.v2.ListTransactionsResponse.items:type_name -> invora.billing.common.v2.BillingWalletTransaction
+	21, // 43: invora.billing.wallets.v2.ListTransactionFilter.part:type_name -> invora.billing.wallets.v2.ListTransactionFilterPart
+	47, // 44: invora.billing.wallets.v2.ListTransactionFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDate
+	23, // 45: invora.billing.wallets.v2.ListTransactionSort.rules:type_name -> invora.billing.wallets.v2.ListTransactionSortRule
+	41, // 46: invora.billing.wallets.v2.ListTransactionSortRule.created_at:type_name -> kernel.SortDirection
+	28, // 47: invora.billing.wallets.v2.ListTransactionConsumptionsRequest.sort:type_name -> invora.billing.wallets.v2.ListTransactionDetailSort
+	36, // 48: invora.billing.wallets.v2.ListTransactionConsumptionsRequest.pagination:type_name -> kernel.PaginationInfo
+	37, // 49: invora.billing.wallets.v2.ListTransactionConsumptionsRequest.read_mask:type_name -> google.protobuf.FieldMask
+	38, // 50: invora.billing.wallets.v2.ListTransactionConsumptionsRequest.view:type_name -> invora.billing.common.v2.View
+	34, // 51: invora.billing.wallets.v2.ListTransactionConsumptionsResponse.items:type_name -> invora.billing.wallets.v2.WalletTransactionConsumption
+	28, // 52: invora.billing.wallets.v2.ListTransactionFundingsRequest.sort:type_name -> invora.billing.wallets.v2.ListTransactionDetailSort
+	36, // 53: invora.billing.wallets.v2.ListTransactionFundingsRequest.pagination:type_name -> kernel.PaginationInfo
+	37, // 54: invora.billing.wallets.v2.ListTransactionFundingsRequest.read_mask:type_name -> google.protobuf.FieldMask
+	38, // 55: invora.billing.wallets.v2.ListTransactionFundingsRequest.view:type_name -> invora.billing.common.v2.View
+	35, // 56: invora.billing.wallets.v2.ListTransactionFundingsResponse.items:type_name -> invora.billing.wallets.v2.WalletTransactionFunding
+	29, // 57: invora.billing.wallets.v2.ListTransactionDetailSort.rules:type_name -> invora.billing.wallets.v2.ListTransactionDetailSortRule
+	41, // 58: invora.billing.wallets.v2.ListTransactionDetailSortRule.created_at:type_name -> kernel.SortDirection
+	48, // 59: invora.billing.wallets.v2.AppliesToInput.fee_types:type_name -> invora.billing.common.v2.FeeTypes
+	42, // 60: invora.billing.wallets.v2.CreateRecurringTransactionRuleInput.expiration_at:type_name -> google.protobuf.Timestamp
+	49, // 61: invora.billing.wallets.v2.CreateRecurringTransactionRuleInput.interval:type_name -> invora.billing.common.v2.RecurringTransactionInterval
+	43, // 62: invora.billing.wallets.v2.CreateRecurringTransactionRuleInput.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
+	50, // 63: invora.billing.wallets.v2.CreateRecurringTransactionRuleInput.method:type_name -> invora.billing.common.v2.RecurringTransactionMethod
+	45, // 64: invora.billing.wallets.v2.CreateRecurringTransactionRuleInput.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
+	42, // 65: invora.billing.wallets.v2.CreateRecurringTransactionRuleInput.started_at:type_name -> google.protobuf.Timestamp
+	33, // 66: invora.billing.wallets.v2.CreateRecurringTransactionRuleInput.transaction_metadata:type_name -> invora.billing.wallets.v2.TransactionMetadataInput
+	51, // 67: invora.billing.wallets.v2.CreateRecurringTransactionRuleInput.trigger:type_name -> invora.billing.common.v2.RecurringTransactionTrigger
+	42, // 68: invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput.expiration_at:type_name -> google.protobuf.Timestamp
+	49, // 69: invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput.interval:type_name -> invora.billing.common.v2.RecurringTransactionInterval
+	43, // 70: invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
+	50, // 71: invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput.method:type_name -> invora.billing.common.v2.RecurringTransactionMethod
+	45, // 72: invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
+	42, // 73: invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput.started_at:type_name -> google.protobuf.Timestamp
+	33, // 74: invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput.transaction_metadata:type_name -> invora.billing.wallets.v2.TransactionMetadataInput
+	51, // 75: invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput.trigger:type_name -> invora.billing.common.v2.RecurringTransactionTrigger
+	42, // 76: invora.billing.wallets.v2.WalletTransactionConsumption.created_at:type_name -> google.protobuf.Timestamp
+	46, // 77: invora.billing.wallets.v2.WalletTransactionConsumption.wallet_transaction:type_name -> invora.billing.common.v2.BillingWalletTransaction
+	42, // 78: invora.billing.wallets.v2.WalletTransactionFunding.created_at:type_name -> google.protobuf.Timestamp
+	46, // 79: invora.billing.wallets.v2.WalletTransactionFunding.wallet_transaction:type_name -> invora.billing.common.v2.BillingWalletTransaction
+	0,  // 80: invora.billing.wallets.v2.WalletsService.List:input_type -> invora.billing.wallets.v2.ListRequest
+	6,  // 81: invora.billing.wallets.v2.WalletsService.Get:input_type -> invora.billing.wallets.v2.GetRequest
+	8,  // 82: invora.billing.wallets.v2.WalletsService.Create:input_type -> invora.billing.wallets.v2.CreateRequest
+	10, // 83: invora.billing.wallets.v2.WalletsService.Update:input_type -> invora.billing.wallets.v2.UpdateRequest
+	12, // 84: invora.billing.wallets.v2.WalletsService.Terminate:input_type -> invora.billing.wallets.v2.TerminateRequest
+	14, // 85: invora.billing.wallets.v2.WalletsService.CreateTransaction:input_type -> invora.billing.wallets.v2.CreateTransactionRequest
+	16, // 86: invora.billing.wallets.v2.WalletsService.GetTransaction:input_type -> invora.billing.wallets.v2.GetTransactionRequest
+	18, // 87: invora.billing.wallets.v2.WalletsService.ListTransactions:input_type -> invora.billing.wallets.v2.ListTransactionsRequest
+	24, // 88: invora.billing.wallets.v2.WalletsService.ListTransactionConsumptions:input_type -> invora.billing.wallets.v2.ListTransactionConsumptionsRequest
+	26, // 89: invora.billing.wallets.v2.WalletsService.ListTransactionFundings:input_type -> invora.billing.wallets.v2.ListTransactionFundingsRequest
+	1,  // 90: invora.billing.wallets.v2.WalletsService.List:output_type -> invora.billing.wallets.v2.ListResponse
+	7,  // 91: invora.billing.wallets.v2.WalletsService.Get:output_type -> invora.billing.wallets.v2.GetResponse
+	9,  // 92: invora.billing.wallets.v2.WalletsService.Create:output_type -> invora.billing.wallets.v2.CreateResponse
+	11, // 93: invora.billing.wallets.v2.WalletsService.Update:output_type -> invora.billing.wallets.v2.UpdateResponse
+	13, // 94: invora.billing.wallets.v2.WalletsService.Terminate:output_type -> invora.billing.wallets.v2.TerminateResponse
+	15, // 95: invora.billing.wallets.v2.WalletsService.CreateTransaction:output_type -> invora.billing.wallets.v2.CreateTransactionResponse
+	17, // 96: invora.billing.wallets.v2.WalletsService.GetTransaction:output_type -> invora.billing.wallets.v2.GetTransactionResponse
+	19, // 97: invora.billing.wallets.v2.WalletsService.ListTransactions:output_type -> invora.billing.wallets.v2.ListTransactionsResponse
+	25, // 98: invora.billing.wallets.v2.WalletsService.ListTransactionConsumptions:output_type -> invora.billing.wallets.v2.ListTransactionConsumptionsResponse
+	27, // 99: invora.billing.wallets.v2.WalletsService.ListTransactionFundings:output_type -> invora.billing.wallets.v2.ListTransactionFundingsResponse
+	90, // [90:100] is the sub-list for method output_type
+	80, // [80:90] is the sub-list for method input_type
+	80, // [80:80] is the sub-list for extension type_name
+	80, // [80:80] is the sub-list for extension extendee
+	0,  // [0:80] is the sub-list for field type_name
 }
 
 func init() { file_invora_billing_wallets_v2_service_proto_init() }
@@ -3162,30 +3194,43 @@ func file_invora_billing_wallets_v2_service_proto_init() {
 	if File_invora_billing_wallets_v2_service_proto != nil {
 		return
 	}
-	file_invora_billing_wallets_v2_service_proto_msgTypes[7].OneofWrappers = []any{
-		(*ListFilterPart_WalletTransactionId)(nil),
+	file_invora_billing_wallets_v2_service_proto_msgTypes[1].OneofWrappers = []any{}
+	file_invora_billing_wallets_v2_service_proto_msgTypes[3].OneofWrappers = []any{
+		(*ListWalletFilterPart_CustomerId)(nil),
+		(*ListWalletFilterPart_Currency)(nil),
 	}
-	file_invora_billing_wallets_v2_service_proto_msgTypes[9].OneofWrappers = []any{
-		(*ListSortRule_CreatedAt)(nil),
+	file_invora_billing_wallets_v2_service_proto_msgTypes[5].OneofWrappers = []any{
+		(*ListWalletSortRule_CreatedAt)(nil),
 	}
-	file_invora_billing_wallets_v2_service_proto_msgTypes[24].OneofWrappers = []any{}
+	file_invora_billing_wallets_v2_service_proto_msgTypes[8].OneofWrappers = []any{}
+	file_invora_billing_wallets_v2_service_proto_msgTypes[10].OneofWrappers = []any{}
+	file_invora_billing_wallets_v2_service_proto_msgTypes[14].OneofWrappers = []any{}
+	file_invora_billing_wallets_v2_service_proto_msgTypes[19].OneofWrappers = []any{}
+	file_invora_billing_wallets_v2_service_proto_msgTypes[21].OneofWrappers = []any{
+		(*ListTransactionFilterPart_CreatedAt)(nil),
+	}
+	file_invora_billing_wallets_v2_service_proto_msgTypes[23].OneofWrappers = []any{
+		(*ListTransactionSortRule_CreatedAt)(nil),
+	}
 	file_invora_billing_wallets_v2_service_proto_msgTypes[25].OneofWrappers = []any{}
-	file_invora_billing_wallets_v2_service_proto_msgTypes[29].OneofWrappers = []any{}
+	file_invora_billing_wallets_v2_service_proto_msgTypes[27].OneofWrappers = []any{}
+	file_invora_billing_wallets_v2_service_proto_msgTypes[29].OneofWrappers = []any{
+		(*ListTransactionDetailSortRule_CreatedAt)(nil),
+	}
+	file_invora_billing_wallets_v2_service_proto_msgTypes[31].OneofWrappers = []any{}
 	file_invora_billing_wallets_v2_service_proto_msgTypes[32].OneofWrappers = []any{}
-	file_invora_billing_wallets_v2_service_proto_msgTypes[33].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_billing_wallets_v2_service_proto_rawDesc), len(file_invora_billing_wallets_v2_service_proto_rawDesc)),
-			NumEnums:      1,
+			NumEnums:      0,
 			NumMessages:   36,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_invora_billing_wallets_v2_service_proto_goTypes,
 		DependencyIndexes: file_invora_billing_wallets_v2_service_proto_depIdxs,
-		EnumInfos:         file_invora_billing_wallets_v2_service_proto_enumTypes,
 		MessageInfos:      file_invora_billing_wallets_v2_service_proto_msgTypes,
 	}.Build()
 	File_invora_billing_wallets_v2_service_proto = out.File

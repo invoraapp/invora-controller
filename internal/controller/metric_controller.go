@@ -36,9 +36,9 @@ func (r *InvoraBillingMetricReconciler) Reconcile(ctx context.Context, req ctrl.
 			metric.Spec.OrganizationRef, metric.Spec.DeletionPolicy,
 			metric.Status.ExternalID, &metric.Status.Conditions, metric.Generation,
 			func(ctx context.Context, orc *orgResourceContext) error {
-				svc := meteringpb.NewBillableMetricServiceClient(orc.Conn())
+				svc := meteringpb.NewBillableMetricsServiceClient(orc.Conn())
 				_, err := svc.Delete(orc.GrpcCtx(ctx), &meteringpb.DeleteRequest{
-					Input: &meteringpb.DestroyBillableMetricInput{Id: metric.Status.ExternalID},
+					Id: metric.Status.ExternalID,
 				})
 				return err
 			})
@@ -75,7 +75,7 @@ func (r *InvoraBillingMetricReconciler) Reconcile(ctx context.Context, req ctrl.
 		return SuccessResult(&metric), nil
 	}
 
-	svc := meteringpb.NewBillableMetricServiceClient(orc.Conn())
+	svc := meteringpb.NewBillableMetricsServiceClient(orc.Conn())
 	grpcCtx := orc.GrpcCtx(ctx)
 
 	if metric.Status.ExternalID != "" {
@@ -92,9 +92,7 @@ func (r *InvoraBillingMetricReconciler) Reconcile(ctx context.Context, req ctrl.
 			}
 		}
 		if metric.Status.ExternalID != "" {
-			_, err := svc.Update(grpcCtx, &meteringpb.UpdateRequest{
-				Input: buildUpdateBillableMetricInput(&metric),
-			})
+			_, err := svc.Update(grpcCtx, buildUpdateBillableMetricRequest(&metric))
 			if err != nil {
 				SetCondition(&metric.Status.Conditions, billingv1alpha1.ConditionSynced,
 					metav1.ConditionFalse, "UpdateFailed", err.Error(), metric.Generation)
@@ -111,9 +109,7 @@ func (r *InvoraBillingMetricReconciler) Reconcile(ctx context.Context, req ctrl.
 	}
 
 	logger.Info("creating billable metric", "code", metric.Spec.Code)
-	created, err := svc.Create(grpcCtx, &meteringpb.CreateRequest{
-		Input: buildCreateBillableMetricInput(&metric),
-	})
+	created, err := svc.Create(grpcCtx, buildCreateBillableMetricRequest(&metric))
 	if err != nil {
 		SetCondition(&metric.Status.Conditions, billingv1alpha1.ConditionSynced,
 			metav1.ConditionFalse, "CreateFailed", err.Error(), metric.Generation)
@@ -145,8 +141,8 @@ func buildBillableMetricFilters(metric *billingv1alpha1.InvoraBillingMetric) []*
 	return out
 }
 
-func buildCreateBillableMetricInput(metric *billingv1alpha1.InvoraBillingMetric) *meteringpb.CreateBillableMetricInput {
-	in := &meteringpb.CreateBillableMetricInput{
+func buildCreateBillableMetricRequest(metric *billingv1alpha1.InvoraBillingMetric) *meteringpb.CreateRequest {
+	in := &meteringpb.CreateRequest{
 		Code:            metric.Spec.Code,
 		Name:            metric.Spec.Name,
 		Description:     metric.Spec.Description,
@@ -167,8 +163,8 @@ func buildCreateBillableMetricInput(metric *billingv1alpha1.InvoraBillingMetric)
 	return in
 }
 
-func buildUpdateBillableMetricInput(metric *billingv1alpha1.InvoraBillingMetric) *meteringpb.UpdateBillableMetricInput {
-	in := &meteringpb.UpdateBillableMetricInput{
+func buildUpdateBillableMetricRequest(metric *billingv1alpha1.InvoraBillingMetric) *meteringpb.UpdateRequest {
+	in := &meteringpb.UpdateRequest{
 		Id:              metric.Status.ExternalID,
 		Code:            metric.Spec.Code,
 		Name:            metric.Spec.Name,

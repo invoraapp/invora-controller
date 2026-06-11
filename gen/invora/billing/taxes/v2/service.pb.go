@@ -13,7 +13,6 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
-	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -26,57 +25,114 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Controls response detail level for List and Get operations.
-type View int32
+type GetRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique ID of the tax.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Fields to return in the response.
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	// Response detail level.
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
 
-const (
-	View_VIEW_UNSPECIFIED View = 0
-	View_VIEW_BASIC       View = 1
-	View_VIEW_FULL        View = 2
-)
+func (x *GetRequest) Reset() {
+	*x = GetRequest{}
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
 
-// Enum value maps for View.
-var (
-	View_name = map[int32]string{
-		0: "VIEW_UNSPECIFIED",
-		1: "VIEW_BASIC",
-		2: "VIEW_FULL",
+func (x *GetRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetRequest) ProtoMessage() {}
+
+func (x *GetRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
 	}
-	View_value = map[string]int32{
-		"VIEW_UNSPECIFIED": 0,
-		"VIEW_BASIC":       1,
-		"VIEW_FULL":        2,
-	}
-)
-
-func (x View) Enum() *View {
-	p := new(View)
-	*p = x
-	return p
+	return mi.MessageOf(x)
 }
 
-func (x View) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (View) Descriptor() protoreflect.EnumDescriptor {
-	return file_invora_billing_taxes_v2_service_proto_enumTypes[0].Descriptor()
-}
-
-func (View) Type() protoreflect.EnumType {
-	return &file_invora_billing_taxes_v2_service_proto_enumTypes[0]
-}
-
-func (x View) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use View.Descriptor instead.
-func (View) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
+func (*GetRequest) Descriptor() ([]byte, []int) {
 	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{0}
 }
 
-type BillingEntityTaxesRequest struct {
+func (x *GetRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *GetRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
+	}
+	return nil
+}
+
+func (x *GetRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
+}
+
+type GetResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Tax           *v2.BillingTax         `protobuf:"bytes,1,opt,name=tax,proto3" json:"tax,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetResponse) Reset() {
+	*x = GetResponse{}
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetResponse) ProtoMessage() {}
+
+func (x *GetResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
+func (*GetResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *GetResponse) GetTax() *v2.BillingTax {
+	if x != nil {
+		return x.Tax
+	}
+	return nil
+}
+
+type ListRequest struct {
 	state      protoimpl.MessageState `protogen:"open.v1"`
 	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
 	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
@@ -84,26 +140,26 @@ type BillingEntityTaxesRequest struct {
 	// Fields to return in the response.
 	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.taxes.v2.View" json:"view,omitempty"`
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *BillingEntityTaxesRequest) Reset() {
-	*x = BillingEntityTaxesRequest{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[0]
+func (x *ListRequest) Reset() {
+	*x = ListRequest{}
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *BillingEntityTaxesRequest) String() string {
+func (x *ListRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*BillingEntityTaxesRequest) ProtoMessage() {}
+func (*ListRequest) ProtoMessage() {}
 
-func (x *BillingEntityTaxesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[0]
+func (x *ListRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -114,70 +170,70 @@ func (x *BillingEntityTaxesRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use BillingEntityTaxesRequest.ProtoReflect.Descriptor instead.
-func (*BillingEntityTaxesRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{0}
+// Deprecated: Use ListRequest.ProtoReflect.Descriptor instead.
+func (*ListRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *BillingEntityTaxesRequest) GetFilter() *ListFilter {
+func (x *ListRequest) GetFilter() *ListFilter {
 	if x != nil {
 		return x.Filter
 	}
 	return nil
 }
 
-func (x *BillingEntityTaxesRequest) GetSort() *ListSort {
+func (x *ListRequest) GetSort() *ListSort {
 	if x != nil {
 		return x.Sort
 	}
 	return nil
 }
 
-func (x *BillingEntityTaxesRequest) GetPagination() *kernel.PaginationInfo {
+func (x *ListRequest) GetPagination() *kernel.PaginationInfo {
 	if x != nil {
 		return x.Pagination
 	}
 	return nil
 }
 
-func (x *BillingEntityTaxesRequest) GetReadMask() *fieldmaskpb.FieldMask {
+func (x *ListRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
 		return x.ReadMask
 	}
 	return nil
 }
 
-func (x *BillingEntityTaxesRequest) GetView() View {
+func (x *ListRequest) GetView() v2.View {
 	if x != nil {
 		return x.View
 	}
-	return View_VIEW_UNSPECIFIED
+	return v2.View(0)
 }
 
-type BillingEntityTaxesResponse struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Items          []*v2.BillingTax        `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
+type ListResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Items          []*v2.BillingTax       `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
-func (x *BillingEntityTaxesResponse) Reset() {
-	*x = BillingEntityTaxesResponse{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[1]
+func (x *ListResponse) Reset() {
+	*x = ListResponse{}
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *BillingEntityTaxesResponse) String() string {
+func (x *ListResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*BillingEntityTaxesResponse) ProtoMessage() {}
+func (*ListResponse) ProtoMessage() {}
 
-func (x *BillingEntityTaxesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[1]
+func (x *ListResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -188,42 +244,43 @@ func (x *BillingEntityTaxesResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use BillingEntityTaxesResponse.ProtoReflect.Descriptor instead.
-func (*BillingEntityTaxesResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{1}
+// Deprecated: Use ListResponse.ProtoReflect.Descriptor instead.
+func (*ListResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *BillingEntityTaxesResponse) GetItems() []*v2.BillingTax {
+func (x *ListResponse) GetItems() []*v2.BillingTax {
 	if x != nil {
 		return x.Items
 	}
 	return nil
 }
 
-func (x *BillingEntityTaxesResponse) GetTotalCount() uint64 {
+func (x *ListResponse) GetTotalCount() uint64 {
 	if x != nil {
 		return x.TotalCount
 	}
 	return 0
 }
 
-func (x *BillingEntityTaxesResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
+func (x *ListResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
 	}
-	return nil
+	return ""
 }
 
 type ListFilter struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Part          *ListFilterPart        `protobuf:"bytes,1,opt,name=part,proto3" json:"part,omitempty"`
+	TextSearch    string                 `protobuf:"bytes,2,opt,name=text_search,json=textSearch,proto3" json:"text_search,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListFilter) Reset() {
 	*x = ListFilter{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[2]
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -235,7 +292,7 @@ func (x *ListFilter) String() string {
 func (*ListFilter) ProtoMessage() {}
 
 func (x *ListFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[2]
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -248,7 +305,7 @@ func (x *ListFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListFilter.ProtoReflect.Descriptor instead.
 func (*ListFilter) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{2}
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ListFilter) GetPart() *ListFilterPart {
@@ -256,6 +313,13 @@ func (x *ListFilter) GetPart() *ListFilterPart {
 		return x.Part
 	}
 	return nil
+}
+
+func (x *ListFilter) GetTextSearch() string {
+	if x != nil {
+		return x.TextSearch
+	}
+	return ""
 }
 
 type ListFilterPart struct {
@@ -270,7 +334,7 @@ type ListFilterPart struct {
 
 func (x *ListFilterPart) Reset() {
 	*x = ListFilterPart{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[3]
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -282,7 +346,7 @@ func (x *ListFilterPart) String() string {
 func (*ListFilterPart) ProtoMessage() {}
 
 func (x *ListFilterPart) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[3]
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -295,7 +359,7 @@ func (x *ListFilterPart) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListFilterPart.ProtoReflect.Descriptor instead.
 func (*ListFilterPart) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{3}
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ListFilterPart) GetType() isListFilterPart_Type {
@@ -333,7 +397,7 @@ type ListSort struct {
 
 func (x *ListSort) Reset() {
 	*x = ListSort{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[4]
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -345,7 +409,7 @@ func (x *ListSort) String() string {
 func (*ListSort) ProtoMessage() {}
 
 func (x *ListSort) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[4]
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -358,7 +422,7 @@ func (x *ListSort) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSort.ProtoReflect.Descriptor instead.
 func (*ListSort) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{4}
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ListSort) GetRules() []*ListSortRule {
@@ -380,7 +444,7 @@ type ListSortRule struct {
 
 func (x *ListSortRule) Reset() {
 	*x = ListSortRule{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[5]
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -392,7 +456,7 @@ func (x *ListSortRule) String() string {
 func (*ListSortRule) ProtoMessage() {}
 
 func (x *ListSortRule) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[5]
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -405,7 +469,7 @@ func (x *ListSortRule) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSortRule.ProtoReflect.Descriptor instead.
 func (*ListSortRule) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{5}
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ListSortRule) GetType() isListSortRule_Type {
@@ -434,437 +498,19 @@ type ListSortRule_CreatedAt struct {
 
 func (*ListSortRule_CreatedAt) isListSortRule_Type() {}
 
-type GetRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Uniq ID of the tax
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.taxes.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetRequest) Reset() {
-	*x = GetRequest{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[6]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetRequest) ProtoMessage() {}
-
-func (x *GetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[6]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
-func (*GetRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{6}
-}
-
-func (x *GetRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *GetRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *GetRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type GetResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Tax           *v2.BillingTax         `protobuf:"bytes,1,opt,name=tax,proto3" json:"tax,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetResponse) Reset() {
-	*x = GetResponse{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[7]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetResponse) ProtoMessage() {}
-
-func (x *GetResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[7]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
-func (*GetResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{7}
-}
-
-func (x *GetResponse) GetTax() *v2.BillingTax {
-	if x != nil {
-		return x.Tax
-	}
-	return nil
-}
-
-type ListRequest struct {
-	state      protoimpl.MessageState `protogen:"open.v1"`
-	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
-	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
-	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.taxes.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListRequest) Reset() {
-	*x = ListRequest{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[8]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListRequest) ProtoMessage() {}
-
-func (x *ListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[8]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListRequest.ProtoReflect.Descriptor instead.
-func (*ListRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{8}
-}
-
-func (x *ListRequest) GetFilter() *ListFilter {
-	if x != nil {
-		return x.Filter
-	}
-	return nil
-}
-
-func (x *ListRequest) GetSort() *ListSort {
-	if x != nil {
-		return x.Sort
-	}
-	return nil
-}
-
-func (x *ListRequest) GetPagination() *kernel.PaginationInfo {
-	if x != nil {
-		return x.Pagination
-	}
-	return nil
-}
-
-func (x *ListRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *ListRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type ListResponse struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Items          []*v2.BillingTax        `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *ListResponse) Reset() {
-	*x = ListResponse{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[9]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListResponse) ProtoMessage() {}
-
-func (x *ListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[9]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListResponse.ProtoReflect.Descriptor instead.
-func (*ListResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{9}
-}
-
-func (x *ListResponse) GetItems() []*v2.BillingTax {
-	if x != nil {
-		return x.Items
-	}
-	return nil
-}
-
-func (x *ListResponse) GetTotalCount() uint64 {
-	if x != nil {
-		return x.TotalCount
-	}
-	return 0
-}
-
-func (x *ListResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
-	}
-	return nil
-}
-
-type BillingEntityApplyTaxesRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *ApplyTaxesInput       `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *BillingEntityApplyTaxesRequest) Reset() {
-	*x = BillingEntityApplyTaxesRequest{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[10]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *BillingEntityApplyTaxesRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*BillingEntityApplyTaxesRequest) ProtoMessage() {}
-
-func (x *BillingEntityApplyTaxesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[10]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use BillingEntityApplyTaxesRequest.ProtoReflect.Descriptor instead.
-func (*BillingEntityApplyTaxesRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{10}
-}
-
-func (x *BillingEntityApplyTaxesRequest) GetInput() *ApplyTaxesInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type BillingEntityApplyTaxesResponse struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	ApplyTaxesPayload *ApplyTaxesPayload     `protobuf:"bytes,1,opt,name=apply_taxes_payload,json=applyTaxesPayload,proto3" json:"apply_taxes_payload,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
-}
-
-func (x *BillingEntityApplyTaxesResponse) Reset() {
-	*x = BillingEntityApplyTaxesResponse{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[11]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *BillingEntityApplyTaxesResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*BillingEntityApplyTaxesResponse) ProtoMessage() {}
-
-func (x *BillingEntityApplyTaxesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[11]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use BillingEntityApplyTaxesResponse.ProtoReflect.Descriptor instead.
-func (*BillingEntityApplyTaxesResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{11}
-}
-
-func (x *BillingEntityApplyTaxesResponse) GetApplyTaxesPayload() *ApplyTaxesPayload {
-	if x != nil {
-		return x.ApplyTaxesPayload
-	}
-	return nil
-}
-
-type BillingEntityRemoveTaxesRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *RemoveTaxesInput      `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *BillingEntityRemoveTaxesRequest) Reset() {
-	*x = BillingEntityRemoveTaxesRequest{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[12]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *BillingEntityRemoveTaxesRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*BillingEntityRemoveTaxesRequest) ProtoMessage() {}
-
-func (x *BillingEntityRemoveTaxesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[12]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use BillingEntityRemoveTaxesRequest.ProtoReflect.Descriptor instead.
-func (*BillingEntityRemoveTaxesRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{12}
-}
-
-func (x *BillingEntityRemoveTaxesRequest) GetInput() *RemoveTaxesInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type BillingEntityRemoveTaxesResponse struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	RemoveTaxesPayload *RemoveTaxesPayload    `protobuf:"bytes,1,opt,name=remove_taxes_payload,json=removeTaxesPayload,proto3" json:"remove_taxes_payload,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *BillingEntityRemoveTaxesResponse) Reset() {
-	*x = BillingEntityRemoveTaxesResponse{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[13]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *BillingEntityRemoveTaxesResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*BillingEntityRemoveTaxesResponse) ProtoMessage() {}
-
-func (x *BillingEntityRemoveTaxesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[13]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use BillingEntityRemoveTaxesResponse.ProtoReflect.Descriptor instead.
-func (*BillingEntityRemoveTaxesResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{13}
-}
-
-func (x *BillingEntityRemoveTaxesResponse) GetRemoveTaxesPayload() *RemoveTaxesPayload {
-	if x != nil {
-		return x.RemoveTaxesPayload
-	}
-	return nil
-}
-
 type CreateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *TaxCreateInput        `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
+	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Description   *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Rate          *kernel.DecimalValue   `protobuf:"bytes,4,opt,name=rate,proto3" json:"rate,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateRequest) Reset() {
 	*x = CreateRequest{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[14]
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -876,7 +522,7 @@ func (x *CreateRequest) String() string {
 func (*CreateRequest) ProtoMessage() {}
 
 func (x *CreateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[14]
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -889,12 +535,33 @@ func (x *CreateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateRequest.ProtoReflect.Descriptor instead.
 func (*CreateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{14}
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *CreateRequest) GetInput() *TaxCreateInput {
+func (x *CreateRequest) GetCode() string {
 	if x != nil {
-		return x.Input
+		return x.Code
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetDescription() string {
+	if x != nil && x.Description != nil {
+		return *x.Description
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetRate() *kernel.DecimalValue {
+	if x != nil {
+		return x.Rate
 	}
 	return nil
 }
@@ -908,7 +575,7 @@ type CreateResponse struct {
 
 func (x *CreateResponse) Reset() {
 	*x = CreateResponse{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[15]
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -920,7 +587,7 @@ func (x *CreateResponse) String() string {
 func (*CreateResponse) ProtoMessage() {}
 
 func (x *CreateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[15]
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -933,7 +600,7 @@ func (x *CreateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateResponse.ProtoReflect.Descriptor instead.
 func (*CreateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{15}
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *CreateResponse) GetTax() *v2.BillingTax {
@@ -943,96 +610,22 @@ func (x *CreateResponse) GetTax() *v2.BillingTax {
 	return nil
 }
 
-type DeleteRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *DestroyTaxInput       `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteRequest) Reset() {
-	*x = DeleteRequest{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[16]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteRequest) ProtoMessage() {}
-
-func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[16]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteRequest.ProtoReflect.Descriptor instead.
-func (*DeleteRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{16}
-}
-
-func (x *DeleteRequest) GetInput() *DestroyTaxInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type DeleteResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteResponse) Reset() {
-	*x = DeleteResponse{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[17]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteResponse) ProtoMessage() {}
-
-func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[17]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteResponse.ProtoReflect.Descriptor instead.
-func (*DeleteResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{17}
-}
-
 type UpdateRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *TaxUpdateInput        `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	Id                    string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	AppliedToOrganization *bool                  `protobuf:"varint,2,opt,name=applied_to_organization,json=appliedToOrganization,proto3,oneof" json:"applied_to_organization,omitempty"`
+	Code                  *string                `protobuf:"bytes,3,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	Description           *string                `protobuf:"bytes,4,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	Name                  *string                `protobuf:"bytes,5,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Rate                  *kernel.DecimalValue   `protobuf:"bytes,6,opt,name=rate,proto3,oneof" json:"rate,omitempty"`
+	UpdateMask            *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
 func (x *UpdateRequest) Reset() {
 	*x = UpdateRequest{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[18]
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1044,7 +637,7 @@ func (x *UpdateRequest) String() string {
 func (*UpdateRequest) ProtoMessage() {}
 
 func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[18]
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1057,12 +650,54 @@ func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateRequest.ProtoReflect.Descriptor instead.
 func (*UpdateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{18}
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *UpdateRequest) GetInput() *TaxUpdateInput {
+func (x *UpdateRequest) GetId() string {
 	if x != nil {
-		return x.Input
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetAppliedToOrganization() bool {
+	if x != nil && x.AppliedToOrganization != nil {
+		return *x.AppliedToOrganization
+	}
+	return false
+}
+
+func (x *UpdateRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetDescription() string {
+	if x != nil && x.Description != nil {
+		return *x.Description
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetRate() *kernel.DecimalValue {
+	if x != nil {
+		return x.Rate
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
 	}
 	return nil
 }
@@ -1076,7 +711,7 @@ type UpdateResponse struct {
 
 func (x *UpdateResponse) Reset() {
 	*x = UpdateResponse{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[19]
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1088,7 +723,7 @@ func (x *UpdateResponse) String() string {
 func (*UpdateResponse) ProtoMessage() {}
 
 func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[19]
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1101,7 +736,7 @@ func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateResponse.ProtoReflect.Descriptor instead.
 func (*UpdateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{19}
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *UpdateResponse) GetTax() *v2.BillingTax {
@@ -1111,114 +746,28 @@ func (x *UpdateResponse) GetTax() *v2.BillingTax {
 	return nil
 }
 
-// Autogenerated input type of UpdateTax
-type TaxUpdateInput struct {
-	state                 protoimpl.MessageState `protogen:"open.v1"`
-	AppliedToOrganization *bool                  `protobuf:"varint,1,opt,name=applied_to_organization,json=appliedToOrganization,proto3,oneof" json:"applied_to_organization,omitempty"`
-	Code                  *string                `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
-	Description           *string                `protobuf:"bytes,3,opt,name=description,proto3,oneof" json:"description,omitempty"`
-	Id                    string                 `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
-	Name                  *string                `protobuf:"bytes,5,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	Rate                  *float64               `protobuf:"fixed64,6,opt,name=rate,proto3,oneof" json:"rate,omitempty"`
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
-}
-
-func (x *TaxUpdateInput) Reset() {
-	*x = TaxUpdateInput{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[20]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *TaxUpdateInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TaxUpdateInput) ProtoMessage() {}
-
-func (x *TaxUpdateInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[20]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TaxUpdateInput.ProtoReflect.Descriptor instead.
-func (*TaxUpdateInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{20}
-}
-
-func (x *TaxUpdateInput) GetAppliedToOrganization() bool {
-	if x != nil && x.AppliedToOrganization != nil {
-		return *x.AppliedToOrganization
-	}
-	return false
-}
-
-func (x *TaxUpdateInput) GetCode() string {
-	if x != nil && x.Code != nil {
-		return *x.Code
-	}
-	return ""
-}
-
-func (x *TaxUpdateInput) GetDescription() string {
-	if x != nil && x.Description != nil {
-		return *x.Description
-	}
-	return ""
-}
-
-func (x *TaxUpdateInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *TaxUpdateInput) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
-	}
-	return ""
-}
-
-func (x *TaxUpdateInput) GetRate() float64 {
-	if x != nil && x.Rate != nil {
-		return *x.Rate
-	}
-	return 0
-}
-
-// Autogenerated input type of DestroyTax
-type DestroyTaxInput struct {
+type DeleteRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DestroyTaxInput) Reset() {
-	*x = DestroyTaxInput{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[21]
+func (x *DeleteRequest) Reset() {
+	*x = DeleteRequest{}
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DestroyTaxInput) String() string {
+func (x *DeleteRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DestroyTaxInput) ProtoMessage() {}
+func (*DeleteRequest) ProtoMessage() {}
 
-func (x *DestroyTaxInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[21]
+func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1229,41 +778,39 @@ func (x *DestroyTaxInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DestroyTaxInput.ProtoReflect.Descriptor instead.
-func (*DestroyTaxInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{21}
+// Deprecated: Use DeleteRequest.ProtoReflect.Descriptor instead.
+func (*DeleteRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *DestroyTaxInput) GetId() string {
+func (x *DeleteRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-// Autogenerated return type of DestroyTax.
-type DestroyTaxPayload struct {
+type DeleteResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            *string                `protobuf:"bytes,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DestroyTaxPayload) Reset() {
-	*x = DestroyTaxPayload{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[22]
+func (x *DeleteResponse) Reset() {
+	*x = DeleteResponse{}
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DestroyTaxPayload) String() string {
+func (x *DeleteResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DestroyTaxPayload) ProtoMessage() {}
+func (*DeleteResponse) ProtoMessage() {}
 
-func (x *DestroyTaxPayload) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[22]
+func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1274,89 +821,12 @@ func (x *DestroyTaxPayload) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DestroyTaxPayload.ProtoReflect.Descriptor instead.
-func (*DestroyTaxPayload) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{22}
+// Deprecated: Use DeleteResponse.ProtoReflect.Descriptor instead.
+func (*DeleteResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *DestroyTaxPayload) GetId() string {
-	if x != nil && x.Id != nil {
-		return *x.Id
-	}
-	return ""
-}
-
-// Autogenerated input type of CreateTax
-type TaxCreateInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
-	Description   *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
-	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	Rate          float64                `protobuf:"fixed64,4,opt,name=rate,proto3" json:"rate,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *TaxCreateInput) Reset() {
-	*x = TaxCreateInput{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[23]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *TaxCreateInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TaxCreateInput) ProtoMessage() {}
-
-func (x *TaxCreateInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[23]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TaxCreateInput.ProtoReflect.Descriptor instead.
-func (*TaxCreateInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{23}
-}
-
-func (x *TaxCreateInput) GetCode() string {
-	if x != nil {
-		return x.Code
-	}
-	return ""
-}
-
-func (x *TaxCreateInput) GetDescription() string {
-	if x != nil && x.Description != nil {
-		return *x.Description
-	}
-	return ""
-}
-
-func (x *TaxCreateInput) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *TaxCreateInput) GetRate() float64 {
-	if x != nil {
-		return x.Rate
-	}
-	return 0
-}
-
-// Autogenerated input type of RemoveTaxes
-type RemoveTaxesInput struct {
+type ApplyTaxesRequest struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	BillingEntityId string                 `protobuf:"bytes,1,opt,name=billing_entity_id,json=billingEntityId,proto3" json:"billing_entity_id,omitempty"`
 	TaxCodes        []string               `protobuf:"bytes,2,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
@@ -1364,21 +834,21 @@ type RemoveTaxesInput struct {
 	sizeCache       protoimpl.SizeCache
 }
 
-func (x *RemoveTaxesInput) Reset() {
-	*x = RemoveTaxesInput{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[24]
+func (x *ApplyTaxesRequest) Reset() {
+	*x = ApplyTaxesRequest{}
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *RemoveTaxesInput) String() string {
+func (x *ApplyTaxesRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RemoveTaxesInput) ProtoMessage() {}
+func (*ApplyTaxesRequest) ProtoMessage() {}
 
-func (x *RemoveTaxesInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[24]
+func (x *ApplyTaxesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1389,146 +859,47 @@ func (x *RemoveTaxesInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RemoveTaxesInput.ProtoReflect.Descriptor instead.
-func (*RemoveTaxesInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{24}
+// Deprecated: Use ApplyTaxesRequest.ProtoReflect.Descriptor instead.
+func (*ApplyTaxesRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{14}
 }
 
-func (x *RemoveTaxesInput) GetBillingEntityId() string {
+func (x *ApplyTaxesRequest) GetBillingEntityId() string {
 	if x != nil {
 		return x.BillingEntityId
 	}
 	return ""
 }
 
-func (x *RemoveTaxesInput) GetTaxCodes() []string {
+func (x *ApplyTaxesRequest) GetTaxCodes() []string {
 	if x != nil {
 		return x.TaxCodes
 	}
 	return nil
 }
 
-// Autogenerated return type of RemoveTaxes.
-type RemoveTaxesPayload struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	RemovedTaxes  []*v2.BillingTax       `protobuf:"bytes,1,rep,name=removed_taxes,json=removedTaxes,proto3" json:"removed_taxes,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RemoveTaxesPayload) Reset() {
-	*x = RemoveTaxesPayload{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[25]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RemoveTaxesPayload) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RemoveTaxesPayload) ProtoMessage() {}
-
-func (x *RemoveTaxesPayload) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[25]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RemoveTaxesPayload.ProtoReflect.Descriptor instead.
-func (*RemoveTaxesPayload) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{25}
-}
-
-func (x *RemoveTaxesPayload) GetRemovedTaxes() []*v2.BillingTax {
-	if x != nil {
-		return x.RemovedTaxes
-	}
-	return nil
-}
-
-// Autogenerated input type of ApplyTaxes
-type ApplyTaxesInput struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	BillingEntityId string                 `protobuf:"bytes,1,opt,name=billing_entity_id,json=billingEntityId,proto3" json:"billing_entity_id,omitempty"`
-	TaxCodes        []string               `protobuf:"bytes,2,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
-}
-
-func (x *ApplyTaxesInput) Reset() {
-	*x = ApplyTaxesInput{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[26]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ApplyTaxesInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ApplyTaxesInput) ProtoMessage() {}
-
-func (x *ApplyTaxesInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[26]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ApplyTaxesInput.ProtoReflect.Descriptor instead.
-func (*ApplyTaxesInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{26}
-}
-
-func (x *ApplyTaxesInput) GetBillingEntityId() string {
-	if x != nil {
-		return x.BillingEntityId
-	}
-	return ""
-}
-
-func (x *ApplyTaxesInput) GetTaxCodes() []string {
-	if x != nil {
-		return x.TaxCodes
-	}
-	return nil
-}
-
-// Autogenerated return type of ApplyTaxes.
-type ApplyTaxesPayload struct {
+type ApplyTaxesResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	AppliedTaxes  []*v2.BillingTax       `protobuf:"bytes,1,rep,name=applied_taxes,json=appliedTaxes,proto3" json:"applied_taxes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ApplyTaxesPayload) Reset() {
-	*x = ApplyTaxesPayload{}
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[27]
+func (x *ApplyTaxesResponse) Reset() {
+	*x = ApplyTaxesResponse{}
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ApplyTaxesPayload) String() string {
+func (x *ApplyTaxesResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ApplyTaxesPayload) ProtoMessage() {}
+func (*ApplyTaxesResponse) ProtoMessage() {}
 
-func (x *ApplyTaxesPayload) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[27]
+func (x *ApplyTaxesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1539,40 +910,285 @@ func (x *ApplyTaxesPayload) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ApplyTaxesPayload.ProtoReflect.Descriptor instead.
-func (*ApplyTaxesPayload) Descriptor() ([]byte, []int) {
-	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{27}
+// Deprecated: Use ApplyTaxesResponse.ProtoReflect.Descriptor instead.
+func (*ApplyTaxesResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{15}
 }
 
-func (x *ApplyTaxesPayload) GetAppliedTaxes() []*v2.BillingTax {
+func (x *ApplyTaxesResponse) GetAppliedTaxes() []*v2.BillingTax {
 	if x != nil {
 		return x.AppliedTaxes
 	}
 	return nil
 }
 
+type RemoveTaxesRequest struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	BillingEntityId string                 `protobuf:"bytes,1,opt,name=billing_entity_id,json=billingEntityId,proto3" json:"billing_entity_id,omitempty"`
+	TaxCodes        []string               `protobuf:"bytes,2,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *RemoveTaxesRequest) Reset() {
+	*x = RemoveTaxesRequest{}
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RemoveTaxesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemoveTaxesRequest) ProtoMessage() {}
+
+func (x *RemoveTaxesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemoveTaxesRequest.ProtoReflect.Descriptor instead.
+func (*RemoveTaxesRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *RemoveTaxesRequest) GetBillingEntityId() string {
+	if x != nil {
+		return x.BillingEntityId
+	}
+	return ""
+}
+
+func (x *RemoveTaxesRequest) GetTaxCodes() []string {
+	if x != nil {
+		return x.TaxCodes
+	}
+	return nil
+}
+
+type RemoveTaxesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RemovedTaxes  []*v2.BillingTax       `protobuf:"bytes,1,rep,name=removed_taxes,json=removedTaxes,proto3" json:"removed_taxes,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RemoveTaxesResponse) Reset() {
+	*x = RemoveTaxesResponse{}
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RemoveTaxesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemoveTaxesResponse) ProtoMessage() {}
+
+func (x *RemoveTaxesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemoveTaxesResponse.ProtoReflect.Descriptor instead.
+func (*RemoveTaxesResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *RemoveTaxesResponse) GetRemovedTaxes() []*v2.BillingTax {
+	if x != nil {
+		return x.RemovedTaxes
+	}
+	return nil
+}
+
+type ListBillingEntityTaxesRequest struct {
+	state      protoimpl.MessageState `protogen:"open.v1"`
+	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
+	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
+	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// Fields to return in the response.
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	// Response detail level.
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListBillingEntityTaxesRequest) Reset() {
+	*x = ListBillingEntityTaxesRequest{}
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListBillingEntityTaxesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListBillingEntityTaxesRequest) ProtoMessage() {}
+
+func (x *ListBillingEntityTaxesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListBillingEntityTaxesRequest.ProtoReflect.Descriptor instead.
+func (*ListBillingEntityTaxesRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *ListBillingEntityTaxesRequest) GetFilter() *ListFilter {
+	if x != nil {
+		return x.Filter
+	}
+	return nil
+}
+
+func (x *ListBillingEntityTaxesRequest) GetSort() *ListSort {
+	if x != nil {
+		return x.Sort
+	}
+	return nil
+}
+
+func (x *ListBillingEntityTaxesRequest) GetPagination() *kernel.PaginationInfo {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *ListBillingEntityTaxesRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
+	}
+	return nil
+}
+
+func (x *ListBillingEntityTaxesRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
+}
+
+type ListBillingEntityTaxesResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Items          []*v2.BillingTax       `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ListBillingEntityTaxesResponse) Reset() {
+	*x = ListBillingEntityTaxesResponse{}
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListBillingEntityTaxesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListBillingEntityTaxesResponse) ProtoMessage() {}
+
+func (x *ListBillingEntityTaxesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_taxes_v2_service_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListBillingEntityTaxesResponse.ProtoReflect.Descriptor instead.
+func (*ListBillingEntityTaxesResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_taxes_v2_service_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *ListBillingEntityTaxesResponse) GetItems() []*v2.BillingTax {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+func (x *ListBillingEntityTaxesResponse) GetTotalCount() uint64 {
+	if x != nil {
+		return x.TotalCount
+	}
+	return 0
+}
+
+func (x *ListBillingEntityTaxesResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
+	}
+	return ""
+}
+
 var File_invora_billing_taxes_v2_service_proto protoreflect.FileDescriptor
 
 const file_invora_billing_taxes_v2_service_proto_rawDesc = "" +
 	"\n" +
-	"%invora/billing/taxes/v2/service.proto\x12\x17invora.billing.taxes.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\xb3\x02\n" +
-	"\x19BillingEntityTaxesRequest\x12;\n" +
+	"%invora/billing/taxes/v2/service.proto\x12\x17invora.billing.taxes.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/decimal.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\x89\x01\n" +
+	"\n" +
+	"GetRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
+	"\tread_mask\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"E\n" +
+	"\vGetResponse\x126\n" +
+	"\x03tax\x18\x01 \x01(\v2$.invora.billing.common.v2.BillingTaxR\x03tax\"\xa6\x02\n" +
+	"\vListRequest\x12;\n" +
 	"\x06filter\x18\x01 \x01(\v2#.invora.billing.taxes.v2.ListFilterR\x06filter\x125\n" +
 	"\x04sort\x18\x02 \x01(\v2!.invora.billing.taxes.v2.ListSortR\x04sort\x126\n" +
 	"\n" +
 	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
 	"pagination\x127\n" +
 	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x121\n" +
-	"\x04view\x18\v \x01(\x0e2\x1d.invora.billing.taxes.v2.ViewR\x04view\"\xc1\x01\n" +
-	"\x1aBillingEntityTaxesResponse\x12:\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xaf\x01\n" +
+	"\fListResponse\x12:\n" +
 	"\x05items\x18\x01 \x03(\v2$.invora.billing.common.v2.BillingTaxR\x05items\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"I\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"j\n" +
 	"\n" +
 	"ListFilter\x12;\n" +
-	"\x04part\x18\x01 \x01(\v2'.invora.billing.taxes.v2.ListFilterPartR\x04part\"F\n" +
+	"\x04part\x18\x01 \x01(\v2'.invora.billing.taxes.v2.ListFilterPartR\x04part\x12\x1f\n" +
+	"\vtext_search\x18\x02 \x01(\tR\n" +
+	"textSearch\"F\n" +
 	"\x0eListFilterPart\x12,\n" +
 	"\x11billing_entity_id\x18\x01 \x01(\tH\x00R\x0fbillingEntityIdB\x06\n" +
 	"\x04type\"G\n" +
@@ -1581,104 +1197,77 @@ const file_invora_billing_taxes_v2_service_proto_rawDesc = "" +
 	"\fListSortRule\x126\n" +
 	"\n" +
 	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAtB\x06\n" +
-	"\x04type\"\x88\x01\n" +
-	"\n" +
-	"GetRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x121\n" +
-	"\x04view\x18\v \x01(\x0e2\x1d.invora.billing.taxes.v2.ViewR\x04view\"E\n" +
-	"\vGetResponse\x126\n" +
-	"\x03tax\x18\x01 \x01(\v2$.invora.billing.common.v2.BillingTaxR\x03tax\"\xa5\x02\n" +
-	"\vListRequest\x12;\n" +
+	"\x04type\"\x98\x01\n" +
+	"\rCreateRequest\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\tR\x04code\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x00R\vdescription\x88\x01\x01\x12\x12\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x12(\n" +
+	"\x04rate\x18\x04 \x01(\v2\x14.kernel.DecimalValueR\x04rateB\x0e\n" +
+	"\f_description\"H\n" +
+	"\x0eCreateResponse\x126\n" +
+	"\x03tax\x18\x01 \x01(\v2$.invora.billing.common.v2.BillingTaxR\x03tax\"\xe8\x02\n" +
+	"\rUpdateRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12;\n" +
+	"\x17applied_to_organization\x18\x02 \x01(\bH\x00R\x15appliedToOrganization\x88\x01\x01\x12\x17\n" +
+	"\x04code\x18\x03 \x01(\tH\x01R\x04code\x88\x01\x01\x12%\n" +
+	"\vdescription\x18\x04 \x01(\tH\x02R\vdescription\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x05 \x01(\tH\x03R\x04name\x88\x01\x01\x12-\n" +
+	"\x04rate\x18\x06 \x01(\v2\x14.kernel.DecimalValueH\x04R\x04rate\x88\x01\x01\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\x1a\n" +
+	"\x18_applied_to_organizationB\a\n" +
+	"\x05_codeB\x0e\n" +
+	"\f_descriptionB\a\n" +
+	"\x05_nameB\a\n" +
+	"\x05_rate\"H\n" +
+	"\x0eUpdateResponse\x126\n" +
+	"\x03tax\x18\x01 \x01(\v2$.invora.billing.common.v2.BillingTaxR\x03tax\"\x1f\n" +
+	"\rDeleteRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"\x10\n" +
+	"\x0eDeleteResponse\"\\\n" +
+	"\x11ApplyTaxesRequest\x12*\n" +
+	"\x11billing_entity_id\x18\x01 \x01(\tR\x0fbillingEntityId\x12\x1b\n" +
+	"\ttax_codes\x18\x02 \x03(\tR\btaxCodes\"_\n" +
+	"\x12ApplyTaxesResponse\x12I\n" +
+	"\rapplied_taxes\x18\x01 \x03(\v2$.invora.billing.common.v2.BillingTaxR\fappliedTaxes\"]\n" +
+	"\x12RemoveTaxesRequest\x12*\n" +
+	"\x11billing_entity_id\x18\x01 \x01(\tR\x0fbillingEntityId\x12\x1b\n" +
+	"\ttax_codes\x18\x02 \x03(\tR\btaxCodes\"`\n" +
+	"\x13RemoveTaxesResponse\x12I\n" +
+	"\rremoved_taxes\x18\x01 \x03(\v2$.invora.billing.common.v2.BillingTaxR\fremovedTaxes\"\xb8\x02\n" +
+	"\x1dListBillingEntityTaxesRequest\x12;\n" +
 	"\x06filter\x18\x01 \x01(\v2#.invora.billing.taxes.v2.ListFilterR\x06filter\x125\n" +
 	"\x04sort\x18\x02 \x01(\v2!.invora.billing.taxes.v2.ListSortR\x04sort\x126\n" +
 	"\n" +
 	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
 	"pagination\x127\n" +
 	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x121\n" +
-	"\x04view\x18\v \x01(\x0e2\x1d.invora.billing.taxes.v2.ViewR\x04view\"\xb3\x01\n" +
-	"\fListResponse\x12:\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xc1\x01\n" +
+	"\x1eListBillingEntityTaxesResponse\x12:\n" +
 	"\x05items\x18\x01 \x03(\v2$.invora.billing.common.v2.BillingTaxR\x05items\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"`\n" +
-	"\x1eBillingEntityApplyTaxesRequest\x12>\n" +
-	"\x05input\x18\x01 \x01(\v2(.invora.billing.taxes.v2.ApplyTaxesInputR\x05input\"}\n" +
-	"\x1fBillingEntityApplyTaxesResponse\x12Z\n" +
-	"\x13apply_taxes_payload\x18\x01 \x01(\v2*.invora.billing.taxes.v2.ApplyTaxesPayloadR\x11applyTaxesPayload\"b\n" +
-	"\x1fBillingEntityRemoveTaxesRequest\x12?\n" +
-	"\x05input\x18\x01 \x01(\v2).invora.billing.taxes.v2.RemoveTaxesInputR\x05input\"\x81\x01\n" +
-	" BillingEntityRemoveTaxesResponse\x12]\n" +
-	"\x14remove_taxes_payload\x18\x01 \x01(\v2+.invora.billing.taxes.v2.RemoveTaxesPayloadR\x12removeTaxesPayload\"N\n" +
-	"\rCreateRequest\x12=\n" +
-	"\x05input\x18\x01 \x01(\v2'.invora.billing.taxes.v2.TaxCreateInputR\x05input\"H\n" +
-	"\x0eCreateResponse\x126\n" +
-	"\x03tax\x18\x01 \x01(\v2$.invora.billing.common.v2.BillingTaxR\x03tax\"O\n" +
-	"\rDeleteRequest\x12>\n" +
-	"\x05input\x18\x01 \x01(\v2(.invora.billing.taxes.v2.DestroyTaxInputR\x05input\"\x10\n" +
-	"\x0eDeleteResponse\"N\n" +
-	"\rUpdateRequest\x12=\n" +
-	"\x05input\x18\x01 \x01(\v2'.invora.billing.taxes.v2.TaxUpdateInputR\x05input\"H\n" +
-	"\x0eUpdateResponse\x126\n" +
-	"\x03tax\x18\x01 \x01(\v2$.invora.billing.common.v2.BillingTaxR\x03tax\"\x96\x02\n" +
-	"\x0eTaxUpdateInput\x12;\n" +
-	"\x17applied_to_organization\x18\x01 \x01(\bH\x00R\x15appliedToOrganization\x88\x01\x01\x12\x17\n" +
-	"\x04code\x18\x02 \x01(\tH\x01R\x04code\x88\x01\x01\x12%\n" +
-	"\vdescription\x18\x03 \x01(\tH\x02R\vdescription\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x04 \x01(\tR\x02id\x12\x17\n" +
-	"\x04name\x18\x05 \x01(\tH\x03R\x04name\x88\x01\x01\x12\x17\n" +
-	"\x04rate\x18\x06 \x01(\x01H\x04R\x04rate\x88\x01\x01B\x1a\n" +
-	"\x18_applied_to_organizationB\a\n" +
-	"\x05_codeB\x0e\n" +
-	"\f_descriptionB\a\n" +
-	"\x05_nameB\a\n" +
-	"\x05_rate\"!\n" +
-	"\x0fDestroyTaxInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"/\n" +
-	"\x11DestroyTaxPayload\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x88\x01\x01B\x05\n" +
-	"\x03_id\"\x83\x01\n" +
-	"\x0eTaxCreateInput\x12\x12\n" +
-	"\x04code\x18\x01 \x01(\tR\x04code\x12%\n" +
-	"\vdescription\x18\x02 \x01(\tH\x00R\vdescription\x88\x01\x01\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\x12\x12\n" +
-	"\x04rate\x18\x04 \x01(\x01R\x04rateB\x0e\n" +
-	"\f_description\"[\n" +
-	"\x10RemoveTaxesInput\x12*\n" +
-	"\x11billing_entity_id\x18\x01 \x01(\tR\x0fbillingEntityId\x12\x1b\n" +
-	"\ttax_codes\x18\x02 \x03(\tR\btaxCodes\"_\n" +
-	"\x12RemoveTaxesPayload\x12I\n" +
-	"\rremoved_taxes\x18\x01 \x03(\v2$.invora.billing.common.v2.BillingTaxR\fremovedTaxes\"Z\n" +
-	"\x0fApplyTaxesInput\x12*\n" +
-	"\x11billing_entity_id\x18\x01 \x01(\tR\x0fbillingEntityId\x12\x1b\n" +
-	"\ttax_codes\x18\x02 \x03(\tR\btaxCodes\"^\n" +
-	"\x11ApplyTaxesPayload\x12I\n" +
-	"\rapplied_taxes\x18\x01 \x03(\v2$.invora.billing.common.v2.BillingTaxR\fappliedTaxes*;\n" +
-	"\x04View\x12\x14\n" +
-	"\x10VIEW_UNSPECIFIED\x10\x00\x12\x0e\n" +
-	"\n" +
-	"VIEW_BASIC\x10\x01\x12\r\n" +
-	"\tVIEW_FULL\x10\x022\xb7\v\n" +
-	"\n" +
-	"TaxService\x12\x9f\x01\n" +
-	"\x06Create\x12&.invora.billing.taxes.v2.CreateRequest\x1a'.invora.billing.taxes.v2.CreateResponse\"D\xe2\xf2\x19 \n" +
-	"\x1eInvora.Billing.Taxes.v2.Create\x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/api/v2/billing/taxes\x12\x95\x01\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor2\xb3\v\n" +
+	"\fTaxesService\x12\x9c\x01\n" +
+	"\x04List\x12$.invora.billing.taxes.v2.ListRequest\x1a%.invora.billing.taxes.v2.ListResponse\"G\xe2\xf2\x19\x1e\n" +
+	"\x1cInvora.Billing.Taxes.v2.List\x82\xd3\xe4\x93\x02\x1f:\x01*\"\x1a/api/billing/v2/taxes/list\x12\x95\x01\n" +
 	"\x03Get\x12#.invora.billing.taxes.v2.GetRequest\x1a$.invora.billing.taxes.v2.GetResponse\"C\xe2\xf2\x19\x1d\n" +
-	"\x1bInvora.Billing.Taxes.v2.Get\x82\xd3\xe4\x93\x02\x1c\x12\x1a/api/v2/billing/taxes/{id}\x12\x94\x01\n" +
-	"\x04List\x12$.invora.billing.taxes.v2.ListRequest\x1a%.invora.billing.taxes.v2.ListResponse\"?\xe2\xf2\x19\x1e\n" +
-	"\x1cInvora.Billing.Taxes.v2.List\x82\xd3\xe4\x93\x02\x17\x12\x15/api/v2/billing/taxes\x12\x9f\x01\n" +
-	"\x06Update\x12&.invora.billing.taxes.v2.UpdateRequest\x1a'.invora.billing.taxes.v2.UpdateResponse\"D\xe2\xf2\x19 \n" +
-	"\x1eInvora.Billing.Taxes.v2.Update\x82\xd3\xe4\x93\x02\x1a:\x01*2\x15/api/v2/billing/taxes\x12\x9c\x01\n" +
-	"\x06Delete\x12&.invora.billing.taxes.v2.DeleteRequest\x1a'.invora.billing.taxes.v2.DeleteResponse\"A\xe2\xf2\x19 \n" +
-	"\x1eInvora.Billing.Taxes.v2.Delete\x82\xd3\xe4\x93\x02\x17*\x15/api/v2/billing/taxes\x12\xe0\x01\n" +
-	"\x17BillingEntityApplyTaxes\x127.invora.billing.taxes.v2.BillingEntityApplyTaxesRequest\x1a8.invora.billing.taxes.v2.BillingEntityApplyTaxesResponse\"R\xe2\xf2\x191\n" +
-	"/Invora.Billing.Taxes.v2.BillingEntityApplyTaxes\x82\xd3\xe4\x93\x02\x17\x12\x15/api/v2/billing/taxes\x12\xe4\x01\n" +
-	"\x18BillingEntityRemoveTaxes\x128.invora.billing.taxes.v2.BillingEntityRemoveTaxesRequest\x1a9.invora.billing.taxes.v2.BillingEntityRemoveTaxesResponse\"S\xe2\xf2\x192\n" +
-	"0Invora.Billing.Taxes.v2.BillingEntityRemoveTaxes\x82\xd3\xe4\x93\x02\x17\x12\x15/api/v2/billing/taxes\x12\xcc\x01\n" +
-	"\x12BillingEntityTaxes\x122.invora.billing.taxes.v2.BillingEntityTaxesRequest\x1a3.invora.billing.taxes.v2.BillingEntityTaxesResponse\"M\xe2\xf2\x19,\n" +
-	"*Invora.Billing.Taxes.v2.BillingEntityTaxes\x82\xd3\xe4\x93\x02\x17\x12\x15/api/v2/billing/taxesB\xf6\x01\n" +
+	"\x1bInvora.Billing.Taxes.v2.Get\x82\xd3\xe4\x93\x02\x1c\x12\x1a/api/billing/v2/taxes/{id}\x12\xa6\x01\n" +
+	"\x06Create\x12&.invora.billing.taxes.v2.CreateRequest\x1a'.invora.billing.taxes.v2.CreateResponse\"K\xe2\xf2\x19'\n" +
+	"%Invora.Billing.Taxes.v2.Modify.Create\x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/api/billing/v2/taxes\x12\xab\x01\n" +
+	"\x06Update\x12&.invora.billing.taxes.v2.UpdateRequest\x1a'.invora.billing.taxes.v2.UpdateResponse\"P\xe2\xf2\x19'\n" +
+	"%Invora.Billing.Taxes.v2.Modify.Update\x82\xd3\xe4\x93\x02\x1f:\x01*\x1a\x1a/api/billing/v2/taxes/{id}\x12\xad\x01\n" +
+	"\x06Delete\x12&.invora.billing.taxes.v2.DeleteRequest\x1a'.invora.billing.taxes.v2.DeleteResponse\"R\xe2\xf2\x19'\n" +
+	"%Invora.Billing.Taxes.v2.Modify.Delete\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/api/billing/v2/taxes/delete\x12\xbc\x01\n" +
+	"\n" +
+	"ApplyTaxes\x12*.invora.billing.taxes.v2.ApplyTaxesRequest\x1a+.invora.billing.taxes.v2.ApplyTaxesResponse\"U\xe2\xf2\x19+\n" +
+	")Invora.Billing.Taxes.v2.Modify.ApplyTaxes\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/api/billing/v2/taxes/apply\x12\xc1\x01\n" +
+	"\vRemoveTaxes\x12+.invora.billing.taxes.v2.RemoveTaxesRequest\x1a,.invora.billing.taxes.v2.RemoveTaxesResponse\"W\xe2\xf2\x19,\n" +
+	"*Invora.Billing.Taxes.v2.Modify.RemoveTaxes\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/api/billing/v2/taxes/remove\x12\xe1\x01\n" +
+	"\x16ListBillingEntityTaxes\x126.invora.billing.taxes.v2.ListBillingEntityTaxesRequest\x1a7.invora.billing.taxes.v2.ListBillingEntityTaxesResponse\"V\xe2\xf2\x19\x1e\n" +
+	"\x1cInvora.Billing.Taxes.v2.List\x82\xd3\xe4\x93\x02.:\x01*\")/api/billing/v2/taxes/billing-entity/listB\xf6\x01\n" +
 	"\x1bcom.invora.billing.taxes.v2B\fServiceProtoP\x01ZJgithub.com/invoraapp/invora-controller/gen/invora/billing/taxes/v2;taxesv2\xa2\x02\x03IBT\xaa\x02\x17Invora.Billing.Taxes.V2\xca\x02\x17Invora\\Billing\\Taxes\\V2\xe2\x02#Invora\\Billing\\Taxes\\V2\\GPBMetadata\xea\x02\x1aInvora::Billing::Taxes::V2b\x06proto3"
 
 var (
@@ -1693,97 +1282,82 @@ func file_invora_billing_taxes_v2_service_proto_rawDescGZIP() []byte {
 	return file_invora_billing_taxes_v2_service_proto_rawDescData
 }
 
-var file_invora_billing_taxes_v2_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_invora_billing_taxes_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
+var file_invora_billing_taxes_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_invora_billing_taxes_v2_service_proto_goTypes = []any{
-	(View)(0),                                // 0: invora.billing.taxes.v2.View
-	(*BillingEntityTaxesRequest)(nil),        // 1: invora.billing.taxes.v2.BillingEntityTaxesRequest
-	(*BillingEntityTaxesResponse)(nil),       // 2: invora.billing.taxes.v2.BillingEntityTaxesResponse
-	(*ListFilter)(nil),                       // 3: invora.billing.taxes.v2.ListFilter
-	(*ListFilterPart)(nil),                   // 4: invora.billing.taxes.v2.ListFilterPart
-	(*ListSort)(nil),                         // 5: invora.billing.taxes.v2.ListSort
-	(*ListSortRule)(nil),                     // 6: invora.billing.taxes.v2.ListSortRule
-	(*GetRequest)(nil),                       // 7: invora.billing.taxes.v2.GetRequest
-	(*GetResponse)(nil),                      // 8: invora.billing.taxes.v2.GetResponse
-	(*ListRequest)(nil),                      // 9: invora.billing.taxes.v2.ListRequest
-	(*ListResponse)(nil),                     // 10: invora.billing.taxes.v2.ListResponse
-	(*BillingEntityApplyTaxesRequest)(nil),   // 11: invora.billing.taxes.v2.BillingEntityApplyTaxesRequest
-	(*BillingEntityApplyTaxesResponse)(nil),  // 12: invora.billing.taxes.v2.BillingEntityApplyTaxesResponse
-	(*BillingEntityRemoveTaxesRequest)(nil),  // 13: invora.billing.taxes.v2.BillingEntityRemoveTaxesRequest
-	(*BillingEntityRemoveTaxesResponse)(nil), // 14: invora.billing.taxes.v2.BillingEntityRemoveTaxesResponse
-	(*CreateRequest)(nil),                    // 15: invora.billing.taxes.v2.CreateRequest
-	(*CreateResponse)(nil),                   // 16: invora.billing.taxes.v2.CreateResponse
-	(*DeleteRequest)(nil),                    // 17: invora.billing.taxes.v2.DeleteRequest
-	(*DeleteResponse)(nil),                   // 18: invora.billing.taxes.v2.DeleteResponse
-	(*UpdateRequest)(nil),                    // 19: invora.billing.taxes.v2.UpdateRequest
-	(*UpdateResponse)(nil),                   // 20: invora.billing.taxes.v2.UpdateResponse
-	(*TaxUpdateInput)(nil),                   // 21: invora.billing.taxes.v2.TaxUpdateInput
-	(*DestroyTaxInput)(nil),                  // 22: invora.billing.taxes.v2.DestroyTaxInput
-	(*DestroyTaxPayload)(nil),                // 23: invora.billing.taxes.v2.DestroyTaxPayload
-	(*TaxCreateInput)(nil),                   // 24: invora.billing.taxes.v2.TaxCreateInput
-	(*RemoveTaxesInput)(nil),                 // 25: invora.billing.taxes.v2.RemoveTaxesInput
-	(*RemoveTaxesPayload)(nil),               // 26: invora.billing.taxes.v2.RemoveTaxesPayload
-	(*ApplyTaxesInput)(nil),                  // 27: invora.billing.taxes.v2.ApplyTaxesInput
-	(*ApplyTaxesPayload)(nil),                // 28: invora.billing.taxes.v2.ApplyTaxesPayload
-	(*kernel.PaginationInfo)(nil),            // 29: kernel.PaginationInfo
-	(*fieldmaskpb.FieldMask)(nil),            // 30: google.protobuf.FieldMask
-	(*v2.BillingTax)(nil),                    // 31: invora.billing.common.v2.BillingTax
-	(*wrapperspb.StringValue)(nil),           // 32: google.protobuf.StringValue
-	(kernel.SortDirection)(0),                // 33: kernel.SortDirection
+	(*GetRequest)(nil),                     // 0: invora.billing.taxes.v2.GetRequest
+	(*GetResponse)(nil),                    // 1: invora.billing.taxes.v2.GetResponse
+	(*ListRequest)(nil),                    // 2: invora.billing.taxes.v2.ListRequest
+	(*ListResponse)(nil),                   // 3: invora.billing.taxes.v2.ListResponse
+	(*ListFilter)(nil),                     // 4: invora.billing.taxes.v2.ListFilter
+	(*ListFilterPart)(nil),                 // 5: invora.billing.taxes.v2.ListFilterPart
+	(*ListSort)(nil),                       // 6: invora.billing.taxes.v2.ListSort
+	(*ListSortRule)(nil),                   // 7: invora.billing.taxes.v2.ListSortRule
+	(*CreateRequest)(nil),                  // 8: invora.billing.taxes.v2.CreateRequest
+	(*CreateResponse)(nil),                 // 9: invora.billing.taxes.v2.CreateResponse
+	(*UpdateRequest)(nil),                  // 10: invora.billing.taxes.v2.UpdateRequest
+	(*UpdateResponse)(nil),                 // 11: invora.billing.taxes.v2.UpdateResponse
+	(*DeleteRequest)(nil),                  // 12: invora.billing.taxes.v2.DeleteRequest
+	(*DeleteResponse)(nil),                 // 13: invora.billing.taxes.v2.DeleteResponse
+	(*ApplyTaxesRequest)(nil),              // 14: invora.billing.taxes.v2.ApplyTaxesRequest
+	(*ApplyTaxesResponse)(nil),             // 15: invora.billing.taxes.v2.ApplyTaxesResponse
+	(*RemoveTaxesRequest)(nil),             // 16: invora.billing.taxes.v2.RemoveTaxesRequest
+	(*RemoveTaxesResponse)(nil),            // 17: invora.billing.taxes.v2.RemoveTaxesResponse
+	(*ListBillingEntityTaxesRequest)(nil),  // 18: invora.billing.taxes.v2.ListBillingEntityTaxesRequest
+	(*ListBillingEntityTaxesResponse)(nil), // 19: invora.billing.taxes.v2.ListBillingEntityTaxesResponse
+	(*fieldmaskpb.FieldMask)(nil),          // 20: google.protobuf.FieldMask
+	(v2.View)(0),                           // 21: invora.billing.common.v2.View
+	(*v2.BillingTax)(nil),                  // 22: invora.billing.common.v2.BillingTax
+	(*kernel.PaginationInfo)(nil),          // 23: kernel.PaginationInfo
+	(kernel.SortDirection)(0),              // 24: kernel.SortDirection
+	(*kernel.DecimalValue)(nil),            // 25: kernel.DecimalValue
 }
 var file_invora_billing_taxes_v2_service_proto_depIdxs = []int32{
-	3,  // 0: invora.billing.taxes.v2.BillingEntityTaxesRequest.filter:type_name -> invora.billing.taxes.v2.ListFilter
-	5,  // 1: invora.billing.taxes.v2.BillingEntityTaxesRequest.sort:type_name -> invora.billing.taxes.v2.ListSort
-	29, // 2: invora.billing.taxes.v2.BillingEntityTaxesRequest.pagination:type_name -> kernel.PaginationInfo
-	30, // 3: invora.billing.taxes.v2.BillingEntityTaxesRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 4: invora.billing.taxes.v2.BillingEntityTaxesRequest.view:type_name -> invora.billing.taxes.v2.View
-	31, // 5: invora.billing.taxes.v2.BillingEntityTaxesResponse.items:type_name -> invora.billing.common.v2.BillingTax
-	32, // 6: invora.billing.taxes.v2.BillingEntityTaxesResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	4,  // 7: invora.billing.taxes.v2.ListFilter.part:type_name -> invora.billing.taxes.v2.ListFilterPart
-	6,  // 8: invora.billing.taxes.v2.ListSort.rules:type_name -> invora.billing.taxes.v2.ListSortRule
-	33, // 9: invora.billing.taxes.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
-	30, // 10: invora.billing.taxes.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 11: invora.billing.taxes.v2.GetRequest.view:type_name -> invora.billing.taxes.v2.View
-	31, // 12: invora.billing.taxes.v2.GetResponse.tax:type_name -> invora.billing.common.v2.BillingTax
-	3,  // 13: invora.billing.taxes.v2.ListRequest.filter:type_name -> invora.billing.taxes.v2.ListFilter
-	5,  // 14: invora.billing.taxes.v2.ListRequest.sort:type_name -> invora.billing.taxes.v2.ListSort
-	29, // 15: invora.billing.taxes.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
-	30, // 16: invora.billing.taxes.v2.ListRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 17: invora.billing.taxes.v2.ListRequest.view:type_name -> invora.billing.taxes.v2.View
-	31, // 18: invora.billing.taxes.v2.ListResponse.items:type_name -> invora.billing.common.v2.BillingTax
-	32, // 19: invora.billing.taxes.v2.ListResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	27, // 20: invora.billing.taxes.v2.BillingEntityApplyTaxesRequest.input:type_name -> invora.billing.taxes.v2.ApplyTaxesInput
-	28, // 21: invora.billing.taxes.v2.BillingEntityApplyTaxesResponse.apply_taxes_payload:type_name -> invora.billing.taxes.v2.ApplyTaxesPayload
-	25, // 22: invora.billing.taxes.v2.BillingEntityRemoveTaxesRequest.input:type_name -> invora.billing.taxes.v2.RemoveTaxesInput
-	26, // 23: invora.billing.taxes.v2.BillingEntityRemoveTaxesResponse.remove_taxes_payload:type_name -> invora.billing.taxes.v2.RemoveTaxesPayload
-	24, // 24: invora.billing.taxes.v2.CreateRequest.input:type_name -> invora.billing.taxes.v2.TaxCreateInput
-	31, // 25: invora.billing.taxes.v2.CreateResponse.tax:type_name -> invora.billing.common.v2.BillingTax
-	22, // 26: invora.billing.taxes.v2.DeleteRequest.input:type_name -> invora.billing.taxes.v2.DestroyTaxInput
-	21, // 27: invora.billing.taxes.v2.UpdateRequest.input:type_name -> invora.billing.taxes.v2.TaxUpdateInput
-	31, // 28: invora.billing.taxes.v2.UpdateResponse.tax:type_name -> invora.billing.common.v2.BillingTax
-	31, // 29: invora.billing.taxes.v2.RemoveTaxesPayload.removed_taxes:type_name -> invora.billing.common.v2.BillingTax
-	31, // 30: invora.billing.taxes.v2.ApplyTaxesPayload.applied_taxes:type_name -> invora.billing.common.v2.BillingTax
-	15, // 31: invora.billing.taxes.v2.TaxService.Create:input_type -> invora.billing.taxes.v2.CreateRequest
-	7,  // 32: invora.billing.taxes.v2.TaxService.Get:input_type -> invora.billing.taxes.v2.GetRequest
-	9,  // 33: invora.billing.taxes.v2.TaxService.List:input_type -> invora.billing.taxes.v2.ListRequest
-	19, // 34: invora.billing.taxes.v2.TaxService.Update:input_type -> invora.billing.taxes.v2.UpdateRequest
-	17, // 35: invora.billing.taxes.v2.TaxService.Delete:input_type -> invora.billing.taxes.v2.DeleteRequest
-	11, // 36: invora.billing.taxes.v2.TaxService.BillingEntityApplyTaxes:input_type -> invora.billing.taxes.v2.BillingEntityApplyTaxesRequest
-	13, // 37: invora.billing.taxes.v2.TaxService.BillingEntityRemoveTaxes:input_type -> invora.billing.taxes.v2.BillingEntityRemoveTaxesRequest
-	1,  // 38: invora.billing.taxes.v2.TaxService.BillingEntityTaxes:input_type -> invora.billing.taxes.v2.BillingEntityTaxesRequest
-	16, // 39: invora.billing.taxes.v2.TaxService.Create:output_type -> invora.billing.taxes.v2.CreateResponse
-	8,  // 40: invora.billing.taxes.v2.TaxService.Get:output_type -> invora.billing.taxes.v2.GetResponse
-	10, // 41: invora.billing.taxes.v2.TaxService.List:output_type -> invora.billing.taxes.v2.ListResponse
-	20, // 42: invora.billing.taxes.v2.TaxService.Update:output_type -> invora.billing.taxes.v2.UpdateResponse
-	18, // 43: invora.billing.taxes.v2.TaxService.Delete:output_type -> invora.billing.taxes.v2.DeleteResponse
-	12, // 44: invora.billing.taxes.v2.TaxService.BillingEntityApplyTaxes:output_type -> invora.billing.taxes.v2.BillingEntityApplyTaxesResponse
-	14, // 45: invora.billing.taxes.v2.TaxService.BillingEntityRemoveTaxes:output_type -> invora.billing.taxes.v2.BillingEntityRemoveTaxesResponse
-	2,  // 46: invora.billing.taxes.v2.TaxService.BillingEntityTaxes:output_type -> invora.billing.taxes.v2.BillingEntityTaxesResponse
-	39, // [39:47] is the sub-list for method output_type
-	31, // [31:39] is the sub-list for method input_type
-	31, // [31:31] is the sub-list for extension type_name
-	31, // [31:31] is the sub-list for extension extendee
-	0,  // [0:31] is the sub-list for field type_name
+	20, // 0: invora.billing.taxes.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
+	21, // 1: invora.billing.taxes.v2.GetRequest.view:type_name -> invora.billing.common.v2.View
+	22, // 2: invora.billing.taxes.v2.GetResponse.tax:type_name -> invora.billing.common.v2.BillingTax
+	4,  // 3: invora.billing.taxes.v2.ListRequest.filter:type_name -> invora.billing.taxes.v2.ListFilter
+	6,  // 4: invora.billing.taxes.v2.ListRequest.sort:type_name -> invora.billing.taxes.v2.ListSort
+	23, // 5: invora.billing.taxes.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
+	20, // 6: invora.billing.taxes.v2.ListRequest.read_mask:type_name -> google.protobuf.FieldMask
+	21, // 7: invora.billing.taxes.v2.ListRequest.view:type_name -> invora.billing.common.v2.View
+	22, // 8: invora.billing.taxes.v2.ListResponse.items:type_name -> invora.billing.common.v2.BillingTax
+	5,  // 9: invora.billing.taxes.v2.ListFilter.part:type_name -> invora.billing.taxes.v2.ListFilterPart
+	7,  // 10: invora.billing.taxes.v2.ListSort.rules:type_name -> invora.billing.taxes.v2.ListSortRule
+	24, // 11: invora.billing.taxes.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
+	25, // 12: invora.billing.taxes.v2.CreateRequest.rate:type_name -> kernel.DecimalValue
+	22, // 13: invora.billing.taxes.v2.CreateResponse.tax:type_name -> invora.billing.common.v2.BillingTax
+	25, // 14: invora.billing.taxes.v2.UpdateRequest.rate:type_name -> kernel.DecimalValue
+	20, // 15: invora.billing.taxes.v2.UpdateRequest.update_mask:type_name -> google.protobuf.FieldMask
+	22, // 16: invora.billing.taxes.v2.UpdateResponse.tax:type_name -> invora.billing.common.v2.BillingTax
+	22, // 17: invora.billing.taxes.v2.ApplyTaxesResponse.applied_taxes:type_name -> invora.billing.common.v2.BillingTax
+	22, // 18: invora.billing.taxes.v2.RemoveTaxesResponse.removed_taxes:type_name -> invora.billing.common.v2.BillingTax
+	4,  // 19: invora.billing.taxes.v2.ListBillingEntityTaxesRequest.filter:type_name -> invora.billing.taxes.v2.ListFilter
+	6,  // 20: invora.billing.taxes.v2.ListBillingEntityTaxesRequest.sort:type_name -> invora.billing.taxes.v2.ListSort
+	23, // 21: invora.billing.taxes.v2.ListBillingEntityTaxesRequest.pagination:type_name -> kernel.PaginationInfo
+	20, // 22: invora.billing.taxes.v2.ListBillingEntityTaxesRequest.read_mask:type_name -> google.protobuf.FieldMask
+	21, // 23: invora.billing.taxes.v2.ListBillingEntityTaxesRequest.view:type_name -> invora.billing.common.v2.View
+	22, // 24: invora.billing.taxes.v2.ListBillingEntityTaxesResponse.items:type_name -> invora.billing.common.v2.BillingTax
+	2,  // 25: invora.billing.taxes.v2.TaxesService.List:input_type -> invora.billing.taxes.v2.ListRequest
+	0,  // 26: invora.billing.taxes.v2.TaxesService.Get:input_type -> invora.billing.taxes.v2.GetRequest
+	8,  // 27: invora.billing.taxes.v2.TaxesService.Create:input_type -> invora.billing.taxes.v2.CreateRequest
+	10, // 28: invora.billing.taxes.v2.TaxesService.Update:input_type -> invora.billing.taxes.v2.UpdateRequest
+	12, // 29: invora.billing.taxes.v2.TaxesService.Delete:input_type -> invora.billing.taxes.v2.DeleteRequest
+	14, // 30: invora.billing.taxes.v2.TaxesService.ApplyTaxes:input_type -> invora.billing.taxes.v2.ApplyTaxesRequest
+	16, // 31: invora.billing.taxes.v2.TaxesService.RemoveTaxes:input_type -> invora.billing.taxes.v2.RemoveTaxesRequest
+	18, // 32: invora.billing.taxes.v2.TaxesService.ListBillingEntityTaxes:input_type -> invora.billing.taxes.v2.ListBillingEntityTaxesRequest
+	3,  // 33: invora.billing.taxes.v2.TaxesService.List:output_type -> invora.billing.taxes.v2.ListResponse
+	1,  // 34: invora.billing.taxes.v2.TaxesService.Get:output_type -> invora.billing.taxes.v2.GetResponse
+	9,  // 35: invora.billing.taxes.v2.TaxesService.Create:output_type -> invora.billing.taxes.v2.CreateResponse
+	11, // 36: invora.billing.taxes.v2.TaxesService.Update:output_type -> invora.billing.taxes.v2.UpdateResponse
+	13, // 37: invora.billing.taxes.v2.TaxesService.Delete:output_type -> invora.billing.taxes.v2.DeleteResponse
+	15, // 38: invora.billing.taxes.v2.TaxesService.ApplyTaxes:output_type -> invora.billing.taxes.v2.ApplyTaxesResponse
+	17, // 39: invora.billing.taxes.v2.TaxesService.RemoveTaxes:output_type -> invora.billing.taxes.v2.RemoveTaxesResponse
+	19, // 40: invora.billing.taxes.v2.TaxesService.ListBillingEntityTaxes:output_type -> invora.billing.taxes.v2.ListBillingEntityTaxesResponse
+	33, // [33:41] is the sub-list for method output_type
+	25, // [25:33] is the sub-list for method input_type
+	25, // [25:25] is the sub-list for extension type_name
+	25, // [25:25] is the sub-list for extension extendee
+	0,  // [0:25] is the sub-list for field type_name
 }
 
 func init() { file_invora_billing_taxes_v2_service_proto_init() }
@@ -1791,28 +1365,28 @@ func file_invora_billing_taxes_v2_service_proto_init() {
 	if File_invora_billing_taxes_v2_service_proto != nil {
 		return
 	}
-	file_invora_billing_taxes_v2_service_proto_msgTypes[3].OneofWrappers = []any{
+	file_invora_billing_taxes_v2_service_proto_msgTypes[3].OneofWrappers = []any{}
+	file_invora_billing_taxes_v2_service_proto_msgTypes[5].OneofWrappers = []any{
 		(*ListFilterPart_BillingEntityId)(nil),
 	}
-	file_invora_billing_taxes_v2_service_proto_msgTypes[5].OneofWrappers = []any{
+	file_invora_billing_taxes_v2_service_proto_msgTypes[7].OneofWrappers = []any{
 		(*ListSortRule_CreatedAt)(nil),
 	}
-	file_invora_billing_taxes_v2_service_proto_msgTypes[20].OneofWrappers = []any{}
-	file_invora_billing_taxes_v2_service_proto_msgTypes[22].OneofWrappers = []any{}
-	file_invora_billing_taxes_v2_service_proto_msgTypes[23].OneofWrappers = []any{}
+	file_invora_billing_taxes_v2_service_proto_msgTypes[8].OneofWrappers = []any{}
+	file_invora_billing_taxes_v2_service_proto_msgTypes[10].OneofWrappers = []any{}
+	file_invora_billing_taxes_v2_service_proto_msgTypes[19].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_billing_taxes_v2_service_proto_rawDesc), len(file_invora_billing_taxes_v2_service_proto_rawDesc)),
-			NumEnums:      1,
-			NumMessages:   28,
+			NumEnums:      0,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_invora_billing_taxes_v2_service_proto_goTypes,
 		DependencyIndexes: file_invora_billing_taxes_v2_service_proto_depIdxs,
-		EnumInfos:         file_invora_billing_taxes_v2_service_proto_enumTypes,
 		MessageInfos:      file_invora_billing_taxes_v2_service_proto_msgTypes,
 	}.Build()
 	File_invora_billing_taxes_v2_service_proto = out.File

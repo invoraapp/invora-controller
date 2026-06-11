@@ -1,6 +1,7 @@
 package convert
 
 import (
+	"math"
 	"strconv"
 	"strings"
 	"time"
@@ -8,6 +9,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	commonpb "github.com/invoraapp/invora-controller/gen/invora/billing/common/v2"
+	"github.com/invoraapp/invora-controller/gen/kernel"
 	webhookspb "github.com/invoraapp/invora-controller/gen/invora/billing/webhooks/v2"
 )
 
@@ -50,8 +52,8 @@ func billingEnum[T ~int32](valueMap map[string]int32, prefix, s string) T {
 }
 
 // CouponType maps CR couponType (e.g. fixed_amount) to proto enum.
-func CouponType(s string) commonpb.CouponTypeEnum {
-	return billingEnum[commonpb.CouponTypeEnum](commonpb.CouponTypeEnum_value, "COUPON_TYPE_ENUM_", s)
+func CouponType(s string) commonpb.CouponType {
+	return billingEnum[commonpb.CouponType](commonpb.CouponType_value, "COUPON_TYPE_", s)
 }
 
 // CouponExpiration maps CR expiration (e.g. no_expiration) to proto enum.
@@ -65,51 +67,58 @@ func CouponFrequency(s string) commonpb.CouponFrequency {
 }
 
 // BillingTime maps CR billingTime (calendar / anniversary) to proto enum.
-func BillingTime(s string) commonpb.BillingTimeEnum {
-	return billingEnum[commonpb.BillingTimeEnum](commonpb.BillingTimeEnum_value, "BILLING_TIME_ENUM_", s)
+func BillingTime(s string) commonpb.BillingTime {
+	return billingEnum[commonpb.BillingTime](commonpb.BillingTime_value, "BILLING_TIME_", s)
 }
 
 // AggregationType maps CR aggregationType to proto enum.
-func AggregationType(s string) commonpb.AggregationTypeEnum {
-	return billingEnum[commonpb.AggregationTypeEnum](commonpb.AggregationTypeEnum_value, "AGGREGATION_TYPE_ENUM_", s)
+func AggregationType(s string) commonpb.AggregationType {
+	return billingEnum[commonpb.AggregationType](commonpb.AggregationType_value, "AGGREGATION_TYPE_", s)
 }
 
 // WeightedInterval maps CR weightedInterval to proto enum.
-func WeightedInterval(s string) commonpb.WeightedIntervalEnum {
+func WeightedInterval(s string) commonpb.WeightedInterval {
 	if s == "" {
-		return commonpb.WeightedIntervalEnum_WEIGHTED_INTERVAL_ENUM_UNSPECIFIED
+		return commonpb.WeightedInterval_WEIGHTED_INTERVAL_UNSPECIFIED
 	}
-	return billingEnum[commonpb.WeightedIntervalEnum](commonpb.WeightedIntervalEnum_value, "WEIGHTED_INTERVAL_ENUM_", s)
+	return billingEnum[commonpb.WeightedInterval](commonpb.WeightedInterval_value, "WEIGHTED_INTERVAL_", s)
 }
 
 // WebhookSignatureAlgo maps CR signatureAlgo (hmac / jwt) to proto enum.
-func WebhookSignatureAlgo(s string) webhookspb.WebhookEndpointSignatureAlgoEnum {
+func WebhookSignatureAlgo(s string) webhookspb.WebhookEndpointSignatureAlgo {
 	if s == "" {
-		return webhookspb.WebhookEndpointSignatureAlgoEnum_WEBHOOK_ENDPOINT_SIGNATURE_ALGO_ENUM_UNSPECIFIED
+		return webhookspb.WebhookEndpointSignatureAlgo_WEBHOOK_ENDPOINT_SIGNATURE_ALGO_UNSPECIFIED
 	}
-	return billingEnum[webhookspb.WebhookEndpointSignatureAlgoEnum](
-		webhookspb.WebhookEndpointSignatureAlgoEnum_value,
-		"WEBHOOK_ENDPOINT_SIGNATURE_ALGO_ENUM_",
+	return billingEnum[webhookspb.WebhookEndpointSignatureAlgo](
+		webhookspb.WebhookEndpointSignatureAlgo_value,
+		"WEBHOOK_ENDPOINT_SIGNATURE_ALGO_",
 		s,
 	)
 }
 
+// float64ToDecimal converts a float64 to a kernel.DecimalValue (units + nanos).
+func float64ToDecimal(v float64) *kernel.DecimalValue {
+	units := int64(v)
+	nanos := int32(math.Round((v - float64(units)) * 1e9))
+	return &kernel.DecimalValue{Units: units, Nanos: nanos}
+}
+
 // TaxRate parses a decimal rate string for billing tax APIs.
-func TaxRate(s string) float64 {
+func TaxRate(s string) *kernel.DecimalValue {
 	v, _ := strconv.ParseFloat(s, 64)
-	return v
+	return float64ToDecimal(v)
 }
 
 // PercentageRate parses a percentage rate string for coupons.
-func PercentageRate(s string) (float64, bool) {
+func PercentageRate(s string) (*kernel.DecimalValue, bool) {
 	if s == "" {
-		return 0, false
+		return nil, false
 	}
 	v, err := strconv.ParseFloat(s, 64)
 	if err != nil {
-		return 0, false
+		return nil, false
 	}
-	return v, true
+	return float64ToDecimal(v), true
 }
 
 // Timestamp parses RFC3339 into a protobuf timestamp; returns nil when empty or invalid.

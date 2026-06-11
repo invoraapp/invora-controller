@@ -13,7 +13,6 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
-	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -26,66 +25,16 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Controls response detail level for List and Get operations.
-type View int32
-
-const (
-	View_VIEW_UNSPECIFIED View = 0
-	View_VIEW_BASIC       View = 1
-	View_VIEW_FULL        View = 2
-)
-
-// Enum value maps for View.
-var (
-	View_name = map[int32]string{
-		0: "VIEW_UNSPECIFIED",
-		1: "VIEW_BASIC",
-		2: "VIEW_FULL",
-	}
-	View_value = map[string]int32{
-		"VIEW_UNSPECIFIED": 0,
-		"VIEW_BASIC":       1,
-		"VIEW_FULL":        2,
-	}
-)
-
-func (x View) Enum() *View {
-	p := new(View)
-	*p = x
-	return p
-}
-
-func (x View) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (View) Descriptor() protoreflect.EnumDescriptor {
-	return file_invora_billing_payment_providers_v2_service_proto_enumTypes[0].Descriptor()
-}
-
-func (View) Type() protoreflect.EnumType {
-	return &file_invora_billing_payment_providers_v2_service_proto_enumTypes[0]
-}
-
-func (x View) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use View.Descriptor instead.
-func (View) EnumDescriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{0}
-}
-
 type GetRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Code of the payment provider
-	Code *string `protobuf:"bytes,1,opt,name=code,proto3,oneof" json:"code,omitempty"`
-	// Uniq ID of the payment provider
-	Id *string `protobuf:"bytes,2,opt,name=id,proto3,oneof" json:"id,omitempty"`
+	// Payment provider ID.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Optional provider code for lookup by code.
+	Code *string `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
 	// Fields to return in the response.
 	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.payment_providers.v2.View" json:"view,omitempty"`
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -120,16 +69,16 @@ func (*GetRequest) Descriptor() ([]byte, []int) {
 	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *GetRequest) GetCode() string {
-	if x != nil && x.Code != nil {
-		return *x.Code
+func (x *GetRequest) GetId() string {
+	if x != nil {
+		return x.Id
 	}
 	return ""
 }
 
-func (x *GetRequest) GetId() string {
-	if x != nil && x.Id != nil {
-		return *x.Id
+func (x *GetRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
 	}
 	return ""
 }
@@ -141,11 +90,11 @@ func (x *GetRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	return nil
 }
 
-func (x *GetRequest) GetView() View {
+func (x *GetRequest) GetView() v2.View {
 	if x != nil {
 		return x.View
 	}
-	return View_VIEW_UNSPECIFIED
+	return v2.View(0)
 }
 
 type GetResponse struct {
@@ -200,7 +149,7 @@ type ListRequest struct {
 	// Fields to return in the response.
 	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.payment_providers.v2.View" json:"view,omitempty"`
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -263,18 +212,18 @@ func (x *ListRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	return nil
 }
 
-func (x *ListRequest) GetView() View {
+func (x *ListRequest) GetView() v2.View {
 	if x != nil {
 		return x.View
 	}
-	return View_VIEW_UNSPECIFIED
+	return v2.View(0)
 }
 
 type ListResponse struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Items          []*v2.PaymentProvider   `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Items          []*v2.PaymentProvider  `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -323,11 +272,11 @@ func (x *ListResponse) GetTotalCount() uint64 {
 	return 0
 }
 
-func (x *ListResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
+func (x *ListResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
 	}
-	return nil
+	return ""
 }
 
 type ListFilter struct {
@@ -421,13 +370,13 @@ func (x *ListFilterPart) GetType() isListFilterPart_Type {
 	return nil
 }
 
-func (x *ListFilterPart) GetFilterType() v2.ProviderTypeEnum {
+func (x *ListFilterPart) GetFilterType() v2.ProviderType {
 	if x != nil {
 		if x, ok := x.Type.(*ListFilterPart_FilterType); ok {
 			return x.FilterType
 		}
 	}
-	return v2.ProviderTypeEnum(0)
+	return v2.ProviderType(0)
 }
 
 type isListFilterPart_Type interface {
@@ -435,7 +384,7 @@ type isListFilterPart_Type interface {
 }
 
 type ListFilterPart_FilterType struct {
-	FilterType v2.ProviderTypeEnum `protobuf:"varint,1,opt,name=filter_type,json=filterType,proto3,enum=invora.billing.common.v2.ProviderTypeEnum,oneof"`
+	FilterType v2.ProviderType `protobuf:"varint,1,opt,name=filter_type,json=filterType,proto3,enum=invora.billing.common.v2.ProviderType,oneof"`
 }
 
 func (*ListFilterPart_FilterType) isListFilterPart_Type() {}
@@ -550,27 +499,27 @@ type ListSortRule_CreatedAt struct {
 
 func (*ListSortRule_CreatedAt) isListSortRule_Type() {}
 
-type CreateAdyenPaymentProviderRequest struct {
-	state         protoimpl.MessageState        `protogen:"open.v1"`
-	Input         *AddAdyenPaymentProviderInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
+type DeleteRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateAdyenPaymentProviderRequest) Reset() {
-	*x = CreateAdyenPaymentProviderRequest{}
+func (x *DeleteRequest) Reset() {
+	*x = DeleteRequest{}
 	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateAdyenPaymentProviderRequest) String() string {
+func (x *DeleteRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateAdyenPaymentProviderRequest) ProtoMessage() {}
+func (*DeleteRequest) ProtoMessage() {}
 
-func (x *CreateAdyenPaymentProviderRequest) ProtoReflect() protoreflect.Message {
+func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -582,39 +531,38 @@ func (x *CreateAdyenPaymentProviderRequest) ProtoReflect() protoreflect.Message 
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateAdyenPaymentProviderRequest.ProtoReflect.Descriptor instead.
-func (*CreateAdyenPaymentProviderRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use DeleteRequest.ProtoReflect.Descriptor instead.
+func (*DeleteRequest) Descriptor() ([]byte, []int) {
 	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *CreateAdyenPaymentProviderRequest) GetInput() *AddAdyenPaymentProviderInput {
+func (x *DeleteRequest) GetId() string {
 	if x != nil {
-		return x.Input
+		return x.Id
 	}
-	return nil
+	return ""
 }
 
-type CreateAdyenPaymentProviderResponse struct {
+type DeleteResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AdyenProvider *v2.AdyenProvider      `protobuf:"bytes,1,opt,name=adyen_provider,json=adyenProvider,proto3" json:"adyen_provider,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateAdyenPaymentProviderResponse) Reset() {
-	*x = CreateAdyenPaymentProviderResponse{}
+func (x *DeleteResponse) Reset() {
+	*x = DeleteResponse{}
 	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateAdyenPaymentProviderResponse) String() string {
+func (x *DeleteResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateAdyenPaymentProviderResponse) ProtoMessage() {}
+func (*DeleteResponse) ProtoMessage() {}
 
-func (x *CreateAdyenPaymentProviderResponse) ProtoReflect() protoreflect.Message {
+func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -626,2223 +574,12 @@ func (x *CreateAdyenPaymentProviderResponse) ProtoReflect() protoreflect.Message
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateAdyenPaymentProviderResponse.ProtoReflect.Descriptor instead.
-func (*CreateAdyenPaymentProviderResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use DeleteResponse.ProtoReflect.Descriptor instead.
+func (*DeleteResponse) Descriptor() ([]byte, []int) {
 	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *CreateAdyenPaymentProviderResponse) GetAdyenProvider() *v2.AdyenProvider {
-	if x != nil {
-		return x.AdyenProvider
-	}
-	return nil
-}
-
-type CreateCashfreePaymentProviderRequest struct {
-	state         protoimpl.MessageState           `protogen:"open.v1"`
-	Input         *AddCashfreePaymentProviderInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateCashfreePaymentProviderRequest) Reset() {
-	*x = CreateCashfreePaymentProviderRequest{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[10]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateCashfreePaymentProviderRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateCashfreePaymentProviderRequest) ProtoMessage() {}
-
-func (x *CreateCashfreePaymentProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[10]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateCashfreePaymentProviderRequest.ProtoReflect.Descriptor instead.
-func (*CreateCashfreePaymentProviderRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{10}
-}
-
-func (x *CreateCashfreePaymentProviderRequest) GetInput() *AddCashfreePaymentProviderInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type CreateCashfreePaymentProviderResponse struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	CashfreeProvider *v2.CashfreeProvider   `protobuf:"bytes,1,opt,name=cashfree_provider,json=cashfreeProvider,proto3" json:"cashfree_provider,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
-}
-
-func (x *CreateCashfreePaymentProviderResponse) Reset() {
-	*x = CreateCashfreePaymentProviderResponse{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[11]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateCashfreePaymentProviderResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateCashfreePaymentProviderResponse) ProtoMessage() {}
-
-func (x *CreateCashfreePaymentProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[11]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateCashfreePaymentProviderResponse.ProtoReflect.Descriptor instead.
-func (*CreateCashfreePaymentProviderResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{11}
-}
-
-func (x *CreateCashfreePaymentProviderResponse) GetCashfreeProvider() *v2.CashfreeProvider {
-	if x != nil {
-		return x.CashfreeProvider
-	}
-	return nil
-}
-
-type CreateFlutterwavePaymentProviderRequest struct {
-	state         protoimpl.MessageState              `protogen:"open.v1"`
-	Input         *AddFlutterwavePaymentProviderInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateFlutterwavePaymentProviderRequest) Reset() {
-	*x = CreateFlutterwavePaymentProviderRequest{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[12]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateFlutterwavePaymentProviderRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateFlutterwavePaymentProviderRequest) ProtoMessage() {}
-
-func (x *CreateFlutterwavePaymentProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[12]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateFlutterwavePaymentProviderRequest.ProtoReflect.Descriptor instead.
-func (*CreateFlutterwavePaymentProviderRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{12}
-}
-
-func (x *CreateFlutterwavePaymentProviderRequest) GetInput() *AddFlutterwavePaymentProviderInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type CreateFlutterwavePaymentProviderResponse struct {
-	state               protoimpl.MessageState  `protogen:"open.v1"`
-	FlutterwaveProvider *v2.FlutterwaveProvider `protobuf:"bytes,1,opt,name=flutterwave_provider,json=flutterwaveProvider,proto3" json:"flutterwave_provider,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
-}
-
-func (x *CreateFlutterwavePaymentProviderResponse) Reset() {
-	*x = CreateFlutterwavePaymentProviderResponse{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[13]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateFlutterwavePaymentProviderResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateFlutterwavePaymentProviderResponse) ProtoMessage() {}
-
-func (x *CreateFlutterwavePaymentProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[13]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateFlutterwavePaymentProviderResponse.ProtoReflect.Descriptor instead.
-func (*CreateFlutterwavePaymentProviderResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{13}
-}
-
-func (x *CreateFlutterwavePaymentProviderResponse) GetFlutterwaveProvider() *v2.FlutterwaveProvider {
-	if x != nil {
-		return x.FlutterwaveProvider
-	}
-	return nil
-}
-
-type CreateGocardlessPaymentProviderRequest struct {
-	state         protoimpl.MessageState             `protogen:"open.v1"`
-	Input         *AddGocardlessPaymentProviderInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateGocardlessPaymentProviderRequest) Reset() {
-	*x = CreateGocardlessPaymentProviderRequest{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[14]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateGocardlessPaymentProviderRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateGocardlessPaymentProviderRequest) ProtoMessage() {}
-
-func (x *CreateGocardlessPaymentProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[14]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateGocardlessPaymentProviderRequest.ProtoReflect.Descriptor instead.
-func (*CreateGocardlessPaymentProviderRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{14}
-}
-
-func (x *CreateGocardlessPaymentProviderRequest) GetInput() *AddGocardlessPaymentProviderInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type CreateGocardlessPaymentProviderResponse struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	GocardlessProvider *v2.GocardlessProvider `protobuf:"bytes,1,opt,name=gocardless_provider,json=gocardlessProvider,proto3" json:"gocardless_provider,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *CreateGocardlessPaymentProviderResponse) Reset() {
-	*x = CreateGocardlessPaymentProviderResponse{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[15]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateGocardlessPaymentProviderResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateGocardlessPaymentProviderResponse) ProtoMessage() {}
-
-func (x *CreateGocardlessPaymentProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[15]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateGocardlessPaymentProviderResponse.ProtoReflect.Descriptor instead.
-func (*CreateGocardlessPaymentProviderResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{15}
-}
-
-func (x *CreateGocardlessPaymentProviderResponse) GetGocardlessProvider() *v2.GocardlessProvider {
-	if x != nil {
-		return x.GocardlessProvider
-	}
-	return nil
-}
-
-type CreateMoneyhashPaymentProviderRequest struct {
-	state         protoimpl.MessageState            `protogen:"open.v1"`
-	Input         *AddMoneyhashPaymentProviderInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateMoneyhashPaymentProviderRequest) Reset() {
-	*x = CreateMoneyhashPaymentProviderRequest{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[16]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateMoneyhashPaymentProviderRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateMoneyhashPaymentProviderRequest) ProtoMessage() {}
-
-func (x *CreateMoneyhashPaymentProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[16]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateMoneyhashPaymentProviderRequest.ProtoReflect.Descriptor instead.
-func (*CreateMoneyhashPaymentProviderRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{16}
-}
-
-func (x *CreateMoneyhashPaymentProviderRequest) GetInput() *AddMoneyhashPaymentProviderInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type CreateMoneyhashPaymentProviderResponse struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	MoneyhashProvider *v2.MoneyhashProvider  `protobuf:"bytes,1,opt,name=moneyhash_provider,json=moneyhashProvider,proto3" json:"moneyhash_provider,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
-}
-
-func (x *CreateMoneyhashPaymentProviderResponse) Reset() {
-	*x = CreateMoneyhashPaymentProviderResponse{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[17]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateMoneyhashPaymentProviderResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateMoneyhashPaymentProviderResponse) ProtoMessage() {}
-
-func (x *CreateMoneyhashPaymentProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[17]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateMoneyhashPaymentProviderResponse.ProtoReflect.Descriptor instead.
-func (*CreateMoneyhashPaymentProviderResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{17}
-}
-
-func (x *CreateMoneyhashPaymentProviderResponse) GetMoneyhashProvider() *v2.MoneyhashProvider {
-	if x != nil {
-		return x.MoneyhashProvider
-	}
-	return nil
-}
-
-type CreateStripePaymentProviderRequest struct {
-	state         protoimpl.MessageState         `protogen:"open.v1"`
-	Input         *AddStripePaymentProviderInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateStripePaymentProviderRequest) Reset() {
-	*x = CreateStripePaymentProviderRequest{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[18]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateStripePaymentProviderRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateStripePaymentProviderRequest) ProtoMessage() {}
-
-func (x *CreateStripePaymentProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[18]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateStripePaymentProviderRequest.ProtoReflect.Descriptor instead.
-func (*CreateStripePaymentProviderRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{18}
-}
-
-func (x *CreateStripePaymentProviderRequest) GetInput() *AddStripePaymentProviderInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type CreateStripePaymentProviderResponse struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	StripeProvider *v2.StripeProvider     `protobuf:"bytes,1,opt,name=stripe_provider,json=stripeProvider,proto3" json:"stripe_provider,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *CreateStripePaymentProviderResponse) Reset() {
-	*x = CreateStripePaymentProviderResponse{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[19]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateStripePaymentProviderResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateStripePaymentProviderResponse) ProtoMessage() {}
-
-func (x *CreateStripePaymentProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[19]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateStripePaymentProviderResponse.ProtoReflect.Descriptor instead.
-func (*CreateStripePaymentProviderResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{19}
-}
-
-func (x *CreateStripePaymentProviderResponse) GetStripeProvider() *v2.StripeProvider {
-	if x != nil {
-		return x.StripeProvider
-	}
-	return nil
-}
-
-type CreateTapPaymentProviderRequest struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	Input         *AddTapPaymentProviderInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateTapPaymentProviderRequest) Reset() {
-	*x = CreateTapPaymentProviderRequest{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[20]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateTapPaymentProviderRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateTapPaymentProviderRequest) ProtoMessage() {}
-
-func (x *CreateTapPaymentProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[20]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateTapPaymentProviderRequest.ProtoReflect.Descriptor instead.
-func (*CreateTapPaymentProviderRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{20}
-}
-
-func (x *CreateTapPaymentProviderRequest) GetInput() *AddTapPaymentProviderInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type CreateTapPaymentProviderResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	TapProvider   *v2.TapProvider        `protobuf:"bytes,1,opt,name=tap_provider,json=tapProvider,proto3" json:"tap_provider,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateTapPaymentProviderResponse) Reset() {
-	*x = CreateTapPaymentProviderResponse{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[21]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateTapPaymentProviderResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateTapPaymentProviderResponse) ProtoMessage() {}
-
-func (x *CreateTapPaymentProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[21]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateTapPaymentProviderResponse.ProtoReflect.Descriptor instead.
-func (*CreateTapPaymentProviderResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{21}
-}
-
-func (x *CreateTapPaymentProviderResponse) GetTapProvider() *v2.TapProvider {
-	if x != nil {
-		return x.TapProvider
-	}
-	return nil
-}
-
-type UpdateAdyenPaymentProviderRequest struct {
-	state         protoimpl.MessageState           `protogen:"open.v1"`
-	Input         *UpdateAdyenPaymentProviderInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateAdyenPaymentProviderRequest) Reset() {
-	*x = UpdateAdyenPaymentProviderRequest{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[22]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateAdyenPaymentProviderRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateAdyenPaymentProviderRequest) ProtoMessage() {}
-
-func (x *UpdateAdyenPaymentProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[22]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateAdyenPaymentProviderRequest.ProtoReflect.Descriptor instead.
-func (*UpdateAdyenPaymentProviderRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{22}
-}
-
-func (x *UpdateAdyenPaymentProviderRequest) GetInput() *UpdateAdyenPaymentProviderInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type UpdateAdyenPaymentProviderResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	AdyenProvider *v2.AdyenProvider      `protobuf:"bytes,1,opt,name=adyen_provider,json=adyenProvider,proto3" json:"adyen_provider,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateAdyenPaymentProviderResponse) Reset() {
-	*x = UpdateAdyenPaymentProviderResponse{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[23]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateAdyenPaymentProviderResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateAdyenPaymentProviderResponse) ProtoMessage() {}
-
-func (x *UpdateAdyenPaymentProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[23]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateAdyenPaymentProviderResponse.ProtoReflect.Descriptor instead.
-func (*UpdateAdyenPaymentProviderResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{23}
-}
-
-func (x *UpdateAdyenPaymentProviderResponse) GetAdyenProvider() *v2.AdyenProvider {
-	if x != nil {
-		return x.AdyenProvider
-	}
-	return nil
-}
-
-type UpdateCashfreePaymentProviderRequest struct {
-	state         protoimpl.MessageState              `protogen:"open.v1"`
-	Input         *UpdateCashfreePaymentProviderInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateCashfreePaymentProviderRequest) Reset() {
-	*x = UpdateCashfreePaymentProviderRequest{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[24]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateCashfreePaymentProviderRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateCashfreePaymentProviderRequest) ProtoMessage() {}
-
-func (x *UpdateCashfreePaymentProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[24]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateCashfreePaymentProviderRequest.ProtoReflect.Descriptor instead.
-func (*UpdateCashfreePaymentProviderRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{24}
-}
-
-func (x *UpdateCashfreePaymentProviderRequest) GetInput() *UpdateCashfreePaymentProviderInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type UpdateCashfreePaymentProviderResponse struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	CashfreeProvider *v2.CashfreeProvider   `protobuf:"bytes,1,opt,name=cashfree_provider,json=cashfreeProvider,proto3" json:"cashfree_provider,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
-}
-
-func (x *UpdateCashfreePaymentProviderResponse) Reset() {
-	*x = UpdateCashfreePaymentProviderResponse{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[25]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateCashfreePaymentProviderResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateCashfreePaymentProviderResponse) ProtoMessage() {}
-
-func (x *UpdateCashfreePaymentProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[25]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateCashfreePaymentProviderResponse.ProtoReflect.Descriptor instead.
-func (*UpdateCashfreePaymentProviderResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{25}
-}
-
-func (x *UpdateCashfreePaymentProviderResponse) GetCashfreeProvider() *v2.CashfreeProvider {
-	if x != nil {
-		return x.CashfreeProvider
-	}
-	return nil
-}
-
-type UpdateFlutterwavePaymentProviderRequest struct {
-	state         protoimpl.MessageState                 `protogen:"open.v1"`
-	Input         *UpdateFlutterwavePaymentProviderInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateFlutterwavePaymentProviderRequest) Reset() {
-	*x = UpdateFlutterwavePaymentProviderRequest{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[26]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateFlutterwavePaymentProviderRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateFlutterwavePaymentProviderRequest) ProtoMessage() {}
-
-func (x *UpdateFlutterwavePaymentProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[26]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateFlutterwavePaymentProviderRequest.ProtoReflect.Descriptor instead.
-func (*UpdateFlutterwavePaymentProviderRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{26}
-}
-
-func (x *UpdateFlutterwavePaymentProviderRequest) GetInput() *UpdateFlutterwavePaymentProviderInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type UpdateFlutterwavePaymentProviderResponse struct {
-	state               protoimpl.MessageState  `protogen:"open.v1"`
-	FlutterwaveProvider *v2.FlutterwaveProvider `protobuf:"bytes,1,opt,name=flutterwave_provider,json=flutterwaveProvider,proto3" json:"flutterwave_provider,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
-}
-
-func (x *UpdateFlutterwavePaymentProviderResponse) Reset() {
-	*x = UpdateFlutterwavePaymentProviderResponse{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[27]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateFlutterwavePaymentProviderResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateFlutterwavePaymentProviderResponse) ProtoMessage() {}
-
-func (x *UpdateFlutterwavePaymentProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[27]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateFlutterwavePaymentProviderResponse.ProtoReflect.Descriptor instead.
-func (*UpdateFlutterwavePaymentProviderResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{27}
-}
-
-func (x *UpdateFlutterwavePaymentProviderResponse) GetFlutterwaveProvider() *v2.FlutterwaveProvider {
-	if x != nil {
-		return x.FlutterwaveProvider
-	}
-	return nil
-}
-
-type UpdateGocardlessPaymentProviderRequest struct {
-	state         protoimpl.MessageState                `protogen:"open.v1"`
-	Input         *UpdateGocardlessPaymentProviderInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateGocardlessPaymentProviderRequest) Reset() {
-	*x = UpdateGocardlessPaymentProviderRequest{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[28]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateGocardlessPaymentProviderRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateGocardlessPaymentProviderRequest) ProtoMessage() {}
-
-func (x *UpdateGocardlessPaymentProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[28]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateGocardlessPaymentProviderRequest.ProtoReflect.Descriptor instead.
-func (*UpdateGocardlessPaymentProviderRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{28}
-}
-
-func (x *UpdateGocardlessPaymentProviderRequest) GetInput() *UpdateGocardlessPaymentProviderInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type UpdateGocardlessPaymentProviderResponse struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	GocardlessProvider *v2.GocardlessProvider `protobuf:"bytes,1,opt,name=gocardless_provider,json=gocardlessProvider,proto3" json:"gocardless_provider,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *UpdateGocardlessPaymentProviderResponse) Reset() {
-	*x = UpdateGocardlessPaymentProviderResponse{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[29]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateGocardlessPaymentProviderResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateGocardlessPaymentProviderResponse) ProtoMessage() {}
-
-func (x *UpdateGocardlessPaymentProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[29]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateGocardlessPaymentProviderResponse.ProtoReflect.Descriptor instead.
-func (*UpdateGocardlessPaymentProviderResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{29}
-}
-
-func (x *UpdateGocardlessPaymentProviderResponse) GetGocardlessProvider() *v2.GocardlessProvider {
-	if x != nil {
-		return x.GocardlessProvider
-	}
-	return nil
-}
-
-type UpdateMoneyhashPaymentProviderRequest struct {
-	state         protoimpl.MessageState               `protogen:"open.v1"`
-	Input         *UpdateMoneyhashPaymentProviderInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateMoneyhashPaymentProviderRequest) Reset() {
-	*x = UpdateMoneyhashPaymentProviderRequest{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[30]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateMoneyhashPaymentProviderRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateMoneyhashPaymentProviderRequest) ProtoMessage() {}
-
-func (x *UpdateMoneyhashPaymentProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[30]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateMoneyhashPaymentProviderRequest.ProtoReflect.Descriptor instead.
-func (*UpdateMoneyhashPaymentProviderRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{30}
-}
-
-func (x *UpdateMoneyhashPaymentProviderRequest) GetInput() *UpdateMoneyhashPaymentProviderInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type UpdateMoneyhashPaymentProviderResponse struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	MoneyhashProvider *v2.MoneyhashProvider  `protobuf:"bytes,1,opt,name=moneyhash_provider,json=moneyhashProvider,proto3" json:"moneyhash_provider,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
-}
-
-func (x *UpdateMoneyhashPaymentProviderResponse) Reset() {
-	*x = UpdateMoneyhashPaymentProviderResponse{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[31]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateMoneyhashPaymentProviderResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateMoneyhashPaymentProviderResponse) ProtoMessage() {}
-
-func (x *UpdateMoneyhashPaymentProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[31]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateMoneyhashPaymentProviderResponse.ProtoReflect.Descriptor instead.
-func (*UpdateMoneyhashPaymentProviderResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{31}
-}
-
-func (x *UpdateMoneyhashPaymentProviderResponse) GetMoneyhashProvider() *v2.MoneyhashProvider {
-	if x != nil {
-		return x.MoneyhashProvider
-	}
-	return nil
-}
-
-type UpdateStripePaymentProviderRequest struct {
-	state         protoimpl.MessageState            `protogen:"open.v1"`
-	Input         *UpdateStripePaymentProviderInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateStripePaymentProviderRequest) Reset() {
-	*x = UpdateStripePaymentProviderRequest{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[32]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateStripePaymentProviderRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateStripePaymentProviderRequest) ProtoMessage() {}
-
-func (x *UpdateStripePaymentProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[32]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateStripePaymentProviderRequest.ProtoReflect.Descriptor instead.
-func (*UpdateStripePaymentProviderRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{32}
-}
-
-func (x *UpdateStripePaymentProviderRequest) GetInput() *UpdateStripePaymentProviderInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type UpdateStripePaymentProviderResponse struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	StripeProvider *v2.StripeProvider     `protobuf:"bytes,1,opt,name=stripe_provider,json=stripeProvider,proto3" json:"stripe_provider,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *UpdateStripePaymentProviderResponse) Reset() {
-	*x = UpdateStripePaymentProviderResponse{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[33]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateStripePaymentProviderResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateStripePaymentProviderResponse) ProtoMessage() {}
-
-func (x *UpdateStripePaymentProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[33]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateStripePaymentProviderResponse.ProtoReflect.Descriptor instead.
-func (*UpdateStripePaymentProviderResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{33}
-}
-
-func (x *UpdateStripePaymentProviderResponse) GetStripeProvider() *v2.StripeProvider {
-	if x != nil {
-		return x.StripeProvider
-	}
-	return nil
-}
-
-type UpdateTapPaymentProviderRequest struct {
-	state         protoimpl.MessageState         `protogen:"open.v1"`
-	Input         *UpdateTapPaymentProviderInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateTapPaymentProviderRequest) Reset() {
-	*x = UpdateTapPaymentProviderRequest{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[34]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateTapPaymentProviderRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateTapPaymentProviderRequest) ProtoMessage() {}
-
-func (x *UpdateTapPaymentProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[34]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateTapPaymentProviderRequest.ProtoReflect.Descriptor instead.
-func (*UpdateTapPaymentProviderRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{34}
-}
-
-func (x *UpdateTapPaymentProviderRequest) GetInput() *UpdateTapPaymentProviderInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type UpdateTapPaymentProviderResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	TapProvider   *v2.TapProvider        `protobuf:"bytes,1,opt,name=tap_provider,json=tapProvider,proto3" json:"tap_provider,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateTapPaymentProviderResponse) Reset() {
-	*x = UpdateTapPaymentProviderResponse{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[35]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateTapPaymentProviderResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateTapPaymentProviderResponse) ProtoMessage() {}
-
-func (x *UpdateTapPaymentProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[35]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateTapPaymentProviderResponse.ProtoReflect.Descriptor instead.
-func (*UpdateTapPaymentProviderResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{35}
-}
-
-func (x *UpdateTapPaymentProviderResponse) GetTapProvider() *v2.TapProvider {
-	if x != nil {
-		return x.TapProvider
-	}
-	return nil
-}
-
-// Tap update input arguments
-type UpdateTapPaymentProviderInput struct {
-	state  protoimpl.MessageState `protogen:"open.v1"`
-	Code   *string                `protobuf:"bytes,1,opt,name=code,proto3,oneof" json:"code,omitempty"`
-	FlowId *string                `protobuf:"bytes,2,opt,name=flow_id,json=flowId,proto3,oneof" json:"flow_id,omitempty"`
-	Id     string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Name   *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	// Enable saved cards for recurring payments (requires Tap KYC onboarding)
-	SaveCardEnabled    *bool   `protobuf:"varint,5,opt,name=save_card_enabled,json=saveCardEnabled,proto3,oneof" json:"save_card_enabled,omitempty"`
-	SuccessRedirectUrl *string `protobuf:"bytes,6,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
-	Supports3Ds        *bool   `protobuf:"varint,7,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *UpdateTapPaymentProviderInput) Reset() {
-	*x = UpdateTapPaymentProviderInput{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[36]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateTapPaymentProviderInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateTapPaymentProviderInput) ProtoMessage() {}
-
-func (x *UpdateTapPaymentProviderInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[36]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateTapPaymentProviderInput.ProtoReflect.Descriptor instead.
-func (*UpdateTapPaymentProviderInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{36}
-}
-
-func (x *UpdateTapPaymentProviderInput) GetCode() string {
-	if x != nil && x.Code != nil {
-		return *x.Code
-	}
-	return ""
-}
-
-func (x *UpdateTapPaymentProviderInput) GetFlowId() string {
-	if x != nil && x.FlowId != nil {
-		return *x.FlowId
-	}
-	return ""
-}
-
-func (x *UpdateTapPaymentProviderInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *UpdateTapPaymentProviderInput) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
-	}
-	return ""
-}
-
-func (x *UpdateTapPaymentProviderInput) GetSaveCardEnabled() bool {
-	if x != nil && x.SaveCardEnabled != nil {
-		return *x.SaveCardEnabled
-	}
-	return false
-}
-
-func (x *UpdateTapPaymentProviderInput) GetSuccessRedirectUrl() string {
-	if x != nil && x.SuccessRedirectUrl != nil {
-		return *x.SuccessRedirectUrl
-	}
-	return ""
-}
-
-func (x *UpdateTapPaymentProviderInput) GetSupports3Ds() bool {
-	if x != nil && x.Supports3Ds != nil {
-		return *x.Supports3Ds
-	}
-	return false
-}
-
-// Update input arguments
-type UpdateStripePaymentProviderInput struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	Code               *string                `protobuf:"bytes,1,opt,name=code,proto3,oneof" json:"code,omitempty"`
-	FlowId             *string                `protobuf:"bytes,2,opt,name=flow_id,json=flowId,proto3,oneof" json:"flow_id,omitempty"`
-	Id                 string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Name               *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
-	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *UpdateStripePaymentProviderInput) Reset() {
-	*x = UpdateStripePaymentProviderInput{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[37]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateStripePaymentProviderInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateStripePaymentProviderInput) ProtoMessage() {}
-
-func (x *UpdateStripePaymentProviderInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[37]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateStripePaymentProviderInput.ProtoReflect.Descriptor instead.
-func (*UpdateStripePaymentProviderInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{37}
-}
-
-func (x *UpdateStripePaymentProviderInput) GetCode() string {
-	if x != nil && x.Code != nil {
-		return *x.Code
-	}
-	return ""
-}
-
-func (x *UpdateStripePaymentProviderInput) GetFlowId() string {
-	if x != nil && x.FlowId != nil {
-		return *x.FlowId
-	}
-	return ""
-}
-
-func (x *UpdateStripePaymentProviderInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *UpdateStripePaymentProviderInput) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
-	}
-	return ""
-}
-
-func (x *UpdateStripePaymentProviderInput) GetSuccessRedirectUrl() string {
-	if x != nil && x.SuccessRedirectUrl != nil {
-		return *x.SuccessRedirectUrl
-	}
-	return ""
-}
-
-func (x *UpdateStripePaymentProviderInput) GetSupports3Ds() bool {
-	if x != nil && x.Supports3Ds != nil {
-		return *x.Supports3Ds
-	}
-	return false
-}
-
-// Update input arguments
-type UpdateMoneyhashPaymentProviderInput struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	Code               *string                `protobuf:"bytes,1,opt,name=code,proto3,oneof" json:"code,omitempty"`
-	FlowId             *string                `protobuf:"bytes,2,opt,name=flow_id,json=flowId,proto3,oneof" json:"flow_id,omitempty"`
-	Id                 string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Name               *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
-	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *UpdateMoneyhashPaymentProviderInput) Reset() {
-	*x = UpdateMoneyhashPaymentProviderInput{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[38]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateMoneyhashPaymentProviderInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateMoneyhashPaymentProviderInput) ProtoMessage() {}
-
-func (x *UpdateMoneyhashPaymentProviderInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[38]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateMoneyhashPaymentProviderInput.ProtoReflect.Descriptor instead.
-func (*UpdateMoneyhashPaymentProviderInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{38}
-}
-
-func (x *UpdateMoneyhashPaymentProviderInput) GetCode() string {
-	if x != nil && x.Code != nil {
-		return *x.Code
-	}
-	return ""
-}
-
-func (x *UpdateMoneyhashPaymentProviderInput) GetFlowId() string {
-	if x != nil && x.FlowId != nil {
-		return *x.FlowId
-	}
-	return ""
-}
-
-func (x *UpdateMoneyhashPaymentProviderInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *UpdateMoneyhashPaymentProviderInput) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
-	}
-	return ""
-}
-
-func (x *UpdateMoneyhashPaymentProviderInput) GetSuccessRedirectUrl() string {
-	if x != nil && x.SuccessRedirectUrl != nil {
-		return *x.SuccessRedirectUrl
-	}
-	return ""
-}
-
-func (x *UpdateMoneyhashPaymentProviderInput) GetSupports3Ds() bool {
-	if x != nil && x.Supports3Ds != nil {
-		return *x.Supports3Ds
-	}
-	return false
-}
-
-// Update input arguments
-type UpdateGocardlessPaymentProviderInput struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	Code               *string                `protobuf:"bytes,1,opt,name=code,proto3,oneof" json:"code,omitempty"`
-	FlowId             *string                `protobuf:"bytes,2,opt,name=flow_id,json=flowId,proto3,oneof" json:"flow_id,omitempty"`
-	Id                 string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Name               *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
-	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *UpdateGocardlessPaymentProviderInput) Reset() {
-	*x = UpdateGocardlessPaymentProviderInput{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[39]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateGocardlessPaymentProviderInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateGocardlessPaymentProviderInput) ProtoMessage() {}
-
-func (x *UpdateGocardlessPaymentProviderInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[39]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateGocardlessPaymentProviderInput.ProtoReflect.Descriptor instead.
-func (*UpdateGocardlessPaymentProviderInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{39}
-}
-
-func (x *UpdateGocardlessPaymentProviderInput) GetCode() string {
-	if x != nil && x.Code != nil {
-		return *x.Code
-	}
-	return ""
-}
-
-func (x *UpdateGocardlessPaymentProviderInput) GetFlowId() string {
-	if x != nil && x.FlowId != nil {
-		return *x.FlowId
-	}
-	return ""
-}
-
-func (x *UpdateGocardlessPaymentProviderInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *UpdateGocardlessPaymentProviderInput) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
-	}
-	return ""
-}
-
-func (x *UpdateGocardlessPaymentProviderInput) GetSuccessRedirectUrl() string {
-	if x != nil && x.SuccessRedirectUrl != nil {
-		return *x.SuccessRedirectUrl
-	}
-	return ""
-}
-
-func (x *UpdateGocardlessPaymentProviderInput) GetSupports3Ds() bool {
-	if x != nil && x.Supports3Ds != nil {
-		return *x.Supports3Ds
-	}
-	return false
-}
-
-// Update input arguments
-type UpdateFlutterwavePaymentProviderInput struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	Code               *string                `protobuf:"bytes,1,opt,name=code,proto3,oneof" json:"code,omitempty"`
-	FlowId             *string                `protobuf:"bytes,2,opt,name=flow_id,json=flowId,proto3,oneof" json:"flow_id,omitempty"`
-	Id                 string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Name               *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
-	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *UpdateFlutterwavePaymentProviderInput) Reset() {
-	*x = UpdateFlutterwavePaymentProviderInput{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[40]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateFlutterwavePaymentProviderInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateFlutterwavePaymentProviderInput) ProtoMessage() {}
-
-func (x *UpdateFlutterwavePaymentProviderInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[40]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateFlutterwavePaymentProviderInput.ProtoReflect.Descriptor instead.
-func (*UpdateFlutterwavePaymentProviderInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{40}
-}
-
-func (x *UpdateFlutterwavePaymentProviderInput) GetCode() string {
-	if x != nil && x.Code != nil {
-		return *x.Code
-	}
-	return ""
-}
-
-func (x *UpdateFlutterwavePaymentProviderInput) GetFlowId() string {
-	if x != nil && x.FlowId != nil {
-		return *x.FlowId
-	}
-	return ""
-}
-
-func (x *UpdateFlutterwavePaymentProviderInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *UpdateFlutterwavePaymentProviderInput) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
-	}
-	return ""
-}
-
-func (x *UpdateFlutterwavePaymentProviderInput) GetSuccessRedirectUrl() string {
-	if x != nil && x.SuccessRedirectUrl != nil {
-		return *x.SuccessRedirectUrl
-	}
-	return ""
-}
-
-func (x *UpdateFlutterwavePaymentProviderInput) GetSupports3Ds() bool {
-	if x != nil && x.Supports3Ds != nil {
-		return *x.Supports3Ds
-	}
-	return false
-}
-
-// Update input arguments
-type UpdateCashfreePaymentProviderInput struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	Code               *string                `protobuf:"bytes,1,opt,name=code,proto3,oneof" json:"code,omitempty"`
-	FlowId             *string                `protobuf:"bytes,2,opt,name=flow_id,json=flowId,proto3,oneof" json:"flow_id,omitempty"`
-	Id                 string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Name               *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
-	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *UpdateCashfreePaymentProviderInput) Reset() {
-	*x = UpdateCashfreePaymentProviderInput{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[41]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateCashfreePaymentProviderInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateCashfreePaymentProviderInput) ProtoMessage() {}
-
-func (x *UpdateCashfreePaymentProviderInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[41]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateCashfreePaymentProviderInput.ProtoReflect.Descriptor instead.
-func (*UpdateCashfreePaymentProviderInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{41}
-}
-
-func (x *UpdateCashfreePaymentProviderInput) GetCode() string {
-	if x != nil && x.Code != nil {
-		return *x.Code
-	}
-	return ""
-}
-
-func (x *UpdateCashfreePaymentProviderInput) GetFlowId() string {
-	if x != nil && x.FlowId != nil {
-		return *x.FlowId
-	}
-	return ""
-}
-
-func (x *UpdateCashfreePaymentProviderInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *UpdateCashfreePaymentProviderInput) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
-	}
-	return ""
-}
-
-func (x *UpdateCashfreePaymentProviderInput) GetSuccessRedirectUrl() string {
-	if x != nil && x.SuccessRedirectUrl != nil {
-		return *x.SuccessRedirectUrl
-	}
-	return ""
-}
-
-func (x *UpdateCashfreePaymentProviderInput) GetSupports3Ds() bool {
-	if x != nil && x.Supports3Ds != nil {
-		return *x.Supports3Ds
-	}
-	return false
-}
-
-// Update input arguments
-type UpdateAdyenPaymentProviderInput struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	Code               *string                `protobuf:"bytes,1,opt,name=code,proto3,oneof" json:"code,omitempty"`
-	FlowId             *string                `protobuf:"bytes,2,opt,name=flow_id,json=flowId,proto3,oneof" json:"flow_id,omitempty"`
-	Id                 string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Name               *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
-	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *UpdateAdyenPaymentProviderInput) Reset() {
-	*x = UpdateAdyenPaymentProviderInput{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[42]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateAdyenPaymentProviderInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateAdyenPaymentProviderInput) ProtoMessage() {}
-
-func (x *UpdateAdyenPaymentProviderInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[42]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateAdyenPaymentProviderInput.ProtoReflect.Descriptor instead.
-func (*UpdateAdyenPaymentProviderInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{42}
-}
-
-func (x *UpdateAdyenPaymentProviderInput) GetCode() string {
-	if x != nil && x.Code != nil {
-		return *x.Code
-	}
-	return ""
-}
-
-func (x *UpdateAdyenPaymentProviderInput) GetFlowId() string {
-	if x != nil && x.FlowId != nil {
-		return *x.FlowId
-	}
-	return ""
-}
-
-func (x *UpdateAdyenPaymentProviderInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *UpdateAdyenPaymentProviderInput) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
-	}
-	return ""
-}
-
-func (x *UpdateAdyenPaymentProviderInput) GetSuccessRedirectUrl() string {
-	if x != nil && x.SuccessRedirectUrl != nil {
-		return *x.SuccessRedirectUrl
-	}
-	return ""
-}
-
-func (x *UpdateAdyenPaymentProviderInput) GetSupports3Ds() bool {
-	if x != nil && x.Supports3Ds != nil {
-		return *x.Supports3Ds
-	}
-	return false
-}
-
-// Tap input arguments
-type AddTapPaymentProviderInput struct {
-	state  protoimpl.MessageState `protogen:"open.v1"`
-	ApiKey *string                `protobuf:"bytes,1,opt,name=api_key,json=apiKey,proto3,oneof" json:"api_key,omitempty"`
-	Code   string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
-	Name   string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	// Enable saved cards for recurring payments (requires Tap KYC onboarding)
-	SaveCardEnabled    *bool   `protobuf:"varint,4,opt,name=save_card_enabled,json=saveCardEnabled,proto3,oneof" json:"save_card_enabled,omitempty"`
-	SuccessRedirectUrl *string `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
-	Supports3Ds        *bool   `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *AddTapPaymentProviderInput) Reset() {
-	*x = AddTapPaymentProviderInput{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[43]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AddTapPaymentProviderInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AddTapPaymentProviderInput) ProtoMessage() {}
-
-func (x *AddTapPaymentProviderInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[43]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AddTapPaymentProviderInput.ProtoReflect.Descriptor instead.
-func (*AddTapPaymentProviderInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{43}
-}
-
-func (x *AddTapPaymentProviderInput) GetApiKey() string {
-	if x != nil && x.ApiKey != nil {
-		return *x.ApiKey
-	}
-	return ""
-}
-
-func (x *AddTapPaymentProviderInput) GetCode() string {
-	if x != nil {
-		return x.Code
-	}
-	return ""
-}
-
-func (x *AddTapPaymentProviderInput) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *AddTapPaymentProviderInput) GetSaveCardEnabled() bool {
-	if x != nil && x.SaveCardEnabled != nil {
-		return *x.SaveCardEnabled
-	}
-	return false
-}
-
-func (x *AddTapPaymentProviderInput) GetSuccessRedirectUrl() string {
-	if x != nil && x.SuccessRedirectUrl != nil {
-		return *x.SuccessRedirectUrl
-	}
-	return ""
-}
-
-func (x *AddTapPaymentProviderInput) GetSupports3Ds() bool {
-	if x != nil && x.Supports3Ds != nil {
-		return *x.Supports3Ds
-	}
-	return false
-}
-
-// Stripe input arguments
-type AddStripePaymentProviderInput struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	Code               string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
-	Name               string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	SecretKey          *string                `protobuf:"bytes,3,opt,name=secret_key,json=secretKey,proto3,oneof" json:"secret_key,omitempty"`
-	SuccessRedirectUrl *string                `protobuf:"bytes,4,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
-	Supports3Ds        *bool                  `protobuf:"varint,5,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *AddStripePaymentProviderInput) Reset() {
-	*x = AddStripePaymentProviderInput{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[44]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AddStripePaymentProviderInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AddStripePaymentProviderInput) ProtoMessage() {}
-
-func (x *AddStripePaymentProviderInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[44]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AddStripePaymentProviderInput.ProtoReflect.Descriptor instead.
-func (*AddStripePaymentProviderInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{44}
-}
-
-func (x *AddStripePaymentProviderInput) GetCode() string {
-	if x != nil {
-		return x.Code
-	}
-	return ""
-}
-
-func (x *AddStripePaymentProviderInput) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *AddStripePaymentProviderInput) GetSecretKey() string {
-	if x != nil && x.SecretKey != nil {
-		return *x.SecretKey
-	}
-	return ""
-}
-
-func (x *AddStripePaymentProviderInput) GetSuccessRedirectUrl() string {
-	if x != nil && x.SuccessRedirectUrl != nil {
-		return *x.SuccessRedirectUrl
-	}
-	return ""
-}
-
-func (x *AddStripePaymentProviderInput) GetSupports3Ds() bool {
-	if x != nil && x.Supports3Ds != nil {
-		return *x.Supports3Ds
-	}
-	return false
-}
-
-// Moneyhash input arguments
-type AddMoneyhashPaymentProviderInput struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	ApiKey             string                 `protobuf:"bytes,1,opt,name=api_key,json=apiKey,proto3" json:"api_key,omitempty"`
-	Code               string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
-	FlowId             string                 `protobuf:"bytes,3,opt,name=flow_id,json=flowId,proto3" json:"flow_id,omitempty"`
-	Name               string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
-	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *AddMoneyhashPaymentProviderInput) Reset() {
-	*x = AddMoneyhashPaymentProviderInput{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[45]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AddMoneyhashPaymentProviderInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AddMoneyhashPaymentProviderInput) ProtoMessage() {}
-
-func (x *AddMoneyhashPaymentProviderInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[45]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AddMoneyhashPaymentProviderInput.ProtoReflect.Descriptor instead.
-func (*AddMoneyhashPaymentProviderInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{45}
-}
-
-func (x *AddMoneyhashPaymentProviderInput) GetApiKey() string {
-	if x != nil {
-		return x.ApiKey
-	}
-	return ""
-}
-
-func (x *AddMoneyhashPaymentProviderInput) GetCode() string {
-	if x != nil {
-		return x.Code
-	}
-	return ""
-}
-
-func (x *AddMoneyhashPaymentProviderInput) GetFlowId() string {
-	if x != nil {
-		return x.FlowId
-	}
-	return ""
-}
-
-func (x *AddMoneyhashPaymentProviderInput) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *AddMoneyhashPaymentProviderInput) GetSuccessRedirectUrl() string {
-	if x != nil && x.SuccessRedirectUrl != nil {
-		return *x.SuccessRedirectUrl
-	}
-	return ""
-}
-
-// Gocardless input arguments
-type AddGocardlessPaymentProviderInput struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	AccessCode         *string                `protobuf:"bytes,1,opt,name=access_code,json=accessCode,proto3,oneof" json:"access_code,omitempty"`
-	Code               string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
-	Name               string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	SuccessRedirectUrl *string                `protobuf:"bytes,4,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *AddGocardlessPaymentProviderInput) Reset() {
-	*x = AddGocardlessPaymentProviderInput{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[46]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AddGocardlessPaymentProviderInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AddGocardlessPaymentProviderInput) ProtoMessage() {}
-
-func (x *AddGocardlessPaymentProviderInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[46]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AddGocardlessPaymentProviderInput.ProtoReflect.Descriptor instead.
-func (*AddGocardlessPaymentProviderInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{46}
-}
-
-func (x *AddGocardlessPaymentProviderInput) GetAccessCode() string {
-	if x != nil && x.AccessCode != nil {
-		return *x.AccessCode
-	}
-	return ""
-}
-
-func (x *AddGocardlessPaymentProviderInput) GetCode() string {
-	if x != nil {
-		return x.Code
-	}
-	return ""
-}
-
-func (x *AddGocardlessPaymentProviderInput) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *AddGocardlessPaymentProviderInput) GetSuccessRedirectUrl() string {
-	if x != nil && x.SuccessRedirectUrl != nil {
-		return *x.SuccessRedirectUrl
-	}
-	return ""
-}
-
-// Flutterwave input arguments
-type AddFlutterwavePaymentProviderInput struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	Code               string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
-	Name               string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	SecretKey          string                 `protobuf:"bytes,3,opt,name=secret_key,json=secretKey,proto3" json:"secret_key,omitempty"`
-	SuccessRedirectUrl *string                `protobuf:"bytes,4,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *AddFlutterwavePaymentProviderInput) Reset() {
-	*x = AddFlutterwavePaymentProviderInput{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[47]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AddFlutterwavePaymentProviderInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AddFlutterwavePaymentProviderInput) ProtoMessage() {}
-
-func (x *AddFlutterwavePaymentProviderInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[47]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AddFlutterwavePaymentProviderInput.ProtoReflect.Descriptor instead.
-func (*AddFlutterwavePaymentProviderInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{47}
-}
-
-func (x *AddFlutterwavePaymentProviderInput) GetCode() string {
-	if x != nil {
-		return x.Code
-	}
-	return ""
-}
-
-func (x *AddFlutterwavePaymentProviderInput) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *AddFlutterwavePaymentProviderInput) GetSecretKey() string {
-	if x != nil {
-		return x.SecretKey
-	}
-	return ""
-}
-
-func (x *AddFlutterwavePaymentProviderInput) GetSuccessRedirectUrl() string {
-	if x != nil && x.SuccessRedirectUrl != nil {
-		return *x.SuccessRedirectUrl
-	}
-	return ""
-}
-
-// Cashfree input arguments
-type AddCashfreePaymentProviderInput struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	ClientId           string                 `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
-	ClientSecret       string                 `protobuf:"bytes,2,opt,name=client_secret,json=clientSecret,proto3" json:"client_secret,omitempty"`
-	Code               string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
-	Name               string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
-	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *AddCashfreePaymentProviderInput) Reset() {
-	*x = AddCashfreePaymentProviderInput{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[48]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AddCashfreePaymentProviderInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AddCashfreePaymentProviderInput) ProtoMessage() {}
-
-func (x *AddCashfreePaymentProviderInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[48]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AddCashfreePaymentProviderInput.ProtoReflect.Descriptor instead.
-func (*AddCashfreePaymentProviderInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{48}
-}
-
-func (x *AddCashfreePaymentProviderInput) GetClientId() string {
-	if x != nil {
-		return x.ClientId
-	}
-	return ""
-}
-
-func (x *AddCashfreePaymentProviderInput) GetClientSecret() string {
-	if x != nil {
-		return x.ClientSecret
-	}
-	return ""
-}
-
-func (x *AddCashfreePaymentProviderInput) GetCode() string {
-	if x != nil {
-		return x.Code
-	}
-	return ""
-}
-
-func (x *AddCashfreePaymentProviderInput) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *AddCashfreePaymentProviderInput) GetSuccessRedirectUrl() string {
-	if x != nil && x.SuccessRedirectUrl != nil {
-		return *x.SuccessRedirectUrl
-	}
-	return ""
-}
-
-// Adyen input arguments
-type AddAdyenPaymentProviderInput struct {
+type CreateAdyenRequest struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	ApiKey             string                 `protobuf:"bytes,1,opt,name=api_key,json=apiKey,proto3" json:"api_key,omitempty"`
 	Code               string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
@@ -2855,21 +592,21 @@ type AddAdyenPaymentProviderInput struct {
 	sizeCache          protoimpl.SizeCache
 }
 
-func (x *AddAdyenPaymentProviderInput) Reset() {
-	*x = AddAdyenPaymentProviderInput{}
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[49]
+func (x *CreateAdyenRequest) Reset() {
+	*x = CreateAdyenRequest{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *AddAdyenPaymentProviderInput) String() string {
+func (x *CreateAdyenRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AddAdyenPaymentProviderInput) ProtoMessage() {}
+func (*CreateAdyenRequest) ProtoMessage() {}
 
-func (x *AddAdyenPaymentProviderInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[49]
+func (x *CreateAdyenRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2880,76 +617,1793 @@ func (x *AddAdyenPaymentProviderInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AddAdyenPaymentProviderInput.ProtoReflect.Descriptor instead.
-func (*AddAdyenPaymentProviderInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{49}
+// Deprecated: Use CreateAdyenRequest.ProtoReflect.Descriptor instead.
+func (*CreateAdyenRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *AddAdyenPaymentProviderInput) GetApiKey() string {
+func (x *CreateAdyenRequest) GetApiKey() string {
 	if x != nil {
 		return x.ApiKey
 	}
 	return ""
 }
 
-func (x *AddAdyenPaymentProviderInput) GetCode() string {
+func (x *CreateAdyenRequest) GetCode() string {
 	if x != nil {
 		return x.Code
 	}
 	return ""
 }
 
-func (x *AddAdyenPaymentProviderInput) GetHmacKey() string {
+func (x *CreateAdyenRequest) GetHmacKey() string {
 	if x != nil && x.HmacKey != nil {
 		return *x.HmacKey
 	}
 	return ""
 }
 
-func (x *AddAdyenPaymentProviderInput) GetLivePrefix() string {
+func (x *CreateAdyenRequest) GetLivePrefix() string {
 	if x != nil && x.LivePrefix != nil {
 		return *x.LivePrefix
 	}
 	return ""
 }
 
-func (x *AddAdyenPaymentProviderInput) GetMerchantAccount() string {
+func (x *CreateAdyenRequest) GetMerchantAccount() string {
 	if x != nil {
 		return x.MerchantAccount
 	}
 	return ""
 }
 
-func (x *AddAdyenPaymentProviderInput) GetName() string {
+func (x *CreateAdyenRequest) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-func (x *AddAdyenPaymentProviderInput) GetSuccessRedirectUrl() string {
+func (x *CreateAdyenRequest) GetSuccessRedirectUrl() string {
 	if x != nil && x.SuccessRedirectUrl != nil {
 		return *x.SuccessRedirectUrl
 	}
 	return ""
 }
 
+type CreateAdyenResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AdyenProvider *v2.AdyenProvider      `protobuf:"bytes,1,opt,name=adyen_provider,json=adyenProvider,proto3" json:"adyen_provider,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateAdyenResponse) Reset() {
+	*x = CreateAdyenResponse{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateAdyenResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateAdyenResponse) ProtoMessage() {}
+
+func (x *CreateAdyenResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateAdyenResponse.ProtoReflect.Descriptor instead.
+func (*CreateAdyenResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *CreateAdyenResponse) GetAdyenProvider() *v2.AdyenProvider {
+	if x != nil {
+		return x.AdyenProvider
+	}
+	return nil
+}
+
+type UpdateAdyenRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Id                 string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Code               *string                `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	FlowId             *string                `protobuf:"bytes,3,opt,name=flow_id,json=flowId,proto3,oneof" json:"flow_id,omitempty"`
+	Name               *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
+	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
+	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *UpdateAdyenRequest) Reset() {
+	*x = UpdateAdyenRequest{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateAdyenRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateAdyenRequest) ProtoMessage() {}
+
+func (x *UpdateAdyenRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateAdyenRequest.ProtoReflect.Descriptor instead.
+func (*UpdateAdyenRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *UpdateAdyenRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateAdyenRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
+	}
+	return ""
+}
+
+func (x *UpdateAdyenRequest) GetFlowId() string {
+	if x != nil && x.FlowId != nil {
+		return *x.FlowId
+	}
+	return ""
+}
+
+func (x *UpdateAdyenRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *UpdateAdyenRequest) GetSuccessRedirectUrl() string {
+	if x != nil && x.SuccessRedirectUrl != nil {
+		return *x.SuccessRedirectUrl
+	}
+	return ""
+}
+
+func (x *UpdateAdyenRequest) GetSupports3Ds() bool {
+	if x != nil && x.Supports3Ds != nil {
+		return *x.Supports3Ds
+	}
+	return false
+}
+
+func (x *UpdateAdyenRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+type UpdateAdyenResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AdyenProvider *v2.AdyenProvider      `protobuf:"bytes,1,opt,name=adyen_provider,json=adyenProvider,proto3" json:"adyen_provider,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateAdyenResponse) Reset() {
+	*x = UpdateAdyenResponse{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateAdyenResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateAdyenResponse) ProtoMessage() {}
+
+func (x *UpdateAdyenResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateAdyenResponse.ProtoReflect.Descriptor instead.
+func (*UpdateAdyenResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *UpdateAdyenResponse) GetAdyenProvider() *v2.AdyenProvider {
+	if x != nil {
+		return x.AdyenProvider
+	}
+	return nil
+}
+
+type CreateCashfreeRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	ClientId           string                 `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
+	ClientSecret       string                 `protobuf:"bytes,2,opt,name=client_secret,json=clientSecret,proto3" json:"client_secret,omitempty"`
+	Code               string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
+	Name               string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *CreateCashfreeRequest) Reset() {
+	*x = CreateCashfreeRequest{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateCashfreeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateCashfreeRequest) ProtoMessage() {}
+
+func (x *CreateCashfreeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateCashfreeRequest.ProtoReflect.Descriptor instead.
+func (*CreateCashfreeRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *CreateCashfreeRequest) GetClientId() string {
+	if x != nil {
+		return x.ClientId
+	}
+	return ""
+}
+
+func (x *CreateCashfreeRequest) GetClientSecret() string {
+	if x != nil {
+		return x.ClientSecret
+	}
+	return ""
+}
+
+func (x *CreateCashfreeRequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *CreateCashfreeRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreateCashfreeRequest) GetSuccessRedirectUrl() string {
+	if x != nil && x.SuccessRedirectUrl != nil {
+		return *x.SuccessRedirectUrl
+	}
+	return ""
+}
+
+type CreateCashfreeResponse struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	CashfreeProvider *v2.CashfreeProvider   `protobuf:"bytes,1,opt,name=cashfree_provider,json=cashfreeProvider,proto3" json:"cashfree_provider,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *CreateCashfreeResponse) Reset() {
+	*x = CreateCashfreeResponse{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateCashfreeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateCashfreeResponse) ProtoMessage() {}
+
+func (x *CreateCashfreeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateCashfreeResponse.ProtoReflect.Descriptor instead.
+func (*CreateCashfreeResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *CreateCashfreeResponse) GetCashfreeProvider() *v2.CashfreeProvider {
+	if x != nil {
+		return x.CashfreeProvider
+	}
+	return nil
+}
+
+type UpdateCashfreeRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Id                 string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Code               *string                `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	FlowId             *string                `protobuf:"bytes,3,opt,name=flow_id,json=flowId,proto3,oneof" json:"flow_id,omitempty"`
+	Name               *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
+	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
+	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *UpdateCashfreeRequest) Reset() {
+	*x = UpdateCashfreeRequest{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateCashfreeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateCashfreeRequest) ProtoMessage() {}
+
+func (x *UpdateCashfreeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateCashfreeRequest.ProtoReflect.Descriptor instead.
+func (*UpdateCashfreeRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *UpdateCashfreeRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateCashfreeRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
+	}
+	return ""
+}
+
+func (x *UpdateCashfreeRequest) GetFlowId() string {
+	if x != nil && x.FlowId != nil {
+		return *x.FlowId
+	}
+	return ""
+}
+
+func (x *UpdateCashfreeRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *UpdateCashfreeRequest) GetSuccessRedirectUrl() string {
+	if x != nil && x.SuccessRedirectUrl != nil {
+		return *x.SuccessRedirectUrl
+	}
+	return ""
+}
+
+func (x *UpdateCashfreeRequest) GetSupports3Ds() bool {
+	if x != nil && x.Supports3Ds != nil {
+		return *x.Supports3Ds
+	}
+	return false
+}
+
+func (x *UpdateCashfreeRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+type UpdateCashfreeResponse struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	CashfreeProvider *v2.CashfreeProvider   `protobuf:"bytes,1,opt,name=cashfree_provider,json=cashfreeProvider,proto3" json:"cashfree_provider,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *UpdateCashfreeResponse) Reset() {
+	*x = UpdateCashfreeResponse{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateCashfreeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateCashfreeResponse) ProtoMessage() {}
+
+func (x *UpdateCashfreeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateCashfreeResponse.ProtoReflect.Descriptor instead.
+func (*UpdateCashfreeResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *UpdateCashfreeResponse) GetCashfreeProvider() *v2.CashfreeProvider {
+	if x != nil {
+		return x.CashfreeProvider
+	}
+	return nil
+}
+
+type CreateFlutterwaveRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Code               string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Name               string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	SecretKey          string                 `protobuf:"bytes,3,opt,name=secret_key,json=secretKey,proto3" json:"secret_key,omitempty"`
+	SuccessRedirectUrl *string                `protobuf:"bytes,4,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *CreateFlutterwaveRequest) Reset() {
+	*x = CreateFlutterwaveRequest{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateFlutterwaveRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateFlutterwaveRequest) ProtoMessage() {}
+
+func (x *CreateFlutterwaveRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateFlutterwaveRequest.ProtoReflect.Descriptor instead.
+func (*CreateFlutterwaveRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *CreateFlutterwaveRequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *CreateFlutterwaveRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreateFlutterwaveRequest) GetSecretKey() string {
+	if x != nil {
+		return x.SecretKey
+	}
+	return ""
+}
+
+func (x *CreateFlutterwaveRequest) GetSuccessRedirectUrl() string {
+	if x != nil && x.SuccessRedirectUrl != nil {
+		return *x.SuccessRedirectUrl
+	}
+	return ""
+}
+
+type CreateFlutterwaveResponse struct {
+	state               protoimpl.MessageState  `protogen:"open.v1"`
+	FlutterwaveProvider *v2.FlutterwaveProvider `protobuf:"bytes,1,opt,name=flutterwave_provider,json=flutterwaveProvider,proto3" json:"flutterwave_provider,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *CreateFlutterwaveResponse) Reset() {
+	*x = CreateFlutterwaveResponse{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateFlutterwaveResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateFlutterwaveResponse) ProtoMessage() {}
+
+func (x *CreateFlutterwaveResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateFlutterwaveResponse.ProtoReflect.Descriptor instead.
+func (*CreateFlutterwaveResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *CreateFlutterwaveResponse) GetFlutterwaveProvider() *v2.FlutterwaveProvider {
+	if x != nil {
+		return x.FlutterwaveProvider
+	}
+	return nil
+}
+
+type UpdateFlutterwaveRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Id                 string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Code               *string                `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	FlowId             *string                `protobuf:"bytes,3,opt,name=flow_id,json=flowId,proto3,oneof" json:"flow_id,omitempty"`
+	Name               *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
+	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
+	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *UpdateFlutterwaveRequest) Reset() {
+	*x = UpdateFlutterwaveRequest{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateFlutterwaveRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateFlutterwaveRequest) ProtoMessage() {}
+
+func (x *UpdateFlutterwaveRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateFlutterwaveRequest.ProtoReflect.Descriptor instead.
+func (*UpdateFlutterwaveRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *UpdateFlutterwaveRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateFlutterwaveRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
+	}
+	return ""
+}
+
+func (x *UpdateFlutterwaveRequest) GetFlowId() string {
+	if x != nil && x.FlowId != nil {
+		return *x.FlowId
+	}
+	return ""
+}
+
+func (x *UpdateFlutterwaveRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *UpdateFlutterwaveRequest) GetSuccessRedirectUrl() string {
+	if x != nil && x.SuccessRedirectUrl != nil {
+		return *x.SuccessRedirectUrl
+	}
+	return ""
+}
+
+func (x *UpdateFlutterwaveRequest) GetSupports3Ds() bool {
+	if x != nil && x.Supports3Ds != nil {
+		return *x.Supports3Ds
+	}
+	return false
+}
+
+func (x *UpdateFlutterwaveRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+type UpdateFlutterwaveResponse struct {
+	state               protoimpl.MessageState  `protogen:"open.v1"`
+	FlutterwaveProvider *v2.FlutterwaveProvider `protobuf:"bytes,1,opt,name=flutterwave_provider,json=flutterwaveProvider,proto3" json:"flutterwave_provider,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *UpdateFlutterwaveResponse) Reset() {
+	*x = UpdateFlutterwaveResponse{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateFlutterwaveResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateFlutterwaveResponse) ProtoMessage() {}
+
+func (x *UpdateFlutterwaveResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateFlutterwaveResponse.ProtoReflect.Descriptor instead.
+func (*UpdateFlutterwaveResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *UpdateFlutterwaveResponse) GetFlutterwaveProvider() *v2.FlutterwaveProvider {
+	if x != nil {
+		return x.FlutterwaveProvider
+	}
+	return nil
+}
+
+type CreateGocardlessRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	AccessCode         *string                `protobuf:"bytes,1,opt,name=access_code,json=accessCode,proto3,oneof" json:"access_code,omitempty"`
+	Code               string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
+	Name               string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	SuccessRedirectUrl *string                `protobuf:"bytes,4,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *CreateGocardlessRequest) Reset() {
+	*x = CreateGocardlessRequest{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateGocardlessRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateGocardlessRequest) ProtoMessage() {}
+
+func (x *CreateGocardlessRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateGocardlessRequest.ProtoReflect.Descriptor instead.
+func (*CreateGocardlessRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *CreateGocardlessRequest) GetAccessCode() string {
+	if x != nil && x.AccessCode != nil {
+		return *x.AccessCode
+	}
+	return ""
+}
+
+func (x *CreateGocardlessRequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *CreateGocardlessRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreateGocardlessRequest) GetSuccessRedirectUrl() string {
+	if x != nil && x.SuccessRedirectUrl != nil {
+		return *x.SuccessRedirectUrl
+	}
+	return ""
+}
+
+type CreateGocardlessResponse struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	GocardlessProvider *v2.GocardlessProvider `protobuf:"bytes,1,opt,name=gocardless_provider,json=gocardlessProvider,proto3" json:"gocardless_provider,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *CreateGocardlessResponse) Reset() {
+	*x = CreateGocardlessResponse{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateGocardlessResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateGocardlessResponse) ProtoMessage() {}
+
+func (x *CreateGocardlessResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateGocardlessResponse.ProtoReflect.Descriptor instead.
+func (*CreateGocardlessResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *CreateGocardlessResponse) GetGocardlessProvider() *v2.GocardlessProvider {
+	if x != nil {
+		return x.GocardlessProvider
+	}
+	return nil
+}
+
+type UpdateGocardlessRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Id                 string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Code               *string                `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	FlowId             *string                `protobuf:"bytes,3,opt,name=flow_id,json=flowId,proto3,oneof" json:"flow_id,omitempty"`
+	Name               *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
+	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
+	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *UpdateGocardlessRequest) Reset() {
+	*x = UpdateGocardlessRequest{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateGocardlessRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateGocardlessRequest) ProtoMessage() {}
+
+func (x *UpdateGocardlessRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateGocardlessRequest.ProtoReflect.Descriptor instead.
+func (*UpdateGocardlessRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *UpdateGocardlessRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateGocardlessRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
+	}
+	return ""
+}
+
+func (x *UpdateGocardlessRequest) GetFlowId() string {
+	if x != nil && x.FlowId != nil {
+		return *x.FlowId
+	}
+	return ""
+}
+
+func (x *UpdateGocardlessRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *UpdateGocardlessRequest) GetSuccessRedirectUrl() string {
+	if x != nil && x.SuccessRedirectUrl != nil {
+		return *x.SuccessRedirectUrl
+	}
+	return ""
+}
+
+func (x *UpdateGocardlessRequest) GetSupports3Ds() bool {
+	if x != nil && x.Supports3Ds != nil {
+		return *x.Supports3Ds
+	}
+	return false
+}
+
+func (x *UpdateGocardlessRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+type UpdateGocardlessResponse struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	GocardlessProvider *v2.GocardlessProvider `protobuf:"bytes,1,opt,name=gocardless_provider,json=gocardlessProvider,proto3" json:"gocardless_provider,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *UpdateGocardlessResponse) Reset() {
+	*x = UpdateGocardlessResponse{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateGocardlessResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateGocardlessResponse) ProtoMessage() {}
+
+func (x *UpdateGocardlessResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateGocardlessResponse.ProtoReflect.Descriptor instead.
+func (*UpdateGocardlessResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *UpdateGocardlessResponse) GetGocardlessProvider() *v2.GocardlessProvider {
+	if x != nil {
+		return x.GocardlessProvider
+	}
+	return nil
+}
+
+type CreateMoneyhashRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	ApiKey             string                 `protobuf:"bytes,1,opt,name=api_key,json=apiKey,proto3" json:"api_key,omitempty"`
+	Code               string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
+	FlowId             string                 `protobuf:"bytes,3,opt,name=flow_id,json=flowId,proto3" json:"flow_id,omitempty"`
+	Name               string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *CreateMoneyhashRequest) Reset() {
+	*x = CreateMoneyhashRequest{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateMoneyhashRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateMoneyhashRequest) ProtoMessage() {}
+
+func (x *CreateMoneyhashRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateMoneyhashRequest.ProtoReflect.Descriptor instead.
+func (*CreateMoneyhashRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *CreateMoneyhashRequest) GetApiKey() string {
+	if x != nil {
+		return x.ApiKey
+	}
+	return ""
+}
+
+func (x *CreateMoneyhashRequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *CreateMoneyhashRequest) GetFlowId() string {
+	if x != nil {
+		return x.FlowId
+	}
+	return ""
+}
+
+func (x *CreateMoneyhashRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreateMoneyhashRequest) GetSuccessRedirectUrl() string {
+	if x != nil && x.SuccessRedirectUrl != nil {
+		return *x.SuccessRedirectUrl
+	}
+	return ""
+}
+
+type CreateMoneyhashResponse struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	MoneyhashProvider *v2.MoneyhashProvider  `protobuf:"bytes,1,opt,name=moneyhash_provider,json=moneyhashProvider,proto3" json:"moneyhash_provider,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *CreateMoneyhashResponse) Reset() {
+	*x = CreateMoneyhashResponse{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateMoneyhashResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateMoneyhashResponse) ProtoMessage() {}
+
+func (x *CreateMoneyhashResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateMoneyhashResponse.ProtoReflect.Descriptor instead.
+func (*CreateMoneyhashResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *CreateMoneyhashResponse) GetMoneyhashProvider() *v2.MoneyhashProvider {
+	if x != nil {
+		return x.MoneyhashProvider
+	}
+	return nil
+}
+
+type UpdateMoneyhashRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Id                 string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Code               *string                `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	FlowId             *string                `protobuf:"bytes,3,opt,name=flow_id,json=flowId,proto3,oneof" json:"flow_id,omitempty"`
+	Name               *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
+	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
+	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *UpdateMoneyhashRequest) Reset() {
+	*x = UpdateMoneyhashRequest{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateMoneyhashRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateMoneyhashRequest) ProtoMessage() {}
+
+func (x *UpdateMoneyhashRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateMoneyhashRequest.ProtoReflect.Descriptor instead.
+func (*UpdateMoneyhashRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *UpdateMoneyhashRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateMoneyhashRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
+	}
+	return ""
+}
+
+func (x *UpdateMoneyhashRequest) GetFlowId() string {
+	if x != nil && x.FlowId != nil {
+		return *x.FlowId
+	}
+	return ""
+}
+
+func (x *UpdateMoneyhashRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *UpdateMoneyhashRequest) GetSuccessRedirectUrl() string {
+	if x != nil && x.SuccessRedirectUrl != nil {
+		return *x.SuccessRedirectUrl
+	}
+	return ""
+}
+
+func (x *UpdateMoneyhashRequest) GetSupports3Ds() bool {
+	if x != nil && x.Supports3Ds != nil {
+		return *x.Supports3Ds
+	}
+	return false
+}
+
+func (x *UpdateMoneyhashRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+type UpdateMoneyhashResponse struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	MoneyhashProvider *v2.MoneyhashProvider  `protobuf:"bytes,1,opt,name=moneyhash_provider,json=moneyhashProvider,proto3" json:"moneyhash_provider,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *UpdateMoneyhashResponse) Reset() {
+	*x = UpdateMoneyhashResponse{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateMoneyhashResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateMoneyhashResponse) ProtoMessage() {}
+
+func (x *UpdateMoneyhashResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateMoneyhashResponse.ProtoReflect.Descriptor instead.
+func (*UpdateMoneyhashResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *UpdateMoneyhashResponse) GetMoneyhashProvider() *v2.MoneyhashProvider {
+	if x != nil {
+		return x.MoneyhashProvider
+	}
+	return nil
+}
+
+type CreateStripeRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Code               string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Name               string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	SecretKey          *string                `protobuf:"bytes,3,opt,name=secret_key,json=secretKey,proto3,oneof" json:"secret_key,omitempty"`
+	SuccessRedirectUrl *string                `protobuf:"bytes,4,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
+	Supports3Ds        *bool                  `protobuf:"varint,5,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *CreateStripeRequest) Reset() {
+	*x = CreateStripeRequest{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateStripeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateStripeRequest) ProtoMessage() {}
+
+func (x *CreateStripeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateStripeRequest.ProtoReflect.Descriptor instead.
+func (*CreateStripeRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *CreateStripeRequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *CreateStripeRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreateStripeRequest) GetSecretKey() string {
+	if x != nil && x.SecretKey != nil {
+		return *x.SecretKey
+	}
+	return ""
+}
+
+func (x *CreateStripeRequest) GetSuccessRedirectUrl() string {
+	if x != nil && x.SuccessRedirectUrl != nil {
+		return *x.SuccessRedirectUrl
+	}
+	return ""
+}
+
+func (x *CreateStripeRequest) GetSupports3Ds() bool {
+	if x != nil && x.Supports3Ds != nil {
+		return *x.Supports3Ds
+	}
+	return false
+}
+
+type CreateStripeResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	StripeProvider *v2.StripeProvider     `protobuf:"bytes,1,opt,name=stripe_provider,json=stripeProvider,proto3" json:"stripe_provider,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *CreateStripeResponse) Reset() {
+	*x = CreateStripeResponse{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateStripeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateStripeResponse) ProtoMessage() {}
+
+func (x *CreateStripeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateStripeResponse.ProtoReflect.Descriptor instead.
+func (*CreateStripeResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *CreateStripeResponse) GetStripeProvider() *v2.StripeProvider {
+	if x != nil {
+		return x.StripeProvider
+	}
+	return nil
+}
+
+type UpdateStripeRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Id                 string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Code               *string                `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	FlowId             *string                `protobuf:"bytes,3,opt,name=flow_id,json=flowId,proto3,oneof" json:"flow_id,omitempty"`
+	Name               *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
+	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
+	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *UpdateStripeRequest) Reset() {
+	*x = UpdateStripeRequest{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateStripeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateStripeRequest) ProtoMessage() {}
+
+func (x *UpdateStripeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateStripeRequest.ProtoReflect.Descriptor instead.
+func (*UpdateStripeRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *UpdateStripeRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateStripeRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
+	}
+	return ""
+}
+
+func (x *UpdateStripeRequest) GetFlowId() string {
+	if x != nil && x.FlowId != nil {
+		return *x.FlowId
+	}
+	return ""
+}
+
+func (x *UpdateStripeRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *UpdateStripeRequest) GetSuccessRedirectUrl() string {
+	if x != nil && x.SuccessRedirectUrl != nil {
+		return *x.SuccessRedirectUrl
+	}
+	return ""
+}
+
+func (x *UpdateStripeRequest) GetSupports3Ds() bool {
+	if x != nil && x.Supports3Ds != nil {
+		return *x.Supports3Ds
+	}
+	return false
+}
+
+func (x *UpdateStripeRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+type UpdateStripeResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	StripeProvider *v2.StripeProvider     `protobuf:"bytes,1,opt,name=stripe_provider,json=stripeProvider,proto3" json:"stripe_provider,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *UpdateStripeResponse) Reset() {
+	*x = UpdateStripeResponse{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateStripeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateStripeResponse) ProtoMessage() {}
+
+func (x *UpdateStripeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateStripeResponse.ProtoReflect.Descriptor instead.
+func (*UpdateStripeResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *UpdateStripeResponse) GetStripeProvider() *v2.StripeProvider {
+	if x != nil {
+		return x.StripeProvider
+	}
+	return nil
+}
+
+type CreateTapRequest struct {
+	state  protoimpl.MessageState `protogen:"open.v1"`
+	ApiKey *string                `protobuf:"bytes,1,opt,name=api_key,json=apiKey,proto3,oneof" json:"api_key,omitempty"`
+	Code   string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
+	Name   string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	// Enable saved cards for recurring payments (requires Tap KYC onboarding).
+	SaveCardEnabled    *bool   `protobuf:"varint,4,opt,name=save_card_enabled,json=saveCardEnabled,proto3,oneof" json:"save_card_enabled,omitempty"`
+	SuccessRedirectUrl *string `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
+	Supports3Ds        *bool   `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *CreateTapRequest) Reset() {
+	*x = CreateTapRequest{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[34]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateTapRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTapRequest) ProtoMessage() {}
+
+func (x *CreateTapRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[34]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTapRequest.ProtoReflect.Descriptor instead.
+func (*CreateTapRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *CreateTapRequest) GetApiKey() string {
+	if x != nil && x.ApiKey != nil {
+		return *x.ApiKey
+	}
+	return ""
+}
+
+func (x *CreateTapRequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *CreateTapRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreateTapRequest) GetSaveCardEnabled() bool {
+	if x != nil && x.SaveCardEnabled != nil {
+		return *x.SaveCardEnabled
+	}
+	return false
+}
+
+func (x *CreateTapRequest) GetSuccessRedirectUrl() string {
+	if x != nil && x.SuccessRedirectUrl != nil {
+		return *x.SuccessRedirectUrl
+	}
+	return ""
+}
+
+func (x *CreateTapRequest) GetSupports3Ds() bool {
+	if x != nil && x.Supports3Ds != nil {
+		return *x.Supports3Ds
+	}
+	return false
+}
+
+type CreateTapResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TapProvider   *v2.TapProvider        `protobuf:"bytes,1,opt,name=tap_provider,json=tapProvider,proto3" json:"tap_provider,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateTapResponse) Reset() {
+	*x = CreateTapResponse{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateTapResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTapResponse) ProtoMessage() {}
+
+func (x *CreateTapResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTapResponse.ProtoReflect.Descriptor instead.
+func (*CreateTapResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *CreateTapResponse) GetTapProvider() *v2.TapProvider {
+	if x != nil {
+		return x.TapProvider
+	}
+	return nil
+}
+
+type UpdateTapRequest struct {
+	state  protoimpl.MessageState `protogen:"open.v1"`
+	Id     string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Code   *string                `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	FlowId *string                `protobuf:"bytes,3,opt,name=flow_id,json=flowId,proto3,oneof" json:"flow_id,omitempty"`
+	Name   *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	// Enable saved cards for recurring payments (requires Tap KYC onboarding).
+	SaveCardEnabled    *bool                  `protobuf:"varint,5,opt,name=save_card_enabled,json=saveCardEnabled,proto3,oneof" json:"save_card_enabled,omitempty"`
+	SuccessRedirectUrl *string                `protobuf:"bytes,6,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
+	Supports3Ds        *bool                  `protobuf:"varint,7,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
+	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *UpdateTapRequest) Reset() {
+	*x = UpdateTapRequest{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[36]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateTapRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateTapRequest) ProtoMessage() {}
+
+func (x *UpdateTapRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[36]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateTapRequest.ProtoReflect.Descriptor instead.
+func (*UpdateTapRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *UpdateTapRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateTapRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
+	}
+	return ""
+}
+
+func (x *UpdateTapRequest) GetFlowId() string {
+	if x != nil && x.FlowId != nil {
+		return *x.FlowId
+	}
+	return ""
+}
+
+func (x *UpdateTapRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *UpdateTapRequest) GetSaveCardEnabled() bool {
+	if x != nil && x.SaveCardEnabled != nil {
+		return *x.SaveCardEnabled
+	}
+	return false
+}
+
+func (x *UpdateTapRequest) GetSuccessRedirectUrl() string {
+	if x != nil && x.SuccessRedirectUrl != nil {
+		return *x.SuccessRedirectUrl
+	}
+	return ""
+}
+
+func (x *UpdateTapRequest) GetSupports3Ds() bool {
+	if x != nil && x.Supports3Ds != nil {
+		return *x.Supports3Ds
+	}
+	return false
+}
+
+func (x *UpdateTapRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+type UpdateTapResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TapProvider   *v2.TapProvider        `protobuf:"bytes,1,opt,name=tap_provider,json=tapProvider,proto3" json:"tap_provider,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateTapResponse) Reset() {
+	*x = UpdateTapResponse{}
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[37]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateTapResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateTapResponse) ProtoMessage() {}
+
+func (x *UpdateTapResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_payment_providers_v2_service_proto_msgTypes[37]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateTapResponse.ProtoReflect.Descriptor instead.
+func (*UpdateTapResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *UpdateTapResponse) GetTapProvider() *v2.TapProvider {
+	if x != nil {
+		return x.TapProvider
+	}
+	return nil
+}
+
 var File_invora_billing_payment_providers_v2_service_proto protoreflect.FileDescriptor
 
 const file_invora_billing_payment_providers_v2_service_proto_rawDesc = "" +
 	"\n" +
-	"1invora/billing/payment_providers/v2/service.proto\x12#invora.billing.payment_providers.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\xc2\x01\n" +
+	"1invora/billing/payment_providers/v2/service.proto\x12#invora.billing.payment_providers.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\xab\x01\n" +
 	"\n" +
-	"GetRequest\x12\x17\n" +
-	"\x04code\x18\x01 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x13\n" +
-	"\x02id\x18\x02 \x01(\tH\x01R\x02id\x88\x01\x01\x127\n" +
+	"GetRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x127\n" +
 	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x12=\n" +
-	"\x04view\x18\v \x01(\x0e2).invora.billing.payment_providers.v2.ViewR\x04viewB\a\n" +
-	"\x05_codeB\x05\n" +
-	"\x03_id\"c\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04viewB\a\n" +
+	"\x05_code\"c\n" +
 	"\vGetResponse\x12T\n" +
-	"\x10payment_provider\x18\x01 \x01(\v2).invora.billing.common.v2.PaymentProviderR\x0fpaymentProvider\"\xc9\x02\n" +
+	"\x10payment_provider\x18\x01 \x01(\v2).invora.billing.common.v2.PaymentProviderR\x0fpaymentProvider\"\xbe\x02\n" +
 	"\vListRequest\x12G\n" +
 	"\x06filter\x18\x01 \x01(\v2/.invora.billing.payment_providers.v2.ListFilterR\x06filter\x12A\n" +
 	"\x04sort\x18\x02 \x01(\v2-.invora.billing.payment_providers.v2.ListSortR\x04sort\x126\n" +
@@ -2957,18 +2411,19 @@ const file_invora_billing_payment_providers_v2_service_proto_rawDesc = "" +
 	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
 	"pagination\x127\n" +
 	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x12=\n" +
-	"\x04view\x18\v \x01(\x0e2).invora.billing.payment_providers.v2.ViewR\x04view\"\xb8\x01\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xb4\x01\n" +
 	"\fListResponse\x12?\n" +
 	"\x05items\x18\x01 \x03(\v2).invora.billing.common.v2.PaymentProviderR\x05items\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"U\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"U\n" +
 	"\n" +
 	"ListFilter\x12G\n" +
-	"\x04part\x18\x01 \x01(\v23.invora.billing.payment_providers.v2.ListFilterPartR\x04part\"g\n" +
-	"\x0eListFilterPart\x12M\n" +
-	"\vfilter_type\x18\x01 \x01(\x0e2*.invora.billing.common.v2.ProviderTypeEnumH\x00R\n" +
+	"\x04part\x18\x01 \x01(\v23.invora.billing.payment_providers.v2.ListFilterPartR\x04part\"c\n" +
+	"\x0eListFilterPart\x12I\n" +
+	"\vfilter_type\x18\x01 \x01(\x0e2&.invora.billing.common.v2.ProviderTypeH\x00R\n" +
 	"filterTypeB\x06\n" +
 	"\x04type\"S\n" +
 	"\bListSort\x12G\n" +
@@ -2976,208 +2431,11 @@ const file_invora_billing_payment_providers_v2_service_proto_rawDesc = "" +
 	"\fListSortRule\x126\n" +
 	"\n" +
 	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAtB\x06\n" +
-	"\x04type\"|\n" +
-	"!CreateAdyenPaymentProviderRequest\x12W\n" +
-	"\x05input\x18\x01 \x01(\v2A.invora.billing.payment_providers.v2.AddAdyenPaymentProviderInputR\x05input\"t\n" +
-	"\"CreateAdyenPaymentProviderResponse\x12N\n" +
-	"\x0eadyen_provider\x18\x01 \x01(\v2'.invora.billing.common.v2.AdyenProviderR\radyenProvider\"\x82\x01\n" +
-	"$CreateCashfreePaymentProviderRequest\x12Z\n" +
-	"\x05input\x18\x01 \x01(\v2D.invora.billing.payment_providers.v2.AddCashfreePaymentProviderInputR\x05input\"\x80\x01\n" +
-	"%CreateCashfreePaymentProviderResponse\x12W\n" +
-	"\x11cashfree_provider\x18\x01 \x01(\v2*.invora.billing.common.v2.CashfreeProviderR\x10cashfreeProvider\"\x88\x01\n" +
-	"'CreateFlutterwavePaymentProviderRequest\x12]\n" +
-	"\x05input\x18\x01 \x01(\v2G.invora.billing.payment_providers.v2.AddFlutterwavePaymentProviderInputR\x05input\"\x8c\x01\n" +
-	"(CreateFlutterwavePaymentProviderResponse\x12`\n" +
-	"\x14flutterwave_provider\x18\x01 \x01(\v2-.invora.billing.common.v2.FlutterwaveProviderR\x13flutterwaveProvider\"\x86\x01\n" +
-	"&CreateGocardlessPaymentProviderRequest\x12\\\n" +
-	"\x05input\x18\x01 \x01(\v2F.invora.billing.payment_providers.v2.AddGocardlessPaymentProviderInputR\x05input\"\x88\x01\n" +
-	"'CreateGocardlessPaymentProviderResponse\x12]\n" +
-	"\x13gocardless_provider\x18\x01 \x01(\v2,.invora.billing.common.v2.GocardlessProviderR\x12gocardlessProvider\"\x84\x01\n" +
-	"%CreateMoneyhashPaymentProviderRequest\x12[\n" +
-	"\x05input\x18\x01 \x01(\v2E.invora.billing.payment_providers.v2.AddMoneyhashPaymentProviderInputR\x05input\"\x84\x01\n" +
-	"&CreateMoneyhashPaymentProviderResponse\x12Z\n" +
-	"\x12moneyhash_provider\x18\x01 \x01(\v2+.invora.billing.common.v2.MoneyhashProviderR\x11moneyhashProvider\"~\n" +
-	"\"CreateStripePaymentProviderRequest\x12X\n" +
-	"\x05input\x18\x01 \x01(\v2B.invora.billing.payment_providers.v2.AddStripePaymentProviderInputR\x05input\"x\n" +
-	"#CreateStripePaymentProviderResponse\x12Q\n" +
-	"\x0fstripe_provider\x18\x01 \x01(\v2(.invora.billing.common.v2.StripeProviderR\x0estripeProvider\"x\n" +
-	"\x1fCreateTapPaymentProviderRequest\x12U\n" +
-	"\x05input\x18\x01 \x01(\v2?.invora.billing.payment_providers.v2.AddTapPaymentProviderInputR\x05input\"l\n" +
-	" CreateTapPaymentProviderResponse\x12H\n" +
-	"\ftap_provider\x18\x01 \x01(\v2%.invora.billing.common.v2.TapProviderR\vtapProvider\"\x7f\n" +
-	"!UpdateAdyenPaymentProviderRequest\x12Z\n" +
-	"\x05input\x18\x01 \x01(\v2D.invora.billing.payment_providers.v2.UpdateAdyenPaymentProviderInputR\x05input\"t\n" +
-	"\"UpdateAdyenPaymentProviderResponse\x12N\n" +
-	"\x0eadyen_provider\x18\x01 \x01(\v2'.invora.billing.common.v2.AdyenProviderR\radyenProvider\"\x85\x01\n" +
-	"$UpdateCashfreePaymentProviderRequest\x12]\n" +
-	"\x05input\x18\x01 \x01(\v2G.invora.billing.payment_providers.v2.UpdateCashfreePaymentProviderInputR\x05input\"\x80\x01\n" +
-	"%UpdateCashfreePaymentProviderResponse\x12W\n" +
-	"\x11cashfree_provider\x18\x01 \x01(\v2*.invora.billing.common.v2.CashfreeProviderR\x10cashfreeProvider\"\x8b\x01\n" +
-	"'UpdateFlutterwavePaymentProviderRequest\x12`\n" +
-	"\x05input\x18\x01 \x01(\v2J.invora.billing.payment_providers.v2.UpdateFlutterwavePaymentProviderInputR\x05input\"\x8c\x01\n" +
-	"(UpdateFlutterwavePaymentProviderResponse\x12`\n" +
-	"\x14flutterwave_provider\x18\x01 \x01(\v2-.invora.billing.common.v2.FlutterwaveProviderR\x13flutterwaveProvider\"\x89\x01\n" +
-	"&UpdateGocardlessPaymentProviderRequest\x12_\n" +
-	"\x05input\x18\x01 \x01(\v2I.invora.billing.payment_providers.v2.UpdateGocardlessPaymentProviderInputR\x05input\"\x88\x01\n" +
-	"'UpdateGocardlessPaymentProviderResponse\x12]\n" +
-	"\x13gocardless_provider\x18\x01 \x01(\v2,.invora.billing.common.v2.GocardlessProviderR\x12gocardlessProvider\"\x87\x01\n" +
-	"%UpdateMoneyhashPaymentProviderRequest\x12^\n" +
-	"\x05input\x18\x01 \x01(\v2H.invora.billing.payment_providers.v2.UpdateMoneyhashPaymentProviderInputR\x05input\"\x84\x01\n" +
-	"&UpdateMoneyhashPaymentProviderResponse\x12Z\n" +
-	"\x12moneyhash_provider\x18\x01 \x01(\v2+.invora.billing.common.v2.MoneyhashProviderR\x11moneyhashProvider\"\x81\x01\n" +
-	"\"UpdateStripePaymentProviderRequest\x12[\n" +
-	"\x05input\x18\x01 \x01(\v2E.invora.billing.payment_providers.v2.UpdateStripePaymentProviderInputR\x05input\"x\n" +
-	"#UpdateStripePaymentProviderResponse\x12Q\n" +
-	"\x0fstripe_provider\x18\x01 \x01(\v2(.invora.billing.common.v2.StripeProviderR\x0estripeProvider\"{\n" +
-	"\x1fUpdateTapPaymentProviderRequest\x12X\n" +
-	"\x05input\x18\x01 \x01(\v2B.invora.billing.payment_providers.v2.UpdateTapPaymentProviderInputR\x05input\"l\n" +
-	" UpdateTapPaymentProviderResponse\x12H\n" +
-	"\ftap_provider\x18\x01 \x01(\v2%.invora.billing.common.v2.TapProviderR\vtapProvider\"\xeb\x02\n" +
-	"\x1dUpdateTapPaymentProviderInput\x12\x17\n" +
-	"\x04code\x18\x01 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
-	"\aflow_id\x18\x02 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\x12\x17\n" +
-	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x12/\n" +
-	"\x11save_card_enabled\x18\x05 \x01(\bH\x03R\x0fsaveCardEnabled\x88\x01\x01\x125\n" +
-	"\x14success_redirect_url\x18\x06 \x01(\tH\x04R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
-	"\vsupports3ds\x18\a \x01(\bH\x05R\vsupports3ds\x88\x01\x01B\a\n" +
-	"\x05_codeB\n" +
-	"\n" +
-	"\b_flow_idB\a\n" +
-	"\x05_nameB\x14\n" +
-	"\x12_save_card_enabledB\x17\n" +
-	"\x15_success_redirect_urlB\x0e\n" +
-	"\f_supports3ds\"\xa7\x02\n" +
-	" UpdateStripePaymentProviderInput\x12\x17\n" +
-	"\x04code\x18\x01 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
-	"\aflow_id\x18\x02 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\x12\x17\n" +
-	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x125\n" +
-	"\x14success_redirect_url\x18\x05 \x01(\tH\x03R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
-	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01B\a\n" +
-	"\x05_codeB\n" +
-	"\n" +
-	"\b_flow_idB\a\n" +
-	"\x05_nameB\x17\n" +
-	"\x15_success_redirect_urlB\x0e\n" +
-	"\f_supports3ds\"\xaa\x02\n" +
-	"#UpdateMoneyhashPaymentProviderInput\x12\x17\n" +
-	"\x04code\x18\x01 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
-	"\aflow_id\x18\x02 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\x12\x17\n" +
-	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x125\n" +
-	"\x14success_redirect_url\x18\x05 \x01(\tH\x03R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
-	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01B\a\n" +
-	"\x05_codeB\n" +
-	"\n" +
-	"\b_flow_idB\a\n" +
-	"\x05_nameB\x17\n" +
-	"\x15_success_redirect_urlB\x0e\n" +
-	"\f_supports3ds\"\xab\x02\n" +
-	"$UpdateGocardlessPaymentProviderInput\x12\x17\n" +
-	"\x04code\x18\x01 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
-	"\aflow_id\x18\x02 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\x12\x17\n" +
-	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x125\n" +
-	"\x14success_redirect_url\x18\x05 \x01(\tH\x03R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
-	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01B\a\n" +
-	"\x05_codeB\n" +
-	"\n" +
-	"\b_flow_idB\a\n" +
-	"\x05_nameB\x17\n" +
-	"\x15_success_redirect_urlB\x0e\n" +
-	"\f_supports3ds\"\xac\x02\n" +
-	"%UpdateFlutterwavePaymentProviderInput\x12\x17\n" +
-	"\x04code\x18\x01 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
-	"\aflow_id\x18\x02 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\x12\x17\n" +
-	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x125\n" +
-	"\x14success_redirect_url\x18\x05 \x01(\tH\x03R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
-	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01B\a\n" +
-	"\x05_codeB\n" +
-	"\n" +
-	"\b_flow_idB\a\n" +
-	"\x05_nameB\x17\n" +
-	"\x15_success_redirect_urlB\x0e\n" +
-	"\f_supports3ds\"\xa9\x02\n" +
-	"\"UpdateCashfreePaymentProviderInput\x12\x17\n" +
-	"\x04code\x18\x01 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
-	"\aflow_id\x18\x02 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\x12\x17\n" +
-	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x125\n" +
-	"\x14success_redirect_url\x18\x05 \x01(\tH\x03R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
-	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01B\a\n" +
-	"\x05_codeB\n" +
-	"\n" +
-	"\b_flow_idB\a\n" +
-	"\x05_nameB\x17\n" +
-	"\x15_success_redirect_urlB\x0e\n" +
-	"\f_supports3ds\"\xa6\x02\n" +
-	"\x1fUpdateAdyenPaymentProviderInput\x12\x17\n" +
-	"\x04code\x18\x01 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
-	"\aflow_id\x18\x02 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\x12\x17\n" +
-	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x125\n" +
-	"\x14success_redirect_url\x18\x05 \x01(\tH\x03R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
-	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01B\a\n" +
-	"\x05_codeB\n" +
-	"\n" +
-	"\b_flow_idB\a\n" +
-	"\x05_nameB\x17\n" +
-	"\x15_success_redirect_urlB\x0e\n" +
-	"\f_supports3ds\"\xbc\x02\n" +
-	"\x1aAddTapPaymentProviderInput\x12\x1c\n" +
-	"\aapi_key\x18\x01 \x01(\tH\x00R\x06apiKey\x88\x01\x01\x12\x12\n" +
-	"\x04code\x18\x02 \x01(\tR\x04code\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\x12/\n" +
-	"\x11save_card_enabled\x18\x04 \x01(\bH\x01R\x0fsaveCardEnabled\x88\x01\x01\x125\n" +
-	"\x14success_redirect_url\x18\x05 \x01(\tH\x02R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
-	"\vsupports3ds\x18\x06 \x01(\bH\x03R\vsupports3ds\x88\x01\x01B\n" +
-	"\n" +
-	"\b_api_keyB\x14\n" +
-	"\x12_save_card_enabledB\x17\n" +
-	"\x15_success_redirect_urlB\x0e\n" +
-	"\f_supports3ds\"\x81\x02\n" +
-	"\x1dAddStripePaymentProviderInput\x12\x12\n" +
-	"\x04code\x18\x01 \x01(\tR\x04code\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\"\n" +
-	"\n" +
-	"secret_key\x18\x03 \x01(\tH\x00R\tsecretKey\x88\x01\x01\x125\n" +
-	"\x14success_redirect_url\x18\x04 \x01(\tH\x01R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
-	"\vsupports3ds\x18\x05 \x01(\bH\x02R\vsupports3ds\x88\x01\x01B\r\n" +
-	"\v_secret_keyB\x17\n" +
-	"\x15_success_redirect_urlB\x0e\n" +
-	"\f_supports3ds\"\xcc\x01\n" +
-	" AddMoneyhashPaymentProviderInput\x12\x17\n" +
-	"\aapi_key\x18\x01 \x01(\tR\x06apiKey\x12\x12\n" +
-	"\x04code\x18\x02 \x01(\tR\x04code\x12\x17\n" +
-	"\aflow_id\x18\x03 \x01(\tR\x06flowId\x12\x12\n" +
-	"\x04name\x18\x04 \x01(\tR\x04name\x125\n" +
-	"\x14success_redirect_url\x18\x05 \x01(\tH\x00R\x12successRedirectUrl\x88\x01\x01B\x17\n" +
-	"\x15_success_redirect_url\"\xd1\x01\n" +
-	"!AddGocardlessPaymentProviderInput\x12$\n" +
-	"\vaccess_code\x18\x01 \x01(\tH\x00R\n" +
-	"accessCode\x88\x01\x01\x12\x12\n" +
-	"\x04code\x18\x02 \x01(\tR\x04code\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\x125\n" +
-	"\x14success_redirect_url\x18\x04 \x01(\tH\x01R\x12successRedirectUrl\x88\x01\x01B\x0e\n" +
-	"\f_access_codeB\x17\n" +
-	"\x15_success_redirect_url\"\xbb\x01\n" +
-	"\"AddFlutterwavePaymentProviderInput\x12\x12\n" +
-	"\x04code\x18\x01 \x01(\tR\x04code\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1d\n" +
-	"\n" +
-	"secret_key\x18\x03 \x01(\tR\tsecretKey\x125\n" +
-	"\x14success_redirect_url\x18\x04 \x01(\tH\x00R\x12successRedirectUrl\x88\x01\x01B\x17\n" +
-	"\x15_success_redirect_url\"\xdb\x01\n" +
-	"\x1fAddCashfreePaymentProviderInput\x12\x1b\n" +
-	"\tclient_id\x18\x01 \x01(\tR\bclientId\x12#\n" +
-	"\rclient_secret\x18\x02 \x01(\tR\fclientSecret\x12\x12\n" +
-	"\x04code\x18\x03 \x01(\tR\x04code\x12\x12\n" +
-	"\x04name\x18\x04 \x01(\tR\x04name\x125\n" +
-	"\x14success_redirect_url\x18\x05 \x01(\tH\x00R\x12successRedirectUrl\x88\x01\x01B\x17\n" +
-	"\x15_success_redirect_url\"\xbd\x02\n" +
-	"\x1cAddAdyenPaymentProviderInput\x12\x17\n" +
+	"\x04type\"\x1f\n" +
+	"\rDeleteRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"\x10\n" +
+	"\x0eDeleteResponse\"\xb3\x02\n" +
+	"\x12CreateAdyenRequest\x12\x17\n" +
 	"\aapi_key\x18\x01 \x01(\tR\x06apiKey\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\tR\x04code\x12\x1e\n" +
 	"\bhmac_key\x18\x03 \x01(\tH\x00R\ahmacKey\x88\x01\x01\x12$\n" +
@@ -3188,45 +2446,228 @@ const file_invora_billing_payment_providers_v2_service_proto_rawDesc = "" +
 	"\x14success_redirect_url\x18\a \x01(\tH\x02R\x12successRedirectUrl\x88\x01\x01B\v\n" +
 	"\t_hmac_keyB\x0e\n" +
 	"\f_live_prefixB\x17\n" +
-	"\x15_success_redirect_url*;\n" +
-	"\x04View\x12\x14\n" +
-	"\x10VIEW_UNSPECIFIED\x10\x00\x12\x0e\n" +
+	"\x15_success_redirect_url\"e\n" +
+	"\x13CreateAdyenResponse\x12N\n" +
+	"\x0eadyen_provider\x18\x01 \x01(\v2'.invora.billing.common.v2.AdyenProviderR\radyenProvider\"\xd6\x02\n" +
+	"\x12UpdateAdyenRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
+	"\aflow_id\x18\x03 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x125\n" +
+	"\x14success_redirect_url\x18\x05 \x01(\tH\x03R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
+	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\a\n" +
+	"\x05_codeB\n" +
 	"\n" +
-	"VIEW_BASIC\x10\x01\x12\r\n" +
-	"\tVIEW_FULL\x10\x022\xf6#\n" +
-	"\x16PaymentProviderService\x12\xbf\x01\n" +
-	"\x03Get\x12/.invora.billing.payment_providers.v2.GetRequest\x1a0.invora.billing.payment_providers.v2.GetResponse\"U\xe2\xf2\x19(\n" +
-	"&Invora.Billing.PaymentProviders.v2.Get\x82\xd3\xe4\x93\x02#\x12!/api/v2/billing/payment-providers\x12\xc3\x01\n" +
-	"\x04List\x120.invora.billing.payment_providers.v2.ListRequest\x1a1.invora.billing.payment_providers.v2.ListResponse\"V\xe2\xf2\x19)\n" +
-	"'Invora.Billing.PaymentProviders.v2.List\x82\xd3\xe4\x93\x02#\x12!/api/v2/billing/payment-providers\x12\x9e\x02\n" +
-	"\x1aCreateAdyenPaymentProvider\x12F.invora.billing.payment_providers.v2.CreateAdyenPaymentProviderRequest\x1aG.invora.billing.payment_providers.v2.CreateAdyenPaymentProviderResponse\"o\xe2\xf2\x19?\n" +
-	"=Invora.Billing.PaymentProviders.v2.CreateAdyenPaymentProvider\x82\xd3\xe4\x93\x02&:\x01*\"!/api/v2/billing/payment-providers\x12\xaa\x02\n" +
-	"\x1dCreateCashfreePaymentProvider\x12I.invora.billing.payment_providers.v2.CreateCashfreePaymentProviderRequest\x1aJ.invora.billing.payment_providers.v2.CreateCashfreePaymentProviderResponse\"r\xe2\xf2\x19B\n" +
-	"@Invora.Billing.PaymentProviders.v2.CreateCashfreePaymentProvider\x82\xd3\xe4\x93\x02&:\x01*\"!/api/v2/billing/payment-providers\x12\xb6\x02\n" +
-	" CreateFlutterwavePaymentProvider\x12L.invora.billing.payment_providers.v2.CreateFlutterwavePaymentProviderRequest\x1aM.invora.billing.payment_providers.v2.CreateFlutterwavePaymentProviderResponse\"u\xe2\xf2\x19E\n" +
-	"CInvora.Billing.PaymentProviders.v2.CreateFlutterwavePaymentProvider\x82\xd3\xe4\x93\x02&:\x01*\"!/api/v2/billing/payment-providers\x12\xb2\x02\n" +
-	"\x1fCreateGocardlessPaymentProvider\x12K.invora.billing.payment_providers.v2.CreateGocardlessPaymentProviderRequest\x1aL.invora.billing.payment_providers.v2.CreateGocardlessPaymentProviderResponse\"t\xe2\xf2\x19D\n" +
-	"BInvora.Billing.PaymentProviders.v2.CreateGocardlessPaymentProvider\x82\xd3\xe4\x93\x02&:\x01*\"!/api/v2/billing/payment-providers\x12\xae\x02\n" +
-	"\x1eCreateMoneyhashPaymentProvider\x12J.invora.billing.payment_providers.v2.CreateMoneyhashPaymentProviderRequest\x1aK.invora.billing.payment_providers.v2.CreateMoneyhashPaymentProviderResponse\"s\xe2\xf2\x19C\n" +
-	"AInvora.Billing.PaymentProviders.v2.CreateMoneyhashPaymentProvider\x82\xd3\xe4\x93\x02&:\x01*\"!/api/v2/billing/payment-providers\x12\xa2\x02\n" +
-	"\x1bCreateStripePaymentProvider\x12G.invora.billing.payment_providers.v2.CreateStripePaymentProviderRequest\x1aH.invora.billing.payment_providers.v2.CreateStripePaymentProviderResponse\"p\xe2\xf2\x19@\n" +
-	">Invora.Billing.PaymentProviders.v2.CreateStripePaymentProvider\x82\xd3\xe4\x93\x02&:\x01*\"!/api/v2/billing/payment-providers\x12\x96\x02\n" +
-	"\x18CreateTapPaymentProvider\x12D.invora.billing.payment_providers.v2.CreateTapPaymentProviderRequest\x1aE.invora.billing.payment_providers.v2.CreateTapPaymentProviderResponse\"m\xe2\xf2\x19=\n" +
-	";Invora.Billing.PaymentProviders.v2.CreateTapPaymentProvider\x82\xd3\xe4\x93\x02&:\x01*\"!/api/v2/billing/payment-providers\x12\x9e\x02\n" +
-	"\x1aUpdateAdyenPaymentProvider\x12F.invora.billing.payment_providers.v2.UpdateAdyenPaymentProviderRequest\x1aG.invora.billing.payment_providers.v2.UpdateAdyenPaymentProviderResponse\"o\xe2\xf2\x19?\n" +
-	"=Invora.Billing.PaymentProviders.v2.UpdateAdyenPaymentProvider\x82\xd3\xe4\x93\x02&:\x01*2!/api/v2/billing/payment-providers\x12\xaa\x02\n" +
-	"\x1dUpdateCashfreePaymentProvider\x12I.invora.billing.payment_providers.v2.UpdateCashfreePaymentProviderRequest\x1aJ.invora.billing.payment_providers.v2.UpdateCashfreePaymentProviderResponse\"r\xe2\xf2\x19B\n" +
-	"@Invora.Billing.PaymentProviders.v2.UpdateCashfreePaymentProvider\x82\xd3\xe4\x93\x02&:\x01*2!/api/v2/billing/payment-providers\x12\xb6\x02\n" +
-	" UpdateFlutterwavePaymentProvider\x12L.invora.billing.payment_providers.v2.UpdateFlutterwavePaymentProviderRequest\x1aM.invora.billing.payment_providers.v2.UpdateFlutterwavePaymentProviderResponse\"u\xe2\xf2\x19E\n" +
-	"CInvora.Billing.PaymentProviders.v2.UpdateFlutterwavePaymentProvider\x82\xd3\xe4\x93\x02&:\x01*2!/api/v2/billing/payment-providers\x12\xb2\x02\n" +
-	"\x1fUpdateGocardlessPaymentProvider\x12K.invora.billing.payment_providers.v2.UpdateGocardlessPaymentProviderRequest\x1aL.invora.billing.payment_providers.v2.UpdateGocardlessPaymentProviderResponse\"t\xe2\xf2\x19D\n" +
-	"BInvora.Billing.PaymentProviders.v2.UpdateGocardlessPaymentProvider\x82\xd3\xe4\x93\x02&:\x01*2!/api/v2/billing/payment-providers\x12\xae\x02\n" +
-	"\x1eUpdateMoneyhashPaymentProvider\x12J.invora.billing.payment_providers.v2.UpdateMoneyhashPaymentProviderRequest\x1aK.invora.billing.payment_providers.v2.UpdateMoneyhashPaymentProviderResponse\"s\xe2\xf2\x19C\n" +
-	"AInvora.Billing.PaymentProviders.v2.UpdateMoneyhashPaymentProvider\x82\xd3\xe4\x93\x02&:\x01*2!/api/v2/billing/payment-providers\x12\xa2\x02\n" +
-	"\x1bUpdateStripePaymentProvider\x12G.invora.billing.payment_providers.v2.UpdateStripePaymentProviderRequest\x1aH.invora.billing.payment_providers.v2.UpdateStripePaymentProviderResponse\"p\xe2\xf2\x19@\n" +
-	">Invora.Billing.PaymentProviders.v2.UpdateStripePaymentProvider\x82\xd3\xe4\x93\x02&:\x01*2!/api/v2/billing/payment-providers\x12\x96\x02\n" +
-	"\x18UpdateTapPaymentProvider\x12D.invora.billing.payment_providers.v2.UpdateTapPaymentProviderRequest\x1aE.invora.billing.payment_providers.v2.UpdateTapPaymentProviderResponse\"m\xe2\xf2\x19=\n" +
-	";Invora.Billing.PaymentProviders.v2.UpdateTapPaymentProvider\x82\xd3\xe4\x93\x02&:\x01*2!/api/v2/billing/payment-providersB\xc6\x02\n" +
+	"\b_flow_idB\a\n" +
+	"\x05_nameB\x17\n" +
+	"\x15_success_redirect_urlB\x0e\n" +
+	"\f_supports3ds\"e\n" +
+	"\x13UpdateAdyenResponse\x12N\n" +
+	"\x0eadyen_provider\x18\x01 \x01(\v2'.invora.billing.common.v2.AdyenProviderR\radyenProvider\"\xd1\x01\n" +
+	"\x15CreateCashfreeRequest\x12\x1b\n" +
+	"\tclient_id\x18\x01 \x01(\tR\bclientId\x12#\n" +
+	"\rclient_secret\x18\x02 \x01(\tR\fclientSecret\x12\x12\n" +
+	"\x04code\x18\x03 \x01(\tR\x04code\x12\x12\n" +
+	"\x04name\x18\x04 \x01(\tR\x04name\x125\n" +
+	"\x14success_redirect_url\x18\x05 \x01(\tH\x00R\x12successRedirectUrl\x88\x01\x01B\x17\n" +
+	"\x15_success_redirect_url\"q\n" +
+	"\x16CreateCashfreeResponse\x12W\n" +
+	"\x11cashfree_provider\x18\x01 \x01(\v2*.invora.billing.common.v2.CashfreeProviderR\x10cashfreeProvider\"\xd9\x02\n" +
+	"\x15UpdateCashfreeRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
+	"\aflow_id\x18\x03 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x125\n" +
+	"\x14success_redirect_url\x18\x05 \x01(\tH\x03R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
+	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\a\n" +
+	"\x05_codeB\n" +
+	"\n" +
+	"\b_flow_idB\a\n" +
+	"\x05_nameB\x17\n" +
+	"\x15_success_redirect_urlB\x0e\n" +
+	"\f_supports3ds\"q\n" +
+	"\x16UpdateCashfreeResponse\x12W\n" +
+	"\x11cashfree_provider\x18\x01 \x01(\v2*.invora.billing.common.v2.CashfreeProviderR\x10cashfreeProvider\"\xb1\x01\n" +
+	"\x18CreateFlutterwaveRequest\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\tR\x04code\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1d\n" +
+	"\n" +
+	"secret_key\x18\x03 \x01(\tR\tsecretKey\x125\n" +
+	"\x14success_redirect_url\x18\x04 \x01(\tH\x00R\x12successRedirectUrl\x88\x01\x01B\x17\n" +
+	"\x15_success_redirect_url\"}\n" +
+	"\x19CreateFlutterwaveResponse\x12`\n" +
+	"\x14flutterwave_provider\x18\x01 \x01(\v2-.invora.billing.common.v2.FlutterwaveProviderR\x13flutterwaveProvider\"\xdc\x02\n" +
+	"\x18UpdateFlutterwaveRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
+	"\aflow_id\x18\x03 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x125\n" +
+	"\x14success_redirect_url\x18\x05 \x01(\tH\x03R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
+	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\a\n" +
+	"\x05_codeB\n" +
+	"\n" +
+	"\b_flow_idB\a\n" +
+	"\x05_nameB\x17\n" +
+	"\x15_success_redirect_urlB\x0e\n" +
+	"\f_supports3ds\"}\n" +
+	"\x19UpdateFlutterwaveResponse\x12`\n" +
+	"\x14flutterwave_provider\x18\x01 \x01(\v2-.invora.billing.common.v2.FlutterwaveProviderR\x13flutterwaveProvider\"\xc7\x01\n" +
+	"\x17CreateGocardlessRequest\x12$\n" +
+	"\vaccess_code\x18\x01 \x01(\tH\x00R\n" +
+	"accessCode\x88\x01\x01\x12\x12\n" +
+	"\x04code\x18\x02 \x01(\tR\x04code\x12\x12\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x125\n" +
+	"\x14success_redirect_url\x18\x04 \x01(\tH\x01R\x12successRedirectUrl\x88\x01\x01B\x0e\n" +
+	"\f_access_codeB\x17\n" +
+	"\x15_success_redirect_url\"y\n" +
+	"\x18CreateGocardlessResponse\x12]\n" +
+	"\x13gocardless_provider\x18\x01 \x01(\v2,.invora.billing.common.v2.GocardlessProviderR\x12gocardlessProvider\"\xdb\x02\n" +
+	"\x17UpdateGocardlessRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
+	"\aflow_id\x18\x03 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x125\n" +
+	"\x14success_redirect_url\x18\x05 \x01(\tH\x03R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
+	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\a\n" +
+	"\x05_codeB\n" +
+	"\n" +
+	"\b_flow_idB\a\n" +
+	"\x05_nameB\x17\n" +
+	"\x15_success_redirect_urlB\x0e\n" +
+	"\f_supports3ds\"y\n" +
+	"\x18UpdateGocardlessResponse\x12]\n" +
+	"\x13gocardless_provider\x18\x01 \x01(\v2,.invora.billing.common.v2.GocardlessProviderR\x12gocardlessProvider\"\xc2\x01\n" +
+	"\x16CreateMoneyhashRequest\x12\x17\n" +
+	"\aapi_key\x18\x01 \x01(\tR\x06apiKey\x12\x12\n" +
+	"\x04code\x18\x02 \x01(\tR\x04code\x12\x17\n" +
+	"\aflow_id\x18\x03 \x01(\tR\x06flowId\x12\x12\n" +
+	"\x04name\x18\x04 \x01(\tR\x04name\x125\n" +
+	"\x14success_redirect_url\x18\x05 \x01(\tH\x00R\x12successRedirectUrl\x88\x01\x01B\x17\n" +
+	"\x15_success_redirect_url\"u\n" +
+	"\x17CreateMoneyhashResponse\x12Z\n" +
+	"\x12moneyhash_provider\x18\x01 \x01(\v2+.invora.billing.common.v2.MoneyhashProviderR\x11moneyhashProvider\"\xda\x02\n" +
+	"\x16UpdateMoneyhashRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
+	"\aflow_id\x18\x03 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x125\n" +
+	"\x14success_redirect_url\x18\x05 \x01(\tH\x03R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
+	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\a\n" +
+	"\x05_codeB\n" +
+	"\n" +
+	"\b_flow_idB\a\n" +
+	"\x05_nameB\x17\n" +
+	"\x15_success_redirect_urlB\x0e\n" +
+	"\f_supports3ds\"u\n" +
+	"\x17UpdateMoneyhashResponse\x12Z\n" +
+	"\x12moneyhash_provider\x18\x01 \x01(\v2+.invora.billing.common.v2.MoneyhashProviderR\x11moneyhashProvider\"\xf7\x01\n" +
+	"\x13CreateStripeRequest\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\tR\x04code\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\"\n" +
+	"\n" +
+	"secret_key\x18\x03 \x01(\tH\x00R\tsecretKey\x88\x01\x01\x125\n" +
+	"\x14success_redirect_url\x18\x04 \x01(\tH\x01R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
+	"\vsupports3ds\x18\x05 \x01(\bH\x02R\vsupports3ds\x88\x01\x01B\r\n" +
+	"\v_secret_keyB\x17\n" +
+	"\x15_success_redirect_urlB\x0e\n" +
+	"\f_supports3ds\"i\n" +
+	"\x14CreateStripeResponse\x12Q\n" +
+	"\x0fstripe_provider\x18\x01 \x01(\v2(.invora.billing.common.v2.StripeProviderR\x0estripeProvider\"\xd7\x02\n" +
+	"\x13UpdateStripeRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
+	"\aflow_id\x18\x03 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x125\n" +
+	"\x14success_redirect_url\x18\x05 \x01(\tH\x03R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
+	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\a\n" +
+	"\x05_codeB\n" +
+	"\n" +
+	"\b_flow_idB\a\n" +
+	"\x05_nameB\x17\n" +
+	"\x15_success_redirect_urlB\x0e\n" +
+	"\f_supports3ds\"i\n" +
+	"\x14UpdateStripeResponse\x12Q\n" +
+	"\x0fstripe_provider\x18\x01 \x01(\v2(.invora.billing.common.v2.StripeProviderR\x0estripeProvider\"\xb2\x02\n" +
+	"\x10CreateTapRequest\x12\x1c\n" +
+	"\aapi_key\x18\x01 \x01(\tH\x00R\x06apiKey\x88\x01\x01\x12\x12\n" +
+	"\x04code\x18\x02 \x01(\tR\x04code\x12\x12\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x12/\n" +
+	"\x11save_card_enabled\x18\x04 \x01(\bH\x01R\x0fsaveCardEnabled\x88\x01\x01\x125\n" +
+	"\x14success_redirect_url\x18\x05 \x01(\tH\x02R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
+	"\vsupports3ds\x18\x06 \x01(\bH\x03R\vsupports3ds\x88\x01\x01B\n" +
+	"\n" +
+	"\b_api_keyB\x14\n" +
+	"\x12_save_card_enabledB\x17\n" +
+	"\x15_success_redirect_urlB\x0e\n" +
+	"\f_supports3ds\"]\n" +
+	"\x11CreateTapResponse\x12H\n" +
+	"\ftap_provider\x18\x01 \x01(\v2%.invora.billing.common.v2.TapProviderR\vtapProvider\"\x9b\x03\n" +
+	"\x10UpdateTapRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
+	"\aflow_id\x18\x03 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x12/\n" +
+	"\x11save_card_enabled\x18\x05 \x01(\bH\x03R\x0fsaveCardEnabled\x88\x01\x01\x125\n" +
+	"\x14success_redirect_url\x18\x06 \x01(\tH\x04R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
+	"\vsupports3ds\x18\a \x01(\bH\x05R\vsupports3ds\x88\x01\x01\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\a\n" +
+	"\x05_codeB\n" +
+	"\n" +
+	"\b_flow_idB\a\n" +
+	"\x05_nameB\x14\n" +
+	"\x12_save_card_enabledB\x17\n" +
+	"\x15_success_redirect_urlB\x0e\n" +
+	"\f_supports3ds\"]\n" +
+	"\x11UpdateTapResponse\x12H\n" +
+	"\ftap_provider\x18\x01 \x01(\v2%.invora.billing.common.v2.TapProviderR\vtapProvider2\xd0 \n" +
+	"\x17PaymentProvidersService\x12\xcb\x01\n" +
+	"\x04List\x120.invora.billing.payment_providers.v2.ListRequest\x1a1.invora.billing.payment_providers.v2.ListResponse\"^\xe2\xf2\x19)\n" +
+	"'Invora.Billing.PaymentProviders.v2.List\x82\xd3\xe4\x93\x02+:\x01*\"&/api/billing/v2/payment-providers/list\x12\xc4\x01\n" +
+	"\x03Get\x12/.invora.billing.payment_providers.v2.GetRequest\x1a0.invora.billing.payment_providers.v2.GetResponse\"Z\xe2\xf2\x19(\n" +
+	"&Invora.Billing.PaymentProviders.v2.Get\x82\xd3\xe4\x93\x02(\x12&/api/billing/v2/payment-providers/{id}\x12\xdc\x01\n" +
+	"\x06Delete\x122.invora.billing.payment_providers.v2.DeleteRequest\x1a3.invora.billing.payment_providers.v2.DeleteResponse\"i\xe2\xf2\x192\n" +
+	"0Invora.Billing.PaymentProviders.v2.Modify.Delete\x82\xd3\xe4\x93\x02-:\x01*\"(/api/billing/v2/payment-providers/delete\x12\xea\x01\n" +
+	"\vCreateAdyen\x127.invora.billing.payment_providers.v2.CreateAdyenRequest\x1a8.invora.billing.payment_providers.v2.CreateAdyenResponse\"h\xe2\xf2\x197\n" +
+	"5Invora.Billing.PaymentProviders.v2.Modify.CreateAdyen\x82\xd3\xe4\x93\x02':\x01*\"\"/api/billing/v2/integrations/adyen\x12\xef\x01\n" +
+	"\vUpdateAdyen\x127.invora.billing.payment_providers.v2.UpdateAdyenRequest\x1a8.invora.billing.payment_providers.v2.UpdateAdyenResponse\"m\xe2\xf2\x197\n" +
+	"5Invora.Billing.PaymentProviders.v2.Modify.UpdateAdyen\x82\xd3\xe4\x93\x02,:\x01*\x1a'/api/billing/v2/integrations/adyen/{id}\x12\xf9\x01\n" +
+	"\x0eCreateCashfree\x12:.invora.billing.payment_providers.v2.CreateCashfreeRequest\x1a;.invora.billing.payment_providers.v2.CreateCashfreeResponse\"n\xe2\xf2\x19:\n" +
+	"8Invora.Billing.PaymentProviders.v2.Modify.CreateCashfree\x82\xd3\xe4\x93\x02*:\x01*\"%/api/billing/v2/integrations/cashfree\x12\xfe\x01\n" +
+	"\x0eUpdateCashfree\x12:.invora.billing.payment_providers.v2.UpdateCashfreeRequest\x1a;.invora.billing.payment_providers.v2.UpdateCashfreeResponse\"s\xe2\xf2\x19:\n" +
+	"8Invora.Billing.PaymentProviders.v2.Modify.UpdateCashfree\x82\xd3\xe4\x93\x02/:\x01*\x1a*/api/billing/v2/integrations/cashfree/{id}\x12\x88\x02\n" +
+	"\x11CreateFlutterwave\x12=.invora.billing.payment_providers.v2.CreateFlutterwaveRequest\x1a>.invora.billing.payment_providers.v2.CreateFlutterwaveResponse\"t\xe2\xf2\x19=\n" +
+	";Invora.Billing.PaymentProviders.v2.Modify.CreateFlutterwave\x82\xd3\xe4\x93\x02-:\x01*\"(/api/billing/v2/integrations/flutterwave\x12\x8d\x02\n" +
+	"\x11UpdateFlutterwave\x12=.invora.billing.payment_providers.v2.UpdateFlutterwaveRequest\x1a>.invora.billing.payment_providers.v2.UpdateFlutterwaveResponse\"y\xe2\xf2\x19=\n" +
+	";Invora.Billing.PaymentProviders.v2.Modify.UpdateFlutterwave\x82\xd3\xe4\x93\x022:\x01*\x1a-/api/billing/v2/integrations/flutterwave/{id}\x12\x83\x02\n" +
+	"\x10CreateGocardless\x12<.invora.billing.payment_providers.v2.CreateGocardlessRequest\x1a=.invora.billing.payment_providers.v2.CreateGocardlessResponse\"r\xe2\xf2\x19<\n" +
+	":Invora.Billing.PaymentProviders.v2.Modify.CreateGocardless\x82\xd3\xe4\x93\x02,:\x01*\"'/api/billing/v2/integrations/gocardless\x12\x88\x02\n" +
+	"\x10UpdateGocardless\x12<.invora.billing.payment_providers.v2.UpdateGocardlessRequest\x1a=.invora.billing.payment_providers.v2.UpdateGocardlessResponse\"w\xe2\xf2\x19<\n" +
+	":Invora.Billing.PaymentProviders.v2.Modify.UpdateGocardless\x82\xd3\xe4\x93\x021:\x01*\x1a,/api/billing/v2/integrations/gocardless/{id}\x12\xfe\x01\n" +
+	"\x0fCreateMoneyhash\x12;.invora.billing.payment_providers.v2.CreateMoneyhashRequest\x1a<.invora.billing.payment_providers.v2.CreateMoneyhashResponse\"p\xe2\xf2\x19;\n" +
+	"9Invora.Billing.PaymentProviders.v2.Modify.CreateMoneyhash\x82\xd3\xe4\x93\x02+:\x01*\"&/api/billing/v2/integrations/moneyhash\x12\x83\x02\n" +
+	"\x0fUpdateMoneyhash\x12;.invora.billing.payment_providers.v2.UpdateMoneyhashRequest\x1a<.invora.billing.payment_providers.v2.UpdateMoneyhashResponse\"u\xe2\xf2\x19;\n" +
+	"9Invora.Billing.PaymentProviders.v2.Modify.UpdateMoneyhash\x82\xd3\xe4\x93\x020:\x01*\x1a+/api/billing/v2/integrations/moneyhash/{id}\x12\xef\x01\n" +
+	"\fCreateStripe\x128.invora.billing.payment_providers.v2.CreateStripeRequest\x1a9.invora.billing.payment_providers.v2.CreateStripeResponse\"j\xe2\xf2\x198\n" +
+	"6Invora.Billing.PaymentProviders.v2.Modify.CreateStripe\x82\xd3\xe4\x93\x02(:\x01*\"#/api/billing/v2/integrations/stripe\x12\xf4\x01\n" +
+	"\fUpdateStripe\x128.invora.billing.payment_providers.v2.UpdateStripeRequest\x1a9.invora.billing.payment_providers.v2.UpdateStripeResponse\"o\xe2\xf2\x198\n" +
+	"6Invora.Billing.PaymentProviders.v2.Modify.UpdateStripe\x82\xd3\xe4\x93\x02-:\x01*\x1a(/api/billing/v2/integrations/stripe/{id}\x12\xe0\x01\n" +
+	"\tCreateTap\x125.invora.billing.payment_providers.v2.CreateTapRequest\x1a6.invora.billing.payment_providers.v2.CreateTapResponse\"d\xe2\xf2\x195\n" +
+	"3Invora.Billing.PaymentProviders.v2.Modify.CreateTap\x82\xd3\xe4\x93\x02%:\x01*\" /api/billing/v2/integrations/tap\x12\xe5\x01\n" +
+	"\tUpdateTap\x125.invora.billing.payment_providers.v2.UpdateTapRequest\x1a6.invora.billing.payment_providers.v2.UpdateTapResponse\"i\xe2\xf2\x195\n" +
+	"3Invora.Billing.PaymentProviders.v2.Modify.UpdateTap\x82\xd3\xe4\x93\x02*:\x01*\x1a%/api/billing/v2/integrations/tap/{id}B\xc6\x02\n" +
 	"'com.invora.billing.payment_providers.v2B\fServiceProtoP\x01Zbgithub.com/invoraapp/invora-controller/gen/invora/billing/payment_providers/v2;payment_providersv2\xa2\x02\x03IBP\xaa\x02\"Invora.Billing.PaymentProviders.V2\xca\x02\"Invora\\Billing\\PaymentProviders\\V2\xe2\x02.Invora\\Billing\\PaymentProviders\\V2\\GPBMetadata\xea\x02%Invora::Billing::PaymentProviders::V2b\x06proto3"
 
 var (
@@ -3241,154 +2682,134 @@ func file_invora_billing_payment_providers_v2_service_proto_rawDescGZIP() []byte
 	return file_invora_billing_payment_providers_v2_service_proto_rawDescData
 }
 
-var file_invora_billing_payment_providers_v2_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_invora_billing_payment_providers_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 50)
+var file_invora_billing_payment_providers_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 38)
 var file_invora_billing_payment_providers_v2_service_proto_goTypes = []any{
-	(View)(0),                                        // 0: invora.billing.payment_providers.v2.View
-	(*GetRequest)(nil),                               // 1: invora.billing.payment_providers.v2.GetRequest
-	(*GetResponse)(nil),                              // 2: invora.billing.payment_providers.v2.GetResponse
-	(*ListRequest)(nil),                              // 3: invora.billing.payment_providers.v2.ListRequest
-	(*ListResponse)(nil),                             // 4: invora.billing.payment_providers.v2.ListResponse
-	(*ListFilter)(nil),                               // 5: invora.billing.payment_providers.v2.ListFilter
-	(*ListFilterPart)(nil),                           // 6: invora.billing.payment_providers.v2.ListFilterPart
-	(*ListSort)(nil),                                 // 7: invora.billing.payment_providers.v2.ListSort
-	(*ListSortRule)(nil),                             // 8: invora.billing.payment_providers.v2.ListSortRule
-	(*CreateAdyenPaymentProviderRequest)(nil),        // 9: invora.billing.payment_providers.v2.CreateAdyenPaymentProviderRequest
-	(*CreateAdyenPaymentProviderResponse)(nil),       // 10: invora.billing.payment_providers.v2.CreateAdyenPaymentProviderResponse
-	(*CreateCashfreePaymentProviderRequest)(nil),     // 11: invora.billing.payment_providers.v2.CreateCashfreePaymentProviderRequest
-	(*CreateCashfreePaymentProviderResponse)(nil),    // 12: invora.billing.payment_providers.v2.CreateCashfreePaymentProviderResponse
-	(*CreateFlutterwavePaymentProviderRequest)(nil),  // 13: invora.billing.payment_providers.v2.CreateFlutterwavePaymentProviderRequest
-	(*CreateFlutterwavePaymentProviderResponse)(nil), // 14: invora.billing.payment_providers.v2.CreateFlutterwavePaymentProviderResponse
-	(*CreateGocardlessPaymentProviderRequest)(nil),   // 15: invora.billing.payment_providers.v2.CreateGocardlessPaymentProviderRequest
-	(*CreateGocardlessPaymentProviderResponse)(nil),  // 16: invora.billing.payment_providers.v2.CreateGocardlessPaymentProviderResponse
-	(*CreateMoneyhashPaymentProviderRequest)(nil),    // 17: invora.billing.payment_providers.v2.CreateMoneyhashPaymentProviderRequest
-	(*CreateMoneyhashPaymentProviderResponse)(nil),   // 18: invora.billing.payment_providers.v2.CreateMoneyhashPaymentProviderResponse
-	(*CreateStripePaymentProviderRequest)(nil),       // 19: invora.billing.payment_providers.v2.CreateStripePaymentProviderRequest
-	(*CreateStripePaymentProviderResponse)(nil),      // 20: invora.billing.payment_providers.v2.CreateStripePaymentProviderResponse
-	(*CreateTapPaymentProviderRequest)(nil),          // 21: invora.billing.payment_providers.v2.CreateTapPaymentProviderRequest
-	(*CreateTapPaymentProviderResponse)(nil),         // 22: invora.billing.payment_providers.v2.CreateTapPaymentProviderResponse
-	(*UpdateAdyenPaymentProviderRequest)(nil),        // 23: invora.billing.payment_providers.v2.UpdateAdyenPaymentProviderRequest
-	(*UpdateAdyenPaymentProviderResponse)(nil),       // 24: invora.billing.payment_providers.v2.UpdateAdyenPaymentProviderResponse
-	(*UpdateCashfreePaymentProviderRequest)(nil),     // 25: invora.billing.payment_providers.v2.UpdateCashfreePaymentProviderRequest
-	(*UpdateCashfreePaymentProviderResponse)(nil),    // 26: invora.billing.payment_providers.v2.UpdateCashfreePaymentProviderResponse
-	(*UpdateFlutterwavePaymentProviderRequest)(nil),  // 27: invora.billing.payment_providers.v2.UpdateFlutterwavePaymentProviderRequest
-	(*UpdateFlutterwavePaymentProviderResponse)(nil), // 28: invora.billing.payment_providers.v2.UpdateFlutterwavePaymentProviderResponse
-	(*UpdateGocardlessPaymentProviderRequest)(nil),   // 29: invora.billing.payment_providers.v2.UpdateGocardlessPaymentProviderRequest
-	(*UpdateGocardlessPaymentProviderResponse)(nil),  // 30: invora.billing.payment_providers.v2.UpdateGocardlessPaymentProviderResponse
-	(*UpdateMoneyhashPaymentProviderRequest)(nil),    // 31: invora.billing.payment_providers.v2.UpdateMoneyhashPaymentProviderRequest
-	(*UpdateMoneyhashPaymentProviderResponse)(nil),   // 32: invora.billing.payment_providers.v2.UpdateMoneyhashPaymentProviderResponse
-	(*UpdateStripePaymentProviderRequest)(nil),       // 33: invora.billing.payment_providers.v2.UpdateStripePaymentProviderRequest
-	(*UpdateStripePaymentProviderResponse)(nil),      // 34: invora.billing.payment_providers.v2.UpdateStripePaymentProviderResponse
-	(*UpdateTapPaymentProviderRequest)(nil),          // 35: invora.billing.payment_providers.v2.UpdateTapPaymentProviderRequest
-	(*UpdateTapPaymentProviderResponse)(nil),         // 36: invora.billing.payment_providers.v2.UpdateTapPaymentProviderResponse
-	(*UpdateTapPaymentProviderInput)(nil),            // 37: invora.billing.payment_providers.v2.UpdateTapPaymentProviderInput
-	(*UpdateStripePaymentProviderInput)(nil),         // 38: invora.billing.payment_providers.v2.UpdateStripePaymentProviderInput
-	(*UpdateMoneyhashPaymentProviderInput)(nil),      // 39: invora.billing.payment_providers.v2.UpdateMoneyhashPaymentProviderInput
-	(*UpdateGocardlessPaymentProviderInput)(nil),     // 40: invora.billing.payment_providers.v2.UpdateGocardlessPaymentProviderInput
-	(*UpdateFlutterwavePaymentProviderInput)(nil),    // 41: invora.billing.payment_providers.v2.UpdateFlutterwavePaymentProviderInput
-	(*UpdateCashfreePaymentProviderInput)(nil),       // 42: invora.billing.payment_providers.v2.UpdateCashfreePaymentProviderInput
-	(*UpdateAdyenPaymentProviderInput)(nil),          // 43: invora.billing.payment_providers.v2.UpdateAdyenPaymentProviderInput
-	(*AddTapPaymentProviderInput)(nil),               // 44: invora.billing.payment_providers.v2.AddTapPaymentProviderInput
-	(*AddStripePaymentProviderInput)(nil),            // 45: invora.billing.payment_providers.v2.AddStripePaymentProviderInput
-	(*AddMoneyhashPaymentProviderInput)(nil),         // 46: invora.billing.payment_providers.v2.AddMoneyhashPaymentProviderInput
-	(*AddGocardlessPaymentProviderInput)(nil),        // 47: invora.billing.payment_providers.v2.AddGocardlessPaymentProviderInput
-	(*AddFlutterwavePaymentProviderInput)(nil),       // 48: invora.billing.payment_providers.v2.AddFlutterwavePaymentProviderInput
-	(*AddCashfreePaymentProviderInput)(nil),          // 49: invora.billing.payment_providers.v2.AddCashfreePaymentProviderInput
-	(*AddAdyenPaymentProviderInput)(nil),             // 50: invora.billing.payment_providers.v2.AddAdyenPaymentProviderInput
-	(*fieldmaskpb.FieldMask)(nil),                    // 51: google.protobuf.FieldMask
-	(*v2.PaymentProvider)(nil),                       // 52: invora.billing.common.v2.PaymentProvider
-	(*kernel.PaginationInfo)(nil),                    // 53: kernel.PaginationInfo
-	(*wrapperspb.StringValue)(nil),                   // 54: google.protobuf.StringValue
-	(v2.ProviderTypeEnum)(0),                         // 55: invora.billing.common.v2.ProviderTypeEnum
-	(kernel.SortDirection)(0),                        // 56: kernel.SortDirection
-	(*v2.AdyenProvider)(nil),                         // 57: invora.billing.common.v2.AdyenProvider
-	(*v2.CashfreeProvider)(nil),                      // 58: invora.billing.common.v2.CashfreeProvider
-	(*v2.FlutterwaveProvider)(nil),                   // 59: invora.billing.common.v2.FlutterwaveProvider
-	(*v2.GocardlessProvider)(nil),                    // 60: invora.billing.common.v2.GocardlessProvider
-	(*v2.MoneyhashProvider)(nil),                     // 61: invora.billing.common.v2.MoneyhashProvider
-	(*v2.StripeProvider)(nil),                        // 62: invora.billing.common.v2.StripeProvider
-	(*v2.TapProvider)(nil),                           // 63: invora.billing.common.v2.TapProvider
+	(*GetRequest)(nil),                // 0: invora.billing.payment_providers.v2.GetRequest
+	(*GetResponse)(nil),               // 1: invora.billing.payment_providers.v2.GetResponse
+	(*ListRequest)(nil),               // 2: invora.billing.payment_providers.v2.ListRequest
+	(*ListResponse)(nil),              // 3: invora.billing.payment_providers.v2.ListResponse
+	(*ListFilter)(nil),                // 4: invora.billing.payment_providers.v2.ListFilter
+	(*ListFilterPart)(nil),            // 5: invora.billing.payment_providers.v2.ListFilterPart
+	(*ListSort)(nil),                  // 6: invora.billing.payment_providers.v2.ListSort
+	(*ListSortRule)(nil),              // 7: invora.billing.payment_providers.v2.ListSortRule
+	(*DeleteRequest)(nil),             // 8: invora.billing.payment_providers.v2.DeleteRequest
+	(*DeleteResponse)(nil),            // 9: invora.billing.payment_providers.v2.DeleteResponse
+	(*CreateAdyenRequest)(nil),        // 10: invora.billing.payment_providers.v2.CreateAdyenRequest
+	(*CreateAdyenResponse)(nil),       // 11: invora.billing.payment_providers.v2.CreateAdyenResponse
+	(*UpdateAdyenRequest)(nil),        // 12: invora.billing.payment_providers.v2.UpdateAdyenRequest
+	(*UpdateAdyenResponse)(nil),       // 13: invora.billing.payment_providers.v2.UpdateAdyenResponse
+	(*CreateCashfreeRequest)(nil),     // 14: invora.billing.payment_providers.v2.CreateCashfreeRequest
+	(*CreateCashfreeResponse)(nil),    // 15: invora.billing.payment_providers.v2.CreateCashfreeResponse
+	(*UpdateCashfreeRequest)(nil),     // 16: invora.billing.payment_providers.v2.UpdateCashfreeRequest
+	(*UpdateCashfreeResponse)(nil),    // 17: invora.billing.payment_providers.v2.UpdateCashfreeResponse
+	(*CreateFlutterwaveRequest)(nil),  // 18: invora.billing.payment_providers.v2.CreateFlutterwaveRequest
+	(*CreateFlutterwaveResponse)(nil), // 19: invora.billing.payment_providers.v2.CreateFlutterwaveResponse
+	(*UpdateFlutterwaveRequest)(nil),  // 20: invora.billing.payment_providers.v2.UpdateFlutterwaveRequest
+	(*UpdateFlutterwaveResponse)(nil), // 21: invora.billing.payment_providers.v2.UpdateFlutterwaveResponse
+	(*CreateGocardlessRequest)(nil),   // 22: invora.billing.payment_providers.v2.CreateGocardlessRequest
+	(*CreateGocardlessResponse)(nil),  // 23: invora.billing.payment_providers.v2.CreateGocardlessResponse
+	(*UpdateGocardlessRequest)(nil),   // 24: invora.billing.payment_providers.v2.UpdateGocardlessRequest
+	(*UpdateGocardlessResponse)(nil),  // 25: invora.billing.payment_providers.v2.UpdateGocardlessResponse
+	(*CreateMoneyhashRequest)(nil),    // 26: invora.billing.payment_providers.v2.CreateMoneyhashRequest
+	(*CreateMoneyhashResponse)(nil),   // 27: invora.billing.payment_providers.v2.CreateMoneyhashResponse
+	(*UpdateMoneyhashRequest)(nil),    // 28: invora.billing.payment_providers.v2.UpdateMoneyhashRequest
+	(*UpdateMoneyhashResponse)(nil),   // 29: invora.billing.payment_providers.v2.UpdateMoneyhashResponse
+	(*CreateStripeRequest)(nil),       // 30: invora.billing.payment_providers.v2.CreateStripeRequest
+	(*CreateStripeResponse)(nil),      // 31: invora.billing.payment_providers.v2.CreateStripeResponse
+	(*UpdateStripeRequest)(nil),       // 32: invora.billing.payment_providers.v2.UpdateStripeRequest
+	(*UpdateStripeResponse)(nil),      // 33: invora.billing.payment_providers.v2.UpdateStripeResponse
+	(*CreateTapRequest)(nil),          // 34: invora.billing.payment_providers.v2.CreateTapRequest
+	(*CreateTapResponse)(nil),         // 35: invora.billing.payment_providers.v2.CreateTapResponse
+	(*UpdateTapRequest)(nil),          // 36: invora.billing.payment_providers.v2.UpdateTapRequest
+	(*UpdateTapResponse)(nil),         // 37: invora.billing.payment_providers.v2.UpdateTapResponse
+	(*fieldmaskpb.FieldMask)(nil),     // 38: google.protobuf.FieldMask
+	(v2.View)(0),                      // 39: invora.billing.common.v2.View
+	(*v2.PaymentProvider)(nil),        // 40: invora.billing.common.v2.PaymentProvider
+	(*kernel.PaginationInfo)(nil),     // 41: kernel.PaginationInfo
+	(v2.ProviderType)(0),              // 42: invora.billing.common.v2.ProviderType
+	(kernel.SortDirection)(0),         // 43: kernel.SortDirection
+	(*v2.AdyenProvider)(nil),          // 44: invora.billing.common.v2.AdyenProvider
+	(*v2.CashfreeProvider)(nil),       // 45: invora.billing.common.v2.CashfreeProvider
+	(*v2.FlutterwaveProvider)(nil),    // 46: invora.billing.common.v2.FlutterwaveProvider
+	(*v2.GocardlessProvider)(nil),     // 47: invora.billing.common.v2.GocardlessProvider
+	(*v2.MoneyhashProvider)(nil),      // 48: invora.billing.common.v2.MoneyhashProvider
+	(*v2.StripeProvider)(nil),         // 49: invora.billing.common.v2.StripeProvider
+	(*v2.TapProvider)(nil),            // 50: invora.billing.common.v2.TapProvider
 }
 var file_invora_billing_payment_providers_v2_service_proto_depIdxs = []int32{
-	51, // 0: invora.billing.payment_providers.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 1: invora.billing.payment_providers.v2.GetRequest.view:type_name -> invora.billing.payment_providers.v2.View
-	52, // 2: invora.billing.payment_providers.v2.GetResponse.payment_provider:type_name -> invora.billing.common.v2.PaymentProvider
-	5,  // 3: invora.billing.payment_providers.v2.ListRequest.filter:type_name -> invora.billing.payment_providers.v2.ListFilter
-	7,  // 4: invora.billing.payment_providers.v2.ListRequest.sort:type_name -> invora.billing.payment_providers.v2.ListSort
-	53, // 5: invora.billing.payment_providers.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
-	51, // 6: invora.billing.payment_providers.v2.ListRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 7: invora.billing.payment_providers.v2.ListRequest.view:type_name -> invora.billing.payment_providers.v2.View
-	52, // 8: invora.billing.payment_providers.v2.ListResponse.items:type_name -> invora.billing.common.v2.PaymentProvider
-	54, // 9: invora.billing.payment_providers.v2.ListResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	6,  // 10: invora.billing.payment_providers.v2.ListFilter.part:type_name -> invora.billing.payment_providers.v2.ListFilterPart
-	55, // 11: invora.billing.payment_providers.v2.ListFilterPart.filter_type:type_name -> invora.billing.common.v2.ProviderTypeEnum
-	8,  // 12: invora.billing.payment_providers.v2.ListSort.rules:type_name -> invora.billing.payment_providers.v2.ListSortRule
-	56, // 13: invora.billing.payment_providers.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
-	50, // 14: invora.billing.payment_providers.v2.CreateAdyenPaymentProviderRequest.input:type_name -> invora.billing.payment_providers.v2.AddAdyenPaymentProviderInput
-	57, // 15: invora.billing.payment_providers.v2.CreateAdyenPaymentProviderResponse.adyen_provider:type_name -> invora.billing.common.v2.AdyenProvider
-	49, // 16: invora.billing.payment_providers.v2.CreateCashfreePaymentProviderRequest.input:type_name -> invora.billing.payment_providers.v2.AddCashfreePaymentProviderInput
-	58, // 17: invora.billing.payment_providers.v2.CreateCashfreePaymentProviderResponse.cashfree_provider:type_name -> invora.billing.common.v2.CashfreeProvider
-	48, // 18: invora.billing.payment_providers.v2.CreateFlutterwavePaymentProviderRequest.input:type_name -> invora.billing.payment_providers.v2.AddFlutterwavePaymentProviderInput
-	59, // 19: invora.billing.payment_providers.v2.CreateFlutterwavePaymentProviderResponse.flutterwave_provider:type_name -> invora.billing.common.v2.FlutterwaveProvider
-	47, // 20: invora.billing.payment_providers.v2.CreateGocardlessPaymentProviderRequest.input:type_name -> invora.billing.payment_providers.v2.AddGocardlessPaymentProviderInput
-	60, // 21: invora.billing.payment_providers.v2.CreateGocardlessPaymentProviderResponse.gocardless_provider:type_name -> invora.billing.common.v2.GocardlessProvider
-	46, // 22: invora.billing.payment_providers.v2.CreateMoneyhashPaymentProviderRequest.input:type_name -> invora.billing.payment_providers.v2.AddMoneyhashPaymentProviderInput
-	61, // 23: invora.billing.payment_providers.v2.CreateMoneyhashPaymentProviderResponse.moneyhash_provider:type_name -> invora.billing.common.v2.MoneyhashProvider
-	45, // 24: invora.billing.payment_providers.v2.CreateStripePaymentProviderRequest.input:type_name -> invora.billing.payment_providers.v2.AddStripePaymentProviderInput
-	62, // 25: invora.billing.payment_providers.v2.CreateStripePaymentProviderResponse.stripe_provider:type_name -> invora.billing.common.v2.StripeProvider
-	44, // 26: invora.billing.payment_providers.v2.CreateTapPaymentProviderRequest.input:type_name -> invora.billing.payment_providers.v2.AddTapPaymentProviderInput
-	63, // 27: invora.billing.payment_providers.v2.CreateTapPaymentProviderResponse.tap_provider:type_name -> invora.billing.common.v2.TapProvider
-	43, // 28: invora.billing.payment_providers.v2.UpdateAdyenPaymentProviderRequest.input:type_name -> invora.billing.payment_providers.v2.UpdateAdyenPaymentProviderInput
-	57, // 29: invora.billing.payment_providers.v2.UpdateAdyenPaymentProviderResponse.adyen_provider:type_name -> invora.billing.common.v2.AdyenProvider
-	42, // 30: invora.billing.payment_providers.v2.UpdateCashfreePaymentProviderRequest.input:type_name -> invora.billing.payment_providers.v2.UpdateCashfreePaymentProviderInput
-	58, // 31: invora.billing.payment_providers.v2.UpdateCashfreePaymentProviderResponse.cashfree_provider:type_name -> invora.billing.common.v2.CashfreeProvider
-	41, // 32: invora.billing.payment_providers.v2.UpdateFlutterwavePaymentProviderRequest.input:type_name -> invora.billing.payment_providers.v2.UpdateFlutterwavePaymentProviderInput
-	59, // 33: invora.billing.payment_providers.v2.UpdateFlutterwavePaymentProviderResponse.flutterwave_provider:type_name -> invora.billing.common.v2.FlutterwaveProvider
-	40, // 34: invora.billing.payment_providers.v2.UpdateGocardlessPaymentProviderRequest.input:type_name -> invora.billing.payment_providers.v2.UpdateGocardlessPaymentProviderInput
-	60, // 35: invora.billing.payment_providers.v2.UpdateGocardlessPaymentProviderResponse.gocardless_provider:type_name -> invora.billing.common.v2.GocardlessProvider
-	39, // 36: invora.billing.payment_providers.v2.UpdateMoneyhashPaymentProviderRequest.input:type_name -> invora.billing.payment_providers.v2.UpdateMoneyhashPaymentProviderInput
-	61, // 37: invora.billing.payment_providers.v2.UpdateMoneyhashPaymentProviderResponse.moneyhash_provider:type_name -> invora.billing.common.v2.MoneyhashProvider
-	38, // 38: invora.billing.payment_providers.v2.UpdateStripePaymentProviderRequest.input:type_name -> invora.billing.payment_providers.v2.UpdateStripePaymentProviderInput
-	62, // 39: invora.billing.payment_providers.v2.UpdateStripePaymentProviderResponse.stripe_provider:type_name -> invora.billing.common.v2.StripeProvider
-	37, // 40: invora.billing.payment_providers.v2.UpdateTapPaymentProviderRequest.input:type_name -> invora.billing.payment_providers.v2.UpdateTapPaymentProviderInput
-	63, // 41: invora.billing.payment_providers.v2.UpdateTapPaymentProviderResponse.tap_provider:type_name -> invora.billing.common.v2.TapProvider
-	1,  // 42: invora.billing.payment_providers.v2.PaymentProviderService.Get:input_type -> invora.billing.payment_providers.v2.GetRequest
-	3,  // 43: invora.billing.payment_providers.v2.PaymentProviderService.List:input_type -> invora.billing.payment_providers.v2.ListRequest
-	9,  // 44: invora.billing.payment_providers.v2.PaymentProviderService.CreateAdyenPaymentProvider:input_type -> invora.billing.payment_providers.v2.CreateAdyenPaymentProviderRequest
-	11, // 45: invora.billing.payment_providers.v2.PaymentProviderService.CreateCashfreePaymentProvider:input_type -> invora.billing.payment_providers.v2.CreateCashfreePaymentProviderRequest
-	13, // 46: invora.billing.payment_providers.v2.PaymentProviderService.CreateFlutterwavePaymentProvider:input_type -> invora.billing.payment_providers.v2.CreateFlutterwavePaymentProviderRequest
-	15, // 47: invora.billing.payment_providers.v2.PaymentProviderService.CreateGocardlessPaymentProvider:input_type -> invora.billing.payment_providers.v2.CreateGocardlessPaymentProviderRequest
-	17, // 48: invora.billing.payment_providers.v2.PaymentProviderService.CreateMoneyhashPaymentProvider:input_type -> invora.billing.payment_providers.v2.CreateMoneyhashPaymentProviderRequest
-	19, // 49: invora.billing.payment_providers.v2.PaymentProviderService.CreateStripePaymentProvider:input_type -> invora.billing.payment_providers.v2.CreateStripePaymentProviderRequest
-	21, // 50: invora.billing.payment_providers.v2.PaymentProviderService.CreateTapPaymentProvider:input_type -> invora.billing.payment_providers.v2.CreateTapPaymentProviderRequest
-	23, // 51: invora.billing.payment_providers.v2.PaymentProviderService.UpdateAdyenPaymentProvider:input_type -> invora.billing.payment_providers.v2.UpdateAdyenPaymentProviderRequest
-	25, // 52: invora.billing.payment_providers.v2.PaymentProviderService.UpdateCashfreePaymentProvider:input_type -> invora.billing.payment_providers.v2.UpdateCashfreePaymentProviderRequest
-	27, // 53: invora.billing.payment_providers.v2.PaymentProviderService.UpdateFlutterwavePaymentProvider:input_type -> invora.billing.payment_providers.v2.UpdateFlutterwavePaymentProviderRequest
-	29, // 54: invora.billing.payment_providers.v2.PaymentProviderService.UpdateGocardlessPaymentProvider:input_type -> invora.billing.payment_providers.v2.UpdateGocardlessPaymentProviderRequest
-	31, // 55: invora.billing.payment_providers.v2.PaymentProviderService.UpdateMoneyhashPaymentProvider:input_type -> invora.billing.payment_providers.v2.UpdateMoneyhashPaymentProviderRequest
-	33, // 56: invora.billing.payment_providers.v2.PaymentProviderService.UpdateStripePaymentProvider:input_type -> invora.billing.payment_providers.v2.UpdateStripePaymentProviderRequest
-	35, // 57: invora.billing.payment_providers.v2.PaymentProviderService.UpdateTapPaymentProvider:input_type -> invora.billing.payment_providers.v2.UpdateTapPaymentProviderRequest
-	2,  // 58: invora.billing.payment_providers.v2.PaymentProviderService.Get:output_type -> invora.billing.payment_providers.v2.GetResponse
-	4,  // 59: invora.billing.payment_providers.v2.PaymentProviderService.List:output_type -> invora.billing.payment_providers.v2.ListResponse
-	10, // 60: invora.billing.payment_providers.v2.PaymentProviderService.CreateAdyenPaymentProvider:output_type -> invora.billing.payment_providers.v2.CreateAdyenPaymentProviderResponse
-	12, // 61: invora.billing.payment_providers.v2.PaymentProviderService.CreateCashfreePaymentProvider:output_type -> invora.billing.payment_providers.v2.CreateCashfreePaymentProviderResponse
-	14, // 62: invora.billing.payment_providers.v2.PaymentProviderService.CreateFlutterwavePaymentProvider:output_type -> invora.billing.payment_providers.v2.CreateFlutterwavePaymentProviderResponse
-	16, // 63: invora.billing.payment_providers.v2.PaymentProviderService.CreateGocardlessPaymentProvider:output_type -> invora.billing.payment_providers.v2.CreateGocardlessPaymentProviderResponse
-	18, // 64: invora.billing.payment_providers.v2.PaymentProviderService.CreateMoneyhashPaymentProvider:output_type -> invora.billing.payment_providers.v2.CreateMoneyhashPaymentProviderResponse
-	20, // 65: invora.billing.payment_providers.v2.PaymentProviderService.CreateStripePaymentProvider:output_type -> invora.billing.payment_providers.v2.CreateStripePaymentProviderResponse
-	22, // 66: invora.billing.payment_providers.v2.PaymentProviderService.CreateTapPaymentProvider:output_type -> invora.billing.payment_providers.v2.CreateTapPaymentProviderResponse
-	24, // 67: invora.billing.payment_providers.v2.PaymentProviderService.UpdateAdyenPaymentProvider:output_type -> invora.billing.payment_providers.v2.UpdateAdyenPaymentProviderResponse
-	26, // 68: invora.billing.payment_providers.v2.PaymentProviderService.UpdateCashfreePaymentProvider:output_type -> invora.billing.payment_providers.v2.UpdateCashfreePaymentProviderResponse
-	28, // 69: invora.billing.payment_providers.v2.PaymentProviderService.UpdateFlutterwavePaymentProvider:output_type -> invora.billing.payment_providers.v2.UpdateFlutterwavePaymentProviderResponse
-	30, // 70: invora.billing.payment_providers.v2.PaymentProviderService.UpdateGocardlessPaymentProvider:output_type -> invora.billing.payment_providers.v2.UpdateGocardlessPaymentProviderResponse
-	32, // 71: invora.billing.payment_providers.v2.PaymentProviderService.UpdateMoneyhashPaymentProvider:output_type -> invora.billing.payment_providers.v2.UpdateMoneyhashPaymentProviderResponse
-	34, // 72: invora.billing.payment_providers.v2.PaymentProviderService.UpdateStripePaymentProvider:output_type -> invora.billing.payment_providers.v2.UpdateStripePaymentProviderResponse
-	36, // 73: invora.billing.payment_providers.v2.PaymentProviderService.UpdateTapPaymentProvider:output_type -> invora.billing.payment_providers.v2.UpdateTapPaymentProviderResponse
-	58, // [58:74] is the sub-list for method output_type
-	42, // [42:58] is the sub-list for method input_type
-	42, // [42:42] is the sub-list for extension type_name
-	42, // [42:42] is the sub-list for extension extendee
-	0,  // [0:42] is the sub-list for field type_name
+	38, // 0: invora.billing.payment_providers.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
+	39, // 1: invora.billing.payment_providers.v2.GetRequest.view:type_name -> invora.billing.common.v2.View
+	40, // 2: invora.billing.payment_providers.v2.GetResponse.payment_provider:type_name -> invora.billing.common.v2.PaymentProvider
+	4,  // 3: invora.billing.payment_providers.v2.ListRequest.filter:type_name -> invora.billing.payment_providers.v2.ListFilter
+	6,  // 4: invora.billing.payment_providers.v2.ListRequest.sort:type_name -> invora.billing.payment_providers.v2.ListSort
+	41, // 5: invora.billing.payment_providers.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
+	38, // 6: invora.billing.payment_providers.v2.ListRequest.read_mask:type_name -> google.protobuf.FieldMask
+	39, // 7: invora.billing.payment_providers.v2.ListRequest.view:type_name -> invora.billing.common.v2.View
+	40, // 8: invora.billing.payment_providers.v2.ListResponse.items:type_name -> invora.billing.common.v2.PaymentProvider
+	5,  // 9: invora.billing.payment_providers.v2.ListFilter.part:type_name -> invora.billing.payment_providers.v2.ListFilterPart
+	42, // 10: invora.billing.payment_providers.v2.ListFilterPart.filter_type:type_name -> invora.billing.common.v2.ProviderType
+	7,  // 11: invora.billing.payment_providers.v2.ListSort.rules:type_name -> invora.billing.payment_providers.v2.ListSortRule
+	43, // 12: invora.billing.payment_providers.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
+	44, // 13: invora.billing.payment_providers.v2.CreateAdyenResponse.adyen_provider:type_name -> invora.billing.common.v2.AdyenProvider
+	38, // 14: invora.billing.payment_providers.v2.UpdateAdyenRequest.update_mask:type_name -> google.protobuf.FieldMask
+	44, // 15: invora.billing.payment_providers.v2.UpdateAdyenResponse.adyen_provider:type_name -> invora.billing.common.v2.AdyenProvider
+	45, // 16: invora.billing.payment_providers.v2.CreateCashfreeResponse.cashfree_provider:type_name -> invora.billing.common.v2.CashfreeProvider
+	38, // 17: invora.billing.payment_providers.v2.UpdateCashfreeRequest.update_mask:type_name -> google.protobuf.FieldMask
+	45, // 18: invora.billing.payment_providers.v2.UpdateCashfreeResponse.cashfree_provider:type_name -> invora.billing.common.v2.CashfreeProvider
+	46, // 19: invora.billing.payment_providers.v2.CreateFlutterwaveResponse.flutterwave_provider:type_name -> invora.billing.common.v2.FlutterwaveProvider
+	38, // 20: invora.billing.payment_providers.v2.UpdateFlutterwaveRequest.update_mask:type_name -> google.protobuf.FieldMask
+	46, // 21: invora.billing.payment_providers.v2.UpdateFlutterwaveResponse.flutterwave_provider:type_name -> invora.billing.common.v2.FlutterwaveProvider
+	47, // 22: invora.billing.payment_providers.v2.CreateGocardlessResponse.gocardless_provider:type_name -> invora.billing.common.v2.GocardlessProvider
+	38, // 23: invora.billing.payment_providers.v2.UpdateGocardlessRequest.update_mask:type_name -> google.protobuf.FieldMask
+	47, // 24: invora.billing.payment_providers.v2.UpdateGocardlessResponse.gocardless_provider:type_name -> invora.billing.common.v2.GocardlessProvider
+	48, // 25: invora.billing.payment_providers.v2.CreateMoneyhashResponse.moneyhash_provider:type_name -> invora.billing.common.v2.MoneyhashProvider
+	38, // 26: invora.billing.payment_providers.v2.UpdateMoneyhashRequest.update_mask:type_name -> google.protobuf.FieldMask
+	48, // 27: invora.billing.payment_providers.v2.UpdateMoneyhashResponse.moneyhash_provider:type_name -> invora.billing.common.v2.MoneyhashProvider
+	49, // 28: invora.billing.payment_providers.v2.CreateStripeResponse.stripe_provider:type_name -> invora.billing.common.v2.StripeProvider
+	38, // 29: invora.billing.payment_providers.v2.UpdateStripeRequest.update_mask:type_name -> google.protobuf.FieldMask
+	49, // 30: invora.billing.payment_providers.v2.UpdateStripeResponse.stripe_provider:type_name -> invora.billing.common.v2.StripeProvider
+	50, // 31: invora.billing.payment_providers.v2.CreateTapResponse.tap_provider:type_name -> invora.billing.common.v2.TapProvider
+	38, // 32: invora.billing.payment_providers.v2.UpdateTapRequest.update_mask:type_name -> google.protobuf.FieldMask
+	50, // 33: invora.billing.payment_providers.v2.UpdateTapResponse.tap_provider:type_name -> invora.billing.common.v2.TapProvider
+	2,  // 34: invora.billing.payment_providers.v2.PaymentProvidersService.List:input_type -> invora.billing.payment_providers.v2.ListRequest
+	0,  // 35: invora.billing.payment_providers.v2.PaymentProvidersService.Get:input_type -> invora.billing.payment_providers.v2.GetRequest
+	8,  // 36: invora.billing.payment_providers.v2.PaymentProvidersService.Delete:input_type -> invora.billing.payment_providers.v2.DeleteRequest
+	10, // 37: invora.billing.payment_providers.v2.PaymentProvidersService.CreateAdyen:input_type -> invora.billing.payment_providers.v2.CreateAdyenRequest
+	12, // 38: invora.billing.payment_providers.v2.PaymentProvidersService.UpdateAdyen:input_type -> invora.billing.payment_providers.v2.UpdateAdyenRequest
+	14, // 39: invora.billing.payment_providers.v2.PaymentProvidersService.CreateCashfree:input_type -> invora.billing.payment_providers.v2.CreateCashfreeRequest
+	16, // 40: invora.billing.payment_providers.v2.PaymentProvidersService.UpdateCashfree:input_type -> invora.billing.payment_providers.v2.UpdateCashfreeRequest
+	18, // 41: invora.billing.payment_providers.v2.PaymentProvidersService.CreateFlutterwave:input_type -> invora.billing.payment_providers.v2.CreateFlutterwaveRequest
+	20, // 42: invora.billing.payment_providers.v2.PaymentProvidersService.UpdateFlutterwave:input_type -> invora.billing.payment_providers.v2.UpdateFlutterwaveRequest
+	22, // 43: invora.billing.payment_providers.v2.PaymentProvidersService.CreateGocardless:input_type -> invora.billing.payment_providers.v2.CreateGocardlessRequest
+	24, // 44: invora.billing.payment_providers.v2.PaymentProvidersService.UpdateGocardless:input_type -> invora.billing.payment_providers.v2.UpdateGocardlessRequest
+	26, // 45: invora.billing.payment_providers.v2.PaymentProvidersService.CreateMoneyhash:input_type -> invora.billing.payment_providers.v2.CreateMoneyhashRequest
+	28, // 46: invora.billing.payment_providers.v2.PaymentProvidersService.UpdateMoneyhash:input_type -> invora.billing.payment_providers.v2.UpdateMoneyhashRequest
+	30, // 47: invora.billing.payment_providers.v2.PaymentProvidersService.CreateStripe:input_type -> invora.billing.payment_providers.v2.CreateStripeRequest
+	32, // 48: invora.billing.payment_providers.v2.PaymentProvidersService.UpdateStripe:input_type -> invora.billing.payment_providers.v2.UpdateStripeRequest
+	34, // 49: invora.billing.payment_providers.v2.PaymentProvidersService.CreateTap:input_type -> invora.billing.payment_providers.v2.CreateTapRequest
+	36, // 50: invora.billing.payment_providers.v2.PaymentProvidersService.UpdateTap:input_type -> invora.billing.payment_providers.v2.UpdateTapRequest
+	3,  // 51: invora.billing.payment_providers.v2.PaymentProvidersService.List:output_type -> invora.billing.payment_providers.v2.ListResponse
+	1,  // 52: invora.billing.payment_providers.v2.PaymentProvidersService.Get:output_type -> invora.billing.payment_providers.v2.GetResponse
+	9,  // 53: invora.billing.payment_providers.v2.PaymentProvidersService.Delete:output_type -> invora.billing.payment_providers.v2.DeleteResponse
+	11, // 54: invora.billing.payment_providers.v2.PaymentProvidersService.CreateAdyen:output_type -> invora.billing.payment_providers.v2.CreateAdyenResponse
+	13, // 55: invora.billing.payment_providers.v2.PaymentProvidersService.UpdateAdyen:output_type -> invora.billing.payment_providers.v2.UpdateAdyenResponse
+	15, // 56: invora.billing.payment_providers.v2.PaymentProvidersService.CreateCashfree:output_type -> invora.billing.payment_providers.v2.CreateCashfreeResponse
+	17, // 57: invora.billing.payment_providers.v2.PaymentProvidersService.UpdateCashfree:output_type -> invora.billing.payment_providers.v2.UpdateCashfreeResponse
+	19, // 58: invora.billing.payment_providers.v2.PaymentProvidersService.CreateFlutterwave:output_type -> invora.billing.payment_providers.v2.CreateFlutterwaveResponse
+	21, // 59: invora.billing.payment_providers.v2.PaymentProvidersService.UpdateFlutterwave:output_type -> invora.billing.payment_providers.v2.UpdateFlutterwaveResponse
+	23, // 60: invora.billing.payment_providers.v2.PaymentProvidersService.CreateGocardless:output_type -> invora.billing.payment_providers.v2.CreateGocardlessResponse
+	25, // 61: invora.billing.payment_providers.v2.PaymentProvidersService.UpdateGocardless:output_type -> invora.billing.payment_providers.v2.UpdateGocardlessResponse
+	27, // 62: invora.billing.payment_providers.v2.PaymentProvidersService.CreateMoneyhash:output_type -> invora.billing.payment_providers.v2.CreateMoneyhashResponse
+	29, // 63: invora.billing.payment_providers.v2.PaymentProvidersService.UpdateMoneyhash:output_type -> invora.billing.payment_providers.v2.UpdateMoneyhashResponse
+	31, // 64: invora.billing.payment_providers.v2.PaymentProvidersService.CreateStripe:output_type -> invora.billing.payment_providers.v2.CreateStripeResponse
+	33, // 65: invora.billing.payment_providers.v2.PaymentProvidersService.UpdateStripe:output_type -> invora.billing.payment_providers.v2.UpdateStripeResponse
+	35, // 66: invora.billing.payment_providers.v2.PaymentProvidersService.CreateTap:output_type -> invora.billing.payment_providers.v2.CreateTapResponse
+	37, // 67: invora.billing.payment_providers.v2.PaymentProvidersService.UpdateTap:output_type -> invora.billing.payment_providers.v2.UpdateTapResponse
+	51, // [51:68] is the sub-list for method output_type
+	34, // [34:51] is the sub-list for method input_type
+	34, // [34:34] is the sub-list for extension type_name
+	34, // [34:34] is the sub-list for extension extendee
+	0,  // [0:34] is the sub-list for field type_name
 }
 
 func init() { file_invora_billing_payment_providers_v2_service_proto_init() }
@@ -3397,39 +2818,39 @@ func file_invora_billing_payment_providers_v2_service_proto_init() {
 		return
 	}
 	file_invora_billing_payment_providers_v2_service_proto_msgTypes[0].OneofWrappers = []any{}
+	file_invora_billing_payment_providers_v2_service_proto_msgTypes[3].OneofWrappers = []any{}
 	file_invora_billing_payment_providers_v2_service_proto_msgTypes[5].OneofWrappers = []any{
 		(*ListFilterPart_FilterType)(nil),
 	}
 	file_invora_billing_payment_providers_v2_service_proto_msgTypes[7].OneofWrappers = []any{
 		(*ListSortRule_CreatedAt)(nil),
 	}
+	file_invora_billing_payment_providers_v2_service_proto_msgTypes[10].OneofWrappers = []any{}
+	file_invora_billing_payment_providers_v2_service_proto_msgTypes[12].OneofWrappers = []any{}
+	file_invora_billing_payment_providers_v2_service_proto_msgTypes[14].OneofWrappers = []any{}
+	file_invora_billing_payment_providers_v2_service_proto_msgTypes[16].OneofWrappers = []any{}
+	file_invora_billing_payment_providers_v2_service_proto_msgTypes[18].OneofWrappers = []any{}
+	file_invora_billing_payment_providers_v2_service_proto_msgTypes[20].OneofWrappers = []any{}
+	file_invora_billing_payment_providers_v2_service_proto_msgTypes[22].OneofWrappers = []any{}
+	file_invora_billing_payment_providers_v2_service_proto_msgTypes[24].OneofWrappers = []any{}
+	file_invora_billing_payment_providers_v2_service_proto_msgTypes[26].OneofWrappers = []any{}
+	file_invora_billing_payment_providers_v2_service_proto_msgTypes[28].OneofWrappers = []any{}
+	file_invora_billing_payment_providers_v2_service_proto_msgTypes[30].OneofWrappers = []any{}
+	file_invora_billing_payment_providers_v2_service_proto_msgTypes[32].OneofWrappers = []any{}
+	file_invora_billing_payment_providers_v2_service_proto_msgTypes[34].OneofWrappers = []any{}
 	file_invora_billing_payment_providers_v2_service_proto_msgTypes[36].OneofWrappers = []any{}
-	file_invora_billing_payment_providers_v2_service_proto_msgTypes[37].OneofWrappers = []any{}
-	file_invora_billing_payment_providers_v2_service_proto_msgTypes[38].OneofWrappers = []any{}
-	file_invora_billing_payment_providers_v2_service_proto_msgTypes[39].OneofWrappers = []any{}
-	file_invora_billing_payment_providers_v2_service_proto_msgTypes[40].OneofWrappers = []any{}
-	file_invora_billing_payment_providers_v2_service_proto_msgTypes[41].OneofWrappers = []any{}
-	file_invora_billing_payment_providers_v2_service_proto_msgTypes[42].OneofWrappers = []any{}
-	file_invora_billing_payment_providers_v2_service_proto_msgTypes[43].OneofWrappers = []any{}
-	file_invora_billing_payment_providers_v2_service_proto_msgTypes[44].OneofWrappers = []any{}
-	file_invora_billing_payment_providers_v2_service_proto_msgTypes[45].OneofWrappers = []any{}
-	file_invora_billing_payment_providers_v2_service_proto_msgTypes[46].OneofWrappers = []any{}
-	file_invora_billing_payment_providers_v2_service_proto_msgTypes[47].OneofWrappers = []any{}
-	file_invora_billing_payment_providers_v2_service_proto_msgTypes[48].OneofWrappers = []any{}
-	file_invora_billing_payment_providers_v2_service_proto_msgTypes[49].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_billing_payment_providers_v2_service_proto_rawDesc), len(file_invora_billing_payment_providers_v2_service_proto_rawDesc)),
-			NumEnums:      1,
-			NumMessages:   50,
+			NumEnums:      0,
+			NumMessages:   38,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_invora_billing_payment_providers_v2_service_proto_goTypes,
 		DependencyIndexes: file_invora_billing_payment_providers_v2_service_proto_depIdxs,
-		EnumInfos:         file_invora_billing_payment_providers_v2_service_proto_enumTypes,
 		MessageInfos:      file_invora_billing_payment_providers_v2_service_proto_msgTypes,
 	}.Build()
 	File_invora_billing_payment_providers_v2_service_proto = out.File

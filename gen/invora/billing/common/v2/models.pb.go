@@ -25,6 +25,56 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Controls response detail level for List and Get operations.
+type View int32
+
+const (
+	View_VIEW_UNSPECIFIED View = 0
+	View_VIEW_BASIC       View = 1
+	View_VIEW_FULL        View = 2
+)
+
+// Enum value maps for View.
+var (
+	View_name = map[int32]string{
+		0: "VIEW_UNSPECIFIED",
+		1: "VIEW_BASIC",
+		2: "VIEW_FULL",
+	}
+	View_value = map[string]int32{
+		"VIEW_UNSPECIFIED": 0,
+		"VIEW_BASIC":       1,
+		"VIEW_FULL":        2,
+	}
+)
+
+func (x View) Enum() *View {
+	p := new(View)
+	*p = x
+	return p
+}
+
+func (x View) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (View) Descriptor() protoreflect.EnumDescriptor {
+	return file_invora_billing_common_v2_models_proto_enumTypes[0].Descriptor()
+}
+
+func (View) Type() protoreflect.EnumType {
+	return &file_invora_billing_common_v2_models_proto_enumTypes[0]
+}
+
+func (x View) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use View.Descriptor instead.
+func (View) EnumDescriptor() ([]byte, []int) {
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{0}
+}
+
 type BillingOrgStatus int32
 
 const (
@@ -64,11 +114,11 @@ func (x BillingOrgStatus) String() string {
 }
 
 func (BillingOrgStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_invora_billing_common_v2_models_proto_enumTypes[0].Descriptor()
+	return file_invora_billing_common_v2_models_proto_enumTypes[1].Descriptor()
 }
 
 func (BillingOrgStatus) Type() protoreflect.EnumType {
-	return &file_invora_billing_common_v2_models_proto_enumTypes[0]
+	return &file_invora_billing_common_v2_models_proto_enumTypes[1]
 }
 
 func (x BillingOrgStatus) Number() protoreflect.EnumNumber {
@@ -77,58 +127,6 @@ func (x BillingOrgStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use BillingOrgStatus.Descriptor instead.
 func (BillingOrgStatus) EnumDescriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{0}
-}
-
-type AnalyticsPeriodEnum int32
-
-const (
-	AnalyticsPeriodEnum_ANALYTICS_PERIOD_ENUM_UNSPECIFIED AnalyticsPeriodEnum = 0
-	AnalyticsPeriodEnum_ANALYTICS_PERIOD_ENUM_MONTH       AnalyticsPeriodEnum = 1
-	AnalyticsPeriodEnum_ANALYTICS_PERIOD_ENUM_QUARTER     AnalyticsPeriodEnum = 2
-	AnalyticsPeriodEnum_ANALYTICS_PERIOD_ENUM_YEAR        AnalyticsPeriodEnum = 3
-)
-
-// Enum value maps for AnalyticsPeriodEnum.
-var (
-	AnalyticsPeriodEnum_name = map[int32]string{
-		0: "ANALYTICS_PERIOD_ENUM_UNSPECIFIED",
-		1: "ANALYTICS_PERIOD_ENUM_MONTH",
-		2: "ANALYTICS_PERIOD_ENUM_QUARTER",
-		3: "ANALYTICS_PERIOD_ENUM_YEAR",
-	}
-	AnalyticsPeriodEnum_value = map[string]int32{
-		"ANALYTICS_PERIOD_ENUM_UNSPECIFIED": 0,
-		"ANALYTICS_PERIOD_ENUM_MONTH":       1,
-		"ANALYTICS_PERIOD_ENUM_QUARTER":     2,
-		"ANALYTICS_PERIOD_ENUM_YEAR":        3,
-	}
-)
-
-func (x AnalyticsPeriodEnum) Enum() *AnalyticsPeriodEnum {
-	p := new(AnalyticsPeriodEnum)
-	*p = x
-	return p
-}
-
-func (x AnalyticsPeriodEnum) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (AnalyticsPeriodEnum) Descriptor() protoreflect.EnumDescriptor {
-	return file_invora_billing_common_v2_models_proto_enumTypes[1].Descriptor()
-}
-
-func (AnalyticsPeriodEnum) Type() protoreflect.EnumType {
-	return &file_invora_billing_common_v2_models_proto_enumTypes[1]
-}
-
-func (x AnalyticsPeriodEnum) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use AnalyticsPeriodEnum.Descriptor instead.
-func (AnalyticsPeriodEnum) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{1}
 }
 
@@ -417,533 +415,533 @@ func (ActivityTypeEnum) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{3}
 }
 
-type AdjustedFeeTypeEnum int32
+type AdjustedFeeType int32
 
 const (
-	AdjustedFeeTypeEnum_ADJUSTED_FEE_TYPE_ENUM_UNSPECIFIED     AdjustedFeeTypeEnum = 0
-	AdjustedFeeTypeEnum_ADJUSTED_FEE_TYPE_ENUM_ADJUSTED_AMOUNT AdjustedFeeTypeEnum = 1
-	AdjustedFeeTypeEnum_ADJUSTED_FEE_TYPE_ENUM_ADJUSTED_UNITS  AdjustedFeeTypeEnum = 2
+	AdjustedFeeType_ADJUSTED_FEE_TYPE_UNSPECIFIED     AdjustedFeeType = 0
+	AdjustedFeeType_ADJUSTED_FEE_TYPE_ADJUSTED_AMOUNT AdjustedFeeType = 1
+	AdjustedFeeType_ADJUSTED_FEE_TYPE_ADJUSTED_UNITS  AdjustedFeeType = 2
 )
 
-// Enum value maps for AdjustedFeeTypeEnum.
+// Enum value maps for AdjustedFeeType.
 var (
-	AdjustedFeeTypeEnum_name = map[int32]string{
-		0: "ADJUSTED_FEE_TYPE_ENUM_UNSPECIFIED",
-		1: "ADJUSTED_FEE_TYPE_ENUM_ADJUSTED_AMOUNT",
-		2: "ADJUSTED_FEE_TYPE_ENUM_ADJUSTED_UNITS",
+	AdjustedFeeType_name = map[int32]string{
+		0: "ADJUSTED_FEE_TYPE_UNSPECIFIED",
+		1: "ADJUSTED_FEE_TYPE_ADJUSTED_AMOUNT",
+		2: "ADJUSTED_FEE_TYPE_ADJUSTED_UNITS",
 	}
-	AdjustedFeeTypeEnum_value = map[string]int32{
-		"ADJUSTED_FEE_TYPE_ENUM_UNSPECIFIED":     0,
-		"ADJUSTED_FEE_TYPE_ENUM_ADJUSTED_AMOUNT": 1,
-		"ADJUSTED_FEE_TYPE_ENUM_ADJUSTED_UNITS":  2,
+	AdjustedFeeType_value = map[string]int32{
+		"ADJUSTED_FEE_TYPE_UNSPECIFIED":     0,
+		"ADJUSTED_FEE_TYPE_ADJUSTED_AMOUNT": 1,
+		"ADJUSTED_FEE_TYPE_ADJUSTED_UNITS":  2,
 	}
 )
 
-func (x AdjustedFeeTypeEnum) Enum() *AdjustedFeeTypeEnum {
-	p := new(AdjustedFeeTypeEnum)
+func (x AdjustedFeeType) Enum() *AdjustedFeeType {
+	p := new(AdjustedFeeType)
 	*p = x
 	return p
 }
 
-func (x AdjustedFeeTypeEnum) String() string {
+func (x AdjustedFeeType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (AdjustedFeeTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (AdjustedFeeType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[4].Descriptor()
 }
 
-func (AdjustedFeeTypeEnum) Type() protoreflect.EnumType {
+func (AdjustedFeeType) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[4]
 }
 
-func (x AdjustedFeeTypeEnum) Number() protoreflect.EnumNumber {
+func (x AdjustedFeeType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use AdjustedFeeTypeEnum.Descriptor instead.
-func (AdjustedFeeTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use AdjustedFeeType.Descriptor instead.
+func (AdjustedFeeType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{4}
 }
 
-type AggregationTypeEnum int32
+type AggregationType int32
 
 const (
-	AggregationTypeEnum_AGGREGATION_TYPE_ENUM_UNSPECIFIED      AggregationTypeEnum = 0
-	AggregationTypeEnum_AGGREGATION_TYPE_ENUM_COUNT_AGG        AggregationTypeEnum = 1
-	AggregationTypeEnum_AGGREGATION_TYPE_ENUM_CUSTOM_AGG       AggregationTypeEnum = 2
-	AggregationTypeEnum_AGGREGATION_TYPE_ENUM_LATEST_AGG       AggregationTypeEnum = 3
-	AggregationTypeEnum_AGGREGATION_TYPE_ENUM_MAX_AGG          AggregationTypeEnum = 4
-	AggregationTypeEnum_AGGREGATION_TYPE_ENUM_SUM_AGG          AggregationTypeEnum = 5
-	AggregationTypeEnum_AGGREGATION_TYPE_ENUM_UNIQUE_COUNT_AGG AggregationTypeEnum = 6
-	AggregationTypeEnum_AGGREGATION_TYPE_ENUM_WEIGHTED_SUM_AGG AggregationTypeEnum = 7
+	AggregationType_AGGREGATION_TYPE_UNSPECIFIED      AggregationType = 0
+	AggregationType_AGGREGATION_TYPE_COUNT_AGG        AggregationType = 1
+	AggregationType_AGGREGATION_TYPE_CUSTOM_AGG       AggregationType = 2
+	AggregationType_AGGREGATION_TYPE_LATEST_AGG       AggregationType = 3
+	AggregationType_AGGREGATION_TYPE_MAX_AGG          AggregationType = 4
+	AggregationType_AGGREGATION_TYPE_SUM_AGG          AggregationType = 5
+	AggregationType_AGGREGATION_TYPE_UNIQUE_COUNT_AGG AggregationType = 6
+	AggregationType_AGGREGATION_TYPE_WEIGHTED_SUM_AGG AggregationType = 7
 )
 
-// Enum value maps for AggregationTypeEnum.
+// Enum value maps for AggregationType.
 var (
-	AggregationTypeEnum_name = map[int32]string{
-		0: "AGGREGATION_TYPE_ENUM_UNSPECIFIED",
-		1: "AGGREGATION_TYPE_ENUM_COUNT_AGG",
-		2: "AGGREGATION_TYPE_ENUM_CUSTOM_AGG",
-		3: "AGGREGATION_TYPE_ENUM_LATEST_AGG",
-		4: "AGGREGATION_TYPE_ENUM_MAX_AGG",
-		5: "AGGREGATION_TYPE_ENUM_SUM_AGG",
-		6: "AGGREGATION_TYPE_ENUM_UNIQUE_COUNT_AGG",
-		7: "AGGREGATION_TYPE_ENUM_WEIGHTED_SUM_AGG",
+	AggregationType_name = map[int32]string{
+		0: "AGGREGATION_TYPE_UNSPECIFIED",
+		1: "AGGREGATION_TYPE_COUNT_AGG",
+		2: "AGGREGATION_TYPE_CUSTOM_AGG",
+		3: "AGGREGATION_TYPE_LATEST_AGG",
+		4: "AGGREGATION_TYPE_MAX_AGG",
+		5: "AGGREGATION_TYPE_SUM_AGG",
+		6: "AGGREGATION_TYPE_UNIQUE_COUNT_AGG",
+		7: "AGGREGATION_TYPE_WEIGHTED_SUM_AGG",
 	}
-	AggregationTypeEnum_value = map[string]int32{
-		"AGGREGATION_TYPE_ENUM_UNSPECIFIED":      0,
-		"AGGREGATION_TYPE_ENUM_COUNT_AGG":        1,
-		"AGGREGATION_TYPE_ENUM_CUSTOM_AGG":       2,
-		"AGGREGATION_TYPE_ENUM_LATEST_AGG":       3,
-		"AGGREGATION_TYPE_ENUM_MAX_AGG":          4,
-		"AGGREGATION_TYPE_ENUM_SUM_AGG":          5,
-		"AGGREGATION_TYPE_ENUM_UNIQUE_COUNT_AGG": 6,
-		"AGGREGATION_TYPE_ENUM_WEIGHTED_SUM_AGG": 7,
+	AggregationType_value = map[string]int32{
+		"AGGREGATION_TYPE_UNSPECIFIED":      0,
+		"AGGREGATION_TYPE_COUNT_AGG":        1,
+		"AGGREGATION_TYPE_CUSTOM_AGG":       2,
+		"AGGREGATION_TYPE_LATEST_AGG":       3,
+		"AGGREGATION_TYPE_MAX_AGG":          4,
+		"AGGREGATION_TYPE_SUM_AGG":          5,
+		"AGGREGATION_TYPE_UNIQUE_COUNT_AGG": 6,
+		"AGGREGATION_TYPE_WEIGHTED_SUM_AGG": 7,
 	}
 )
 
-func (x AggregationTypeEnum) Enum() *AggregationTypeEnum {
-	p := new(AggregationTypeEnum)
+func (x AggregationType) Enum() *AggregationType {
+	p := new(AggregationType)
 	*p = x
 	return p
 }
 
-func (x AggregationTypeEnum) String() string {
+func (x AggregationType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (AggregationTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (AggregationType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[5].Descriptor()
 }
 
-func (AggregationTypeEnum) Type() protoreflect.EnumType {
+func (AggregationType) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[5]
 }
 
-func (x AggregationTypeEnum) Number() protoreflect.EnumNumber {
+func (x AggregationType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use AggregationTypeEnum.Descriptor instead.
-func (AggregationTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use AggregationType.Descriptor instead.
+func (AggregationType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{5}
 }
 
-type AppliedCouponStatusEnum int32
+type AppliedCouponStatus int32
 
 const (
-	AppliedCouponStatusEnum_APPLIED_COUPON_STATUS_ENUM_UNSPECIFIED AppliedCouponStatusEnum = 0
-	AppliedCouponStatusEnum_APPLIED_COUPON_STATUS_ENUM_ACTIVE      AppliedCouponStatusEnum = 1
-	AppliedCouponStatusEnum_APPLIED_COUPON_STATUS_ENUM_TERMINATED  AppliedCouponStatusEnum = 2
+	AppliedCouponStatus_APPLIED_COUPON_STATUS_UNSPECIFIED AppliedCouponStatus = 0
+	AppliedCouponStatus_APPLIED_COUPON_STATUS_ACTIVE      AppliedCouponStatus = 1
+	AppliedCouponStatus_APPLIED_COUPON_STATUS_TERMINATED  AppliedCouponStatus = 2
 )
 
-// Enum value maps for AppliedCouponStatusEnum.
+// Enum value maps for AppliedCouponStatus.
 var (
-	AppliedCouponStatusEnum_name = map[int32]string{
-		0: "APPLIED_COUPON_STATUS_ENUM_UNSPECIFIED",
-		1: "APPLIED_COUPON_STATUS_ENUM_ACTIVE",
-		2: "APPLIED_COUPON_STATUS_ENUM_TERMINATED",
+	AppliedCouponStatus_name = map[int32]string{
+		0: "APPLIED_COUPON_STATUS_UNSPECIFIED",
+		1: "APPLIED_COUPON_STATUS_ACTIVE",
+		2: "APPLIED_COUPON_STATUS_TERMINATED",
 	}
-	AppliedCouponStatusEnum_value = map[string]int32{
-		"APPLIED_COUPON_STATUS_ENUM_UNSPECIFIED": 0,
-		"APPLIED_COUPON_STATUS_ENUM_ACTIVE":      1,
-		"APPLIED_COUPON_STATUS_ENUM_TERMINATED":  2,
+	AppliedCouponStatus_value = map[string]int32{
+		"APPLIED_COUPON_STATUS_UNSPECIFIED": 0,
+		"APPLIED_COUPON_STATUS_ACTIVE":      1,
+		"APPLIED_COUPON_STATUS_TERMINATED":  2,
 	}
 )
 
-func (x AppliedCouponStatusEnum) Enum() *AppliedCouponStatusEnum {
-	p := new(AppliedCouponStatusEnum)
+func (x AppliedCouponStatus) Enum() *AppliedCouponStatus {
+	p := new(AppliedCouponStatus)
 	*p = x
 	return p
 }
 
-func (x AppliedCouponStatusEnum) String() string {
+func (x AppliedCouponStatus) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (AppliedCouponStatusEnum) Descriptor() protoreflect.EnumDescriptor {
+func (AppliedCouponStatus) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[6].Descriptor()
 }
 
-func (AppliedCouponStatusEnum) Type() protoreflect.EnumType {
+func (AppliedCouponStatus) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[6]
 }
 
-func (x AppliedCouponStatusEnum) Number() protoreflect.EnumNumber {
+func (x AppliedCouponStatus) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use AppliedCouponStatusEnum.Descriptor instead.
-func (AppliedCouponStatusEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use AppliedCouponStatus.Descriptor instead.
+func (AppliedCouponStatus) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{6}
 }
 
 // Document numbering type
-type BillingEntityDocumentNumberingEnum int32
+type BillingEntityDocumentNumbering int32
 
 const (
-	BillingEntityDocumentNumberingEnum_BILLING_ENTITY_DOCUMENT_NUMBERING_ENUM_UNSPECIFIED        BillingEntityDocumentNumberingEnum = 0
-	BillingEntityDocumentNumberingEnum_BILLING_ENTITY_DOCUMENT_NUMBERING_ENUM_PER_BILLING_ENTITY BillingEntityDocumentNumberingEnum = 1
-	BillingEntityDocumentNumberingEnum_BILLING_ENTITY_DOCUMENT_NUMBERING_ENUM_PER_CUSTOMER       BillingEntityDocumentNumberingEnum = 2
+	BillingEntityDocumentNumbering_BILLING_ENTITY_DOCUMENT_NUMBERING_UNSPECIFIED        BillingEntityDocumentNumbering = 0
+	BillingEntityDocumentNumbering_BILLING_ENTITY_DOCUMENT_NUMBERING_PER_BILLING_ENTITY BillingEntityDocumentNumbering = 1
+	BillingEntityDocumentNumbering_BILLING_ENTITY_DOCUMENT_NUMBERING_PER_CUSTOMER       BillingEntityDocumentNumbering = 2
 )
 
-// Enum value maps for BillingEntityDocumentNumberingEnum.
+// Enum value maps for BillingEntityDocumentNumbering.
 var (
-	BillingEntityDocumentNumberingEnum_name = map[int32]string{
-		0: "BILLING_ENTITY_DOCUMENT_NUMBERING_ENUM_UNSPECIFIED",
-		1: "BILLING_ENTITY_DOCUMENT_NUMBERING_ENUM_PER_BILLING_ENTITY",
-		2: "BILLING_ENTITY_DOCUMENT_NUMBERING_ENUM_PER_CUSTOMER",
+	BillingEntityDocumentNumbering_name = map[int32]string{
+		0: "BILLING_ENTITY_DOCUMENT_NUMBERING_UNSPECIFIED",
+		1: "BILLING_ENTITY_DOCUMENT_NUMBERING_PER_BILLING_ENTITY",
+		2: "BILLING_ENTITY_DOCUMENT_NUMBERING_PER_CUSTOMER",
 	}
-	BillingEntityDocumentNumberingEnum_value = map[string]int32{
-		"BILLING_ENTITY_DOCUMENT_NUMBERING_ENUM_UNSPECIFIED":        0,
-		"BILLING_ENTITY_DOCUMENT_NUMBERING_ENUM_PER_BILLING_ENTITY": 1,
-		"BILLING_ENTITY_DOCUMENT_NUMBERING_ENUM_PER_CUSTOMER":       2,
+	BillingEntityDocumentNumbering_value = map[string]int32{
+		"BILLING_ENTITY_DOCUMENT_NUMBERING_UNSPECIFIED":        0,
+		"BILLING_ENTITY_DOCUMENT_NUMBERING_PER_BILLING_ENTITY": 1,
+		"BILLING_ENTITY_DOCUMENT_NUMBERING_PER_CUSTOMER":       2,
 	}
 )
 
-func (x BillingEntityDocumentNumberingEnum) Enum() *BillingEntityDocumentNumberingEnum {
-	p := new(BillingEntityDocumentNumberingEnum)
+func (x BillingEntityDocumentNumbering) Enum() *BillingEntityDocumentNumbering {
+	p := new(BillingEntityDocumentNumbering)
 	*p = x
 	return p
 }
 
-func (x BillingEntityDocumentNumberingEnum) String() string {
+func (x BillingEntityDocumentNumbering) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (BillingEntityDocumentNumberingEnum) Descriptor() protoreflect.EnumDescriptor {
+func (BillingEntityDocumentNumbering) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[7].Descriptor()
 }
 
-func (BillingEntityDocumentNumberingEnum) Type() protoreflect.EnumType {
+func (BillingEntityDocumentNumbering) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[7]
 }
 
-func (x BillingEntityDocumentNumberingEnum) Number() protoreflect.EnumNumber {
+func (x BillingEntityDocumentNumbering) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use BillingEntityDocumentNumberingEnum.Descriptor instead.
-func (BillingEntityDocumentNumberingEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use BillingEntityDocumentNumbering.Descriptor instead.
+func (BillingEntityDocumentNumbering) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{7}
 }
 
 // BillingEntity Email Settings Values
-type BillingEntityEmailSettingsEnum int32
+type BillingEntityEmailSettings int32
 
 const (
-	BillingEntityEmailSettingsEnum_BILLING_ENTITY_EMAIL_SETTINGS_ENUM_UNSPECIFIED BillingEntityEmailSettingsEnum = 0
+	BillingEntityEmailSettings_BILLING_ENTITY_EMAIL_SETTINGS_UNSPECIFIED BillingEntityEmailSettings = 0
 	// credit_note.created
-	BillingEntityEmailSettingsEnum_BILLING_ENTITY_EMAIL_SETTINGS_ENUM_CREDIT_NOTE_CREATED BillingEntityEmailSettingsEnum = 1
+	BillingEntityEmailSettings_BILLING_ENTITY_EMAIL_SETTINGS_CREDIT_NOTE_CREATED BillingEntityEmailSettings = 1
 	// invoice.finalized
-	BillingEntityEmailSettingsEnum_BILLING_ENTITY_EMAIL_SETTINGS_ENUM_INVOICE_FINALIZED BillingEntityEmailSettingsEnum = 2
+	BillingEntityEmailSettings_BILLING_ENTITY_EMAIL_SETTINGS_INVOICE_FINALIZED BillingEntityEmailSettings = 2
 	// payment_receipt.created
-	BillingEntityEmailSettingsEnum_BILLING_ENTITY_EMAIL_SETTINGS_ENUM_PAYMENT_RECEIPT_CREATED BillingEntityEmailSettingsEnum = 3
+	BillingEntityEmailSettings_BILLING_ENTITY_EMAIL_SETTINGS_PAYMENT_RECEIPT_CREATED BillingEntityEmailSettings = 3
 )
 
-// Enum value maps for BillingEntityEmailSettingsEnum.
+// Enum value maps for BillingEntityEmailSettings.
 var (
-	BillingEntityEmailSettingsEnum_name = map[int32]string{
-		0: "BILLING_ENTITY_EMAIL_SETTINGS_ENUM_UNSPECIFIED",
-		1: "BILLING_ENTITY_EMAIL_SETTINGS_ENUM_CREDIT_NOTE_CREATED",
-		2: "BILLING_ENTITY_EMAIL_SETTINGS_ENUM_INVOICE_FINALIZED",
-		3: "BILLING_ENTITY_EMAIL_SETTINGS_ENUM_PAYMENT_RECEIPT_CREATED",
+	BillingEntityEmailSettings_name = map[int32]string{
+		0: "BILLING_ENTITY_EMAIL_SETTINGS_UNSPECIFIED",
+		1: "BILLING_ENTITY_EMAIL_SETTINGS_CREDIT_NOTE_CREATED",
+		2: "BILLING_ENTITY_EMAIL_SETTINGS_INVOICE_FINALIZED",
+		3: "BILLING_ENTITY_EMAIL_SETTINGS_PAYMENT_RECEIPT_CREATED",
 	}
-	BillingEntityEmailSettingsEnum_value = map[string]int32{
-		"BILLING_ENTITY_EMAIL_SETTINGS_ENUM_UNSPECIFIED":             0,
-		"BILLING_ENTITY_EMAIL_SETTINGS_ENUM_CREDIT_NOTE_CREATED":     1,
-		"BILLING_ENTITY_EMAIL_SETTINGS_ENUM_INVOICE_FINALIZED":       2,
-		"BILLING_ENTITY_EMAIL_SETTINGS_ENUM_PAYMENT_RECEIPT_CREATED": 3,
+	BillingEntityEmailSettings_value = map[string]int32{
+		"BILLING_ENTITY_EMAIL_SETTINGS_UNSPECIFIED":             0,
+		"BILLING_ENTITY_EMAIL_SETTINGS_CREDIT_NOTE_CREATED":     1,
+		"BILLING_ENTITY_EMAIL_SETTINGS_INVOICE_FINALIZED":       2,
+		"BILLING_ENTITY_EMAIL_SETTINGS_PAYMENT_RECEIPT_CREATED": 3,
 	}
 )
 
-func (x BillingEntityEmailSettingsEnum) Enum() *BillingEntityEmailSettingsEnum {
-	p := new(BillingEntityEmailSettingsEnum)
+func (x BillingEntityEmailSettings) Enum() *BillingEntityEmailSettings {
+	p := new(BillingEntityEmailSettings)
 	*p = x
 	return p
 }
 
-func (x BillingEntityEmailSettingsEnum) String() string {
+func (x BillingEntityEmailSettings) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (BillingEntityEmailSettingsEnum) Descriptor() protoreflect.EnumDescriptor {
+func (BillingEntityEmailSettings) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[8].Descriptor()
 }
 
-func (BillingEntityEmailSettingsEnum) Type() protoreflect.EnumType {
+func (BillingEntityEmailSettings) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[8]
 }
 
-func (x BillingEntityEmailSettingsEnum) Number() protoreflect.EnumNumber {
+func (x BillingEntityEmailSettings) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use BillingEntityEmailSettingsEnum.Descriptor instead.
-func (BillingEntityEmailSettingsEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use BillingEntityEmailSettings.Descriptor instead.
+func (BillingEntityEmailSettings) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{8}
 }
 
 // Subscription Invoice Issuing Date Adjustment Values
-type BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum int32
+type BillingEntitySubscriptionInvoiceIssuingDateAdjustment int32
 
 const (
-	BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum_BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_UNSPECIFIED                  BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum = 0
-	BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum_BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_ALIGN_WITH_FINALIZATION_DATE BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum = 1
-	BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum_BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_KEEP_ANCHOR                  BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum = 2
+	BillingEntitySubscriptionInvoiceIssuingDateAdjustment_BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_UNSPECIFIED                  BillingEntitySubscriptionInvoiceIssuingDateAdjustment = 0
+	BillingEntitySubscriptionInvoiceIssuingDateAdjustment_BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ALIGN_WITH_FINALIZATION_DATE BillingEntitySubscriptionInvoiceIssuingDateAdjustment = 1
+	BillingEntitySubscriptionInvoiceIssuingDateAdjustment_BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_KEEP_ANCHOR                  BillingEntitySubscriptionInvoiceIssuingDateAdjustment = 2
 )
 
-// Enum value maps for BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum.
+// Enum value maps for BillingEntitySubscriptionInvoiceIssuingDateAdjustment.
 var (
-	BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum_name = map[int32]string{
-		0: "BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_UNSPECIFIED",
-		1: "BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_ALIGN_WITH_FINALIZATION_DATE",
-		2: "BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_KEEP_ANCHOR",
+	BillingEntitySubscriptionInvoiceIssuingDateAdjustment_name = map[int32]string{
+		0: "BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_UNSPECIFIED",
+		1: "BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ALIGN_WITH_FINALIZATION_DATE",
+		2: "BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_KEEP_ANCHOR",
 	}
-	BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum_value = map[string]int32{
-		"BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_UNSPECIFIED":                  0,
-		"BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_ALIGN_WITH_FINALIZATION_DATE": 1,
-		"BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_KEEP_ANCHOR":                  2,
+	BillingEntitySubscriptionInvoiceIssuingDateAdjustment_value = map[string]int32{
+		"BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_UNSPECIFIED":                  0,
+		"BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ALIGN_WITH_FINALIZATION_DATE": 1,
+		"BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_KEEP_ANCHOR":                  2,
 	}
 )
 
-func (x BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum) Enum() *BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum {
-	p := new(BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum)
+func (x BillingEntitySubscriptionInvoiceIssuingDateAdjustment) Enum() *BillingEntitySubscriptionInvoiceIssuingDateAdjustment {
+	p := new(BillingEntitySubscriptionInvoiceIssuingDateAdjustment)
 	*p = x
 	return p
 }
 
-func (x BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum) String() string {
+func (x BillingEntitySubscriptionInvoiceIssuingDateAdjustment) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum) Descriptor() protoreflect.EnumDescriptor {
+func (BillingEntitySubscriptionInvoiceIssuingDateAdjustment) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[9].Descriptor()
 }
 
-func (BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum) Type() protoreflect.EnumType {
+func (BillingEntitySubscriptionInvoiceIssuingDateAdjustment) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[9]
 }
 
-func (x BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum) Number() protoreflect.EnumNumber {
+func (x BillingEntitySubscriptionInvoiceIssuingDateAdjustment) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum.Descriptor instead.
-func (BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use BillingEntitySubscriptionInvoiceIssuingDateAdjustment.Descriptor instead.
+func (BillingEntitySubscriptionInvoiceIssuingDateAdjustment) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{9}
 }
 
 // Subscription Invoice Issuing Date Anchor Values
-type BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum int32
+type BillingEntitySubscriptionInvoiceIssuingDateAnchor int32
 
 const (
-	BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum_BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_UNSPECIFIED        BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum = 0
-	BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum_BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_CURRENT_PERIOD_END BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum = 1
-	BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum_BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_NEXT_PERIOD_START  BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum = 2
+	BillingEntitySubscriptionInvoiceIssuingDateAnchor_BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_UNSPECIFIED        BillingEntitySubscriptionInvoiceIssuingDateAnchor = 0
+	BillingEntitySubscriptionInvoiceIssuingDateAnchor_BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_CURRENT_PERIOD_END BillingEntitySubscriptionInvoiceIssuingDateAnchor = 1
+	BillingEntitySubscriptionInvoiceIssuingDateAnchor_BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_NEXT_PERIOD_START  BillingEntitySubscriptionInvoiceIssuingDateAnchor = 2
 )
 
-// Enum value maps for BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum.
+// Enum value maps for BillingEntitySubscriptionInvoiceIssuingDateAnchor.
 var (
-	BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum_name = map[int32]string{
-		0: "BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_UNSPECIFIED",
-		1: "BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_CURRENT_PERIOD_END",
-		2: "BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_NEXT_PERIOD_START",
+	BillingEntitySubscriptionInvoiceIssuingDateAnchor_name = map[int32]string{
+		0: "BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_UNSPECIFIED",
+		1: "BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_CURRENT_PERIOD_END",
+		2: "BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_NEXT_PERIOD_START",
 	}
-	BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum_value = map[string]int32{
-		"BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_UNSPECIFIED":        0,
-		"BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_CURRENT_PERIOD_END": 1,
-		"BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_NEXT_PERIOD_START":  2,
+	BillingEntitySubscriptionInvoiceIssuingDateAnchor_value = map[string]int32{
+		"BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_UNSPECIFIED":        0,
+		"BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_CURRENT_PERIOD_END": 1,
+		"BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_NEXT_PERIOD_START":  2,
 	}
 )
 
-func (x BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum) Enum() *BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum {
-	p := new(BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum)
+func (x BillingEntitySubscriptionInvoiceIssuingDateAnchor) Enum() *BillingEntitySubscriptionInvoiceIssuingDateAnchor {
+	p := new(BillingEntitySubscriptionInvoiceIssuingDateAnchor)
 	*p = x
 	return p
 }
 
-func (x BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum) String() string {
+func (x BillingEntitySubscriptionInvoiceIssuingDateAnchor) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum) Descriptor() protoreflect.EnumDescriptor {
+func (BillingEntitySubscriptionInvoiceIssuingDateAnchor) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[10].Descriptor()
 }
 
-func (BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum) Type() protoreflect.EnumType {
+func (BillingEntitySubscriptionInvoiceIssuingDateAnchor) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[10]
 }
 
-func (x BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum) Number() protoreflect.EnumNumber {
+func (x BillingEntitySubscriptionInvoiceIssuingDateAnchor) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum.Descriptor instead.
-func (BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use BillingEntitySubscriptionInvoiceIssuingDateAnchor.Descriptor instead.
+func (BillingEntitySubscriptionInvoiceIssuingDateAnchor) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{10}
 }
 
-type BillingTimeEnum int32
+type BillingTime int32
 
 const (
-	BillingTimeEnum_BILLING_TIME_ENUM_UNSPECIFIED BillingTimeEnum = 0
-	BillingTimeEnum_BILLING_TIME_ENUM_ANNIVERSARY BillingTimeEnum = 1
-	BillingTimeEnum_BILLING_TIME_ENUM_CALENDAR    BillingTimeEnum = 2
+	BillingTime_BILLING_TIME_UNSPECIFIED BillingTime = 0
+	BillingTime_BILLING_TIME_ANNIVERSARY BillingTime = 1
+	BillingTime_BILLING_TIME_CALENDAR    BillingTime = 2
 )
 
-// Enum value maps for BillingTimeEnum.
+// Enum value maps for BillingTime.
 var (
-	BillingTimeEnum_name = map[int32]string{
-		0: "BILLING_TIME_ENUM_UNSPECIFIED",
-		1: "BILLING_TIME_ENUM_ANNIVERSARY",
-		2: "BILLING_TIME_ENUM_CALENDAR",
+	BillingTime_name = map[int32]string{
+		0: "BILLING_TIME_UNSPECIFIED",
+		1: "BILLING_TIME_ANNIVERSARY",
+		2: "BILLING_TIME_CALENDAR",
 	}
-	BillingTimeEnum_value = map[string]int32{
-		"BILLING_TIME_ENUM_UNSPECIFIED": 0,
-		"BILLING_TIME_ENUM_ANNIVERSARY": 1,
-		"BILLING_TIME_ENUM_CALENDAR":    2,
+	BillingTime_value = map[string]int32{
+		"BILLING_TIME_UNSPECIFIED": 0,
+		"BILLING_TIME_ANNIVERSARY": 1,
+		"BILLING_TIME_CALENDAR":    2,
 	}
 )
 
-func (x BillingTimeEnum) Enum() *BillingTimeEnum {
-	p := new(BillingTimeEnum)
+func (x BillingTime) Enum() *BillingTime {
+	p := new(BillingTime)
 	*p = x
 	return p
 }
 
-func (x BillingTimeEnum) String() string {
+func (x BillingTime) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (BillingTimeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (BillingTime) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[11].Descriptor()
 }
 
-func (BillingTimeEnum) Type() protoreflect.EnumType {
+func (BillingTime) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[11]
 }
 
-func (x BillingTimeEnum) Number() protoreflect.EnumNumber {
+func (x BillingTime) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use BillingTimeEnum.Descriptor instead.
-func (BillingTimeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use BillingTime.Descriptor instead.
+func (BillingTime) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{11}
 }
 
-type ChargeModelEnum int32
+type ChargeModel int32
 
 const (
-	ChargeModelEnum_CHARGE_MODEL_ENUM_UNSPECIFIED          ChargeModelEnum = 0
-	ChargeModelEnum_CHARGE_MODEL_ENUM_CUSTOM               ChargeModelEnum = 1
-	ChargeModelEnum_CHARGE_MODEL_ENUM_DYNAMIC              ChargeModelEnum = 2
-	ChargeModelEnum_CHARGE_MODEL_ENUM_GRADUATED            ChargeModelEnum = 3
-	ChargeModelEnum_CHARGE_MODEL_ENUM_GRADUATED_PERCENTAGE ChargeModelEnum = 4
-	ChargeModelEnum_CHARGE_MODEL_ENUM_PACKAGE              ChargeModelEnum = 5
-	ChargeModelEnum_CHARGE_MODEL_ENUM_PERCENTAGE           ChargeModelEnum = 6
-	ChargeModelEnum_CHARGE_MODEL_ENUM_STANDARD             ChargeModelEnum = 7
-	ChargeModelEnum_CHARGE_MODEL_ENUM_VOLUME               ChargeModelEnum = 8
+	ChargeModel_CHARGE_MODEL_UNSPECIFIED          ChargeModel = 0
+	ChargeModel_CHARGE_MODEL_CUSTOM               ChargeModel = 1
+	ChargeModel_CHARGE_MODEL_DYNAMIC              ChargeModel = 2
+	ChargeModel_CHARGE_MODEL_GRADUATED            ChargeModel = 3
+	ChargeModel_CHARGE_MODEL_GRADUATED_PERCENTAGE ChargeModel = 4
+	ChargeModel_CHARGE_MODEL_PACKAGE              ChargeModel = 5
+	ChargeModel_CHARGE_MODEL_PERCENTAGE           ChargeModel = 6
+	ChargeModel_CHARGE_MODEL_STANDARD             ChargeModel = 7
+	ChargeModel_CHARGE_MODEL_VOLUME               ChargeModel = 8
 )
 
-// Enum value maps for ChargeModelEnum.
+// Enum value maps for ChargeModel.
 var (
-	ChargeModelEnum_name = map[int32]string{
-		0: "CHARGE_MODEL_ENUM_UNSPECIFIED",
-		1: "CHARGE_MODEL_ENUM_CUSTOM",
-		2: "CHARGE_MODEL_ENUM_DYNAMIC",
-		3: "CHARGE_MODEL_ENUM_GRADUATED",
-		4: "CHARGE_MODEL_ENUM_GRADUATED_PERCENTAGE",
-		5: "CHARGE_MODEL_ENUM_PACKAGE",
-		6: "CHARGE_MODEL_ENUM_PERCENTAGE",
-		7: "CHARGE_MODEL_ENUM_STANDARD",
-		8: "CHARGE_MODEL_ENUM_VOLUME",
+	ChargeModel_name = map[int32]string{
+		0: "CHARGE_MODEL_UNSPECIFIED",
+		1: "CHARGE_MODEL_CUSTOM",
+		2: "CHARGE_MODEL_DYNAMIC",
+		3: "CHARGE_MODEL_GRADUATED",
+		4: "CHARGE_MODEL_GRADUATED_PERCENTAGE",
+		5: "CHARGE_MODEL_PACKAGE",
+		6: "CHARGE_MODEL_PERCENTAGE",
+		7: "CHARGE_MODEL_STANDARD",
+		8: "CHARGE_MODEL_VOLUME",
 	}
-	ChargeModelEnum_value = map[string]int32{
-		"CHARGE_MODEL_ENUM_UNSPECIFIED":          0,
-		"CHARGE_MODEL_ENUM_CUSTOM":               1,
-		"CHARGE_MODEL_ENUM_DYNAMIC":              2,
-		"CHARGE_MODEL_ENUM_GRADUATED":            3,
-		"CHARGE_MODEL_ENUM_GRADUATED_PERCENTAGE": 4,
-		"CHARGE_MODEL_ENUM_PACKAGE":              5,
-		"CHARGE_MODEL_ENUM_PERCENTAGE":           6,
-		"CHARGE_MODEL_ENUM_STANDARD":             7,
-		"CHARGE_MODEL_ENUM_VOLUME":               8,
+	ChargeModel_value = map[string]int32{
+		"CHARGE_MODEL_UNSPECIFIED":          0,
+		"CHARGE_MODEL_CUSTOM":               1,
+		"CHARGE_MODEL_DYNAMIC":              2,
+		"CHARGE_MODEL_GRADUATED":            3,
+		"CHARGE_MODEL_GRADUATED_PERCENTAGE": 4,
+		"CHARGE_MODEL_PACKAGE":              5,
+		"CHARGE_MODEL_PERCENTAGE":           6,
+		"CHARGE_MODEL_STANDARD":             7,
+		"CHARGE_MODEL_VOLUME":               8,
 	}
 )
 
-func (x ChargeModelEnum) Enum() *ChargeModelEnum {
-	p := new(ChargeModelEnum)
+func (x ChargeModel) Enum() *ChargeModel {
+	p := new(ChargeModel)
 	*p = x
 	return p
 }
 
-func (x ChargeModelEnum) String() string {
+func (x ChargeModel) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (ChargeModelEnum) Descriptor() protoreflect.EnumDescriptor {
+func (ChargeModel) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[12].Descriptor()
 }
 
-func (ChargeModelEnum) Type() protoreflect.EnumType {
+func (ChargeModel) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[12]
 }
 
-func (x ChargeModelEnum) Number() protoreflect.EnumNumber {
+func (x ChargeModel) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use ChargeModelEnum.Descriptor instead.
-func (ChargeModelEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use ChargeModel.Descriptor instead.
+func (ChargeModel) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{12}
 }
 
-type CommitmentTypeEnum int32
+type CommitmentType int32
 
 const (
-	CommitmentTypeEnum_COMMITMENT_TYPE_ENUM_UNSPECIFIED        CommitmentTypeEnum = 0
-	CommitmentTypeEnum_COMMITMENT_TYPE_ENUM_MINIMUM_COMMITMENT CommitmentTypeEnum = 1
+	CommitmentType_COMMITMENT_TYPE_UNSPECIFIED        CommitmentType = 0
+	CommitmentType_COMMITMENT_TYPE_MINIMUM_COMMITMENT CommitmentType = 1
 )
 
-// Enum value maps for CommitmentTypeEnum.
+// Enum value maps for CommitmentType.
 var (
-	CommitmentTypeEnum_name = map[int32]string{
-		0: "COMMITMENT_TYPE_ENUM_UNSPECIFIED",
-		1: "COMMITMENT_TYPE_ENUM_MINIMUM_COMMITMENT",
+	CommitmentType_name = map[int32]string{
+		0: "COMMITMENT_TYPE_UNSPECIFIED",
+		1: "COMMITMENT_TYPE_MINIMUM_COMMITMENT",
 	}
-	CommitmentTypeEnum_value = map[string]int32{
-		"COMMITMENT_TYPE_ENUM_UNSPECIFIED":        0,
-		"COMMITMENT_TYPE_ENUM_MINIMUM_COMMITMENT": 1,
+	CommitmentType_value = map[string]int32{
+		"COMMITMENT_TYPE_UNSPECIFIED":        0,
+		"COMMITMENT_TYPE_MINIMUM_COMMITMENT": 1,
 	}
 )
 
-func (x CommitmentTypeEnum) Enum() *CommitmentTypeEnum {
-	p := new(CommitmentTypeEnum)
+func (x CommitmentType) Enum() *CommitmentType {
+	p := new(CommitmentType)
 	*p = x
 	return p
 }
 
-func (x CommitmentTypeEnum) String() string {
+func (x CommitmentType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (CommitmentTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (CommitmentType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[13].Descriptor()
 }
 
-func (CommitmentTypeEnum) Type() protoreflect.EnumType {
+func (CommitmentType) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[13]
 }
 
-func (x CommitmentTypeEnum) Number() protoreflect.EnumNumber {
+func (x CommitmentType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use CommitmentTypeEnum.Descriptor instead.
-func (CommitmentTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use CommitmentType.Descriptor instead.
+func (CommitmentType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{13}
 }
 
@@ -2091,266 +2089,266 @@ func (CouponFrequency) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{16}
 }
 
-type CouponStatusEnum int32
+type CouponStatus int32
 
 const (
-	CouponStatusEnum_COUPON_STATUS_ENUM_UNSPECIFIED CouponStatusEnum = 0
-	CouponStatusEnum_COUPON_STATUS_ENUM_ACTIVE      CouponStatusEnum = 1
-	CouponStatusEnum_COUPON_STATUS_ENUM_TERMINATED  CouponStatusEnum = 2
+	CouponStatus_COUPON_STATUS_UNSPECIFIED CouponStatus = 0
+	CouponStatus_COUPON_STATUS_ACTIVE      CouponStatus = 1
+	CouponStatus_COUPON_STATUS_TERMINATED  CouponStatus = 2
 )
 
-// Enum value maps for CouponStatusEnum.
+// Enum value maps for CouponStatus.
 var (
-	CouponStatusEnum_name = map[int32]string{
-		0: "COUPON_STATUS_ENUM_UNSPECIFIED",
-		1: "COUPON_STATUS_ENUM_ACTIVE",
-		2: "COUPON_STATUS_ENUM_TERMINATED",
+	CouponStatus_name = map[int32]string{
+		0: "COUPON_STATUS_UNSPECIFIED",
+		1: "COUPON_STATUS_ACTIVE",
+		2: "COUPON_STATUS_TERMINATED",
 	}
-	CouponStatusEnum_value = map[string]int32{
-		"COUPON_STATUS_ENUM_UNSPECIFIED": 0,
-		"COUPON_STATUS_ENUM_ACTIVE":      1,
-		"COUPON_STATUS_ENUM_TERMINATED":  2,
+	CouponStatus_value = map[string]int32{
+		"COUPON_STATUS_UNSPECIFIED": 0,
+		"COUPON_STATUS_ACTIVE":      1,
+		"COUPON_STATUS_TERMINATED":  2,
 	}
 )
 
-func (x CouponStatusEnum) Enum() *CouponStatusEnum {
-	p := new(CouponStatusEnum)
+func (x CouponStatus) Enum() *CouponStatus {
+	p := new(CouponStatus)
 	*p = x
 	return p
 }
 
-func (x CouponStatusEnum) String() string {
+func (x CouponStatus) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (CouponStatusEnum) Descriptor() protoreflect.EnumDescriptor {
+func (CouponStatus) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[17].Descriptor()
 }
 
-func (CouponStatusEnum) Type() protoreflect.EnumType {
+func (CouponStatus) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[17]
 }
 
-func (x CouponStatusEnum) Number() protoreflect.EnumNumber {
+func (x CouponStatus) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use CouponStatusEnum.Descriptor instead.
-func (CouponStatusEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use CouponStatus.Descriptor instead.
+func (CouponStatus) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{17}
 }
 
-type CouponTypeEnum int32
+type CouponType int32
 
 const (
-	CouponTypeEnum_COUPON_TYPE_ENUM_UNSPECIFIED  CouponTypeEnum = 0
-	CouponTypeEnum_COUPON_TYPE_ENUM_FIXED_AMOUNT CouponTypeEnum = 1
-	CouponTypeEnum_COUPON_TYPE_ENUM_PERCENTAGE   CouponTypeEnum = 2
+	CouponType_COUPON_TYPE_UNSPECIFIED  CouponType = 0
+	CouponType_COUPON_TYPE_FIXED_AMOUNT CouponType = 1
+	CouponType_COUPON_TYPE_PERCENTAGE   CouponType = 2
 )
 
-// Enum value maps for CouponTypeEnum.
+// Enum value maps for CouponType.
 var (
-	CouponTypeEnum_name = map[int32]string{
-		0: "COUPON_TYPE_ENUM_UNSPECIFIED",
-		1: "COUPON_TYPE_ENUM_FIXED_AMOUNT",
-		2: "COUPON_TYPE_ENUM_PERCENTAGE",
+	CouponType_name = map[int32]string{
+		0: "COUPON_TYPE_UNSPECIFIED",
+		1: "COUPON_TYPE_FIXED_AMOUNT",
+		2: "COUPON_TYPE_PERCENTAGE",
 	}
-	CouponTypeEnum_value = map[string]int32{
-		"COUPON_TYPE_ENUM_UNSPECIFIED":  0,
-		"COUPON_TYPE_ENUM_FIXED_AMOUNT": 1,
-		"COUPON_TYPE_ENUM_PERCENTAGE":   2,
+	CouponType_value = map[string]int32{
+		"COUPON_TYPE_UNSPECIFIED":  0,
+		"COUPON_TYPE_FIXED_AMOUNT": 1,
+		"COUPON_TYPE_PERCENTAGE":   2,
 	}
 )
 
-func (x CouponTypeEnum) Enum() *CouponTypeEnum {
-	p := new(CouponTypeEnum)
+func (x CouponType) Enum() *CouponType {
+	p := new(CouponType)
 	*p = x
 	return p
 }
 
-func (x CouponTypeEnum) String() string {
+func (x CouponType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (CouponTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (CouponType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[18].Descriptor()
 }
 
-func (CouponTypeEnum) Type() protoreflect.EnumType {
+func (CouponType) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[18]
 }
 
-func (x CouponTypeEnum) Number() protoreflect.EnumNumber {
+func (x CouponType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use CouponTypeEnum.Descriptor instead.
-func (CouponTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use CouponType.Descriptor instead.
+func (CouponType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{18}
 }
 
-type CreditNoteCreditStatusEnum int32
+type CreditNoteCreditStatus int32
 
 const (
-	CreditNoteCreditStatusEnum_CREDIT_NOTE_CREDIT_STATUS_ENUM_UNSPECIFIED CreditNoteCreditStatusEnum = 0
-	CreditNoteCreditStatusEnum_CREDIT_NOTE_CREDIT_STATUS_ENUM_AVAILABLE   CreditNoteCreditStatusEnum = 1
-	CreditNoteCreditStatusEnum_CREDIT_NOTE_CREDIT_STATUS_ENUM_CONSUMED    CreditNoteCreditStatusEnum = 2
-	CreditNoteCreditStatusEnum_CREDIT_NOTE_CREDIT_STATUS_ENUM_VOIDED      CreditNoteCreditStatusEnum = 3
+	CreditNoteCreditStatus_CREDIT_NOTE_CREDIT_STATUS_UNSPECIFIED CreditNoteCreditStatus = 0
+	CreditNoteCreditStatus_CREDIT_NOTE_CREDIT_STATUS_AVAILABLE   CreditNoteCreditStatus = 1
+	CreditNoteCreditStatus_CREDIT_NOTE_CREDIT_STATUS_CONSUMED    CreditNoteCreditStatus = 2
+	CreditNoteCreditStatus_CREDIT_NOTE_CREDIT_STATUS_VOIDED      CreditNoteCreditStatus = 3
 )
 
-// Enum value maps for CreditNoteCreditStatusEnum.
+// Enum value maps for CreditNoteCreditStatus.
 var (
-	CreditNoteCreditStatusEnum_name = map[int32]string{
-		0: "CREDIT_NOTE_CREDIT_STATUS_ENUM_UNSPECIFIED",
-		1: "CREDIT_NOTE_CREDIT_STATUS_ENUM_AVAILABLE",
-		2: "CREDIT_NOTE_CREDIT_STATUS_ENUM_CONSUMED",
-		3: "CREDIT_NOTE_CREDIT_STATUS_ENUM_VOIDED",
+	CreditNoteCreditStatus_name = map[int32]string{
+		0: "CREDIT_NOTE_CREDIT_STATUS_UNSPECIFIED",
+		1: "CREDIT_NOTE_CREDIT_STATUS_AVAILABLE",
+		2: "CREDIT_NOTE_CREDIT_STATUS_CONSUMED",
+		3: "CREDIT_NOTE_CREDIT_STATUS_VOIDED",
 	}
-	CreditNoteCreditStatusEnum_value = map[string]int32{
-		"CREDIT_NOTE_CREDIT_STATUS_ENUM_UNSPECIFIED": 0,
-		"CREDIT_NOTE_CREDIT_STATUS_ENUM_AVAILABLE":   1,
-		"CREDIT_NOTE_CREDIT_STATUS_ENUM_CONSUMED":    2,
-		"CREDIT_NOTE_CREDIT_STATUS_ENUM_VOIDED":      3,
+	CreditNoteCreditStatus_value = map[string]int32{
+		"CREDIT_NOTE_CREDIT_STATUS_UNSPECIFIED": 0,
+		"CREDIT_NOTE_CREDIT_STATUS_AVAILABLE":   1,
+		"CREDIT_NOTE_CREDIT_STATUS_CONSUMED":    2,
+		"CREDIT_NOTE_CREDIT_STATUS_VOIDED":      3,
 	}
 )
 
-func (x CreditNoteCreditStatusEnum) Enum() *CreditNoteCreditStatusEnum {
-	p := new(CreditNoteCreditStatusEnum)
+func (x CreditNoteCreditStatus) Enum() *CreditNoteCreditStatus {
+	p := new(CreditNoteCreditStatus)
 	*p = x
 	return p
 }
 
-func (x CreditNoteCreditStatusEnum) String() string {
+func (x CreditNoteCreditStatus) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (CreditNoteCreditStatusEnum) Descriptor() protoreflect.EnumDescriptor {
+func (CreditNoteCreditStatus) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[19].Descriptor()
 }
 
-func (CreditNoteCreditStatusEnum) Type() protoreflect.EnumType {
+func (CreditNoteCreditStatus) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[19]
 }
 
-func (x CreditNoteCreditStatusEnum) Number() protoreflect.EnumNumber {
+func (x CreditNoteCreditStatus) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use CreditNoteCreditStatusEnum.Descriptor instead.
-func (CreditNoteCreditStatusEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use CreditNoteCreditStatus.Descriptor instead.
+func (CreditNoteCreditStatus) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{19}
 }
 
-type CreditNoteReasonEnum int32
+type CreditNoteReason int32
 
 const (
-	CreditNoteReasonEnum_CREDIT_NOTE_REASON_ENUM_UNSPECIFIED            CreditNoteReasonEnum = 0
-	CreditNoteReasonEnum_CREDIT_NOTE_REASON_ENUM_DUPLICATED_CHARGE      CreditNoteReasonEnum = 1
-	CreditNoteReasonEnum_CREDIT_NOTE_REASON_ENUM_FRAUDULENT_CHARGE      CreditNoteReasonEnum = 2
-	CreditNoteReasonEnum_CREDIT_NOTE_REASON_ENUM_ORDER_CANCELLATION     CreditNoteReasonEnum = 3
-	CreditNoteReasonEnum_CREDIT_NOTE_REASON_ENUM_ORDER_CHANGE           CreditNoteReasonEnum = 4
-	CreditNoteReasonEnum_CREDIT_NOTE_REASON_ENUM_OTHER                  CreditNoteReasonEnum = 5
-	CreditNoteReasonEnum_CREDIT_NOTE_REASON_ENUM_PRODUCT_UNSATISFACTORY CreditNoteReasonEnum = 6
+	CreditNoteReason_CREDIT_NOTE_REASON_UNSPECIFIED            CreditNoteReason = 0
+	CreditNoteReason_CREDIT_NOTE_REASON_DUPLICATED_CHARGE      CreditNoteReason = 1
+	CreditNoteReason_CREDIT_NOTE_REASON_FRAUDULENT_CHARGE      CreditNoteReason = 2
+	CreditNoteReason_CREDIT_NOTE_REASON_ORDER_CANCELLATION     CreditNoteReason = 3
+	CreditNoteReason_CREDIT_NOTE_REASON_ORDER_CHANGE           CreditNoteReason = 4
+	CreditNoteReason_CREDIT_NOTE_REASON_OTHER                  CreditNoteReason = 5
+	CreditNoteReason_CREDIT_NOTE_REASON_PRODUCT_UNSATISFACTORY CreditNoteReason = 6
 )
 
-// Enum value maps for CreditNoteReasonEnum.
+// Enum value maps for CreditNoteReason.
 var (
-	CreditNoteReasonEnum_name = map[int32]string{
-		0: "CREDIT_NOTE_REASON_ENUM_UNSPECIFIED",
-		1: "CREDIT_NOTE_REASON_ENUM_DUPLICATED_CHARGE",
-		2: "CREDIT_NOTE_REASON_ENUM_FRAUDULENT_CHARGE",
-		3: "CREDIT_NOTE_REASON_ENUM_ORDER_CANCELLATION",
-		4: "CREDIT_NOTE_REASON_ENUM_ORDER_CHANGE",
-		5: "CREDIT_NOTE_REASON_ENUM_OTHER",
-		6: "CREDIT_NOTE_REASON_ENUM_PRODUCT_UNSATISFACTORY",
+	CreditNoteReason_name = map[int32]string{
+		0: "CREDIT_NOTE_REASON_UNSPECIFIED",
+		1: "CREDIT_NOTE_REASON_DUPLICATED_CHARGE",
+		2: "CREDIT_NOTE_REASON_FRAUDULENT_CHARGE",
+		3: "CREDIT_NOTE_REASON_ORDER_CANCELLATION",
+		4: "CREDIT_NOTE_REASON_ORDER_CHANGE",
+		5: "CREDIT_NOTE_REASON_OTHER",
+		6: "CREDIT_NOTE_REASON_PRODUCT_UNSATISFACTORY",
 	}
-	CreditNoteReasonEnum_value = map[string]int32{
-		"CREDIT_NOTE_REASON_ENUM_UNSPECIFIED":            0,
-		"CREDIT_NOTE_REASON_ENUM_DUPLICATED_CHARGE":      1,
-		"CREDIT_NOTE_REASON_ENUM_FRAUDULENT_CHARGE":      2,
-		"CREDIT_NOTE_REASON_ENUM_ORDER_CANCELLATION":     3,
-		"CREDIT_NOTE_REASON_ENUM_ORDER_CHANGE":           4,
-		"CREDIT_NOTE_REASON_ENUM_OTHER":                  5,
-		"CREDIT_NOTE_REASON_ENUM_PRODUCT_UNSATISFACTORY": 6,
+	CreditNoteReason_value = map[string]int32{
+		"CREDIT_NOTE_REASON_UNSPECIFIED":            0,
+		"CREDIT_NOTE_REASON_DUPLICATED_CHARGE":      1,
+		"CREDIT_NOTE_REASON_FRAUDULENT_CHARGE":      2,
+		"CREDIT_NOTE_REASON_ORDER_CANCELLATION":     3,
+		"CREDIT_NOTE_REASON_ORDER_CHANGE":           4,
+		"CREDIT_NOTE_REASON_OTHER":                  5,
+		"CREDIT_NOTE_REASON_PRODUCT_UNSATISFACTORY": 6,
 	}
 )
 
-func (x CreditNoteReasonEnum) Enum() *CreditNoteReasonEnum {
-	p := new(CreditNoteReasonEnum)
+func (x CreditNoteReason) Enum() *CreditNoteReason {
+	p := new(CreditNoteReason)
 	*p = x
 	return p
 }
 
-func (x CreditNoteReasonEnum) String() string {
+func (x CreditNoteReason) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (CreditNoteReasonEnum) Descriptor() protoreflect.EnumDescriptor {
+func (CreditNoteReason) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[20].Descriptor()
 }
 
-func (CreditNoteReasonEnum) Type() protoreflect.EnumType {
+func (CreditNoteReason) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[20]
 }
 
-func (x CreditNoteReasonEnum) Number() protoreflect.EnumNumber {
+func (x CreditNoteReason) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use CreditNoteReasonEnum.Descriptor instead.
-func (CreditNoteReasonEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use CreditNoteReason.Descriptor instead.
+func (CreditNoteReason) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{20}
 }
 
-type CreditNoteRefundStatusEnum int32
+type CreditNoteRefundStatus int32
 
 const (
-	CreditNoteRefundStatusEnum_CREDIT_NOTE_REFUND_STATUS_ENUM_UNSPECIFIED CreditNoteRefundStatusEnum = 0
-	CreditNoteRefundStatusEnum_CREDIT_NOTE_REFUND_STATUS_ENUM_FAILED      CreditNoteRefundStatusEnum = 1
-	CreditNoteRefundStatusEnum_CREDIT_NOTE_REFUND_STATUS_ENUM_PENDING     CreditNoteRefundStatusEnum = 2
-	CreditNoteRefundStatusEnum_CREDIT_NOTE_REFUND_STATUS_ENUM_SUCCEEDED   CreditNoteRefundStatusEnum = 3
+	CreditNoteRefundStatus_CREDIT_NOTE_REFUND_STATUS_UNSPECIFIED CreditNoteRefundStatus = 0
+	CreditNoteRefundStatus_CREDIT_NOTE_REFUND_STATUS_FAILED      CreditNoteRefundStatus = 1
+	CreditNoteRefundStatus_CREDIT_NOTE_REFUND_STATUS_PENDING     CreditNoteRefundStatus = 2
+	CreditNoteRefundStatus_CREDIT_NOTE_REFUND_STATUS_SUCCEEDED   CreditNoteRefundStatus = 3
 )
 
-// Enum value maps for CreditNoteRefundStatusEnum.
+// Enum value maps for CreditNoteRefundStatus.
 var (
-	CreditNoteRefundStatusEnum_name = map[int32]string{
-		0: "CREDIT_NOTE_REFUND_STATUS_ENUM_UNSPECIFIED",
-		1: "CREDIT_NOTE_REFUND_STATUS_ENUM_FAILED",
-		2: "CREDIT_NOTE_REFUND_STATUS_ENUM_PENDING",
-		3: "CREDIT_NOTE_REFUND_STATUS_ENUM_SUCCEEDED",
+	CreditNoteRefundStatus_name = map[int32]string{
+		0: "CREDIT_NOTE_REFUND_STATUS_UNSPECIFIED",
+		1: "CREDIT_NOTE_REFUND_STATUS_FAILED",
+		2: "CREDIT_NOTE_REFUND_STATUS_PENDING",
+		3: "CREDIT_NOTE_REFUND_STATUS_SUCCEEDED",
 	}
-	CreditNoteRefundStatusEnum_value = map[string]int32{
-		"CREDIT_NOTE_REFUND_STATUS_ENUM_UNSPECIFIED": 0,
-		"CREDIT_NOTE_REFUND_STATUS_ENUM_FAILED":      1,
-		"CREDIT_NOTE_REFUND_STATUS_ENUM_PENDING":     2,
-		"CREDIT_NOTE_REFUND_STATUS_ENUM_SUCCEEDED":   3,
+	CreditNoteRefundStatus_value = map[string]int32{
+		"CREDIT_NOTE_REFUND_STATUS_UNSPECIFIED": 0,
+		"CREDIT_NOTE_REFUND_STATUS_FAILED":      1,
+		"CREDIT_NOTE_REFUND_STATUS_PENDING":     2,
+		"CREDIT_NOTE_REFUND_STATUS_SUCCEEDED":   3,
 	}
 )
 
-func (x CreditNoteRefundStatusEnum) Enum() *CreditNoteRefundStatusEnum {
-	p := new(CreditNoteRefundStatusEnum)
+func (x CreditNoteRefundStatus) Enum() *CreditNoteRefundStatus {
+	p := new(CreditNoteRefundStatus)
 	*p = x
 	return p
 }
 
-func (x CreditNoteRefundStatusEnum) String() string {
+func (x CreditNoteRefundStatus) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (CreditNoteRefundStatusEnum) Descriptor() protoreflect.EnumDescriptor {
+func (CreditNoteRefundStatus) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[21].Descriptor()
 }
 
-func (CreditNoteRefundStatusEnum) Type() protoreflect.EnumType {
+func (CreditNoteRefundStatus) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[21]
 }
 
-func (x CreditNoteRefundStatusEnum) Number() protoreflect.EnumNumber {
+func (x CreditNoteRefundStatus) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use CreditNoteRefundStatusEnum.Descriptor instead.
-func (CreditNoteRefundStatusEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use CreditNoteRefundStatus.Descriptor instead.
+func (CreditNoteRefundStatus) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{21}
 }
 
@@ -2965,522 +2963,522 @@ func (CurrencyEnum) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{22}
 }
 
-type CustomerAccountTypeEnum int32
+type CustomerAccountType int32
 
 const (
-	CustomerAccountTypeEnum_CUSTOMER_ACCOUNT_TYPE_ENUM_UNSPECIFIED CustomerAccountTypeEnum = 0
-	CustomerAccountTypeEnum_CUSTOMER_ACCOUNT_TYPE_ENUM_CUSTOMER    CustomerAccountTypeEnum = 1
-	CustomerAccountTypeEnum_CUSTOMER_ACCOUNT_TYPE_ENUM_PARTNER     CustomerAccountTypeEnum = 2
+	CustomerAccountType_CUSTOMER_ACCOUNT_TYPE_UNSPECIFIED CustomerAccountType = 0
+	CustomerAccountType_CUSTOMER_ACCOUNT_TYPE_CUSTOMER    CustomerAccountType = 1
+	CustomerAccountType_CUSTOMER_ACCOUNT_TYPE_PARTNER     CustomerAccountType = 2
 )
 
-// Enum value maps for CustomerAccountTypeEnum.
+// Enum value maps for CustomerAccountType.
 var (
-	CustomerAccountTypeEnum_name = map[int32]string{
-		0: "CUSTOMER_ACCOUNT_TYPE_ENUM_UNSPECIFIED",
-		1: "CUSTOMER_ACCOUNT_TYPE_ENUM_CUSTOMER",
-		2: "CUSTOMER_ACCOUNT_TYPE_ENUM_PARTNER",
+	CustomerAccountType_name = map[int32]string{
+		0: "CUSTOMER_ACCOUNT_TYPE_UNSPECIFIED",
+		1: "CUSTOMER_ACCOUNT_TYPE_CUSTOMER",
+		2: "CUSTOMER_ACCOUNT_TYPE_PARTNER",
 	}
-	CustomerAccountTypeEnum_value = map[string]int32{
-		"CUSTOMER_ACCOUNT_TYPE_ENUM_UNSPECIFIED": 0,
-		"CUSTOMER_ACCOUNT_TYPE_ENUM_CUSTOMER":    1,
-		"CUSTOMER_ACCOUNT_TYPE_ENUM_PARTNER":     2,
+	CustomerAccountType_value = map[string]int32{
+		"CUSTOMER_ACCOUNT_TYPE_UNSPECIFIED": 0,
+		"CUSTOMER_ACCOUNT_TYPE_CUSTOMER":    1,
+		"CUSTOMER_ACCOUNT_TYPE_PARTNER":     2,
 	}
 )
 
-func (x CustomerAccountTypeEnum) Enum() *CustomerAccountTypeEnum {
-	p := new(CustomerAccountTypeEnum)
+func (x CustomerAccountType) Enum() *CustomerAccountType {
+	p := new(CustomerAccountType)
 	*p = x
 	return p
 }
 
-func (x CustomerAccountTypeEnum) String() string {
+func (x CustomerAccountType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (CustomerAccountTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (CustomerAccountType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[23].Descriptor()
 }
 
-func (CustomerAccountTypeEnum) Type() protoreflect.EnumType {
+func (CustomerAccountType) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[23]
 }
 
-func (x CustomerAccountTypeEnum) Number() protoreflect.EnumNumber {
+func (x CustomerAccountType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use CustomerAccountTypeEnum.Descriptor instead.
-func (CustomerAccountTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use CustomerAccountType.Descriptor instead.
+func (CustomerAccountType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{23}
 }
 
 // Subscription Invoice Issuing Date Adjustment Values
-type CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum int32
+type CustomerSubscriptionInvoiceIssuingDateAdjustment int32
 
 const (
-	CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum_CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_UNSPECIFIED                  CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum = 0
-	CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum_CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_ALIGN_WITH_FINALIZATION_DATE CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum = 1
-	CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum_CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_KEEP_ANCHOR                  CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum = 2
+	CustomerSubscriptionInvoiceIssuingDateAdjustment_CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_UNSPECIFIED                  CustomerSubscriptionInvoiceIssuingDateAdjustment = 0
+	CustomerSubscriptionInvoiceIssuingDateAdjustment_CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ALIGN_WITH_FINALIZATION_DATE CustomerSubscriptionInvoiceIssuingDateAdjustment = 1
+	CustomerSubscriptionInvoiceIssuingDateAdjustment_CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_KEEP_ANCHOR                  CustomerSubscriptionInvoiceIssuingDateAdjustment = 2
 )
 
-// Enum value maps for CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum.
+// Enum value maps for CustomerSubscriptionInvoiceIssuingDateAdjustment.
 var (
-	CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum_name = map[int32]string{
-		0: "CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_UNSPECIFIED",
-		1: "CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_ALIGN_WITH_FINALIZATION_DATE",
-		2: "CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_KEEP_ANCHOR",
+	CustomerSubscriptionInvoiceIssuingDateAdjustment_name = map[int32]string{
+		0: "CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_UNSPECIFIED",
+		1: "CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ALIGN_WITH_FINALIZATION_DATE",
+		2: "CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_KEEP_ANCHOR",
 	}
-	CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum_value = map[string]int32{
-		"CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_UNSPECIFIED":                  0,
-		"CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_ALIGN_WITH_FINALIZATION_DATE": 1,
-		"CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_KEEP_ANCHOR":                  2,
+	CustomerSubscriptionInvoiceIssuingDateAdjustment_value = map[string]int32{
+		"CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_UNSPECIFIED":                  0,
+		"CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ALIGN_WITH_FINALIZATION_DATE": 1,
+		"CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_KEEP_ANCHOR":                  2,
 	}
 )
 
-func (x CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum) Enum() *CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum {
-	p := new(CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum)
+func (x CustomerSubscriptionInvoiceIssuingDateAdjustment) Enum() *CustomerSubscriptionInvoiceIssuingDateAdjustment {
+	p := new(CustomerSubscriptionInvoiceIssuingDateAdjustment)
 	*p = x
 	return p
 }
 
-func (x CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum) String() string {
+func (x CustomerSubscriptionInvoiceIssuingDateAdjustment) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum) Descriptor() protoreflect.EnumDescriptor {
+func (CustomerSubscriptionInvoiceIssuingDateAdjustment) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[24].Descriptor()
 }
 
-func (CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum) Type() protoreflect.EnumType {
+func (CustomerSubscriptionInvoiceIssuingDateAdjustment) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[24]
 }
 
-func (x CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum) Number() protoreflect.EnumNumber {
+func (x CustomerSubscriptionInvoiceIssuingDateAdjustment) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum.Descriptor instead.
-func (CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use CustomerSubscriptionInvoiceIssuingDateAdjustment.Descriptor instead.
+func (CustomerSubscriptionInvoiceIssuingDateAdjustment) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{24}
 }
 
 // Subscription Invoice Issuing Date Anchor Values
-type CustomerSubscriptionInvoiceIssuingDateAnchorEnum int32
+type CustomerSubscriptionInvoiceIssuingDateAnchor int32
 
 const (
-	CustomerSubscriptionInvoiceIssuingDateAnchorEnum_CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_UNSPECIFIED        CustomerSubscriptionInvoiceIssuingDateAnchorEnum = 0
-	CustomerSubscriptionInvoiceIssuingDateAnchorEnum_CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_CURRENT_PERIOD_END CustomerSubscriptionInvoiceIssuingDateAnchorEnum = 1
-	CustomerSubscriptionInvoiceIssuingDateAnchorEnum_CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_NEXT_PERIOD_START  CustomerSubscriptionInvoiceIssuingDateAnchorEnum = 2
+	CustomerSubscriptionInvoiceIssuingDateAnchor_CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_UNSPECIFIED        CustomerSubscriptionInvoiceIssuingDateAnchor = 0
+	CustomerSubscriptionInvoiceIssuingDateAnchor_CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_CURRENT_PERIOD_END CustomerSubscriptionInvoiceIssuingDateAnchor = 1
+	CustomerSubscriptionInvoiceIssuingDateAnchor_CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_NEXT_PERIOD_START  CustomerSubscriptionInvoiceIssuingDateAnchor = 2
 )
 
-// Enum value maps for CustomerSubscriptionInvoiceIssuingDateAnchorEnum.
+// Enum value maps for CustomerSubscriptionInvoiceIssuingDateAnchor.
 var (
-	CustomerSubscriptionInvoiceIssuingDateAnchorEnum_name = map[int32]string{
-		0: "CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_UNSPECIFIED",
-		1: "CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_CURRENT_PERIOD_END",
-		2: "CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_NEXT_PERIOD_START",
+	CustomerSubscriptionInvoiceIssuingDateAnchor_name = map[int32]string{
+		0: "CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_UNSPECIFIED",
+		1: "CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_CURRENT_PERIOD_END",
+		2: "CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_NEXT_PERIOD_START",
 	}
-	CustomerSubscriptionInvoiceIssuingDateAnchorEnum_value = map[string]int32{
-		"CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_UNSPECIFIED":        0,
-		"CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_CURRENT_PERIOD_END": 1,
-		"CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_NEXT_PERIOD_START":  2,
+	CustomerSubscriptionInvoiceIssuingDateAnchor_value = map[string]int32{
+		"CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_UNSPECIFIED":        0,
+		"CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_CURRENT_PERIOD_END": 1,
+		"CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_NEXT_PERIOD_START":  2,
 	}
 )
 
-func (x CustomerSubscriptionInvoiceIssuingDateAnchorEnum) Enum() *CustomerSubscriptionInvoiceIssuingDateAnchorEnum {
-	p := new(CustomerSubscriptionInvoiceIssuingDateAnchorEnum)
+func (x CustomerSubscriptionInvoiceIssuingDateAnchor) Enum() *CustomerSubscriptionInvoiceIssuingDateAnchor {
+	p := new(CustomerSubscriptionInvoiceIssuingDateAnchor)
 	*p = x
 	return p
 }
 
-func (x CustomerSubscriptionInvoiceIssuingDateAnchorEnum) String() string {
+func (x CustomerSubscriptionInvoiceIssuingDateAnchor) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (CustomerSubscriptionInvoiceIssuingDateAnchorEnum) Descriptor() protoreflect.EnumDescriptor {
+func (CustomerSubscriptionInvoiceIssuingDateAnchor) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[25].Descriptor()
 }
 
-func (CustomerSubscriptionInvoiceIssuingDateAnchorEnum) Type() protoreflect.EnumType {
+func (CustomerSubscriptionInvoiceIssuingDateAnchor) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[25]
 }
 
-func (x CustomerSubscriptionInvoiceIssuingDateAnchorEnum) Number() protoreflect.EnumNumber {
+func (x CustomerSubscriptionInvoiceIssuingDateAnchor) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use CustomerSubscriptionInvoiceIssuingDateAnchorEnum.Descriptor instead.
-func (CustomerSubscriptionInvoiceIssuingDateAnchorEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use CustomerSubscriptionInvoiceIssuingDateAnchor.Descriptor instead.
+func (CustomerSubscriptionInvoiceIssuingDateAnchor) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{25}
 }
 
-type CustomerTypeEnum int32
+type CustomerType int32
 
 const (
-	CustomerTypeEnum_CUSTOMER_TYPE_ENUM_UNSPECIFIED CustomerTypeEnum = 0
-	CustomerTypeEnum_CUSTOMER_TYPE_ENUM_COMPANY     CustomerTypeEnum = 1
-	CustomerTypeEnum_CUSTOMER_TYPE_ENUM_INDIVIDUAL  CustomerTypeEnum = 2
+	CustomerType_CUSTOMER_TYPE_UNSPECIFIED CustomerType = 0
+	CustomerType_CUSTOMER_TYPE_COMPANY     CustomerType = 1
+	CustomerType_CUSTOMER_TYPE_INDIVIDUAL  CustomerType = 2
 )
 
-// Enum value maps for CustomerTypeEnum.
+// Enum value maps for CustomerType.
 var (
-	CustomerTypeEnum_name = map[int32]string{
-		0: "CUSTOMER_TYPE_ENUM_UNSPECIFIED",
-		1: "CUSTOMER_TYPE_ENUM_COMPANY",
-		2: "CUSTOMER_TYPE_ENUM_INDIVIDUAL",
+	CustomerType_name = map[int32]string{
+		0: "CUSTOMER_TYPE_UNSPECIFIED",
+		1: "CUSTOMER_TYPE_COMPANY",
+		2: "CUSTOMER_TYPE_INDIVIDUAL",
 	}
-	CustomerTypeEnum_value = map[string]int32{
-		"CUSTOMER_TYPE_ENUM_UNSPECIFIED": 0,
-		"CUSTOMER_TYPE_ENUM_COMPANY":     1,
-		"CUSTOMER_TYPE_ENUM_INDIVIDUAL":  2,
+	CustomerType_value = map[string]int32{
+		"CUSTOMER_TYPE_UNSPECIFIED": 0,
+		"CUSTOMER_TYPE_COMPANY":     1,
+		"CUSTOMER_TYPE_INDIVIDUAL":  2,
 	}
 )
 
-func (x CustomerTypeEnum) Enum() *CustomerTypeEnum {
-	p := new(CustomerTypeEnum)
+func (x CustomerType) Enum() *CustomerType {
+	p := new(CustomerType)
 	*p = x
 	return p
 }
 
-func (x CustomerTypeEnum) String() string {
+func (x CustomerType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (CustomerTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (CustomerType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[26].Descriptor()
 }
 
-func (CustomerTypeEnum) Type() protoreflect.EnumType {
+func (CustomerType) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[26]
 }
 
-func (x CustomerTypeEnum) Number() protoreflect.EnumNumber {
+func (x CustomerType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use CustomerTypeEnum.Descriptor instead.
-func (CustomerTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use CustomerType.Descriptor instead.
+func (CustomerType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{26}
 }
 
-type DataExportFormatTypeEnum int32
+type DataExportFormatType int32
 
 const (
-	DataExportFormatTypeEnum_DATA_EXPORT_FORMAT_TYPE_ENUM_UNSPECIFIED DataExportFormatTypeEnum = 0
-	DataExportFormatTypeEnum_DATA_EXPORT_FORMAT_TYPE_ENUM_CSV         DataExportFormatTypeEnum = 1
+	DataExportFormatType_DATA_EXPORT_FORMAT_TYPE_UNSPECIFIED DataExportFormatType = 0
+	DataExportFormatType_DATA_EXPORT_FORMAT_TYPE_CSV         DataExportFormatType = 1
 )
 
-// Enum value maps for DataExportFormatTypeEnum.
+// Enum value maps for DataExportFormatType.
 var (
-	DataExportFormatTypeEnum_name = map[int32]string{
-		0: "DATA_EXPORT_FORMAT_TYPE_ENUM_UNSPECIFIED",
-		1: "DATA_EXPORT_FORMAT_TYPE_ENUM_CSV",
+	DataExportFormatType_name = map[int32]string{
+		0: "DATA_EXPORT_FORMAT_TYPE_UNSPECIFIED",
+		1: "DATA_EXPORT_FORMAT_TYPE_CSV",
 	}
-	DataExportFormatTypeEnum_value = map[string]int32{
-		"DATA_EXPORT_FORMAT_TYPE_ENUM_UNSPECIFIED": 0,
-		"DATA_EXPORT_FORMAT_TYPE_ENUM_CSV":         1,
+	DataExportFormatType_value = map[string]int32{
+		"DATA_EXPORT_FORMAT_TYPE_UNSPECIFIED": 0,
+		"DATA_EXPORT_FORMAT_TYPE_CSV":         1,
 	}
 )
 
-func (x DataExportFormatTypeEnum) Enum() *DataExportFormatTypeEnum {
-	p := new(DataExportFormatTypeEnum)
+func (x DataExportFormatType) Enum() *DataExportFormatType {
+	p := new(DataExportFormatType)
 	*p = x
 	return p
 }
 
-func (x DataExportFormatTypeEnum) String() string {
+func (x DataExportFormatType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (DataExportFormatTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (DataExportFormatType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[27].Descriptor()
 }
 
-func (DataExportFormatTypeEnum) Type() protoreflect.EnumType {
+func (DataExportFormatType) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[27]
 }
 
-func (x DataExportFormatTypeEnum) Number() protoreflect.EnumNumber {
+func (x DataExportFormatType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use DataExportFormatTypeEnum.Descriptor instead.
-func (DataExportFormatTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use DataExportFormatType.Descriptor instead.
+func (DataExportFormatType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{27}
 }
 
-type DataExportStatusEnum int32
+type DataExportStatus int32
 
 const (
-	DataExportStatusEnum_DATA_EXPORT_STATUS_ENUM_UNSPECIFIED DataExportStatusEnum = 0
-	DataExportStatusEnum_DATA_EXPORT_STATUS_ENUM_COMPLETED   DataExportStatusEnum = 1
-	DataExportStatusEnum_DATA_EXPORT_STATUS_ENUM_FAILED      DataExportStatusEnum = 2
-	DataExportStatusEnum_DATA_EXPORT_STATUS_ENUM_PENDING     DataExportStatusEnum = 3
-	DataExportStatusEnum_DATA_EXPORT_STATUS_ENUM_PROCESSING  DataExportStatusEnum = 4
+	DataExportStatus_DATA_EXPORT_STATUS_UNSPECIFIED DataExportStatus = 0
+	DataExportStatus_DATA_EXPORT_STATUS_COMPLETED   DataExportStatus = 1
+	DataExportStatus_DATA_EXPORT_STATUS_FAILED      DataExportStatus = 2
+	DataExportStatus_DATA_EXPORT_STATUS_PENDING     DataExportStatus = 3
+	DataExportStatus_DATA_EXPORT_STATUS_PROCESSING  DataExportStatus = 4
 )
 
-// Enum value maps for DataExportStatusEnum.
+// Enum value maps for DataExportStatus.
 var (
-	DataExportStatusEnum_name = map[int32]string{
-		0: "DATA_EXPORT_STATUS_ENUM_UNSPECIFIED",
-		1: "DATA_EXPORT_STATUS_ENUM_COMPLETED",
-		2: "DATA_EXPORT_STATUS_ENUM_FAILED",
-		3: "DATA_EXPORT_STATUS_ENUM_PENDING",
-		4: "DATA_EXPORT_STATUS_ENUM_PROCESSING",
+	DataExportStatus_name = map[int32]string{
+		0: "DATA_EXPORT_STATUS_UNSPECIFIED",
+		1: "DATA_EXPORT_STATUS_COMPLETED",
+		2: "DATA_EXPORT_STATUS_FAILED",
+		3: "DATA_EXPORT_STATUS_PENDING",
+		4: "DATA_EXPORT_STATUS_PROCESSING",
 	}
-	DataExportStatusEnum_value = map[string]int32{
-		"DATA_EXPORT_STATUS_ENUM_UNSPECIFIED": 0,
-		"DATA_EXPORT_STATUS_ENUM_COMPLETED":   1,
-		"DATA_EXPORT_STATUS_ENUM_FAILED":      2,
-		"DATA_EXPORT_STATUS_ENUM_PENDING":     3,
-		"DATA_EXPORT_STATUS_ENUM_PROCESSING":  4,
+	DataExportStatus_value = map[string]int32{
+		"DATA_EXPORT_STATUS_UNSPECIFIED": 0,
+		"DATA_EXPORT_STATUS_COMPLETED":   1,
+		"DATA_EXPORT_STATUS_FAILED":      2,
+		"DATA_EXPORT_STATUS_PENDING":     3,
+		"DATA_EXPORT_STATUS_PROCESSING":  4,
 	}
 )
 
-func (x DataExportStatusEnum) Enum() *DataExportStatusEnum {
-	p := new(DataExportStatusEnum)
+func (x DataExportStatus) Enum() *DataExportStatus {
+	p := new(DataExportStatus)
 	*p = x
 	return p
 }
 
-func (x DataExportStatusEnum) String() string {
+func (x DataExportStatus) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (DataExportStatusEnum) Descriptor() protoreflect.EnumDescriptor {
+func (DataExportStatus) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[28].Descriptor()
 }
 
-func (DataExportStatusEnum) Type() protoreflect.EnumType {
+func (DataExportStatus) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[28]
 }
 
-func (x DataExportStatusEnum) Number() protoreflect.EnumNumber {
+func (x DataExportStatus) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use DataExportStatusEnum.Descriptor instead.
-func (DataExportStatusEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use DataExportStatus.Descriptor instead.
+func (DataExportStatus) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{28}
 }
 
-type ErrorCodesEnum int32
+type ErrorCodes int32
 
 const (
-	ErrorCodesEnum_ERROR_CODES_ENUM_UNSPECIFIED              ErrorCodesEnum = 0
-	ErrorCodesEnum_ERROR_CODES_ENUM_INVOICE_GENERATION_ERROR ErrorCodesEnum = 1
-	ErrorCodesEnum_ERROR_CODES_ENUM_NOT_PROVIDED             ErrorCodesEnum = 2
-	ErrorCodesEnum_ERROR_CODES_ENUM_TAX_ERROR                ErrorCodesEnum = 3
-	ErrorCodesEnum_ERROR_CODES_ENUM_TAX_VOIDING_ERROR        ErrorCodesEnum = 4
+	ErrorCodes_ERROR_CODES_UNSPECIFIED              ErrorCodes = 0
+	ErrorCodes_ERROR_CODES_INVOICE_GENERATION_ERROR ErrorCodes = 1
+	ErrorCodes_ERROR_CODES_NOT_PROVIDED             ErrorCodes = 2
+	ErrorCodes_ERROR_CODES_TAX_ERROR                ErrorCodes = 3
+	ErrorCodes_ERROR_CODES_TAX_VOIDING_ERROR        ErrorCodes = 4
 )
 
-// Enum value maps for ErrorCodesEnum.
+// Enum value maps for ErrorCodes.
 var (
-	ErrorCodesEnum_name = map[int32]string{
-		0: "ERROR_CODES_ENUM_UNSPECIFIED",
-		1: "ERROR_CODES_ENUM_INVOICE_GENERATION_ERROR",
-		2: "ERROR_CODES_ENUM_NOT_PROVIDED",
-		3: "ERROR_CODES_ENUM_TAX_ERROR",
-		4: "ERROR_CODES_ENUM_TAX_VOIDING_ERROR",
+	ErrorCodes_name = map[int32]string{
+		0: "ERROR_CODES_UNSPECIFIED",
+		1: "ERROR_CODES_INVOICE_GENERATION_ERROR",
+		2: "ERROR_CODES_NOT_PROVIDED",
+		3: "ERROR_CODES_TAX_ERROR",
+		4: "ERROR_CODES_TAX_VOIDING_ERROR",
 	}
-	ErrorCodesEnum_value = map[string]int32{
-		"ERROR_CODES_ENUM_UNSPECIFIED":              0,
-		"ERROR_CODES_ENUM_INVOICE_GENERATION_ERROR": 1,
-		"ERROR_CODES_ENUM_NOT_PROVIDED":             2,
-		"ERROR_CODES_ENUM_TAX_ERROR":                3,
-		"ERROR_CODES_ENUM_TAX_VOIDING_ERROR":        4,
+	ErrorCodes_value = map[string]int32{
+		"ERROR_CODES_UNSPECIFIED":              0,
+		"ERROR_CODES_INVOICE_GENERATION_ERROR": 1,
+		"ERROR_CODES_NOT_PROVIDED":             2,
+		"ERROR_CODES_TAX_ERROR":                3,
+		"ERROR_CODES_TAX_VOIDING_ERROR":        4,
 	}
 )
 
-func (x ErrorCodesEnum) Enum() *ErrorCodesEnum {
-	p := new(ErrorCodesEnum)
+func (x ErrorCodes) Enum() *ErrorCodes {
+	p := new(ErrorCodes)
 	*p = x
 	return p
 }
 
-func (x ErrorCodesEnum) String() string {
+func (x ErrorCodes) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (ErrorCodesEnum) Descriptor() protoreflect.EnumDescriptor {
+func (ErrorCodes) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[29].Descriptor()
 }
 
-func (ErrorCodesEnum) Type() protoreflect.EnumType {
+func (ErrorCodes) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[29]
 }
 
-func (x ErrorCodesEnum) Number() protoreflect.EnumNumber {
+func (x ErrorCodes) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use ErrorCodesEnum.Descriptor instead.
-func (ErrorCodesEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use ErrorCodes.Descriptor instead.
+func (ErrorCodes) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{29}
 }
 
-type FeeTypesEnum int32
+type FeeTypes int32
 
 const (
-	FeeTypesEnum_FEE_TYPES_ENUM_UNSPECIFIED  FeeTypesEnum = 0
-	FeeTypesEnum_FEE_TYPES_ENUM_ADD_ON       FeeTypesEnum = 1
-	FeeTypesEnum_FEE_TYPES_ENUM_CHARGE       FeeTypesEnum = 2
-	FeeTypesEnum_FEE_TYPES_ENUM_COMMITMENT   FeeTypesEnum = 3
-	FeeTypesEnum_FEE_TYPES_ENUM_CREDIT       FeeTypesEnum = 4
-	FeeTypesEnum_FEE_TYPES_ENUM_FIXED_CHARGE FeeTypesEnum = 5
-	FeeTypesEnum_FEE_TYPES_ENUM_SUBSCRIPTION FeeTypesEnum = 6
+	FeeTypes_FEE_TYPES_UNSPECIFIED  FeeTypes = 0
+	FeeTypes_FEE_TYPES_ADD_ON       FeeTypes = 1
+	FeeTypes_FEE_TYPES_CHARGE       FeeTypes = 2
+	FeeTypes_FEE_TYPES_COMMITMENT   FeeTypes = 3
+	FeeTypes_FEE_TYPES_CREDIT       FeeTypes = 4
+	FeeTypes_FEE_TYPES_FIXED_CHARGE FeeTypes = 5
+	FeeTypes_FEE_TYPES_SUBSCRIPTION FeeTypes = 6
 )
 
-// Enum value maps for FeeTypesEnum.
+// Enum value maps for FeeTypes.
 var (
-	FeeTypesEnum_name = map[int32]string{
-		0: "FEE_TYPES_ENUM_UNSPECIFIED",
-		1: "FEE_TYPES_ENUM_ADD_ON",
-		2: "FEE_TYPES_ENUM_CHARGE",
-		3: "FEE_TYPES_ENUM_COMMITMENT",
-		4: "FEE_TYPES_ENUM_CREDIT",
-		5: "FEE_TYPES_ENUM_FIXED_CHARGE",
-		6: "FEE_TYPES_ENUM_SUBSCRIPTION",
+	FeeTypes_name = map[int32]string{
+		0: "FEE_TYPES_UNSPECIFIED",
+		1: "FEE_TYPES_ADD_ON",
+		2: "FEE_TYPES_CHARGE",
+		3: "FEE_TYPES_COMMITMENT",
+		4: "FEE_TYPES_CREDIT",
+		5: "FEE_TYPES_FIXED_CHARGE",
+		6: "FEE_TYPES_SUBSCRIPTION",
 	}
-	FeeTypesEnum_value = map[string]int32{
-		"FEE_TYPES_ENUM_UNSPECIFIED":  0,
-		"FEE_TYPES_ENUM_ADD_ON":       1,
-		"FEE_TYPES_ENUM_CHARGE":       2,
-		"FEE_TYPES_ENUM_COMMITMENT":   3,
-		"FEE_TYPES_ENUM_CREDIT":       4,
-		"FEE_TYPES_ENUM_FIXED_CHARGE": 5,
-		"FEE_TYPES_ENUM_SUBSCRIPTION": 6,
+	FeeTypes_value = map[string]int32{
+		"FEE_TYPES_UNSPECIFIED":  0,
+		"FEE_TYPES_ADD_ON":       1,
+		"FEE_TYPES_CHARGE":       2,
+		"FEE_TYPES_COMMITMENT":   3,
+		"FEE_TYPES_CREDIT":       4,
+		"FEE_TYPES_FIXED_CHARGE": 5,
+		"FEE_TYPES_SUBSCRIPTION": 6,
 	}
 )
 
-func (x FeeTypesEnum) Enum() *FeeTypesEnum {
-	p := new(FeeTypesEnum)
+func (x FeeTypes) Enum() *FeeTypes {
+	p := new(FeeTypes)
 	*p = x
 	return p
 }
 
-func (x FeeTypesEnum) String() string {
+func (x FeeTypes) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (FeeTypesEnum) Descriptor() protoreflect.EnumDescriptor {
+func (FeeTypes) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[30].Descriptor()
 }
 
-func (FeeTypesEnum) Type() protoreflect.EnumType {
+func (FeeTypes) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[30]
 }
 
-func (x FeeTypesEnum) Number() protoreflect.EnumNumber {
+func (x FeeTypes) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use FeeTypesEnum.Descriptor instead.
-func (FeeTypesEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use FeeTypes.Descriptor instead.
+func (FeeTypes) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{30}
 }
 
-type FinalizeZeroAmountInvoiceEnum int32
+type FinalizeZeroAmountInvoice int32
 
 const (
-	FinalizeZeroAmountInvoiceEnum_FINALIZE_ZERO_AMOUNT_INVOICE_ENUM_UNSPECIFIED FinalizeZeroAmountInvoiceEnum = 0
-	FinalizeZeroAmountInvoiceEnum_FINALIZE_ZERO_AMOUNT_INVOICE_ENUM_FINALIZE    FinalizeZeroAmountInvoiceEnum = 1
-	FinalizeZeroAmountInvoiceEnum_FINALIZE_ZERO_AMOUNT_INVOICE_ENUM_INHERIT     FinalizeZeroAmountInvoiceEnum = 2
-	FinalizeZeroAmountInvoiceEnum_FINALIZE_ZERO_AMOUNT_INVOICE_ENUM_SKIP        FinalizeZeroAmountInvoiceEnum = 3
+	FinalizeZeroAmountInvoice_FINALIZE_ZERO_AMOUNT_INVOICE_UNSPECIFIED FinalizeZeroAmountInvoice = 0
+	FinalizeZeroAmountInvoice_FINALIZE_ZERO_AMOUNT_INVOICE_FINALIZE    FinalizeZeroAmountInvoice = 1
+	FinalizeZeroAmountInvoice_FINALIZE_ZERO_AMOUNT_INVOICE_INHERIT     FinalizeZeroAmountInvoice = 2
+	FinalizeZeroAmountInvoice_FINALIZE_ZERO_AMOUNT_INVOICE_SKIP        FinalizeZeroAmountInvoice = 3
 )
 
-// Enum value maps for FinalizeZeroAmountInvoiceEnum.
+// Enum value maps for FinalizeZeroAmountInvoice.
 var (
-	FinalizeZeroAmountInvoiceEnum_name = map[int32]string{
-		0: "FINALIZE_ZERO_AMOUNT_INVOICE_ENUM_UNSPECIFIED",
-		1: "FINALIZE_ZERO_AMOUNT_INVOICE_ENUM_FINALIZE",
-		2: "FINALIZE_ZERO_AMOUNT_INVOICE_ENUM_INHERIT",
-		3: "FINALIZE_ZERO_AMOUNT_INVOICE_ENUM_SKIP",
+	FinalizeZeroAmountInvoice_name = map[int32]string{
+		0: "FINALIZE_ZERO_AMOUNT_INVOICE_UNSPECIFIED",
+		1: "FINALIZE_ZERO_AMOUNT_INVOICE_FINALIZE",
+		2: "FINALIZE_ZERO_AMOUNT_INVOICE_INHERIT",
+		3: "FINALIZE_ZERO_AMOUNT_INVOICE_SKIP",
 	}
-	FinalizeZeroAmountInvoiceEnum_value = map[string]int32{
-		"FINALIZE_ZERO_AMOUNT_INVOICE_ENUM_UNSPECIFIED": 0,
-		"FINALIZE_ZERO_AMOUNT_INVOICE_ENUM_FINALIZE":    1,
-		"FINALIZE_ZERO_AMOUNT_INVOICE_ENUM_INHERIT":     2,
-		"FINALIZE_ZERO_AMOUNT_INVOICE_ENUM_SKIP":        3,
+	FinalizeZeroAmountInvoice_value = map[string]int32{
+		"FINALIZE_ZERO_AMOUNT_INVOICE_UNSPECIFIED": 0,
+		"FINALIZE_ZERO_AMOUNT_INVOICE_FINALIZE":    1,
+		"FINALIZE_ZERO_AMOUNT_INVOICE_INHERIT":     2,
+		"FINALIZE_ZERO_AMOUNT_INVOICE_SKIP":        3,
 	}
 )
 
-func (x FinalizeZeroAmountInvoiceEnum) Enum() *FinalizeZeroAmountInvoiceEnum {
-	p := new(FinalizeZeroAmountInvoiceEnum)
+func (x FinalizeZeroAmountInvoice) Enum() *FinalizeZeroAmountInvoice {
+	p := new(FinalizeZeroAmountInvoice)
 	*p = x
 	return p
 }
 
-func (x FinalizeZeroAmountInvoiceEnum) String() string {
+func (x FinalizeZeroAmountInvoice) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (FinalizeZeroAmountInvoiceEnum) Descriptor() protoreflect.EnumDescriptor {
+func (FinalizeZeroAmountInvoice) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[31].Descriptor()
 }
 
-func (FinalizeZeroAmountInvoiceEnum) Type() protoreflect.EnumType {
+func (FinalizeZeroAmountInvoice) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[31]
 }
 
-func (x FinalizeZeroAmountInvoiceEnum) Number() protoreflect.EnumNumber {
+func (x FinalizeZeroAmountInvoice) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use FinalizeZeroAmountInvoiceEnum.Descriptor instead.
-func (FinalizeZeroAmountInvoiceEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use FinalizeZeroAmountInvoice.Descriptor instead.
+func (FinalizeZeroAmountInvoice) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{31}
 }
 
-type FixedChargeChargeModelEnum int32
+type FixedChargeChargeModel int32
 
 const (
-	FixedChargeChargeModelEnum_FIXED_CHARGE_CHARGE_MODEL_ENUM_UNSPECIFIED FixedChargeChargeModelEnum = 0
-	FixedChargeChargeModelEnum_FIXED_CHARGE_CHARGE_MODEL_ENUM_GRADUATED   FixedChargeChargeModelEnum = 1
-	FixedChargeChargeModelEnum_FIXED_CHARGE_CHARGE_MODEL_ENUM_STANDARD    FixedChargeChargeModelEnum = 2
-	FixedChargeChargeModelEnum_FIXED_CHARGE_CHARGE_MODEL_ENUM_VOLUME      FixedChargeChargeModelEnum = 3
+	FixedChargeChargeModel_FIXED_CHARGE_CHARGE_MODEL_UNSPECIFIED FixedChargeChargeModel = 0
+	FixedChargeChargeModel_FIXED_CHARGE_CHARGE_MODEL_GRADUATED   FixedChargeChargeModel = 1
+	FixedChargeChargeModel_FIXED_CHARGE_CHARGE_MODEL_STANDARD    FixedChargeChargeModel = 2
+	FixedChargeChargeModel_FIXED_CHARGE_CHARGE_MODEL_VOLUME      FixedChargeChargeModel = 3
 )
 
-// Enum value maps for FixedChargeChargeModelEnum.
+// Enum value maps for FixedChargeChargeModel.
 var (
-	FixedChargeChargeModelEnum_name = map[int32]string{
-		0: "FIXED_CHARGE_CHARGE_MODEL_ENUM_UNSPECIFIED",
-		1: "FIXED_CHARGE_CHARGE_MODEL_ENUM_GRADUATED",
-		2: "FIXED_CHARGE_CHARGE_MODEL_ENUM_STANDARD",
-		3: "FIXED_CHARGE_CHARGE_MODEL_ENUM_VOLUME",
+	FixedChargeChargeModel_name = map[int32]string{
+		0: "FIXED_CHARGE_CHARGE_MODEL_UNSPECIFIED",
+		1: "FIXED_CHARGE_CHARGE_MODEL_GRADUATED",
+		2: "FIXED_CHARGE_CHARGE_MODEL_STANDARD",
+		3: "FIXED_CHARGE_CHARGE_MODEL_VOLUME",
 	}
-	FixedChargeChargeModelEnum_value = map[string]int32{
-		"FIXED_CHARGE_CHARGE_MODEL_ENUM_UNSPECIFIED": 0,
-		"FIXED_CHARGE_CHARGE_MODEL_ENUM_GRADUATED":   1,
-		"FIXED_CHARGE_CHARGE_MODEL_ENUM_STANDARD":    2,
-		"FIXED_CHARGE_CHARGE_MODEL_ENUM_VOLUME":      3,
+	FixedChargeChargeModel_value = map[string]int32{
+		"FIXED_CHARGE_CHARGE_MODEL_UNSPECIFIED": 0,
+		"FIXED_CHARGE_CHARGE_MODEL_GRADUATED":   1,
+		"FIXED_CHARGE_CHARGE_MODEL_STANDARD":    2,
+		"FIXED_CHARGE_CHARGE_MODEL_VOLUME":      3,
 	}
 )
 
-func (x FixedChargeChargeModelEnum) Enum() *FixedChargeChargeModelEnum {
-	p := new(FixedChargeChargeModelEnum)
+func (x FixedChargeChargeModel) Enum() *FixedChargeChargeModel {
+	p := new(FixedChargeChargeModel)
 	*p = x
 	return p
 }
 
-func (x FixedChargeChargeModelEnum) String() string {
+func (x FixedChargeChargeModel) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (FixedChargeChargeModelEnum) Descriptor() protoreflect.EnumDescriptor {
+func (FixedChargeChargeModel) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[32].Descriptor()
 }
 
-func (FixedChargeChargeModelEnum) Type() protoreflect.EnumType {
+func (FixedChargeChargeModel) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[32]
 }
 
-func (x FixedChargeChargeModelEnum) Number() protoreflect.EnumNumber {
+func (x FixedChargeChargeModel) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use FixedChargeChargeModelEnum.Descriptor instead.
-func (FixedChargeChargeModelEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use FixedChargeChargeModel.Descriptor instead.
+func (FixedChargeChargeModel) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{32}
 }
 
@@ -3585,429 +3583,429 @@ func (IntegrationItemTypeEnum) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{34}
 }
 
-type IntegrationTypeEnum int32
+type IntegrationType int32
 
 const (
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_UNSPECIFIED                IntegrationTypeEnum = 0
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_ANALYTICS_DASHBOARDS       IntegrationTypeEnum = 1
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_ANROK                      IntegrationTypeEnum = 2
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_API_PERMISSIONS            IntegrationTypeEnum = 3
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_AUTO_DUNNING               IntegrationTypeEnum = 4
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_AVALARA                    IntegrationTypeEnum = 5
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_BETA_PAYMENT_AUTHORIZATION IntegrationTypeEnum = 6
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_CUSTOM_ROLES               IntegrationTypeEnum = 7
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_EVENTS_TARGETING_WALLETS   IntegrationTypeEnum = 8
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_FORECASTED_USAGE           IntegrationTypeEnum = 9
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_FROM_EMAIL                 IntegrationTypeEnum = 10
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_GRANULAR_LIFETIME_USAGE    IntegrationTypeEnum = 11
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_HUBSPOT                    IntegrationTypeEnum = 12
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_INVORA                     IntegrationTypeEnum = 13
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_ISSUE_RECEIPTS             IntegrationTypeEnum = 14
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_LIFETIME_USAGE             IntegrationTypeEnum = 15
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_MANUAL_PAYMENTS            IntegrationTypeEnum = 16
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_MULTI_ENTITIES_ENTERPRISE  IntegrationTypeEnum = 17
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_MULTI_ENTITIES_PRO         IntegrationTypeEnum = 18
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_NETSUITE                   IntegrationTypeEnum = 19
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_OKTA                       IntegrationTypeEnum = 20
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_PREVIEW                    IntegrationTypeEnum = 21
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_PROGRESSIVE_BILLING        IntegrationTypeEnum = 22
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_PROJECTED_USAGE            IntegrationTypeEnum = 23
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_REMOVE_BRANDING_WATERMARK  IntegrationTypeEnum = 24
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_REVENUE_ANALYTICS          IntegrationTypeEnum = 25
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_REVENUE_SHARE              IntegrationTypeEnum = 26
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_SALESFORCE                 IntegrationTypeEnum = 27
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_SECURITY_LOGS              IntegrationTypeEnum = 28
-	IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_XERO                       IntegrationTypeEnum = 29
+	IntegrationType_INTEGRATION_TYPE_UNSPECIFIED                IntegrationType = 0
+	IntegrationType_INTEGRATION_TYPE_ANALYTICS_DASHBOARDS       IntegrationType = 1
+	IntegrationType_INTEGRATION_TYPE_ANROK                      IntegrationType = 2
+	IntegrationType_INTEGRATION_TYPE_API_PERMISSIONS            IntegrationType = 3
+	IntegrationType_INTEGRATION_TYPE_AUTO_DUNNING               IntegrationType = 4
+	IntegrationType_INTEGRATION_TYPE_AVALARA                    IntegrationType = 5
+	IntegrationType_INTEGRATION_TYPE_BETA_PAYMENT_AUTHORIZATION IntegrationType = 6
+	IntegrationType_INTEGRATION_TYPE_CUSTOM_ROLES               IntegrationType = 7
+	IntegrationType_INTEGRATION_TYPE_EVENTS_TARGETING_WALLETS   IntegrationType = 8
+	IntegrationType_INTEGRATION_TYPE_FORECASTED_USAGE           IntegrationType = 9
+	IntegrationType_INTEGRATION_TYPE_FROM_EMAIL                 IntegrationType = 10
+	IntegrationType_INTEGRATION_TYPE_GRANULAR_LIFETIME_USAGE    IntegrationType = 11
+	IntegrationType_INTEGRATION_TYPE_HUBSPOT                    IntegrationType = 12
+	IntegrationType_INTEGRATION_TYPE_INVORA                     IntegrationType = 13
+	IntegrationType_INTEGRATION_TYPE_ISSUE_RECEIPTS             IntegrationType = 14
+	IntegrationType_INTEGRATION_TYPE_LIFETIME_USAGE             IntegrationType = 15
+	IntegrationType_INTEGRATION_TYPE_MANUAL_PAYMENTS            IntegrationType = 16
+	IntegrationType_INTEGRATION_TYPE_MULTI_ENTITIES_ENTERPRISE  IntegrationType = 17
+	IntegrationType_INTEGRATION_TYPE_MULTI_ENTITIES_PRO         IntegrationType = 18
+	IntegrationType_INTEGRATION_TYPE_NETSUITE                   IntegrationType = 19
+	IntegrationType_INTEGRATION_TYPE_OKTA                       IntegrationType = 20
+	IntegrationType_INTEGRATION_TYPE_PREVIEW                    IntegrationType = 21
+	IntegrationType_INTEGRATION_TYPE_PROGRESSIVE_BILLING        IntegrationType = 22
+	IntegrationType_INTEGRATION_TYPE_PROJECTED_USAGE            IntegrationType = 23
+	IntegrationType_INTEGRATION_TYPE_REMOVE_BRANDING_WATERMARK  IntegrationType = 24
+	IntegrationType_INTEGRATION_TYPE_REVENUE_ANALYTICS          IntegrationType = 25
+	IntegrationType_INTEGRATION_TYPE_REVENUE_SHARE              IntegrationType = 26
+	IntegrationType_INTEGRATION_TYPE_SALESFORCE                 IntegrationType = 27
+	IntegrationType_INTEGRATION_TYPE_SECURITY_LOGS              IntegrationType = 28
+	IntegrationType_INTEGRATION_TYPE_XERO                       IntegrationType = 29
 )
 
-// Enum value maps for IntegrationTypeEnum.
+// Enum value maps for IntegrationType.
 var (
-	IntegrationTypeEnum_name = map[int32]string{
-		0:  "INTEGRATION_TYPE_ENUM_UNSPECIFIED",
-		1:  "INTEGRATION_TYPE_ENUM_ANALYTICS_DASHBOARDS",
-		2:  "INTEGRATION_TYPE_ENUM_ANROK",
-		3:  "INTEGRATION_TYPE_ENUM_API_PERMISSIONS",
-		4:  "INTEGRATION_TYPE_ENUM_AUTO_DUNNING",
-		5:  "INTEGRATION_TYPE_ENUM_AVALARA",
-		6:  "INTEGRATION_TYPE_ENUM_BETA_PAYMENT_AUTHORIZATION",
-		7:  "INTEGRATION_TYPE_ENUM_CUSTOM_ROLES",
-		8:  "INTEGRATION_TYPE_ENUM_EVENTS_TARGETING_WALLETS",
-		9:  "INTEGRATION_TYPE_ENUM_FORECASTED_USAGE",
-		10: "INTEGRATION_TYPE_ENUM_FROM_EMAIL",
-		11: "INTEGRATION_TYPE_ENUM_GRANULAR_LIFETIME_USAGE",
-		12: "INTEGRATION_TYPE_ENUM_HUBSPOT",
-		13: "INTEGRATION_TYPE_ENUM_INVORA",
-		14: "INTEGRATION_TYPE_ENUM_ISSUE_RECEIPTS",
-		15: "INTEGRATION_TYPE_ENUM_LIFETIME_USAGE",
-		16: "INTEGRATION_TYPE_ENUM_MANUAL_PAYMENTS",
-		17: "INTEGRATION_TYPE_ENUM_MULTI_ENTITIES_ENTERPRISE",
-		18: "INTEGRATION_TYPE_ENUM_MULTI_ENTITIES_PRO",
-		19: "INTEGRATION_TYPE_ENUM_NETSUITE",
-		20: "INTEGRATION_TYPE_ENUM_OKTA",
-		21: "INTEGRATION_TYPE_ENUM_PREVIEW",
-		22: "INTEGRATION_TYPE_ENUM_PROGRESSIVE_BILLING",
-		23: "INTEGRATION_TYPE_ENUM_PROJECTED_USAGE",
-		24: "INTEGRATION_TYPE_ENUM_REMOVE_BRANDING_WATERMARK",
-		25: "INTEGRATION_TYPE_ENUM_REVENUE_ANALYTICS",
-		26: "INTEGRATION_TYPE_ENUM_REVENUE_SHARE",
-		27: "INTEGRATION_TYPE_ENUM_SALESFORCE",
-		28: "INTEGRATION_TYPE_ENUM_SECURITY_LOGS",
-		29: "INTEGRATION_TYPE_ENUM_XERO",
+	IntegrationType_name = map[int32]string{
+		0:  "INTEGRATION_TYPE_UNSPECIFIED",
+		1:  "INTEGRATION_TYPE_ANALYTICS_DASHBOARDS",
+		2:  "INTEGRATION_TYPE_ANROK",
+		3:  "INTEGRATION_TYPE_API_PERMISSIONS",
+		4:  "INTEGRATION_TYPE_AUTO_DUNNING",
+		5:  "INTEGRATION_TYPE_AVALARA",
+		6:  "INTEGRATION_TYPE_BETA_PAYMENT_AUTHORIZATION",
+		7:  "INTEGRATION_TYPE_CUSTOM_ROLES",
+		8:  "INTEGRATION_TYPE_EVENTS_TARGETING_WALLETS",
+		9:  "INTEGRATION_TYPE_FORECASTED_USAGE",
+		10: "INTEGRATION_TYPE_FROM_EMAIL",
+		11: "INTEGRATION_TYPE_GRANULAR_LIFETIME_USAGE",
+		12: "INTEGRATION_TYPE_HUBSPOT",
+		13: "INTEGRATION_TYPE_INVORA",
+		14: "INTEGRATION_TYPE_ISSUE_RECEIPTS",
+		15: "INTEGRATION_TYPE_LIFETIME_USAGE",
+		16: "INTEGRATION_TYPE_MANUAL_PAYMENTS",
+		17: "INTEGRATION_TYPE_MULTI_ENTITIES_ENTERPRISE",
+		18: "INTEGRATION_TYPE_MULTI_ENTITIES_PRO",
+		19: "INTEGRATION_TYPE_NETSUITE",
+		20: "INTEGRATION_TYPE_OKTA",
+		21: "INTEGRATION_TYPE_PREVIEW",
+		22: "INTEGRATION_TYPE_PROGRESSIVE_BILLING",
+		23: "INTEGRATION_TYPE_PROJECTED_USAGE",
+		24: "INTEGRATION_TYPE_REMOVE_BRANDING_WATERMARK",
+		25: "INTEGRATION_TYPE_REVENUE_ANALYTICS",
+		26: "INTEGRATION_TYPE_REVENUE_SHARE",
+		27: "INTEGRATION_TYPE_SALESFORCE",
+		28: "INTEGRATION_TYPE_SECURITY_LOGS",
+		29: "INTEGRATION_TYPE_XERO",
 	}
-	IntegrationTypeEnum_value = map[string]int32{
-		"INTEGRATION_TYPE_ENUM_UNSPECIFIED":                0,
-		"INTEGRATION_TYPE_ENUM_ANALYTICS_DASHBOARDS":       1,
-		"INTEGRATION_TYPE_ENUM_ANROK":                      2,
-		"INTEGRATION_TYPE_ENUM_API_PERMISSIONS":            3,
-		"INTEGRATION_TYPE_ENUM_AUTO_DUNNING":               4,
-		"INTEGRATION_TYPE_ENUM_AVALARA":                    5,
-		"INTEGRATION_TYPE_ENUM_BETA_PAYMENT_AUTHORIZATION": 6,
-		"INTEGRATION_TYPE_ENUM_CUSTOM_ROLES":               7,
-		"INTEGRATION_TYPE_ENUM_EVENTS_TARGETING_WALLETS":   8,
-		"INTEGRATION_TYPE_ENUM_FORECASTED_USAGE":           9,
-		"INTEGRATION_TYPE_ENUM_FROM_EMAIL":                 10,
-		"INTEGRATION_TYPE_ENUM_GRANULAR_LIFETIME_USAGE":    11,
-		"INTEGRATION_TYPE_ENUM_HUBSPOT":                    12,
-		"INTEGRATION_TYPE_ENUM_INVORA":                     13,
-		"INTEGRATION_TYPE_ENUM_ISSUE_RECEIPTS":             14,
-		"INTEGRATION_TYPE_ENUM_LIFETIME_USAGE":             15,
-		"INTEGRATION_TYPE_ENUM_MANUAL_PAYMENTS":            16,
-		"INTEGRATION_TYPE_ENUM_MULTI_ENTITIES_ENTERPRISE":  17,
-		"INTEGRATION_TYPE_ENUM_MULTI_ENTITIES_PRO":         18,
-		"INTEGRATION_TYPE_ENUM_NETSUITE":                   19,
-		"INTEGRATION_TYPE_ENUM_OKTA":                       20,
-		"INTEGRATION_TYPE_ENUM_PREVIEW":                    21,
-		"INTEGRATION_TYPE_ENUM_PROGRESSIVE_BILLING":        22,
-		"INTEGRATION_TYPE_ENUM_PROJECTED_USAGE":            23,
-		"INTEGRATION_TYPE_ENUM_REMOVE_BRANDING_WATERMARK":  24,
-		"INTEGRATION_TYPE_ENUM_REVENUE_ANALYTICS":          25,
-		"INTEGRATION_TYPE_ENUM_REVENUE_SHARE":              26,
-		"INTEGRATION_TYPE_ENUM_SALESFORCE":                 27,
-		"INTEGRATION_TYPE_ENUM_SECURITY_LOGS":              28,
-		"INTEGRATION_TYPE_ENUM_XERO":                       29,
+	IntegrationType_value = map[string]int32{
+		"INTEGRATION_TYPE_UNSPECIFIED":                0,
+		"INTEGRATION_TYPE_ANALYTICS_DASHBOARDS":       1,
+		"INTEGRATION_TYPE_ANROK":                      2,
+		"INTEGRATION_TYPE_API_PERMISSIONS":            3,
+		"INTEGRATION_TYPE_AUTO_DUNNING":               4,
+		"INTEGRATION_TYPE_AVALARA":                    5,
+		"INTEGRATION_TYPE_BETA_PAYMENT_AUTHORIZATION": 6,
+		"INTEGRATION_TYPE_CUSTOM_ROLES":               7,
+		"INTEGRATION_TYPE_EVENTS_TARGETING_WALLETS":   8,
+		"INTEGRATION_TYPE_FORECASTED_USAGE":           9,
+		"INTEGRATION_TYPE_FROM_EMAIL":                 10,
+		"INTEGRATION_TYPE_GRANULAR_LIFETIME_USAGE":    11,
+		"INTEGRATION_TYPE_HUBSPOT":                    12,
+		"INTEGRATION_TYPE_INVORA":                     13,
+		"INTEGRATION_TYPE_ISSUE_RECEIPTS":             14,
+		"INTEGRATION_TYPE_LIFETIME_USAGE":             15,
+		"INTEGRATION_TYPE_MANUAL_PAYMENTS":            16,
+		"INTEGRATION_TYPE_MULTI_ENTITIES_ENTERPRISE":  17,
+		"INTEGRATION_TYPE_MULTI_ENTITIES_PRO":         18,
+		"INTEGRATION_TYPE_NETSUITE":                   19,
+		"INTEGRATION_TYPE_OKTA":                       20,
+		"INTEGRATION_TYPE_PREVIEW":                    21,
+		"INTEGRATION_TYPE_PROGRESSIVE_BILLING":        22,
+		"INTEGRATION_TYPE_PROJECTED_USAGE":            23,
+		"INTEGRATION_TYPE_REMOVE_BRANDING_WATERMARK":  24,
+		"INTEGRATION_TYPE_REVENUE_ANALYTICS":          25,
+		"INTEGRATION_TYPE_REVENUE_SHARE":              26,
+		"INTEGRATION_TYPE_SALESFORCE":                 27,
+		"INTEGRATION_TYPE_SECURITY_LOGS":              28,
+		"INTEGRATION_TYPE_XERO":                       29,
 	}
 )
 
-func (x IntegrationTypeEnum) Enum() *IntegrationTypeEnum {
-	p := new(IntegrationTypeEnum)
+func (x IntegrationType) Enum() *IntegrationType {
+	p := new(IntegrationType)
 	*p = x
 	return p
 }
 
-func (x IntegrationTypeEnum) String() string {
+func (x IntegrationType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (IntegrationTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (IntegrationType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[35].Descriptor()
 }
 
-func (IntegrationTypeEnum) Type() protoreflect.EnumType {
+func (IntegrationType) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[35]
 }
 
-func (x IntegrationTypeEnum) Number() protoreflect.EnumNumber {
+func (x IntegrationType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use IntegrationTypeEnum.Descriptor instead.
-func (IntegrationTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use IntegrationType.Descriptor instead.
+func (IntegrationType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{35}
 }
 
-type InvoiceAppliedTaxOnWholeInvoiceCodeEnum int32
+type InvoiceAppliedTaxOnWholeInvoiceCode int32
 
 const (
-	InvoiceAppliedTaxOnWholeInvoiceCodeEnum_INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_UNSPECIFIED        InvoiceAppliedTaxOnWholeInvoiceCodeEnum = 0
-	InvoiceAppliedTaxOnWholeInvoiceCodeEnum_INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_CUSTOMER_EXEMPT    InvoiceAppliedTaxOnWholeInvoiceCodeEnum = 1
-	InvoiceAppliedTaxOnWholeInvoiceCodeEnum_INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_JURIS_HAS_NO_TAX   InvoiceAppliedTaxOnWholeInvoiceCodeEnum = 2
-	InvoiceAppliedTaxOnWholeInvoiceCodeEnum_INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_JURIS_NOT_TAXED    InvoiceAppliedTaxOnWholeInvoiceCodeEnum = 3
-	InvoiceAppliedTaxOnWholeInvoiceCodeEnum_INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_NOT_COLLECTING     InvoiceAppliedTaxOnWholeInvoiceCodeEnum = 4
-	InvoiceAppliedTaxOnWholeInvoiceCodeEnum_INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_REVERSE_CHARGE     InvoiceAppliedTaxOnWholeInvoiceCodeEnum = 5
-	InvoiceAppliedTaxOnWholeInvoiceCodeEnum_INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_TRANSACTION_EXEMPT InvoiceAppliedTaxOnWholeInvoiceCodeEnum = 6
-	InvoiceAppliedTaxOnWholeInvoiceCodeEnum_INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_UNKNOWN_TAXATION   InvoiceAppliedTaxOnWholeInvoiceCodeEnum = 7
+	InvoiceAppliedTaxOnWholeInvoiceCode_INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_UNSPECIFIED        InvoiceAppliedTaxOnWholeInvoiceCode = 0
+	InvoiceAppliedTaxOnWholeInvoiceCode_INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_CUSTOMER_EXEMPT    InvoiceAppliedTaxOnWholeInvoiceCode = 1
+	InvoiceAppliedTaxOnWholeInvoiceCode_INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_JURIS_HAS_NO_TAX   InvoiceAppliedTaxOnWholeInvoiceCode = 2
+	InvoiceAppliedTaxOnWholeInvoiceCode_INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_JURIS_NOT_TAXED    InvoiceAppliedTaxOnWholeInvoiceCode = 3
+	InvoiceAppliedTaxOnWholeInvoiceCode_INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_NOT_COLLECTING     InvoiceAppliedTaxOnWholeInvoiceCode = 4
+	InvoiceAppliedTaxOnWholeInvoiceCode_INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_REVERSE_CHARGE     InvoiceAppliedTaxOnWholeInvoiceCode = 5
+	InvoiceAppliedTaxOnWholeInvoiceCode_INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_TRANSACTION_EXEMPT InvoiceAppliedTaxOnWholeInvoiceCode = 6
+	InvoiceAppliedTaxOnWholeInvoiceCode_INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_UNKNOWN_TAXATION   InvoiceAppliedTaxOnWholeInvoiceCode = 7
 )
 
-// Enum value maps for InvoiceAppliedTaxOnWholeInvoiceCodeEnum.
+// Enum value maps for InvoiceAppliedTaxOnWholeInvoiceCode.
 var (
-	InvoiceAppliedTaxOnWholeInvoiceCodeEnum_name = map[int32]string{
-		0: "INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_UNSPECIFIED",
-		1: "INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_CUSTOMER_EXEMPT",
-		2: "INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_JURIS_HAS_NO_TAX",
-		3: "INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_JURIS_NOT_TAXED",
-		4: "INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_NOT_COLLECTING",
-		5: "INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_REVERSE_CHARGE",
-		6: "INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_TRANSACTION_EXEMPT",
-		7: "INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_UNKNOWN_TAXATION",
+	InvoiceAppliedTaxOnWholeInvoiceCode_name = map[int32]string{
+		0: "INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_UNSPECIFIED",
+		1: "INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_CUSTOMER_EXEMPT",
+		2: "INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_JURIS_HAS_NO_TAX",
+		3: "INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_JURIS_NOT_TAXED",
+		4: "INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_NOT_COLLECTING",
+		5: "INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_REVERSE_CHARGE",
+		6: "INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_TRANSACTION_EXEMPT",
+		7: "INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_UNKNOWN_TAXATION",
 	}
-	InvoiceAppliedTaxOnWholeInvoiceCodeEnum_value = map[string]int32{
-		"INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_UNSPECIFIED":        0,
-		"INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_CUSTOMER_EXEMPT":    1,
-		"INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_JURIS_HAS_NO_TAX":   2,
-		"INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_JURIS_NOT_TAXED":    3,
-		"INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_NOT_COLLECTING":     4,
-		"INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_REVERSE_CHARGE":     5,
-		"INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_TRANSACTION_EXEMPT": 6,
-		"INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_UNKNOWN_TAXATION":   7,
+	InvoiceAppliedTaxOnWholeInvoiceCode_value = map[string]int32{
+		"INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_UNSPECIFIED":        0,
+		"INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_CUSTOMER_EXEMPT":    1,
+		"INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_JURIS_HAS_NO_TAX":   2,
+		"INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_JURIS_NOT_TAXED":    3,
+		"INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_NOT_COLLECTING":     4,
+		"INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_REVERSE_CHARGE":     5,
+		"INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_TRANSACTION_EXEMPT": 6,
+		"INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_UNKNOWN_TAXATION":   7,
 	}
 )
 
-func (x InvoiceAppliedTaxOnWholeInvoiceCodeEnum) Enum() *InvoiceAppliedTaxOnWholeInvoiceCodeEnum {
-	p := new(InvoiceAppliedTaxOnWholeInvoiceCodeEnum)
+func (x InvoiceAppliedTaxOnWholeInvoiceCode) Enum() *InvoiceAppliedTaxOnWholeInvoiceCode {
+	p := new(InvoiceAppliedTaxOnWholeInvoiceCode)
 	*p = x
 	return p
 }
 
-func (x InvoiceAppliedTaxOnWholeInvoiceCodeEnum) String() string {
+func (x InvoiceAppliedTaxOnWholeInvoiceCode) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (InvoiceAppliedTaxOnWholeInvoiceCodeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (InvoiceAppliedTaxOnWholeInvoiceCode) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[36].Descriptor()
 }
 
-func (InvoiceAppliedTaxOnWholeInvoiceCodeEnum) Type() protoreflect.EnumType {
+func (InvoiceAppliedTaxOnWholeInvoiceCode) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[36]
 }
 
-func (x InvoiceAppliedTaxOnWholeInvoiceCodeEnum) Number() protoreflect.EnumNumber {
+func (x InvoiceAppliedTaxOnWholeInvoiceCode) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use InvoiceAppliedTaxOnWholeInvoiceCodeEnum.Descriptor instead.
-func (InvoiceAppliedTaxOnWholeInvoiceCodeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use InvoiceAppliedTaxOnWholeInvoiceCode.Descriptor instead.
+func (InvoiceAppliedTaxOnWholeInvoiceCode) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{36}
 }
 
-type InvoicePaymentStatusTypeEnum int32
+type InvoicePaymentStatusType int32
 
 const (
-	InvoicePaymentStatusTypeEnum_INVOICE_PAYMENT_STATUS_TYPE_ENUM_UNSPECIFIED InvoicePaymentStatusTypeEnum = 0
-	InvoicePaymentStatusTypeEnum_INVOICE_PAYMENT_STATUS_TYPE_ENUM_FAILED      InvoicePaymentStatusTypeEnum = 1
-	InvoicePaymentStatusTypeEnum_INVOICE_PAYMENT_STATUS_TYPE_ENUM_PENDING     InvoicePaymentStatusTypeEnum = 2
-	InvoicePaymentStatusTypeEnum_INVOICE_PAYMENT_STATUS_TYPE_ENUM_SUCCEEDED   InvoicePaymentStatusTypeEnum = 3
+	InvoicePaymentStatusType_INVOICE_PAYMENT_STATUS_TYPE_UNSPECIFIED InvoicePaymentStatusType = 0
+	InvoicePaymentStatusType_INVOICE_PAYMENT_STATUS_TYPE_FAILED      InvoicePaymentStatusType = 1
+	InvoicePaymentStatusType_INVOICE_PAYMENT_STATUS_TYPE_PENDING     InvoicePaymentStatusType = 2
+	InvoicePaymentStatusType_INVOICE_PAYMENT_STATUS_TYPE_SUCCEEDED   InvoicePaymentStatusType = 3
 )
 
-// Enum value maps for InvoicePaymentStatusTypeEnum.
+// Enum value maps for InvoicePaymentStatusType.
 var (
-	InvoicePaymentStatusTypeEnum_name = map[int32]string{
-		0: "INVOICE_PAYMENT_STATUS_TYPE_ENUM_UNSPECIFIED",
-		1: "INVOICE_PAYMENT_STATUS_TYPE_ENUM_FAILED",
-		2: "INVOICE_PAYMENT_STATUS_TYPE_ENUM_PENDING",
-		3: "INVOICE_PAYMENT_STATUS_TYPE_ENUM_SUCCEEDED",
+	InvoicePaymentStatusType_name = map[int32]string{
+		0: "INVOICE_PAYMENT_STATUS_TYPE_UNSPECIFIED",
+		1: "INVOICE_PAYMENT_STATUS_TYPE_FAILED",
+		2: "INVOICE_PAYMENT_STATUS_TYPE_PENDING",
+		3: "INVOICE_PAYMENT_STATUS_TYPE_SUCCEEDED",
 	}
-	InvoicePaymentStatusTypeEnum_value = map[string]int32{
-		"INVOICE_PAYMENT_STATUS_TYPE_ENUM_UNSPECIFIED": 0,
-		"INVOICE_PAYMENT_STATUS_TYPE_ENUM_FAILED":      1,
-		"INVOICE_PAYMENT_STATUS_TYPE_ENUM_PENDING":     2,
-		"INVOICE_PAYMENT_STATUS_TYPE_ENUM_SUCCEEDED":   3,
+	InvoicePaymentStatusType_value = map[string]int32{
+		"INVOICE_PAYMENT_STATUS_TYPE_UNSPECIFIED": 0,
+		"INVOICE_PAYMENT_STATUS_TYPE_FAILED":      1,
+		"INVOICE_PAYMENT_STATUS_TYPE_PENDING":     2,
+		"INVOICE_PAYMENT_STATUS_TYPE_SUCCEEDED":   3,
 	}
 )
 
-func (x InvoicePaymentStatusTypeEnum) Enum() *InvoicePaymentStatusTypeEnum {
-	p := new(InvoicePaymentStatusTypeEnum)
+func (x InvoicePaymentStatusType) Enum() *InvoicePaymentStatusType {
+	p := new(InvoicePaymentStatusType)
 	*p = x
 	return p
 }
 
-func (x InvoicePaymentStatusTypeEnum) String() string {
+func (x InvoicePaymentStatusType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (InvoicePaymentStatusTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (InvoicePaymentStatusType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[37].Descriptor()
 }
 
-func (InvoicePaymentStatusTypeEnum) Type() protoreflect.EnumType {
+func (InvoicePaymentStatusType) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[37]
 }
 
-func (x InvoicePaymentStatusTypeEnum) Number() protoreflect.EnumNumber {
+func (x InvoicePaymentStatusType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use InvoicePaymentStatusTypeEnum.Descriptor instead.
-func (InvoicePaymentStatusTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use InvoicePaymentStatusType.Descriptor instead.
+func (InvoicePaymentStatusType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{37}
 }
 
-type InvoiceStatusTypeEnum int32
+type InvoiceStatusType int32
 
 const (
-	InvoiceStatusTypeEnum_INVOICE_STATUS_TYPE_ENUM_UNSPECIFIED InvoiceStatusTypeEnum = 0
-	InvoiceStatusTypeEnum_INVOICE_STATUS_TYPE_ENUM_CLOSED      InvoiceStatusTypeEnum = 1
-	InvoiceStatusTypeEnum_INVOICE_STATUS_TYPE_ENUM_DRAFT       InvoiceStatusTypeEnum = 2
-	InvoiceStatusTypeEnum_INVOICE_STATUS_TYPE_ENUM_FAILED      InvoiceStatusTypeEnum = 3
-	InvoiceStatusTypeEnum_INVOICE_STATUS_TYPE_ENUM_FINALIZED   InvoiceStatusTypeEnum = 4
-	InvoiceStatusTypeEnum_INVOICE_STATUS_TYPE_ENUM_GENERATING  InvoiceStatusTypeEnum = 5
-	InvoiceStatusTypeEnum_INVOICE_STATUS_TYPE_ENUM_OPEN        InvoiceStatusTypeEnum = 6
-	InvoiceStatusTypeEnum_INVOICE_STATUS_TYPE_ENUM_PENDING     InvoiceStatusTypeEnum = 7
-	InvoiceStatusTypeEnum_INVOICE_STATUS_TYPE_ENUM_VOIDED      InvoiceStatusTypeEnum = 8
+	InvoiceStatusType_INVOICE_STATUS_TYPE_UNSPECIFIED InvoiceStatusType = 0
+	InvoiceStatusType_INVOICE_STATUS_TYPE_CLOSED      InvoiceStatusType = 1
+	InvoiceStatusType_INVOICE_STATUS_TYPE_DRAFT       InvoiceStatusType = 2
+	InvoiceStatusType_INVOICE_STATUS_TYPE_FAILED      InvoiceStatusType = 3
+	InvoiceStatusType_INVOICE_STATUS_TYPE_FINALIZED   InvoiceStatusType = 4
+	InvoiceStatusType_INVOICE_STATUS_TYPE_GENERATING  InvoiceStatusType = 5
+	InvoiceStatusType_INVOICE_STATUS_TYPE_OPEN        InvoiceStatusType = 6
+	InvoiceStatusType_INVOICE_STATUS_TYPE_PENDING     InvoiceStatusType = 7
+	InvoiceStatusType_INVOICE_STATUS_TYPE_VOIDED      InvoiceStatusType = 8
 )
 
-// Enum value maps for InvoiceStatusTypeEnum.
+// Enum value maps for InvoiceStatusType.
 var (
-	InvoiceStatusTypeEnum_name = map[int32]string{
-		0: "INVOICE_STATUS_TYPE_ENUM_UNSPECIFIED",
-		1: "INVOICE_STATUS_TYPE_ENUM_CLOSED",
-		2: "INVOICE_STATUS_TYPE_ENUM_DRAFT",
-		3: "INVOICE_STATUS_TYPE_ENUM_FAILED",
-		4: "INVOICE_STATUS_TYPE_ENUM_FINALIZED",
-		5: "INVOICE_STATUS_TYPE_ENUM_GENERATING",
-		6: "INVOICE_STATUS_TYPE_ENUM_OPEN",
-		7: "INVOICE_STATUS_TYPE_ENUM_PENDING",
-		8: "INVOICE_STATUS_TYPE_ENUM_VOIDED",
+	InvoiceStatusType_name = map[int32]string{
+		0: "INVOICE_STATUS_TYPE_UNSPECIFIED",
+		1: "INVOICE_STATUS_TYPE_CLOSED",
+		2: "INVOICE_STATUS_TYPE_DRAFT",
+		3: "INVOICE_STATUS_TYPE_FAILED",
+		4: "INVOICE_STATUS_TYPE_FINALIZED",
+		5: "INVOICE_STATUS_TYPE_GENERATING",
+		6: "INVOICE_STATUS_TYPE_OPEN",
+		7: "INVOICE_STATUS_TYPE_PENDING",
+		8: "INVOICE_STATUS_TYPE_VOIDED",
 	}
-	InvoiceStatusTypeEnum_value = map[string]int32{
-		"INVOICE_STATUS_TYPE_ENUM_UNSPECIFIED": 0,
-		"INVOICE_STATUS_TYPE_ENUM_CLOSED":      1,
-		"INVOICE_STATUS_TYPE_ENUM_DRAFT":       2,
-		"INVOICE_STATUS_TYPE_ENUM_FAILED":      3,
-		"INVOICE_STATUS_TYPE_ENUM_FINALIZED":   4,
-		"INVOICE_STATUS_TYPE_ENUM_GENERATING":  5,
-		"INVOICE_STATUS_TYPE_ENUM_OPEN":        6,
-		"INVOICE_STATUS_TYPE_ENUM_PENDING":     7,
-		"INVOICE_STATUS_TYPE_ENUM_VOIDED":      8,
+	InvoiceStatusType_value = map[string]int32{
+		"INVOICE_STATUS_TYPE_UNSPECIFIED": 0,
+		"INVOICE_STATUS_TYPE_CLOSED":      1,
+		"INVOICE_STATUS_TYPE_DRAFT":       2,
+		"INVOICE_STATUS_TYPE_FAILED":      3,
+		"INVOICE_STATUS_TYPE_FINALIZED":   4,
+		"INVOICE_STATUS_TYPE_GENERATING":  5,
+		"INVOICE_STATUS_TYPE_OPEN":        6,
+		"INVOICE_STATUS_TYPE_PENDING":     7,
+		"INVOICE_STATUS_TYPE_VOIDED":      8,
 	}
 )
 
-func (x InvoiceStatusTypeEnum) Enum() *InvoiceStatusTypeEnum {
-	p := new(InvoiceStatusTypeEnum)
+func (x InvoiceStatusType) Enum() *InvoiceStatusType {
+	p := new(InvoiceStatusType)
 	*p = x
 	return p
 }
 
-func (x InvoiceStatusTypeEnum) String() string {
+func (x InvoiceStatusType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (InvoiceStatusTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (InvoiceStatusType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[38].Descriptor()
 }
 
-func (InvoiceStatusTypeEnum) Type() protoreflect.EnumType {
+func (InvoiceStatusType) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[38]
 }
 
-func (x InvoiceStatusTypeEnum) Number() protoreflect.EnumNumber {
+func (x InvoiceStatusType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use InvoiceStatusTypeEnum.Descriptor instead.
-func (InvoiceStatusTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use InvoiceStatusType.Descriptor instead.
+func (InvoiceStatusType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{38}
 }
 
-type InvoiceTaxStatusTypeEnum int32
+type InvoiceTaxStatusType int32
 
 const (
-	InvoiceTaxStatusTypeEnum_INVOICE_TAX_STATUS_TYPE_ENUM_UNSPECIFIED InvoiceTaxStatusTypeEnum = 0
-	InvoiceTaxStatusTypeEnum_INVOICE_TAX_STATUS_TYPE_ENUM_FAILED      InvoiceTaxStatusTypeEnum = 1
-	InvoiceTaxStatusTypeEnum_INVOICE_TAX_STATUS_TYPE_ENUM_PENDING     InvoiceTaxStatusTypeEnum = 2
-	InvoiceTaxStatusTypeEnum_INVOICE_TAX_STATUS_TYPE_ENUM_SUCCEEDED   InvoiceTaxStatusTypeEnum = 3
+	InvoiceTaxStatusType_INVOICE_TAX_STATUS_TYPE_UNSPECIFIED InvoiceTaxStatusType = 0
+	InvoiceTaxStatusType_INVOICE_TAX_STATUS_TYPE_FAILED      InvoiceTaxStatusType = 1
+	InvoiceTaxStatusType_INVOICE_TAX_STATUS_TYPE_PENDING     InvoiceTaxStatusType = 2
+	InvoiceTaxStatusType_INVOICE_TAX_STATUS_TYPE_SUCCEEDED   InvoiceTaxStatusType = 3
 )
 
-// Enum value maps for InvoiceTaxStatusTypeEnum.
+// Enum value maps for InvoiceTaxStatusType.
 var (
-	InvoiceTaxStatusTypeEnum_name = map[int32]string{
-		0: "INVOICE_TAX_STATUS_TYPE_ENUM_UNSPECIFIED",
-		1: "INVOICE_TAX_STATUS_TYPE_ENUM_FAILED",
-		2: "INVOICE_TAX_STATUS_TYPE_ENUM_PENDING",
-		3: "INVOICE_TAX_STATUS_TYPE_ENUM_SUCCEEDED",
+	InvoiceTaxStatusType_name = map[int32]string{
+		0: "INVOICE_TAX_STATUS_TYPE_UNSPECIFIED",
+		1: "INVOICE_TAX_STATUS_TYPE_FAILED",
+		2: "INVOICE_TAX_STATUS_TYPE_PENDING",
+		3: "INVOICE_TAX_STATUS_TYPE_SUCCEEDED",
 	}
-	InvoiceTaxStatusTypeEnum_value = map[string]int32{
-		"INVOICE_TAX_STATUS_TYPE_ENUM_UNSPECIFIED": 0,
-		"INVOICE_TAX_STATUS_TYPE_ENUM_FAILED":      1,
-		"INVOICE_TAX_STATUS_TYPE_ENUM_PENDING":     2,
-		"INVOICE_TAX_STATUS_TYPE_ENUM_SUCCEEDED":   3,
+	InvoiceTaxStatusType_value = map[string]int32{
+		"INVOICE_TAX_STATUS_TYPE_UNSPECIFIED": 0,
+		"INVOICE_TAX_STATUS_TYPE_FAILED":      1,
+		"INVOICE_TAX_STATUS_TYPE_PENDING":     2,
+		"INVOICE_TAX_STATUS_TYPE_SUCCEEDED":   3,
 	}
 )
 
-func (x InvoiceTaxStatusTypeEnum) Enum() *InvoiceTaxStatusTypeEnum {
-	p := new(InvoiceTaxStatusTypeEnum)
+func (x InvoiceTaxStatusType) Enum() *InvoiceTaxStatusType {
+	p := new(InvoiceTaxStatusType)
 	*p = x
 	return p
 }
 
-func (x InvoiceTaxStatusTypeEnum) String() string {
+func (x InvoiceTaxStatusType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (InvoiceTaxStatusTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (InvoiceTaxStatusType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[39].Descriptor()
 }
 
-func (InvoiceTaxStatusTypeEnum) Type() protoreflect.EnumType {
+func (InvoiceTaxStatusType) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[39]
 }
 
-func (x InvoiceTaxStatusTypeEnum) Number() protoreflect.EnumNumber {
+func (x InvoiceTaxStatusType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use InvoiceTaxStatusTypeEnum.Descriptor instead.
-func (InvoiceTaxStatusTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use InvoiceTaxStatusType.Descriptor instead.
+func (InvoiceTaxStatusType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{39}
 }
 
-type InvoiceTypeEnum int32
+type InvoiceType int32
 
 const (
-	InvoiceTypeEnum_INVOICE_TYPE_ENUM_UNSPECIFIED         InvoiceTypeEnum = 0
-	InvoiceTypeEnum_INVOICE_TYPE_ENUM_ADD_ON              InvoiceTypeEnum = 1
-	InvoiceTypeEnum_INVOICE_TYPE_ENUM_ADVANCE_CHARGES     InvoiceTypeEnum = 2
-	InvoiceTypeEnum_INVOICE_TYPE_ENUM_CREDIT              InvoiceTypeEnum = 3
-	InvoiceTypeEnum_INVOICE_TYPE_ENUM_ONE_OFF             InvoiceTypeEnum = 4
-	InvoiceTypeEnum_INVOICE_TYPE_ENUM_PROGRESSIVE_BILLING InvoiceTypeEnum = 5
-	InvoiceTypeEnum_INVOICE_TYPE_ENUM_SUBSCRIPTION        InvoiceTypeEnum = 6
+	InvoiceType_INVOICE_TYPE_UNSPECIFIED         InvoiceType = 0
+	InvoiceType_INVOICE_TYPE_ADD_ON              InvoiceType = 1
+	InvoiceType_INVOICE_TYPE_ADVANCE_CHARGES     InvoiceType = 2
+	InvoiceType_INVOICE_TYPE_CREDIT              InvoiceType = 3
+	InvoiceType_INVOICE_TYPE_ONE_OFF             InvoiceType = 4
+	InvoiceType_INVOICE_TYPE_PROGRESSIVE_BILLING InvoiceType = 5
+	InvoiceType_INVOICE_TYPE_SUBSCRIPTION        InvoiceType = 6
 )
 
-// Enum value maps for InvoiceTypeEnum.
+// Enum value maps for InvoiceType.
 var (
-	InvoiceTypeEnum_name = map[int32]string{
-		0: "INVOICE_TYPE_ENUM_UNSPECIFIED",
-		1: "INVOICE_TYPE_ENUM_ADD_ON",
-		2: "INVOICE_TYPE_ENUM_ADVANCE_CHARGES",
-		3: "INVOICE_TYPE_ENUM_CREDIT",
-		4: "INVOICE_TYPE_ENUM_ONE_OFF",
-		5: "INVOICE_TYPE_ENUM_PROGRESSIVE_BILLING",
-		6: "INVOICE_TYPE_ENUM_SUBSCRIPTION",
+	InvoiceType_name = map[int32]string{
+		0: "INVOICE_TYPE_UNSPECIFIED",
+		1: "INVOICE_TYPE_ADD_ON",
+		2: "INVOICE_TYPE_ADVANCE_CHARGES",
+		3: "INVOICE_TYPE_CREDIT",
+		4: "INVOICE_TYPE_ONE_OFF",
+		5: "INVOICE_TYPE_PROGRESSIVE_BILLING",
+		6: "INVOICE_TYPE_SUBSCRIPTION",
 	}
-	InvoiceTypeEnum_value = map[string]int32{
-		"INVOICE_TYPE_ENUM_UNSPECIFIED":         0,
-		"INVOICE_TYPE_ENUM_ADD_ON":              1,
-		"INVOICE_TYPE_ENUM_ADVANCE_CHARGES":     2,
-		"INVOICE_TYPE_ENUM_CREDIT":              3,
-		"INVOICE_TYPE_ENUM_ONE_OFF":             4,
-		"INVOICE_TYPE_ENUM_PROGRESSIVE_BILLING": 5,
-		"INVOICE_TYPE_ENUM_SUBSCRIPTION":        6,
+	InvoiceType_value = map[string]int32{
+		"INVOICE_TYPE_UNSPECIFIED":         0,
+		"INVOICE_TYPE_ADD_ON":              1,
+		"INVOICE_TYPE_ADVANCE_CHARGES":     2,
+		"INVOICE_TYPE_CREDIT":              3,
+		"INVOICE_TYPE_ONE_OFF":             4,
+		"INVOICE_TYPE_PROGRESSIVE_BILLING": 5,
+		"INVOICE_TYPE_SUBSCRIPTION":        6,
 	}
 )
 
-func (x InvoiceTypeEnum) Enum() *InvoiceTypeEnum {
-	p := new(InvoiceTypeEnum)
+func (x InvoiceType) Enum() *InvoiceType {
+	p := new(InvoiceType)
 	*p = x
 	return p
 }
 
-func (x InvoiceTypeEnum) String() string {
+func (x InvoiceType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (InvoiceTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (InvoiceType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[40].Descriptor()
 }
 
-func (InvoiceTypeEnum) Type() protoreflect.EnumType {
+func (InvoiceType) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[40]
 }
 
-func (x InvoiceTypeEnum) Number() protoreflect.EnumNumber {
+func (x InvoiceType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use InvoiceTypeEnum.Descriptor instead.
-func (InvoiceTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use InvoiceType.Descriptor instead.
+func (InvoiceType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{40}
 }
 
@@ -4130,309 +4128,309 @@ func (MappingTypeEnum) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{42}
 }
 
-type NextSubscriptionTypeEnum int32
+type NextSubscriptionType int32
 
 const (
-	NextSubscriptionTypeEnum_NEXT_SUBSCRIPTION_TYPE_ENUM_UNSPECIFIED NextSubscriptionTypeEnum = 0
-	NextSubscriptionTypeEnum_NEXT_SUBSCRIPTION_TYPE_ENUM_DOWNGRADE   NextSubscriptionTypeEnum = 1
-	NextSubscriptionTypeEnum_NEXT_SUBSCRIPTION_TYPE_ENUM_UPGRADE     NextSubscriptionTypeEnum = 2
+	NextSubscriptionType_NEXT_SUBSCRIPTION_TYPE_UNSPECIFIED NextSubscriptionType = 0
+	NextSubscriptionType_NEXT_SUBSCRIPTION_TYPE_DOWNGRADE   NextSubscriptionType = 1
+	NextSubscriptionType_NEXT_SUBSCRIPTION_TYPE_UPGRADE     NextSubscriptionType = 2
 )
 
-// Enum value maps for NextSubscriptionTypeEnum.
+// Enum value maps for NextSubscriptionType.
 var (
-	NextSubscriptionTypeEnum_name = map[int32]string{
-		0: "NEXT_SUBSCRIPTION_TYPE_ENUM_UNSPECIFIED",
-		1: "NEXT_SUBSCRIPTION_TYPE_ENUM_DOWNGRADE",
-		2: "NEXT_SUBSCRIPTION_TYPE_ENUM_UPGRADE",
+	NextSubscriptionType_name = map[int32]string{
+		0: "NEXT_SUBSCRIPTION_TYPE_UNSPECIFIED",
+		1: "NEXT_SUBSCRIPTION_TYPE_DOWNGRADE",
+		2: "NEXT_SUBSCRIPTION_TYPE_UPGRADE",
 	}
-	NextSubscriptionTypeEnum_value = map[string]int32{
-		"NEXT_SUBSCRIPTION_TYPE_ENUM_UNSPECIFIED": 0,
-		"NEXT_SUBSCRIPTION_TYPE_ENUM_DOWNGRADE":   1,
-		"NEXT_SUBSCRIPTION_TYPE_ENUM_UPGRADE":     2,
+	NextSubscriptionType_value = map[string]int32{
+		"NEXT_SUBSCRIPTION_TYPE_UNSPECIFIED": 0,
+		"NEXT_SUBSCRIPTION_TYPE_DOWNGRADE":   1,
+		"NEXT_SUBSCRIPTION_TYPE_UPGRADE":     2,
 	}
 )
 
-func (x NextSubscriptionTypeEnum) Enum() *NextSubscriptionTypeEnum {
-	p := new(NextSubscriptionTypeEnum)
+func (x NextSubscriptionType) Enum() *NextSubscriptionType {
+	p := new(NextSubscriptionType)
 	*p = x
 	return p
 }
 
-func (x NextSubscriptionTypeEnum) String() string {
+func (x NextSubscriptionType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (NextSubscriptionTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (NextSubscriptionType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[43].Descriptor()
 }
 
-func (NextSubscriptionTypeEnum) Type() protoreflect.EnumType {
+func (NextSubscriptionType) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[43]
 }
 
-func (x NextSubscriptionTypeEnum) Number() protoreflect.EnumNumber {
+func (x NextSubscriptionType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use NextSubscriptionTypeEnum.Descriptor instead.
-func (NextSubscriptionTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use NextSubscriptionType.Descriptor instead.
+func (NextSubscriptionType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{43}
 }
 
-type OnTerminationCreditNoteEnum int32
+type OnTerminationCreditNote int32
 
 const (
-	OnTerminationCreditNoteEnum_ON_TERMINATION_CREDIT_NOTE_ENUM_UNSPECIFIED OnTerminationCreditNoteEnum = 0
-	OnTerminationCreditNoteEnum_ON_TERMINATION_CREDIT_NOTE_ENUM_CREDIT      OnTerminationCreditNoteEnum = 1
-	OnTerminationCreditNoteEnum_ON_TERMINATION_CREDIT_NOTE_ENUM_OFFSET      OnTerminationCreditNoteEnum = 2
-	OnTerminationCreditNoteEnum_ON_TERMINATION_CREDIT_NOTE_ENUM_REFUND      OnTerminationCreditNoteEnum = 3
-	OnTerminationCreditNoteEnum_ON_TERMINATION_CREDIT_NOTE_ENUM_SKIP        OnTerminationCreditNoteEnum = 4
+	OnTerminationCreditNote_ON_TERMINATION_CREDIT_NOTE_UNSPECIFIED OnTerminationCreditNote = 0
+	OnTerminationCreditNote_ON_TERMINATION_CREDIT_NOTE_CREDIT      OnTerminationCreditNote = 1
+	OnTerminationCreditNote_ON_TERMINATION_CREDIT_NOTE_OFFSET      OnTerminationCreditNote = 2
+	OnTerminationCreditNote_ON_TERMINATION_CREDIT_NOTE_REFUND      OnTerminationCreditNote = 3
+	OnTerminationCreditNote_ON_TERMINATION_CREDIT_NOTE_SKIP        OnTerminationCreditNote = 4
 )
 
-// Enum value maps for OnTerminationCreditNoteEnum.
+// Enum value maps for OnTerminationCreditNote.
 var (
-	OnTerminationCreditNoteEnum_name = map[int32]string{
-		0: "ON_TERMINATION_CREDIT_NOTE_ENUM_UNSPECIFIED",
-		1: "ON_TERMINATION_CREDIT_NOTE_ENUM_CREDIT",
-		2: "ON_TERMINATION_CREDIT_NOTE_ENUM_OFFSET",
-		3: "ON_TERMINATION_CREDIT_NOTE_ENUM_REFUND",
-		4: "ON_TERMINATION_CREDIT_NOTE_ENUM_SKIP",
+	OnTerminationCreditNote_name = map[int32]string{
+		0: "ON_TERMINATION_CREDIT_NOTE_UNSPECIFIED",
+		1: "ON_TERMINATION_CREDIT_NOTE_CREDIT",
+		2: "ON_TERMINATION_CREDIT_NOTE_OFFSET",
+		3: "ON_TERMINATION_CREDIT_NOTE_REFUND",
+		4: "ON_TERMINATION_CREDIT_NOTE_SKIP",
 	}
-	OnTerminationCreditNoteEnum_value = map[string]int32{
-		"ON_TERMINATION_CREDIT_NOTE_ENUM_UNSPECIFIED": 0,
-		"ON_TERMINATION_CREDIT_NOTE_ENUM_CREDIT":      1,
-		"ON_TERMINATION_CREDIT_NOTE_ENUM_OFFSET":      2,
-		"ON_TERMINATION_CREDIT_NOTE_ENUM_REFUND":      3,
-		"ON_TERMINATION_CREDIT_NOTE_ENUM_SKIP":        4,
+	OnTerminationCreditNote_value = map[string]int32{
+		"ON_TERMINATION_CREDIT_NOTE_UNSPECIFIED": 0,
+		"ON_TERMINATION_CREDIT_NOTE_CREDIT":      1,
+		"ON_TERMINATION_CREDIT_NOTE_OFFSET":      2,
+		"ON_TERMINATION_CREDIT_NOTE_REFUND":      3,
+		"ON_TERMINATION_CREDIT_NOTE_SKIP":        4,
 	}
 )
 
-func (x OnTerminationCreditNoteEnum) Enum() *OnTerminationCreditNoteEnum {
-	p := new(OnTerminationCreditNoteEnum)
+func (x OnTerminationCreditNote) Enum() *OnTerminationCreditNote {
+	p := new(OnTerminationCreditNote)
 	*p = x
 	return p
 }
 
-func (x OnTerminationCreditNoteEnum) String() string {
+func (x OnTerminationCreditNote) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (OnTerminationCreditNoteEnum) Descriptor() protoreflect.EnumDescriptor {
+func (OnTerminationCreditNote) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[44].Descriptor()
 }
 
-func (OnTerminationCreditNoteEnum) Type() protoreflect.EnumType {
+func (OnTerminationCreditNote) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[44]
 }
 
-func (x OnTerminationCreditNoteEnum) Number() protoreflect.EnumNumber {
+func (x OnTerminationCreditNote) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use OnTerminationCreditNoteEnum.Descriptor instead.
-func (OnTerminationCreditNoteEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use OnTerminationCreditNote.Descriptor instead.
+func (OnTerminationCreditNote) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{44}
 }
 
-type OnTerminationInvoiceEnum int32
+type OnTerminationInvoice int32
 
 const (
-	OnTerminationInvoiceEnum_ON_TERMINATION_INVOICE_ENUM_UNSPECIFIED OnTerminationInvoiceEnum = 0
-	OnTerminationInvoiceEnum_ON_TERMINATION_INVOICE_ENUM_GENERATE    OnTerminationInvoiceEnum = 1
-	OnTerminationInvoiceEnum_ON_TERMINATION_INVOICE_ENUM_SKIP        OnTerminationInvoiceEnum = 2
+	OnTerminationInvoice_ON_TERMINATION_INVOICE_UNSPECIFIED OnTerminationInvoice = 0
+	OnTerminationInvoice_ON_TERMINATION_INVOICE_GENERATE    OnTerminationInvoice = 1
+	OnTerminationInvoice_ON_TERMINATION_INVOICE_SKIP        OnTerminationInvoice = 2
 )
 
-// Enum value maps for OnTerminationInvoiceEnum.
+// Enum value maps for OnTerminationInvoice.
 var (
-	OnTerminationInvoiceEnum_name = map[int32]string{
-		0: "ON_TERMINATION_INVOICE_ENUM_UNSPECIFIED",
-		1: "ON_TERMINATION_INVOICE_ENUM_GENERATE",
-		2: "ON_TERMINATION_INVOICE_ENUM_SKIP",
+	OnTerminationInvoice_name = map[int32]string{
+		0: "ON_TERMINATION_INVOICE_UNSPECIFIED",
+		1: "ON_TERMINATION_INVOICE_GENERATE",
+		2: "ON_TERMINATION_INVOICE_SKIP",
 	}
-	OnTerminationInvoiceEnum_value = map[string]int32{
-		"ON_TERMINATION_INVOICE_ENUM_UNSPECIFIED": 0,
-		"ON_TERMINATION_INVOICE_ENUM_GENERATE":    1,
-		"ON_TERMINATION_INVOICE_ENUM_SKIP":        2,
+	OnTerminationInvoice_value = map[string]int32{
+		"ON_TERMINATION_INVOICE_UNSPECIFIED": 0,
+		"ON_TERMINATION_INVOICE_GENERATE":    1,
+		"ON_TERMINATION_INVOICE_SKIP":        2,
 	}
 )
 
-func (x OnTerminationInvoiceEnum) Enum() *OnTerminationInvoiceEnum {
-	p := new(OnTerminationInvoiceEnum)
+func (x OnTerminationInvoice) Enum() *OnTerminationInvoice {
+	p := new(OnTerminationInvoice)
 	*p = x
 	return p
 }
 
-func (x OnTerminationInvoiceEnum) String() string {
+func (x OnTerminationInvoice) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (OnTerminationInvoiceEnum) Descriptor() protoreflect.EnumDescriptor {
+func (OnTerminationInvoice) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[45].Descriptor()
 }
 
-func (OnTerminationInvoiceEnum) Type() protoreflect.EnumType {
+func (OnTerminationInvoice) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[45]
 }
 
-func (x OnTerminationInvoiceEnum) Number() protoreflect.EnumNumber {
+func (x OnTerminationInvoice) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use OnTerminationInvoiceEnum.Descriptor instead.
-func (OnTerminationInvoiceEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use OnTerminationInvoice.Descriptor instead.
+func (OnTerminationInvoice) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{45}
 }
 
-type PayablePaymentStatusEnum int32
+type PayablePaymentStatus int32
 
 const (
-	PayablePaymentStatusEnum_PAYABLE_PAYMENT_STATUS_ENUM_UNSPECIFIED PayablePaymentStatusEnum = 0
-	PayablePaymentStatusEnum_PAYABLE_PAYMENT_STATUS_ENUM_FAILED      PayablePaymentStatusEnum = 1
-	PayablePaymentStatusEnum_PAYABLE_PAYMENT_STATUS_ENUM_PENDING     PayablePaymentStatusEnum = 2
-	PayablePaymentStatusEnum_PAYABLE_PAYMENT_STATUS_ENUM_PROCESSING  PayablePaymentStatusEnum = 3
-	PayablePaymentStatusEnum_PAYABLE_PAYMENT_STATUS_ENUM_SUCCEEDED   PayablePaymentStatusEnum = 4
+	PayablePaymentStatus_PAYABLE_PAYMENT_STATUS_UNSPECIFIED PayablePaymentStatus = 0
+	PayablePaymentStatus_PAYABLE_PAYMENT_STATUS_FAILED      PayablePaymentStatus = 1
+	PayablePaymentStatus_PAYABLE_PAYMENT_STATUS_PENDING     PayablePaymentStatus = 2
+	PayablePaymentStatus_PAYABLE_PAYMENT_STATUS_PROCESSING  PayablePaymentStatus = 3
+	PayablePaymentStatus_PAYABLE_PAYMENT_STATUS_SUCCEEDED   PayablePaymentStatus = 4
 )
 
-// Enum value maps for PayablePaymentStatusEnum.
+// Enum value maps for PayablePaymentStatus.
 var (
-	PayablePaymentStatusEnum_name = map[int32]string{
-		0: "PAYABLE_PAYMENT_STATUS_ENUM_UNSPECIFIED",
-		1: "PAYABLE_PAYMENT_STATUS_ENUM_FAILED",
-		2: "PAYABLE_PAYMENT_STATUS_ENUM_PENDING",
-		3: "PAYABLE_PAYMENT_STATUS_ENUM_PROCESSING",
-		4: "PAYABLE_PAYMENT_STATUS_ENUM_SUCCEEDED",
+	PayablePaymentStatus_name = map[int32]string{
+		0: "PAYABLE_PAYMENT_STATUS_UNSPECIFIED",
+		1: "PAYABLE_PAYMENT_STATUS_FAILED",
+		2: "PAYABLE_PAYMENT_STATUS_PENDING",
+		3: "PAYABLE_PAYMENT_STATUS_PROCESSING",
+		4: "PAYABLE_PAYMENT_STATUS_SUCCEEDED",
 	}
-	PayablePaymentStatusEnum_value = map[string]int32{
-		"PAYABLE_PAYMENT_STATUS_ENUM_UNSPECIFIED": 0,
-		"PAYABLE_PAYMENT_STATUS_ENUM_FAILED":      1,
-		"PAYABLE_PAYMENT_STATUS_ENUM_PENDING":     2,
-		"PAYABLE_PAYMENT_STATUS_ENUM_PROCESSING":  3,
-		"PAYABLE_PAYMENT_STATUS_ENUM_SUCCEEDED":   4,
+	PayablePaymentStatus_value = map[string]int32{
+		"PAYABLE_PAYMENT_STATUS_UNSPECIFIED": 0,
+		"PAYABLE_PAYMENT_STATUS_FAILED":      1,
+		"PAYABLE_PAYMENT_STATUS_PENDING":     2,
+		"PAYABLE_PAYMENT_STATUS_PROCESSING":  3,
+		"PAYABLE_PAYMENT_STATUS_SUCCEEDED":   4,
 	}
 )
 
-func (x PayablePaymentStatusEnum) Enum() *PayablePaymentStatusEnum {
-	p := new(PayablePaymentStatusEnum)
+func (x PayablePaymentStatus) Enum() *PayablePaymentStatus {
+	p := new(PayablePaymentStatus)
 	*p = x
 	return p
 }
 
-func (x PayablePaymentStatusEnum) String() string {
+func (x PayablePaymentStatus) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (PayablePaymentStatusEnum) Descriptor() protoreflect.EnumDescriptor {
+func (PayablePaymentStatus) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[46].Descriptor()
 }
 
-func (PayablePaymentStatusEnum) Type() protoreflect.EnumType {
+func (PayablePaymentStatus) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[46]
 }
 
-func (x PayablePaymentStatusEnum) Number() protoreflect.EnumNumber {
+func (x PayablePaymentStatus) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use PayablePaymentStatusEnum.Descriptor instead.
-func (PayablePaymentStatusEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use PayablePaymentStatus.Descriptor instead.
+func (PayablePaymentStatus) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{46}
 }
 
-type PaymentMethodTypeEnum int32
+type PaymentMethodType int32
 
 const (
-	PaymentMethodTypeEnum_PAYMENT_METHOD_TYPE_ENUM_UNSPECIFIED PaymentMethodTypeEnum = 0
-	PaymentMethodTypeEnum_PAYMENT_METHOD_TYPE_ENUM_MANUAL      PaymentMethodTypeEnum = 1
-	PaymentMethodTypeEnum_PAYMENT_METHOD_TYPE_ENUM_PROVIDER    PaymentMethodTypeEnum = 2
+	PaymentMethodType_PAYMENT_METHOD_TYPE_UNSPECIFIED PaymentMethodType = 0
+	PaymentMethodType_PAYMENT_METHOD_TYPE_MANUAL      PaymentMethodType = 1
+	PaymentMethodType_PAYMENT_METHOD_TYPE_PROVIDER    PaymentMethodType = 2
 )
 
-// Enum value maps for PaymentMethodTypeEnum.
+// Enum value maps for PaymentMethodType.
 var (
-	PaymentMethodTypeEnum_name = map[int32]string{
-		0: "PAYMENT_METHOD_TYPE_ENUM_UNSPECIFIED",
-		1: "PAYMENT_METHOD_TYPE_ENUM_MANUAL",
-		2: "PAYMENT_METHOD_TYPE_ENUM_PROVIDER",
+	PaymentMethodType_name = map[int32]string{
+		0: "PAYMENT_METHOD_TYPE_UNSPECIFIED",
+		1: "PAYMENT_METHOD_TYPE_MANUAL",
+		2: "PAYMENT_METHOD_TYPE_PROVIDER",
 	}
-	PaymentMethodTypeEnum_value = map[string]int32{
-		"PAYMENT_METHOD_TYPE_ENUM_UNSPECIFIED": 0,
-		"PAYMENT_METHOD_TYPE_ENUM_MANUAL":      1,
-		"PAYMENT_METHOD_TYPE_ENUM_PROVIDER":    2,
+	PaymentMethodType_value = map[string]int32{
+		"PAYMENT_METHOD_TYPE_UNSPECIFIED": 0,
+		"PAYMENT_METHOD_TYPE_MANUAL":      1,
+		"PAYMENT_METHOD_TYPE_PROVIDER":    2,
 	}
 )
 
-func (x PaymentMethodTypeEnum) Enum() *PaymentMethodTypeEnum {
-	p := new(PaymentMethodTypeEnum)
+func (x PaymentMethodType) Enum() *PaymentMethodType {
+	p := new(PaymentMethodType)
 	*p = x
 	return p
 }
 
-func (x PaymentMethodTypeEnum) String() string {
+func (x PaymentMethodType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (PaymentMethodTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (PaymentMethodType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[47].Descriptor()
 }
 
-func (PaymentMethodTypeEnum) Type() protoreflect.EnumType {
+func (PaymentMethodType) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[47]
 }
 
-func (x PaymentMethodTypeEnum) Number() protoreflect.EnumNumber {
+func (x PaymentMethodType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use PaymentMethodTypeEnum.Descriptor instead.
-func (PaymentMethodTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use PaymentMethodType.Descriptor instead.
+func (PaymentMethodType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{47}
 }
 
-type PaymentTypeEnum int32
+type PaymentType int32
 
 const (
-	PaymentTypeEnum_PAYMENT_TYPE_ENUM_UNSPECIFIED PaymentTypeEnum = 0
-	PaymentTypeEnum_PAYMENT_TYPE_ENUM_MANUAL      PaymentTypeEnum = 1
-	PaymentTypeEnum_PAYMENT_TYPE_ENUM_PROVIDER    PaymentTypeEnum = 2
+	PaymentType_PAYMENT_TYPE_UNSPECIFIED PaymentType = 0
+	PaymentType_PAYMENT_TYPE_MANUAL      PaymentType = 1
+	PaymentType_PAYMENT_TYPE_PROVIDER    PaymentType = 2
 )
 
-// Enum value maps for PaymentTypeEnum.
+// Enum value maps for PaymentType.
 var (
-	PaymentTypeEnum_name = map[int32]string{
-		0: "PAYMENT_TYPE_ENUM_UNSPECIFIED",
-		1: "PAYMENT_TYPE_ENUM_MANUAL",
-		2: "PAYMENT_TYPE_ENUM_PROVIDER",
+	PaymentType_name = map[int32]string{
+		0: "PAYMENT_TYPE_UNSPECIFIED",
+		1: "PAYMENT_TYPE_MANUAL",
+		2: "PAYMENT_TYPE_PROVIDER",
 	}
-	PaymentTypeEnum_value = map[string]int32{
-		"PAYMENT_TYPE_ENUM_UNSPECIFIED": 0,
-		"PAYMENT_TYPE_ENUM_MANUAL":      1,
-		"PAYMENT_TYPE_ENUM_PROVIDER":    2,
+	PaymentType_value = map[string]int32{
+		"PAYMENT_TYPE_UNSPECIFIED": 0,
+		"PAYMENT_TYPE_MANUAL":      1,
+		"PAYMENT_TYPE_PROVIDER":    2,
 	}
 )
 
-func (x PaymentTypeEnum) Enum() *PaymentTypeEnum {
-	p := new(PaymentTypeEnum)
+func (x PaymentType) Enum() *PaymentType {
+	p := new(PaymentType)
 	*p = x
 	return p
 }
 
-func (x PaymentTypeEnum) String() string {
+func (x PaymentType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (PaymentTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (PaymentType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[48].Descriptor()
 }
 
-func (PaymentTypeEnum) Type() protoreflect.EnumType {
+func (PaymentType) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[48]
 }
 
-func (x PaymentTypeEnum) Number() protoreflect.EnumNumber {
+func (x PaymentType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use PaymentTypeEnum.Descriptor instead.
-func (PaymentTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use PaymentType.Descriptor instead.
+func (PaymentType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{48}
 }
 
@@ -4549,1355 +4547,1349 @@ func (PrivilegeValueTypeEnum) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{50}
 }
 
-type ProviderPaymentMethodsEnum int32
+type ProviderPaymentMethods int32
 
 const (
-	ProviderPaymentMethodsEnum_PROVIDER_PAYMENT_METHODS_ENUM_UNSPECIFIED      ProviderPaymentMethodsEnum = 0
-	ProviderPaymentMethodsEnum_PROVIDER_PAYMENT_METHODS_ENUM_BACS_DEBIT       ProviderPaymentMethodsEnum = 1
-	ProviderPaymentMethodsEnum_PROVIDER_PAYMENT_METHODS_ENUM_BOLETO           ProviderPaymentMethodsEnum = 2
-	ProviderPaymentMethodsEnum_PROVIDER_PAYMENT_METHODS_ENUM_CARD             ProviderPaymentMethodsEnum = 3
-	ProviderPaymentMethodsEnum_PROVIDER_PAYMENT_METHODS_ENUM_CRYPTO           ProviderPaymentMethodsEnum = 4
-	ProviderPaymentMethodsEnum_PROVIDER_PAYMENT_METHODS_ENUM_CUSTOMER_BALANCE ProviderPaymentMethodsEnum = 5
-	ProviderPaymentMethodsEnum_PROVIDER_PAYMENT_METHODS_ENUM_LINK             ProviderPaymentMethodsEnum = 6
-	ProviderPaymentMethodsEnum_PROVIDER_PAYMENT_METHODS_ENUM_SEPA_DEBIT       ProviderPaymentMethodsEnum = 7
-	ProviderPaymentMethodsEnum_PROVIDER_PAYMENT_METHODS_ENUM_US_BANK_ACCOUNT  ProviderPaymentMethodsEnum = 8
+	ProviderPaymentMethods_PROVIDER_PAYMENT_METHODS_UNSPECIFIED      ProviderPaymentMethods = 0
+	ProviderPaymentMethods_PROVIDER_PAYMENT_METHODS_BACS_DEBIT       ProviderPaymentMethods = 1
+	ProviderPaymentMethods_PROVIDER_PAYMENT_METHODS_BOLETO           ProviderPaymentMethods = 2
+	ProviderPaymentMethods_PROVIDER_PAYMENT_METHODS_CARD             ProviderPaymentMethods = 3
+	ProviderPaymentMethods_PROVIDER_PAYMENT_METHODS_CRYPTO           ProviderPaymentMethods = 4
+	ProviderPaymentMethods_PROVIDER_PAYMENT_METHODS_CUSTOMER_BALANCE ProviderPaymentMethods = 5
+	ProviderPaymentMethods_PROVIDER_PAYMENT_METHODS_LINK             ProviderPaymentMethods = 6
+	ProviderPaymentMethods_PROVIDER_PAYMENT_METHODS_SEPA_DEBIT       ProviderPaymentMethods = 7
+	ProviderPaymentMethods_PROVIDER_PAYMENT_METHODS_US_BANK_ACCOUNT  ProviderPaymentMethods = 8
 )
 
-// Enum value maps for ProviderPaymentMethodsEnum.
+// Enum value maps for ProviderPaymentMethods.
 var (
-	ProviderPaymentMethodsEnum_name = map[int32]string{
-		0: "PROVIDER_PAYMENT_METHODS_ENUM_UNSPECIFIED",
-		1: "PROVIDER_PAYMENT_METHODS_ENUM_BACS_DEBIT",
-		2: "PROVIDER_PAYMENT_METHODS_ENUM_BOLETO",
-		3: "PROVIDER_PAYMENT_METHODS_ENUM_CARD",
-		4: "PROVIDER_PAYMENT_METHODS_ENUM_CRYPTO",
-		5: "PROVIDER_PAYMENT_METHODS_ENUM_CUSTOMER_BALANCE",
-		6: "PROVIDER_PAYMENT_METHODS_ENUM_LINK",
-		7: "PROVIDER_PAYMENT_METHODS_ENUM_SEPA_DEBIT",
-		8: "PROVIDER_PAYMENT_METHODS_ENUM_US_BANK_ACCOUNT",
+	ProviderPaymentMethods_name = map[int32]string{
+		0: "PROVIDER_PAYMENT_METHODS_UNSPECIFIED",
+		1: "PROVIDER_PAYMENT_METHODS_BACS_DEBIT",
+		2: "PROVIDER_PAYMENT_METHODS_BOLETO",
+		3: "PROVIDER_PAYMENT_METHODS_CARD",
+		4: "PROVIDER_PAYMENT_METHODS_CRYPTO",
+		5: "PROVIDER_PAYMENT_METHODS_CUSTOMER_BALANCE",
+		6: "PROVIDER_PAYMENT_METHODS_LINK",
+		7: "PROVIDER_PAYMENT_METHODS_SEPA_DEBIT",
+		8: "PROVIDER_PAYMENT_METHODS_US_BANK_ACCOUNT",
 	}
-	ProviderPaymentMethodsEnum_value = map[string]int32{
-		"PROVIDER_PAYMENT_METHODS_ENUM_UNSPECIFIED":      0,
-		"PROVIDER_PAYMENT_METHODS_ENUM_BACS_DEBIT":       1,
-		"PROVIDER_PAYMENT_METHODS_ENUM_BOLETO":           2,
-		"PROVIDER_PAYMENT_METHODS_ENUM_CARD":             3,
-		"PROVIDER_PAYMENT_METHODS_ENUM_CRYPTO":           4,
-		"PROVIDER_PAYMENT_METHODS_ENUM_CUSTOMER_BALANCE": 5,
-		"PROVIDER_PAYMENT_METHODS_ENUM_LINK":             6,
-		"PROVIDER_PAYMENT_METHODS_ENUM_SEPA_DEBIT":       7,
-		"PROVIDER_PAYMENT_METHODS_ENUM_US_BANK_ACCOUNT":  8,
+	ProviderPaymentMethods_value = map[string]int32{
+		"PROVIDER_PAYMENT_METHODS_UNSPECIFIED":      0,
+		"PROVIDER_PAYMENT_METHODS_BACS_DEBIT":       1,
+		"PROVIDER_PAYMENT_METHODS_BOLETO":           2,
+		"PROVIDER_PAYMENT_METHODS_CARD":             3,
+		"PROVIDER_PAYMENT_METHODS_CRYPTO":           4,
+		"PROVIDER_PAYMENT_METHODS_CUSTOMER_BALANCE": 5,
+		"PROVIDER_PAYMENT_METHODS_LINK":             6,
+		"PROVIDER_PAYMENT_METHODS_SEPA_DEBIT":       7,
+		"PROVIDER_PAYMENT_METHODS_US_BANK_ACCOUNT":  8,
 	}
 )
 
-func (x ProviderPaymentMethodsEnum) Enum() *ProviderPaymentMethodsEnum {
-	p := new(ProviderPaymentMethodsEnum)
+func (x ProviderPaymentMethods) Enum() *ProviderPaymentMethods {
+	p := new(ProviderPaymentMethods)
 	*p = x
 	return p
 }
 
-func (x ProviderPaymentMethodsEnum) String() string {
+func (x ProviderPaymentMethods) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (ProviderPaymentMethodsEnum) Descriptor() protoreflect.EnumDescriptor {
+func (ProviderPaymentMethods) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[51].Descriptor()
 }
 
-func (ProviderPaymentMethodsEnum) Type() protoreflect.EnumType {
+func (ProviderPaymentMethods) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[51]
 }
 
-func (x ProviderPaymentMethodsEnum) Number() protoreflect.EnumNumber {
+func (x ProviderPaymentMethods) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use ProviderPaymentMethodsEnum.Descriptor instead.
-func (ProviderPaymentMethodsEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use ProviderPaymentMethods.Descriptor instead.
+func (ProviderPaymentMethods) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{51}
 }
 
-type ProviderTypeEnum int32
+type ProviderType int32
 
 const (
-	ProviderTypeEnum_PROVIDER_TYPE_ENUM_UNSPECIFIED ProviderTypeEnum = 0
-	ProviderTypeEnum_PROVIDER_TYPE_ENUM_ADYEN       ProviderTypeEnum = 1
-	ProviderTypeEnum_PROVIDER_TYPE_ENUM_CASHFREE    ProviderTypeEnum = 2
-	ProviderTypeEnum_PROVIDER_TYPE_ENUM_FLUTTERWAVE ProviderTypeEnum = 3
-	ProviderTypeEnum_PROVIDER_TYPE_ENUM_GOCARDLESS  ProviderTypeEnum = 4
-	ProviderTypeEnum_PROVIDER_TYPE_ENUM_MONEYHASH   ProviderTypeEnum = 5
-	ProviderTypeEnum_PROVIDER_TYPE_ENUM_STRIPE      ProviderTypeEnum = 6
-	ProviderTypeEnum_PROVIDER_TYPE_ENUM_TAP         ProviderTypeEnum = 7
+	ProviderType_PROVIDER_TYPE_UNSPECIFIED ProviderType = 0
+	ProviderType_PROVIDER_TYPE_ADYEN       ProviderType = 1
+	ProviderType_PROVIDER_TYPE_CASHFREE    ProviderType = 2
+	ProviderType_PROVIDER_TYPE_FLUTTERWAVE ProviderType = 3
+	ProviderType_PROVIDER_TYPE_GOCARDLESS  ProviderType = 4
+	ProviderType_PROVIDER_TYPE_MONEYHASH   ProviderType = 5
+	ProviderType_PROVIDER_TYPE_STRIPE      ProviderType = 6
+	ProviderType_PROVIDER_TYPE_TAP         ProviderType = 7
 )
 
-// Enum value maps for ProviderTypeEnum.
+// Enum value maps for ProviderType.
 var (
-	ProviderTypeEnum_name = map[int32]string{
-		0: "PROVIDER_TYPE_ENUM_UNSPECIFIED",
-		1: "PROVIDER_TYPE_ENUM_ADYEN",
-		2: "PROVIDER_TYPE_ENUM_CASHFREE",
-		3: "PROVIDER_TYPE_ENUM_FLUTTERWAVE",
-		4: "PROVIDER_TYPE_ENUM_GOCARDLESS",
-		5: "PROVIDER_TYPE_ENUM_MONEYHASH",
-		6: "PROVIDER_TYPE_ENUM_STRIPE",
-		7: "PROVIDER_TYPE_ENUM_TAP",
+	ProviderType_name = map[int32]string{
+		0: "PROVIDER_TYPE_UNSPECIFIED",
+		1: "PROVIDER_TYPE_ADYEN",
+		2: "PROVIDER_TYPE_CASHFREE",
+		3: "PROVIDER_TYPE_FLUTTERWAVE",
+		4: "PROVIDER_TYPE_GOCARDLESS",
+		5: "PROVIDER_TYPE_MONEYHASH",
+		6: "PROVIDER_TYPE_STRIPE",
+		7: "PROVIDER_TYPE_TAP",
 	}
-	ProviderTypeEnum_value = map[string]int32{
-		"PROVIDER_TYPE_ENUM_UNSPECIFIED": 0,
-		"PROVIDER_TYPE_ENUM_ADYEN":       1,
-		"PROVIDER_TYPE_ENUM_CASHFREE":    2,
-		"PROVIDER_TYPE_ENUM_FLUTTERWAVE": 3,
-		"PROVIDER_TYPE_ENUM_GOCARDLESS":  4,
-		"PROVIDER_TYPE_ENUM_MONEYHASH":   5,
-		"PROVIDER_TYPE_ENUM_STRIPE":      6,
-		"PROVIDER_TYPE_ENUM_TAP":         7,
+	ProviderType_value = map[string]int32{
+		"PROVIDER_TYPE_UNSPECIFIED": 0,
+		"PROVIDER_TYPE_ADYEN":       1,
+		"PROVIDER_TYPE_CASHFREE":    2,
+		"PROVIDER_TYPE_FLUTTERWAVE": 3,
+		"PROVIDER_TYPE_GOCARDLESS":  4,
+		"PROVIDER_TYPE_MONEYHASH":   5,
+		"PROVIDER_TYPE_STRIPE":      6,
+		"PROVIDER_TYPE_TAP":         7,
 	}
 )
 
-func (x ProviderTypeEnum) Enum() *ProviderTypeEnum {
-	p := new(ProviderTypeEnum)
+func (x ProviderType) Enum() *ProviderType {
+	p := new(ProviderType)
 	*p = x
 	return p
 }
 
-func (x ProviderTypeEnum) String() string {
+func (x ProviderType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (ProviderTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (ProviderType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[52].Descriptor()
 }
 
-func (ProviderTypeEnum) Type() protoreflect.EnumType {
+func (ProviderType) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[52]
 }
 
-func (x ProviderTypeEnum) Number() protoreflect.EnumNumber {
+func (x ProviderType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use ProviderTypeEnum.Descriptor instead.
-func (ProviderTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use ProviderType.Descriptor instead.
+func (ProviderType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{52}
 }
 
-type RecurringTransactionIntervalEnum int32
+type RecurringTransactionInterval int32
 
 const (
-	RecurringTransactionIntervalEnum_RECURRING_TRANSACTION_INTERVAL_ENUM_UNSPECIFIED RecurringTransactionIntervalEnum = 0
-	RecurringTransactionIntervalEnum_RECURRING_TRANSACTION_INTERVAL_ENUM_MONTHLY     RecurringTransactionIntervalEnum = 1
-	RecurringTransactionIntervalEnum_RECURRING_TRANSACTION_INTERVAL_ENUM_QUARTERLY   RecurringTransactionIntervalEnum = 2
-	RecurringTransactionIntervalEnum_RECURRING_TRANSACTION_INTERVAL_ENUM_SEMIANNUAL  RecurringTransactionIntervalEnum = 3
-	RecurringTransactionIntervalEnum_RECURRING_TRANSACTION_INTERVAL_ENUM_WEEKLY      RecurringTransactionIntervalEnum = 4
-	RecurringTransactionIntervalEnum_RECURRING_TRANSACTION_INTERVAL_ENUM_YEARLY      RecurringTransactionIntervalEnum = 5
+	RecurringTransactionInterval_RECURRING_TRANSACTION_INTERVAL_UNSPECIFIED RecurringTransactionInterval = 0
+	RecurringTransactionInterval_RECURRING_TRANSACTION_INTERVAL_MONTHLY     RecurringTransactionInterval = 1
+	RecurringTransactionInterval_RECURRING_TRANSACTION_INTERVAL_QUARTERLY   RecurringTransactionInterval = 2
+	RecurringTransactionInterval_RECURRING_TRANSACTION_INTERVAL_SEMIANNUAL  RecurringTransactionInterval = 3
+	RecurringTransactionInterval_RECURRING_TRANSACTION_INTERVAL_WEEKLY      RecurringTransactionInterval = 4
+	RecurringTransactionInterval_RECURRING_TRANSACTION_INTERVAL_YEARLY      RecurringTransactionInterval = 5
 )
 
-// Enum value maps for RecurringTransactionIntervalEnum.
+// Enum value maps for RecurringTransactionInterval.
 var (
-	RecurringTransactionIntervalEnum_name = map[int32]string{
-		0: "RECURRING_TRANSACTION_INTERVAL_ENUM_UNSPECIFIED",
-		1: "RECURRING_TRANSACTION_INTERVAL_ENUM_MONTHLY",
-		2: "RECURRING_TRANSACTION_INTERVAL_ENUM_QUARTERLY",
-		3: "RECURRING_TRANSACTION_INTERVAL_ENUM_SEMIANNUAL",
-		4: "RECURRING_TRANSACTION_INTERVAL_ENUM_WEEKLY",
-		5: "RECURRING_TRANSACTION_INTERVAL_ENUM_YEARLY",
+	RecurringTransactionInterval_name = map[int32]string{
+		0: "RECURRING_TRANSACTION_INTERVAL_UNSPECIFIED",
+		1: "RECURRING_TRANSACTION_INTERVAL_MONTHLY",
+		2: "RECURRING_TRANSACTION_INTERVAL_QUARTERLY",
+		3: "RECURRING_TRANSACTION_INTERVAL_SEMIANNUAL",
+		4: "RECURRING_TRANSACTION_INTERVAL_WEEKLY",
+		5: "RECURRING_TRANSACTION_INTERVAL_YEARLY",
 	}
-	RecurringTransactionIntervalEnum_value = map[string]int32{
-		"RECURRING_TRANSACTION_INTERVAL_ENUM_UNSPECIFIED": 0,
-		"RECURRING_TRANSACTION_INTERVAL_ENUM_MONTHLY":     1,
-		"RECURRING_TRANSACTION_INTERVAL_ENUM_QUARTERLY":   2,
-		"RECURRING_TRANSACTION_INTERVAL_ENUM_SEMIANNUAL":  3,
-		"RECURRING_TRANSACTION_INTERVAL_ENUM_WEEKLY":      4,
-		"RECURRING_TRANSACTION_INTERVAL_ENUM_YEARLY":      5,
+	RecurringTransactionInterval_value = map[string]int32{
+		"RECURRING_TRANSACTION_INTERVAL_UNSPECIFIED": 0,
+		"RECURRING_TRANSACTION_INTERVAL_MONTHLY":     1,
+		"RECURRING_TRANSACTION_INTERVAL_QUARTERLY":   2,
+		"RECURRING_TRANSACTION_INTERVAL_SEMIANNUAL":  3,
+		"RECURRING_TRANSACTION_INTERVAL_WEEKLY":      4,
+		"RECURRING_TRANSACTION_INTERVAL_YEARLY":      5,
 	}
 )
 
-func (x RecurringTransactionIntervalEnum) Enum() *RecurringTransactionIntervalEnum {
-	p := new(RecurringTransactionIntervalEnum)
+func (x RecurringTransactionInterval) Enum() *RecurringTransactionInterval {
+	p := new(RecurringTransactionInterval)
 	*p = x
 	return p
 }
 
-func (x RecurringTransactionIntervalEnum) String() string {
+func (x RecurringTransactionInterval) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (RecurringTransactionIntervalEnum) Descriptor() protoreflect.EnumDescriptor {
+func (RecurringTransactionInterval) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[53].Descriptor()
 }
 
-func (RecurringTransactionIntervalEnum) Type() protoreflect.EnumType {
+func (RecurringTransactionInterval) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[53]
 }
 
-func (x RecurringTransactionIntervalEnum) Number() protoreflect.EnumNumber {
+func (x RecurringTransactionInterval) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use RecurringTransactionIntervalEnum.Descriptor instead.
-func (RecurringTransactionIntervalEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use RecurringTransactionInterval.Descriptor instead.
+func (RecurringTransactionInterval) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{53}
 }
 
-type RecurringTransactionMethodEnum int32
+type RecurringTransactionMethod int32
 
 const (
-	RecurringTransactionMethodEnum_RECURRING_TRANSACTION_METHOD_ENUM_UNSPECIFIED RecurringTransactionMethodEnum = 0
-	RecurringTransactionMethodEnum_RECURRING_TRANSACTION_METHOD_ENUM_FIXED       RecurringTransactionMethodEnum = 1
-	RecurringTransactionMethodEnum_RECURRING_TRANSACTION_METHOD_ENUM_TARGET      RecurringTransactionMethodEnum = 2
+	RecurringTransactionMethod_RECURRING_TRANSACTION_METHOD_UNSPECIFIED RecurringTransactionMethod = 0
+	RecurringTransactionMethod_RECURRING_TRANSACTION_METHOD_FIXED       RecurringTransactionMethod = 1
+	RecurringTransactionMethod_RECURRING_TRANSACTION_METHOD_TARGET      RecurringTransactionMethod = 2
 )
 
-// Enum value maps for RecurringTransactionMethodEnum.
+// Enum value maps for RecurringTransactionMethod.
 var (
-	RecurringTransactionMethodEnum_name = map[int32]string{
-		0: "RECURRING_TRANSACTION_METHOD_ENUM_UNSPECIFIED",
-		1: "RECURRING_TRANSACTION_METHOD_ENUM_FIXED",
-		2: "RECURRING_TRANSACTION_METHOD_ENUM_TARGET",
+	RecurringTransactionMethod_name = map[int32]string{
+		0: "RECURRING_TRANSACTION_METHOD_UNSPECIFIED",
+		1: "RECURRING_TRANSACTION_METHOD_FIXED",
+		2: "RECURRING_TRANSACTION_METHOD_TARGET",
 	}
-	RecurringTransactionMethodEnum_value = map[string]int32{
-		"RECURRING_TRANSACTION_METHOD_ENUM_UNSPECIFIED": 0,
-		"RECURRING_TRANSACTION_METHOD_ENUM_FIXED":       1,
-		"RECURRING_TRANSACTION_METHOD_ENUM_TARGET":      2,
+	RecurringTransactionMethod_value = map[string]int32{
+		"RECURRING_TRANSACTION_METHOD_UNSPECIFIED": 0,
+		"RECURRING_TRANSACTION_METHOD_FIXED":       1,
+		"RECURRING_TRANSACTION_METHOD_TARGET":      2,
 	}
 )
 
-func (x RecurringTransactionMethodEnum) Enum() *RecurringTransactionMethodEnum {
-	p := new(RecurringTransactionMethodEnum)
+func (x RecurringTransactionMethod) Enum() *RecurringTransactionMethod {
+	p := new(RecurringTransactionMethod)
 	*p = x
 	return p
 }
 
-func (x RecurringTransactionMethodEnum) String() string {
+func (x RecurringTransactionMethod) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (RecurringTransactionMethodEnum) Descriptor() protoreflect.EnumDescriptor {
+func (RecurringTransactionMethod) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[54].Descriptor()
 }
 
-func (RecurringTransactionMethodEnum) Type() protoreflect.EnumType {
+func (RecurringTransactionMethod) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[54]
 }
 
-func (x RecurringTransactionMethodEnum) Number() protoreflect.EnumNumber {
+func (x RecurringTransactionMethod) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use RecurringTransactionMethodEnum.Descriptor instead.
-func (RecurringTransactionMethodEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use RecurringTransactionMethod.Descriptor instead.
+func (RecurringTransactionMethod) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{54}
 }
 
-type RecurringTransactionTriggerEnum int32
+type RecurringTransactionTrigger int32
 
 const (
-	RecurringTransactionTriggerEnum_RECURRING_TRANSACTION_TRIGGER_ENUM_UNSPECIFIED RecurringTransactionTriggerEnum = 0
-	RecurringTransactionTriggerEnum_RECURRING_TRANSACTION_TRIGGER_ENUM_INTERVAL    RecurringTransactionTriggerEnum = 1
-	RecurringTransactionTriggerEnum_RECURRING_TRANSACTION_TRIGGER_ENUM_THRESHOLD   RecurringTransactionTriggerEnum = 2
+	RecurringTransactionTrigger_RECURRING_TRANSACTION_TRIGGER_UNSPECIFIED RecurringTransactionTrigger = 0
+	RecurringTransactionTrigger_RECURRING_TRANSACTION_TRIGGER_INTERVAL    RecurringTransactionTrigger = 1
+	RecurringTransactionTrigger_RECURRING_TRANSACTION_TRIGGER_THRESHOLD   RecurringTransactionTrigger = 2
 )
 
-// Enum value maps for RecurringTransactionTriggerEnum.
+// Enum value maps for RecurringTransactionTrigger.
 var (
-	RecurringTransactionTriggerEnum_name = map[int32]string{
-		0: "RECURRING_TRANSACTION_TRIGGER_ENUM_UNSPECIFIED",
-		1: "RECURRING_TRANSACTION_TRIGGER_ENUM_INTERVAL",
-		2: "RECURRING_TRANSACTION_TRIGGER_ENUM_THRESHOLD",
+	RecurringTransactionTrigger_name = map[int32]string{
+		0: "RECURRING_TRANSACTION_TRIGGER_UNSPECIFIED",
+		1: "RECURRING_TRANSACTION_TRIGGER_INTERVAL",
+		2: "RECURRING_TRANSACTION_TRIGGER_THRESHOLD",
 	}
-	RecurringTransactionTriggerEnum_value = map[string]int32{
-		"RECURRING_TRANSACTION_TRIGGER_ENUM_UNSPECIFIED": 0,
-		"RECURRING_TRANSACTION_TRIGGER_ENUM_INTERVAL":    1,
-		"RECURRING_TRANSACTION_TRIGGER_ENUM_THRESHOLD":   2,
+	RecurringTransactionTrigger_value = map[string]int32{
+		"RECURRING_TRANSACTION_TRIGGER_UNSPECIFIED": 0,
+		"RECURRING_TRANSACTION_TRIGGER_INTERVAL":    1,
+		"RECURRING_TRANSACTION_TRIGGER_THRESHOLD":   2,
 	}
 )
 
-func (x RecurringTransactionTriggerEnum) Enum() *RecurringTransactionTriggerEnum {
-	p := new(RecurringTransactionTriggerEnum)
+func (x RecurringTransactionTrigger) Enum() *RecurringTransactionTrigger {
+	p := new(RecurringTransactionTrigger)
 	*p = x
 	return p
 }
 
-func (x RecurringTransactionTriggerEnum) String() string {
+func (x RecurringTransactionTrigger) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (RecurringTransactionTriggerEnum) Descriptor() protoreflect.EnumDescriptor {
+func (RecurringTransactionTrigger) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[55].Descriptor()
 }
 
-func (RecurringTransactionTriggerEnum) Type() protoreflect.EnumType {
+func (RecurringTransactionTrigger) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[55]
 }
 
-func (x RecurringTransactionTriggerEnum) Number() protoreflect.EnumNumber {
+func (x RecurringTransactionTrigger) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use RecurringTransactionTriggerEnum.Descriptor instead.
-func (RecurringTransactionTriggerEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use RecurringTransactionTrigger.Descriptor instead.
+func (RecurringTransactionTrigger) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{55}
 }
 
-type RegroupPaidFeesEnum int32
+type RegroupPaidFees int32
 
 const (
-	RegroupPaidFeesEnum_REGROUP_PAID_FEES_ENUM_UNSPECIFIED RegroupPaidFeesEnum = 0
-	RegroupPaidFeesEnum_REGROUP_PAID_FEES_ENUM_INVOICE     RegroupPaidFeesEnum = 1
+	RegroupPaidFees_REGROUP_PAID_FEES_UNSPECIFIED RegroupPaidFees = 0
+	RegroupPaidFees_REGROUP_PAID_FEES_INVOICE     RegroupPaidFees = 1
 )
 
-// Enum value maps for RegroupPaidFeesEnum.
+// Enum value maps for RegroupPaidFees.
 var (
-	RegroupPaidFeesEnum_name = map[int32]string{
-		0: "REGROUP_PAID_FEES_ENUM_UNSPECIFIED",
-		1: "REGROUP_PAID_FEES_ENUM_INVOICE",
+	RegroupPaidFees_name = map[int32]string{
+		0: "REGROUP_PAID_FEES_UNSPECIFIED",
+		1: "REGROUP_PAID_FEES_INVOICE",
 	}
-	RegroupPaidFeesEnum_value = map[string]int32{
-		"REGROUP_PAID_FEES_ENUM_UNSPECIFIED": 0,
-		"REGROUP_PAID_FEES_ENUM_INVOICE":     1,
+	RegroupPaidFees_value = map[string]int32{
+		"REGROUP_PAID_FEES_UNSPECIFIED": 0,
+		"REGROUP_PAID_FEES_INVOICE":     1,
 	}
 )
 
-func (x RegroupPaidFeesEnum) Enum() *RegroupPaidFeesEnum {
-	p := new(RegroupPaidFeesEnum)
+func (x RegroupPaidFees) Enum() *RegroupPaidFees {
+	p := new(RegroupPaidFees)
 	*p = x
 	return p
 }
 
-func (x RegroupPaidFeesEnum) String() string {
+func (x RegroupPaidFees) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (RegroupPaidFeesEnum) Descriptor() protoreflect.EnumDescriptor {
+func (RegroupPaidFees) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[56].Descriptor()
 }
 
-func (RegroupPaidFeesEnum) Type() protoreflect.EnumType {
+func (RegroupPaidFees) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[56]
 }
 
-func (x RegroupPaidFeesEnum) Number() protoreflect.EnumNumber {
+func (x RegroupPaidFees) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use RegroupPaidFeesEnum.Descriptor instead.
-func (RegroupPaidFeesEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use RegroupPaidFees.Descriptor instead.
+func (RegroupPaidFees) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{56}
 }
 
-type RoundingFunctionEnum int32
+type RoundingFunction int32
 
 const (
-	RoundingFunctionEnum_ROUNDING_FUNCTION_ENUM_UNSPECIFIED RoundingFunctionEnum = 0
-	RoundingFunctionEnum_ROUNDING_FUNCTION_ENUM_CEIL        RoundingFunctionEnum = 1
-	RoundingFunctionEnum_ROUNDING_FUNCTION_ENUM_FLOOR       RoundingFunctionEnum = 2
-	RoundingFunctionEnum_ROUNDING_FUNCTION_ENUM_ROUND       RoundingFunctionEnum = 3
+	RoundingFunction_ROUNDING_FUNCTION_UNSPECIFIED RoundingFunction = 0
+	RoundingFunction_ROUNDING_FUNCTION_CEIL        RoundingFunction = 1
+	RoundingFunction_ROUNDING_FUNCTION_FLOOR       RoundingFunction = 2
+	RoundingFunction_ROUNDING_FUNCTION_ROUND       RoundingFunction = 3
 )
 
-// Enum value maps for RoundingFunctionEnum.
+// Enum value maps for RoundingFunction.
 var (
-	RoundingFunctionEnum_name = map[int32]string{
-		0: "ROUNDING_FUNCTION_ENUM_UNSPECIFIED",
-		1: "ROUNDING_FUNCTION_ENUM_CEIL",
-		2: "ROUNDING_FUNCTION_ENUM_FLOOR",
-		3: "ROUNDING_FUNCTION_ENUM_ROUND",
+	RoundingFunction_name = map[int32]string{
+		0: "ROUNDING_FUNCTION_UNSPECIFIED",
+		1: "ROUNDING_FUNCTION_CEIL",
+		2: "ROUNDING_FUNCTION_FLOOR",
+		3: "ROUNDING_FUNCTION_ROUND",
 	}
-	RoundingFunctionEnum_value = map[string]int32{
-		"ROUNDING_FUNCTION_ENUM_UNSPECIFIED": 0,
-		"ROUNDING_FUNCTION_ENUM_CEIL":        1,
-		"ROUNDING_FUNCTION_ENUM_FLOOR":       2,
-		"ROUNDING_FUNCTION_ENUM_ROUND":       3,
+	RoundingFunction_value = map[string]int32{
+		"ROUNDING_FUNCTION_UNSPECIFIED": 0,
+		"ROUNDING_FUNCTION_CEIL":        1,
+		"ROUNDING_FUNCTION_FLOOR":       2,
+		"ROUNDING_FUNCTION_ROUND":       3,
 	}
 )
 
-func (x RoundingFunctionEnum) Enum() *RoundingFunctionEnum {
-	p := new(RoundingFunctionEnum)
+func (x RoundingFunction) Enum() *RoundingFunction {
+	p := new(RoundingFunction)
 	*p = x
 	return p
 }
 
-func (x RoundingFunctionEnum) String() string {
+func (x RoundingFunction) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (RoundingFunctionEnum) Descriptor() protoreflect.EnumDescriptor {
+func (RoundingFunction) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[57].Descriptor()
 }
 
-func (RoundingFunctionEnum) Type() protoreflect.EnumType {
+func (RoundingFunction) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[57]
 }
 
-func (x RoundingFunctionEnum) Number() protoreflect.EnumNumber {
+func (x RoundingFunction) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use RoundingFunctionEnum.Descriptor instead.
-func (RoundingFunctionEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use RoundingFunction.Descriptor instead.
+func (RoundingFunction) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{57}
 }
 
-type StatusTypeEnum int32
+type StatusType int32
 
 const (
-	StatusTypeEnum_STATUS_TYPE_ENUM_UNSPECIFIED StatusTypeEnum = 0
-	StatusTypeEnum_STATUS_TYPE_ENUM_ACTIVE      StatusTypeEnum = 1
-	StatusTypeEnum_STATUS_TYPE_ENUM_CANCELED    StatusTypeEnum = 2
-	StatusTypeEnum_STATUS_TYPE_ENUM_PENDING     StatusTypeEnum = 3
-	StatusTypeEnum_STATUS_TYPE_ENUM_TERMINATED  StatusTypeEnum = 4
+	StatusType_STATUS_TYPE_UNSPECIFIED StatusType = 0
+	StatusType_STATUS_TYPE_ACTIVE      StatusType = 1
+	StatusType_STATUS_TYPE_CANCELED    StatusType = 2
+	StatusType_STATUS_TYPE_PENDING     StatusType = 3
+	StatusType_STATUS_TYPE_TERMINATED  StatusType = 4
 )
 
-// Enum value maps for StatusTypeEnum.
+// Enum value maps for StatusType.
 var (
-	StatusTypeEnum_name = map[int32]string{
-		0: "STATUS_TYPE_ENUM_UNSPECIFIED",
-		1: "STATUS_TYPE_ENUM_ACTIVE",
-		2: "STATUS_TYPE_ENUM_CANCELED",
-		3: "STATUS_TYPE_ENUM_PENDING",
-		4: "STATUS_TYPE_ENUM_TERMINATED",
+	StatusType_name = map[int32]string{
+		0: "STATUS_TYPE_UNSPECIFIED",
+		1: "STATUS_TYPE_ACTIVE",
+		2: "STATUS_TYPE_CANCELED",
+		3: "STATUS_TYPE_PENDING",
+		4: "STATUS_TYPE_TERMINATED",
 	}
-	StatusTypeEnum_value = map[string]int32{
-		"STATUS_TYPE_ENUM_UNSPECIFIED": 0,
-		"STATUS_TYPE_ENUM_ACTIVE":      1,
-		"STATUS_TYPE_ENUM_CANCELED":    2,
-		"STATUS_TYPE_ENUM_PENDING":     3,
-		"STATUS_TYPE_ENUM_TERMINATED":  4,
+	StatusType_value = map[string]int32{
+		"STATUS_TYPE_UNSPECIFIED": 0,
+		"STATUS_TYPE_ACTIVE":      1,
+		"STATUS_TYPE_CANCELED":    2,
+		"STATUS_TYPE_PENDING":     3,
+		"STATUS_TYPE_TERMINATED":  4,
 	}
 )
 
-func (x StatusTypeEnum) Enum() *StatusTypeEnum {
-	p := new(StatusTypeEnum)
+func (x StatusType) Enum() *StatusType {
+	p := new(StatusType)
 	*p = x
 	return p
 }
 
-func (x StatusTypeEnum) String() string {
+func (x StatusType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (StatusTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (StatusType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[58].Descriptor()
 }
 
-func (StatusTypeEnum) Type() protoreflect.EnumType {
+func (StatusType) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[58]
 }
 
-func (x StatusTypeEnum) Number() protoreflect.EnumNumber {
+func (x StatusType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use StatusTypeEnum.Descriptor instead.
-func (StatusTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use StatusType.Descriptor instead.
+func (StatusType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{58}
 }
 
-type TimezoneEnum int32
+type Timezone int32
 
 const (
-	TimezoneEnum_TIMEZONE_ENUM_UNSPECIFIED TimezoneEnum = 0
+	Timezone_TIMEZONE_UNSPECIFIED Timezone = 0
 	// Africa/Algiers
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AFRICA_ALGIERS TimezoneEnum = 1
+	Timezone_TIMEZONE_TZ_AFRICA_ALGIERS Timezone = 1
 	// Africa/Cairo
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AFRICA_CAIRO TimezoneEnum = 2
+	Timezone_TIMEZONE_TZ_AFRICA_CAIRO Timezone = 2
 	// Africa/Casablanca
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AFRICA_CASABLANCA TimezoneEnum = 3
+	Timezone_TIMEZONE_TZ_AFRICA_CASABLANCA Timezone = 3
 	// Africa/Harare
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AFRICA_HARARE TimezoneEnum = 4
+	Timezone_TIMEZONE_TZ_AFRICA_HARARE Timezone = 4
 	// Africa/Johannesburg
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AFRICA_JOHANNESBURG TimezoneEnum = 5
+	Timezone_TIMEZONE_TZ_AFRICA_JOHANNESBURG Timezone = 5
 	// Africa/Monrovia
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AFRICA_MONROVIA TimezoneEnum = 6
+	Timezone_TIMEZONE_TZ_AFRICA_MONROVIA Timezone = 6
 	// Africa/Nairobi
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AFRICA_NAIROBI TimezoneEnum = 7
+	Timezone_TIMEZONE_TZ_AFRICA_NAIROBI Timezone = 7
 	// America/Argentina/Buenos_Aires
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_ARGENTINA_BUENOS_AIRES TimezoneEnum = 8
+	Timezone_TIMEZONE_TZ_AMERICA_ARGENTINA_BUENOS_AIRES Timezone = 8
 	// America/Bogota
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_BOGOTA TimezoneEnum = 9
+	Timezone_TIMEZONE_TZ_AMERICA_BOGOTA Timezone = 9
 	// America/Caracas
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_CARACAS TimezoneEnum = 10
+	Timezone_TIMEZONE_TZ_AMERICA_CARACAS Timezone = 10
 	// America/Chicago
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_CHICAGO TimezoneEnum = 11
+	Timezone_TIMEZONE_TZ_AMERICA_CHICAGO Timezone = 11
 	// America/Chihuahua
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_CHIHUAHUA TimezoneEnum = 12
+	Timezone_TIMEZONE_TZ_AMERICA_CHIHUAHUA Timezone = 12
 	// America/Denver
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_DENVER TimezoneEnum = 13
+	Timezone_TIMEZONE_TZ_AMERICA_DENVER Timezone = 13
 	// America/Guatemala
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_GUATEMALA TimezoneEnum = 14
+	Timezone_TIMEZONE_TZ_AMERICA_GUATEMALA Timezone = 14
 	// America/Guyana
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_GUYANA TimezoneEnum = 15
+	Timezone_TIMEZONE_TZ_AMERICA_GUYANA Timezone = 15
 	// America/Halifax
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_HALIFAX TimezoneEnum = 16
+	Timezone_TIMEZONE_TZ_AMERICA_HALIFAX Timezone = 16
 	// America/Indiana/Indianapolis
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_INDIANA_INDIANAPOLIS TimezoneEnum = 17
+	Timezone_TIMEZONE_TZ_AMERICA_INDIANA_INDIANAPOLIS Timezone = 17
 	// America/Juneau
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_JUNEAU TimezoneEnum = 18
+	Timezone_TIMEZONE_TZ_AMERICA_JUNEAU Timezone = 18
 	// America/La_Paz
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_LA_PAZ TimezoneEnum = 19
+	Timezone_TIMEZONE_TZ_AMERICA_LA_PAZ Timezone = 19
 	// America/Lima
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_LIMA TimezoneEnum = 20
+	Timezone_TIMEZONE_TZ_AMERICA_LIMA Timezone = 20
 	// America/Los_Angeles
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_LOS_ANGELES TimezoneEnum = 21
+	Timezone_TIMEZONE_TZ_AMERICA_LOS_ANGELES Timezone = 21
 	// America/Mazatlan
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_MAZATLAN TimezoneEnum = 22
+	Timezone_TIMEZONE_TZ_AMERICA_MAZATLAN Timezone = 22
 	// America/Mexico_City
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_MEXICO_CITY TimezoneEnum = 23
+	Timezone_TIMEZONE_TZ_AMERICA_MEXICO_CITY Timezone = 23
 	// America/Monterrey
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_MONTERREY TimezoneEnum = 24
+	Timezone_TIMEZONE_TZ_AMERICA_MONTERREY Timezone = 24
 	// America/Montevideo
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_MONTEVIDEO TimezoneEnum = 25
+	Timezone_TIMEZONE_TZ_AMERICA_MONTEVIDEO Timezone = 25
 	// America/New_York
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_NEW_YORK TimezoneEnum = 26
+	Timezone_TIMEZONE_TZ_AMERICA_NEW_YORK Timezone = 26
 	// America/Nuuk
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_NUUK TimezoneEnum = 27
+	Timezone_TIMEZONE_TZ_AMERICA_NUUK Timezone = 27
 	// America/Phoenix
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_PHOENIX TimezoneEnum = 28
+	Timezone_TIMEZONE_TZ_AMERICA_PHOENIX Timezone = 28
 	// America/Puerto_Rico
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_PUERTO_RICO TimezoneEnum = 29
+	Timezone_TIMEZONE_TZ_AMERICA_PUERTO_RICO Timezone = 29
 	// America/Regina
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_REGINA TimezoneEnum = 30
+	Timezone_TIMEZONE_TZ_AMERICA_REGINA Timezone = 30
 	// America/Santiago
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_SANTIAGO TimezoneEnum = 31
+	Timezone_TIMEZONE_TZ_AMERICA_SANTIAGO Timezone = 31
 	// America/Sao_Paulo
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_SAO_PAULO TimezoneEnum = 32
+	Timezone_TIMEZONE_TZ_AMERICA_SAO_PAULO Timezone = 32
 	// America/St_Johns
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_ST_JOHNS TimezoneEnum = 33
+	Timezone_TIMEZONE_TZ_AMERICA_ST_JOHNS Timezone = 33
 	// America/Tijuana
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AMERICA_TIJUANA TimezoneEnum = 34
+	Timezone_TIMEZONE_TZ_AMERICA_TIJUANA Timezone = 34
 	// Asia/Almaty
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_ALMATY TimezoneEnum = 35
+	Timezone_TIMEZONE_TZ_ASIA_ALMATY Timezone = 35
 	// Asia/Baghdad
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_BAGHDAD TimezoneEnum = 36
+	Timezone_TIMEZONE_TZ_ASIA_BAGHDAD Timezone = 36
 	// Asia/Baku
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_BAKU TimezoneEnum = 37
+	Timezone_TIMEZONE_TZ_ASIA_BAKU Timezone = 37
 	// Asia/Bangkok
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_BANGKOK TimezoneEnum = 38
+	Timezone_TIMEZONE_TZ_ASIA_BANGKOK Timezone = 38
 	// Asia/Chongqing
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_CHONGQING TimezoneEnum = 39
+	Timezone_TIMEZONE_TZ_ASIA_CHONGQING Timezone = 39
 	// Asia/Colombo
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_COLOMBO TimezoneEnum = 40
+	Timezone_TIMEZONE_TZ_ASIA_COLOMBO Timezone = 40
 	// Asia/Dhaka
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_DHAKA TimezoneEnum = 41
+	Timezone_TIMEZONE_TZ_ASIA_DHAKA Timezone = 41
 	// Asia/Hong_Kong
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_HONG_KONG TimezoneEnum = 42
+	Timezone_TIMEZONE_TZ_ASIA_HONG_KONG Timezone = 42
 	// Asia/Irkutsk
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_IRKUTSK TimezoneEnum = 43
+	Timezone_TIMEZONE_TZ_ASIA_IRKUTSK Timezone = 43
 	// Asia/Jakarta
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_JAKARTA TimezoneEnum = 44
+	Timezone_TIMEZONE_TZ_ASIA_JAKARTA Timezone = 44
 	// Asia/Jerusalem
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_JERUSALEM TimezoneEnum = 45
+	Timezone_TIMEZONE_TZ_ASIA_JERUSALEM Timezone = 45
 	// Asia/Kabul
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_KABUL TimezoneEnum = 46
+	Timezone_TIMEZONE_TZ_ASIA_KABUL Timezone = 46
 	// Asia/Kamchatka
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_KAMCHATKA TimezoneEnum = 47
+	Timezone_TIMEZONE_TZ_ASIA_KAMCHATKA Timezone = 47
 	// Asia/Karachi
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_KARACHI TimezoneEnum = 48
+	Timezone_TIMEZONE_TZ_ASIA_KARACHI Timezone = 48
 	// Asia/Kathmandu
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_KATHMANDU TimezoneEnum = 49
+	Timezone_TIMEZONE_TZ_ASIA_KATHMANDU Timezone = 49
 	// Asia/Kolkata
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_KOLKATA TimezoneEnum = 50
+	Timezone_TIMEZONE_TZ_ASIA_KOLKATA Timezone = 50
 	// Asia/Krasnoyarsk
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_KRASNOYARSK TimezoneEnum = 51
+	Timezone_TIMEZONE_TZ_ASIA_KRASNOYARSK Timezone = 51
 	// Asia/Kuala_Lumpur
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_KUALA_LUMPUR TimezoneEnum = 52
+	Timezone_TIMEZONE_TZ_ASIA_KUALA_LUMPUR Timezone = 52
 	// Asia/Kuwait
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_KUWAIT TimezoneEnum = 53
+	Timezone_TIMEZONE_TZ_ASIA_KUWAIT Timezone = 53
 	// Asia/Magadan
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_MAGADAN TimezoneEnum = 54
+	Timezone_TIMEZONE_TZ_ASIA_MAGADAN Timezone = 54
 	// Asia/Muscat
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_MUSCAT TimezoneEnum = 55
+	Timezone_TIMEZONE_TZ_ASIA_MUSCAT Timezone = 55
 	// Asia/Novosibirsk
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_NOVOSIBIRSK TimezoneEnum = 56
+	Timezone_TIMEZONE_TZ_ASIA_NOVOSIBIRSK Timezone = 56
 	// Asia/Riyadh
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_RIYADH TimezoneEnum = 57
+	Timezone_TIMEZONE_TZ_ASIA_RIYADH Timezone = 57
 	// Asia/Seoul
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_SEOUL TimezoneEnum = 58
+	Timezone_TIMEZONE_TZ_ASIA_SEOUL Timezone = 58
 	// Asia/Shanghai
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_SHANGHAI TimezoneEnum = 59
+	Timezone_TIMEZONE_TZ_ASIA_SHANGHAI Timezone = 59
 	// Asia/Singapore
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_SINGAPORE TimezoneEnum = 60
+	Timezone_TIMEZONE_TZ_ASIA_SINGAPORE Timezone = 60
 	// Asia/Srednekolymsk
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_SREDNEKOLYMSK TimezoneEnum = 61
+	Timezone_TIMEZONE_TZ_ASIA_SREDNEKOLYMSK Timezone = 61
 	// Asia/Taipei
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_TAIPEI TimezoneEnum = 62
+	Timezone_TIMEZONE_TZ_ASIA_TAIPEI Timezone = 62
 	// Asia/Tashkent
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_TASHKENT TimezoneEnum = 63
+	Timezone_TIMEZONE_TZ_ASIA_TASHKENT Timezone = 63
 	// Asia/Tbilisi
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_TBILISI TimezoneEnum = 64
+	Timezone_TIMEZONE_TZ_ASIA_TBILISI Timezone = 64
 	// Asia/Tehran
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_TEHRAN TimezoneEnum = 65
+	Timezone_TIMEZONE_TZ_ASIA_TEHRAN Timezone = 65
 	// Asia/Tokyo
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_TOKYO TimezoneEnum = 66
+	Timezone_TIMEZONE_TZ_ASIA_TOKYO Timezone = 66
 	// Asia/Ulaanbaatar
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_ULAANBAATAR TimezoneEnum = 67
+	Timezone_TIMEZONE_TZ_ASIA_ULAANBAATAR Timezone = 67
 	// Asia/Urumqi
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_URUMQI TimezoneEnum = 68
+	Timezone_TIMEZONE_TZ_ASIA_URUMQI Timezone = 68
 	// Asia/Vladivostok
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_VLADIVOSTOK TimezoneEnum = 69
+	Timezone_TIMEZONE_TZ_ASIA_VLADIVOSTOK Timezone = 69
 	// Asia/Yakutsk
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_YAKUTSK TimezoneEnum = 70
+	Timezone_TIMEZONE_TZ_ASIA_YAKUTSK Timezone = 70
 	// Asia/Yangon
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_YANGON TimezoneEnum = 71
+	Timezone_TIMEZONE_TZ_ASIA_YANGON Timezone = 71
 	// Asia/Yekaterinburg
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_YEKATERINBURG TimezoneEnum = 72
+	Timezone_TIMEZONE_TZ_ASIA_YEKATERINBURG Timezone = 72
 	// Asia/Yerevan
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ASIA_YEREVAN TimezoneEnum = 73
+	Timezone_TIMEZONE_TZ_ASIA_YEREVAN Timezone = 73
 	// Atlantic/Azores
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ATLANTIC_AZORES TimezoneEnum = 74
+	Timezone_TIMEZONE_TZ_ATLANTIC_AZORES Timezone = 74
 	// Atlantic/Cape_Verde
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ATLANTIC_CAPE_VERDE TimezoneEnum = 75
+	Timezone_TIMEZONE_TZ_ATLANTIC_CAPE_VERDE Timezone = 75
 	// Atlantic/South_Georgia
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ATLANTIC_SOUTH_GEORGIA TimezoneEnum = 76
+	Timezone_TIMEZONE_TZ_ATLANTIC_SOUTH_GEORGIA Timezone = 76
 	// Australia/Adelaide
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AUSTRALIA_ADELAIDE TimezoneEnum = 77
+	Timezone_TIMEZONE_TZ_AUSTRALIA_ADELAIDE Timezone = 77
 	// Australia/Brisbane
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AUSTRALIA_BRISBANE TimezoneEnum = 78
+	Timezone_TIMEZONE_TZ_AUSTRALIA_BRISBANE Timezone = 78
 	// Australia/Canberra
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AUSTRALIA_CANBERRA TimezoneEnum = 79
+	Timezone_TIMEZONE_TZ_AUSTRALIA_CANBERRA Timezone = 79
 	// Australia/Darwin
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AUSTRALIA_DARWIN TimezoneEnum = 80
+	Timezone_TIMEZONE_TZ_AUSTRALIA_DARWIN Timezone = 80
 	// Australia/Hobart
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AUSTRALIA_HOBART TimezoneEnum = 81
+	Timezone_TIMEZONE_TZ_AUSTRALIA_HOBART Timezone = 81
 	// Australia/Melbourne
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AUSTRALIA_MELBOURNE TimezoneEnum = 82
+	Timezone_TIMEZONE_TZ_AUSTRALIA_MELBOURNE Timezone = 82
 	// Australia/Perth
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AUSTRALIA_PERTH TimezoneEnum = 83
+	Timezone_TIMEZONE_TZ_AUSTRALIA_PERTH Timezone = 83
 	// Australia/Sydney
-	TimezoneEnum_TIMEZONE_ENUM_TZ_AUSTRALIA_SYDNEY TimezoneEnum = 84
+	Timezone_TIMEZONE_TZ_AUSTRALIA_SYDNEY Timezone = 84
 	// Etc/GMT+12
-	TimezoneEnum_TIMEZONE_ENUM_TZ_ETC_GMT_12 TimezoneEnum = 85
+	Timezone_TIMEZONE_TZ_ETC_GMT_12 Timezone = 85
 	// Europe/Amsterdam
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_AMSTERDAM TimezoneEnum = 86
+	Timezone_TIMEZONE_TZ_EUROPE_AMSTERDAM Timezone = 86
 	// Europe/Athens
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_ATHENS TimezoneEnum = 87
+	Timezone_TIMEZONE_TZ_EUROPE_ATHENS Timezone = 87
 	// Europe/Belgrade
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_BELGRADE TimezoneEnum = 88
+	Timezone_TIMEZONE_TZ_EUROPE_BELGRADE Timezone = 88
 	// Europe/Berlin
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_BERLIN TimezoneEnum = 89
+	Timezone_TIMEZONE_TZ_EUROPE_BERLIN Timezone = 89
 	// Europe/Bratislava
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_BRATISLAVA TimezoneEnum = 90
+	Timezone_TIMEZONE_TZ_EUROPE_BRATISLAVA Timezone = 90
 	// Europe/Brussels
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_BRUSSELS TimezoneEnum = 91
+	Timezone_TIMEZONE_TZ_EUROPE_BRUSSELS Timezone = 91
 	// Europe/Bucharest
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_BUCHAREST TimezoneEnum = 92
+	Timezone_TIMEZONE_TZ_EUROPE_BUCHAREST Timezone = 92
 	// Europe/Budapest
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_BUDAPEST TimezoneEnum = 93
+	Timezone_TIMEZONE_TZ_EUROPE_BUDAPEST Timezone = 93
 	// Europe/Copenhagen
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_COPENHAGEN TimezoneEnum = 94
+	Timezone_TIMEZONE_TZ_EUROPE_COPENHAGEN Timezone = 94
 	// Europe/Dublin
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_DUBLIN TimezoneEnum = 95
+	Timezone_TIMEZONE_TZ_EUROPE_DUBLIN Timezone = 95
 	// Europe/Helsinki
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_HELSINKI TimezoneEnum = 96
+	Timezone_TIMEZONE_TZ_EUROPE_HELSINKI Timezone = 96
 	// Europe/Istanbul
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_ISTANBUL TimezoneEnum = 97
+	Timezone_TIMEZONE_TZ_EUROPE_ISTANBUL Timezone = 97
 	// Europe/Kaliningrad
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_KALININGRAD TimezoneEnum = 98
+	Timezone_TIMEZONE_TZ_EUROPE_KALININGRAD Timezone = 98
 	// Europe/Kyiv
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_KYIV TimezoneEnum = 99
+	Timezone_TIMEZONE_TZ_EUROPE_KYIV Timezone = 99
 	// Europe/Lisbon
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_LISBON TimezoneEnum = 100
+	Timezone_TIMEZONE_TZ_EUROPE_LISBON Timezone = 100
 	// Europe/Ljubljana
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_LJUBLJANA TimezoneEnum = 101
+	Timezone_TIMEZONE_TZ_EUROPE_LJUBLJANA Timezone = 101
 	// Europe/London
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_LONDON TimezoneEnum = 102
+	Timezone_TIMEZONE_TZ_EUROPE_LONDON Timezone = 102
 	// Europe/Madrid
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_MADRID TimezoneEnum = 103
+	Timezone_TIMEZONE_TZ_EUROPE_MADRID Timezone = 103
 	// Europe/Minsk
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_MINSK TimezoneEnum = 104
+	Timezone_TIMEZONE_TZ_EUROPE_MINSK Timezone = 104
 	// Europe/Moscow
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_MOSCOW TimezoneEnum = 105
+	Timezone_TIMEZONE_TZ_EUROPE_MOSCOW Timezone = 105
 	// Europe/Paris
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_PARIS TimezoneEnum = 106
+	Timezone_TIMEZONE_TZ_EUROPE_PARIS Timezone = 106
 	// Europe/Prague
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_PRAGUE TimezoneEnum = 107
+	Timezone_TIMEZONE_TZ_EUROPE_PRAGUE Timezone = 107
 	// Europe/Riga
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_RIGA TimezoneEnum = 108
+	Timezone_TIMEZONE_TZ_EUROPE_RIGA Timezone = 108
 	// Europe/Rome
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_ROME TimezoneEnum = 109
+	Timezone_TIMEZONE_TZ_EUROPE_ROME Timezone = 109
 	// Europe/Samara
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_SAMARA TimezoneEnum = 110
+	Timezone_TIMEZONE_TZ_EUROPE_SAMARA Timezone = 110
 	// Europe/Sarajevo
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_SARAJEVO TimezoneEnum = 111
+	Timezone_TIMEZONE_TZ_EUROPE_SARAJEVO Timezone = 111
 	// Europe/Skopje
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_SKOPJE TimezoneEnum = 112
+	Timezone_TIMEZONE_TZ_EUROPE_SKOPJE Timezone = 112
 	// Europe/Sofia
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_SOFIA TimezoneEnum = 113
+	Timezone_TIMEZONE_TZ_EUROPE_SOFIA Timezone = 113
 	// Europe/Stockholm
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_STOCKHOLM TimezoneEnum = 114
+	Timezone_TIMEZONE_TZ_EUROPE_STOCKHOLM Timezone = 114
 	// Europe/Tallinn
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_TALLINN TimezoneEnum = 115
+	Timezone_TIMEZONE_TZ_EUROPE_TALLINN Timezone = 115
 	// Europe/Vienna
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_VIENNA TimezoneEnum = 116
+	Timezone_TIMEZONE_TZ_EUROPE_VIENNA Timezone = 116
 	// Europe/Vilnius
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_VILNIUS TimezoneEnum = 117
+	Timezone_TIMEZONE_TZ_EUROPE_VILNIUS Timezone = 117
 	// Europe/Volgograd
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_VOLGOGRAD TimezoneEnum = 118
+	Timezone_TIMEZONE_TZ_EUROPE_VOLGOGRAD Timezone = 118
 	// Europe/Warsaw
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_WARSAW TimezoneEnum = 119
+	Timezone_TIMEZONE_TZ_EUROPE_WARSAW Timezone = 119
 	// Europe/Zagreb
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_ZAGREB TimezoneEnum = 120
+	Timezone_TIMEZONE_TZ_EUROPE_ZAGREB Timezone = 120
 	// Europe/Zurich
-	TimezoneEnum_TIMEZONE_ENUM_TZ_EUROPE_ZURICH TimezoneEnum = 121
+	Timezone_TIMEZONE_TZ_EUROPE_ZURICH Timezone = 121
 	// Pacific/Apia
-	TimezoneEnum_TIMEZONE_ENUM_TZ_PACIFIC_APIA TimezoneEnum = 122
+	Timezone_TIMEZONE_TZ_PACIFIC_APIA Timezone = 122
 	// Pacific/Auckland
-	TimezoneEnum_TIMEZONE_ENUM_TZ_PACIFIC_AUCKLAND TimezoneEnum = 123
+	Timezone_TIMEZONE_TZ_PACIFIC_AUCKLAND Timezone = 123
 	// Pacific/Chatham
-	TimezoneEnum_TIMEZONE_ENUM_TZ_PACIFIC_CHATHAM TimezoneEnum = 124
+	Timezone_TIMEZONE_TZ_PACIFIC_CHATHAM Timezone = 124
 	// Pacific/Fakaofo
-	TimezoneEnum_TIMEZONE_ENUM_TZ_PACIFIC_FAKAOFO TimezoneEnum = 125
+	Timezone_TIMEZONE_TZ_PACIFIC_FAKAOFO Timezone = 125
 	// Pacific/Fiji
-	TimezoneEnum_TIMEZONE_ENUM_TZ_PACIFIC_FIJI TimezoneEnum = 126
+	Timezone_TIMEZONE_TZ_PACIFIC_FIJI Timezone = 126
 	// Pacific/Guadalcanal
-	TimezoneEnum_TIMEZONE_ENUM_TZ_PACIFIC_GUADALCANAL TimezoneEnum = 127
+	Timezone_TIMEZONE_TZ_PACIFIC_GUADALCANAL Timezone = 127
 	// Pacific/Guam
-	TimezoneEnum_TIMEZONE_ENUM_TZ_PACIFIC_GUAM TimezoneEnum = 128
+	Timezone_TIMEZONE_TZ_PACIFIC_GUAM Timezone = 128
 	// Pacific/Honolulu
-	TimezoneEnum_TIMEZONE_ENUM_TZ_PACIFIC_HONOLULU TimezoneEnum = 129
+	Timezone_TIMEZONE_TZ_PACIFIC_HONOLULU Timezone = 129
 	// Pacific/Majuro
-	TimezoneEnum_TIMEZONE_ENUM_TZ_PACIFIC_MAJURO TimezoneEnum = 130
+	Timezone_TIMEZONE_TZ_PACIFIC_MAJURO Timezone = 130
 	// Pacific/Midway
-	TimezoneEnum_TIMEZONE_ENUM_TZ_PACIFIC_MIDWAY TimezoneEnum = 131
+	Timezone_TIMEZONE_TZ_PACIFIC_MIDWAY Timezone = 131
 	// Pacific/Noumea
-	TimezoneEnum_TIMEZONE_ENUM_TZ_PACIFIC_NOUMEA TimezoneEnum = 132
+	Timezone_TIMEZONE_TZ_PACIFIC_NOUMEA Timezone = 132
 	// Pacific/Pago_Pago
-	TimezoneEnum_TIMEZONE_ENUM_TZ_PACIFIC_PAGO_PAGO TimezoneEnum = 133
+	Timezone_TIMEZONE_TZ_PACIFIC_PAGO_PAGO Timezone = 133
 	// Pacific/Port_Moresby
-	TimezoneEnum_TIMEZONE_ENUM_TZ_PACIFIC_PORT_MORESBY TimezoneEnum = 134
+	Timezone_TIMEZONE_TZ_PACIFIC_PORT_MORESBY Timezone = 134
 	// Pacific/Tongatapu
-	TimezoneEnum_TIMEZONE_ENUM_TZ_PACIFIC_TONGATAPU TimezoneEnum = 135
+	Timezone_TIMEZONE_TZ_PACIFIC_TONGATAPU Timezone = 135
 	// UTC
-	TimezoneEnum_TIMEZONE_ENUM_TZ_UTC TimezoneEnum = 136
+	Timezone_TIMEZONE_TZ_UTC Timezone = 136
 )
 
-// Enum value maps for TimezoneEnum.
+// Enum value maps for Timezone.
 var (
-	TimezoneEnum_name = map[int32]string{
-		0:   "TIMEZONE_ENUM_UNSPECIFIED",
-		1:   "TIMEZONE_ENUM_TZ_AFRICA_ALGIERS",
-		2:   "TIMEZONE_ENUM_TZ_AFRICA_CAIRO",
-		3:   "TIMEZONE_ENUM_TZ_AFRICA_CASABLANCA",
-		4:   "TIMEZONE_ENUM_TZ_AFRICA_HARARE",
-		5:   "TIMEZONE_ENUM_TZ_AFRICA_JOHANNESBURG",
-		6:   "TIMEZONE_ENUM_TZ_AFRICA_MONROVIA",
-		7:   "TIMEZONE_ENUM_TZ_AFRICA_NAIROBI",
-		8:   "TIMEZONE_ENUM_TZ_AMERICA_ARGENTINA_BUENOS_AIRES",
-		9:   "TIMEZONE_ENUM_TZ_AMERICA_BOGOTA",
-		10:  "TIMEZONE_ENUM_TZ_AMERICA_CARACAS",
-		11:  "TIMEZONE_ENUM_TZ_AMERICA_CHICAGO",
-		12:  "TIMEZONE_ENUM_TZ_AMERICA_CHIHUAHUA",
-		13:  "TIMEZONE_ENUM_TZ_AMERICA_DENVER",
-		14:  "TIMEZONE_ENUM_TZ_AMERICA_GUATEMALA",
-		15:  "TIMEZONE_ENUM_TZ_AMERICA_GUYANA",
-		16:  "TIMEZONE_ENUM_TZ_AMERICA_HALIFAX",
-		17:  "TIMEZONE_ENUM_TZ_AMERICA_INDIANA_INDIANAPOLIS",
-		18:  "TIMEZONE_ENUM_TZ_AMERICA_JUNEAU",
-		19:  "TIMEZONE_ENUM_TZ_AMERICA_LA_PAZ",
-		20:  "TIMEZONE_ENUM_TZ_AMERICA_LIMA",
-		21:  "TIMEZONE_ENUM_TZ_AMERICA_LOS_ANGELES",
-		22:  "TIMEZONE_ENUM_TZ_AMERICA_MAZATLAN",
-		23:  "TIMEZONE_ENUM_TZ_AMERICA_MEXICO_CITY",
-		24:  "TIMEZONE_ENUM_TZ_AMERICA_MONTERREY",
-		25:  "TIMEZONE_ENUM_TZ_AMERICA_MONTEVIDEO",
-		26:  "TIMEZONE_ENUM_TZ_AMERICA_NEW_YORK",
-		27:  "TIMEZONE_ENUM_TZ_AMERICA_NUUK",
-		28:  "TIMEZONE_ENUM_TZ_AMERICA_PHOENIX",
-		29:  "TIMEZONE_ENUM_TZ_AMERICA_PUERTO_RICO",
-		30:  "TIMEZONE_ENUM_TZ_AMERICA_REGINA",
-		31:  "TIMEZONE_ENUM_TZ_AMERICA_SANTIAGO",
-		32:  "TIMEZONE_ENUM_TZ_AMERICA_SAO_PAULO",
-		33:  "TIMEZONE_ENUM_TZ_AMERICA_ST_JOHNS",
-		34:  "TIMEZONE_ENUM_TZ_AMERICA_TIJUANA",
-		35:  "TIMEZONE_ENUM_TZ_ASIA_ALMATY",
-		36:  "TIMEZONE_ENUM_TZ_ASIA_BAGHDAD",
-		37:  "TIMEZONE_ENUM_TZ_ASIA_BAKU",
-		38:  "TIMEZONE_ENUM_TZ_ASIA_BANGKOK",
-		39:  "TIMEZONE_ENUM_TZ_ASIA_CHONGQING",
-		40:  "TIMEZONE_ENUM_TZ_ASIA_COLOMBO",
-		41:  "TIMEZONE_ENUM_TZ_ASIA_DHAKA",
-		42:  "TIMEZONE_ENUM_TZ_ASIA_HONG_KONG",
-		43:  "TIMEZONE_ENUM_TZ_ASIA_IRKUTSK",
-		44:  "TIMEZONE_ENUM_TZ_ASIA_JAKARTA",
-		45:  "TIMEZONE_ENUM_TZ_ASIA_JERUSALEM",
-		46:  "TIMEZONE_ENUM_TZ_ASIA_KABUL",
-		47:  "TIMEZONE_ENUM_TZ_ASIA_KAMCHATKA",
-		48:  "TIMEZONE_ENUM_TZ_ASIA_KARACHI",
-		49:  "TIMEZONE_ENUM_TZ_ASIA_KATHMANDU",
-		50:  "TIMEZONE_ENUM_TZ_ASIA_KOLKATA",
-		51:  "TIMEZONE_ENUM_TZ_ASIA_KRASNOYARSK",
-		52:  "TIMEZONE_ENUM_TZ_ASIA_KUALA_LUMPUR",
-		53:  "TIMEZONE_ENUM_TZ_ASIA_KUWAIT",
-		54:  "TIMEZONE_ENUM_TZ_ASIA_MAGADAN",
-		55:  "TIMEZONE_ENUM_TZ_ASIA_MUSCAT",
-		56:  "TIMEZONE_ENUM_TZ_ASIA_NOVOSIBIRSK",
-		57:  "TIMEZONE_ENUM_TZ_ASIA_RIYADH",
-		58:  "TIMEZONE_ENUM_TZ_ASIA_SEOUL",
-		59:  "TIMEZONE_ENUM_TZ_ASIA_SHANGHAI",
-		60:  "TIMEZONE_ENUM_TZ_ASIA_SINGAPORE",
-		61:  "TIMEZONE_ENUM_TZ_ASIA_SREDNEKOLYMSK",
-		62:  "TIMEZONE_ENUM_TZ_ASIA_TAIPEI",
-		63:  "TIMEZONE_ENUM_TZ_ASIA_TASHKENT",
-		64:  "TIMEZONE_ENUM_TZ_ASIA_TBILISI",
-		65:  "TIMEZONE_ENUM_TZ_ASIA_TEHRAN",
-		66:  "TIMEZONE_ENUM_TZ_ASIA_TOKYO",
-		67:  "TIMEZONE_ENUM_TZ_ASIA_ULAANBAATAR",
-		68:  "TIMEZONE_ENUM_TZ_ASIA_URUMQI",
-		69:  "TIMEZONE_ENUM_TZ_ASIA_VLADIVOSTOK",
-		70:  "TIMEZONE_ENUM_TZ_ASIA_YAKUTSK",
-		71:  "TIMEZONE_ENUM_TZ_ASIA_YANGON",
-		72:  "TIMEZONE_ENUM_TZ_ASIA_YEKATERINBURG",
-		73:  "TIMEZONE_ENUM_TZ_ASIA_YEREVAN",
-		74:  "TIMEZONE_ENUM_TZ_ATLANTIC_AZORES",
-		75:  "TIMEZONE_ENUM_TZ_ATLANTIC_CAPE_VERDE",
-		76:  "TIMEZONE_ENUM_TZ_ATLANTIC_SOUTH_GEORGIA",
-		77:  "TIMEZONE_ENUM_TZ_AUSTRALIA_ADELAIDE",
-		78:  "TIMEZONE_ENUM_TZ_AUSTRALIA_BRISBANE",
-		79:  "TIMEZONE_ENUM_TZ_AUSTRALIA_CANBERRA",
-		80:  "TIMEZONE_ENUM_TZ_AUSTRALIA_DARWIN",
-		81:  "TIMEZONE_ENUM_TZ_AUSTRALIA_HOBART",
-		82:  "TIMEZONE_ENUM_TZ_AUSTRALIA_MELBOURNE",
-		83:  "TIMEZONE_ENUM_TZ_AUSTRALIA_PERTH",
-		84:  "TIMEZONE_ENUM_TZ_AUSTRALIA_SYDNEY",
-		85:  "TIMEZONE_ENUM_TZ_ETC_GMT_12",
-		86:  "TIMEZONE_ENUM_TZ_EUROPE_AMSTERDAM",
-		87:  "TIMEZONE_ENUM_TZ_EUROPE_ATHENS",
-		88:  "TIMEZONE_ENUM_TZ_EUROPE_BELGRADE",
-		89:  "TIMEZONE_ENUM_TZ_EUROPE_BERLIN",
-		90:  "TIMEZONE_ENUM_TZ_EUROPE_BRATISLAVA",
-		91:  "TIMEZONE_ENUM_TZ_EUROPE_BRUSSELS",
-		92:  "TIMEZONE_ENUM_TZ_EUROPE_BUCHAREST",
-		93:  "TIMEZONE_ENUM_TZ_EUROPE_BUDAPEST",
-		94:  "TIMEZONE_ENUM_TZ_EUROPE_COPENHAGEN",
-		95:  "TIMEZONE_ENUM_TZ_EUROPE_DUBLIN",
-		96:  "TIMEZONE_ENUM_TZ_EUROPE_HELSINKI",
-		97:  "TIMEZONE_ENUM_TZ_EUROPE_ISTANBUL",
-		98:  "TIMEZONE_ENUM_TZ_EUROPE_KALININGRAD",
-		99:  "TIMEZONE_ENUM_TZ_EUROPE_KYIV",
-		100: "TIMEZONE_ENUM_TZ_EUROPE_LISBON",
-		101: "TIMEZONE_ENUM_TZ_EUROPE_LJUBLJANA",
-		102: "TIMEZONE_ENUM_TZ_EUROPE_LONDON",
-		103: "TIMEZONE_ENUM_TZ_EUROPE_MADRID",
-		104: "TIMEZONE_ENUM_TZ_EUROPE_MINSK",
-		105: "TIMEZONE_ENUM_TZ_EUROPE_MOSCOW",
-		106: "TIMEZONE_ENUM_TZ_EUROPE_PARIS",
-		107: "TIMEZONE_ENUM_TZ_EUROPE_PRAGUE",
-		108: "TIMEZONE_ENUM_TZ_EUROPE_RIGA",
-		109: "TIMEZONE_ENUM_TZ_EUROPE_ROME",
-		110: "TIMEZONE_ENUM_TZ_EUROPE_SAMARA",
-		111: "TIMEZONE_ENUM_TZ_EUROPE_SARAJEVO",
-		112: "TIMEZONE_ENUM_TZ_EUROPE_SKOPJE",
-		113: "TIMEZONE_ENUM_TZ_EUROPE_SOFIA",
-		114: "TIMEZONE_ENUM_TZ_EUROPE_STOCKHOLM",
-		115: "TIMEZONE_ENUM_TZ_EUROPE_TALLINN",
-		116: "TIMEZONE_ENUM_TZ_EUROPE_VIENNA",
-		117: "TIMEZONE_ENUM_TZ_EUROPE_VILNIUS",
-		118: "TIMEZONE_ENUM_TZ_EUROPE_VOLGOGRAD",
-		119: "TIMEZONE_ENUM_TZ_EUROPE_WARSAW",
-		120: "TIMEZONE_ENUM_TZ_EUROPE_ZAGREB",
-		121: "TIMEZONE_ENUM_TZ_EUROPE_ZURICH",
-		122: "TIMEZONE_ENUM_TZ_PACIFIC_APIA",
-		123: "TIMEZONE_ENUM_TZ_PACIFIC_AUCKLAND",
-		124: "TIMEZONE_ENUM_TZ_PACIFIC_CHATHAM",
-		125: "TIMEZONE_ENUM_TZ_PACIFIC_FAKAOFO",
-		126: "TIMEZONE_ENUM_TZ_PACIFIC_FIJI",
-		127: "TIMEZONE_ENUM_TZ_PACIFIC_GUADALCANAL",
-		128: "TIMEZONE_ENUM_TZ_PACIFIC_GUAM",
-		129: "TIMEZONE_ENUM_TZ_PACIFIC_HONOLULU",
-		130: "TIMEZONE_ENUM_TZ_PACIFIC_MAJURO",
-		131: "TIMEZONE_ENUM_TZ_PACIFIC_MIDWAY",
-		132: "TIMEZONE_ENUM_TZ_PACIFIC_NOUMEA",
-		133: "TIMEZONE_ENUM_TZ_PACIFIC_PAGO_PAGO",
-		134: "TIMEZONE_ENUM_TZ_PACIFIC_PORT_MORESBY",
-		135: "TIMEZONE_ENUM_TZ_PACIFIC_TONGATAPU",
-		136: "TIMEZONE_ENUM_TZ_UTC",
+	Timezone_name = map[int32]string{
+		0:   "TIMEZONE_UNSPECIFIED",
+		1:   "TIMEZONE_TZ_AFRICA_ALGIERS",
+		2:   "TIMEZONE_TZ_AFRICA_CAIRO",
+		3:   "TIMEZONE_TZ_AFRICA_CASABLANCA",
+		4:   "TIMEZONE_TZ_AFRICA_HARARE",
+		5:   "TIMEZONE_TZ_AFRICA_JOHANNESBURG",
+		6:   "TIMEZONE_TZ_AFRICA_MONROVIA",
+		7:   "TIMEZONE_TZ_AFRICA_NAIROBI",
+		8:   "TIMEZONE_TZ_AMERICA_ARGENTINA_BUENOS_AIRES",
+		9:   "TIMEZONE_TZ_AMERICA_BOGOTA",
+		10:  "TIMEZONE_TZ_AMERICA_CARACAS",
+		11:  "TIMEZONE_TZ_AMERICA_CHICAGO",
+		12:  "TIMEZONE_TZ_AMERICA_CHIHUAHUA",
+		13:  "TIMEZONE_TZ_AMERICA_DENVER",
+		14:  "TIMEZONE_TZ_AMERICA_GUATEMALA",
+		15:  "TIMEZONE_TZ_AMERICA_GUYANA",
+		16:  "TIMEZONE_TZ_AMERICA_HALIFAX",
+		17:  "TIMEZONE_TZ_AMERICA_INDIANA_INDIANAPOLIS",
+		18:  "TIMEZONE_TZ_AMERICA_JUNEAU",
+		19:  "TIMEZONE_TZ_AMERICA_LA_PAZ",
+		20:  "TIMEZONE_TZ_AMERICA_LIMA",
+		21:  "TIMEZONE_TZ_AMERICA_LOS_ANGELES",
+		22:  "TIMEZONE_TZ_AMERICA_MAZATLAN",
+		23:  "TIMEZONE_TZ_AMERICA_MEXICO_CITY",
+		24:  "TIMEZONE_TZ_AMERICA_MONTERREY",
+		25:  "TIMEZONE_TZ_AMERICA_MONTEVIDEO",
+		26:  "TIMEZONE_TZ_AMERICA_NEW_YORK",
+		27:  "TIMEZONE_TZ_AMERICA_NUUK",
+		28:  "TIMEZONE_TZ_AMERICA_PHOENIX",
+		29:  "TIMEZONE_TZ_AMERICA_PUERTO_RICO",
+		30:  "TIMEZONE_TZ_AMERICA_REGINA",
+		31:  "TIMEZONE_TZ_AMERICA_SANTIAGO",
+		32:  "TIMEZONE_TZ_AMERICA_SAO_PAULO",
+		33:  "TIMEZONE_TZ_AMERICA_ST_JOHNS",
+		34:  "TIMEZONE_TZ_AMERICA_TIJUANA",
+		35:  "TIMEZONE_TZ_ASIA_ALMATY",
+		36:  "TIMEZONE_TZ_ASIA_BAGHDAD",
+		37:  "TIMEZONE_TZ_ASIA_BAKU",
+		38:  "TIMEZONE_TZ_ASIA_BANGKOK",
+		39:  "TIMEZONE_TZ_ASIA_CHONGQING",
+		40:  "TIMEZONE_TZ_ASIA_COLOMBO",
+		41:  "TIMEZONE_TZ_ASIA_DHAKA",
+		42:  "TIMEZONE_TZ_ASIA_HONG_KONG",
+		43:  "TIMEZONE_TZ_ASIA_IRKUTSK",
+		44:  "TIMEZONE_TZ_ASIA_JAKARTA",
+		45:  "TIMEZONE_TZ_ASIA_JERUSALEM",
+		46:  "TIMEZONE_TZ_ASIA_KABUL",
+		47:  "TIMEZONE_TZ_ASIA_KAMCHATKA",
+		48:  "TIMEZONE_TZ_ASIA_KARACHI",
+		49:  "TIMEZONE_TZ_ASIA_KATHMANDU",
+		50:  "TIMEZONE_TZ_ASIA_KOLKATA",
+		51:  "TIMEZONE_TZ_ASIA_KRASNOYARSK",
+		52:  "TIMEZONE_TZ_ASIA_KUALA_LUMPUR",
+		53:  "TIMEZONE_TZ_ASIA_KUWAIT",
+		54:  "TIMEZONE_TZ_ASIA_MAGADAN",
+		55:  "TIMEZONE_TZ_ASIA_MUSCAT",
+		56:  "TIMEZONE_TZ_ASIA_NOVOSIBIRSK",
+		57:  "TIMEZONE_TZ_ASIA_RIYADH",
+		58:  "TIMEZONE_TZ_ASIA_SEOUL",
+		59:  "TIMEZONE_TZ_ASIA_SHANGHAI",
+		60:  "TIMEZONE_TZ_ASIA_SINGAPORE",
+		61:  "TIMEZONE_TZ_ASIA_SREDNEKOLYMSK",
+		62:  "TIMEZONE_TZ_ASIA_TAIPEI",
+		63:  "TIMEZONE_TZ_ASIA_TASHKENT",
+		64:  "TIMEZONE_TZ_ASIA_TBILISI",
+		65:  "TIMEZONE_TZ_ASIA_TEHRAN",
+		66:  "TIMEZONE_TZ_ASIA_TOKYO",
+		67:  "TIMEZONE_TZ_ASIA_ULAANBAATAR",
+		68:  "TIMEZONE_TZ_ASIA_URUMQI",
+		69:  "TIMEZONE_TZ_ASIA_VLADIVOSTOK",
+		70:  "TIMEZONE_TZ_ASIA_YAKUTSK",
+		71:  "TIMEZONE_TZ_ASIA_YANGON",
+		72:  "TIMEZONE_TZ_ASIA_YEKATERINBURG",
+		73:  "TIMEZONE_TZ_ASIA_YEREVAN",
+		74:  "TIMEZONE_TZ_ATLANTIC_AZORES",
+		75:  "TIMEZONE_TZ_ATLANTIC_CAPE_VERDE",
+		76:  "TIMEZONE_TZ_ATLANTIC_SOUTH_GEORGIA",
+		77:  "TIMEZONE_TZ_AUSTRALIA_ADELAIDE",
+		78:  "TIMEZONE_TZ_AUSTRALIA_BRISBANE",
+		79:  "TIMEZONE_TZ_AUSTRALIA_CANBERRA",
+		80:  "TIMEZONE_TZ_AUSTRALIA_DARWIN",
+		81:  "TIMEZONE_TZ_AUSTRALIA_HOBART",
+		82:  "TIMEZONE_TZ_AUSTRALIA_MELBOURNE",
+		83:  "TIMEZONE_TZ_AUSTRALIA_PERTH",
+		84:  "TIMEZONE_TZ_AUSTRALIA_SYDNEY",
+		85:  "TIMEZONE_TZ_ETC_GMT_12",
+		86:  "TIMEZONE_TZ_EUROPE_AMSTERDAM",
+		87:  "TIMEZONE_TZ_EUROPE_ATHENS",
+		88:  "TIMEZONE_TZ_EUROPE_BELGRADE",
+		89:  "TIMEZONE_TZ_EUROPE_BERLIN",
+		90:  "TIMEZONE_TZ_EUROPE_BRATISLAVA",
+		91:  "TIMEZONE_TZ_EUROPE_BRUSSELS",
+		92:  "TIMEZONE_TZ_EUROPE_BUCHAREST",
+		93:  "TIMEZONE_TZ_EUROPE_BUDAPEST",
+		94:  "TIMEZONE_TZ_EUROPE_COPENHAGEN",
+		95:  "TIMEZONE_TZ_EUROPE_DUBLIN",
+		96:  "TIMEZONE_TZ_EUROPE_HELSINKI",
+		97:  "TIMEZONE_TZ_EUROPE_ISTANBUL",
+		98:  "TIMEZONE_TZ_EUROPE_KALININGRAD",
+		99:  "TIMEZONE_TZ_EUROPE_KYIV",
+		100: "TIMEZONE_TZ_EUROPE_LISBON",
+		101: "TIMEZONE_TZ_EUROPE_LJUBLJANA",
+		102: "TIMEZONE_TZ_EUROPE_LONDON",
+		103: "TIMEZONE_TZ_EUROPE_MADRID",
+		104: "TIMEZONE_TZ_EUROPE_MINSK",
+		105: "TIMEZONE_TZ_EUROPE_MOSCOW",
+		106: "TIMEZONE_TZ_EUROPE_PARIS",
+		107: "TIMEZONE_TZ_EUROPE_PRAGUE",
+		108: "TIMEZONE_TZ_EUROPE_RIGA",
+		109: "TIMEZONE_TZ_EUROPE_ROME",
+		110: "TIMEZONE_TZ_EUROPE_SAMARA",
+		111: "TIMEZONE_TZ_EUROPE_SARAJEVO",
+		112: "TIMEZONE_TZ_EUROPE_SKOPJE",
+		113: "TIMEZONE_TZ_EUROPE_SOFIA",
+		114: "TIMEZONE_TZ_EUROPE_STOCKHOLM",
+		115: "TIMEZONE_TZ_EUROPE_TALLINN",
+		116: "TIMEZONE_TZ_EUROPE_VIENNA",
+		117: "TIMEZONE_TZ_EUROPE_VILNIUS",
+		118: "TIMEZONE_TZ_EUROPE_VOLGOGRAD",
+		119: "TIMEZONE_TZ_EUROPE_WARSAW",
+		120: "TIMEZONE_TZ_EUROPE_ZAGREB",
+		121: "TIMEZONE_TZ_EUROPE_ZURICH",
+		122: "TIMEZONE_TZ_PACIFIC_APIA",
+		123: "TIMEZONE_TZ_PACIFIC_AUCKLAND",
+		124: "TIMEZONE_TZ_PACIFIC_CHATHAM",
+		125: "TIMEZONE_TZ_PACIFIC_FAKAOFO",
+		126: "TIMEZONE_TZ_PACIFIC_FIJI",
+		127: "TIMEZONE_TZ_PACIFIC_GUADALCANAL",
+		128: "TIMEZONE_TZ_PACIFIC_GUAM",
+		129: "TIMEZONE_TZ_PACIFIC_HONOLULU",
+		130: "TIMEZONE_TZ_PACIFIC_MAJURO",
+		131: "TIMEZONE_TZ_PACIFIC_MIDWAY",
+		132: "TIMEZONE_TZ_PACIFIC_NOUMEA",
+		133: "TIMEZONE_TZ_PACIFIC_PAGO_PAGO",
+		134: "TIMEZONE_TZ_PACIFIC_PORT_MORESBY",
+		135: "TIMEZONE_TZ_PACIFIC_TONGATAPU",
+		136: "TIMEZONE_TZ_UTC",
 	}
-	TimezoneEnum_value = map[string]int32{
-		"TIMEZONE_ENUM_UNSPECIFIED":                       0,
-		"TIMEZONE_ENUM_TZ_AFRICA_ALGIERS":                 1,
-		"TIMEZONE_ENUM_TZ_AFRICA_CAIRO":                   2,
-		"TIMEZONE_ENUM_TZ_AFRICA_CASABLANCA":              3,
-		"TIMEZONE_ENUM_TZ_AFRICA_HARARE":                  4,
-		"TIMEZONE_ENUM_TZ_AFRICA_JOHANNESBURG":            5,
-		"TIMEZONE_ENUM_TZ_AFRICA_MONROVIA":                6,
-		"TIMEZONE_ENUM_TZ_AFRICA_NAIROBI":                 7,
-		"TIMEZONE_ENUM_TZ_AMERICA_ARGENTINA_BUENOS_AIRES": 8,
-		"TIMEZONE_ENUM_TZ_AMERICA_BOGOTA":                 9,
-		"TIMEZONE_ENUM_TZ_AMERICA_CARACAS":                10,
-		"TIMEZONE_ENUM_TZ_AMERICA_CHICAGO":                11,
-		"TIMEZONE_ENUM_TZ_AMERICA_CHIHUAHUA":              12,
-		"TIMEZONE_ENUM_TZ_AMERICA_DENVER":                 13,
-		"TIMEZONE_ENUM_TZ_AMERICA_GUATEMALA":              14,
-		"TIMEZONE_ENUM_TZ_AMERICA_GUYANA":                 15,
-		"TIMEZONE_ENUM_TZ_AMERICA_HALIFAX":                16,
-		"TIMEZONE_ENUM_TZ_AMERICA_INDIANA_INDIANAPOLIS":   17,
-		"TIMEZONE_ENUM_TZ_AMERICA_JUNEAU":                 18,
-		"TIMEZONE_ENUM_TZ_AMERICA_LA_PAZ":                 19,
-		"TIMEZONE_ENUM_TZ_AMERICA_LIMA":                   20,
-		"TIMEZONE_ENUM_TZ_AMERICA_LOS_ANGELES":            21,
-		"TIMEZONE_ENUM_TZ_AMERICA_MAZATLAN":               22,
-		"TIMEZONE_ENUM_TZ_AMERICA_MEXICO_CITY":            23,
-		"TIMEZONE_ENUM_TZ_AMERICA_MONTERREY":              24,
-		"TIMEZONE_ENUM_TZ_AMERICA_MONTEVIDEO":             25,
-		"TIMEZONE_ENUM_TZ_AMERICA_NEW_YORK":               26,
-		"TIMEZONE_ENUM_TZ_AMERICA_NUUK":                   27,
-		"TIMEZONE_ENUM_TZ_AMERICA_PHOENIX":                28,
-		"TIMEZONE_ENUM_TZ_AMERICA_PUERTO_RICO":            29,
-		"TIMEZONE_ENUM_TZ_AMERICA_REGINA":                 30,
-		"TIMEZONE_ENUM_TZ_AMERICA_SANTIAGO":               31,
-		"TIMEZONE_ENUM_TZ_AMERICA_SAO_PAULO":              32,
-		"TIMEZONE_ENUM_TZ_AMERICA_ST_JOHNS":               33,
-		"TIMEZONE_ENUM_TZ_AMERICA_TIJUANA":                34,
-		"TIMEZONE_ENUM_TZ_ASIA_ALMATY":                    35,
-		"TIMEZONE_ENUM_TZ_ASIA_BAGHDAD":                   36,
-		"TIMEZONE_ENUM_TZ_ASIA_BAKU":                      37,
-		"TIMEZONE_ENUM_TZ_ASIA_BANGKOK":                   38,
-		"TIMEZONE_ENUM_TZ_ASIA_CHONGQING":                 39,
-		"TIMEZONE_ENUM_TZ_ASIA_COLOMBO":                   40,
-		"TIMEZONE_ENUM_TZ_ASIA_DHAKA":                     41,
-		"TIMEZONE_ENUM_TZ_ASIA_HONG_KONG":                 42,
-		"TIMEZONE_ENUM_TZ_ASIA_IRKUTSK":                   43,
-		"TIMEZONE_ENUM_TZ_ASIA_JAKARTA":                   44,
-		"TIMEZONE_ENUM_TZ_ASIA_JERUSALEM":                 45,
-		"TIMEZONE_ENUM_TZ_ASIA_KABUL":                     46,
-		"TIMEZONE_ENUM_TZ_ASIA_KAMCHATKA":                 47,
-		"TIMEZONE_ENUM_TZ_ASIA_KARACHI":                   48,
-		"TIMEZONE_ENUM_TZ_ASIA_KATHMANDU":                 49,
-		"TIMEZONE_ENUM_TZ_ASIA_KOLKATA":                   50,
-		"TIMEZONE_ENUM_TZ_ASIA_KRASNOYARSK":               51,
-		"TIMEZONE_ENUM_TZ_ASIA_KUALA_LUMPUR":              52,
-		"TIMEZONE_ENUM_TZ_ASIA_KUWAIT":                    53,
-		"TIMEZONE_ENUM_TZ_ASIA_MAGADAN":                   54,
-		"TIMEZONE_ENUM_TZ_ASIA_MUSCAT":                    55,
-		"TIMEZONE_ENUM_TZ_ASIA_NOVOSIBIRSK":               56,
-		"TIMEZONE_ENUM_TZ_ASIA_RIYADH":                    57,
-		"TIMEZONE_ENUM_TZ_ASIA_SEOUL":                     58,
-		"TIMEZONE_ENUM_TZ_ASIA_SHANGHAI":                  59,
-		"TIMEZONE_ENUM_TZ_ASIA_SINGAPORE":                 60,
-		"TIMEZONE_ENUM_TZ_ASIA_SREDNEKOLYMSK":             61,
-		"TIMEZONE_ENUM_TZ_ASIA_TAIPEI":                    62,
-		"TIMEZONE_ENUM_TZ_ASIA_TASHKENT":                  63,
-		"TIMEZONE_ENUM_TZ_ASIA_TBILISI":                   64,
-		"TIMEZONE_ENUM_TZ_ASIA_TEHRAN":                    65,
-		"TIMEZONE_ENUM_TZ_ASIA_TOKYO":                     66,
-		"TIMEZONE_ENUM_TZ_ASIA_ULAANBAATAR":               67,
-		"TIMEZONE_ENUM_TZ_ASIA_URUMQI":                    68,
-		"TIMEZONE_ENUM_TZ_ASIA_VLADIVOSTOK":               69,
-		"TIMEZONE_ENUM_TZ_ASIA_YAKUTSK":                   70,
-		"TIMEZONE_ENUM_TZ_ASIA_YANGON":                    71,
-		"TIMEZONE_ENUM_TZ_ASIA_YEKATERINBURG":             72,
-		"TIMEZONE_ENUM_TZ_ASIA_YEREVAN":                   73,
-		"TIMEZONE_ENUM_TZ_ATLANTIC_AZORES":                74,
-		"TIMEZONE_ENUM_TZ_ATLANTIC_CAPE_VERDE":            75,
-		"TIMEZONE_ENUM_TZ_ATLANTIC_SOUTH_GEORGIA":         76,
-		"TIMEZONE_ENUM_TZ_AUSTRALIA_ADELAIDE":             77,
-		"TIMEZONE_ENUM_TZ_AUSTRALIA_BRISBANE":             78,
-		"TIMEZONE_ENUM_TZ_AUSTRALIA_CANBERRA":             79,
-		"TIMEZONE_ENUM_TZ_AUSTRALIA_DARWIN":               80,
-		"TIMEZONE_ENUM_TZ_AUSTRALIA_HOBART":               81,
-		"TIMEZONE_ENUM_TZ_AUSTRALIA_MELBOURNE":            82,
-		"TIMEZONE_ENUM_TZ_AUSTRALIA_PERTH":                83,
-		"TIMEZONE_ENUM_TZ_AUSTRALIA_SYDNEY":               84,
-		"TIMEZONE_ENUM_TZ_ETC_GMT_12":                     85,
-		"TIMEZONE_ENUM_TZ_EUROPE_AMSTERDAM":               86,
-		"TIMEZONE_ENUM_TZ_EUROPE_ATHENS":                  87,
-		"TIMEZONE_ENUM_TZ_EUROPE_BELGRADE":                88,
-		"TIMEZONE_ENUM_TZ_EUROPE_BERLIN":                  89,
-		"TIMEZONE_ENUM_TZ_EUROPE_BRATISLAVA":              90,
-		"TIMEZONE_ENUM_TZ_EUROPE_BRUSSELS":                91,
-		"TIMEZONE_ENUM_TZ_EUROPE_BUCHAREST":               92,
-		"TIMEZONE_ENUM_TZ_EUROPE_BUDAPEST":                93,
-		"TIMEZONE_ENUM_TZ_EUROPE_COPENHAGEN":              94,
-		"TIMEZONE_ENUM_TZ_EUROPE_DUBLIN":                  95,
-		"TIMEZONE_ENUM_TZ_EUROPE_HELSINKI":                96,
-		"TIMEZONE_ENUM_TZ_EUROPE_ISTANBUL":                97,
-		"TIMEZONE_ENUM_TZ_EUROPE_KALININGRAD":             98,
-		"TIMEZONE_ENUM_TZ_EUROPE_KYIV":                    99,
-		"TIMEZONE_ENUM_TZ_EUROPE_LISBON":                  100,
-		"TIMEZONE_ENUM_TZ_EUROPE_LJUBLJANA":               101,
-		"TIMEZONE_ENUM_TZ_EUROPE_LONDON":                  102,
-		"TIMEZONE_ENUM_TZ_EUROPE_MADRID":                  103,
-		"TIMEZONE_ENUM_TZ_EUROPE_MINSK":                   104,
-		"TIMEZONE_ENUM_TZ_EUROPE_MOSCOW":                  105,
-		"TIMEZONE_ENUM_TZ_EUROPE_PARIS":                   106,
-		"TIMEZONE_ENUM_TZ_EUROPE_PRAGUE":                  107,
-		"TIMEZONE_ENUM_TZ_EUROPE_RIGA":                    108,
-		"TIMEZONE_ENUM_TZ_EUROPE_ROME":                    109,
-		"TIMEZONE_ENUM_TZ_EUROPE_SAMARA":                  110,
-		"TIMEZONE_ENUM_TZ_EUROPE_SARAJEVO":                111,
-		"TIMEZONE_ENUM_TZ_EUROPE_SKOPJE":                  112,
-		"TIMEZONE_ENUM_TZ_EUROPE_SOFIA":                   113,
-		"TIMEZONE_ENUM_TZ_EUROPE_STOCKHOLM":               114,
-		"TIMEZONE_ENUM_TZ_EUROPE_TALLINN":                 115,
-		"TIMEZONE_ENUM_TZ_EUROPE_VIENNA":                  116,
-		"TIMEZONE_ENUM_TZ_EUROPE_VILNIUS":                 117,
-		"TIMEZONE_ENUM_TZ_EUROPE_VOLGOGRAD":               118,
-		"TIMEZONE_ENUM_TZ_EUROPE_WARSAW":                  119,
-		"TIMEZONE_ENUM_TZ_EUROPE_ZAGREB":                  120,
-		"TIMEZONE_ENUM_TZ_EUROPE_ZURICH":                  121,
-		"TIMEZONE_ENUM_TZ_PACIFIC_APIA":                   122,
-		"TIMEZONE_ENUM_TZ_PACIFIC_AUCKLAND":               123,
-		"TIMEZONE_ENUM_TZ_PACIFIC_CHATHAM":                124,
-		"TIMEZONE_ENUM_TZ_PACIFIC_FAKAOFO":                125,
-		"TIMEZONE_ENUM_TZ_PACIFIC_FIJI":                   126,
-		"TIMEZONE_ENUM_TZ_PACIFIC_GUADALCANAL":            127,
-		"TIMEZONE_ENUM_TZ_PACIFIC_GUAM":                   128,
-		"TIMEZONE_ENUM_TZ_PACIFIC_HONOLULU":               129,
-		"TIMEZONE_ENUM_TZ_PACIFIC_MAJURO":                 130,
-		"TIMEZONE_ENUM_TZ_PACIFIC_MIDWAY":                 131,
-		"TIMEZONE_ENUM_TZ_PACIFIC_NOUMEA":                 132,
-		"TIMEZONE_ENUM_TZ_PACIFIC_PAGO_PAGO":              133,
-		"TIMEZONE_ENUM_TZ_PACIFIC_PORT_MORESBY":           134,
-		"TIMEZONE_ENUM_TZ_PACIFIC_TONGATAPU":              135,
-		"TIMEZONE_ENUM_TZ_UTC":                            136,
+	Timezone_value = map[string]int32{
+		"TIMEZONE_UNSPECIFIED":                       0,
+		"TIMEZONE_TZ_AFRICA_ALGIERS":                 1,
+		"TIMEZONE_TZ_AFRICA_CAIRO":                   2,
+		"TIMEZONE_TZ_AFRICA_CASABLANCA":              3,
+		"TIMEZONE_TZ_AFRICA_HARARE":                  4,
+		"TIMEZONE_TZ_AFRICA_JOHANNESBURG":            5,
+		"TIMEZONE_TZ_AFRICA_MONROVIA":                6,
+		"TIMEZONE_TZ_AFRICA_NAIROBI":                 7,
+		"TIMEZONE_TZ_AMERICA_ARGENTINA_BUENOS_AIRES": 8,
+		"TIMEZONE_TZ_AMERICA_BOGOTA":                 9,
+		"TIMEZONE_TZ_AMERICA_CARACAS":                10,
+		"TIMEZONE_TZ_AMERICA_CHICAGO":                11,
+		"TIMEZONE_TZ_AMERICA_CHIHUAHUA":              12,
+		"TIMEZONE_TZ_AMERICA_DENVER":                 13,
+		"TIMEZONE_TZ_AMERICA_GUATEMALA":              14,
+		"TIMEZONE_TZ_AMERICA_GUYANA":                 15,
+		"TIMEZONE_TZ_AMERICA_HALIFAX":                16,
+		"TIMEZONE_TZ_AMERICA_INDIANA_INDIANAPOLIS":   17,
+		"TIMEZONE_TZ_AMERICA_JUNEAU":                 18,
+		"TIMEZONE_TZ_AMERICA_LA_PAZ":                 19,
+		"TIMEZONE_TZ_AMERICA_LIMA":                   20,
+		"TIMEZONE_TZ_AMERICA_LOS_ANGELES":            21,
+		"TIMEZONE_TZ_AMERICA_MAZATLAN":               22,
+		"TIMEZONE_TZ_AMERICA_MEXICO_CITY":            23,
+		"TIMEZONE_TZ_AMERICA_MONTERREY":              24,
+		"TIMEZONE_TZ_AMERICA_MONTEVIDEO":             25,
+		"TIMEZONE_TZ_AMERICA_NEW_YORK":               26,
+		"TIMEZONE_TZ_AMERICA_NUUK":                   27,
+		"TIMEZONE_TZ_AMERICA_PHOENIX":                28,
+		"TIMEZONE_TZ_AMERICA_PUERTO_RICO":            29,
+		"TIMEZONE_TZ_AMERICA_REGINA":                 30,
+		"TIMEZONE_TZ_AMERICA_SANTIAGO":               31,
+		"TIMEZONE_TZ_AMERICA_SAO_PAULO":              32,
+		"TIMEZONE_TZ_AMERICA_ST_JOHNS":               33,
+		"TIMEZONE_TZ_AMERICA_TIJUANA":                34,
+		"TIMEZONE_TZ_ASIA_ALMATY":                    35,
+		"TIMEZONE_TZ_ASIA_BAGHDAD":                   36,
+		"TIMEZONE_TZ_ASIA_BAKU":                      37,
+		"TIMEZONE_TZ_ASIA_BANGKOK":                   38,
+		"TIMEZONE_TZ_ASIA_CHONGQING":                 39,
+		"TIMEZONE_TZ_ASIA_COLOMBO":                   40,
+		"TIMEZONE_TZ_ASIA_DHAKA":                     41,
+		"TIMEZONE_TZ_ASIA_HONG_KONG":                 42,
+		"TIMEZONE_TZ_ASIA_IRKUTSK":                   43,
+		"TIMEZONE_TZ_ASIA_JAKARTA":                   44,
+		"TIMEZONE_TZ_ASIA_JERUSALEM":                 45,
+		"TIMEZONE_TZ_ASIA_KABUL":                     46,
+		"TIMEZONE_TZ_ASIA_KAMCHATKA":                 47,
+		"TIMEZONE_TZ_ASIA_KARACHI":                   48,
+		"TIMEZONE_TZ_ASIA_KATHMANDU":                 49,
+		"TIMEZONE_TZ_ASIA_KOLKATA":                   50,
+		"TIMEZONE_TZ_ASIA_KRASNOYARSK":               51,
+		"TIMEZONE_TZ_ASIA_KUALA_LUMPUR":              52,
+		"TIMEZONE_TZ_ASIA_KUWAIT":                    53,
+		"TIMEZONE_TZ_ASIA_MAGADAN":                   54,
+		"TIMEZONE_TZ_ASIA_MUSCAT":                    55,
+		"TIMEZONE_TZ_ASIA_NOVOSIBIRSK":               56,
+		"TIMEZONE_TZ_ASIA_RIYADH":                    57,
+		"TIMEZONE_TZ_ASIA_SEOUL":                     58,
+		"TIMEZONE_TZ_ASIA_SHANGHAI":                  59,
+		"TIMEZONE_TZ_ASIA_SINGAPORE":                 60,
+		"TIMEZONE_TZ_ASIA_SREDNEKOLYMSK":             61,
+		"TIMEZONE_TZ_ASIA_TAIPEI":                    62,
+		"TIMEZONE_TZ_ASIA_TASHKENT":                  63,
+		"TIMEZONE_TZ_ASIA_TBILISI":                   64,
+		"TIMEZONE_TZ_ASIA_TEHRAN":                    65,
+		"TIMEZONE_TZ_ASIA_TOKYO":                     66,
+		"TIMEZONE_TZ_ASIA_ULAANBAATAR":               67,
+		"TIMEZONE_TZ_ASIA_URUMQI":                    68,
+		"TIMEZONE_TZ_ASIA_VLADIVOSTOK":               69,
+		"TIMEZONE_TZ_ASIA_YAKUTSK":                   70,
+		"TIMEZONE_TZ_ASIA_YANGON":                    71,
+		"TIMEZONE_TZ_ASIA_YEKATERINBURG":             72,
+		"TIMEZONE_TZ_ASIA_YEREVAN":                   73,
+		"TIMEZONE_TZ_ATLANTIC_AZORES":                74,
+		"TIMEZONE_TZ_ATLANTIC_CAPE_VERDE":            75,
+		"TIMEZONE_TZ_ATLANTIC_SOUTH_GEORGIA":         76,
+		"TIMEZONE_TZ_AUSTRALIA_ADELAIDE":             77,
+		"TIMEZONE_TZ_AUSTRALIA_BRISBANE":             78,
+		"TIMEZONE_TZ_AUSTRALIA_CANBERRA":             79,
+		"TIMEZONE_TZ_AUSTRALIA_DARWIN":               80,
+		"TIMEZONE_TZ_AUSTRALIA_HOBART":               81,
+		"TIMEZONE_TZ_AUSTRALIA_MELBOURNE":            82,
+		"TIMEZONE_TZ_AUSTRALIA_PERTH":                83,
+		"TIMEZONE_TZ_AUSTRALIA_SYDNEY":               84,
+		"TIMEZONE_TZ_ETC_GMT_12":                     85,
+		"TIMEZONE_TZ_EUROPE_AMSTERDAM":               86,
+		"TIMEZONE_TZ_EUROPE_ATHENS":                  87,
+		"TIMEZONE_TZ_EUROPE_BELGRADE":                88,
+		"TIMEZONE_TZ_EUROPE_BERLIN":                  89,
+		"TIMEZONE_TZ_EUROPE_BRATISLAVA":              90,
+		"TIMEZONE_TZ_EUROPE_BRUSSELS":                91,
+		"TIMEZONE_TZ_EUROPE_BUCHAREST":               92,
+		"TIMEZONE_TZ_EUROPE_BUDAPEST":                93,
+		"TIMEZONE_TZ_EUROPE_COPENHAGEN":              94,
+		"TIMEZONE_TZ_EUROPE_DUBLIN":                  95,
+		"TIMEZONE_TZ_EUROPE_HELSINKI":                96,
+		"TIMEZONE_TZ_EUROPE_ISTANBUL":                97,
+		"TIMEZONE_TZ_EUROPE_KALININGRAD":             98,
+		"TIMEZONE_TZ_EUROPE_KYIV":                    99,
+		"TIMEZONE_TZ_EUROPE_LISBON":                  100,
+		"TIMEZONE_TZ_EUROPE_LJUBLJANA":               101,
+		"TIMEZONE_TZ_EUROPE_LONDON":                  102,
+		"TIMEZONE_TZ_EUROPE_MADRID":                  103,
+		"TIMEZONE_TZ_EUROPE_MINSK":                   104,
+		"TIMEZONE_TZ_EUROPE_MOSCOW":                  105,
+		"TIMEZONE_TZ_EUROPE_PARIS":                   106,
+		"TIMEZONE_TZ_EUROPE_PRAGUE":                  107,
+		"TIMEZONE_TZ_EUROPE_RIGA":                    108,
+		"TIMEZONE_TZ_EUROPE_ROME":                    109,
+		"TIMEZONE_TZ_EUROPE_SAMARA":                  110,
+		"TIMEZONE_TZ_EUROPE_SARAJEVO":                111,
+		"TIMEZONE_TZ_EUROPE_SKOPJE":                  112,
+		"TIMEZONE_TZ_EUROPE_SOFIA":                   113,
+		"TIMEZONE_TZ_EUROPE_STOCKHOLM":               114,
+		"TIMEZONE_TZ_EUROPE_TALLINN":                 115,
+		"TIMEZONE_TZ_EUROPE_VIENNA":                  116,
+		"TIMEZONE_TZ_EUROPE_VILNIUS":                 117,
+		"TIMEZONE_TZ_EUROPE_VOLGOGRAD":               118,
+		"TIMEZONE_TZ_EUROPE_WARSAW":                  119,
+		"TIMEZONE_TZ_EUROPE_ZAGREB":                  120,
+		"TIMEZONE_TZ_EUROPE_ZURICH":                  121,
+		"TIMEZONE_TZ_PACIFIC_APIA":                   122,
+		"TIMEZONE_TZ_PACIFIC_AUCKLAND":               123,
+		"TIMEZONE_TZ_PACIFIC_CHATHAM":                124,
+		"TIMEZONE_TZ_PACIFIC_FAKAOFO":                125,
+		"TIMEZONE_TZ_PACIFIC_FIJI":                   126,
+		"TIMEZONE_TZ_PACIFIC_GUADALCANAL":            127,
+		"TIMEZONE_TZ_PACIFIC_GUAM":                   128,
+		"TIMEZONE_TZ_PACIFIC_HONOLULU":               129,
+		"TIMEZONE_TZ_PACIFIC_MAJURO":                 130,
+		"TIMEZONE_TZ_PACIFIC_MIDWAY":                 131,
+		"TIMEZONE_TZ_PACIFIC_NOUMEA":                 132,
+		"TIMEZONE_TZ_PACIFIC_PAGO_PAGO":              133,
+		"TIMEZONE_TZ_PACIFIC_PORT_MORESBY":           134,
+		"TIMEZONE_TZ_PACIFIC_TONGATAPU":              135,
+		"TIMEZONE_TZ_UTC":                            136,
 	}
 )
 
-func (x TimezoneEnum) Enum() *TimezoneEnum {
-	p := new(TimezoneEnum)
+func (x Timezone) Enum() *Timezone {
+	p := new(Timezone)
 	*p = x
 	return p
 }
 
-func (x TimezoneEnum) String() string {
+func (x Timezone) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (TimezoneEnum) Descriptor() protoreflect.EnumDescriptor {
+func (Timezone) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[59].Descriptor()
 }
 
-func (TimezoneEnum) Type() protoreflect.EnumType {
+func (Timezone) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[59]
 }
 
-func (x TimezoneEnum) Number() protoreflect.EnumNumber {
+func (x Timezone) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use TimezoneEnum.Descriptor instead.
-func (TimezoneEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use Timezone.Descriptor instead.
+func (Timezone) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{59}
 }
 
-type WalletStatusEnum int32
+type WalletStatus int32
 
 const (
-	WalletStatusEnum_WALLET_STATUS_ENUM_UNSPECIFIED WalletStatusEnum = 0
-	WalletStatusEnum_WALLET_STATUS_ENUM_ACTIVE      WalletStatusEnum = 1
-	WalletStatusEnum_WALLET_STATUS_ENUM_TERMINATED  WalletStatusEnum = 2
+	WalletStatus_WALLET_STATUS_UNSPECIFIED WalletStatus = 0
+	WalletStatus_WALLET_STATUS_ACTIVE      WalletStatus = 1
+	WalletStatus_WALLET_STATUS_TERMINATED  WalletStatus = 2
 )
 
-// Enum value maps for WalletStatusEnum.
+// Enum value maps for WalletStatus.
 var (
-	WalletStatusEnum_name = map[int32]string{
-		0: "WALLET_STATUS_ENUM_UNSPECIFIED",
-		1: "WALLET_STATUS_ENUM_ACTIVE",
-		2: "WALLET_STATUS_ENUM_TERMINATED",
+	WalletStatus_name = map[int32]string{
+		0: "WALLET_STATUS_UNSPECIFIED",
+		1: "WALLET_STATUS_ACTIVE",
+		2: "WALLET_STATUS_TERMINATED",
 	}
-	WalletStatusEnum_value = map[string]int32{
-		"WALLET_STATUS_ENUM_UNSPECIFIED": 0,
-		"WALLET_STATUS_ENUM_ACTIVE":      1,
-		"WALLET_STATUS_ENUM_TERMINATED":  2,
+	WalletStatus_value = map[string]int32{
+		"WALLET_STATUS_UNSPECIFIED": 0,
+		"WALLET_STATUS_ACTIVE":      1,
+		"WALLET_STATUS_TERMINATED":  2,
 	}
 )
 
-func (x WalletStatusEnum) Enum() *WalletStatusEnum {
-	p := new(WalletStatusEnum)
+func (x WalletStatus) Enum() *WalletStatus {
+	p := new(WalletStatus)
 	*p = x
 	return p
 }
 
-func (x WalletStatusEnum) String() string {
+func (x WalletStatus) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (WalletStatusEnum) Descriptor() protoreflect.EnumDescriptor {
+func (WalletStatus) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[60].Descriptor()
 }
 
-func (WalletStatusEnum) Type() protoreflect.EnumType {
+func (WalletStatus) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[60]
 }
 
-func (x WalletStatusEnum) Number() protoreflect.EnumNumber {
+func (x WalletStatus) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use WalletStatusEnum.Descriptor instead.
-func (WalletStatusEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use WalletStatus.Descriptor instead.
+func (WalletStatus) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{60}
 }
 
-type WalletTransactionSourceEnum int32
+type WalletTransactionSource int32
 
 const (
-	WalletTransactionSourceEnum_WALLET_TRANSACTION_SOURCE_ENUM_UNSPECIFIED WalletTransactionSourceEnum = 0
-	WalletTransactionSourceEnum_WALLET_TRANSACTION_SOURCE_ENUM_INTERVAL    WalletTransactionSourceEnum = 1
-	WalletTransactionSourceEnum_WALLET_TRANSACTION_SOURCE_ENUM_MANUAL      WalletTransactionSourceEnum = 2
-	WalletTransactionSourceEnum_WALLET_TRANSACTION_SOURCE_ENUM_THRESHOLD   WalletTransactionSourceEnum = 3
+	WalletTransactionSource_WALLET_TRANSACTION_SOURCE_UNSPECIFIED WalletTransactionSource = 0
+	WalletTransactionSource_WALLET_TRANSACTION_SOURCE_INTERVAL    WalletTransactionSource = 1
+	WalletTransactionSource_WALLET_TRANSACTION_SOURCE_MANUAL      WalletTransactionSource = 2
+	WalletTransactionSource_WALLET_TRANSACTION_SOURCE_THRESHOLD   WalletTransactionSource = 3
 )
 
-// Enum value maps for WalletTransactionSourceEnum.
+// Enum value maps for WalletTransactionSource.
 var (
-	WalletTransactionSourceEnum_name = map[int32]string{
-		0: "WALLET_TRANSACTION_SOURCE_ENUM_UNSPECIFIED",
-		1: "WALLET_TRANSACTION_SOURCE_ENUM_INTERVAL",
-		2: "WALLET_TRANSACTION_SOURCE_ENUM_MANUAL",
-		3: "WALLET_TRANSACTION_SOURCE_ENUM_THRESHOLD",
+	WalletTransactionSource_name = map[int32]string{
+		0: "WALLET_TRANSACTION_SOURCE_UNSPECIFIED",
+		1: "WALLET_TRANSACTION_SOURCE_INTERVAL",
+		2: "WALLET_TRANSACTION_SOURCE_MANUAL",
+		3: "WALLET_TRANSACTION_SOURCE_THRESHOLD",
 	}
-	WalletTransactionSourceEnum_value = map[string]int32{
-		"WALLET_TRANSACTION_SOURCE_ENUM_UNSPECIFIED": 0,
-		"WALLET_TRANSACTION_SOURCE_ENUM_INTERVAL":    1,
-		"WALLET_TRANSACTION_SOURCE_ENUM_MANUAL":      2,
-		"WALLET_TRANSACTION_SOURCE_ENUM_THRESHOLD":   3,
+	WalletTransactionSource_value = map[string]int32{
+		"WALLET_TRANSACTION_SOURCE_UNSPECIFIED": 0,
+		"WALLET_TRANSACTION_SOURCE_INTERVAL":    1,
+		"WALLET_TRANSACTION_SOURCE_MANUAL":      2,
+		"WALLET_TRANSACTION_SOURCE_THRESHOLD":   3,
 	}
 )
 
-func (x WalletTransactionSourceEnum) Enum() *WalletTransactionSourceEnum {
-	p := new(WalletTransactionSourceEnum)
+func (x WalletTransactionSource) Enum() *WalletTransactionSource {
+	p := new(WalletTransactionSource)
 	*p = x
 	return p
 }
 
-func (x WalletTransactionSourceEnum) String() string {
+func (x WalletTransactionSource) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (WalletTransactionSourceEnum) Descriptor() protoreflect.EnumDescriptor {
+func (WalletTransactionSource) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[61].Descriptor()
 }
 
-func (WalletTransactionSourceEnum) Type() protoreflect.EnumType {
+func (WalletTransactionSource) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[61]
 }
 
-func (x WalletTransactionSourceEnum) Number() protoreflect.EnumNumber {
+func (x WalletTransactionSource) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use WalletTransactionSourceEnum.Descriptor instead.
-func (WalletTransactionSourceEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use WalletTransactionSource.Descriptor instead.
+func (WalletTransactionSource) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{61}
 }
 
-type WalletTransactionStatusEnum int32
+type WalletTransactionStatus int32
 
 const (
-	WalletTransactionStatusEnum_WALLET_TRANSACTION_STATUS_ENUM_UNSPECIFIED WalletTransactionStatusEnum = 0
-	WalletTransactionStatusEnum_WALLET_TRANSACTION_STATUS_ENUM_FAILED      WalletTransactionStatusEnum = 1
-	WalletTransactionStatusEnum_WALLET_TRANSACTION_STATUS_ENUM_PENDING     WalletTransactionStatusEnum = 2
-	WalletTransactionStatusEnum_WALLET_TRANSACTION_STATUS_ENUM_SETTLED     WalletTransactionStatusEnum = 3
+	WalletTransactionStatus_WALLET_TRANSACTION_STATUS_UNSPECIFIED WalletTransactionStatus = 0
+	WalletTransactionStatus_WALLET_TRANSACTION_STATUS_FAILED      WalletTransactionStatus = 1
+	WalletTransactionStatus_WALLET_TRANSACTION_STATUS_PENDING     WalletTransactionStatus = 2
+	WalletTransactionStatus_WALLET_TRANSACTION_STATUS_SETTLED     WalletTransactionStatus = 3
 )
 
-// Enum value maps for WalletTransactionStatusEnum.
+// Enum value maps for WalletTransactionStatus.
 var (
-	WalletTransactionStatusEnum_name = map[int32]string{
-		0: "WALLET_TRANSACTION_STATUS_ENUM_UNSPECIFIED",
-		1: "WALLET_TRANSACTION_STATUS_ENUM_FAILED",
-		2: "WALLET_TRANSACTION_STATUS_ENUM_PENDING",
-		3: "WALLET_TRANSACTION_STATUS_ENUM_SETTLED",
+	WalletTransactionStatus_name = map[int32]string{
+		0: "WALLET_TRANSACTION_STATUS_UNSPECIFIED",
+		1: "WALLET_TRANSACTION_STATUS_FAILED",
+		2: "WALLET_TRANSACTION_STATUS_PENDING",
+		3: "WALLET_TRANSACTION_STATUS_SETTLED",
 	}
-	WalletTransactionStatusEnum_value = map[string]int32{
-		"WALLET_TRANSACTION_STATUS_ENUM_UNSPECIFIED": 0,
-		"WALLET_TRANSACTION_STATUS_ENUM_FAILED":      1,
-		"WALLET_TRANSACTION_STATUS_ENUM_PENDING":     2,
-		"WALLET_TRANSACTION_STATUS_ENUM_SETTLED":     3,
+	WalletTransactionStatus_value = map[string]int32{
+		"WALLET_TRANSACTION_STATUS_UNSPECIFIED": 0,
+		"WALLET_TRANSACTION_STATUS_FAILED":      1,
+		"WALLET_TRANSACTION_STATUS_PENDING":     2,
+		"WALLET_TRANSACTION_STATUS_SETTLED":     3,
 	}
 )
 
-func (x WalletTransactionStatusEnum) Enum() *WalletTransactionStatusEnum {
-	p := new(WalletTransactionStatusEnum)
+func (x WalletTransactionStatus) Enum() *WalletTransactionStatus {
+	p := new(WalletTransactionStatus)
 	*p = x
 	return p
 }
 
-func (x WalletTransactionStatusEnum) String() string {
+func (x WalletTransactionStatus) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (WalletTransactionStatusEnum) Descriptor() protoreflect.EnumDescriptor {
+func (WalletTransactionStatus) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[62].Descriptor()
 }
 
-func (WalletTransactionStatusEnum) Type() protoreflect.EnumType {
+func (WalletTransactionStatus) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[62]
 }
 
-func (x WalletTransactionStatusEnum) Number() protoreflect.EnumNumber {
+func (x WalletTransactionStatus) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use WalletTransactionStatusEnum.Descriptor instead.
-func (WalletTransactionStatusEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use WalletTransactionStatus.Descriptor instead.
+func (WalletTransactionStatus) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{62}
 }
 
-type WalletTransactionTransactionStatusEnum int32
+type WalletTransactionTransactionStatus int32
 
 const (
-	WalletTransactionTransactionStatusEnum_WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_UNSPECIFIED WalletTransactionTransactionStatusEnum = 0
-	WalletTransactionTransactionStatusEnum_WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_GRANTED     WalletTransactionTransactionStatusEnum = 1
-	WalletTransactionTransactionStatusEnum_WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_INVOICED    WalletTransactionTransactionStatusEnum = 2
-	WalletTransactionTransactionStatusEnum_WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_PURCHASED   WalletTransactionTransactionStatusEnum = 3
-	WalletTransactionTransactionStatusEnum_WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_VOIDED      WalletTransactionTransactionStatusEnum = 4
+	WalletTransactionTransactionStatus_WALLET_TRANSACTION_TRANSACTION_STATUS_UNSPECIFIED WalletTransactionTransactionStatus = 0
+	WalletTransactionTransactionStatus_WALLET_TRANSACTION_TRANSACTION_STATUS_GRANTED     WalletTransactionTransactionStatus = 1
+	WalletTransactionTransactionStatus_WALLET_TRANSACTION_TRANSACTION_STATUS_INVOICED    WalletTransactionTransactionStatus = 2
+	WalletTransactionTransactionStatus_WALLET_TRANSACTION_TRANSACTION_STATUS_PURCHASED   WalletTransactionTransactionStatus = 3
+	WalletTransactionTransactionStatus_WALLET_TRANSACTION_TRANSACTION_STATUS_VOIDED      WalletTransactionTransactionStatus = 4
 )
 
-// Enum value maps for WalletTransactionTransactionStatusEnum.
+// Enum value maps for WalletTransactionTransactionStatus.
 var (
-	WalletTransactionTransactionStatusEnum_name = map[int32]string{
-		0: "WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_UNSPECIFIED",
-		1: "WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_GRANTED",
-		2: "WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_INVOICED",
-		3: "WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_PURCHASED",
-		4: "WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_VOIDED",
+	WalletTransactionTransactionStatus_name = map[int32]string{
+		0: "WALLET_TRANSACTION_TRANSACTION_STATUS_UNSPECIFIED",
+		1: "WALLET_TRANSACTION_TRANSACTION_STATUS_GRANTED",
+		2: "WALLET_TRANSACTION_TRANSACTION_STATUS_INVOICED",
+		3: "WALLET_TRANSACTION_TRANSACTION_STATUS_PURCHASED",
+		4: "WALLET_TRANSACTION_TRANSACTION_STATUS_VOIDED",
 	}
-	WalletTransactionTransactionStatusEnum_value = map[string]int32{
-		"WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_UNSPECIFIED": 0,
-		"WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_GRANTED":     1,
-		"WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_INVOICED":    2,
-		"WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_PURCHASED":   3,
-		"WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_VOIDED":      4,
+	WalletTransactionTransactionStatus_value = map[string]int32{
+		"WALLET_TRANSACTION_TRANSACTION_STATUS_UNSPECIFIED": 0,
+		"WALLET_TRANSACTION_TRANSACTION_STATUS_GRANTED":     1,
+		"WALLET_TRANSACTION_TRANSACTION_STATUS_INVOICED":    2,
+		"WALLET_TRANSACTION_TRANSACTION_STATUS_PURCHASED":   3,
+		"WALLET_TRANSACTION_TRANSACTION_STATUS_VOIDED":      4,
 	}
 )
 
-func (x WalletTransactionTransactionStatusEnum) Enum() *WalletTransactionTransactionStatusEnum {
-	p := new(WalletTransactionTransactionStatusEnum)
+func (x WalletTransactionTransactionStatus) Enum() *WalletTransactionTransactionStatus {
+	p := new(WalletTransactionTransactionStatus)
 	*p = x
 	return p
 }
 
-func (x WalletTransactionTransactionStatusEnum) String() string {
+func (x WalletTransactionTransactionStatus) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (WalletTransactionTransactionStatusEnum) Descriptor() protoreflect.EnumDescriptor {
+func (WalletTransactionTransactionStatus) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[63].Descriptor()
 }
 
-func (WalletTransactionTransactionStatusEnum) Type() protoreflect.EnumType {
+func (WalletTransactionTransactionStatus) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[63]
 }
 
-func (x WalletTransactionTransactionStatusEnum) Number() protoreflect.EnumNumber {
+func (x WalletTransactionTransactionStatus) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use WalletTransactionTransactionStatusEnum.Descriptor instead.
-func (WalletTransactionTransactionStatusEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use WalletTransactionTransactionStatus.Descriptor instead.
+func (WalletTransactionTransactionStatus) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{63}
 }
 
-type WalletTransactionTransactionTypeEnum int32
+type WalletTransactionTransactionType int32
 
 const (
-	WalletTransactionTransactionTypeEnum_WALLET_TRANSACTION_TRANSACTION_TYPE_ENUM_UNSPECIFIED WalletTransactionTransactionTypeEnum = 0
-	WalletTransactionTransactionTypeEnum_WALLET_TRANSACTION_TRANSACTION_TYPE_ENUM_INBOUND     WalletTransactionTransactionTypeEnum = 1
-	WalletTransactionTransactionTypeEnum_WALLET_TRANSACTION_TRANSACTION_TYPE_ENUM_OUTBOUND    WalletTransactionTransactionTypeEnum = 2
+	WalletTransactionTransactionType_WALLET_TRANSACTION_TRANSACTION_TYPE_UNSPECIFIED WalletTransactionTransactionType = 0
+	WalletTransactionTransactionType_WALLET_TRANSACTION_TRANSACTION_TYPE_INBOUND     WalletTransactionTransactionType = 1
+	WalletTransactionTransactionType_WALLET_TRANSACTION_TRANSACTION_TYPE_OUTBOUND    WalletTransactionTransactionType = 2
 )
 
-// Enum value maps for WalletTransactionTransactionTypeEnum.
+// Enum value maps for WalletTransactionTransactionType.
 var (
-	WalletTransactionTransactionTypeEnum_name = map[int32]string{
-		0: "WALLET_TRANSACTION_TRANSACTION_TYPE_ENUM_UNSPECIFIED",
-		1: "WALLET_TRANSACTION_TRANSACTION_TYPE_ENUM_INBOUND",
-		2: "WALLET_TRANSACTION_TRANSACTION_TYPE_ENUM_OUTBOUND",
+	WalletTransactionTransactionType_name = map[int32]string{
+		0: "WALLET_TRANSACTION_TRANSACTION_TYPE_UNSPECIFIED",
+		1: "WALLET_TRANSACTION_TRANSACTION_TYPE_INBOUND",
+		2: "WALLET_TRANSACTION_TRANSACTION_TYPE_OUTBOUND",
 	}
-	WalletTransactionTransactionTypeEnum_value = map[string]int32{
-		"WALLET_TRANSACTION_TRANSACTION_TYPE_ENUM_UNSPECIFIED": 0,
-		"WALLET_TRANSACTION_TRANSACTION_TYPE_ENUM_INBOUND":     1,
-		"WALLET_TRANSACTION_TRANSACTION_TYPE_ENUM_OUTBOUND":    2,
+	WalletTransactionTransactionType_value = map[string]int32{
+		"WALLET_TRANSACTION_TRANSACTION_TYPE_UNSPECIFIED": 0,
+		"WALLET_TRANSACTION_TRANSACTION_TYPE_INBOUND":     1,
+		"WALLET_TRANSACTION_TRANSACTION_TYPE_OUTBOUND":    2,
 	}
 )
 
-func (x WalletTransactionTransactionTypeEnum) Enum() *WalletTransactionTransactionTypeEnum {
-	p := new(WalletTransactionTransactionTypeEnum)
+func (x WalletTransactionTransactionType) Enum() *WalletTransactionTransactionType {
+	p := new(WalletTransactionTransactionType)
 	*p = x
 	return p
 }
 
-func (x WalletTransactionTransactionTypeEnum) String() string {
+func (x WalletTransactionTransactionType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (WalletTransactionTransactionTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (WalletTransactionTransactionType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[64].Descriptor()
 }
 
-func (WalletTransactionTransactionTypeEnum) Type() protoreflect.EnumType {
+func (WalletTransactionTransactionType) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[64]
 }
 
-func (x WalletTransactionTransactionTypeEnum) Number() protoreflect.EnumNumber {
+func (x WalletTransactionTransactionType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use WalletTransactionTransactionTypeEnum.Descriptor instead.
-func (WalletTransactionTransactionTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use WalletTransactionTransactionType.Descriptor instead.
+func (WalletTransactionTransactionType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{64}
 }
 
-type WeightedIntervalEnum int32
+type WeightedInterval int32
 
 const (
-	WeightedIntervalEnum_WEIGHTED_INTERVAL_ENUM_UNSPECIFIED WeightedIntervalEnum = 0
-	WeightedIntervalEnum_WEIGHTED_INTERVAL_ENUM_SECONDS     WeightedIntervalEnum = 1
+	WeightedInterval_WEIGHTED_INTERVAL_UNSPECIFIED WeightedInterval = 0
+	WeightedInterval_WEIGHTED_INTERVAL_SECONDS     WeightedInterval = 1
 )
 
-// Enum value maps for WeightedIntervalEnum.
+// Enum value maps for WeightedInterval.
 var (
-	WeightedIntervalEnum_name = map[int32]string{
-		0: "WEIGHTED_INTERVAL_ENUM_UNSPECIFIED",
-		1: "WEIGHTED_INTERVAL_ENUM_SECONDS",
+	WeightedInterval_name = map[int32]string{
+		0: "WEIGHTED_INTERVAL_UNSPECIFIED",
+		1: "WEIGHTED_INTERVAL_SECONDS",
 	}
-	WeightedIntervalEnum_value = map[string]int32{
-		"WEIGHTED_INTERVAL_ENUM_UNSPECIFIED": 0,
-		"WEIGHTED_INTERVAL_ENUM_SECONDS":     1,
+	WeightedInterval_value = map[string]int32{
+		"WEIGHTED_INTERVAL_UNSPECIFIED": 0,
+		"WEIGHTED_INTERVAL_SECONDS":     1,
 	}
 )
 
-func (x WeightedIntervalEnum) Enum() *WeightedIntervalEnum {
-	p := new(WeightedIntervalEnum)
+func (x WeightedInterval) Enum() *WeightedInterval {
+	p := new(WeightedInterval)
 	*p = x
 	return p
 }
 
-func (x WeightedIntervalEnum) String() string {
+func (x WeightedInterval) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (WeightedIntervalEnum) Descriptor() protoreflect.EnumDescriptor {
+func (WeightedInterval) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_common_v2_models_proto_enumTypes[65].Descriptor()
 }
 
-func (WeightedIntervalEnum) Type() protoreflect.EnumType {
+func (WeightedInterval) Type() protoreflect.EnumType {
 	return &file_invora_billing_common_v2_models_proto_enumTypes[65]
 }
 
-func (x WeightedIntervalEnum) Number() protoreflect.EnumNumber {
+func (x WeightedInterval) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use WeightedIntervalEnum.Descriptor instead.
-func (WeightedIntervalEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use WeightedInterval.Descriptor instead.
+func (WeightedInterval) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{65}
 }
 
 type BillingCustomer struct {
-	state       protoimpl.MessageState  `protogen:"open.v1"`
-	AccountType CustomerAccountTypeEnum `protobuf:"varint,1,opt,name=account_type,json=accountType,proto3,enum=invora.billing.common.v2.CustomerAccountTypeEnum" json:"account_type,omitempty"`
+	state       protoimpl.MessageState `protogen:"open.v1"`
+	AccountType CustomerAccountType    `protobuf:"varint,1,opt,name=account_type,json=accountType,proto3,enum=invora.billing.common.v2.CustomerAccountType" json:"account_type,omitempty"`
 	// Number of active subscriptions per customer
 	ActiveSubscriptionsCount int32                         `protobuf:"varint,2,opt,name=active_subscriptions_count,json=activeSubscriptionsCount,proto3" json:"active_subscriptions_count,omitempty"`
-	ActivityLogs             []*ActivityLog                `protobuf:"bytes,3,rep,name=activity_logs,json=activityLogs,proto3" json:"activity_logs,omitempty"`
 	AddressLine1             *string                       `protobuf:"bytes,4,opt,name=address_line1,json=addressLine1,proto3,oneof" json:"address_line1,omitempty"`
 	AddressLine2             *string                       `protobuf:"bytes,5,opt,name=address_line2,json=addressLine2,proto3,oneof" json:"address_line2,omitempty"`
-	AnrokCustomer            *AnrokCustomer                `protobuf:"bytes,6,opt,name=anrok_customer,json=anrokCustomer,proto3,oneof" json:"anrok_customer,omitempty"`
-	ApplicableTimezone       TimezoneEnum                  `protobuf:"varint,7,opt,name=applicable_timezone,json=applicableTimezone,proto3,enum=invora.billing.common.v2.TimezoneEnum" json:"applicable_timezone,omitempty"`
+	ApplicableTimezone       Timezone                      `protobuf:"varint,7,opt,name=applicable_timezone,json=applicableTimezone,proto3,enum=invora.billing.common.v2.Timezone" json:"applicable_timezone,omitempty"`
 	AppliedAddOns            []*AppliedAddOn               `protobuf:"bytes,8,rep,name=applied_add_ons,json=appliedAddOns,proto3" json:"applied_add_ons,omitempty"`
 	AppliedCoupons           []*AppliedCoupon              `protobuf:"bytes,9,rep,name=applied_coupons,json=appliedCoupons,proto3" json:"applied_coupons,omitempty"`
-	AppliedDunningCampaign   *DunningCampaign              `protobuf:"bytes,10,opt,name=applied_dunning_campaign,json=appliedDunningCampaign,proto3,oneof" json:"applied_dunning_campaign,omitempty"`
-	AvalaraCustomer          *AvalaraCustomer              `protobuf:"bytes,11,opt,name=avalara_customer,json=avalaraCustomer,proto3,oneof" json:"avalara_customer,omitempty"`
 	BillingConfiguration     *CustomerBillingConfiguration `protobuf:"bytes,12,opt,name=billing_configuration,json=billingConfiguration,proto3,oneof" json:"billing_configuration,omitempty"`
 	BillingEntity            *BillingEntity                `protobuf:"bytes,13,opt,name=billing_entity,json=billingEntity,proto3" json:"billing_entity,omitempty"`
-	// Check if customer attributes are editable
-	CanEditAttributes bool    `protobuf:"varint,14,opt,name=can_edit_attributes,json=canEditAttributes,proto3" json:"can_edit_attributes,omitempty"`
-	City              *string `protobuf:"bytes,15,opt,name=city,proto3,oneof" json:"city,omitempty"`
+	City                     *string                       `protobuf:"bytes,15,opt,name=city,proto3,oneof" json:"city,omitempty"`
 	// Invoice custom sections manually configured for the customer
 	ConfigurableInvoiceCustomSections []*InvoiceCustomSection `protobuf:"bytes,16,rep,name=configurable_invoice_custom_sections,json=configurableInvoiceCustomSections,proto3" json:"configurable_invoice_custom_sections,omitempty"`
 	Country                           *CountryCode            `protobuf:"varint,17,opt,name=country,proto3,enum=invora.billing.common.v2.CountryCode,oneof" json:"country,omitempty"`
@@ -5908,46 +5900,30 @@ type BillingCustomer struct {
 	// Number of available credits from credit notes per customer
 	CreditNotesCreditsAvailableCount int32                  `protobuf:"varint,21,opt,name=credit_notes_credits_available_count,json=creditNotesCreditsAvailableCount,proto3" json:"credit_notes_credits_available_count,omitempty"`
 	Currency                         *CurrencyEnum          `protobuf:"varint,22,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"currency,omitempty"`
-	CustomerType                     *CustomerTypeEnum      `protobuf:"varint,23,opt,name=customer_type,json=customerType,proto3,enum=invora.billing.common.v2.CustomerTypeEnum,oneof" json:"customer_type,omitempty"`
+	CustomerType                     *CustomerType          `protobuf:"varint,23,opt,name=customer_type,json=customerType,proto3,enum=invora.billing.common.v2.CustomerType,oneof" json:"customer_type,omitempty"`
 	DeletedAt                        *timestamppb.Timestamp `protobuf:"bytes,24,opt,name=deleted_at,json=deletedAt,proto3,oneof" json:"deleted_at,omitempty"`
 	DisplayName                      string                 `protobuf:"bytes,25,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
 	Email                            *string                `protobuf:"bytes,26,opt,name=email,proto3,oneof" json:"email,omitempty"`
-	ErrorDetails                     []*ErrorDetail         `protobuf:"bytes,27,rep,name=error_details,json=errorDetails,proto3" json:"error_details,omitempty"`
-	ExcludeFromDunningCampaign       bool                   `protobuf:"varint,28,opt,name=exclude_from_dunning_campaign,json=excludeFromDunningCampaign,proto3" json:"exclude_from_dunning_campaign,omitempty"`
 	ExternalId                       string                 `protobuf:"bytes,29,opt,name=external_id,json=externalId,proto3" json:"external_id,omitempty"`
 	ExternalSalesforceId             *string                `protobuf:"bytes,30,opt,name=external_salesforce_id,json=externalSalesforceId,proto3,oneof" json:"external_salesforce_id,omitempty"`
 	// Options for handling invoices with a zero total amount.
-	FinalizeZeroAmountInvoice *FinalizeZeroAmountInvoiceEnum `protobuf:"varint,31,opt,name=finalize_zero_amount_invoice,json=finalizeZeroAmountInvoice,proto3,enum=invora.billing.common.v2.FinalizeZeroAmountInvoiceEnum,oneof" json:"finalize_zero_amount_invoice,omitempty"`
-	Firstname                 *string                        `protobuf:"bytes,32,opt,name=firstname,proto3,oneof" json:"firstname,omitempty"`
-	// Define if a customer has an active wallet
-	HasActiveWallet bool `protobuf:"varint,33,opt,name=has_active_wallet,json=hasActiveWallet,proto3" json:"has_active_wallet,omitempty"`
-	// Define if a customer has any credit note
-	HasCreditNotes bool `protobuf:"varint,34,opt,name=has_credit_notes,json=hasCreditNotes,proto3" json:"has_credit_notes,omitempty"`
-	// Define if a customer has overdue invoices
-	HasOverdueInvoices bool `protobuf:"varint,35,opt,name=has_overdue_invoices,json=hasOverdueInvoices,proto3" json:"has_overdue_invoices,omitempty"`
-	// Define if the customer has custom invoice custom sections selection
-	HasOverwrittenInvoiceCustomSectionsSelection *bool                  `protobuf:"varint,36,opt,name=has_overwritten_invoice_custom_sections_selection,json=hasOverwrittenInvoiceCustomSectionsSelection,proto3,oneof" json:"has_overwritten_invoice_custom_sections_selection,omitempty"`
-	HubspotCustomer                              *HubspotCustomer       `protobuf:"bytes,37,opt,name=hubspot_customer,json=hubspotCustomer,proto3,oneof" json:"hubspot_customer,omitempty"`
-	Id                                           string                 `protobuf:"bytes,38,opt,name=id,proto3" json:"id,omitempty"`
-	InvoiceGracePeriod                           *int32                 `protobuf:"varint,39,opt,name=invoice_grace_period,json=invoiceGracePeriod,proto3,oneof" json:"invoice_grace_period,omitempty"`
-	Invoices                                     []*BillingInvoice      `protobuf:"bytes,40,rep,name=invoices,proto3" json:"invoices,omitempty"`
-	LastDunningCampaignAttempt                   int32                  `protobuf:"varint,41,opt,name=last_dunning_campaign_attempt,json=lastDunningCampaignAttempt,proto3" json:"last_dunning_campaign_attempt,omitempty"`
-	LastDunningCampaignAttemptAt                 *timestamppb.Timestamp `protobuf:"bytes,42,opt,name=last_dunning_campaign_attempt_at,json=lastDunningCampaignAttemptAt,proto3,oneof" json:"last_dunning_campaign_attempt_at,omitempty"`
-	Lastname                                     *string                `protobuf:"bytes,43,opt,name=lastname,proto3,oneof" json:"lastname,omitempty"`
-	LegalName                                    *string                `protobuf:"bytes,44,opt,name=legal_name,json=legalName,proto3,oneof" json:"legal_name,omitempty"`
-	LegalNumber                                  *string                `protobuf:"bytes,45,opt,name=legal_number,json=legalNumber,proto3,oneof" json:"legal_number,omitempty"`
-	LogoUrl                                      *string                `protobuf:"bytes,46,opt,name=logo_url,json=logoUrl,proto3,oneof" json:"logo_url,omitempty"`
-	Metadata                                     []*CustomerMetadata    `protobuf:"bytes,47,rep,name=metadata,proto3" json:"metadata,omitempty"`
-	Name                                         *string                `protobuf:"bytes,48,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	NetPaymentTerm                               *int32                 `protobuf:"varint,49,opt,name=net_payment_term,json=netPaymentTerm,proto3,oneof" json:"net_payment_term,omitempty"`
-	NetsuiteCustomer                             *NetsuiteCustomer      `protobuf:"bytes,50,opt,name=netsuite_customer,json=netsuiteCustomer,proto3,oneof" json:"netsuite_customer,omitempty"`
-	PaymentProvider                              *ProviderTypeEnum      `protobuf:"varint,51,opt,name=payment_provider,json=paymentProvider,proto3,enum=invora.billing.common.v2.ProviderTypeEnum,oneof" json:"payment_provider,omitempty"`
-	PaymentProviderCode                          *string                `protobuf:"bytes,52,opt,name=payment_provider_code,json=paymentProviderCode,proto3,oneof" json:"payment_provider_code,omitempty"`
-	Phone                                        *string                `protobuf:"bytes,53,opt,name=phone,proto3,oneof" json:"phone,omitempty"`
-	ProviderCustomer                             *ProviderCustomer      `protobuf:"bytes,54,opt,name=provider_customer,json=providerCustomer,proto3,oneof" json:"provider_customer,omitempty"`
-	SalesforceCustomer                           *SalesforceCustomer    `protobuf:"bytes,55,opt,name=salesforce_customer,json=salesforceCustomer,proto3,oneof" json:"salesforce_customer,omitempty"`
-	SequentialId                                 string                 `protobuf:"bytes,56,opt,name=sequential_id,json=sequentialId,proto3" json:"sequential_id,omitempty"`
-	ShippingAddress                              *CustomerAddress       `protobuf:"bytes,57,opt,name=shipping_address,json=shippingAddress,proto3,oneof" json:"shipping_address,omitempty"`
+	FinalizeZeroAmountInvoice *FinalizeZeroAmountInvoice `protobuf:"varint,31,opt,name=finalize_zero_amount_invoice,json=finalizeZeroAmountInvoice,proto3,enum=invora.billing.common.v2.FinalizeZeroAmountInvoice,oneof" json:"finalize_zero_amount_invoice,omitempty"`
+	Firstname                 *string                    `protobuf:"bytes,32,opt,name=firstname,proto3,oneof" json:"firstname,omitempty"`
+	Id                        string                     `protobuf:"bytes,38,opt,name=id,proto3" json:"id,omitempty"`
+	InvoiceGracePeriod        *int32                     `protobuf:"varint,39,opt,name=invoice_grace_period,json=invoiceGracePeriod,proto3,oneof" json:"invoice_grace_period,omitempty"`
+	Invoices                  []*BillingInvoice          `protobuf:"bytes,40,rep,name=invoices,proto3" json:"invoices,omitempty"`
+	Lastname                  *string                    `protobuf:"bytes,43,opt,name=lastname,proto3,oneof" json:"lastname,omitempty"`
+	LegalName                 *string                    `protobuf:"bytes,44,opt,name=legal_name,json=legalName,proto3,oneof" json:"legal_name,omitempty"`
+	LegalNumber               *string                    `protobuf:"bytes,45,opt,name=legal_number,json=legalNumber,proto3,oneof" json:"legal_number,omitempty"`
+	LogoUrl                   *string                    `protobuf:"bytes,46,opt,name=logo_url,json=logoUrl,proto3,oneof" json:"logo_url,omitempty"`
+	Metadata                  []*CustomerMetadata        `protobuf:"bytes,47,rep,name=metadata,proto3" json:"metadata,omitempty"`
+	Name                      *string                    `protobuf:"bytes,48,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	NetPaymentTerm            *int32                     `protobuf:"varint,49,opt,name=net_payment_term,json=netPaymentTerm,proto3,oneof" json:"net_payment_term,omitempty"`
+	PaymentProvider           *ProviderType              `protobuf:"varint,51,opt,name=payment_provider,json=paymentProvider,proto3,enum=invora.billing.common.v2.ProviderType,oneof" json:"payment_provider,omitempty"`
+	PaymentProviderCode       *string                    `protobuf:"bytes,52,opt,name=payment_provider_code,json=paymentProviderCode,proto3,oneof" json:"payment_provider_code,omitempty"`
+	Phone                     *string                    `protobuf:"bytes,53,opt,name=phone,proto3,oneof" json:"phone,omitempty"`
+	SequentialId              string                     `protobuf:"bytes,56,opt,name=sequential_id,json=sequentialId,proto3" json:"sequential_id,omitempty"`
+	ShippingAddress           *CustomerAddress           `protobuf:"bytes,57,opt,name=shipping_address,json=shippingAddress,proto3,oneof" json:"shipping_address,omitempty"`
 	// Skip invoice custom sections for the customer
 	SkipInvoiceCustomSections *bool   `protobuf:"varint,58,opt,name=skip_invoice_custom_sections,json=skipInvoiceCustomSections,proto3,oneof" json:"skip_invoice_custom_sections,omitempty"`
 	Slug                      string  `protobuf:"bytes,59,opt,name=slug,proto3" json:"slug,omitempty"`
@@ -5956,10 +5932,9 @@ type BillingCustomer struct {
 	Subscriptions           []*BillingSubscription `protobuf:"bytes,61,rep,name=subscriptions,proto3" json:"subscriptions,omitempty"`
 	TaxIdentificationNumber *string                `protobuf:"bytes,62,opt,name=tax_identification_number,json=taxIdentificationNumber,proto3,oneof" json:"tax_identification_number,omitempty"`
 	Taxes                   []*BillingTax          `protobuf:"bytes,63,rep,name=taxes,proto3" json:"taxes,omitempty"`
-	Timezone                *TimezoneEnum          `protobuf:"varint,64,opt,name=timezone,proto3,enum=invora.billing.common.v2.TimezoneEnum,oneof" json:"timezone,omitempty"`
+	Timezone                *Timezone              `protobuf:"varint,64,opt,name=timezone,proto3,enum=invora.billing.common.v2.Timezone,oneof" json:"timezone,omitempty"`
 	UpdatedAt               *timestamppb.Timestamp `protobuf:"bytes,65,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	Url                     *string                `protobuf:"bytes,66,opt,name=url,proto3,oneof" json:"url,omitempty"`
-	XeroCustomer            *XeroCustomer          `protobuf:"bytes,67,opt,name=xero_customer,json=xeroCustomer,proto3,oneof" json:"xero_customer,omitempty"`
 	Zipcode                 *string                `protobuf:"bytes,68,opt,name=zipcode,proto3,oneof" json:"zipcode,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
@@ -5995,11 +5970,11 @@ func (*BillingCustomer) Descriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *BillingCustomer) GetAccountType() CustomerAccountTypeEnum {
+func (x *BillingCustomer) GetAccountType() CustomerAccountType {
 	if x != nil {
 		return x.AccountType
 	}
-	return CustomerAccountTypeEnum_CUSTOMER_ACCOUNT_TYPE_ENUM_UNSPECIFIED
+	return CustomerAccountType_CUSTOMER_ACCOUNT_TYPE_UNSPECIFIED
 }
 
 func (x *BillingCustomer) GetActiveSubscriptionsCount() int32 {
@@ -6007,13 +5982,6 @@ func (x *BillingCustomer) GetActiveSubscriptionsCount() int32 {
 		return x.ActiveSubscriptionsCount
 	}
 	return 0
-}
-
-func (x *BillingCustomer) GetActivityLogs() []*ActivityLog {
-	if x != nil {
-		return x.ActivityLogs
-	}
-	return nil
 }
 
 func (x *BillingCustomer) GetAddressLine1() string {
@@ -6030,18 +5998,11 @@ func (x *BillingCustomer) GetAddressLine2() string {
 	return ""
 }
 
-func (x *BillingCustomer) GetAnrokCustomer() *AnrokCustomer {
-	if x != nil {
-		return x.AnrokCustomer
-	}
-	return nil
-}
-
-func (x *BillingCustomer) GetApplicableTimezone() TimezoneEnum {
+func (x *BillingCustomer) GetApplicableTimezone() Timezone {
 	if x != nil {
 		return x.ApplicableTimezone
 	}
-	return TimezoneEnum_TIMEZONE_ENUM_UNSPECIFIED
+	return Timezone_TIMEZONE_UNSPECIFIED
 }
 
 func (x *BillingCustomer) GetAppliedAddOns() []*AppliedAddOn {
@@ -6058,20 +6019,6 @@ func (x *BillingCustomer) GetAppliedCoupons() []*AppliedCoupon {
 	return nil
 }
 
-func (x *BillingCustomer) GetAppliedDunningCampaign() *DunningCampaign {
-	if x != nil {
-		return x.AppliedDunningCampaign
-	}
-	return nil
-}
-
-func (x *BillingCustomer) GetAvalaraCustomer() *AvalaraCustomer {
-	if x != nil {
-		return x.AvalaraCustomer
-	}
-	return nil
-}
-
 func (x *BillingCustomer) GetBillingConfiguration() *CustomerBillingConfiguration {
 	if x != nil {
 		return x.BillingConfiguration
@@ -6084,13 +6031,6 @@ func (x *BillingCustomer) GetBillingEntity() *BillingEntity {
 		return x.BillingEntity
 	}
 	return nil
-}
-
-func (x *BillingCustomer) GetCanEditAttributes() bool {
-	if x != nil {
-		return x.CanEditAttributes
-	}
-	return false
 }
 
 func (x *BillingCustomer) GetCity() string {
@@ -6149,11 +6089,11 @@ func (x *BillingCustomer) GetCurrency() CurrencyEnum {
 	return CurrencyEnum_CURRENCY_ENUM_UNSPECIFIED
 }
 
-func (x *BillingCustomer) GetCustomerType() CustomerTypeEnum {
+func (x *BillingCustomer) GetCustomerType() CustomerType {
 	if x != nil && x.CustomerType != nil {
 		return *x.CustomerType
 	}
-	return CustomerTypeEnum_CUSTOMER_TYPE_ENUM_UNSPECIFIED
+	return CustomerType_CUSTOMER_TYPE_UNSPECIFIED
 }
 
 func (x *BillingCustomer) GetDeletedAt() *timestamppb.Timestamp {
@@ -6177,20 +6117,6 @@ func (x *BillingCustomer) GetEmail() string {
 	return ""
 }
 
-func (x *BillingCustomer) GetErrorDetails() []*ErrorDetail {
-	if x != nil {
-		return x.ErrorDetails
-	}
-	return nil
-}
-
-func (x *BillingCustomer) GetExcludeFromDunningCampaign() bool {
-	if x != nil {
-		return x.ExcludeFromDunningCampaign
-	}
-	return false
-}
-
 func (x *BillingCustomer) GetExternalId() string {
 	if x != nil {
 		return x.ExternalId
@@ -6205,11 +6131,11 @@ func (x *BillingCustomer) GetExternalSalesforceId() string {
 	return ""
 }
 
-func (x *BillingCustomer) GetFinalizeZeroAmountInvoice() FinalizeZeroAmountInvoiceEnum {
+func (x *BillingCustomer) GetFinalizeZeroAmountInvoice() FinalizeZeroAmountInvoice {
 	if x != nil && x.FinalizeZeroAmountInvoice != nil {
 		return *x.FinalizeZeroAmountInvoice
 	}
-	return FinalizeZeroAmountInvoiceEnum_FINALIZE_ZERO_AMOUNT_INVOICE_ENUM_UNSPECIFIED
+	return FinalizeZeroAmountInvoice_FINALIZE_ZERO_AMOUNT_INVOICE_UNSPECIFIED
 }
 
 func (x *BillingCustomer) GetFirstname() string {
@@ -6217,41 +6143,6 @@ func (x *BillingCustomer) GetFirstname() string {
 		return *x.Firstname
 	}
 	return ""
-}
-
-func (x *BillingCustomer) GetHasActiveWallet() bool {
-	if x != nil {
-		return x.HasActiveWallet
-	}
-	return false
-}
-
-func (x *BillingCustomer) GetHasCreditNotes() bool {
-	if x != nil {
-		return x.HasCreditNotes
-	}
-	return false
-}
-
-func (x *BillingCustomer) GetHasOverdueInvoices() bool {
-	if x != nil {
-		return x.HasOverdueInvoices
-	}
-	return false
-}
-
-func (x *BillingCustomer) GetHasOverwrittenInvoiceCustomSectionsSelection() bool {
-	if x != nil && x.HasOverwrittenInvoiceCustomSectionsSelection != nil {
-		return *x.HasOverwrittenInvoiceCustomSectionsSelection
-	}
-	return false
-}
-
-func (x *BillingCustomer) GetHubspotCustomer() *HubspotCustomer {
-	if x != nil {
-		return x.HubspotCustomer
-	}
-	return nil
 }
 
 func (x *BillingCustomer) GetId() string {
@@ -6271,20 +6162,6 @@ func (x *BillingCustomer) GetInvoiceGracePeriod() int32 {
 func (x *BillingCustomer) GetInvoices() []*BillingInvoice {
 	if x != nil {
 		return x.Invoices
-	}
-	return nil
-}
-
-func (x *BillingCustomer) GetLastDunningCampaignAttempt() int32 {
-	if x != nil {
-		return x.LastDunningCampaignAttempt
-	}
-	return 0
-}
-
-func (x *BillingCustomer) GetLastDunningCampaignAttemptAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.LastDunningCampaignAttemptAt
 	}
 	return nil
 }
@@ -6338,18 +6215,11 @@ func (x *BillingCustomer) GetNetPaymentTerm() int32 {
 	return 0
 }
 
-func (x *BillingCustomer) GetNetsuiteCustomer() *NetsuiteCustomer {
-	if x != nil {
-		return x.NetsuiteCustomer
-	}
-	return nil
-}
-
-func (x *BillingCustomer) GetPaymentProvider() ProviderTypeEnum {
+func (x *BillingCustomer) GetPaymentProvider() ProviderType {
 	if x != nil && x.PaymentProvider != nil {
 		return *x.PaymentProvider
 	}
-	return ProviderTypeEnum_PROVIDER_TYPE_ENUM_UNSPECIFIED
+	return ProviderType_PROVIDER_TYPE_UNSPECIFIED
 }
 
 func (x *BillingCustomer) GetPaymentProviderCode() string {
@@ -6364,20 +6234,6 @@ func (x *BillingCustomer) GetPhone() string {
 		return *x.Phone
 	}
 	return ""
-}
-
-func (x *BillingCustomer) GetProviderCustomer() *ProviderCustomer {
-	if x != nil {
-		return x.ProviderCustomer
-	}
-	return nil
-}
-
-func (x *BillingCustomer) GetSalesforceCustomer() *SalesforceCustomer {
-	if x != nil {
-		return x.SalesforceCustomer
-	}
-	return nil
 }
 
 func (x *BillingCustomer) GetSequentialId() string {
@@ -6436,11 +6292,11 @@ func (x *BillingCustomer) GetTaxes() []*BillingTax {
 	return nil
 }
 
-func (x *BillingCustomer) GetTimezone() TimezoneEnum {
+func (x *BillingCustomer) GetTimezone() Timezone {
 	if x != nil && x.Timezone != nil {
 		return *x.Timezone
 	}
-	return TimezoneEnum_TIMEZONE_ENUM_UNSPECIFIED
+	return Timezone_TIMEZONE_UNSPECIFIED
 }
 
 func (x *BillingCustomer) GetUpdatedAt() *timestamppb.Timestamp {
@@ -6457,13 +6313,6 @@ func (x *BillingCustomer) GetUrl() string {
 	return ""
 }
 
-func (x *BillingCustomer) GetXeroCustomer() *XeroCustomer {
-	if x != nil {
-		return x.XeroCustomer
-	}
-	return nil
-}
-
 func (x *BillingCustomer) GetZipcode() string {
 	if x != nil && x.Zipcode != nil {
 		return *x.Zipcode
@@ -6472,42 +6321,41 @@ func (x *BillingCustomer) GetZipcode() string {
 }
 
 type BillingSubscription struct {
-	state                         protoimpl.MessageState       `protogen:"open.v1"`
-	ActivityLogs                  []*ActivityLog               `protobuf:"bytes,1,rep,name=activity_logs,json=activityLogs,proto3" json:"activity_logs,omitempty"`
-	BillingTime                   *BillingTimeEnum             `protobuf:"varint,2,opt,name=billing_time,json=billingTime,proto3,enum=invora.billing.common.v2.BillingTimeEnum,oneof" json:"billing_time,omitempty"`
-	CanceledAt                    *timestamppb.Timestamp       `protobuf:"bytes,3,opt,name=canceled_at,json=canceledAt,proto3,oneof" json:"canceled_at,omitempty"`
-	Charges                       []*Charge                    `protobuf:"bytes,4,rep,name=charges,proto3" json:"charges,omitempty"`
-	CreatedAt                     *timestamppb.Timestamp       `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	CurrentBillingPeriodEndingAt  *timestamppb.Timestamp       `protobuf:"bytes,6,opt,name=current_billing_period_ending_at,json=currentBillingPeriodEndingAt,proto3,oneof" json:"current_billing_period_ending_at,omitempty"`
-	CurrentBillingPeriodStartedAt *timestamppb.Timestamp       `protobuf:"bytes,7,opt,name=current_billing_period_started_at,json=currentBillingPeriodStartedAt,proto3,oneof" json:"current_billing_period_started_at,omitempty"`
-	Customer                      *BillingCustomer             `protobuf:"bytes,8,opt,name=customer,proto3" json:"customer,omitempty"`
-	EndingAt                      *timestamppb.Timestamp       `protobuf:"bytes,9,opt,name=ending_at,json=endingAt,proto3,oneof" json:"ending_at,omitempty"`
-	ExternalId                    string                       `protobuf:"bytes,10,opt,name=external_id,json=externalId,proto3" json:"external_id,omitempty"`
-	Fees                          []*BillingFee                `protobuf:"bytes,11,rep,name=fees,proto3" json:"fees,omitempty"`
-	FixedCharges                  []*FixedCharge               `protobuf:"bytes,12,rep,name=fixed_charges,json=fixedCharges,proto3" json:"fixed_charges,omitempty"`
-	Id                            string                       `protobuf:"bytes,13,opt,name=id,proto3" json:"id,omitempty"`
-	LifetimeUsage                 *SubscriptionLifetimeUsage   `protobuf:"bytes,14,opt,name=lifetime_usage,json=lifetimeUsage,proto3,oneof" json:"lifetime_usage,omitempty"`
-	Name                          *string                      `protobuf:"bytes,15,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	NextName                      *string                      `protobuf:"bytes,16,opt,name=next_name,json=nextName,proto3,oneof" json:"next_name,omitempty"`
-	NextPlan                      *BillingPlan                 `protobuf:"bytes,17,opt,name=next_plan,json=nextPlan,proto3,oneof" json:"next_plan,omitempty"`
-	NextSubscription              *BillingSubscription         `protobuf:"bytes,18,opt,name=next_subscription,json=nextSubscription,proto3,oneof" json:"next_subscription,omitempty"`
-	NextSubscriptionAt            *timestamppb.Timestamp       `protobuf:"bytes,19,opt,name=next_subscription_at,json=nextSubscriptionAt,proto3,oneof" json:"next_subscription_at,omitempty"`
-	NextSubscriptionType          *NextSubscriptionTypeEnum    `protobuf:"varint,20,opt,name=next_subscription_type,json=nextSubscriptionType,proto3,enum=invora.billing.common.v2.NextSubscriptionTypeEnum,oneof" json:"next_subscription_type,omitempty"`
-	OnTerminationCreditNote       *OnTerminationCreditNoteEnum `protobuf:"varint,21,opt,name=on_termination_credit_note,json=onTerminationCreditNote,proto3,enum=invora.billing.common.v2.OnTerminationCreditNoteEnum,oneof" json:"on_termination_credit_note,omitempty"`
-	OnTerminationInvoice          OnTerminationInvoiceEnum     `protobuf:"varint,22,opt,name=on_termination_invoice,json=onTerminationInvoice,proto3,enum=invora.billing.common.v2.OnTerminationInvoiceEnum" json:"on_termination_invoice,omitempty"`
-	PaymentMethod                 *PaymentMethod               `protobuf:"bytes,23,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
-	PaymentMethodType             *PaymentMethodTypeEnum       `protobuf:"varint,24,opt,name=payment_method_type,json=paymentMethodType,proto3,enum=invora.billing.common.v2.PaymentMethodTypeEnum,oneof" json:"payment_method_type,omitempty"`
-	PeriodEndDate                 *date.Date                   `protobuf:"bytes,25,opt,name=period_end_date,json=periodEndDate,proto3,oneof" json:"period_end_date,omitempty"`
-	Plan                          *BillingPlan                 `protobuf:"bytes,26,opt,name=plan,proto3" json:"plan,omitempty"`
-	ProgressiveBillingDisabled    *bool                        `protobuf:"varint,27,opt,name=progressive_billing_disabled,json=progressiveBillingDisabled,proto3,oneof" json:"progressive_billing_disabled,omitempty"`
-	SelectedInvoiceCustomSections []*InvoiceCustomSection      `protobuf:"bytes,28,rep,name=selected_invoice_custom_sections,json=selectedInvoiceCustomSections,proto3" json:"selected_invoice_custom_sections,omitempty"`
-	SkipInvoiceCustomSections     *bool                        `protobuf:"varint,29,opt,name=skip_invoice_custom_sections,json=skipInvoiceCustomSections,proto3,oneof" json:"skip_invoice_custom_sections,omitempty"`
-	StartedAt                     *timestamppb.Timestamp       `protobuf:"bytes,30,opt,name=started_at,json=startedAt,proto3,oneof" json:"started_at,omitempty"`
-	Status                        *StatusTypeEnum              `protobuf:"varint,31,opt,name=status,proto3,enum=invora.billing.common.v2.StatusTypeEnum,oneof" json:"status,omitempty"`
-	SubscriptionAt                *timestamppb.Timestamp       `protobuf:"bytes,32,opt,name=subscription_at,json=subscriptionAt,proto3,oneof" json:"subscription_at,omitempty"`
-	TerminatedAt                  *timestamppb.Timestamp       `protobuf:"bytes,33,opt,name=terminated_at,json=terminatedAt,proto3,oneof" json:"terminated_at,omitempty"`
-	UpdatedAt                     *timestamppb.Timestamp       `protobuf:"bytes,34,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	UsageThresholds               []*UsageThreshold            `protobuf:"bytes,35,rep,name=usage_thresholds,json=usageThresholds,proto3" json:"usage_thresholds,omitempty"`
+	state                         protoimpl.MessageState     `protogen:"open.v1"`
+	BillingTime                   *BillingTime               `protobuf:"varint,2,opt,name=billing_time,json=billingTime,proto3,enum=invora.billing.common.v2.BillingTime,oneof" json:"billing_time,omitempty"`
+	CanceledAt                    *timestamppb.Timestamp     `protobuf:"bytes,3,opt,name=canceled_at,json=canceledAt,proto3,oneof" json:"canceled_at,omitempty"`
+	Charges                       []*Charge                  `protobuf:"bytes,4,rep,name=charges,proto3" json:"charges,omitempty"`
+	CreatedAt                     *timestamppb.Timestamp     `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	CurrentBillingPeriodEndingAt  *timestamppb.Timestamp     `protobuf:"bytes,6,opt,name=current_billing_period_ending_at,json=currentBillingPeriodEndingAt,proto3,oneof" json:"current_billing_period_ending_at,omitempty"`
+	CurrentBillingPeriodStartedAt *timestamppb.Timestamp     `protobuf:"bytes,7,opt,name=current_billing_period_started_at,json=currentBillingPeriodStartedAt,proto3,oneof" json:"current_billing_period_started_at,omitempty"`
+	Customer                      *BillingCustomer           `protobuf:"bytes,8,opt,name=customer,proto3" json:"customer,omitempty"`
+	EndingAt                      *timestamppb.Timestamp     `protobuf:"bytes,9,opt,name=ending_at,json=endingAt,proto3,oneof" json:"ending_at,omitempty"`
+	ExternalId                    string                     `protobuf:"bytes,10,opt,name=external_id,json=externalId,proto3" json:"external_id,omitempty"`
+	Fees                          []*BillingFee              `protobuf:"bytes,11,rep,name=fees,proto3" json:"fees,omitempty"`
+	FixedCharges                  []*FixedCharge             `protobuf:"bytes,12,rep,name=fixed_charges,json=fixedCharges,proto3" json:"fixed_charges,omitempty"`
+	Id                            string                     `protobuf:"bytes,13,opt,name=id,proto3" json:"id,omitempty"`
+	LifetimeUsage                 *SubscriptionLifetimeUsage `protobuf:"bytes,14,opt,name=lifetime_usage,json=lifetimeUsage,proto3,oneof" json:"lifetime_usage,omitempty"`
+	Name                          *string                    `protobuf:"bytes,15,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	NextName                      *string                    `protobuf:"bytes,16,opt,name=next_name,json=nextName,proto3,oneof" json:"next_name,omitempty"`
+	NextPlan                      *BillingPlan               `protobuf:"bytes,17,opt,name=next_plan,json=nextPlan,proto3,oneof" json:"next_plan,omitempty"`
+	NextSubscription              *BillingSubscription       `protobuf:"bytes,18,opt,name=next_subscription,json=nextSubscription,proto3,oneof" json:"next_subscription,omitempty"`
+	NextSubscriptionAt            *timestamppb.Timestamp     `protobuf:"bytes,19,opt,name=next_subscription_at,json=nextSubscriptionAt,proto3,oneof" json:"next_subscription_at,omitempty"`
+	NextSubscriptionType          *NextSubscriptionType      `protobuf:"varint,20,opt,name=next_subscription_type,json=nextSubscriptionType,proto3,enum=invora.billing.common.v2.NextSubscriptionType,oneof" json:"next_subscription_type,omitempty"`
+	OnTerminationCreditNote       *OnTerminationCreditNote   `protobuf:"varint,21,opt,name=on_termination_credit_note,json=onTerminationCreditNote,proto3,enum=invora.billing.common.v2.OnTerminationCreditNote,oneof" json:"on_termination_credit_note,omitempty"`
+	OnTerminationInvoice          OnTerminationInvoice       `protobuf:"varint,22,opt,name=on_termination_invoice,json=onTerminationInvoice,proto3,enum=invora.billing.common.v2.OnTerminationInvoice" json:"on_termination_invoice,omitempty"`
+	PaymentMethod                 *PaymentMethod             `protobuf:"bytes,23,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
+	PaymentMethodType             *PaymentMethodType         `protobuf:"varint,24,opt,name=payment_method_type,json=paymentMethodType,proto3,enum=invora.billing.common.v2.PaymentMethodType,oneof" json:"payment_method_type,omitempty"`
+	PeriodEndDate                 *date.Date                 `protobuf:"bytes,25,opt,name=period_end_date,json=periodEndDate,proto3,oneof" json:"period_end_date,omitempty"`
+	Plan                          *BillingPlan               `protobuf:"bytes,26,opt,name=plan,proto3" json:"plan,omitempty"`
+	ProgressiveBillingDisabled    *bool                      `protobuf:"varint,27,opt,name=progressive_billing_disabled,json=progressiveBillingDisabled,proto3,oneof" json:"progressive_billing_disabled,omitempty"`
+	SelectedInvoiceCustomSections []*InvoiceCustomSection    `protobuf:"bytes,28,rep,name=selected_invoice_custom_sections,json=selectedInvoiceCustomSections,proto3" json:"selected_invoice_custom_sections,omitempty"`
+	SkipInvoiceCustomSections     *bool                      `protobuf:"varint,29,opt,name=skip_invoice_custom_sections,json=skipInvoiceCustomSections,proto3,oneof" json:"skip_invoice_custom_sections,omitempty"`
+	StartedAt                     *timestamppb.Timestamp     `protobuf:"bytes,30,opt,name=started_at,json=startedAt,proto3,oneof" json:"started_at,omitempty"`
+	Status                        *StatusType                `protobuf:"varint,31,opt,name=status,proto3,enum=invora.billing.common.v2.StatusType,oneof" json:"status,omitempty"`
+	SubscriptionAt                *timestamppb.Timestamp     `protobuf:"bytes,32,opt,name=subscription_at,json=subscriptionAt,proto3,oneof" json:"subscription_at,omitempty"`
+	TerminatedAt                  *timestamppb.Timestamp     `protobuf:"bytes,33,opt,name=terminated_at,json=terminatedAt,proto3,oneof" json:"terminated_at,omitempty"`
+	UpdatedAt                     *timestamppb.Timestamp     `protobuf:"bytes,34,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	UsageThresholds               []*UsageThreshold          `protobuf:"bytes,35,rep,name=usage_thresholds,json=usageThresholds,proto3" json:"usage_thresholds,omitempty"`
 	unknownFields                 protoimpl.UnknownFields
 	sizeCache                     protoimpl.SizeCache
 }
@@ -6542,18 +6390,11 @@ func (*BillingSubscription) Descriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *BillingSubscription) GetActivityLogs() []*ActivityLog {
-	if x != nil {
-		return x.ActivityLogs
-	}
-	return nil
-}
-
-func (x *BillingSubscription) GetBillingTime() BillingTimeEnum {
+func (x *BillingSubscription) GetBillingTime() BillingTime {
 	if x != nil && x.BillingTime != nil {
 		return *x.BillingTime
 	}
-	return BillingTimeEnum_BILLING_TIME_ENUM_UNSPECIFIED
+	return BillingTime_BILLING_TIME_UNSPECIFIED
 }
 
 func (x *BillingSubscription) GetCanceledAt() *timestamppb.Timestamp {
@@ -6675,25 +6516,25 @@ func (x *BillingSubscription) GetNextSubscriptionAt() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *BillingSubscription) GetNextSubscriptionType() NextSubscriptionTypeEnum {
+func (x *BillingSubscription) GetNextSubscriptionType() NextSubscriptionType {
 	if x != nil && x.NextSubscriptionType != nil {
 		return *x.NextSubscriptionType
 	}
-	return NextSubscriptionTypeEnum_NEXT_SUBSCRIPTION_TYPE_ENUM_UNSPECIFIED
+	return NextSubscriptionType_NEXT_SUBSCRIPTION_TYPE_UNSPECIFIED
 }
 
-func (x *BillingSubscription) GetOnTerminationCreditNote() OnTerminationCreditNoteEnum {
+func (x *BillingSubscription) GetOnTerminationCreditNote() OnTerminationCreditNote {
 	if x != nil && x.OnTerminationCreditNote != nil {
 		return *x.OnTerminationCreditNote
 	}
-	return OnTerminationCreditNoteEnum_ON_TERMINATION_CREDIT_NOTE_ENUM_UNSPECIFIED
+	return OnTerminationCreditNote_ON_TERMINATION_CREDIT_NOTE_UNSPECIFIED
 }
 
-func (x *BillingSubscription) GetOnTerminationInvoice() OnTerminationInvoiceEnum {
+func (x *BillingSubscription) GetOnTerminationInvoice() OnTerminationInvoice {
 	if x != nil {
 		return x.OnTerminationInvoice
 	}
-	return OnTerminationInvoiceEnum_ON_TERMINATION_INVOICE_ENUM_UNSPECIFIED
+	return OnTerminationInvoice_ON_TERMINATION_INVOICE_UNSPECIFIED
 }
 
 func (x *BillingSubscription) GetPaymentMethod() *PaymentMethod {
@@ -6703,11 +6544,11 @@ func (x *BillingSubscription) GetPaymentMethod() *PaymentMethod {
 	return nil
 }
 
-func (x *BillingSubscription) GetPaymentMethodType() PaymentMethodTypeEnum {
+func (x *BillingSubscription) GetPaymentMethodType() PaymentMethodType {
 	if x != nil && x.PaymentMethodType != nil {
 		return *x.PaymentMethodType
 	}
-	return PaymentMethodTypeEnum_PAYMENT_METHOD_TYPE_ENUM_UNSPECIFIED
+	return PaymentMethodType_PAYMENT_METHOD_TYPE_UNSPECIFIED
 }
 
 func (x *BillingSubscription) GetPeriodEndDate() *date.Date {
@@ -6752,11 +6593,11 @@ func (x *BillingSubscription) GetStartedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *BillingSubscription) GetStatus() StatusTypeEnum {
+func (x *BillingSubscription) GetStatus() StatusType {
 	if x != nil && x.Status != nil {
 		return *x.Status
 	}
-	return StatusTypeEnum_STATUS_TYPE_ENUM_UNSPECIFIED
+	return StatusType_STATUS_TYPE_UNSPECIFIED
 }
 
 func (x *BillingSubscription) GetSubscriptionAt() *timestamppb.Timestamp {
@@ -6788,75 +6629,73 @@ func (x *BillingSubscription) GetUsageThresholds() []*UsageThreshold {
 }
 
 type BillingInvoice struct {
-	state                               protoimpl.MessageState       `protogen:"open.v1"`
-	ActivityLogs                        []*ActivityLog               `protobuf:"bytes,1,rep,name=activity_logs,json=activityLogs,proto3" json:"activity_logs,omitempty"`
-	AllChargesHaveFees                  bool                         `protobuf:"varint,2,opt,name=all_charges_have_fees,json=allChargesHaveFees,proto3" json:"all_charges_have_fees,omitempty"`
-	AllFixedChargesHaveFees             bool                         `protobuf:"varint,3,opt,name=all_fixed_charges_have_fees,json=allFixedChargesHaveFees,proto3" json:"all_fixed_charges_have_fees,omitempty"`
-	AppliedTaxes                        []*InvoiceAppliedTax         `protobuf:"bytes,4,rep,name=applied_taxes,json=appliedTaxes,proto3" json:"applied_taxes,omitempty"`
-	AssociatedActiveWalletPresent       bool                         `protobuf:"varint,5,opt,name=associated_active_wallet_present,json=associatedActiveWalletPresent,proto3" json:"associated_active_wallet_present,omitempty"`
-	AvailableToCreditAmountCents        int64                        `protobuf:"varint,6,opt,name=available_to_credit_amount_cents,json=availableToCreditAmountCents,proto3" json:"available_to_credit_amount_cents,omitempty"`
-	BillingEntity                       *BillingEntity               `protobuf:"bytes,7,opt,name=billing_entity,json=billingEntity,proto3" json:"billing_entity,omitempty"`
-	ChargeAmountCents                   int64                        `protobuf:"varint,8,opt,name=charge_amount_cents,json=chargeAmountCents,proto3" json:"charge_amount_cents,omitempty"`
-	CouponsAmountCents                  int64                        `protobuf:"varint,9,opt,name=coupons_amount_cents,json=couponsAmountCents,proto3" json:"coupons_amount_cents,omitempty"`
-	CreatedAt                           *timestamppb.Timestamp       `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	CreditNotes                         []*BillingCreditNote         `protobuf:"bytes,11,rep,name=credit_notes,json=creditNotes,proto3" json:"credit_notes,omitempty"`
-	CreditNotesAmountCents              int64                        `protobuf:"varint,12,opt,name=credit_notes_amount_cents,json=creditNotesAmountCents,proto3" json:"credit_notes_amount_cents,omitempty"`
-	CreditableAmountCents               int64                        `protobuf:"varint,13,opt,name=creditable_amount_cents,json=creditableAmountCents,proto3" json:"creditable_amount_cents,omitempty"`
-	Currency                            *CurrencyEnum                `protobuf:"varint,14,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"currency,omitempty"`
-	Customer                            *BillingCustomer             `protobuf:"bytes,15,opt,name=customer,proto3" json:"customer,omitempty"`
-	ErrorDetails                        []*ErrorDetail               `protobuf:"bytes,16,rep,name=error_details,json=errorDetails,proto3" json:"error_details,omitempty"`
-	ExpectedFinalizationDate            *date.Date                   `protobuf:"bytes,17,opt,name=expected_finalization_date,json=expectedFinalizationDate,proto3" json:"expected_finalization_date,omitempty"`
-	ExternalHubspotIntegrationId        *string                      `protobuf:"bytes,18,opt,name=external_hubspot_integration_id,json=externalHubspotIntegrationId,proto3,oneof" json:"external_hubspot_integration_id,omitempty"`
-	ExternalIntegrationId               *string                      `protobuf:"bytes,19,opt,name=external_integration_id,json=externalIntegrationId,proto3,oneof" json:"external_integration_id,omitempty"`
-	ExternalSalesforceIntegrationId     *string                      `protobuf:"bytes,20,opt,name=external_salesforce_integration_id,json=externalSalesforceIntegrationId,proto3,oneof" json:"external_salesforce_integration_id,omitempty"`
-	Fees                                []*BillingFee                `protobuf:"bytes,21,rep,name=fees,proto3" json:"fees,omitempty"`
-	FeesAmountCents                     int64                        `protobuf:"varint,22,opt,name=fees_amount_cents,json=feesAmountCents,proto3" json:"fees_amount_cents,omitempty"`
-	FileUrl                             *string                      `protobuf:"bytes,23,opt,name=file_url,json=fileUrl,proto3,oneof" json:"file_url,omitempty"`
-	Id                                  string                       `protobuf:"bytes,24,opt,name=id,proto3" json:"id,omitempty"`
-	IntegrationHubspotSyncable          bool                         `protobuf:"varint,25,opt,name=integration_hubspot_syncable,json=integrationHubspotSyncable,proto3" json:"integration_hubspot_syncable,omitempty"`
-	IntegrationSalesforceSyncable       bool                         `protobuf:"varint,26,opt,name=integration_salesforce_syncable,json=integrationSalesforceSyncable,proto3" json:"integration_salesforce_syncable,omitempty"`
-	IntegrationSyncable                 bool                         `protobuf:"varint,27,opt,name=integration_syncable,json=integrationSyncable,proto3" json:"integration_syncable,omitempty"`
-	InvoiceSubscriptions                []*InvoiceSubscription       `protobuf:"bytes,28,rep,name=invoice_subscriptions,json=invoiceSubscriptions,proto3" json:"invoice_subscriptions,omitempty"`
-	InvoiceType                         InvoiceTypeEnum              `protobuf:"varint,29,opt,name=invoice_type,json=invoiceType,proto3,enum=invora.billing.common.v2.InvoiceTypeEnum" json:"invoice_type,omitempty"`
-	IssuingDate                         *date.Date                   `protobuf:"bytes,30,opt,name=issuing_date,json=issuingDate,proto3" json:"issuing_date,omitempty"`
-	Metadata                            []*InvoiceMetadata           `protobuf:"bytes,31,rep,name=metadata,proto3" json:"metadata,omitempty"`
-	Number                              string                       `protobuf:"bytes,32,opt,name=number,proto3" json:"number,omitempty"`
-	OffsettableAmountCents              int64                        `protobuf:"varint,33,opt,name=offsettable_amount_cents,json=offsettableAmountCents,proto3" json:"offsettable_amount_cents,omitempty"`
-	PayableType                         string                       `protobuf:"bytes,34,opt,name=payable_type,json=payableType,proto3" json:"payable_type,omitempty"`
-	PaymentDisputeLosable               bool                         `protobuf:"varint,35,opt,name=payment_dispute_losable,json=paymentDisputeLosable,proto3" json:"payment_dispute_losable,omitempty"`
-	PaymentDisputeLostAt                *timestamppb.Timestamp       `protobuf:"bytes,36,opt,name=payment_dispute_lost_at,json=paymentDisputeLostAt,proto3,oneof" json:"payment_dispute_lost_at,omitempty"`
-	PaymentDueDate                      *date.Date                   `protobuf:"bytes,37,opt,name=payment_due_date,json=paymentDueDate,proto3" json:"payment_due_date,omitempty"`
-	PaymentOverdue                      bool                         `protobuf:"varint,38,opt,name=payment_overdue,json=paymentOverdue,proto3" json:"payment_overdue,omitempty"`
-	PaymentStatus                       InvoicePaymentStatusTypeEnum `protobuf:"varint,39,opt,name=payment_status,json=paymentStatus,proto3,enum=invora.billing.common.v2.InvoicePaymentStatusTypeEnum" json:"payment_status,omitempty"`
-	Payments                            []*BillingPayment            `protobuf:"bytes,40,rep,name=payments,proto3" json:"payments,omitempty"`
-	PrepaidCreditAmountCents            int64                        `protobuf:"varint,41,opt,name=prepaid_credit_amount_cents,json=prepaidCreditAmountCents,proto3" json:"prepaid_credit_amount_cents,omitempty"`
-	PrepaidGrantedCreditAmountCents     *int64                       `protobuf:"varint,42,opt,name=prepaid_granted_credit_amount_cents,json=prepaidGrantedCreditAmountCents,proto3,oneof" json:"prepaid_granted_credit_amount_cents,omitempty"`
-	PrepaidPurchasedCreditAmountCents   *int64                       `protobuf:"varint,43,opt,name=prepaid_purchased_credit_amount_cents,json=prepaidPurchasedCreditAmountCents,proto3,oneof" json:"prepaid_purchased_credit_amount_cents,omitempty"`
-	ProgressiveBillingCreditAmountCents int64                        `protobuf:"varint,44,opt,name=progressive_billing_credit_amount_cents,json=progressiveBillingCreditAmountCents,proto3" json:"progressive_billing_credit_amount_cents,omitempty"`
-	ReadyForPaymentProcessing           bool                         `protobuf:"varint,45,opt,name=ready_for_payment_processing,json=readyForPaymentProcessing,proto3" json:"ready_for_payment_processing,omitempty"`
-	RefundableAmountCents               int64                        `protobuf:"varint,46,opt,name=refundable_amount_cents,json=refundableAmountCents,proto3" json:"refundable_amount_cents,omitempty"`
-	RegeneratedInvoiceId                *string                      `protobuf:"bytes,47,opt,name=regenerated_invoice_id,json=regeneratedInvoiceId,proto3,oneof" json:"regenerated_invoice_id,omitempty"`
-	SelfBilled                          bool                         `protobuf:"varint,48,opt,name=self_billed,json=selfBilled,proto3" json:"self_billed,omitempty"`
-	SequentialId                        string                       `protobuf:"bytes,49,opt,name=sequential_id,json=sequentialId,proto3" json:"sequential_id,omitempty"`
-	Status                              InvoiceStatusTypeEnum        `protobuf:"varint,50,opt,name=status,proto3,enum=invora.billing.common.v2.InvoiceStatusTypeEnum" json:"status,omitempty"`
-	SubTotalExcludingTaxesAmountCents   int64                        `protobuf:"varint,51,opt,name=sub_total_excluding_taxes_amount_cents,json=subTotalExcludingTaxesAmountCents,proto3" json:"sub_total_excluding_taxes_amount_cents,omitempty"`
-	SubTotalIncludingTaxesAmountCents   int64                        `protobuf:"varint,52,opt,name=sub_total_including_taxes_amount_cents,json=subTotalIncludingTaxesAmountCents,proto3" json:"sub_total_including_taxes_amount_cents,omitempty"`
-	Subscriptions                       []*BillingSubscription       `protobuf:"bytes,53,rep,name=subscriptions,proto3" json:"subscriptions,omitempty"`
-	TaxProviderId                       *string                      `protobuf:"bytes,54,opt,name=tax_provider_id,json=taxProviderId,proto3,oneof" json:"tax_provider_id,omitempty"`
-	TaxProviderVoidable                 bool                         `protobuf:"varint,55,opt,name=tax_provider_voidable,json=taxProviderVoidable,proto3" json:"tax_provider_voidable,omitempty"`
-	TaxStatus                           *InvoiceTaxStatusTypeEnum    `protobuf:"varint,56,opt,name=tax_status,json=taxStatus,proto3,enum=invora.billing.common.v2.InvoiceTaxStatusTypeEnum,oneof" json:"tax_status,omitempty"`
-	TaxesAmountCents                    int64                        `protobuf:"varint,57,opt,name=taxes_amount_cents,json=taxesAmountCents,proto3" json:"taxes_amount_cents,omitempty"`
-	TaxesRate                           float64                      `protobuf:"fixed64,58,opt,name=taxes_rate,json=taxesRate,proto3" json:"taxes_rate,omitempty"`
-	TotalAmountCents                    int64                        `protobuf:"varint,59,opt,name=total_amount_cents,json=totalAmountCents,proto3" json:"total_amount_cents,omitempty"`
-	TotalDueAmountCents                 int64                        `protobuf:"varint,60,opt,name=total_due_amount_cents,json=totalDueAmountCents,proto3" json:"total_due_amount_cents,omitempty"`
-	TotalPaidAmountCents                int64                        `protobuf:"varint,61,opt,name=total_paid_amount_cents,json=totalPaidAmountCents,proto3" json:"total_paid_amount_cents,omitempty"`
-	TotalSettledAmountCents             int64                        `protobuf:"varint,62,opt,name=total_settled_amount_cents,json=totalSettledAmountCents,proto3" json:"total_settled_amount_cents,omitempty"`
-	UpdatedAt                           *timestamppb.Timestamp       `protobuf:"bytes,63,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	VersionNumber                       int32                        `protobuf:"varint,64,opt,name=version_number,json=versionNumber,proto3" json:"version_number,omitempty"`
-	Voidable                            bool                         `protobuf:"varint,65,opt,name=voidable,proto3" json:"voidable,omitempty"`
-	VoidedAt                            *timestamppb.Timestamp       `protobuf:"bytes,66,opt,name=voided_at,json=voidedAt,proto3,oneof" json:"voided_at,omitempty"`
-	VoidedInvoiceId                     *string                      `protobuf:"bytes,67,opt,name=voided_invoice_id,json=voidedInvoiceId,proto3,oneof" json:"voided_invoice_id,omitempty"`
-	XmlUrl                              *string                      `protobuf:"bytes,68,opt,name=xml_url,json=xmlUrl,proto3,oneof" json:"xml_url,omitempty"`
+	state                               protoimpl.MessageState   `protogen:"open.v1"`
+	AllChargesHaveFees                  bool                     `protobuf:"varint,2,opt,name=all_charges_have_fees,json=allChargesHaveFees,proto3" json:"all_charges_have_fees,omitempty"`
+	AllFixedChargesHaveFees             bool                     `protobuf:"varint,3,opt,name=all_fixed_charges_have_fees,json=allFixedChargesHaveFees,proto3" json:"all_fixed_charges_have_fees,omitempty"`
+	AppliedTaxes                        []*InvoiceAppliedTax     `protobuf:"bytes,4,rep,name=applied_taxes,json=appliedTaxes,proto3" json:"applied_taxes,omitempty"`
+	AssociatedActiveWalletPresent       bool                     `protobuf:"varint,5,opt,name=associated_active_wallet_present,json=associatedActiveWalletPresent,proto3" json:"associated_active_wallet_present,omitempty"`
+	AvailableToCreditAmountCents        int64                    `protobuf:"varint,6,opt,name=available_to_credit_amount_cents,json=availableToCreditAmountCents,proto3" json:"available_to_credit_amount_cents,omitempty"`
+	BillingEntity                       *BillingEntity           `protobuf:"bytes,7,opt,name=billing_entity,json=billingEntity,proto3" json:"billing_entity,omitempty"`
+	ChargeAmountCents                   int64                    `protobuf:"varint,8,opt,name=charge_amount_cents,json=chargeAmountCents,proto3" json:"charge_amount_cents,omitempty"`
+	CouponsAmountCents                  int64                    `protobuf:"varint,9,opt,name=coupons_amount_cents,json=couponsAmountCents,proto3" json:"coupons_amount_cents,omitempty"`
+	CreatedAt                           *timestamppb.Timestamp   `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	CreditNotes                         []*BillingCreditNote     `protobuf:"bytes,11,rep,name=credit_notes,json=creditNotes,proto3" json:"credit_notes,omitempty"`
+	CreditNotesAmountCents              int64                    `protobuf:"varint,12,opt,name=credit_notes_amount_cents,json=creditNotesAmountCents,proto3" json:"credit_notes_amount_cents,omitempty"`
+	CreditableAmountCents               int64                    `protobuf:"varint,13,opt,name=creditable_amount_cents,json=creditableAmountCents,proto3" json:"creditable_amount_cents,omitempty"`
+	Currency                            *CurrencyEnum            `protobuf:"varint,14,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"currency,omitempty"`
+	Customer                            *BillingCustomer         `protobuf:"bytes,15,opt,name=customer,proto3" json:"customer,omitempty"`
+	ExpectedFinalizationDate            *date.Date               `protobuf:"bytes,17,opt,name=expected_finalization_date,json=expectedFinalizationDate,proto3" json:"expected_finalization_date,omitempty"`
+	ExternalHubspotIntegrationId        *string                  `protobuf:"bytes,18,opt,name=external_hubspot_integration_id,json=externalHubspotIntegrationId,proto3,oneof" json:"external_hubspot_integration_id,omitempty"`
+	ExternalIntegrationId               *string                  `protobuf:"bytes,19,opt,name=external_integration_id,json=externalIntegrationId,proto3,oneof" json:"external_integration_id,omitempty"`
+	ExternalSalesforceIntegrationId     *string                  `protobuf:"bytes,20,opt,name=external_salesforce_integration_id,json=externalSalesforceIntegrationId,proto3,oneof" json:"external_salesforce_integration_id,omitempty"`
+	Fees                                []*BillingFee            `protobuf:"bytes,21,rep,name=fees,proto3" json:"fees,omitempty"`
+	FeesAmountCents                     int64                    `protobuf:"varint,22,opt,name=fees_amount_cents,json=feesAmountCents,proto3" json:"fees_amount_cents,omitempty"`
+	FileUrl                             *string                  `protobuf:"bytes,23,opt,name=file_url,json=fileUrl,proto3,oneof" json:"file_url,omitempty"`
+	Id                                  string                   `protobuf:"bytes,24,opt,name=id,proto3" json:"id,omitempty"`
+	IntegrationHubspotSyncable          bool                     `protobuf:"varint,25,opt,name=integration_hubspot_syncable,json=integrationHubspotSyncable,proto3" json:"integration_hubspot_syncable,omitempty"`
+	IntegrationSalesforceSyncable       bool                     `protobuf:"varint,26,opt,name=integration_salesforce_syncable,json=integrationSalesforceSyncable,proto3" json:"integration_salesforce_syncable,omitempty"`
+	IntegrationSyncable                 bool                     `protobuf:"varint,27,opt,name=integration_syncable,json=integrationSyncable,proto3" json:"integration_syncable,omitempty"`
+	InvoiceSubscriptions                []*InvoiceSubscription   `protobuf:"bytes,28,rep,name=invoice_subscriptions,json=invoiceSubscriptions,proto3" json:"invoice_subscriptions,omitempty"`
+	InvoiceType                         InvoiceType              `protobuf:"varint,29,opt,name=invoice_type,json=invoiceType,proto3,enum=invora.billing.common.v2.InvoiceType" json:"invoice_type,omitempty"`
+	IssuingDate                         *date.Date               `protobuf:"bytes,30,opt,name=issuing_date,json=issuingDate,proto3" json:"issuing_date,omitempty"`
+	Metadata                            []*InvoiceMetadata       `protobuf:"bytes,31,rep,name=metadata,proto3" json:"metadata,omitempty"`
+	Number                              string                   `protobuf:"bytes,32,opt,name=number,proto3" json:"number,omitempty"`
+	OffsettableAmountCents              int64                    `protobuf:"varint,33,opt,name=offsettable_amount_cents,json=offsettableAmountCents,proto3" json:"offsettable_amount_cents,omitempty"`
+	PayableType                         string                   `protobuf:"bytes,34,opt,name=payable_type,json=payableType,proto3" json:"payable_type,omitempty"`
+	PaymentDisputeLosable               bool                     `protobuf:"varint,35,opt,name=payment_dispute_losable,json=paymentDisputeLosable,proto3" json:"payment_dispute_losable,omitempty"`
+	PaymentDisputeLostAt                *timestamppb.Timestamp   `protobuf:"bytes,36,opt,name=payment_dispute_lost_at,json=paymentDisputeLostAt,proto3,oneof" json:"payment_dispute_lost_at,omitempty"`
+	PaymentDueDate                      *date.Date               `protobuf:"bytes,37,opt,name=payment_due_date,json=paymentDueDate,proto3" json:"payment_due_date,omitempty"`
+	PaymentOverdue                      bool                     `protobuf:"varint,38,opt,name=payment_overdue,json=paymentOverdue,proto3" json:"payment_overdue,omitempty"`
+	PaymentStatus                       InvoicePaymentStatusType `protobuf:"varint,39,opt,name=payment_status,json=paymentStatus,proto3,enum=invora.billing.common.v2.InvoicePaymentStatusType" json:"payment_status,omitempty"`
+	Payments                            []*BillingPayment        `protobuf:"bytes,40,rep,name=payments,proto3" json:"payments,omitempty"`
+	PrepaidCreditAmountCents            int64                    `protobuf:"varint,41,opt,name=prepaid_credit_amount_cents,json=prepaidCreditAmountCents,proto3" json:"prepaid_credit_amount_cents,omitempty"`
+	PrepaidGrantedCreditAmountCents     *int64                   `protobuf:"varint,42,opt,name=prepaid_granted_credit_amount_cents,json=prepaidGrantedCreditAmountCents,proto3,oneof" json:"prepaid_granted_credit_amount_cents,omitempty"`
+	PrepaidPurchasedCreditAmountCents   *int64                   `protobuf:"varint,43,opt,name=prepaid_purchased_credit_amount_cents,json=prepaidPurchasedCreditAmountCents,proto3,oneof" json:"prepaid_purchased_credit_amount_cents,omitempty"`
+	ProgressiveBillingCreditAmountCents int64                    `protobuf:"varint,44,opt,name=progressive_billing_credit_amount_cents,json=progressiveBillingCreditAmountCents,proto3" json:"progressive_billing_credit_amount_cents,omitempty"`
+	ReadyForPaymentProcessing           bool                     `protobuf:"varint,45,opt,name=ready_for_payment_processing,json=readyForPaymentProcessing,proto3" json:"ready_for_payment_processing,omitempty"`
+	RefundableAmountCents               int64                    `protobuf:"varint,46,opt,name=refundable_amount_cents,json=refundableAmountCents,proto3" json:"refundable_amount_cents,omitempty"`
+	RegeneratedInvoiceId                *string                  `protobuf:"bytes,47,opt,name=regenerated_invoice_id,json=regeneratedInvoiceId,proto3,oneof" json:"regenerated_invoice_id,omitempty"`
+	SelfBilled                          bool                     `protobuf:"varint,48,opt,name=self_billed,json=selfBilled,proto3" json:"self_billed,omitempty"`
+	SequentialId                        string                   `protobuf:"bytes,49,opt,name=sequential_id,json=sequentialId,proto3" json:"sequential_id,omitempty"`
+	Status                              InvoiceStatusType        `protobuf:"varint,50,opt,name=status,proto3,enum=invora.billing.common.v2.InvoiceStatusType" json:"status,omitempty"`
+	SubTotalExcludingTaxesAmountCents   int64                    `protobuf:"varint,51,opt,name=sub_total_excluding_taxes_amount_cents,json=subTotalExcludingTaxesAmountCents,proto3" json:"sub_total_excluding_taxes_amount_cents,omitempty"`
+	SubTotalIncludingTaxesAmountCents   int64                    `protobuf:"varint,52,opt,name=sub_total_including_taxes_amount_cents,json=subTotalIncludingTaxesAmountCents,proto3" json:"sub_total_including_taxes_amount_cents,omitempty"`
+	Subscriptions                       []*BillingSubscription   `protobuf:"bytes,53,rep,name=subscriptions,proto3" json:"subscriptions,omitempty"`
+	TaxProviderId                       *string                  `protobuf:"bytes,54,opt,name=tax_provider_id,json=taxProviderId,proto3,oneof" json:"tax_provider_id,omitempty"`
+	TaxProviderVoidable                 bool                     `protobuf:"varint,55,opt,name=tax_provider_voidable,json=taxProviderVoidable,proto3" json:"tax_provider_voidable,omitempty"`
+	TaxStatus                           *InvoiceTaxStatusType    `protobuf:"varint,56,opt,name=tax_status,json=taxStatus,proto3,enum=invora.billing.common.v2.InvoiceTaxStatusType,oneof" json:"tax_status,omitempty"`
+	TaxesAmountCents                    int64                    `protobuf:"varint,57,opt,name=taxes_amount_cents,json=taxesAmountCents,proto3" json:"taxes_amount_cents,omitempty"`
+	TaxesRate                           *kernel.DecimalValue     `protobuf:"bytes,58,opt,name=taxes_rate,json=taxesRate,proto3" json:"taxes_rate,omitempty"`
+	TotalAmountCents                    int64                    `protobuf:"varint,59,opt,name=total_amount_cents,json=totalAmountCents,proto3" json:"total_amount_cents,omitempty"`
+	TotalDueAmountCents                 int64                    `protobuf:"varint,60,opt,name=total_due_amount_cents,json=totalDueAmountCents,proto3" json:"total_due_amount_cents,omitempty"`
+	TotalPaidAmountCents                int64                    `protobuf:"varint,61,opt,name=total_paid_amount_cents,json=totalPaidAmountCents,proto3" json:"total_paid_amount_cents,omitempty"`
+	TotalSettledAmountCents             int64                    `protobuf:"varint,62,opt,name=total_settled_amount_cents,json=totalSettledAmountCents,proto3" json:"total_settled_amount_cents,omitempty"`
+	UpdatedAt                           *timestamppb.Timestamp   `protobuf:"bytes,63,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	VersionNumber                       int32                    `protobuf:"varint,64,opt,name=version_number,json=versionNumber,proto3" json:"version_number,omitempty"`
+	Voidable                            bool                     `protobuf:"varint,65,opt,name=voidable,proto3" json:"voidable,omitempty"`
+	VoidedAt                            *timestamppb.Timestamp   `protobuf:"bytes,66,opt,name=voided_at,json=voidedAt,proto3,oneof" json:"voided_at,omitempty"`
+	VoidedInvoiceId                     *string                  `protobuf:"bytes,67,opt,name=voided_invoice_id,json=voidedInvoiceId,proto3,oneof" json:"voided_invoice_id,omitempty"`
+	XmlUrl                              *string                  `protobuf:"bytes,68,opt,name=xml_url,json=xmlUrl,proto3,oneof" json:"xml_url,omitempty"`
 	unknownFields                       protoimpl.UnknownFields
 	sizeCache                           protoimpl.SizeCache
 }
@@ -6889,13 +6728,6 @@ func (x *BillingInvoice) ProtoReflect() protoreflect.Message {
 // Deprecated: Use BillingInvoice.ProtoReflect.Descriptor instead.
 func (*BillingInvoice) Descriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *BillingInvoice) GetActivityLogs() []*ActivityLog {
-	if x != nil {
-		return x.ActivityLogs
-	}
-	return nil
 }
 
 func (x *BillingInvoice) GetAllChargesHaveFees() bool {
@@ -6996,13 +6828,6 @@ func (x *BillingInvoice) GetCustomer() *BillingCustomer {
 	return nil
 }
 
-func (x *BillingInvoice) GetErrorDetails() []*ErrorDetail {
-	if x != nil {
-		return x.ErrorDetails
-	}
-	return nil
-}
-
 func (x *BillingInvoice) GetExpectedFinalizationDate() *date.Date {
 	if x != nil {
 		return x.ExpectedFinalizationDate
@@ -7087,11 +6912,11 @@ func (x *BillingInvoice) GetInvoiceSubscriptions() []*InvoiceSubscription {
 	return nil
 }
 
-func (x *BillingInvoice) GetInvoiceType() InvoiceTypeEnum {
+func (x *BillingInvoice) GetInvoiceType() InvoiceType {
 	if x != nil {
 		return x.InvoiceType
 	}
-	return InvoiceTypeEnum_INVOICE_TYPE_ENUM_UNSPECIFIED
+	return InvoiceType_INVOICE_TYPE_UNSPECIFIED
 }
 
 func (x *BillingInvoice) GetIssuingDate() *date.Date {
@@ -7157,11 +6982,11 @@ func (x *BillingInvoice) GetPaymentOverdue() bool {
 	return false
 }
 
-func (x *BillingInvoice) GetPaymentStatus() InvoicePaymentStatusTypeEnum {
+func (x *BillingInvoice) GetPaymentStatus() InvoicePaymentStatusType {
 	if x != nil {
 		return x.PaymentStatus
 	}
-	return InvoicePaymentStatusTypeEnum_INVOICE_PAYMENT_STATUS_TYPE_ENUM_UNSPECIFIED
+	return InvoicePaymentStatusType_INVOICE_PAYMENT_STATUS_TYPE_UNSPECIFIED
 }
 
 func (x *BillingInvoice) GetPayments() []*BillingPayment {
@@ -7234,11 +7059,11 @@ func (x *BillingInvoice) GetSequentialId() string {
 	return ""
 }
 
-func (x *BillingInvoice) GetStatus() InvoiceStatusTypeEnum {
+func (x *BillingInvoice) GetStatus() InvoiceStatusType {
 	if x != nil {
 		return x.Status
 	}
-	return InvoiceStatusTypeEnum_INVOICE_STATUS_TYPE_ENUM_UNSPECIFIED
+	return InvoiceStatusType_INVOICE_STATUS_TYPE_UNSPECIFIED
 }
 
 func (x *BillingInvoice) GetSubTotalExcludingTaxesAmountCents() int64 {
@@ -7276,11 +7101,11 @@ func (x *BillingInvoice) GetTaxProviderVoidable() bool {
 	return false
 }
 
-func (x *BillingInvoice) GetTaxStatus() InvoiceTaxStatusTypeEnum {
+func (x *BillingInvoice) GetTaxStatus() InvoiceTaxStatusType {
 	if x != nil && x.TaxStatus != nil {
 		return *x.TaxStatus
 	}
-	return InvoiceTaxStatusTypeEnum_INVOICE_TAX_STATUS_TYPE_ENUM_UNSPECIFIED
+	return InvoiceTaxStatusType_INVOICE_TAX_STATUS_TYPE_UNSPECIFIED
 }
 
 func (x *BillingInvoice) GetTaxesAmountCents() int64 {
@@ -7290,11 +7115,11 @@ func (x *BillingInvoice) GetTaxesAmountCents() int64 {
 	return 0
 }
 
-func (x *BillingInvoice) GetTaxesRate() float64 {
+func (x *BillingInvoice) GetTaxesRate() *kernel.DecimalValue {
 	if x != nil {
 		return x.TaxesRate
 	}
-	return 0
+	return nil
 }
 
 func (x *BillingInvoice) GetTotalAmountCents() int64 {
@@ -7369,44 +7194,42 @@ func (x *BillingInvoice) GetXmlUrl() string {
 
 type BillingCreditNote struct {
 	state              protoimpl.MessageState  `protogen:"open.v1"`
-	ActivityLogs       []*ActivityLog          `protobuf:"bytes,1,rep,name=activity_logs,json=activityLogs,proto3" json:"activity_logs,omitempty"`
 	AppliedTaxes       []*CreditNoteAppliedTax `protobuf:"bytes,2,rep,name=applied_taxes,json=appliedTaxes,proto3" json:"applied_taxes,omitempty"`
 	BalanceAmountCents int64                   `protobuf:"varint,3,opt,name=balance_amount_cents,json=balanceAmountCents,proto3" json:"balance_amount_cents,omitempty"`
 	BillingEntity      *BillingEntity          `protobuf:"bytes,4,opt,name=billing_entity,json=billingEntity,proto3" json:"billing_entity,omitempty"`
 	// Check if credit note can be voided
-	CanBeVoided                       bool                        `protobuf:"varint,5,opt,name=can_be_voided,json=canBeVoided,proto3" json:"can_be_voided,omitempty"`
-	CouponsAdjustmentAmountCents      int64                       `protobuf:"varint,6,opt,name=coupons_adjustment_amount_cents,json=couponsAdjustmentAmountCents,proto3" json:"coupons_adjustment_amount_cents,omitempty"`
-	CreatedAt                         *timestamppb.Timestamp      `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	CreditAmountCents                 int64                       `protobuf:"varint,8,opt,name=credit_amount_cents,json=creditAmountCents,proto3" json:"credit_amount_cents,omitempty"`
-	CreditStatus                      *CreditNoteCreditStatusEnum `protobuf:"varint,9,opt,name=credit_status,json=creditStatus,proto3,enum=invora.billing.common.v2.CreditNoteCreditStatusEnum,oneof" json:"credit_status,omitempty"`
-	Currency                          CurrencyEnum                `protobuf:"varint,10,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"currency,omitempty"`
-	Customer                          *BillingCustomer            `protobuf:"bytes,11,opt,name=customer,proto3" json:"customer,omitempty"`
-	Description                       *string                     `protobuf:"bytes,12,opt,name=description,proto3,oneof" json:"description,omitempty"`
-	ErrorDetails                      []*ErrorDetail              `protobuf:"bytes,13,rep,name=error_details,json=errorDetails,proto3" json:"error_details,omitempty"`
-	ExternalIntegrationId             *string                     `protobuf:"bytes,14,opt,name=external_integration_id,json=externalIntegrationId,proto3,oneof" json:"external_integration_id,omitempty"`
-	FileUrl                           *string                     `protobuf:"bytes,15,opt,name=file_url,json=fileUrl,proto3,oneof" json:"file_url,omitempty"`
-	Id                                string                      `protobuf:"bytes,16,opt,name=id,proto3" json:"id,omitempty"`
-	IntegrationSyncable               bool                        `protobuf:"varint,17,opt,name=integration_syncable,json=integrationSyncable,proto3" json:"integration_syncable,omitempty"`
-	Invoice                           *BillingInvoice             `protobuf:"bytes,18,opt,name=invoice,proto3,oneof" json:"invoice,omitempty"`
-	IssuingDate                       *date.Date                  `protobuf:"bytes,19,opt,name=issuing_date,json=issuingDate,proto3" json:"issuing_date,omitempty"`
-	Items                             []*CreditNoteItem           `protobuf:"bytes,20,rep,name=items,proto3" json:"items,omitempty"`
-	Metadata                          []*ItemMetadata             `protobuf:"bytes,21,rep,name=metadata,proto3" json:"metadata,omitempty"`
-	Number                            string                      `protobuf:"bytes,22,opt,name=number,proto3" json:"number,omitempty"`
-	OffsetAmountCents                 int64                       `protobuf:"varint,23,opt,name=offset_amount_cents,json=offsetAmountCents,proto3" json:"offset_amount_cents,omitempty"`
-	Reason                            CreditNoteReasonEnum        `protobuf:"varint,24,opt,name=reason,proto3,enum=invora.billing.common.v2.CreditNoteReasonEnum" json:"reason,omitempty"`
-	RefundAmountCents                 int64                       `protobuf:"varint,25,opt,name=refund_amount_cents,json=refundAmountCents,proto3" json:"refund_amount_cents,omitempty"`
-	RefundStatus                      *CreditNoteRefundStatusEnum `protobuf:"varint,26,opt,name=refund_status,json=refundStatus,proto3,enum=invora.billing.common.v2.CreditNoteRefundStatusEnum,oneof" json:"refund_status,omitempty"`
-	RefundedAt                        *timestamppb.Timestamp      `protobuf:"bytes,27,opt,name=refunded_at,json=refundedAt,proto3,oneof" json:"refunded_at,omitempty"`
-	SequentialId                      string                      `protobuf:"bytes,28,opt,name=sequential_id,json=sequentialId,proto3" json:"sequential_id,omitempty"`
-	SubTotalExcludingTaxesAmountCents int64                       `protobuf:"varint,29,opt,name=sub_total_excluding_taxes_amount_cents,json=subTotalExcludingTaxesAmountCents,proto3" json:"sub_total_excluding_taxes_amount_cents,omitempty"`
-	TaxProviderId                     *string                     `protobuf:"bytes,30,opt,name=tax_provider_id,json=taxProviderId,proto3,oneof" json:"tax_provider_id,omitempty"`
-	TaxProviderSyncable               bool                        `protobuf:"varint,31,opt,name=tax_provider_syncable,json=taxProviderSyncable,proto3" json:"tax_provider_syncable,omitempty"`
-	TaxesAmountCents                  int64                       `protobuf:"varint,32,opt,name=taxes_amount_cents,json=taxesAmountCents,proto3" json:"taxes_amount_cents,omitempty"`
-	TaxesRate                         float64                     `protobuf:"fixed64,33,opt,name=taxes_rate,json=taxesRate,proto3" json:"taxes_rate,omitempty"`
-	TotalAmountCents                  int64                       `protobuf:"varint,34,opt,name=total_amount_cents,json=totalAmountCents,proto3" json:"total_amount_cents,omitempty"`
-	UpdatedAt                         *timestamppb.Timestamp      `protobuf:"bytes,35,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	VoidedAt                          *timestamppb.Timestamp      `protobuf:"bytes,36,opt,name=voided_at,json=voidedAt,proto3,oneof" json:"voided_at,omitempty"`
-	XmlUrl                            *string                     `protobuf:"bytes,37,opt,name=xml_url,json=xmlUrl,proto3,oneof" json:"xml_url,omitempty"`
+	CanBeVoided                       bool                    `protobuf:"varint,5,opt,name=can_be_voided,json=canBeVoided,proto3" json:"can_be_voided,omitempty"`
+	CouponsAdjustmentAmountCents      int64                   `protobuf:"varint,6,opt,name=coupons_adjustment_amount_cents,json=couponsAdjustmentAmountCents,proto3" json:"coupons_adjustment_amount_cents,omitempty"`
+	CreatedAt                         *timestamppb.Timestamp  `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	CreditAmountCents                 int64                   `protobuf:"varint,8,opt,name=credit_amount_cents,json=creditAmountCents,proto3" json:"credit_amount_cents,omitempty"`
+	CreditStatus                      *CreditNoteCreditStatus `protobuf:"varint,9,opt,name=credit_status,json=creditStatus,proto3,enum=invora.billing.common.v2.CreditNoteCreditStatus,oneof" json:"credit_status,omitempty"`
+	Currency                          CurrencyEnum            `protobuf:"varint,10,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"currency,omitempty"`
+	Customer                          *BillingCustomer        `protobuf:"bytes,11,opt,name=customer,proto3" json:"customer,omitempty"`
+	Description                       *string                 `protobuf:"bytes,12,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	ExternalIntegrationId             *string                 `protobuf:"bytes,14,opt,name=external_integration_id,json=externalIntegrationId,proto3,oneof" json:"external_integration_id,omitempty"`
+	FileUrl                           *string                 `protobuf:"bytes,15,opt,name=file_url,json=fileUrl,proto3,oneof" json:"file_url,omitempty"`
+	Id                                string                  `protobuf:"bytes,16,opt,name=id,proto3" json:"id,omitempty"`
+	IntegrationSyncable               bool                    `protobuf:"varint,17,opt,name=integration_syncable,json=integrationSyncable,proto3" json:"integration_syncable,omitempty"`
+	Invoice                           *BillingInvoice         `protobuf:"bytes,18,opt,name=invoice,proto3,oneof" json:"invoice,omitempty"`
+	IssuingDate                       *date.Date              `protobuf:"bytes,19,opt,name=issuing_date,json=issuingDate,proto3" json:"issuing_date,omitempty"`
+	Items                             []*CreditNoteItem       `protobuf:"bytes,20,rep,name=items,proto3" json:"items,omitempty"`
+	Metadata                          []*ItemMetadata         `protobuf:"bytes,21,rep,name=metadata,proto3" json:"metadata,omitempty"`
+	Number                            string                  `protobuf:"bytes,22,opt,name=number,proto3" json:"number,omitempty"`
+	OffsetAmountCents                 int64                   `protobuf:"varint,23,opt,name=offset_amount_cents,json=offsetAmountCents,proto3" json:"offset_amount_cents,omitempty"`
+	Reason                            CreditNoteReason        `protobuf:"varint,24,opt,name=reason,proto3,enum=invora.billing.common.v2.CreditNoteReason" json:"reason,omitempty"`
+	RefundAmountCents                 int64                   `protobuf:"varint,25,opt,name=refund_amount_cents,json=refundAmountCents,proto3" json:"refund_amount_cents,omitempty"`
+	RefundStatus                      *CreditNoteRefundStatus `protobuf:"varint,26,opt,name=refund_status,json=refundStatus,proto3,enum=invora.billing.common.v2.CreditNoteRefundStatus,oneof" json:"refund_status,omitempty"`
+	RefundedAt                        *timestamppb.Timestamp  `protobuf:"bytes,27,opt,name=refunded_at,json=refundedAt,proto3,oneof" json:"refunded_at,omitempty"`
+	SequentialId                      string                  `protobuf:"bytes,28,opt,name=sequential_id,json=sequentialId,proto3" json:"sequential_id,omitempty"`
+	SubTotalExcludingTaxesAmountCents int64                   `protobuf:"varint,29,opt,name=sub_total_excluding_taxes_amount_cents,json=subTotalExcludingTaxesAmountCents,proto3" json:"sub_total_excluding_taxes_amount_cents,omitempty"`
+	TaxProviderId                     *string                 `protobuf:"bytes,30,opt,name=tax_provider_id,json=taxProviderId,proto3,oneof" json:"tax_provider_id,omitempty"`
+	TaxProviderSyncable               bool                    `protobuf:"varint,31,opt,name=tax_provider_syncable,json=taxProviderSyncable,proto3" json:"tax_provider_syncable,omitempty"`
+	TaxesAmountCents                  int64                   `protobuf:"varint,32,opt,name=taxes_amount_cents,json=taxesAmountCents,proto3" json:"taxes_amount_cents,omitempty"`
+	TaxesRate                         *kernel.DecimalValue    `protobuf:"bytes,33,opt,name=taxes_rate,json=taxesRate,proto3" json:"taxes_rate,omitempty"`
+	TotalAmountCents                  int64                   `protobuf:"varint,34,opt,name=total_amount_cents,json=totalAmountCents,proto3" json:"total_amount_cents,omitempty"`
+	UpdatedAt                         *timestamppb.Timestamp  `protobuf:"bytes,35,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	VoidedAt                          *timestamppb.Timestamp  `protobuf:"bytes,36,opt,name=voided_at,json=voidedAt,proto3,oneof" json:"voided_at,omitempty"`
+	XmlUrl                            *string                 `protobuf:"bytes,37,opt,name=xml_url,json=xmlUrl,proto3,oneof" json:"xml_url,omitempty"`
 	unknownFields                     protoimpl.UnknownFields
 	sizeCache                         protoimpl.SizeCache
 }
@@ -7439,13 +7262,6 @@ func (x *BillingCreditNote) ProtoReflect() protoreflect.Message {
 // Deprecated: Use BillingCreditNote.ProtoReflect.Descriptor instead.
 func (*BillingCreditNote) Descriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *BillingCreditNote) GetActivityLogs() []*ActivityLog {
-	if x != nil {
-		return x.ActivityLogs
-	}
-	return nil
 }
 
 func (x *BillingCreditNote) GetAppliedTaxes() []*CreditNoteAppliedTax {
@@ -7497,11 +7313,11 @@ func (x *BillingCreditNote) GetCreditAmountCents() int64 {
 	return 0
 }
 
-func (x *BillingCreditNote) GetCreditStatus() CreditNoteCreditStatusEnum {
+func (x *BillingCreditNote) GetCreditStatus() CreditNoteCreditStatus {
 	if x != nil && x.CreditStatus != nil {
 		return *x.CreditStatus
 	}
-	return CreditNoteCreditStatusEnum_CREDIT_NOTE_CREDIT_STATUS_ENUM_UNSPECIFIED
+	return CreditNoteCreditStatus_CREDIT_NOTE_CREDIT_STATUS_UNSPECIFIED
 }
 
 func (x *BillingCreditNote) GetCurrency() CurrencyEnum {
@@ -7523,13 +7339,6 @@ func (x *BillingCreditNote) GetDescription() string {
 		return *x.Description
 	}
 	return ""
-}
-
-func (x *BillingCreditNote) GetErrorDetails() []*ErrorDetail {
-	if x != nil {
-		return x.ErrorDetails
-	}
-	return nil
 }
 
 func (x *BillingCreditNote) GetExternalIntegrationId() string {
@@ -7602,11 +7411,11 @@ func (x *BillingCreditNote) GetOffsetAmountCents() int64 {
 	return 0
 }
 
-func (x *BillingCreditNote) GetReason() CreditNoteReasonEnum {
+func (x *BillingCreditNote) GetReason() CreditNoteReason {
 	if x != nil {
 		return x.Reason
 	}
-	return CreditNoteReasonEnum_CREDIT_NOTE_REASON_ENUM_UNSPECIFIED
+	return CreditNoteReason_CREDIT_NOTE_REASON_UNSPECIFIED
 }
 
 func (x *BillingCreditNote) GetRefundAmountCents() int64 {
@@ -7616,11 +7425,11 @@ func (x *BillingCreditNote) GetRefundAmountCents() int64 {
 	return 0
 }
 
-func (x *BillingCreditNote) GetRefundStatus() CreditNoteRefundStatusEnum {
+func (x *BillingCreditNote) GetRefundStatus() CreditNoteRefundStatus {
 	if x != nil && x.RefundStatus != nil {
 		return *x.RefundStatus
 	}
-	return CreditNoteRefundStatusEnum_CREDIT_NOTE_REFUND_STATUS_ENUM_UNSPECIFIED
+	return CreditNoteRefundStatus_CREDIT_NOTE_REFUND_STATUS_UNSPECIFIED
 }
 
 func (x *BillingCreditNote) GetRefundedAt() *timestamppb.Timestamp {
@@ -7665,11 +7474,11 @@ func (x *BillingCreditNote) GetTaxesAmountCents() int64 {
 	return 0
 }
 
-func (x *BillingCreditNote) GetTaxesRate() float64 {
+func (x *BillingCreditNote) GetTaxesRate() *kernel.DecimalValue {
 	if x != nil {
 		return x.TaxesRate
 	}
-	return 0
+	return nil
 }
 
 func (x *BillingCreditNote) GetTotalAmountCents() int64 {
@@ -7703,7 +7512,6 @@ func (x *BillingCreditNote) GetXmlUrl() string {
 type BillingPlan struct {
 	state                     protoimpl.MessageState `protogen:"open.v1"`
 	ActiveSubscriptionsCount  int32                  `protobuf:"varint,1,opt,name=active_subscriptions_count,json=activeSubscriptionsCount,proto3" json:"active_subscriptions_count,omitempty"`
-	ActivityLogs              []*ActivityLog         `protobuf:"bytes,2,rep,name=activity_logs,json=activityLogs,proto3" json:"activity_logs,omitempty"`
 	AmountCents               int64                  `protobuf:"varint,3,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
 	AmountCurrency            CurrencyEnum           `protobuf:"varint,4,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"amount_currency,omitempty"`
 	ApplicableUsageThresholds []*UsageThreshold      `protobuf:"bytes,5,rep,name=applicable_usage_thresholds,json=applicableUsageThresholds,proto3" json:"applicable_usage_thresholds,omitempty"`
@@ -7784,13 +7592,6 @@ func (x *BillingPlan) GetActiveSubscriptionsCount() int32 {
 		return x.ActiveSubscriptionsCount
 	}
 	return 0
-}
-
-func (x *BillingPlan) GetActivityLogs() []*ActivityLog {
-	if x != nil {
-		return x.ActivityLogs
-	}
-	return nil
 }
 
 func (x *BillingPlan) GetAmountCents() int64 {
@@ -8061,16 +7862,15 @@ func (x *BillingPlan) GetUsageThresholds() []*UsageThreshold {
 
 type BillingWallet struct {
 	state                            protoimpl.MessageState      `protogen:"open.v1"`
-	ActivityLogs                     []*ActivityLog              `protobuf:"bytes,1,rep,name=activity_logs,json=activityLogs,proto3" json:"activity_logs,omitempty"`
 	AppliesTo                        *WalletAppliesTo            `protobuf:"bytes,2,opt,name=applies_to,json=appliesTo,proto3,oneof" json:"applies_to,omitempty"`
 	BalanceCents                     int64                       `protobuf:"varint,3,opt,name=balance_cents,json=balanceCents,proto3" json:"balance_cents,omitempty"`
 	Code                             *string                     `protobuf:"bytes,4,opt,name=code,proto3,oneof" json:"code,omitempty"`
 	ConsumedAmountCents              int64                       `protobuf:"varint,5,opt,name=consumed_amount_cents,json=consumedAmountCents,proto3" json:"consumed_amount_cents,omitempty"`
-	ConsumedCredits                  float64                     `protobuf:"fixed64,6,opt,name=consumed_credits,json=consumedCredits,proto3" json:"consumed_credits,omitempty"`
+	ConsumedCredits                  *kernel.DecimalValue        `protobuf:"bytes,6,opt,name=consumed_credits,json=consumedCredits,proto3" json:"consumed_credits,omitempty"`
 	CreatedAt                        *timestamppb.Timestamp      `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	CreditsBalance                   float64                     `protobuf:"fixed64,8,opt,name=credits_balance,json=creditsBalance,proto3" json:"credits_balance,omitempty"`
-	CreditsOngoingBalance            float64                     `protobuf:"fixed64,9,opt,name=credits_ongoing_balance,json=creditsOngoingBalance,proto3" json:"credits_ongoing_balance,omitempty"`
-	CreditsOngoingUsageBalance       float64                     `protobuf:"fixed64,10,opt,name=credits_ongoing_usage_balance,json=creditsOngoingUsageBalance,proto3" json:"credits_ongoing_usage_balance,omitempty"`
+	CreditsBalance                   *kernel.DecimalValue        `protobuf:"bytes,8,opt,name=credits_balance,json=creditsBalance,proto3" json:"credits_balance,omitempty"`
+	CreditsOngoingBalance            *kernel.DecimalValue        `protobuf:"bytes,9,opt,name=credits_ongoing_balance,json=creditsOngoingBalance,proto3" json:"credits_ongoing_balance,omitempty"`
+	CreditsOngoingUsageBalance       *kernel.DecimalValue        `protobuf:"bytes,10,opt,name=credits_ongoing_usage_balance,json=creditsOngoingUsageBalance,proto3" json:"credits_ongoing_usage_balance,omitempty"`
 	Currency                         CurrencyEnum                `protobuf:"varint,11,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"currency,omitempty"`
 	Customer                         *BillingCustomer            `protobuf:"bytes,12,opt,name=customer,proto3,oneof" json:"customer,omitempty"`
 	ExpirationAt                     *timestamppb.Timestamp      `protobuf:"bytes,13,opt,name=expiration_at,json=expirationAt,proto3,oneof" json:"expiration_at,omitempty"`
@@ -8088,13 +7888,13 @@ type BillingWallet struct {
 	PaidTopUpMinAmountCents          *int64                      `protobuf:"varint,25,opt,name=paid_top_up_min_amount_cents,json=paidTopUpMinAmountCents,proto3,oneof" json:"paid_top_up_min_amount_cents,omitempty"`
 	PaidTopUpMinCredits              *int64                      `protobuf:"varint,26,opt,name=paid_top_up_min_credits,json=paidTopUpMinCredits,proto3,oneof" json:"paid_top_up_min_credits,omitempty"`
 	PaymentMethod                    *PaymentMethod              `protobuf:"bytes,27,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
-	PaymentMethodType                *PaymentMethodTypeEnum      `protobuf:"varint,28,opt,name=payment_method_type,json=paymentMethodType,proto3,enum=invora.billing.common.v2.PaymentMethodTypeEnum,oneof" json:"payment_method_type,omitempty"`
+	PaymentMethodType                *PaymentMethodType          `protobuf:"varint,28,opt,name=payment_method_type,json=paymentMethodType,proto3,enum=invora.billing.common.v2.PaymentMethodType,oneof" json:"payment_method_type,omitempty"`
 	Priority                         int32                       `protobuf:"varint,29,opt,name=priority,proto3" json:"priority,omitempty"`
-	RateAmount                       float64                     `protobuf:"fixed64,30,opt,name=rate_amount,json=rateAmount,proto3" json:"rate_amount,omitempty"`
+	RateAmount                       *kernel.DecimalValue        `protobuf:"bytes,30,opt,name=rate_amount,json=rateAmount,proto3" json:"rate_amount,omitempty"`
 	RecurringTransactionRules        []*RecurringTransactionRule `protobuf:"bytes,31,rep,name=recurring_transaction_rules,json=recurringTransactionRules,proto3" json:"recurring_transaction_rules,omitempty"`
 	SelectedInvoiceCustomSections    []*InvoiceCustomSection     `protobuf:"bytes,32,rep,name=selected_invoice_custom_sections,json=selectedInvoiceCustomSections,proto3" json:"selected_invoice_custom_sections,omitempty"`
 	SkipInvoiceCustomSections        *bool                       `protobuf:"varint,33,opt,name=skip_invoice_custom_sections,json=skipInvoiceCustomSections,proto3,oneof" json:"skip_invoice_custom_sections,omitempty"`
-	Status                           WalletStatusEnum            `protobuf:"varint,34,opt,name=status,proto3,enum=invora.billing.common.v2.WalletStatusEnum" json:"status,omitempty"`
+	Status                           WalletStatus                `protobuf:"varint,34,opt,name=status,proto3,enum=invora.billing.common.v2.WalletStatus" json:"status,omitempty"`
 	TerminatedAt                     *timestamppb.Timestamp      `protobuf:"bytes,35,opt,name=terminated_at,json=terminatedAt,proto3,oneof" json:"terminated_at,omitempty"`
 	Traceable                        bool                        `protobuf:"varint,36,opt,name=traceable,proto3" json:"traceable,omitempty"`
 	UpdatedAt                        *timestamppb.Timestamp      `protobuf:"bytes,37,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
@@ -8132,13 +7932,6 @@ func (*BillingWallet) Descriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *BillingWallet) GetActivityLogs() []*ActivityLog {
-	if x != nil {
-		return x.ActivityLogs
-	}
-	return nil
-}
-
 func (x *BillingWallet) GetAppliesTo() *WalletAppliesTo {
 	if x != nil {
 		return x.AppliesTo
@@ -8167,11 +7960,11 @@ func (x *BillingWallet) GetConsumedAmountCents() int64 {
 	return 0
 }
 
-func (x *BillingWallet) GetConsumedCredits() float64 {
+func (x *BillingWallet) GetConsumedCredits() *kernel.DecimalValue {
 	if x != nil {
 		return x.ConsumedCredits
 	}
-	return 0
+	return nil
 }
 
 func (x *BillingWallet) GetCreatedAt() *timestamppb.Timestamp {
@@ -8181,25 +7974,25 @@ func (x *BillingWallet) GetCreatedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *BillingWallet) GetCreditsBalance() float64 {
+func (x *BillingWallet) GetCreditsBalance() *kernel.DecimalValue {
 	if x != nil {
 		return x.CreditsBalance
 	}
-	return 0
+	return nil
 }
 
-func (x *BillingWallet) GetCreditsOngoingBalance() float64 {
+func (x *BillingWallet) GetCreditsOngoingBalance() *kernel.DecimalValue {
 	if x != nil {
 		return x.CreditsOngoingBalance
 	}
-	return 0
+	return nil
 }
 
-func (x *BillingWallet) GetCreditsOngoingUsageBalance() float64 {
+func (x *BillingWallet) GetCreditsOngoingUsageBalance() *kernel.DecimalValue {
 	if x != nil {
 		return x.CreditsOngoingUsageBalance
 	}
-	return 0
+	return nil
 }
 
 func (x *BillingWallet) GetCurrency() CurrencyEnum {
@@ -8321,11 +8114,11 @@ func (x *BillingWallet) GetPaymentMethod() *PaymentMethod {
 	return nil
 }
 
-func (x *BillingWallet) GetPaymentMethodType() PaymentMethodTypeEnum {
+func (x *BillingWallet) GetPaymentMethodType() PaymentMethodType {
 	if x != nil && x.PaymentMethodType != nil {
 		return *x.PaymentMethodType
 	}
-	return PaymentMethodTypeEnum_PAYMENT_METHOD_TYPE_ENUM_UNSPECIFIED
+	return PaymentMethodType_PAYMENT_METHOD_TYPE_UNSPECIFIED
 }
 
 func (x *BillingWallet) GetPriority() int32 {
@@ -8335,11 +8128,11 @@ func (x *BillingWallet) GetPriority() int32 {
 	return 0
 }
 
-func (x *BillingWallet) GetRateAmount() float64 {
+func (x *BillingWallet) GetRateAmount() *kernel.DecimalValue {
 	if x != nil {
 		return x.RateAmount
 	}
-	return 0
+	return nil
 }
 
 func (x *BillingWallet) GetRecurringTransactionRules() []*RecurringTransactionRule {
@@ -8363,11 +8156,11 @@ func (x *BillingWallet) GetSkipInvoiceCustomSections() bool {
 	return false
 }
 
-func (x *BillingWallet) GetStatus() WalletStatusEnum {
+func (x *BillingWallet) GetStatus() WalletStatus {
 	if x != nil {
 		return x.Status
 	}
-	return WalletStatusEnum_WALLET_STATUS_ENUM_UNSPECIFIED
+	return WalletStatus_WALLET_STATUS_UNSPECIFIED
 }
 
 func (x *BillingWallet) GetTerminatedAt() *timestamppb.Timestamp {
@@ -8392,30 +8185,30 @@ func (x *BillingWallet) GetUpdatedAt() *timestamppb.Timestamp {
 }
 
 type BillingWalletTransaction struct {
-	state                            protoimpl.MessageState                 `protogen:"open.v1"`
-	Amount                           string                                 `protobuf:"bytes,1,opt,name=amount,proto3" json:"amount,omitempty"`
-	CreatedAt                        *timestamppb.Timestamp                 `protobuf:"bytes,2,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	CreditAmount                     string                                 `protobuf:"bytes,3,opt,name=credit_amount,json=creditAmount,proto3" json:"credit_amount,omitempty"`
-	FailedAt                         *timestamppb.Timestamp                 `protobuf:"bytes,4,opt,name=failed_at,json=failedAt,proto3,oneof" json:"failed_at,omitempty"`
-	Id                               string                                 `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
-	Invoice                          *BillingInvoice                        `protobuf:"bytes,6,opt,name=invoice,proto3,oneof" json:"invoice,omitempty"`
-	InvoiceRequiresSuccessfulPayment bool                                   `protobuf:"varint,7,opt,name=invoice_requires_successful_payment,json=invoiceRequiresSuccessfulPayment,proto3" json:"invoice_requires_successful_payment,omitempty"`
-	Metadata                         []*WalletTransactionMetadataObject     `protobuf:"bytes,8,rep,name=metadata,proto3" json:"metadata,omitempty"`
-	Name                             *string                                `protobuf:"bytes,9,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	Priority                         int32                                  `protobuf:"varint,10,opt,name=priority,proto3" json:"priority,omitempty"`
-	RemainingAmountCents             *int64                                 `protobuf:"varint,11,opt,name=remaining_amount_cents,json=remainingAmountCents,proto3,oneof" json:"remaining_amount_cents,omitempty"`
-	RemainingCreditAmount            *string                                `protobuf:"bytes,12,opt,name=remaining_credit_amount,json=remainingCreditAmount,proto3,oneof" json:"remaining_credit_amount,omitempty"`
-	SelectedInvoiceCustomSections    []*InvoiceCustomSection                `protobuf:"bytes,13,rep,name=selected_invoice_custom_sections,json=selectedInvoiceCustomSections,proto3" json:"selected_invoice_custom_sections,omitempty"`
-	SettledAt                        *timestamppb.Timestamp                 `protobuf:"bytes,14,opt,name=settled_at,json=settledAt,proto3,oneof" json:"settled_at,omitempty"`
-	SkipInvoiceCustomSections        *bool                                  `protobuf:"varint,15,opt,name=skip_invoice_custom_sections,json=skipInvoiceCustomSections,proto3,oneof" json:"skip_invoice_custom_sections,omitempty"`
-	Source                           WalletTransactionSourceEnum            `protobuf:"varint,16,opt,name=source,proto3,enum=invora.billing.common.v2.WalletTransactionSourceEnum" json:"source,omitempty"`
-	Status                           WalletTransactionStatusEnum            `protobuf:"varint,17,opt,name=status,proto3,enum=invora.billing.common.v2.WalletTransactionStatusEnum" json:"status,omitempty"`
-	TransactionStatus                WalletTransactionTransactionStatusEnum `protobuf:"varint,18,opt,name=transaction_status,json=transactionStatus,proto3,enum=invora.billing.common.v2.WalletTransactionTransactionStatusEnum" json:"transaction_status,omitempty"`
-	TransactionType                  WalletTransactionTransactionTypeEnum   `protobuf:"varint,19,opt,name=transaction_type,json=transactionType,proto3,enum=invora.billing.common.v2.WalletTransactionTransactionTypeEnum" json:"transaction_type,omitempty"`
-	UpdatedAt                        *timestamppb.Timestamp                 `protobuf:"bytes,20,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	VoidedInvoice                    *BillingInvoice                        `protobuf:"bytes,21,opt,name=voided_invoice,json=voidedInvoice,proto3,oneof" json:"voided_invoice,omitempty"`
-	Wallet                           *BillingWallet                         `protobuf:"bytes,22,opt,name=wallet,proto3,oneof" json:"wallet,omitempty"`
-	WalletName                       *string                                `protobuf:"bytes,23,opt,name=wallet_name,json=walletName,proto3,oneof" json:"wallet_name,omitempty"`
+	state                            protoimpl.MessageState             `protogen:"open.v1"`
+	Amount                           *kernel.DecimalValue               `protobuf:"bytes,1,opt,name=amount,proto3" json:"amount,omitempty"`
+	CreatedAt                        *timestamppb.Timestamp             `protobuf:"bytes,2,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	CreditAmount                     *kernel.DecimalValue               `protobuf:"bytes,3,opt,name=credit_amount,json=creditAmount,proto3" json:"credit_amount,omitempty"`
+	FailedAt                         *timestamppb.Timestamp             `protobuf:"bytes,4,opt,name=failed_at,json=failedAt,proto3,oneof" json:"failed_at,omitempty"`
+	Id                               string                             `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
+	Invoice                          *BillingInvoice                    `protobuf:"bytes,6,opt,name=invoice,proto3,oneof" json:"invoice,omitempty"`
+	InvoiceRequiresSuccessfulPayment bool                               `protobuf:"varint,7,opt,name=invoice_requires_successful_payment,json=invoiceRequiresSuccessfulPayment,proto3" json:"invoice_requires_successful_payment,omitempty"`
+	Metadata                         []*WalletTransactionMetadataObject `protobuf:"bytes,8,rep,name=metadata,proto3" json:"metadata,omitempty"`
+	Name                             *string                            `protobuf:"bytes,9,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Priority                         int32                              `protobuf:"varint,10,opt,name=priority,proto3" json:"priority,omitempty"`
+	RemainingAmountCents             *int64                             `protobuf:"varint,11,opt,name=remaining_amount_cents,json=remainingAmountCents,proto3,oneof" json:"remaining_amount_cents,omitempty"`
+	RemainingCreditAmount            *kernel.DecimalValue               `protobuf:"bytes,12,opt,name=remaining_credit_amount,json=remainingCreditAmount,proto3,oneof" json:"remaining_credit_amount,omitempty"`
+	SelectedInvoiceCustomSections    []*InvoiceCustomSection            `protobuf:"bytes,13,rep,name=selected_invoice_custom_sections,json=selectedInvoiceCustomSections,proto3" json:"selected_invoice_custom_sections,omitempty"`
+	SettledAt                        *timestamppb.Timestamp             `protobuf:"bytes,14,opt,name=settled_at,json=settledAt,proto3,oneof" json:"settled_at,omitempty"`
+	SkipInvoiceCustomSections        *bool                              `protobuf:"varint,15,opt,name=skip_invoice_custom_sections,json=skipInvoiceCustomSections,proto3,oneof" json:"skip_invoice_custom_sections,omitempty"`
+	Source                           WalletTransactionSource            `protobuf:"varint,16,opt,name=source,proto3,enum=invora.billing.common.v2.WalletTransactionSource" json:"source,omitempty"`
+	Status                           WalletTransactionStatus            `protobuf:"varint,17,opt,name=status,proto3,enum=invora.billing.common.v2.WalletTransactionStatus" json:"status,omitempty"`
+	TransactionStatus                WalletTransactionTransactionStatus `protobuf:"varint,18,opt,name=transaction_status,json=transactionStatus,proto3,enum=invora.billing.common.v2.WalletTransactionTransactionStatus" json:"transaction_status,omitempty"`
+	TransactionType                  WalletTransactionTransactionType   `protobuf:"varint,19,opt,name=transaction_type,json=transactionType,proto3,enum=invora.billing.common.v2.WalletTransactionTransactionType" json:"transaction_type,omitempty"`
+	UpdatedAt                        *timestamppb.Timestamp             `protobuf:"bytes,20,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	VoidedInvoice                    *BillingInvoice                    `protobuf:"bytes,21,opt,name=voided_invoice,json=voidedInvoice,proto3,oneof" json:"voided_invoice,omitempty"`
+	Wallet                           *BillingWallet                     `protobuf:"bytes,22,opt,name=wallet,proto3,oneof" json:"wallet,omitempty"`
+	WalletName                       *string                            `protobuf:"bytes,23,opt,name=wallet_name,json=walletName,proto3,oneof" json:"wallet_name,omitempty"`
 	unknownFields                    protoimpl.UnknownFields
 	sizeCache                        protoimpl.SizeCache
 }
@@ -8450,11 +8243,11 @@ func (*BillingWalletTransaction) Descriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *BillingWalletTransaction) GetAmount() string {
+func (x *BillingWalletTransaction) GetAmount() *kernel.DecimalValue {
 	if x != nil {
 		return x.Amount
 	}
-	return ""
+	return nil
 }
 
 func (x *BillingWalletTransaction) GetCreatedAt() *timestamppb.Timestamp {
@@ -8464,11 +8257,11 @@ func (x *BillingWalletTransaction) GetCreatedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *BillingWalletTransaction) GetCreditAmount() string {
+func (x *BillingWalletTransaction) GetCreditAmount() *kernel.DecimalValue {
 	if x != nil {
 		return x.CreditAmount
 	}
-	return ""
+	return nil
 }
 
 func (x *BillingWalletTransaction) GetFailedAt() *timestamppb.Timestamp {
@@ -8527,11 +8320,11 @@ func (x *BillingWalletTransaction) GetRemainingAmountCents() int64 {
 	return 0
 }
 
-func (x *BillingWalletTransaction) GetRemainingCreditAmount() string {
-	if x != nil && x.RemainingCreditAmount != nil {
-		return *x.RemainingCreditAmount
+func (x *BillingWalletTransaction) GetRemainingCreditAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.RemainingCreditAmount
 	}
-	return ""
+	return nil
 }
 
 func (x *BillingWalletTransaction) GetSelectedInvoiceCustomSections() []*InvoiceCustomSection {
@@ -8555,32 +8348,32 @@ func (x *BillingWalletTransaction) GetSkipInvoiceCustomSections() bool {
 	return false
 }
 
-func (x *BillingWalletTransaction) GetSource() WalletTransactionSourceEnum {
+func (x *BillingWalletTransaction) GetSource() WalletTransactionSource {
 	if x != nil {
 		return x.Source
 	}
-	return WalletTransactionSourceEnum_WALLET_TRANSACTION_SOURCE_ENUM_UNSPECIFIED
+	return WalletTransactionSource_WALLET_TRANSACTION_SOURCE_UNSPECIFIED
 }
 
-func (x *BillingWalletTransaction) GetStatus() WalletTransactionStatusEnum {
+func (x *BillingWalletTransaction) GetStatus() WalletTransactionStatus {
 	if x != nil {
 		return x.Status
 	}
-	return WalletTransactionStatusEnum_WALLET_TRANSACTION_STATUS_ENUM_UNSPECIFIED
+	return WalletTransactionStatus_WALLET_TRANSACTION_STATUS_UNSPECIFIED
 }
 
-func (x *BillingWalletTransaction) GetTransactionStatus() WalletTransactionTransactionStatusEnum {
+func (x *BillingWalletTransaction) GetTransactionStatus() WalletTransactionTransactionStatus {
 	if x != nil {
 		return x.TransactionStatus
 	}
-	return WalletTransactionTransactionStatusEnum_WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_UNSPECIFIED
+	return WalletTransactionTransactionStatus_WALLET_TRANSACTION_TRANSACTION_STATUS_UNSPECIFIED
 }
 
-func (x *BillingWalletTransaction) GetTransactionType() WalletTransactionTransactionTypeEnum {
+func (x *BillingWalletTransaction) GetTransactionType() WalletTransactionTransactionType {
 	if x != nil {
 		return x.TransactionType
 	}
-	return WalletTransactionTransactionTypeEnum_WALLET_TRANSACTION_TRANSACTION_TYPE_ENUM_UNSPECIFIED
+	return WalletTransactionTransactionType_WALLET_TRANSACTION_TRANSACTION_TYPE_UNSPECIFIED
 }
 
 func (x *BillingWalletTransaction) GetUpdatedAt() *timestamppb.Timestamp {
@@ -8615,7 +8408,7 @@ type BillingFee struct {
 	state                  protoimpl.MessageState    `protogen:"open.v1"`
 	AddOn                  *BillingAddOn             `protobuf:"bytes,1,opt,name=add_on,json=addOn,proto3,oneof" json:"add_on,omitempty"`
 	AdjustedFee            bool                      `protobuf:"varint,2,opt,name=adjusted_fee,json=adjustedFee,proto3" json:"adjusted_fee,omitempty"`
-	AdjustedFeeType        *AdjustedFeeTypeEnum      `protobuf:"varint,3,opt,name=adjusted_fee_type,json=adjustedFeeType,proto3,enum=invora.billing.common.v2.AdjustedFeeTypeEnum,oneof" json:"adjusted_fee_type,omitempty"`
+	AdjustedFeeType        *AdjustedFeeType          `protobuf:"varint,3,opt,name=adjusted_fee_type,json=adjustedFeeType,proto3,enum=invora.billing.common.v2.AdjustedFeeType,oneof" json:"adjusted_fee_type,omitempty"`
 	AmountCents            int64                     `protobuf:"varint,4,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
 	AmountCurrency         CurrencyEnum              `protobuf:"varint,5,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"amount_currency,omitempty"`
 	AmountDetails          *FeeAmountDetails         `protobuf:"bytes,6,opt,name=amount_details,json=amountDetails,proto3,oneof" json:"amount_details,omitempty"`
@@ -8626,7 +8419,7 @@ type BillingFee struct {
 	Currency               CurrencyEnum              `protobuf:"varint,11,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"currency,omitempty"`
 	Description            *string                   `protobuf:"bytes,12,opt,name=description,proto3,oneof" json:"description,omitempty"`
 	EventsCount            *int64                    `protobuf:"varint,13,opt,name=events_count,json=eventsCount,proto3,oneof" json:"events_count,omitempty"`
-	FeeType                FeeTypesEnum              `protobuf:"varint,14,opt,name=fee_type,json=feeType,proto3,enum=invora.billing.common.v2.FeeTypesEnum" json:"fee_type,omitempty"`
+	FeeType                FeeTypes                  `protobuf:"varint,14,opt,name=fee_type,json=feeType,proto3,enum=invora.billing.common.v2.FeeTypes" json:"fee_type,omitempty"`
 	FixedCharge            *FixedCharge              `protobuf:"bytes,15,opt,name=fixed_charge,json=fixedCharge,proto3,oneof" json:"fixed_charge,omitempty"`
 	GroupedBy              *structpb.Struct          `protobuf:"bytes,16,opt,name=grouped_by,json=groupedBy,proto3" json:"grouped_by,omitempty"`
 	Id                     string                    `protobuf:"bytes,17,opt,name=id,proto3" json:"id,omitempty"`
@@ -8637,16 +8430,16 @@ type BillingFee struct {
 	ItemName               string                    `protobuf:"bytes,22,opt,name=item_name,json=itemName,proto3" json:"item_name,omitempty"`
 	ItemType               string                    `protobuf:"bytes,23,opt,name=item_type,json=itemType,proto3" json:"item_type,omitempty"`
 	OffsettableAmountCents int64                     `protobuf:"varint,24,opt,name=offsettable_amount_cents,json=offsettableAmountCents,proto3" json:"offsettable_amount_cents,omitempty"`
-	PreciseUnitAmount      float64                   `protobuf:"fixed64,25,opt,name=precise_unit_amount,json=preciseUnitAmount,proto3" json:"precise_unit_amount,omitempty"`
+	PreciseUnitAmount      *kernel.DecimalValue      `protobuf:"bytes,25,opt,name=precise_unit_amount,json=preciseUnitAmount,proto3" json:"precise_unit_amount,omitempty"`
 	PricingUnitUsage       *PricingUnitUsage         `protobuf:"bytes,26,opt,name=pricing_unit_usage,json=pricingUnitUsage,proto3,oneof" json:"pricing_unit_usage,omitempty"`
 	Properties             *FeeProperties            `protobuf:"bytes,27,opt,name=properties,proto3,oneof" json:"properties,omitempty"`
 	Subscription           *BillingSubscription      `protobuf:"bytes,28,opt,name=subscription,proto3,oneof" json:"subscription,omitempty"`
 	SucceededAt            *timestamppb.Timestamp    `protobuf:"bytes,29,opt,name=succeeded_at,json=succeededAt,proto3,oneof" json:"succeeded_at,omitempty"`
 	TaxesAmountCents       int64                     `protobuf:"varint,30,opt,name=taxes_amount_cents,json=taxesAmountCents,proto3" json:"taxes_amount_cents,omitempty"`
-	TaxesRate              *float64                  `protobuf:"fixed64,31,opt,name=taxes_rate,json=taxesRate,proto3,oneof" json:"taxes_rate,omitempty"`
+	TaxesRate              *kernel.DecimalValue      `protobuf:"bytes,31,opt,name=taxes_rate,json=taxesRate,proto3,oneof" json:"taxes_rate,omitempty"`
 	TrueUpFee              *BillingFee               `protobuf:"bytes,32,opt,name=true_up_fee,json=trueUpFee,proto3,oneof" json:"true_up_fee,omitempty"`
 	TrueUpParentFee        *BillingFee               `protobuf:"bytes,33,opt,name=true_up_parent_fee,json=trueUpParentFee,proto3,oneof" json:"true_up_parent_fee,omitempty"`
-	Units                  float64                   `protobuf:"fixed64,34,opt,name=units,proto3" json:"units,omitempty"`
+	Units                  *kernel.DecimalValue      `protobuf:"bytes,34,opt,name=units,proto3" json:"units,omitempty"`
 	WalletTransaction      *BillingWalletTransaction `protobuf:"bytes,35,opt,name=wallet_transaction,json=walletTransaction,proto3,oneof" json:"wallet_transaction,omitempty"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
@@ -8696,11 +8489,11 @@ func (x *BillingFee) GetAdjustedFee() bool {
 	return false
 }
 
-func (x *BillingFee) GetAdjustedFeeType() AdjustedFeeTypeEnum {
+func (x *BillingFee) GetAdjustedFeeType() AdjustedFeeType {
 	if x != nil && x.AdjustedFeeType != nil {
 		return *x.AdjustedFeeType
 	}
-	return AdjustedFeeTypeEnum_ADJUSTED_FEE_TYPE_ENUM_UNSPECIFIED
+	return AdjustedFeeType_ADJUSTED_FEE_TYPE_UNSPECIFIED
 }
 
 func (x *BillingFee) GetAmountCents() int64 {
@@ -8773,11 +8566,11 @@ func (x *BillingFee) GetEventsCount() int64 {
 	return 0
 }
 
-func (x *BillingFee) GetFeeType() FeeTypesEnum {
+func (x *BillingFee) GetFeeType() FeeTypes {
 	if x != nil {
 		return x.FeeType
 	}
-	return FeeTypesEnum_FEE_TYPES_ENUM_UNSPECIFIED
+	return FeeTypes_FEE_TYPES_UNSPECIFIED
 }
 
 func (x *BillingFee) GetFixedCharge() *FixedCharge {
@@ -8850,11 +8643,11 @@ func (x *BillingFee) GetOffsettableAmountCents() int64 {
 	return 0
 }
 
-func (x *BillingFee) GetPreciseUnitAmount() float64 {
+func (x *BillingFee) GetPreciseUnitAmount() *kernel.DecimalValue {
 	if x != nil {
 		return x.PreciseUnitAmount
 	}
-	return 0
+	return nil
 }
 
 func (x *BillingFee) GetPricingUnitUsage() *PricingUnitUsage {
@@ -8892,11 +8685,11 @@ func (x *BillingFee) GetTaxesAmountCents() int64 {
 	return 0
 }
 
-func (x *BillingFee) GetTaxesRate() float64 {
-	if x != nil && x.TaxesRate != nil {
-		return *x.TaxesRate
+func (x *BillingFee) GetTaxesRate() *kernel.DecimalValue {
+	if x != nil {
+		return x.TaxesRate
 	}
-	return 0
+	return nil
 }
 
 func (x *BillingFee) GetTrueUpFee() *BillingFee {
@@ -8913,11 +8706,11 @@ func (x *BillingFee) GetTrueUpParentFee() *BillingFee {
 	return nil
 }
 
-func (x *BillingFee) GetUnits() float64 {
+func (x *BillingFee) GetUnits() *kernel.DecimalValue {
 	if x != nil {
 		return x.Units
 	}
-	return 0
+	return nil
 }
 
 func (x *BillingFee) GetWalletTransaction() *BillingWalletTransaction {
@@ -8945,7 +8738,7 @@ type BillingTax struct {
 	Organization   *Organization `protobuf:"bytes,11,opt,name=organization,proto3,oneof" json:"organization,omitempty"`
 	// Number of plans using this tax
 	PlansCount    int32                  `protobuf:"varint,12,opt,name=plans_count,json=plansCount,proto3" json:"plans_count,omitempty"`
-	Rate          float64                `protobuf:"fixed64,13,opt,name=rate,proto3" json:"rate,omitempty"`
+	Rate          *kernel.DecimalValue   `protobuf:"bytes,13,opt,name=rate,proto3" json:"rate,omitempty"`
 	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,14,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -9065,11 +8858,11 @@ func (x *BillingTax) GetPlansCount() int32 {
 	return 0
 }
 
-func (x *BillingTax) GetRate() float64 {
+func (x *BillingTax) GetRate() *kernel.DecimalValue {
 	if x != nil {
 		return x.Rate
 	}
-	return 0
+	return nil
 }
 
 func (x *BillingTax) GetUpdatedAt() *timestamppb.Timestamp {
@@ -9081,13 +8874,12 @@ func (x *BillingTax) GetUpdatedAt() *timestamppb.Timestamp {
 
 type BillingCoupon struct {
 	state               protoimpl.MessageState   `protogen:"open.v1"`
-	ActivityLogs        []*ActivityLog           `protobuf:"bytes,1,rep,name=activity_logs,json=activityLogs,proto3" json:"activity_logs,omitempty"`
 	AmountCents         *int64                   `protobuf:"varint,2,opt,name=amount_cents,json=amountCents,proto3,oneof" json:"amount_cents,omitempty"`
 	AmountCurrency      *CurrencyEnum            `protobuf:"varint,3,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"amount_currency,omitempty"`
 	AppliedCouponsCount int32                    `protobuf:"varint,4,opt,name=applied_coupons_count,json=appliedCouponsCount,proto3" json:"applied_coupons_count,omitempty"`
 	BillableMetrics     []*BillingBillableMetric `protobuf:"bytes,5,rep,name=billable_metrics,json=billableMetrics,proto3" json:"billable_metrics,omitempty"`
 	Code                *string                  `protobuf:"bytes,6,opt,name=code,proto3,oneof" json:"code,omitempty"`
-	CouponType          CouponTypeEnum           `protobuf:"varint,7,opt,name=coupon_type,json=couponType,proto3,enum=invora.billing.common.v2.CouponTypeEnum" json:"coupon_type,omitempty"`
+	CouponType          CouponType               `protobuf:"varint,7,opt,name=coupon_type,json=couponType,proto3,enum=invora.billing.common.v2.CouponType" json:"coupon_type,omitempty"`
 	CreatedAt           *timestamppb.Timestamp   `protobuf:"bytes,8,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	// Number of customers using this coupon
 	CustomersCount         int32                  `protobuf:"varint,9,opt,name=customers_count,json=customersCount,proto3" json:"customers_count,omitempty"`
@@ -9101,10 +8893,10 @@ type BillingCoupon struct {
 	LimitedPlans           bool                   `protobuf:"varint,17,opt,name=limited_plans,json=limitedPlans,proto3" json:"limited_plans,omitempty"`
 	Name                   string                 `protobuf:"bytes,18,opt,name=name,proto3" json:"name,omitempty"`
 	Organization           *Organization          `protobuf:"bytes,19,opt,name=organization,proto3,oneof" json:"organization,omitempty"`
-	PercentageRate         *float64               `protobuf:"fixed64,20,opt,name=percentage_rate,json=percentageRate,proto3,oneof" json:"percentage_rate,omitempty"`
+	PercentageRate         *kernel.DecimalValue   `protobuf:"bytes,20,opt,name=percentage_rate,json=percentageRate,proto3,oneof" json:"percentage_rate,omitempty"`
 	Plans                  []*BillingPlan         `protobuf:"bytes,21,rep,name=plans,proto3" json:"plans,omitempty"`
 	Reusable               bool                   `protobuf:"varint,22,opt,name=reusable,proto3" json:"reusable,omitempty"`
-	Status                 CouponStatusEnum       `protobuf:"varint,23,opt,name=status,proto3,enum=invora.billing.common.v2.CouponStatusEnum" json:"status,omitempty"`
+	Status                 CouponStatus           `protobuf:"varint,23,opt,name=status,proto3,enum=invora.billing.common.v2.CouponStatus" json:"status,omitempty"`
 	TerminatedAt           *timestamppb.Timestamp `protobuf:"bytes,24,opt,name=terminated_at,json=terminatedAt,proto3,oneof" json:"terminated_at,omitempty"`
 	UpdatedAt              *timestamppb.Timestamp `protobuf:"bytes,25,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields          protoimpl.UnknownFields
@@ -9139,13 +8931,6 @@ func (x *BillingCoupon) ProtoReflect() protoreflect.Message {
 // Deprecated: Use BillingCoupon.ProtoReflect.Descriptor instead.
 func (*BillingCoupon) Descriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{9}
-}
-
-func (x *BillingCoupon) GetActivityLogs() []*ActivityLog {
-	if x != nil {
-		return x.ActivityLogs
-	}
-	return nil
 }
 
 func (x *BillingCoupon) GetAmountCents() int64 {
@@ -9183,11 +8968,11 @@ func (x *BillingCoupon) GetCode() string {
 	return ""
 }
 
-func (x *BillingCoupon) GetCouponType() CouponTypeEnum {
+func (x *BillingCoupon) GetCouponType() CouponType {
 	if x != nil {
 		return x.CouponType
 	}
-	return CouponTypeEnum_COUPON_TYPE_ENUM_UNSPECIFIED
+	return CouponType_COUPON_TYPE_UNSPECIFIED
 }
 
 func (x *BillingCoupon) GetCreatedAt() *timestamppb.Timestamp {
@@ -9274,11 +9059,11 @@ func (x *BillingCoupon) GetOrganization() *Organization {
 	return nil
 }
 
-func (x *BillingCoupon) GetPercentageRate() float64 {
-	if x != nil && x.PercentageRate != nil {
-		return *x.PercentageRate
+func (x *BillingCoupon) GetPercentageRate() *kernel.DecimalValue {
+	if x != nil {
+		return x.PercentageRate
 	}
-	return 0
+	return nil
 }
 
 func (x *BillingCoupon) GetPlans() []*BillingPlan {
@@ -9295,11 +9080,11 @@ func (x *BillingCoupon) GetReusable() bool {
 	return false
 }
 
-func (x *BillingCoupon) GetStatus() CouponStatusEnum {
+func (x *BillingCoupon) GetStatus() CouponStatus {
 	if x != nil {
 		return x.Status
 	}
-	return CouponStatusEnum_COUPON_STATUS_ENUM_UNSPECIFIED
+	return CouponStatus_COUPON_STATUS_UNSPECIFIED
 }
 
 func (x *BillingCoupon) GetTerminatedAt() *timestamppb.Timestamp {
@@ -9475,8 +9260,7 @@ func (x *BillingAddOn) GetUpdatedAt() *timestamppb.Timestamp {
 
 type BillingBillableMetric struct {
 	state                  protoimpl.MessageState  `protogen:"open.v1"`
-	ActivityLogs           []*ActivityLog          `protobuf:"bytes,1,rep,name=activity_logs,json=activityLogs,proto3" json:"activity_logs,omitempty"`
-	AggregationType        AggregationTypeEnum     `protobuf:"varint,2,opt,name=aggregation_type,json=aggregationType,proto3,enum=invora.billing.common.v2.AggregationTypeEnum" json:"aggregation_type,omitempty"`
+	AggregationType        AggregationType         `protobuf:"varint,2,opt,name=aggregation_type,json=aggregationType,proto3,enum=invora.billing.common.v2.AggregationType" json:"aggregation_type,omitempty"`
 	Code                   string                  `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
 	CreatedAt              *timestamppb.Timestamp  `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	DeletedAt              *timestamppb.Timestamp  `protobuf:"bytes,5,opt,name=deleted_at,json=deletedAt,proto3,oneof" json:"deleted_at,omitempty"`
@@ -9493,10 +9277,10 @@ type BillingBillableMetric struct {
 	Name                   string                  `protobuf:"bytes,16,opt,name=name,proto3" json:"name,omitempty"`
 	Organization           *Organization           `protobuf:"bytes,17,opt,name=organization,proto3,oneof" json:"organization,omitempty"`
 	Recurring              bool                    `protobuf:"varint,18,opt,name=recurring,proto3" json:"recurring,omitempty"`
-	RoundingFunction       *RoundingFunctionEnum   `protobuf:"varint,19,opt,name=rounding_function,json=roundingFunction,proto3,enum=invora.billing.common.v2.RoundingFunctionEnum,oneof" json:"rounding_function,omitempty"`
+	RoundingFunction       *RoundingFunction       `protobuf:"varint,19,opt,name=rounding_function,json=roundingFunction,proto3,enum=invora.billing.common.v2.RoundingFunction,oneof" json:"rounding_function,omitempty"`
 	RoundingPrecision      *int32                  `protobuf:"varint,20,opt,name=rounding_precision,json=roundingPrecision,proto3,oneof" json:"rounding_precision,omitempty"`
 	UpdatedAt              *timestamppb.Timestamp  `protobuf:"bytes,21,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	WeightedInterval       *WeightedIntervalEnum   `protobuf:"varint,22,opt,name=weighted_interval,json=weightedInterval,proto3,enum=invora.billing.common.v2.WeightedIntervalEnum,oneof" json:"weighted_interval,omitempty"`
+	WeightedInterval       *WeightedInterval       `protobuf:"varint,22,opt,name=weighted_interval,json=weightedInterval,proto3,enum=invora.billing.common.v2.WeightedInterval,oneof" json:"weighted_interval,omitempty"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
 }
@@ -9531,18 +9315,11 @@ func (*BillingBillableMetric) Descriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *BillingBillableMetric) GetActivityLogs() []*ActivityLog {
-	if x != nil {
-		return x.ActivityLogs
-	}
-	return nil
-}
-
-func (x *BillingBillableMetric) GetAggregationType() AggregationTypeEnum {
+func (x *BillingBillableMetric) GetAggregationType() AggregationType {
 	if x != nil {
 		return x.AggregationType
 	}
-	return AggregationTypeEnum_AGGREGATION_TYPE_ENUM_UNSPECIFIED
+	return AggregationType_AGGREGATION_TYPE_UNSPECIFIED
 }
 
 func (x *BillingBillableMetric) GetCode() string {
@@ -9657,11 +9434,11 @@ func (x *BillingBillableMetric) GetRecurring() bool {
 	return false
 }
 
-func (x *BillingBillableMetric) GetRoundingFunction() RoundingFunctionEnum {
+func (x *BillingBillableMetric) GetRoundingFunction() RoundingFunction {
 	if x != nil && x.RoundingFunction != nil {
 		return *x.RoundingFunction
 	}
-	return RoundingFunctionEnum_ROUNDING_FUNCTION_ENUM_UNSPECIFIED
+	return RoundingFunction_ROUNDING_FUNCTION_UNSPECIFIED
 }
 
 func (x *BillingBillableMetric) GetRoundingPrecision() int32 {
@@ -9678,25 +9455,25 @@ func (x *BillingBillableMetric) GetUpdatedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *BillingBillableMetric) GetWeightedInterval() WeightedIntervalEnum {
+func (x *BillingBillableMetric) GetWeightedInterval() WeightedInterval {
 	if x != nil && x.WeightedInterval != nil {
 		return *x.WeightedInterval
 	}
-	return WeightedIntervalEnum_WEIGHTED_INTERVAL_ENUM_UNSPECIFIED
+	return WeightedInterval_WEIGHTED_INTERVAL_UNSPECIFIED
 }
 
 type BillingPaymentRequest struct {
-	state          protoimpl.MessageState       `protogen:"open.v1"`
-	AmountCents    int64                        `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
-	AmountCurrency CurrencyEnum                 `protobuf:"varint,2,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"amount_currency,omitempty"`
-	CreatedAt      *timestamppb.Timestamp       `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	Customer       *BillingCustomer             `protobuf:"bytes,4,opt,name=customer,proto3" json:"customer,omitempty"`
-	Email          string                       `protobuf:"bytes,5,opt,name=email,proto3" json:"email,omitempty"`
-	Id             string                       `protobuf:"bytes,6,opt,name=id,proto3" json:"id,omitempty"`
-	Invoices       []*BillingInvoice            `protobuf:"bytes,7,rep,name=invoices,proto3" json:"invoices,omitempty"`
-	PayableType    string                       `protobuf:"bytes,8,opt,name=payable_type,json=payableType,proto3" json:"payable_type,omitempty"`
-	PaymentStatus  InvoicePaymentStatusTypeEnum `protobuf:"varint,9,opt,name=payment_status,json=paymentStatus,proto3,enum=invora.billing.common.v2.InvoicePaymentStatusTypeEnum" json:"payment_status,omitempty"`
-	UpdatedAt      *timestamppb.Timestamp       `protobuf:"bytes,10,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	state          protoimpl.MessageState   `protogen:"open.v1"`
+	AmountCents    int64                    `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
+	AmountCurrency CurrencyEnum             `protobuf:"varint,2,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"amount_currency,omitempty"`
+	CreatedAt      *timestamppb.Timestamp   `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	Customer       *BillingCustomer         `protobuf:"bytes,4,opt,name=customer,proto3" json:"customer,omitempty"`
+	Email          string                   `protobuf:"bytes,5,opt,name=email,proto3" json:"email,omitempty"`
+	Id             string                   `protobuf:"bytes,6,opt,name=id,proto3" json:"id,omitempty"`
+	Invoices       []*BillingInvoice        `protobuf:"bytes,7,rep,name=invoices,proto3" json:"invoices,omitempty"`
+	PayableType    string                   `protobuf:"bytes,8,opt,name=payable_type,json=payableType,proto3" json:"payable_type,omitempty"`
+	PaymentStatus  InvoicePaymentStatusType `protobuf:"varint,9,opt,name=payment_status,json=paymentStatus,proto3,enum=invora.billing.common.v2.InvoicePaymentStatusType" json:"payment_status,omitempty"`
+	UpdatedAt      *timestamppb.Timestamp   `protobuf:"bytes,10,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -9787,11 +9564,11 @@ func (x *BillingPaymentRequest) GetPayableType() string {
 	return ""
 }
 
-func (x *BillingPaymentRequest) GetPaymentStatus() InvoicePaymentStatusTypeEnum {
+func (x *BillingPaymentRequest) GetPaymentStatus() InvoicePaymentStatusType {
 	if x != nil {
 		return x.PaymentStatus
 	}
-	return InvoicePaymentStatusTypeEnum_INVOICE_PAYMENT_STATUS_TYPE_ENUM_UNSPECIFIED
+	return InvoicePaymentStatusType_INVOICE_PAYMENT_STATUS_TYPE_UNSPECIFIED
 }
 
 func (x *BillingPaymentRequest) GetUpdatedAt() *timestamppb.Timestamp {
@@ -9894,22 +9671,22 @@ func (x *BillingPaymentReceipt) GetXmlUrl() string {
 }
 
 type BillingPayment struct {
-	state                protoimpl.MessageState    `protogen:"open.v1"`
-	AmountCents          int64                     `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
-	AmountCurrency       CurrencyEnum              `protobuf:"varint,2,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"amount_currency,omitempty"`
-	CreatedAt            *timestamppb.Timestamp    `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	Customer             *BillingCustomer          `protobuf:"bytes,4,opt,name=customer,proto3" json:"customer,omitempty"`
-	Id                   string                    `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
-	Payable              *Payable                  `protobuf:"bytes,6,opt,name=payable,proto3" json:"payable,omitempty"`
-	PayablePaymentStatus *PayablePaymentStatusEnum `protobuf:"varint,7,opt,name=payable_payment_status,json=payablePaymentStatus,proto3,enum=invora.billing.common.v2.PayablePaymentStatusEnum,oneof" json:"payable_payment_status,omitempty"`
-	PaymentMethodId      *string                   `protobuf:"bytes,8,opt,name=payment_method_id,json=paymentMethodId,proto3,oneof" json:"payment_method_id,omitempty"`
-	PaymentProvider      *PaymentProvider          `protobuf:"bytes,9,opt,name=payment_provider,json=paymentProvider,proto3,oneof" json:"payment_provider,omitempty"`
-	PaymentProviderType  *ProviderTypeEnum         `protobuf:"varint,10,opt,name=payment_provider_type,json=paymentProviderType,proto3,enum=invora.billing.common.v2.ProviderTypeEnum,oneof" json:"payment_provider_type,omitempty"`
-	PaymentReceipt       *BillingPaymentReceipt    `protobuf:"bytes,11,opt,name=payment_receipt,json=paymentReceipt,proto3,oneof" json:"payment_receipt,omitempty"`
-	PaymentType          PaymentTypeEnum           `protobuf:"varint,12,opt,name=payment_type,json=paymentType,proto3,enum=invora.billing.common.v2.PaymentTypeEnum" json:"payment_type,omitempty"`
-	ProviderPaymentId    *string                   `protobuf:"bytes,13,opt,name=provider_payment_id,json=providerPaymentId,proto3,oneof" json:"provider_payment_id,omitempty"`
-	Reference            *string                   `protobuf:"bytes,14,opt,name=reference,proto3,oneof" json:"reference,omitempty"`
-	UpdatedAt            *timestamppb.Timestamp    `protobuf:"bytes,15,opt,name=updated_at,json=updatedAt,proto3,oneof" json:"updated_at,omitempty"`
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	AmountCents          int64                  `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
+	AmountCurrency       CurrencyEnum           `protobuf:"varint,2,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"amount_currency,omitempty"`
+	CreatedAt            *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	Customer             *BillingCustomer       `protobuf:"bytes,4,opt,name=customer,proto3" json:"customer,omitempty"`
+	Id                   string                 `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
+	Payable              *Payable               `protobuf:"bytes,6,opt,name=payable,proto3" json:"payable,omitempty"`
+	PayablePaymentStatus *PayablePaymentStatus  `protobuf:"varint,7,opt,name=payable_payment_status,json=payablePaymentStatus,proto3,enum=invora.billing.common.v2.PayablePaymentStatus,oneof" json:"payable_payment_status,omitempty"`
+	PaymentMethodId      *string                `protobuf:"bytes,8,opt,name=payment_method_id,json=paymentMethodId,proto3,oneof" json:"payment_method_id,omitempty"`
+	PaymentProvider      *PaymentProvider       `protobuf:"bytes,9,opt,name=payment_provider,json=paymentProvider,proto3,oneof" json:"payment_provider,omitempty"`
+	PaymentProviderType  *ProviderType          `protobuf:"varint,10,opt,name=payment_provider_type,json=paymentProviderType,proto3,enum=invora.billing.common.v2.ProviderType,oneof" json:"payment_provider_type,omitempty"`
+	PaymentReceipt       *BillingPaymentReceipt `protobuf:"bytes,11,opt,name=payment_receipt,json=paymentReceipt,proto3,oneof" json:"payment_receipt,omitempty"`
+	PaymentType          PaymentType            `protobuf:"varint,12,opt,name=payment_type,json=paymentType,proto3,enum=invora.billing.common.v2.PaymentType" json:"payment_type,omitempty"`
+	ProviderPaymentId    *string                `protobuf:"bytes,13,opt,name=provider_payment_id,json=providerPaymentId,proto3,oneof" json:"provider_payment_id,omitempty"`
+	Reference            *string                `protobuf:"bytes,14,opt,name=reference,proto3,oneof" json:"reference,omitempty"`
+	UpdatedAt            *timestamppb.Timestamp `protobuf:"bytes,15,opt,name=updated_at,json=updatedAt,proto3,oneof" json:"updated_at,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -9986,11 +9763,11 @@ func (x *BillingPayment) GetPayable() *Payable {
 	return nil
 }
 
-func (x *BillingPayment) GetPayablePaymentStatus() PayablePaymentStatusEnum {
+func (x *BillingPayment) GetPayablePaymentStatus() PayablePaymentStatus {
 	if x != nil && x.PayablePaymentStatus != nil {
 		return *x.PayablePaymentStatus
 	}
-	return PayablePaymentStatusEnum_PAYABLE_PAYMENT_STATUS_ENUM_UNSPECIFIED
+	return PayablePaymentStatus_PAYABLE_PAYMENT_STATUS_UNSPECIFIED
 }
 
 func (x *BillingPayment) GetPaymentMethodId() string {
@@ -10007,11 +9784,11 @@ func (x *BillingPayment) GetPaymentProvider() *PaymentProvider {
 	return nil
 }
 
-func (x *BillingPayment) GetPaymentProviderType() ProviderTypeEnum {
+func (x *BillingPayment) GetPaymentProviderType() ProviderType {
 	if x != nil && x.PaymentProviderType != nil {
 		return *x.PaymentProviderType
 	}
-	return ProviderTypeEnum_PROVIDER_TYPE_ENUM_UNSPECIFIED
+	return ProviderType_PROVIDER_TYPE_UNSPECIFIED
 }
 
 func (x *BillingPayment) GetPaymentReceipt() *BillingPaymentReceipt {
@@ -10021,11 +9798,11 @@ func (x *BillingPayment) GetPaymentReceipt() *BillingPaymentReceipt {
 	return nil
 }
 
-func (x *BillingPayment) GetPaymentType() PaymentTypeEnum {
+func (x *BillingPayment) GetPaymentType() PaymentType {
 	if x != nil {
 		return x.PaymentType
 	}
-	return PaymentTypeEnum_PAYMENT_TYPE_ENUM_UNSPECIFIED
+	return PaymentType_PAYMENT_TYPE_UNSPECIFIED
 }
 
 func (x *BillingPayment) GetProviderPaymentId() string {
@@ -10935,9 +10712,7 @@ func (*ActivityLogResourceObject_BillingWallet) isActivityLogResourceObject_Valu
 
 type AdyenProvider struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
-	ApiKey             *string                `protobuf:"bytes,1,opt,name=api_key,json=apiKey,proto3,oneof" json:"api_key,omitempty"`
 	Code               string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
-	HmacKey            *string                `protobuf:"bytes,3,opt,name=hmac_key,json=hmacKey,proto3,oneof" json:"hmac_key,omitempty"`
 	Id                 string                 `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
 	LivePrefix         *string                `protobuf:"bytes,5,opt,name=live_prefix,json=livePrefix,proto3,oneof" json:"live_prefix,omitempty"`
 	MerchantAccount    *string                `protobuf:"bytes,6,opt,name=merchant_account,json=merchantAccount,proto3,oneof" json:"merchant_account,omitempty"`
@@ -10977,23 +10752,9 @@ func (*AdyenProvider) Descriptor() ([]byte, []int) {
 	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{22}
 }
 
-func (x *AdyenProvider) GetApiKey() string {
-	if x != nil && x.ApiKey != nil {
-		return *x.ApiKey
-	}
-	return ""
-}
-
 func (x *AdyenProvider) GetCode() string {
 	if x != nil {
 		return x.Code
-	}
-	return ""
-}
-
-func (x *AdyenProvider) GetHmacKey() string {
-	if x != nil && x.HmacKey != nil {
-		return *x.HmacKey
 	}
 	return ""
 }
@@ -11033,98 +10794,6 @@ func (x *AdyenProvider) GetSuccessRedirectUrl() string {
 	return ""
 }
 
-type AnrokCustomer struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	ExternalAccountId  *string                `protobuf:"bytes,1,opt,name=external_account_id,json=externalAccountId,proto3,oneof" json:"external_account_id,omitempty"`
-	ExternalCustomerId *string                `protobuf:"bytes,2,opt,name=external_customer_id,json=externalCustomerId,proto3,oneof" json:"external_customer_id,omitempty"`
-	Id                 string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	IntegrationCode    *string                `protobuf:"bytes,4,opt,name=integration_code,json=integrationCode,proto3,oneof" json:"integration_code,omitempty"`
-	IntegrationId      *string                `protobuf:"bytes,5,opt,name=integration_id,json=integrationId,proto3,oneof" json:"integration_id,omitempty"`
-	IntegrationType    *IntegrationTypeEnum   `protobuf:"varint,6,opt,name=integration_type,json=integrationType,proto3,enum=invora.billing.common.v2.IntegrationTypeEnum,oneof" json:"integration_type,omitempty"`
-	SyncWithProvider   *bool                  `protobuf:"varint,7,opt,name=sync_with_provider,json=syncWithProvider,proto3,oneof" json:"sync_with_provider,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *AnrokCustomer) Reset() {
-	*x = AnrokCustomer{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[23]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AnrokCustomer) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AnrokCustomer) ProtoMessage() {}
-
-func (x *AnrokCustomer) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[23]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AnrokCustomer.ProtoReflect.Descriptor instead.
-func (*AnrokCustomer) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{23}
-}
-
-func (x *AnrokCustomer) GetExternalAccountId() string {
-	if x != nil && x.ExternalAccountId != nil {
-		return *x.ExternalAccountId
-	}
-	return ""
-}
-
-func (x *AnrokCustomer) GetExternalCustomerId() string {
-	if x != nil && x.ExternalCustomerId != nil {
-		return *x.ExternalCustomerId
-	}
-	return ""
-}
-
-func (x *AnrokCustomer) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *AnrokCustomer) GetIntegrationCode() string {
-	if x != nil && x.IntegrationCode != nil {
-		return *x.IntegrationCode
-	}
-	return ""
-}
-
-func (x *AnrokCustomer) GetIntegrationId() string {
-	if x != nil && x.IntegrationId != nil {
-		return *x.IntegrationId
-	}
-	return ""
-}
-
-func (x *AnrokCustomer) GetIntegrationType() IntegrationTypeEnum {
-	if x != nil && x.IntegrationType != nil {
-		return *x.IntegrationType
-	}
-	return IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_UNSPECIFIED
-}
-
-func (x *AnrokCustomer) GetSyncWithProvider() bool {
-	if x != nil && x.SyncWithProvider != nil {
-		return *x.SyncWithProvider
-	}
-	return false
-}
-
 type AppliedAddOn struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	AddOn          *BillingAddOn          `protobuf:"bytes,1,opt,name=add_on,json=addOn,proto3" json:"add_on,omitempty"`
@@ -11138,7 +10807,7 @@ type AppliedAddOn struct {
 
 func (x *AppliedAddOn) Reset() {
 	*x = AppliedAddOn{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[24]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11150,7 +10819,7 @@ func (x *AppliedAddOn) String() string {
 func (*AppliedAddOn) ProtoMessage() {}
 
 func (x *AppliedAddOn) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[24]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11163,7 +10832,7 @@ func (x *AppliedAddOn) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AppliedAddOn.ProtoReflect.Descriptor instead.
 func (*AppliedAddOn) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{24}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *AppliedAddOn) GetAddOn() *BillingAddOn {
@@ -11202,27 +10871,27 @@ func (x *AppliedAddOn) GetId() string {
 }
 
 type AppliedCoupon struct {
-	state                      protoimpl.MessageState  `protogen:"open.v1"`
-	AmountCents                *int64                  `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3,oneof" json:"amount_cents,omitempty"`
-	AmountCentsRemaining       *int64                  `protobuf:"varint,2,opt,name=amount_cents_remaining,json=amountCentsRemaining,proto3,oneof" json:"amount_cents_remaining,omitempty"`
-	AmountCurrency             *CurrencyEnum           `protobuf:"varint,3,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"amount_currency,omitempty"`
-	Coupon                     *BillingCoupon          `protobuf:"bytes,4,opt,name=coupon,proto3" json:"coupon,omitempty"`
-	CreatedAt                  *timestamppb.Timestamp  `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	Customer                   *BillingCustomer        `protobuf:"bytes,6,opt,name=customer,proto3" json:"customer,omitempty"`
-	Frequency                  CouponFrequency         `protobuf:"varint,7,opt,name=frequency,proto3,enum=invora.billing.common.v2.CouponFrequency" json:"frequency,omitempty"`
-	FrequencyDuration          *int32                  `protobuf:"varint,8,opt,name=frequency_duration,json=frequencyDuration,proto3,oneof" json:"frequency_duration,omitempty"`
-	FrequencyDurationRemaining *int32                  `protobuf:"varint,9,opt,name=frequency_duration_remaining,json=frequencyDurationRemaining,proto3,oneof" json:"frequency_duration_remaining,omitempty"`
-	Id                         string                  `protobuf:"bytes,10,opt,name=id,proto3" json:"id,omitempty"`
-	PercentageRate             *float64                `protobuf:"fixed64,11,opt,name=percentage_rate,json=percentageRate,proto3,oneof" json:"percentage_rate,omitempty"`
-	Status                     AppliedCouponStatusEnum `protobuf:"varint,12,opt,name=status,proto3,enum=invora.billing.common.v2.AppliedCouponStatusEnum" json:"status,omitempty"`
-	TerminatedAt               *timestamppb.Timestamp  `protobuf:"bytes,13,opt,name=terminated_at,json=terminatedAt,proto3,oneof" json:"terminated_at,omitempty"`
+	state                      protoimpl.MessageState `protogen:"open.v1"`
+	AmountCents                *int64                 `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3,oneof" json:"amount_cents,omitempty"`
+	AmountCentsRemaining       *int64                 `protobuf:"varint,2,opt,name=amount_cents_remaining,json=amountCentsRemaining,proto3,oneof" json:"amount_cents_remaining,omitempty"`
+	AmountCurrency             *CurrencyEnum          `protobuf:"varint,3,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"amount_currency,omitempty"`
+	Coupon                     *BillingCoupon         `protobuf:"bytes,4,opt,name=coupon,proto3" json:"coupon,omitempty"`
+	CreatedAt                  *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	Customer                   *BillingCustomer       `protobuf:"bytes,6,opt,name=customer,proto3" json:"customer,omitempty"`
+	Frequency                  CouponFrequency        `protobuf:"varint,7,opt,name=frequency,proto3,enum=invora.billing.common.v2.CouponFrequency" json:"frequency,omitempty"`
+	FrequencyDuration          *int32                 `protobuf:"varint,8,opt,name=frequency_duration,json=frequencyDuration,proto3,oneof" json:"frequency_duration,omitempty"`
+	FrequencyDurationRemaining *int32                 `protobuf:"varint,9,opt,name=frequency_duration_remaining,json=frequencyDurationRemaining,proto3,oneof" json:"frequency_duration_remaining,omitempty"`
+	Id                         string                 `protobuf:"bytes,10,opt,name=id,proto3" json:"id,omitempty"`
+	PercentageRate             *kernel.DecimalValue   `protobuf:"bytes,11,opt,name=percentage_rate,json=percentageRate,proto3,oneof" json:"percentage_rate,omitempty"`
+	Status                     AppliedCouponStatus    `protobuf:"varint,12,opt,name=status,proto3,enum=invora.billing.common.v2.AppliedCouponStatus" json:"status,omitempty"`
+	TerminatedAt               *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=terminated_at,json=terminatedAt,proto3,oneof" json:"terminated_at,omitempty"`
 	unknownFields              protoimpl.UnknownFields
 	sizeCache                  protoimpl.SizeCache
 }
 
 func (x *AppliedCoupon) Reset() {
 	*x = AppliedCoupon{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[25]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11234,7 +10903,7 @@ func (x *AppliedCoupon) String() string {
 func (*AppliedCoupon) ProtoMessage() {}
 
 func (x *AppliedCoupon) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[25]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11247,7 +10916,7 @@ func (x *AppliedCoupon) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AppliedCoupon.ProtoReflect.Descriptor instead.
 func (*AppliedCoupon) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{25}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *AppliedCoupon) GetAmountCents() int64 {
@@ -11320,18 +10989,18 @@ func (x *AppliedCoupon) GetId() string {
 	return ""
 }
 
-func (x *AppliedCoupon) GetPercentageRate() float64 {
-	if x != nil && x.PercentageRate != nil {
-		return *x.PercentageRate
+func (x *AppliedCoupon) GetPercentageRate() *kernel.DecimalValue {
+	if x != nil {
+		return x.PercentageRate
 	}
-	return 0
+	return nil
 }
 
-func (x *AppliedCoupon) GetStatus() AppliedCouponStatusEnum {
+func (x *AppliedCoupon) GetStatus() AppliedCouponStatus {
 	if x != nil {
 		return x.Status
 	}
-	return AppliedCouponStatusEnum_APPLIED_COUPON_STATUS_ENUM_UNSPECIFIED
+	return AppliedCouponStatus_APPLIED_COUPON_STATUS_UNSPECIFIED
 }
 
 func (x *AppliedCoupon) GetTerminatedAt() *timestamppb.Timestamp {
@@ -11343,7 +11012,7 @@ func (x *AppliedCoupon) GetTerminatedAt() *timestamppb.Timestamp {
 
 type AppliedPricingUnit struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	ConversionRate float64                `protobuf:"fixed64,1,opt,name=conversion_rate,json=conversionRate,proto3" json:"conversion_rate,omitempty"`
+	ConversionRate *kernel.DecimalValue   `protobuf:"bytes,1,opt,name=conversion_rate,json=conversionRate,proto3" json:"conversion_rate,omitempty"`
 	CreatedAt      *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	Id             string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
 	PricingUnit    *PricingUnit           `protobuf:"bytes,4,opt,name=pricing_unit,json=pricingUnit,proto3" json:"pricing_unit,omitempty"`
@@ -11354,7 +11023,7 @@ type AppliedPricingUnit struct {
 
 func (x *AppliedPricingUnit) Reset() {
 	*x = AppliedPricingUnit{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[26]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11366,7 +11035,7 @@ func (x *AppliedPricingUnit) String() string {
 func (*AppliedPricingUnit) ProtoMessage() {}
 
 func (x *AppliedPricingUnit) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[26]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11379,14 +11048,14 @@ func (x *AppliedPricingUnit) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AppliedPricingUnit.ProtoReflect.Descriptor instead.
 func (*AppliedPricingUnit) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{26}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{25}
 }
 
-func (x *AppliedPricingUnit) GetConversionRate() float64 {
+func (x *AppliedPricingUnit) GetConversionRate() *kernel.DecimalValue {
 	if x != nil {
 		return x.ConversionRate
 	}
-	return 0
+	return nil
 }
 
 func (x *AppliedPricingUnit) GetCreatedAt() *timestamppb.Timestamp {
@@ -11417,90 +11086,6 @@ func (x *AppliedPricingUnit) GetUpdatedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-type AvalaraCustomer struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	ExternalCustomerId *string                `protobuf:"bytes,1,opt,name=external_customer_id,json=externalCustomerId,proto3,oneof" json:"external_customer_id,omitempty"`
-	Id                 string                 `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
-	IntegrationCode    *string                `protobuf:"bytes,3,opt,name=integration_code,json=integrationCode,proto3,oneof" json:"integration_code,omitempty"`
-	IntegrationId      *string                `protobuf:"bytes,4,opt,name=integration_id,json=integrationId,proto3,oneof" json:"integration_id,omitempty"`
-	IntegrationType    *IntegrationTypeEnum   `protobuf:"varint,5,opt,name=integration_type,json=integrationType,proto3,enum=invora.billing.common.v2.IntegrationTypeEnum,oneof" json:"integration_type,omitempty"`
-	SyncWithProvider   *bool                  `protobuf:"varint,6,opt,name=sync_with_provider,json=syncWithProvider,proto3,oneof" json:"sync_with_provider,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *AvalaraCustomer) Reset() {
-	*x = AvalaraCustomer{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[27]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AvalaraCustomer) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AvalaraCustomer) ProtoMessage() {}
-
-func (x *AvalaraCustomer) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[27]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AvalaraCustomer.ProtoReflect.Descriptor instead.
-func (*AvalaraCustomer) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{27}
-}
-
-func (x *AvalaraCustomer) GetExternalCustomerId() string {
-	if x != nil && x.ExternalCustomerId != nil {
-		return *x.ExternalCustomerId
-	}
-	return ""
-}
-
-func (x *AvalaraCustomer) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *AvalaraCustomer) GetIntegrationCode() string {
-	if x != nil && x.IntegrationCode != nil {
-		return *x.IntegrationCode
-	}
-	return ""
-}
-
-func (x *AvalaraCustomer) GetIntegrationId() string {
-	if x != nil && x.IntegrationId != nil {
-		return *x.IntegrationId
-	}
-	return ""
-}
-
-func (x *AvalaraCustomer) GetIntegrationType() IntegrationTypeEnum {
-	if x != nil && x.IntegrationType != nil {
-		return *x.IntegrationType
-	}
-	return IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_UNSPECIFIED
-}
-
-func (x *AvalaraCustomer) GetSyncWithProvider() bool {
-	if x != nil && x.SyncWithProvider != nil {
-		return *x.SyncWithProvider
-	}
-	return false
-}
-
 // Billable metric filters
 type BillableMetricFilter struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -11513,7 +11098,7 @@ type BillableMetricFilter struct {
 
 func (x *BillableMetricFilter) Reset() {
 	*x = BillableMetricFilter{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[28]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11525,7 +11110,7 @@ func (x *BillableMetricFilter) String() string {
 func (*BillableMetricFilter) ProtoMessage() {}
 
 func (x *BillableMetricFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[28]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11538,7 +11123,7 @@ func (x *BillableMetricFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BillableMetricFilter.ProtoReflect.Descriptor instead.
 func (*BillableMetricFilter) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{28}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *BillableMetricFilter) GetId() string {
@@ -11567,7 +11152,6 @@ type BillingEntity struct {
 	state                         protoimpl.MessageState             `protogen:"open.v1"`
 	AddressLine1                  *string                            `protobuf:"bytes,1,opt,name=address_line1,json=addressLine1,proto3,oneof" json:"address_line1,omitempty"`
 	AddressLine2                  *string                            `protobuf:"bytes,2,opt,name=address_line2,json=addressLine2,proto3,oneof" json:"address_line2,omitempty"`
-	AppliedDunningCampaign        *DunningCampaign                   `protobuf:"bytes,3,opt,name=applied_dunning_campaign,json=appliedDunningCampaign,proto3,oneof" json:"applied_dunning_campaign,omitempty"`
 	BillingConfiguration          *BillingEntityBillingConfiguration `protobuf:"bytes,4,opt,name=billing_configuration,json=billingConfiguration,proto3,oneof" json:"billing_configuration,omitempty"`
 	City                          *string                            `protobuf:"bytes,5,opt,name=city,proto3,oneof" json:"city,omitempty"`
 	Code                          string                             `protobuf:"bytes,6,opt,name=code,proto3" json:"code,omitempty"`
@@ -11575,10 +11159,10 @@ type BillingEntity struct {
 	CreatedAt                     *timestamppb.Timestamp             `protobuf:"bytes,8,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	DefaultCurrency               CurrencyEnum                       `protobuf:"varint,9,opt,name=default_currency,json=defaultCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"default_currency,omitempty"`
 	DocumentNumberPrefix          string                             `protobuf:"bytes,10,opt,name=document_number_prefix,json=documentNumberPrefix,proto3" json:"document_number_prefix,omitempty"`
-	DocumentNumbering             BillingEntityDocumentNumberingEnum `protobuf:"varint,11,opt,name=document_numbering,json=documentNumbering,proto3,enum=invora.billing.common.v2.BillingEntityDocumentNumberingEnum" json:"document_numbering,omitempty"`
+	DocumentNumbering             BillingEntityDocumentNumbering     `protobuf:"varint,11,opt,name=document_numbering,json=documentNumbering,proto3,enum=invora.billing.common.v2.BillingEntityDocumentNumbering" json:"document_numbering,omitempty"`
 	Einvoicing                    bool                               `protobuf:"varint,12,opt,name=einvoicing,proto3" json:"einvoicing,omitempty"`
 	Email                         *string                            `protobuf:"bytes,13,opt,name=email,proto3,oneof" json:"email,omitempty"`
-	EmailSettings                 []BillingEntityEmailSettingsEnum   `protobuf:"varint,14,rep,packed,name=email_settings,json=emailSettings,proto3,enum=invora.billing.common.v2.BillingEntityEmailSettingsEnum" json:"email_settings,omitempty"`
+	EmailSettings                 []BillingEntityEmailSettings       `protobuf:"varint,14,rep,packed,name=email_settings,json=emailSettings,proto3,enum=invora.billing.common.v2.BillingEntityEmailSettings" json:"email_settings,omitempty"`
 	EuTaxManagement               bool                               `protobuf:"varint,15,opt,name=eu_tax_management,json=euTaxManagement,proto3" json:"eu_tax_management,omitempty"`
 	FinalizeZeroAmountInvoice     bool                               `protobuf:"varint,16,opt,name=finalize_zero_amount_invoice,json=finalizeZeroAmountInvoice,proto3" json:"finalize_zero_amount_invoice,omitempty"`
 	Id                            string                             `protobuf:"bytes,17,opt,name=id,proto3" json:"id,omitempty"`
@@ -11592,7 +11176,7 @@ type BillingEntity struct {
 	SelectedInvoiceCustomSections []*InvoiceCustomSection            `protobuf:"bytes,25,rep,name=selected_invoice_custom_sections,json=selectedInvoiceCustomSections,proto3" json:"selected_invoice_custom_sections,omitempty"`
 	State                         *string                            `protobuf:"bytes,26,opt,name=state,proto3,oneof" json:"state,omitempty"`
 	TaxIdentificationNumber       *string                            `protobuf:"bytes,27,opt,name=tax_identification_number,json=taxIdentificationNumber,proto3,oneof" json:"tax_identification_number,omitempty"`
-	Timezone                      *TimezoneEnum                      `protobuf:"varint,28,opt,name=timezone,proto3,enum=invora.billing.common.v2.TimezoneEnum,oneof" json:"timezone,omitempty"`
+	Timezone                      *Timezone                          `protobuf:"varint,28,opt,name=timezone,proto3,enum=invora.billing.common.v2.Timezone,oneof" json:"timezone,omitempty"`
 	UpdatedAt                     *timestamppb.Timestamp             `protobuf:"bytes,29,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	Zipcode                       *string                            `protobuf:"bytes,30,opt,name=zipcode,proto3,oneof" json:"zipcode,omitempty"`
 	unknownFields                 protoimpl.UnknownFields
@@ -11601,7 +11185,7 @@ type BillingEntity struct {
 
 func (x *BillingEntity) Reset() {
 	*x = BillingEntity{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[29]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11613,7 +11197,7 @@ func (x *BillingEntity) String() string {
 func (*BillingEntity) ProtoMessage() {}
 
 func (x *BillingEntity) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[29]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11626,7 +11210,7 @@ func (x *BillingEntity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BillingEntity.ProtoReflect.Descriptor instead.
 func (*BillingEntity) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{29}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *BillingEntity) GetAddressLine1() string {
@@ -11641,13 +11225,6 @@ func (x *BillingEntity) GetAddressLine2() string {
 		return *x.AddressLine2
 	}
 	return ""
-}
-
-func (x *BillingEntity) GetAppliedDunningCampaign() *DunningCampaign {
-	if x != nil {
-		return x.AppliedDunningCampaign
-	}
-	return nil
 }
 
 func (x *BillingEntity) GetBillingConfiguration() *BillingEntityBillingConfiguration {
@@ -11699,11 +11276,11 @@ func (x *BillingEntity) GetDocumentNumberPrefix() string {
 	return ""
 }
 
-func (x *BillingEntity) GetDocumentNumbering() BillingEntityDocumentNumberingEnum {
+func (x *BillingEntity) GetDocumentNumbering() BillingEntityDocumentNumbering {
 	if x != nil {
 		return x.DocumentNumbering
 	}
-	return BillingEntityDocumentNumberingEnum_BILLING_ENTITY_DOCUMENT_NUMBERING_ENUM_UNSPECIFIED
+	return BillingEntityDocumentNumbering_BILLING_ENTITY_DOCUMENT_NUMBERING_UNSPECIFIED
 }
 
 func (x *BillingEntity) GetEinvoicing() bool {
@@ -11720,7 +11297,7 @@ func (x *BillingEntity) GetEmail() string {
 	return ""
 }
 
-func (x *BillingEntity) GetEmailSettings() []BillingEntityEmailSettingsEnum {
+func (x *BillingEntity) GetEmailSettings() []BillingEntityEmailSettings {
 	if x != nil {
 		return x.EmailSettings
 	}
@@ -11818,11 +11395,11 @@ func (x *BillingEntity) GetTaxIdentificationNumber() string {
 	return ""
 }
 
-func (x *BillingEntity) GetTimezone() TimezoneEnum {
+func (x *BillingEntity) GetTimezone() Timezone {
 	if x != nil && x.Timezone != nil {
 		return *x.Timezone
 	}
-	return TimezoneEnum_TIMEZONE_ENUM_UNSPECIFIED
+	return Timezone_TIMEZONE_UNSPECIFIED
 }
 
 func (x *BillingEntity) GetUpdatedAt() *timestamppb.Timestamp {
@@ -11840,20 +11417,20 @@ func (x *BillingEntity) GetZipcode() string {
 }
 
 type BillingEntityBillingConfiguration struct {
-	state                                    protoimpl.MessageState                                    `protogen:"open.v1"`
-	DocumentLocale                           *string                                                   `protobuf:"bytes,1,opt,name=document_locale,json=documentLocale,proto3,oneof" json:"document_locale,omitempty"`
-	Id                                       string                                                    `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
-	InvoiceFooter                            *string                                                   `protobuf:"bytes,3,opt,name=invoice_footer,json=invoiceFooter,proto3,oneof" json:"invoice_footer,omitempty"`
-	InvoiceGracePeriod                       int32                                                     `protobuf:"varint,4,opt,name=invoice_grace_period,json=invoiceGracePeriod,proto3" json:"invoice_grace_period,omitempty"`
-	SubscriptionInvoiceIssuingDateAdjustment BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum `protobuf:"varint,5,opt,name=subscription_invoice_issuing_date_adjustment,json=subscriptionInvoiceIssuingDateAdjustment,proto3,enum=invora.billing.common.v2.BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum" json:"subscription_invoice_issuing_date_adjustment,omitempty"`
-	SubscriptionInvoiceIssuingDateAnchor     BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum     `protobuf:"varint,6,opt,name=subscription_invoice_issuing_date_anchor,json=subscriptionInvoiceIssuingDateAnchor,proto3,enum=invora.billing.common.v2.BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum" json:"subscription_invoice_issuing_date_anchor,omitempty"`
+	state                                    protoimpl.MessageState                                `protogen:"open.v1"`
+	DocumentLocale                           *string                                               `protobuf:"bytes,1,opt,name=document_locale,json=documentLocale,proto3,oneof" json:"document_locale,omitempty"`
+	Id                                       string                                                `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	InvoiceFooter                            *string                                               `protobuf:"bytes,3,opt,name=invoice_footer,json=invoiceFooter,proto3,oneof" json:"invoice_footer,omitempty"`
+	InvoiceGracePeriod                       int32                                                 `protobuf:"varint,4,opt,name=invoice_grace_period,json=invoiceGracePeriod,proto3" json:"invoice_grace_period,omitempty"`
+	SubscriptionInvoiceIssuingDateAdjustment BillingEntitySubscriptionInvoiceIssuingDateAdjustment `protobuf:"varint,5,opt,name=subscription_invoice_issuing_date_adjustment,json=subscriptionInvoiceIssuingDateAdjustment,proto3,enum=invora.billing.common.v2.BillingEntitySubscriptionInvoiceIssuingDateAdjustment" json:"subscription_invoice_issuing_date_adjustment,omitempty"`
+	SubscriptionInvoiceIssuingDateAnchor     BillingEntitySubscriptionInvoiceIssuingDateAnchor     `protobuf:"varint,6,opt,name=subscription_invoice_issuing_date_anchor,json=subscriptionInvoiceIssuingDateAnchor,proto3,enum=invora.billing.common.v2.BillingEntitySubscriptionInvoiceIssuingDateAnchor" json:"subscription_invoice_issuing_date_anchor,omitempty"`
 	unknownFields                            protoimpl.UnknownFields
 	sizeCache                                protoimpl.SizeCache
 }
 
 func (x *BillingEntityBillingConfiguration) Reset() {
 	*x = BillingEntityBillingConfiguration{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[30]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11865,7 +11442,7 @@ func (x *BillingEntityBillingConfiguration) String() string {
 func (*BillingEntityBillingConfiguration) ProtoMessage() {}
 
 func (x *BillingEntityBillingConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[30]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11878,7 +11455,7 @@ func (x *BillingEntityBillingConfiguration) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use BillingEntityBillingConfiguration.ProtoReflect.Descriptor instead.
 func (*BillingEntityBillingConfiguration) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{30}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *BillingEntityBillingConfiguration) GetDocumentLocale() string {
@@ -11909,24 +11486,23 @@ func (x *BillingEntityBillingConfiguration) GetInvoiceGracePeriod() int32 {
 	return 0
 }
 
-func (x *BillingEntityBillingConfiguration) GetSubscriptionInvoiceIssuingDateAdjustment() BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum {
+func (x *BillingEntityBillingConfiguration) GetSubscriptionInvoiceIssuingDateAdjustment() BillingEntitySubscriptionInvoiceIssuingDateAdjustment {
 	if x != nil {
 		return x.SubscriptionInvoiceIssuingDateAdjustment
 	}
-	return BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum_BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_UNSPECIFIED
+	return BillingEntitySubscriptionInvoiceIssuingDateAdjustment_BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_UNSPECIFIED
 }
 
-func (x *BillingEntityBillingConfiguration) GetSubscriptionInvoiceIssuingDateAnchor() BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum {
+func (x *BillingEntityBillingConfiguration) GetSubscriptionInvoiceIssuingDateAnchor() BillingEntitySubscriptionInvoiceIssuingDateAnchor {
 	if x != nil {
 		return x.SubscriptionInvoiceIssuingDateAnchor
 	}
-	return BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum_BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_UNSPECIFIED
+	return BillingEntitySubscriptionInvoiceIssuingDateAnchor_BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_UNSPECIFIED
 }
 
 type CashfreeProvider struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	ClientId           *string                `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3,oneof" json:"client_id,omitempty"`
-	ClientSecret       *string                `protobuf:"bytes,2,opt,name=client_secret,json=clientSecret,proto3,oneof" json:"client_secret,omitempty"`
 	Code               string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
 	Id                 string                 `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
 	Name               string                 `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
@@ -11937,7 +11513,7 @@ type CashfreeProvider struct {
 
 func (x *CashfreeProvider) Reset() {
 	*x = CashfreeProvider{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[31]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11949,7 +11525,7 @@ func (x *CashfreeProvider) String() string {
 func (*CashfreeProvider) ProtoMessage() {}
 
 func (x *CashfreeProvider) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[31]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11962,19 +11538,12 @@ func (x *CashfreeProvider) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CashfreeProvider.ProtoReflect.Descriptor instead.
 func (*CashfreeProvider) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{31}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *CashfreeProvider) GetClientId() string {
 	if x != nil && x.ClientId != nil {
 		return *x.ClientId
-	}
-	return ""
-}
-
-func (x *CashfreeProvider) GetClientSecret() string {
-	if x != nil && x.ClientSecret != nil {
-		return *x.ClientSecret
 	}
 	return ""
 }
@@ -12011,7 +11580,7 @@ type Charge struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	AppliedPricingUnit *AppliedPricingUnit    `protobuf:"bytes,1,opt,name=applied_pricing_unit,json=appliedPricingUnit,proto3,oneof" json:"applied_pricing_unit,omitempty"`
 	BillableMetric     *BillingBillableMetric `protobuf:"bytes,2,opt,name=billable_metric,json=billableMetric,proto3" json:"billable_metric,omitempty"`
-	ChargeModel        ChargeModelEnum        `protobuf:"varint,3,opt,name=charge_model,json=chargeModel,proto3,enum=invora.billing.common.v2.ChargeModelEnum" json:"charge_model,omitempty"`
+	ChargeModel        ChargeModel            `protobuf:"varint,3,opt,name=charge_model,json=chargeModel,proto3,enum=invora.billing.common.v2.ChargeModel" json:"charge_model,omitempty"`
 	Code               *string                `protobuf:"bytes,4,opt,name=code,proto3,oneof" json:"code,omitempty"`
 	CreatedAt          *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	DeletedAt          *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=deleted_at,json=deletedAt,proto3,oneof" json:"deleted_at,omitempty"`
@@ -12024,7 +11593,7 @@ type Charge struct {
 	PayInAdvance       bool                   `protobuf:"varint,13,opt,name=pay_in_advance,json=payInAdvance,proto3" json:"pay_in_advance,omitempty"`
 	Properties         *Properties            `protobuf:"bytes,14,opt,name=properties,proto3,oneof" json:"properties,omitempty"`
 	Prorated           bool                   `protobuf:"varint,15,opt,name=prorated,proto3" json:"prorated,omitempty"`
-	RegroupPaidFees    *RegroupPaidFeesEnum   `protobuf:"varint,16,opt,name=regroup_paid_fees,json=regroupPaidFees,proto3,enum=invora.billing.common.v2.RegroupPaidFeesEnum,oneof" json:"regroup_paid_fees,omitempty"`
+	RegroupPaidFees    *RegroupPaidFees       `protobuf:"varint,16,opt,name=regroup_paid_fees,json=regroupPaidFees,proto3,enum=invora.billing.common.v2.RegroupPaidFees,oneof" json:"regroup_paid_fees,omitempty"`
 	Taxes              []*BillingTax          `protobuf:"bytes,17,rep,name=taxes,proto3" json:"taxes,omitempty"`
 	UpdatedAt          *timestamppb.Timestamp `protobuf:"bytes,18,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields      protoimpl.UnknownFields
@@ -12033,7 +11602,7 @@ type Charge struct {
 
 func (x *Charge) Reset() {
 	*x = Charge{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[32]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12045,7 +11614,7 @@ func (x *Charge) String() string {
 func (*Charge) ProtoMessage() {}
 
 func (x *Charge) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[32]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12058,7 +11627,7 @@ func (x *Charge) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Charge.ProtoReflect.Descriptor instead.
 func (*Charge) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{32}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *Charge) GetAppliedPricingUnit() *AppliedPricingUnit {
@@ -12075,11 +11644,11 @@ func (x *Charge) GetBillableMetric() *BillingBillableMetric {
 	return nil
 }
 
-func (x *Charge) GetChargeModel() ChargeModelEnum {
+func (x *Charge) GetChargeModel() ChargeModel {
 	if x != nil {
 		return x.ChargeModel
 	}
-	return ChargeModelEnum_CHARGE_MODEL_ENUM_UNSPECIFIED
+	return ChargeModel_CHARGE_MODEL_UNSPECIFIED
 }
 
 func (x *Charge) GetCode() string {
@@ -12166,11 +11735,11 @@ func (x *Charge) GetProrated() bool {
 	return false
 }
 
-func (x *Charge) GetRegroupPaidFees() RegroupPaidFeesEnum {
+func (x *Charge) GetRegroupPaidFees() RegroupPaidFees {
 	if x != nil && x.RegroupPaidFees != nil {
 		return *x.RegroupPaidFees
 	}
-	return RegroupPaidFeesEnum_REGROUP_PAID_FEES_ENUM_UNSPECIFIED
+	return RegroupPaidFees_REGROUP_PAID_FEES_UNSPECIFIED
 }
 
 func (x *Charge) GetTaxes() []*BillingTax {
@@ -12201,7 +11770,7 @@ type ChargeFilter struct {
 
 func (x *ChargeFilter) Reset() {
 	*x = ChargeFilter{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[33]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12213,7 +11782,7 @@ func (x *ChargeFilter) String() string {
 func (*ChargeFilter) ProtoMessage() {}
 
 func (x *ChargeFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[33]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12226,7 +11795,7 @@ func (x *ChargeFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChargeFilter.ProtoReflect.Descriptor instead.
 func (*ChargeFilter) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{33}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *ChargeFilter) GetChargeCode() string {
@@ -12276,7 +11845,7 @@ type ChargeFilterInput struct {
 
 func (x *ChargeFilterInput) Reset() {
 	*x = ChargeFilterInput{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[34]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12288,7 +11857,7 @@ func (x *ChargeFilterInput) String() string {
 func (*ChargeFilterInput) ProtoMessage() {}
 
 func (x *ChargeFilterInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[34]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12301,7 +11870,7 @@ func (x *ChargeFilterInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChargeFilterInput.ProtoReflect.Descriptor instead.
 func (*ChargeFilterInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{34}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *ChargeFilterInput) GetInvoiceDisplayName() string {
@@ -12332,7 +11901,7 @@ type ChargeFilterUsage struct {
 	Id                     *string                `protobuf:"bytes,3,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InvoiceDisplayName     *string                `protobuf:"bytes,4,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
 	PricingUnitAmountCents *int64                 `protobuf:"varint,5,opt,name=pricing_unit_amount_cents,json=pricingUnitAmountCents,proto3,oneof" json:"pricing_unit_amount_cents,omitempty"`
-	Units                  float64                `protobuf:"fixed64,6,opt,name=units,proto3" json:"units,omitempty"`
+	Units                  *kernel.DecimalValue   `protobuf:"bytes,6,opt,name=units,proto3" json:"units,omitempty"`
 	Values                 *structpb.Struct       `protobuf:"bytes,7,opt,name=values,proto3" json:"values,omitempty"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
@@ -12340,7 +11909,7 @@ type ChargeFilterUsage struct {
 
 func (x *ChargeFilterUsage) Reset() {
 	*x = ChargeFilterUsage{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[35]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12352,7 +11921,7 @@ func (x *ChargeFilterUsage) String() string {
 func (*ChargeFilterUsage) ProtoMessage() {}
 
 func (x *ChargeFilterUsage) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[35]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12365,7 +11934,7 @@ func (x *ChargeFilterUsage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChargeFilterUsage.ProtoReflect.Descriptor instead.
 func (*ChargeFilterUsage) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{35}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *ChargeFilterUsage) GetAmountCents() int64 {
@@ -12403,11 +11972,11 @@ func (x *ChargeFilterUsage) GetPricingUnitAmountCents() int64 {
 	return 0
 }
 
-func (x *ChargeFilterUsage) GetUnits() float64 {
+func (x *ChargeFilterUsage) GetUnits() *kernel.DecimalValue {
 	if x != nil {
 		return x.Units
 	}
-	return 0
+	return nil
 }
 
 func (x *ChargeFilterUsage) GetValues() *structpb.Struct {
@@ -12427,14 +11996,14 @@ type ChargeUsage struct {
 	GroupedUsage           []*GroupedChargeUsage  `protobuf:"bytes,6,rep,name=grouped_usage,json=groupedUsage,proto3" json:"grouped_usage,omitempty"`
 	Id                     string                 `protobuf:"bytes,7,opt,name=id,proto3" json:"id,omitempty"`
 	PricingUnitAmountCents *int64                 `protobuf:"varint,8,opt,name=pricing_unit_amount_cents,json=pricingUnitAmountCents,proto3,oneof" json:"pricing_unit_amount_cents,omitempty"`
-	Units                  float64                `protobuf:"fixed64,9,opt,name=units,proto3" json:"units,omitempty"`
+	Units                  *kernel.DecimalValue   `protobuf:"bytes,9,opt,name=units,proto3" json:"units,omitempty"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
 }
 
 func (x *ChargeUsage) Reset() {
 	*x = ChargeUsage{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[36]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12446,7 +12015,7 @@ func (x *ChargeUsage) String() string {
 func (*ChargeUsage) ProtoMessage() {}
 
 func (x *ChargeUsage) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[36]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12459,7 +12028,7 @@ func (x *ChargeUsage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChargeUsage.ProtoReflect.Descriptor instead.
 func (*ChargeUsage) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{36}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *ChargeUsage) GetAmountCents() int64 {
@@ -12518,11 +12087,11 @@ func (x *ChargeUsage) GetPricingUnitAmountCents() int64 {
 	return 0
 }
 
-func (x *ChargeUsage) GetUnits() float64 {
+func (x *ChargeUsage) GetUnits() *kernel.DecimalValue {
 	if x != nil {
 		return x.Units
 	}
-	return 0
+	return nil
 }
 
 // Integration collection mapping — links an internal Invora resource type to an
@@ -12546,7 +12115,7 @@ type CollectionMapping struct {
 
 func (x *CollectionMapping) Reset() {
 	*x = CollectionMapping{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[37]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12558,7 +12127,7 @@ func (x *CollectionMapping) String() string {
 func (*CollectionMapping) ProtoMessage() {}
 
 func (x *CollectionMapping) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[37]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12571,7 +12140,7 @@ func (x *CollectionMapping) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CollectionMapping.ProtoReflect.Descriptor instead.
 func (*CollectionMapping) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{37}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *CollectionMapping) GetBillingEntityId() string {
@@ -12651,83 +12220,10 @@ func (x *CollectionMapping) GetTaxType() string {
 	return ""
 }
 
-// Type for CollectionMetadataType
-type CollectionMetadata struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Current Page of loaded data
-	CurrentPage int32 `protobuf:"varint,1,opt,name=current_page,json=currentPage,proto3" json:"current_page,omitempty"`
-	// The number of items per page
-	LimitValue int32 `protobuf:"varint,2,opt,name=limit_value,json=limitValue,proto3" json:"limit_value,omitempty"`
-	// The total number of items to be paginated
-	TotalCount int32 `protobuf:"varint,3,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	// The total number of pages in the pagination
-	TotalPages    int32 `protobuf:"varint,4,opt,name=total_pages,json=totalPages,proto3" json:"total_pages,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CollectionMetadata) Reset() {
-	*x = CollectionMetadata{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[38]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CollectionMetadata) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CollectionMetadata) ProtoMessage() {}
-
-func (x *CollectionMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[38]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CollectionMetadata.ProtoReflect.Descriptor instead.
-func (*CollectionMetadata) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{38}
-}
-
-func (x *CollectionMetadata) GetCurrentPage() int32 {
-	if x != nil {
-		return x.CurrentPage
-	}
-	return 0
-}
-
-func (x *CollectionMetadata) GetLimitValue() int32 {
-	if x != nil {
-		return x.LimitValue
-	}
-	return 0
-}
-
-func (x *CollectionMetadata) GetTotalCount() int32 {
-	if x != nil {
-		return x.TotalCount
-	}
-	return 0
-}
-
-func (x *CollectionMetadata) GetTotalPages() int32 {
-	if x != nil {
-		return x.TotalPages
-	}
-	return 0
-}
-
 type Commitment struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	AmountCents        int64                  `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
-	CommitmentType     CommitmentTypeEnum     `protobuf:"varint,2,opt,name=commitment_type,json=commitmentType,proto3,enum=invora.billing.common.v2.CommitmentTypeEnum" json:"commitment_type,omitempty"`
+	CommitmentType     CommitmentType         `protobuf:"varint,2,opt,name=commitment_type,json=commitmentType,proto3,enum=invora.billing.common.v2.CommitmentType" json:"commitment_type,omitempty"`
 	CreatedAt          *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	Id                 string                 `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
 	InvoiceDisplayName *string                `protobuf:"bytes,5,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
@@ -12740,7 +12236,7 @@ type Commitment struct {
 
 func (x *Commitment) Reset() {
 	*x = Commitment{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[39]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12752,7 +12248,7 @@ func (x *Commitment) String() string {
 func (*Commitment) ProtoMessage() {}
 
 func (x *Commitment) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[39]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12765,7 +12261,7 @@ func (x *Commitment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Commitment.ProtoReflect.Descriptor instead.
 func (*Commitment) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{39}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *Commitment) GetAmountCents() int64 {
@@ -12775,11 +12271,11 @@ func (x *Commitment) GetAmountCents() int64 {
 	return 0
 }
 
-func (x *Commitment) GetCommitmentType() CommitmentTypeEnum {
+func (x *Commitment) GetCommitmentType() CommitmentType {
 	if x != nil {
 		return x.CommitmentType
 	}
-	return CommitmentTypeEnum_COMMITMENT_TYPE_ENUM_UNSPECIFIED
+	return CommitmentType_COMMITMENT_TYPE_UNSPECIFIED
 }
 
 func (x *Commitment) GetCreatedAt() *timestamppb.Timestamp {
@@ -12827,7 +12323,7 @@ func (x *Commitment) GetUpdatedAt() *timestamppb.Timestamp {
 type CommitmentInput struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	AmountCents        *int64                 `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3,oneof" json:"amount_cents,omitempty"`
-	CommitmentType     *CommitmentTypeEnum    `protobuf:"varint,2,opt,name=commitment_type,json=commitmentType,proto3,enum=invora.billing.common.v2.CommitmentTypeEnum,oneof" json:"commitment_type,omitempty"`
+	CommitmentType     *CommitmentType        `protobuf:"varint,2,opt,name=commitment_type,json=commitmentType,proto3,enum=invora.billing.common.v2.CommitmentType,oneof" json:"commitment_type,omitempty"`
 	Id                 *string                `protobuf:"bytes,3,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InvoiceDisplayName *string                `protobuf:"bytes,4,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
 	TaxCodes           []string               `protobuf:"bytes,5,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
@@ -12837,7 +12333,7 @@ type CommitmentInput struct {
 
 func (x *CommitmentInput) Reset() {
 	*x = CommitmentInput{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[40]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12849,7 +12345,7 @@ func (x *CommitmentInput) String() string {
 func (*CommitmentInput) ProtoMessage() {}
 
 func (x *CommitmentInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[40]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12862,7 +12358,7 @@ func (x *CommitmentInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CommitmentInput.ProtoReflect.Descriptor instead.
 func (*CommitmentInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{40}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *CommitmentInput) GetAmountCents() int64 {
@@ -12872,11 +12368,11 @@ func (x *CommitmentInput) GetAmountCents() int64 {
 	return 0
 }
 
-func (x *CommitmentInput) GetCommitmentType() CommitmentTypeEnum {
+func (x *CommitmentInput) GetCommitmentType() CommitmentType {
 	if x != nil && x.CommitmentType != nil {
 		return *x.CommitmentType
 	}
-	return CommitmentTypeEnum_COMMITMENT_TYPE_ENUM_UNSPECIFIED
+	return CommitmentType_COMMITMENT_TYPE_UNSPECIFIED
 }
 
 func (x *CommitmentInput) GetId() string {
@@ -12912,7 +12408,7 @@ type CreditNoteAppliedTax struct {
 	TaxCode         string                 `protobuf:"bytes,8,opt,name=tax_code,json=taxCode,proto3" json:"tax_code,omitempty"`
 	TaxDescription  *string                `protobuf:"bytes,9,opt,name=tax_description,json=taxDescription,proto3,oneof" json:"tax_description,omitempty"`
 	TaxName         string                 `protobuf:"bytes,10,opt,name=tax_name,json=taxName,proto3" json:"tax_name,omitempty"`
-	TaxRate         float64                `protobuf:"fixed64,11,opt,name=tax_rate,json=taxRate,proto3" json:"tax_rate,omitempty"`
+	TaxRate         *kernel.DecimalValue   `protobuf:"bytes,11,opt,name=tax_rate,json=taxRate,proto3" json:"tax_rate,omitempty"`
 	UpdatedAt       *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
@@ -12920,7 +12416,7 @@ type CreditNoteAppliedTax struct {
 
 func (x *CreditNoteAppliedTax) Reset() {
 	*x = CreditNoteAppliedTax{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[41]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12932,7 +12428,7 @@ func (x *CreditNoteAppliedTax) String() string {
 func (*CreditNoteAppliedTax) ProtoMessage() {}
 
 func (x *CreditNoteAppliedTax) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[41]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12945,7 +12441,7 @@ func (x *CreditNoteAppliedTax) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreditNoteAppliedTax.ProtoReflect.Descriptor instead.
 func (*CreditNoteAppliedTax) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{41}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *CreditNoteAppliedTax) GetAmountCents() int64 {
@@ -13018,11 +12514,11 @@ func (x *CreditNoteAppliedTax) GetTaxName() string {
 	return ""
 }
 
-func (x *CreditNoteAppliedTax) GetTaxRate() float64 {
+func (x *CreditNoteAppliedTax) GetTaxRate() *kernel.DecimalValue {
 	if x != nil {
 		return x.TaxRate
 	}
-	return 0
+	return nil
 }
 
 func (x *CreditNoteAppliedTax) GetUpdatedAt() *timestamppb.Timestamp {
@@ -13045,7 +12541,7 @@ type CreditNoteItem struct {
 
 func (x *CreditNoteItem) Reset() {
 	*x = CreditNoteItem{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[42]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13057,7 +12553,7 @@ func (x *CreditNoteItem) String() string {
 func (*CreditNoteItem) ProtoMessage() {}
 
 func (x *CreditNoteItem) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[42]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13070,7 +12566,7 @@ func (x *CreditNoteItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreditNoteItem.ProtoReflect.Descriptor instead.
 func (*CreditNoteItem) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{42}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *CreditNoteItem) GetAmountCents() int64 {
@@ -13120,7 +12616,7 @@ type CurrencyMappingItem struct {
 
 func (x *CurrencyMappingItem) Reset() {
 	*x = CurrencyMappingItem{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[43]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13132,7 +12628,7 @@ func (x *CurrencyMappingItem) String() string {
 func (*CurrencyMappingItem) ProtoMessage() {}
 
 func (x *CurrencyMappingItem) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[43]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13145,7 +12641,7 @@ func (x *CurrencyMappingItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CurrencyMappingItem.ProtoReflect.Descriptor instead.
 func (*CurrencyMappingItem) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{43}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *CurrencyMappingItem) GetCurrency() CurrencyEnum {
@@ -13181,7 +12677,7 @@ type CurrencyMappingItemInput struct {
 
 func (x *CurrencyMappingItemInput) Reset() {
 	*x = CurrencyMappingItemInput{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[44]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13193,7 +12689,7 @@ func (x *CurrencyMappingItemInput) String() string {
 func (*CurrencyMappingItemInput) ProtoMessage() {}
 
 func (x *CurrencyMappingItemInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[44]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13206,7 +12702,7 @@ func (x *CurrencyMappingItemInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CurrencyMappingItemInput.ProtoReflect.Descriptor instead.
 func (*CurrencyMappingItemInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{44}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *CurrencyMappingItemInput) GetCurrency() CurrencyEnum {
@@ -13244,7 +12740,7 @@ type CustomerAddress struct {
 
 func (x *CustomerAddress) Reset() {
 	*x = CustomerAddress{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[45]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13256,7 +12752,7 @@ func (x *CustomerAddress) String() string {
 func (*CustomerAddress) ProtoMessage() {}
 
 func (x *CustomerAddress) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[45]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13269,7 +12765,7 @@ func (x *CustomerAddress) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CustomerAddress.ProtoReflect.Descriptor instead.
 func (*CustomerAddress) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{45}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *CustomerAddress) GetAddressLine1() string {
@@ -13315,18 +12811,18 @@ func (x *CustomerAddress) GetZipcode() string {
 }
 
 type CustomerBillingConfiguration struct {
-	state                                    protoimpl.MessageState                                `protogen:"open.v1"`
-	DocumentLocale                           *string                                               `protobuf:"bytes,1,opt,name=document_locale,json=documentLocale,proto3,oneof" json:"document_locale,omitempty"`
-	Id                                       string                                                `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
-	SubscriptionInvoiceIssuingDateAdjustment *CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum `protobuf:"varint,3,opt,name=subscription_invoice_issuing_date_adjustment,json=subscriptionInvoiceIssuingDateAdjustment,proto3,enum=invora.billing.common.v2.CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum,oneof" json:"subscription_invoice_issuing_date_adjustment,omitempty"`
-	SubscriptionInvoiceIssuingDateAnchor     *CustomerSubscriptionInvoiceIssuingDateAnchorEnum     `protobuf:"varint,4,opt,name=subscription_invoice_issuing_date_anchor,json=subscriptionInvoiceIssuingDateAnchor,proto3,enum=invora.billing.common.v2.CustomerSubscriptionInvoiceIssuingDateAnchorEnum,oneof" json:"subscription_invoice_issuing_date_anchor,omitempty"`
+	state                                    protoimpl.MessageState                            `protogen:"open.v1"`
+	DocumentLocale                           *string                                           `protobuf:"bytes,1,opt,name=document_locale,json=documentLocale,proto3,oneof" json:"document_locale,omitempty"`
+	Id                                       string                                            `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	SubscriptionInvoiceIssuingDateAdjustment *CustomerSubscriptionInvoiceIssuingDateAdjustment `protobuf:"varint,3,opt,name=subscription_invoice_issuing_date_adjustment,json=subscriptionInvoiceIssuingDateAdjustment,proto3,enum=invora.billing.common.v2.CustomerSubscriptionInvoiceIssuingDateAdjustment,oneof" json:"subscription_invoice_issuing_date_adjustment,omitempty"`
+	SubscriptionInvoiceIssuingDateAnchor     *CustomerSubscriptionInvoiceIssuingDateAnchor     `protobuf:"varint,4,opt,name=subscription_invoice_issuing_date_anchor,json=subscriptionInvoiceIssuingDateAnchor,proto3,enum=invora.billing.common.v2.CustomerSubscriptionInvoiceIssuingDateAnchor,oneof" json:"subscription_invoice_issuing_date_anchor,omitempty"`
 	unknownFields                            protoimpl.UnknownFields
 	sizeCache                                protoimpl.SizeCache
 }
 
 func (x *CustomerBillingConfiguration) Reset() {
 	*x = CustomerBillingConfiguration{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[46]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13338,7 +12834,7 @@ func (x *CustomerBillingConfiguration) String() string {
 func (*CustomerBillingConfiguration) ProtoMessage() {}
 
 func (x *CustomerBillingConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[46]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13351,7 +12847,7 @@ func (x *CustomerBillingConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CustomerBillingConfiguration.ProtoReflect.Descriptor instead.
 func (*CustomerBillingConfiguration) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{46}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *CustomerBillingConfiguration) GetDocumentLocale() string {
@@ -13368,18 +12864,18 @@ func (x *CustomerBillingConfiguration) GetId() string {
 	return ""
 }
 
-func (x *CustomerBillingConfiguration) GetSubscriptionInvoiceIssuingDateAdjustment() CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum {
+func (x *CustomerBillingConfiguration) GetSubscriptionInvoiceIssuingDateAdjustment() CustomerSubscriptionInvoiceIssuingDateAdjustment {
 	if x != nil && x.SubscriptionInvoiceIssuingDateAdjustment != nil {
 		return *x.SubscriptionInvoiceIssuingDateAdjustment
 	}
-	return CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum_CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_UNSPECIFIED
+	return CustomerSubscriptionInvoiceIssuingDateAdjustment_CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_UNSPECIFIED
 }
 
-func (x *CustomerBillingConfiguration) GetSubscriptionInvoiceIssuingDateAnchor() CustomerSubscriptionInvoiceIssuingDateAnchorEnum {
+func (x *CustomerBillingConfiguration) GetSubscriptionInvoiceIssuingDateAnchor() CustomerSubscriptionInvoiceIssuingDateAnchor {
 	if x != nil && x.SubscriptionInvoiceIssuingDateAnchor != nil {
 		return *x.SubscriptionInvoiceIssuingDateAnchor
 	}
-	return CustomerSubscriptionInvoiceIssuingDateAnchorEnum_CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_UNSPECIFIED
+	return CustomerSubscriptionInvoiceIssuingDateAnchor_CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_UNSPECIFIED
 }
 
 type CustomerMetadata struct {
@@ -13396,7 +12892,7 @@ type CustomerMetadata struct {
 
 func (x *CustomerMetadata) Reset() {
 	*x = CustomerMetadata{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[47]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13408,7 +12904,7 @@ func (x *CustomerMetadata) String() string {
 func (*CustomerMetadata) ProtoMessage() {}
 
 func (x *CustomerMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[47]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13421,7 +12917,7 @@ func (x *CustomerMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CustomerMetadata.ProtoReflect.Descriptor instead.
 func (*CustomerMetadata) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{47}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *CustomerMetadata) GetCreatedAt() *timestamppb.Timestamp {
@@ -13468,16 +12964,16 @@ func (x *CustomerMetadata) GetValue() string {
 
 type CustomerPortalCustomer struct {
 	state                             protoimpl.MessageState             `protogen:"open.v1"`
-	AccountType                       CustomerAccountTypeEnum            `protobuf:"varint,1,opt,name=account_type,json=accountType,proto3,enum=invora.billing.common.v2.CustomerAccountTypeEnum" json:"account_type,omitempty"`
+	AccountType                       CustomerAccountType                `protobuf:"varint,1,opt,name=account_type,json=accountType,proto3,enum=invora.billing.common.v2.CustomerAccountType" json:"account_type,omitempty"`
 	AddressLine1                      *string                            `protobuf:"bytes,2,opt,name=address_line1,json=addressLine1,proto3,oneof" json:"address_line1,omitempty"`
 	AddressLine2                      *string                            `protobuf:"bytes,3,opt,name=address_line2,json=addressLine2,proto3,oneof" json:"address_line2,omitempty"`
-	ApplicableTimezone                TimezoneEnum                       `protobuf:"varint,4,opt,name=applicable_timezone,json=applicableTimezone,proto3,enum=invora.billing.common.v2.TimezoneEnum" json:"applicable_timezone,omitempty"`
+	ApplicableTimezone                Timezone                           `protobuf:"varint,4,opt,name=applicable_timezone,json=applicableTimezone,proto3,enum=invora.billing.common.v2.Timezone" json:"applicable_timezone,omitempty"`
 	BillingConfiguration              *CustomerBillingConfiguration      `protobuf:"bytes,5,opt,name=billing_configuration,json=billingConfiguration,proto3,oneof" json:"billing_configuration,omitempty"`
 	BillingEntityBillingConfiguration *BillingEntityBillingConfiguration `protobuf:"bytes,6,opt,name=billing_entity_billing_configuration,json=billingEntityBillingConfiguration,proto3" json:"billing_entity_billing_configuration,omitempty"`
 	City                              *string                            `protobuf:"bytes,7,opt,name=city,proto3,oneof" json:"city,omitempty"`
 	Country                           *CountryCode                       `protobuf:"varint,8,opt,name=country,proto3,enum=invora.billing.common.v2.CountryCode,oneof" json:"country,omitempty"`
 	Currency                          *CurrencyEnum                      `protobuf:"varint,9,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"currency,omitempty"`
-	CustomerType                      *CustomerTypeEnum                  `protobuf:"varint,10,opt,name=customer_type,json=customerType,proto3,enum=invora.billing.common.v2.CustomerTypeEnum,oneof" json:"customer_type,omitempty"`
+	CustomerType                      *CustomerType                      `protobuf:"varint,10,opt,name=customer_type,json=customerType,proto3,enum=invora.billing.common.v2.CustomerType,oneof" json:"customer_type,omitempty"`
 	DisplayName                       string                             `protobuf:"bytes,11,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
 	Email                             *string                            `protobuf:"bytes,12,opt,name=email,proto3,oneof" json:"email,omitempty"`
 	Firstname                         *string                            `protobuf:"bytes,13,opt,name=firstname,proto3,oneof" json:"firstname,omitempty"`
@@ -13486,7 +12982,6 @@ type CustomerPortalCustomer struct {
 	LegalName                         *string                            `protobuf:"bytes,16,opt,name=legal_name,json=legalName,proto3,oneof" json:"legal_name,omitempty"`
 	LegalNumber                       *string                            `protobuf:"bytes,17,opt,name=legal_number,json=legalNumber,proto3,oneof" json:"legal_number,omitempty"`
 	Name                              *string                            `protobuf:"bytes,18,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	Premium                           bool                               `protobuf:"varint,19,opt,name=premium,proto3" json:"premium,omitempty"`
 	ShippingAddress                   *CustomerAddress                   `protobuf:"bytes,20,opt,name=shipping_address,json=shippingAddress,proto3,oneof" json:"shipping_address,omitempty"`
 	State                             *string                            `protobuf:"bytes,21,opt,name=state,proto3,oneof" json:"state,omitempty"`
 	TaxIdentificationNumber           *string                            `protobuf:"bytes,22,opt,name=tax_identification_number,json=taxIdentificationNumber,proto3,oneof" json:"tax_identification_number,omitempty"`
@@ -13497,7 +12992,7 @@ type CustomerPortalCustomer struct {
 
 func (x *CustomerPortalCustomer) Reset() {
 	*x = CustomerPortalCustomer{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[48]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[45]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13509,7 +13004,7 @@ func (x *CustomerPortalCustomer) String() string {
 func (*CustomerPortalCustomer) ProtoMessage() {}
 
 func (x *CustomerPortalCustomer) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[48]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[45]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13522,14 +13017,14 @@ func (x *CustomerPortalCustomer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CustomerPortalCustomer.ProtoReflect.Descriptor instead.
 func (*CustomerPortalCustomer) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{48}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{45}
 }
 
-func (x *CustomerPortalCustomer) GetAccountType() CustomerAccountTypeEnum {
+func (x *CustomerPortalCustomer) GetAccountType() CustomerAccountType {
 	if x != nil {
 		return x.AccountType
 	}
-	return CustomerAccountTypeEnum_CUSTOMER_ACCOUNT_TYPE_ENUM_UNSPECIFIED
+	return CustomerAccountType_CUSTOMER_ACCOUNT_TYPE_UNSPECIFIED
 }
 
 func (x *CustomerPortalCustomer) GetAddressLine1() string {
@@ -13546,11 +13041,11 @@ func (x *CustomerPortalCustomer) GetAddressLine2() string {
 	return ""
 }
 
-func (x *CustomerPortalCustomer) GetApplicableTimezone() TimezoneEnum {
+func (x *CustomerPortalCustomer) GetApplicableTimezone() Timezone {
 	if x != nil {
 		return x.ApplicableTimezone
 	}
-	return TimezoneEnum_TIMEZONE_ENUM_UNSPECIFIED
+	return Timezone_TIMEZONE_UNSPECIFIED
 }
 
 func (x *CustomerPortalCustomer) GetBillingConfiguration() *CustomerBillingConfiguration {
@@ -13588,11 +13083,11 @@ func (x *CustomerPortalCustomer) GetCurrency() CurrencyEnum {
 	return CurrencyEnum_CURRENCY_ENUM_UNSPECIFIED
 }
 
-func (x *CustomerPortalCustomer) GetCustomerType() CustomerTypeEnum {
+func (x *CustomerPortalCustomer) GetCustomerType() CustomerType {
 	if x != nil && x.CustomerType != nil {
 		return *x.CustomerType
 	}
-	return CustomerTypeEnum_CUSTOMER_TYPE_ENUM_UNSPECIFIED
+	return CustomerType_CUSTOMER_TYPE_UNSPECIFIED
 }
 
 func (x *CustomerPortalCustomer) GetDisplayName() string {
@@ -13651,13 +13146,6 @@ func (x *CustomerPortalCustomer) GetName() string {
 	return ""
 }
 
-func (x *CustomerPortalCustomer) GetPremium() bool {
-	if x != nil {
-		return x.Premium
-	}
-	return false
-}
-
 func (x *CustomerPortalCustomer) GetShippingAddress() *CustomerAddress {
 	if x != nil {
 		return x.ShippingAddress
@@ -13692,9 +13180,9 @@ type CustomerPortalWallet struct {
 	BalanceCents             int64                  `protobuf:"varint,1,opt,name=balance_cents,json=balanceCents,proto3" json:"balance_cents,omitempty"`
 	Code                     *string                `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
 	ConsumedAmountCents      int64                  `protobuf:"varint,3,opt,name=consumed_amount_cents,json=consumedAmountCents,proto3" json:"consumed_amount_cents,omitempty"`
-	ConsumedCredits          float64                `protobuf:"fixed64,4,opt,name=consumed_credits,json=consumedCredits,proto3" json:"consumed_credits,omitempty"`
-	CreditsBalance           float64                `protobuf:"fixed64,5,opt,name=credits_balance,json=creditsBalance,proto3" json:"credits_balance,omitempty"`
-	CreditsOngoingBalance    float64                `protobuf:"fixed64,6,opt,name=credits_ongoing_balance,json=creditsOngoingBalance,proto3" json:"credits_ongoing_balance,omitempty"`
+	ConsumedCredits          *kernel.DecimalValue   `protobuf:"bytes,4,opt,name=consumed_credits,json=consumedCredits,proto3" json:"consumed_credits,omitempty"`
+	CreditsBalance           *kernel.DecimalValue   `protobuf:"bytes,5,opt,name=credits_balance,json=creditsBalance,proto3" json:"credits_balance,omitempty"`
+	CreditsOngoingBalance    *kernel.DecimalValue   `protobuf:"bytes,6,opt,name=credits_ongoing_balance,json=creditsOngoingBalance,proto3" json:"credits_ongoing_balance,omitempty"`
 	Currency                 CurrencyEnum           `protobuf:"varint,7,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"currency,omitempty"`
 	ExpirationAt             *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=expiration_at,json=expirationAt,proto3,oneof" json:"expiration_at,omitempty"`
 	Id                       string                 `protobuf:"bytes,9,opt,name=id,proto3" json:"id,omitempty"`
@@ -13707,15 +13195,15 @@ type CustomerPortalWallet struct {
 	PaidTopUpMinAmountCents  *int64                 `protobuf:"varint,16,opt,name=paid_top_up_min_amount_cents,json=paidTopUpMinAmountCents,proto3,oneof" json:"paid_top_up_min_amount_cents,omitempty"`
 	PaidTopUpMinCredits      *int64                 `protobuf:"varint,17,opt,name=paid_top_up_min_credits,json=paidTopUpMinCredits,proto3,oneof" json:"paid_top_up_min_credits,omitempty"`
 	Priority                 int32                  `protobuf:"varint,18,opt,name=priority,proto3" json:"priority,omitempty"`
-	RateAmount               float64                `protobuf:"fixed64,19,opt,name=rate_amount,json=rateAmount,proto3" json:"rate_amount,omitempty"`
-	Status                   WalletStatusEnum       `protobuf:"varint,20,opt,name=status,proto3,enum=invora.billing.common.v2.WalletStatusEnum" json:"status,omitempty"`
+	RateAmount               *kernel.DecimalValue   `protobuf:"bytes,19,opt,name=rate_amount,json=rateAmount,proto3" json:"rate_amount,omitempty"`
+	Status                   WalletStatus           `protobuf:"varint,20,opt,name=status,proto3,enum=invora.billing.common.v2.WalletStatus" json:"status,omitempty"`
 	unknownFields            protoimpl.UnknownFields
 	sizeCache                protoimpl.SizeCache
 }
 
 func (x *CustomerPortalWallet) Reset() {
 	*x = CustomerPortalWallet{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[49]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[46]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13727,7 +13215,7 @@ func (x *CustomerPortalWallet) String() string {
 func (*CustomerPortalWallet) ProtoMessage() {}
 
 func (x *CustomerPortalWallet) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[49]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[46]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13740,7 +13228,7 @@ func (x *CustomerPortalWallet) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CustomerPortalWallet.ProtoReflect.Descriptor instead.
 func (*CustomerPortalWallet) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{49}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *CustomerPortalWallet) GetBalanceCents() int64 {
@@ -13764,25 +13252,25 @@ func (x *CustomerPortalWallet) GetConsumedAmountCents() int64 {
 	return 0
 }
 
-func (x *CustomerPortalWallet) GetConsumedCredits() float64 {
+func (x *CustomerPortalWallet) GetConsumedCredits() *kernel.DecimalValue {
 	if x != nil {
 		return x.ConsumedCredits
 	}
-	return 0
+	return nil
 }
 
-func (x *CustomerPortalWallet) GetCreditsBalance() float64 {
+func (x *CustomerPortalWallet) GetCreditsBalance() *kernel.DecimalValue {
 	if x != nil {
 		return x.CreditsBalance
 	}
-	return 0
+	return nil
 }
 
-func (x *CustomerPortalWallet) GetCreditsOngoingBalance() float64 {
+func (x *CustomerPortalWallet) GetCreditsOngoingBalance() *kernel.DecimalValue {
 	if x != nil {
 		return x.CreditsOngoingBalance
 	}
-	return 0
+	return nil
 }
 
 func (x *CustomerPortalWallet) GetCurrency() CurrencyEnum {
@@ -13869,18 +13357,18 @@ func (x *CustomerPortalWallet) GetPriority() int32 {
 	return 0
 }
 
-func (x *CustomerPortalWallet) GetRateAmount() float64 {
+func (x *CustomerPortalWallet) GetRateAmount() *kernel.DecimalValue {
 	if x != nil {
 		return x.RateAmount
 	}
-	return 0
+	return nil
 }
 
-func (x *CustomerPortalWallet) GetStatus() WalletStatusEnum {
+func (x *CustomerPortalWallet) GetStatus() WalletStatus {
 	if x != nil {
 		return x.Status
 	}
-	return WalletStatusEnum_WALLET_STATUS_ENUM_UNSPECIFIED
+	return WalletStatus_WALLET_STATUS_UNSPECIFIED
 }
 
 type CustomerProjectedUsage struct {
@@ -13900,7 +13388,7 @@ type CustomerProjectedUsage struct {
 
 func (x *CustomerProjectedUsage) Reset() {
 	*x = CustomerProjectedUsage{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[50]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[47]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13912,7 +13400,7 @@ func (x *CustomerProjectedUsage) String() string {
 func (*CustomerProjectedUsage) ProtoMessage() {}
 
 func (x *CustomerProjectedUsage) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[50]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[47]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13925,7 +13413,7 @@ func (x *CustomerProjectedUsage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CustomerProjectedUsage.ProtoReflect.Descriptor instead.
 func (*CustomerProjectedUsage) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{50}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *CustomerProjectedUsage) GetAmountCents() int64 {
@@ -14007,7 +13495,7 @@ type CustomerUsage struct {
 
 func (x *CustomerUsage) Reset() {
 	*x = CustomerUsage{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[51]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14019,7 +13507,7 @@ func (x *CustomerUsage) String() string {
 func (*CustomerUsage) ProtoMessage() {}
 
 func (x *CustomerUsage) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[51]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14032,7 +13520,7 @@ func (x *CustomerUsage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CustomerUsage.ProtoReflect.Descriptor instead.
 func (*CustomerUsage) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{51}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *CustomerUsage) GetAmountCents() int64 {
@@ -14094,14 +13582,14 @@ func (x *CustomerUsage) GetTotalAmountCents() int64 {
 type DataExport struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Status        DataExportStatusEnum   `protobuf:"varint,2,opt,name=status,proto3,enum=invora.billing.common.v2.DataExportStatusEnum" json:"status,omitempty"`
+	Status        DataExportStatus       `protobuf:"varint,2,opt,name=status,proto3,enum=invora.billing.common.v2.DataExportStatus" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *DataExport) Reset() {
 	*x = DataExport{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[52]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[49]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14113,7 +13601,7 @@ func (x *DataExport) String() string {
 func (*DataExport) ProtoMessage() {}
 
 func (x *DataExport) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[52]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[49]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14126,7 +13614,7 @@ func (x *DataExport) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DataExport.ProtoReflect.Descriptor instead.
 func (*DataExport) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{52}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{49}
 }
 
 func (x *DataExport) GetId() string {
@@ -14136,203 +13624,11 @@ func (x *DataExport) GetId() string {
 	return ""
 }
 
-func (x *DataExport) GetStatus() DataExportStatusEnum {
+func (x *DataExport) GetStatus() DataExportStatus {
 	if x != nil {
 		return x.Status
 	}
-	return DataExportStatusEnum_DATA_EXPORT_STATUS_ENUM_UNSPECIFIED
-}
-
-type DunningCampaign struct {
-	state                 protoimpl.MessageState      `protogen:"open.v1"`
-	AppliedToOrganization bool                        `protobuf:"varint,1,opt,name=applied_to_organization,json=appliedToOrganization,proto3" json:"applied_to_organization,omitempty"`
-	BccEmails             []string                    `protobuf:"bytes,2,rep,name=bcc_emails,json=bccEmails,proto3" json:"bcc_emails,omitempty"`
-	Code                  string                      `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
-	CreatedAt             *timestamppb.Timestamp      `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	CustomersCount        int32                       `protobuf:"varint,5,opt,name=customers_count,json=customersCount,proto3" json:"customers_count,omitempty"`
-	DaysBetweenAttempts   int32                       `protobuf:"varint,6,opt,name=days_between_attempts,json=daysBetweenAttempts,proto3" json:"days_between_attempts,omitempty"`
-	Description           *string                     `protobuf:"bytes,7,opt,name=description,proto3,oneof" json:"description,omitempty"`
-	Id                    string                      `protobuf:"bytes,8,opt,name=id,proto3" json:"id,omitempty"`
-	MaxAttempts           int32                       `protobuf:"varint,9,opt,name=max_attempts,json=maxAttempts,proto3" json:"max_attempts,omitempty"`
-	Name                  string                      `protobuf:"bytes,10,opt,name=name,proto3" json:"name,omitempty"`
-	Thresholds            []*DunningCampaignThreshold `protobuf:"bytes,11,rep,name=thresholds,proto3" json:"thresholds,omitempty"`
-	UpdatedAt             *timestamppb.Timestamp      `protobuf:"bytes,12,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
-}
-
-func (x *DunningCampaign) Reset() {
-	*x = DunningCampaign{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[53]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DunningCampaign) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DunningCampaign) ProtoMessage() {}
-
-func (x *DunningCampaign) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[53]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DunningCampaign.ProtoReflect.Descriptor instead.
-func (*DunningCampaign) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{53}
-}
-
-func (x *DunningCampaign) GetAppliedToOrganization() bool {
-	if x != nil {
-		return x.AppliedToOrganization
-	}
-	return false
-}
-
-func (x *DunningCampaign) GetBccEmails() []string {
-	if x != nil {
-		return x.BccEmails
-	}
-	return nil
-}
-
-func (x *DunningCampaign) GetCode() string {
-	if x != nil {
-		return x.Code
-	}
-	return ""
-}
-
-func (x *DunningCampaign) GetCreatedAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.CreatedAt
-	}
-	return nil
-}
-
-func (x *DunningCampaign) GetCustomersCount() int32 {
-	if x != nil {
-		return x.CustomersCount
-	}
-	return 0
-}
-
-func (x *DunningCampaign) GetDaysBetweenAttempts() int32 {
-	if x != nil {
-		return x.DaysBetweenAttempts
-	}
-	return 0
-}
-
-func (x *DunningCampaign) GetDescription() string {
-	if x != nil && x.Description != nil {
-		return *x.Description
-	}
-	return ""
-}
-
-func (x *DunningCampaign) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *DunningCampaign) GetMaxAttempts() int32 {
-	if x != nil {
-		return x.MaxAttempts
-	}
-	return 0
-}
-
-func (x *DunningCampaign) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *DunningCampaign) GetThresholds() []*DunningCampaignThreshold {
-	if x != nil {
-		return x.Thresholds
-	}
-	return nil
-}
-
-func (x *DunningCampaign) GetUpdatedAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.UpdatedAt
-	}
-	return nil
-}
-
-type DunningCampaignThreshold struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	AmountCents   int64                  `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
-	Currency      CurrencyEnum           `protobuf:"varint,2,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"currency,omitempty"`
-	Id            string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DunningCampaignThreshold) Reset() {
-	*x = DunningCampaignThreshold{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[54]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DunningCampaignThreshold) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DunningCampaignThreshold) ProtoMessage() {}
-
-func (x *DunningCampaignThreshold) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[54]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DunningCampaignThreshold.ProtoReflect.Descriptor instead.
-func (*DunningCampaignThreshold) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{54}
-}
-
-func (x *DunningCampaignThreshold) GetAmountCents() int64 {
-	if x != nil {
-		return x.AmountCents
-	}
-	return 0
-}
-
-func (x *DunningCampaignThreshold) GetCurrency() CurrencyEnum {
-	if x != nil {
-		return x.Currency
-	}
-	return CurrencyEnum_CURRENCY_ENUM_UNSPECIFIED
-}
-
-func (x *DunningCampaignThreshold) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
+	return DataExportStatus_DATA_EXPORT_STATUS_UNSPECIFIED
 }
 
 // Input for updating a plan entitlement
@@ -14347,7 +13643,7 @@ type EntitlementInput struct {
 
 func (x *EntitlementInput) Reset() {
 	*x = EntitlementInput{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[55]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[50]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14359,7 +13655,7 @@ func (x *EntitlementInput) String() string {
 func (*EntitlementInput) ProtoMessage() {}
 
 func (x *EntitlementInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[55]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[50]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14372,7 +13668,7 @@ func (x *EntitlementInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EntitlementInput.ProtoReflect.Descriptor instead.
 func (*EntitlementInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{55}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *EntitlementInput) GetFeatureCode() string {
@@ -14400,7 +13696,7 @@ type EntitlementPrivilegeInput struct {
 
 func (x *EntitlementPrivilegeInput) Reset() {
 	*x = EntitlementPrivilegeInput{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[56]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14412,7 +13708,7 @@ func (x *EntitlementPrivilegeInput) String() string {
 func (*EntitlementPrivilegeInput) ProtoMessage() {}
 
 func (x *EntitlementPrivilegeInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[56]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14425,7 +13721,7 @@ func (x *EntitlementPrivilegeInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EntitlementPrivilegeInput.ProtoReflect.Descriptor instead.
 func (*EntitlementPrivilegeInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{56}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *EntitlementPrivilegeInput) GetPrivilegeCode() string {
@@ -14438,66 +13734,6 @@ func (x *EntitlementPrivilegeInput) GetPrivilegeCode() string {
 func (x *EntitlementPrivilegeInput) GetValue() string {
 	if x != nil {
 		return x.Value
-	}
-	return ""
-}
-
-type ErrorDetail struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	ErrorCode     ErrorCodesEnum         `protobuf:"varint,1,opt,name=error_code,json=errorCode,proto3,enum=invora.billing.common.v2.ErrorCodesEnum" json:"error_code,omitempty"`
-	ErrorDetails  *string                `protobuf:"bytes,2,opt,name=error_details,json=errorDetails,proto3,oneof" json:"error_details,omitempty"`
-	Id            string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ErrorDetail) Reset() {
-	*x = ErrorDetail{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[57]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ErrorDetail) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ErrorDetail) ProtoMessage() {}
-
-func (x *ErrorDetail) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[57]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ErrorDetail.ProtoReflect.Descriptor instead.
-func (*ErrorDetail) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{57}
-}
-
-func (x *ErrorDetail) GetErrorCode() ErrorCodesEnum {
-	if x != nil {
-		return x.ErrorCode
-	}
-	return ErrorCodesEnum_ERROR_CODES_ENUM_UNSPECIFIED
-}
-
-func (x *ErrorDetail) GetErrorDetails() string {
-	if x != nil && x.ErrorDetails != nil {
-		return *x.ErrorDetails
-	}
-	return ""
-}
-
-func (x *ErrorDetail) GetId() string {
-	if x != nil {
-		return x.Id
 	}
 	return ""
 }
@@ -14518,7 +13754,7 @@ type FeatureObject struct {
 
 func (x *FeatureObject) Reset() {
 	*x = FeatureObject{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[58]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[52]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14530,7 +13766,7 @@ func (x *FeatureObject) String() string {
 func (*FeatureObject) ProtoMessage() {}
 
 func (x *FeatureObject) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[58]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[52]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14543,7 +13779,7 @@ func (x *FeatureObject) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FeatureObject.ProtoReflect.Descriptor instead.
 func (*FeatureObject) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{58}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *FeatureObject) GetCode() string {
@@ -14604,29 +13840,29 @@ func (x *FeatureObject) GetSubscriptionsCount() int32 {
 
 type FeeAmountDetails struct {
 	state                       protoimpl.MessageState                      `protogen:"open.v1"`
-	FixedFeeTotalAmount         *string                                     `protobuf:"bytes,1,opt,name=fixed_fee_total_amount,json=fixedFeeTotalAmount,proto3,oneof" json:"fixed_fee_total_amount,omitempty"`
-	FixedFeeUnitAmount          *string                                     `protobuf:"bytes,2,opt,name=fixed_fee_unit_amount,json=fixedFeeUnitAmount,proto3,oneof" json:"fixed_fee_unit_amount,omitempty"`
-	FlatUnitAmount              *string                                     `protobuf:"bytes,3,opt,name=flat_unit_amount,json=flatUnitAmount,proto3,oneof" json:"flat_unit_amount,omitempty"`
+	FixedFeeTotalAmount         *kernel.DecimalValue                        `protobuf:"bytes,1,opt,name=fixed_fee_total_amount,json=fixedFeeTotalAmount,proto3,oneof" json:"fixed_fee_total_amount,omitempty"`
+	FixedFeeUnitAmount          *kernel.DecimalValue                        `protobuf:"bytes,2,opt,name=fixed_fee_unit_amount,json=fixedFeeUnitAmount,proto3,oneof" json:"fixed_fee_unit_amount,omitempty"`
+	FlatUnitAmount              *kernel.DecimalValue                        `protobuf:"bytes,3,opt,name=flat_unit_amount,json=flatUnitAmount,proto3,oneof" json:"flat_unit_amount,omitempty"`
 	FreeEvents                  *int32                                      `protobuf:"varint,4,opt,name=free_events,json=freeEvents,proto3,oneof" json:"free_events,omitempty"`
-	FreeUnits                   *string                                     `protobuf:"bytes,5,opt,name=free_units,json=freeUnits,proto3,oneof" json:"free_units,omitempty"`
+	FreeUnits                   *kernel.DecimalValue                        `protobuf:"bytes,5,opt,name=free_units,json=freeUnits,proto3,oneof" json:"free_units,omitempty"`
 	GraduatedPercentageRanges   []*FeeAmountDetailsGraduatedPercentageRange `protobuf:"bytes,6,rep,name=graduated_percentage_ranges,json=graduatedPercentageRanges,proto3" json:"graduated_percentage_ranges,omitempty"`
 	GraduatedRanges             []*FeeAmountDetailsGraduatedRange           `protobuf:"bytes,7,rep,name=graduated_ranges,json=graduatedRanges,proto3" json:"graduated_ranges,omitempty"`
-	MinMaxAdjustmentTotalAmount *string                                     `protobuf:"bytes,8,opt,name=min_max_adjustment_total_amount,json=minMaxAdjustmentTotalAmount,proto3,oneof" json:"min_max_adjustment_total_amount,omitempty"`
+	MinMaxAdjustmentTotalAmount *kernel.DecimalValue                        `protobuf:"bytes,8,opt,name=min_max_adjustment_total_amount,json=minMaxAdjustmentTotalAmount,proto3,oneof" json:"min_max_adjustment_total_amount,omitempty"`
 	PaidEvents                  *int32                                      `protobuf:"varint,9,opt,name=paid_events,json=paidEvents,proto3,oneof" json:"paid_events,omitempty"`
-	PaidUnits                   *string                                     `protobuf:"bytes,10,opt,name=paid_units,json=paidUnits,proto3,oneof" json:"paid_units,omitempty"`
+	PaidUnits                   *kernel.DecimalValue                        `protobuf:"bytes,10,opt,name=paid_units,json=paidUnits,proto3,oneof" json:"paid_units,omitempty"`
 	PerPackageSize              *int32                                      `protobuf:"varint,11,opt,name=per_package_size,json=perPackageSize,proto3,oneof" json:"per_package_size,omitempty"`
-	PerPackageUnitAmount        *string                                     `protobuf:"bytes,12,opt,name=per_package_unit_amount,json=perPackageUnitAmount,proto3,oneof" json:"per_package_unit_amount,omitempty"`
-	PerUnitAmount               *string                                     `protobuf:"bytes,13,opt,name=per_unit_amount,json=perUnitAmount,proto3,oneof" json:"per_unit_amount,omitempty"`
-	PerUnitTotalAmount          *string                                     `protobuf:"bytes,14,opt,name=per_unit_total_amount,json=perUnitTotalAmount,proto3,oneof" json:"per_unit_total_amount,omitempty"`
-	Rate                        *string                                     `protobuf:"bytes,15,opt,name=rate,proto3,oneof" json:"rate,omitempty"`
-	Units                       *string                                     `protobuf:"bytes,16,opt,name=units,proto3,oneof" json:"units,omitempty"`
+	PerPackageUnitAmount        *kernel.DecimalValue                        `protobuf:"bytes,12,opt,name=per_package_unit_amount,json=perPackageUnitAmount,proto3,oneof" json:"per_package_unit_amount,omitempty"`
+	PerUnitAmount               *kernel.DecimalValue                        `protobuf:"bytes,13,opt,name=per_unit_amount,json=perUnitAmount,proto3,oneof" json:"per_unit_amount,omitempty"`
+	PerUnitTotalAmount          *kernel.DecimalValue                        `protobuf:"bytes,14,opt,name=per_unit_total_amount,json=perUnitTotalAmount,proto3,oneof" json:"per_unit_total_amount,omitempty"`
+	Rate                        *kernel.DecimalValue                        `protobuf:"bytes,15,opt,name=rate,proto3,oneof" json:"rate,omitempty"`
+	Units                       *kernel.DecimalValue                        `protobuf:"bytes,16,opt,name=units,proto3,oneof" json:"units,omitempty"`
 	unknownFields               protoimpl.UnknownFields
 	sizeCache                   protoimpl.SizeCache
 }
 
 func (x *FeeAmountDetails) Reset() {
 	*x = FeeAmountDetails{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[59]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[53]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14638,7 +13874,7 @@ func (x *FeeAmountDetails) String() string {
 func (*FeeAmountDetails) ProtoMessage() {}
 
 func (x *FeeAmountDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[59]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[53]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14651,28 +13887,28 @@ func (x *FeeAmountDetails) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FeeAmountDetails.ProtoReflect.Descriptor instead.
 func (*FeeAmountDetails) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{59}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{53}
 }
 
-func (x *FeeAmountDetails) GetFixedFeeTotalAmount() string {
-	if x != nil && x.FixedFeeTotalAmount != nil {
-		return *x.FixedFeeTotalAmount
+func (x *FeeAmountDetails) GetFixedFeeTotalAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.FixedFeeTotalAmount
 	}
-	return ""
+	return nil
 }
 
-func (x *FeeAmountDetails) GetFixedFeeUnitAmount() string {
-	if x != nil && x.FixedFeeUnitAmount != nil {
-		return *x.FixedFeeUnitAmount
+func (x *FeeAmountDetails) GetFixedFeeUnitAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.FixedFeeUnitAmount
 	}
-	return ""
+	return nil
 }
 
-func (x *FeeAmountDetails) GetFlatUnitAmount() string {
-	if x != nil && x.FlatUnitAmount != nil {
-		return *x.FlatUnitAmount
+func (x *FeeAmountDetails) GetFlatUnitAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.FlatUnitAmount
 	}
-	return ""
+	return nil
 }
 
 func (x *FeeAmountDetails) GetFreeEvents() int32 {
@@ -14682,11 +13918,11 @@ func (x *FeeAmountDetails) GetFreeEvents() int32 {
 	return 0
 }
 
-func (x *FeeAmountDetails) GetFreeUnits() string {
-	if x != nil && x.FreeUnits != nil {
-		return *x.FreeUnits
+func (x *FeeAmountDetails) GetFreeUnits() *kernel.DecimalValue {
+	if x != nil {
+		return x.FreeUnits
 	}
-	return ""
+	return nil
 }
 
 func (x *FeeAmountDetails) GetGraduatedPercentageRanges() []*FeeAmountDetailsGraduatedPercentageRange {
@@ -14703,11 +13939,11 @@ func (x *FeeAmountDetails) GetGraduatedRanges() []*FeeAmountDetailsGraduatedRang
 	return nil
 }
 
-func (x *FeeAmountDetails) GetMinMaxAdjustmentTotalAmount() string {
-	if x != nil && x.MinMaxAdjustmentTotalAmount != nil {
-		return *x.MinMaxAdjustmentTotalAmount
+func (x *FeeAmountDetails) GetMinMaxAdjustmentTotalAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.MinMaxAdjustmentTotalAmount
 	}
-	return ""
+	return nil
 }
 
 func (x *FeeAmountDetails) GetPaidEvents() int32 {
@@ -14717,11 +13953,11 @@ func (x *FeeAmountDetails) GetPaidEvents() int32 {
 	return 0
 }
 
-func (x *FeeAmountDetails) GetPaidUnits() string {
-	if x != nil && x.PaidUnits != nil {
-		return *x.PaidUnits
+func (x *FeeAmountDetails) GetPaidUnits() *kernel.DecimalValue {
+	if x != nil {
+		return x.PaidUnits
 	}
-	return ""
+	return nil
 }
 
 func (x *FeeAmountDetails) GetPerPackageSize() int32 {
@@ -14731,57 +13967,57 @@ func (x *FeeAmountDetails) GetPerPackageSize() int32 {
 	return 0
 }
 
-func (x *FeeAmountDetails) GetPerPackageUnitAmount() string {
-	if x != nil && x.PerPackageUnitAmount != nil {
-		return *x.PerPackageUnitAmount
+func (x *FeeAmountDetails) GetPerPackageUnitAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.PerPackageUnitAmount
 	}
-	return ""
+	return nil
 }
 
-func (x *FeeAmountDetails) GetPerUnitAmount() string {
-	if x != nil && x.PerUnitAmount != nil {
-		return *x.PerUnitAmount
+func (x *FeeAmountDetails) GetPerUnitAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.PerUnitAmount
 	}
-	return ""
+	return nil
 }
 
-func (x *FeeAmountDetails) GetPerUnitTotalAmount() string {
-	if x != nil && x.PerUnitTotalAmount != nil {
-		return *x.PerUnitTotalAmount
+func (x *FeeAmountDetails) GetPerUnitTotalAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.PerUnitTotalAmount
 	}
-	return ""
+	return nil
 }
 
-func (x *FeeAmountDetails) GetRate() string {
-	if x != nil && x.Rate != nil {
-		return *x.Rate
+func (x *FeeAmountDetails) GetRate() *kernel.DecimalValue {
+	if x != nil {
+		return x.Rate
 	}
-	return ""
+	return nil
 }
 
-func (x *FeeAmountDetails) GetUnits() string {
-	if x != nil && x.Units != nil {
-		return *x.Units
+func (x *FeeAmountDetails) GetUnits() *kernel.DecimalValue {
+	if x != nil {
+		return x.Units
 	}
-	return ""
+	return nil
 }
 
 type FeeAmountDetailsGraduatedPercentageRange struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
-	FlatUnitAmount      *string                `protobuf:"bytes,1,opt,name=flat_unit_amount,json=flatUnitAmount,proto3,oneof" json:"flat_unit_amount,omitempty"`
+	FlatUnitAmount      *kernel.DecimalValue   `protobuf:"bytes,1,opt,name=flat_unit_amount,json=flatUnitAmount,proto3,oneof" json:"flat_unit_amount,omitempty"`
 	FromValue           *int64                 `protobuf:"varint,2,opt,name=from_value,json=fromValue,proto3,oneof" json:"from_value,omitempty"`
-	PerUnitTotalAmount  *string                `protobuf:"bytes,3,opt,name=per_unit_total_amount,json=perUnitTotalAmount,proto3,oneof" json:"per_unit_total_amount,omitempty"`
-	Rate                *string                `protobuf:"bytes,4,opt,name=rate,proto3,oneof" json:"rate,omitempty"`
+	PerUnitTotalAmount  *kernel.DecimalValue   `protobuf:"bytes,3,opt,name=per_unit_total_amount,json=perUnitTotalAmount,proto3,oneof" json:"per_unit_total_amount,omitempty"`
+	Rate                *kernel.DecimalValue   `protobuf:"bytes,4,opt,name=rate,proto3,oneof" json:"rate,omitempty"`
 	ToValue             *int64                 `protobuf:"varint,5,opt,name=to_value,json=toValue,proto3,oneof" json:"to_value,omitempty"`
-	TotalWithFlatAmount *string                `protobuf:"bytes,6,opt,name=total_with_flat_amount,json=totalWithFlatAmount,proto3,oneof" json:"total_with_flat_amount,omitempty"`
-	Units               *string                `protobuf:"bytes,7,opt,name=units,proto3,oneof" json:"units,omitempty"`
+	TotalWithFlatAmount *kernel.DecimalValue   `protobuf:"bytes,6,opt,name=total_with_flat_amount,json=totalWithFlatAmount,proto3,oneof" json:"total_with_flat_amount,omitempty"`
+	Units               *kernel.DecimalValue   `protobuf:"bytes,7,opt,name=units,proto3,oneof" json:"units,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
 
 func (x *FeeAmountDetailsGraduatedPercentageRange) Reset() {
 	*x = FeeAmountDetailsGraduatedPercentageRange{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[60]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[54]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14793,7 +14029,7 @@ func (x *FeeAmountDetailsGraduatedPercentageRange) String() string {
 func (*FeeAmountDetailsGraduatedPercentageRange) ProtoMessage() {}
 
 func (x *FeeAmountDetailsGraduatedPercentageRange) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[60]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[54]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14806,14 +14042,14 @@ func (x *FeeAmountDetailsGraduatedPercentageRange) ProtoReflect() protoreflect.M
 
 // Deprecated: Use FeeAmountDetailsGraduatedPercentageRange.ProtoReflect.Descriptor instead.
 func (*FeeAmountDetailsGraduatedPercentageRange) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{60}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{54}
 }
 
-func (x *FeeAmountDetailsGraduatedPercentageRange) GetFlatUnitAmount() string {
-	if x != nil && x.FlatUnitAmount != nil {
-		return *x.FlatUnitAmount
+func (x *FeeAmountDetailsGraduatedPercentageRange) GetFlatUnitAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.FlatUnitAmount
 	}
-	return ""
+	return nil
 }
 
 func (x *FeeAmountDetailsGraduatedPercentageRange) GetFromValue() int64 {
@@ -14823,18 +14059,18 @@ func (x *FeeAmountDetailsGraduatedPercentageRange) GetFromValue() int64 {
 	return 0
 }
 
-func (x *FeeAmountDetailsGraduatedPercentageRange) GetPerUnitTotalAmount() string {
-	if x != nil && x.PerUnitTotalAmount != nil {
-		return *x.PerUnitTotalAmount
+func (x *FeeAmountDetailsGraduatedPercentageRange) GetPerUnitTotalAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.PerUnitTotalAmount
 	}
-	return ""
+	return nil
 }
 
-func (x *FeeAmountDetailsGraduatedPercentageRange) GetRate() string {
-	if x != nil && x.Rate != nil {
-		return *x.Rate
+func (x *FeeAmountDetailsGraduatedPercentageRange) GetRate() *kernel.DecimalValue {
+	if x != nil {
+		return x.Rate
 	}
-	return ""
+	return nil
 }
 
 func (x *FeeAmountDetailsGraduatedPercentageRange) GetToValue() int64 {
@@ -14844,36 +14080,36 @@ func (x *FeeAmountDetailsGraduatedPercentageRange) GetToValue() int64 {
 	return 0
 }
 
-func (x *FeeAmountDetailsGraduatedPercentageRange) GetTotalWithFlatAmount() string {
-	if x != nil && x.TotalWithFlatAmount != nil {
-		return *x.TotalWithFlatAmount
+func (x *FeeAmountDetailsGraduatedPercentageRange) GetTotalWithFlatAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.TotalWithFlatAmount
 	}
-	return ""
+	return nil
 }
 
-func (x *FeeAmountDetailsGraduatedPercentageRange) GetUnits() string {
-	if x != nil && x.Units != nil {
-		return *x.Units
+func (x *FeeAmountDetailsGraduatedPercentageRange) GetUnits() *kernel.DecimalValue {
+	if x != nil {
+		return x.Units
 	}
-	return ""
+	return nil
 }
 
 type FeeAmountDetailsGraduatedRange struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
-	FlatUnitAmount      *string                `protobuf:"bytes,1,opt,name=flat_unit_amount,json=flatUnitAmount,proto3,oneof" json:"flat_unit_amount,omitempty"`
-	FromValue           *float64               `protobuf:"fixed64,2,opt,name=from_value,json=fromValue,proto3,oneof" json:"from_value,omitempty"`
-	PerUnitAmount       *string                `protobuf:"bytes,3,opt,name=per_unit_amount,json=perUnitAmount,proto3,oneof" json:"per_unit_amount,omitempty"`
-	PerUnitTotalAmount  *string                `protobuf:"bytes,4,opt,name=per_unit_total_amount,json=perUnitTotalAmount,proto3,oneof" json:"per_unit_total_amount,omitempty"`
-	ToValue             *float64               `protobuf:"fixed64,5,opt,name=to_value,json=toValue,proto3,oneof" json:"to_value,omitempty"`
-	TotalWithFlatAmount *string                `protobuf:"bytes,6,opt,name=total_with_flat_amount,json=totalWithFlatAmount,proto3,oneof" json:"total_with_flat_amount,omitempty"`
-	Units               *string                `protobuf:"bytes,7,opt,name=units,proto3,oneof" json:"units,omitempty"`
+	FlatUnitAmount      *kernel.DecimalValue   `protobuf:"bytes,1,opt,name=flat_unit_amount,json=flatUnitAmount,proto3,oneof" json:"flat_unit_amount,omitempty"`
+	FromValue           *kernel.DecimalValue   `protobuf:"bytes,2,opt,name=from_value,json=fromValue,proto3,oneof" json:"from_value,omitempty"`
+	PerUnitAmount       *kernel.DecimalValue   `protobuf:"bytes,3,opt,name=per_unit_amount,json=perUnitAmount,proto3,oneof" json:"per_unit_amount,omitempty"`
+	PerUnitTotalAmount  *kernel.DecimalValue   `protobuf:"bytes,4,opt,name=per_unit_total_amount,json=perUnitTotalAmount,proto3,oneof" json:"per_unit_total_amount,omitempty"`
+	ToValue             *kernel.DecimalValue   `protobuf:"bytes,5,opt,name=to_value,json=toValue,proto3,oneof" json:"to_value,omitempty"`
+	TotalWithFlatAmount *kernel.DecimalValue   `protobuf:"bytes,6,opt,name=total_with_flat_amount,json=totalWithFlatAmount,proto3,oneof" json:"total_with_flat_amount,omitempty"`
+	Units               *kernel.DecimalValue   `protobuf:"bytes,7,opt,name=units,proto3,oneof" json:"units,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
 
 func (x *FeeAmountDetailsGraduatedRange) Reset() {
 	*x = FeeAmountDetailsGraduatedRange{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[61]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[55]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14885,7 +14121,7 @@ func (x *FeeAmountDetailsGraduatedRange) String() string {
 func (*FeeAmountDetailsGraduatedRange) ProtoMessage() {}
 
 func (x *FeeAmountDetailsGraduatedRange) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[61]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[55]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14898,56 +14134,56 @@ func (x *FeeAmountDetailsGraduatedRange) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FeeAmountDetailsGraduatedRange.ProtoReflect.Descriptor instead.
 func (*FeeAmountDetailsGraduatedRange) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{61}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{55}
 }
 
-func (x *FeeAmountDetailsGraduatedRange) GetFlatUnitAmount() string {
-	if x != nil && x.FlatUnitAmount != nil {
-		return *x.FlatUnitAmount
+func (x *FeeAmountDetailsGraduatedRange) GetFlatUnitAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.FlatUnitAmount
 	}
-	return ""
+	return nil
 }
 
-func (x *FeeAmountDetailsGraduatedRange) GetFromValue() float64 {
-	if x != nil && x.FromValue != nil {
-		return *x.FromValue
+func (x *FeeAmountDetailsGraduatedRange) GetFromValue() *kernel.DecimalValue {
+	if x != nil {
+		return x.FromValue
 	}
-	return 0
+	return nil
 }
 
-func (x *FeeAmountDetailsGraduatedRange) GetPerUnitAmount() string {
-	if x != nil && x.PerUnitAmount != nil {
-		return *x.PerUnitAmount
+func (x *FeeAmountDetailsGraduatedRange) GetPerUnitAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.PerUnitAmount
 	}
-	return ""
+	return nil
 }
 
-func (x *FeeAmountDetailsGraduatedRange) GetPerUnitTotalAmount() string {
-	if x != nil && x.PerUnitTotalAmount != nil {
-		return *x.PerUnitTotalAmount
+func (x *FeeAmountDetailsGraduatedRange) GetPerUnitTotalAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.PerUnitTotalAmount
 	}
-	return ""
+	return nil
 }
 
-func (x *FeeAmountDetailsGraduatedRange) GetToValue() float64 {
-	if x != nil && x.ToValue != nil {
-		return *x.ToValue
+func (x *FeeAmountDetailsGraduatedRange) GetToValue() *kernel.DecimalValue {
+	if x != nil {
+		return x.ToValue
 	}
-	return 0
+	return nil
 }
 
-func (x *FeeAmountDetailsGraduatedRange) GetTotalWithFlatAmount() string {
-	if x != nil && x.TotalWithFlatAmount != nil {
-		return *x.TotalWithFlatAmount
+func (x *FeeAmountDetailsGraduatedRange) GetTotalWithFlatAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.TotalWithFlatAmount
 	}
-	return ""
+	return nil
 }
 
-func (x *FeeAmountDetailsGraduatedRange) GetUnits() string {
-	if x != nil && x.Units != nil {
-		return *x.Units
+func (x *FeeAmountDetailsGraduatedRange) GetUnits() *kernel.DecimalValue {
+	if x != nil {
+		return x.Units
 	}
-	return ""
+	return nil
 }
 
 type FeeAppliedTax struct {
@@ -14961,7 +14197,7 @@ type FeeAppliedTax struct {
 	TaxCode        string                 `protobuf:"bytes,7,opt,name=tax_code,json=taxCode,proto3" json:"tax_code,omitempty"`
 	TaxDescription *string                `protobuf:"bytes,8,opt,name=tax_description,json=taxDescription,proto3,oneof" json:"tax_description,omitempty"`
 	TaxName        string                 `protobuf:"bytes,9,opt,name=tax_name,json=taxName,proto3" json:"tax_name,omitempty"`
-	TaxRate        float64                `protobuf:"fixed64,10,opt,name=tax_rate,json=taxRate,proto3" json:"tax_rate,omitempty"`
+	TaxRate        *kernel.DecimalValue   `protobuf:"bytes,10,opt,name=tax_rate,json=taxRate,proto3" json:"tax_rate,omitempty"`
 	UpdatedAt      *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -14969,7 +14205,7 @@ type FeeAppliedTax struct {
 
 func (x *FeeAppliedTax) Reset() {
 	*x = FeeAppliedTax{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[62]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[56]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14981,7 +14217,7 @@ func (x *FeeAppliedTax) String() string {
 func (*FeeAppliedTax) ProtoMessage() {}
 
 func (x *FeeAppliedTax) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[62]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[56]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14994,7 +14230,7 @@ func (x *FeeAppliedTax) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FeeAppliedTax.ProtoReflect.Descriptor instead.
 func (*FeeAppliedTax) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{62}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{56}
 }
 
 func (x *FeeAppliedTax) GetAmountCents() int64 {
@@ -15060,11 +14296,11 @@ func (x *FeeAppliedTax) GetTaxName() string {
 	return ""
 }
 
-func (x *FeeAppliedTax) GetTaxRate() float64 {
+func (x *FeeAppliedTax) GetTaxRate() *kernel.DecimalValue {
 	if x != nil {
 		return x.TaxRate
 	}
-	return 0
+	return nil
 }
 
 func (x *FeeAppliedTax) GetUpdatedAt() *timestamppb.Timestamp {
@@ -15084,7 +14320,7 @@ type FeeProperties struct {
 
 func (x *FeeProperties) Reset() {
 	*x = FeeProperties{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[63]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[57]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15096,7 +14332,7 @@ func (x *FeeProperties) String() string {
 func (*FeeProperties) ProtoMessage() {}
 
 func (x *FeeProperties) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[63]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[57]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15109,7 +14345,7 @@ func (x *FeeProperties) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FeeProperties.ProtoReflect.Descriptor instead.
 func (*FeeProperties) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{63}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{57}
 }
 
 func (x *FeeProperties) GetFromDatetime() *timestamppb.Timestamp {
@@ -15127,19 +14363,19 @@ func (x *FeeProperties) GetToDatetime() *timestamppb.Timestamp {
 }
 
 type FinalizedInvoiceCollection struct {
-	state         protoimpl.MessageState        `protogen:"open.v1"`
-	AmountCents   int64                         `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
-	Currency      *CurrencyEnum                 `protobuf:"varint,2,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"currency,omitempty"`
-	InvoicesCount int64                         `protobuf:"varint,3,opt,name=invoices_count,json=invoicesCount,proto3" json:"invoices_count,omitempty"`
-	Month         *timestamppb.Timestamp        `protobuf:"bytes,4,opt,name=month,proto3" json:"month,omitempty"`
-	PaymentStatus *InvoicePaymentStatusTypeEnum `protobuf:"varint,5,opt,name=payment_status,json=paymentStatus,proto3,enum=invora.billing.common.v2.InvoicePaymentStatusTypeEnum,oneof" json:"payment_status,omitempty"`
+	state         protoimpl.MessageState    `protogen:"open.v1"`
+	AmountCents   int64                     `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
+	Currency      *CurrencyEnum             `protobuf:"varint,2,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"currency,omitempty"`
+	InvoicesCount int64                     `protobuf:"varint,3,opt,name=invoices_count,json=invoicesCount,proto3" json:"invoices_count,omitempty"`
+	Month         *timestamppb.Timestamp    `protobuf:"bytes,4,opt,name=month,proto3" json:"month,omitempty"`
+	PaymentStatus *InvoicePaymentStatusType `protobuf:"varint,5,opt,name=payment_status,json=paymentStatus,proto3,enum=invora.billing.common.v2.InvoicePaymentStatusType,oneof" json:"payment_status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *FinalizedInvoiceCollection) Reset() {
 	*x = FinalizedInvoiceCollection{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[64]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[58]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15151,7 +14387,7 @@ func (x *FinalizedInvoiceCollection) String() string {
 func (*FinalizedInvoiceCollection) ProtoMessage() {}
 
 func (x *FinalizedInvoiceCollection) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[64]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[58]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15164,7 +14400,7 @@ func (x *FinalizedInvoiceCollection) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FinalizedInvoiceCollection.ProtoReflect.Descriptor instead.
 func (*FinalizedInvoiceCollection) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{64}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{58}
 }
 
 func (x *FinalizedInvoiceCollection) GetAmountCents() int64 {
@@ -15195,36 +14431,36 @@ func (x *FinalizedInvoiceCollection) GetMonth() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *FinalizedInvoiceCollection) GetPaymentStatus() InvoicePaymentStatusTypeEnum {
+func (x *FinalizedInvoiceCollection) GetPaymentStatus() InvoicePaymentStatusType {
 	if x != nil && x.PaymentStatus != nil {
 		return *x.PaymentStatus
 	}
-	return InvoicePaymentStatusTypeEnum_INVOICE_PAYMENT_STATUS_TYPE_ENUM_UNSPECIFIED
+	return InvoicePaymentStatusType_INVOICE_PAYMENT_STATUS_TYPE_UNSPECIFIED
 }
 
 type FixedCharge struct {
-	state              protoimpl.MessageState     `protogen:"open.v1"`
-	AddOn              *BillingAddOn              `protobuf:"bytes,1,opt,name=add_on,json=addOn,proto3" json:"add_on,omitempty"`
-	ChargeModel        FixedChargeChargeModelEnum `protobuf:"varint,2,opt,name=charge_model,json=chargeModel,proto3,enum=invora.billing.common.v2.FixedChargeChargeModelEnum" json:"charge_model,omitempty"`
-	Code               *string                    `protobuf:"bytes,3,opt,name=code,proto3,oneof" json:"code,omitempty"`
-	CreatedAt          *timestamppb.Timestamp     `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	DeletedAt          *timestamppb.Timestamp     `protobuf:"bytes,5,opt,name=deleted_at,json=deletedAt,proto3,oneof" json:"deleted_at,omitempty"`
-	Id                 string                     `protobuf:"bytes,6,opt,name=id,proto3" json:"id,omitempty"`
-	InvoiceDisplayName *string                    `protobuf:"bytes,7,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
-	ParentId           *string                    `protobuf:"bytes,8,opt,name=parent_id,json=parentId,proto3,oneof" json:"parent_id,omitempty"`
-	PayInAdvance       bool                       `protobuf:"varint,9,opt,name=pay_in_advance,json=payInAdvance,proto3" json:"pay_in_advance,omitempty"`
-	Properties         *FixedChargeProperties     `protobuf:"bytes,10,opt,name=properties,proto3,oneof" json:"properties,omitempty"`
-	Prorated           bool                       `protobuf:"varint,11,opt,name=prorated,proto3" json:"prorated,omitempty"`
-	Taxes              []*BillingTax              `protobuf:"bytes,12,rep,name=taxes,proto3" json:"taxes,omitempty"`
-	Units              string                     `protobuf:"bytes,13,opt,name=units,proto3" json:"units,omitempty"`
-	UpdatedAt          *timestamppb.Timestamp     `protobuf:"bytes,14,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	AddOn              *BillingAddOn          `protobuf:"bytes,1,opt,name=add_on,json=addOn,proto3" json:"add_on,omitempty"`
+	ChargeModel        FixedChargeChargeModel `protobuf:"varint,2,opt,name=charge_model,json=chargeModel,proto3,enum=invora.billing.common.v2.FixedChargeChargeModel" json:"charge_model,omitempty"`
+	Code               *string                `protobuf:"bytes,3,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	CreatedAt          *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	DeletedAt          *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=deleted_at,json=deletedAt,proto3,oneof" json:"deleted_at,omitempty"`
+	Id                 string                 `protobuf:"bytes,6,opt,name=id,proto3" json:"id,omitempty"`
+	InvoiceDisplayName *string                `protobuf:"bytes,7,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
+	ParentId           *string                `protobuf:"bytes,8,opt,name=parent_id,json=parentId,proto3,oneof" json:"parent_id,omitempty"`
+	PayInAdvance       bool                   `protobuf:"varint,9,opt,name=pay_in_advance,json=payInAdvance,proto3" json:"pay_in_advance,omitempty"`
+	Properties         *FixedChargeProperties `protobuf:"bytes,10,opt,name=properties,proto3,oneof" json:"properties,omitempty"`
+	Prorated           bool                   `protobuf:"varint,11,opt,name=prorated,proto3" json:"prorated,omitempty"`
+	Taxes              []*BillingTax          `protobuf:"bytes,12,rep,name=taxes,proto3" json:"taxes,omitempty"`
+	Units              *kernel.DecimalValue   `protobuf:"bytes,13,opt,name=units,proto3" json:"units,omitempty"`
+	UpdatedAt          *timestamppb.Timestamp `protobuf:"bytes,14,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
 
 func (x *FixedCharge) Reset() {
 	*x = FixedCharge{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[65]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[59]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15236,7 +14472,7 @@ func (x *FixedCharge) String() string {
 func (*FixedCharge) ProtoMessage() {}
 
 func (x *FixedCharge) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[65]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[59]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15249,7 +14485,7 @@ func (x *FixedCharge) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FixedCharge.ProtoReflect.Descriptor instead.
 func (*FixedCharge) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{65}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{59}
 }
 
 func (x *FixedCharge) GetAddOn() *BillingAddOn {
@@ -15259,11 +14495,11 @@ func (x *FixedCharge) GetAddOn() *BillingAddOn {
 	return nil
 }
 
-func (x *FixedCharge) GetChargeModel() FixedChargeChargeModelEnum {
+func (x *FixedCharge) GetChargeModel() FixedChargeChargeModel {
 	if x != nil {
 		return x.ChargeModel
 	}
-	return FixedChargeChargeModelEnum_FIXED_CHARGE_CHARGE_MODEL_ENUM_UNSPECIFIED
+	return FixedChargeChargeModel_FIXED_CHARGE_CHARGE_MODEL_UNSPECIFIED
 }
 
 func (x *FixedCharge) GetCode() string {
@@ -15336,11 +14572,11 @@ func (x *FixedCharge) GetTaxes() []*BillingTax {
 	return nil
 }
 
-func (x *FixedCharge) GetUnits() string {
+func (x *FixedCharge) GetUnits() *kernel.DecimalValue {
 	if x != nil {
 		return x.Units
 	}
-	return ""
+	return nil
 }
 
 func (x *FixedCharge) GetUpdatedAt() *timestamppb.Timestamp {
@@ -15352,7 +14588,7 @@ func (x *FixedCharge) GetUpdatedAt() *timestamppb.Timestamp {
 
 type FixedChargeProperties struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	Amount          *string                `protobuf:"bytes,1,opt,name=amount,proto3,oneof" json:"amount,omitempty"`
+	Amount          *kernel.DecimalValue   `protobuf:"bytes,1,opt,name=amount,proto3,oneof" json:"amount,omitempty"`
 	GraduatedRanges []*GraduatedRange      `protobuf:"bytes,2,rep,name=graduated_ranges,json=graduatedRanges,proto3" json:"graduated_ranges,omitempty"`
 	VolumeRanges    []*VolumeRange         `protobuf:"bytes,3,rep,name=volume_ranges,json=volumeRanges,proto3" json:"volume_ranges,omitempty"`
 	unknownFields   protoimpl.UnknownFields
@@ -15361,7 +14597,7 @@ type FixedChargeProperties struct {
 
 func (x *FixedChargeProperties) Reset() {
 	*x = FixedChargeProperties{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[66]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[60]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15373,7 +14609,7 @@ func (x *FixedChargeProperties) String() string {
 func (*FixedChargeProperties) ProtoMessage() {}
 
 func (x *FixedChargeProperties) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[66]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[60]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15386,14 +14622,14 @@ func (x *FixedChargeProperties) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FixedChargeProperties.ProtoReflect.Descriptor instead.
 func (*FixedChargeProperties) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{66}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{60}
 }
 
-func (x *FixedChargeProperties) GetAmount() string {
-	if x != nil && x.Amount != nil {
-		return *x.Amount
+func (x *FixedChargeProperties) GetAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.Amount
 	}
-	return ""
+	return nil
 }
 
 func (x *FixedChargeProperties) GetGraduatedRanges() []*GraduatedRange {
@@ -15412,7 +14648,7 @@ func (x *FixedChargeProperties) GetVolumeRanges() []*VolumeRange {
 
 type FixedChargePropertiesInput struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	Amount          *string                `protobuf:"bytes,1,opt,name=amount,proto3,oneof" json:"amount,omitempty"`
+	Amount          *kernel.DecimalValue   `protobuf:"bytes,1,opt,name=amount,proto3,oneof" json:"amount,omitempty"`
 	GraduatedRanges []*GraduatedRangeInput `protobuf:"bytes,2,rep,name=graduated_ranges,json=graduatedRanges,proto3" json:"graduated_ranges,omitempty"`
 	VolumeRanges    []*VolumeRangeInput    `protobuf:"bytes,3,rep,name=volume_ranges,json=volumeRanges,proto3" json:"volume_ranges,omitempty"`
 	unknownFields   protoimpl.UnknownFields
@@ -15421,7 +14657,7 @@ type FixedChargePropertiesInput struct {
 
 func (x *FixedChargePropertiesInput) Reset() {
 	*x = FixedChargePropertiesInput{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[67]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[61]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15433,7 +14669,7 @@ func (x *FixedChargePropertiesInput) String() string {
 func (*FixedChargePropertiesInput) ProtoMessage() {}
 
 func (x *FixedChargePropertiesInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[67]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[61]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15446,14 +14682,14 @@ func (x *FixedChargePropertiesInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FixedChargePropertiesInput.ProtoReflect.Descriptor instead.
 func (*FixedChargePropertiesInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{67}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{61}
 }
 
-func (x *FixedChargePropertiesInput) GetAmount() string {
-	if x != nil && x.Amount != nil {
-		return *x.Amount
+func (x *FixedChargePropertiesInput) GetAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.Amount
 	}
-	return ""
+	return nil
 }
 
 func (x *FixedChargePropertiesInput) GetGraduatedRanges() []*GraduatedRangeInput {
@@ -15475,16 +14711,14 @@ type FlutterwaveProvider struct {
 	Code               string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
 	Id                 string                 `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
 	Name               string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	SecretKey          *string                `protobuf:"bytes,4,opt,name=secret_key,json=secretKey,proto3,oneof" json:"secret_key,omitempty"`
 	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
-	WebhookSecret      *string                `protobuf:"bytes,6,opt,name=webhook_secret,json=webhookSecret,proto3,oneof" json:"webhook_secret,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
 
 func (x *FlutterwaveProvider) Reset() {
 	*x = FlutterwaveProvider{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[68]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[62]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15496,7 +14730,7 @@ func (x *FlutterwaveProvider) String() string {
 func (*FlutterwaveProvider) ProtoMessage() {}
 
 func (x *FlutterwaveProvider) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[68]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[62]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15509,7 +14743,7 @@ func (x *FlutterwaveProvider) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FlutterwaveProvider.ProtoReflect.Descriptor instead.
 func (*FlutterwaveProvider) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{68}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{62}
 }
 
 func (x *FlutterwaveProvider) GetCode() string {
@@ -15533,23 +14767,9 @@ func (x *FlutterwaveProvider) GetName() string {
 	return ""
 }
 
-func (x *FlutterwaveProvider) GetSecretKey() string {
-	if x != nil && x.SecretKey != nil {
-		return *x.SecretKey
-	}
-	return ""
-}
-
 func (x *FlutterwaveProvider) GetSuccessRedirectUrl() string {
 	if x != nil && x.SuccessRedirectUrl != nil {
 		return *x.SuccessRedirectUrl
-	}
-	return ""
-}
-
-func (x *FlutterwaveProvider) GetWebhookSecret() string {
-	if x != nil && x.WebhookSecret != nil {
-		return *x.WebhookSecret
 	}
 	return ""
 }
@@ -15561,14 +14781,13 @@ type GocardlessProvider struct {
 	Id                 string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
 	Name               string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
 	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
-	WebhookSecret      *string                `protobuf:"bytes,6,opt,name=webhook_secret,json=webhookSecret,proto3,oneof" json:"webhook_secret,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
 
 func (x *GocardlessProvider) Reset() {
 	*x = GocardlessProvider{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[69]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[63]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15580,7 +14799,7 @@ func (x *GocardlessProvider) String() string {
 func (*GocardlessProvider) ProtoMessage() {}
 
 func (x *GocardlessProvider) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[69]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[63]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15593,7 +14812,7 @@ func (x *GocardlessProvider) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GocardlessProvider.ProtoReflect.Descriptor instead.
 func (*GocardlessProvider) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{69}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{63}
 }
 
 func (x *GocardlessProvider) GetCode() string {
@@ -15631,26 +14850,19 @@ func (x *GocardlessProvider) GetSuccessRedirectUrl() string {
 	return ""
 }
 
-func (x *GocardlessProvider) GetWebhookSecret() string {
-	if x != nil && x.WebhookSecret != nil {
-		return *x.WebhookSecret
-	}
-	return ""
-}
-
 type GraduatedPercentageRange struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	FlatAmount    string                 `protobuf:"bytes,1,opt,name=flat_amount,json=flatAmount,proto3" json:"flat_amount,omitempty"`
-	FromValue     float64                `protobuf:"fixed64,2,opt,name=from_value,json=fromValue,proto3" json:"from_value,omitempty"`
-	Rate          string                 `protobuf:"bytes,3,opt,name=rate,proto3" json:"rate,omitempty"`
-	ToValue       *float64               `protobuf:"fixed64,4,opt,name=to_value,json=toValue,proto3,oneof" json:"to_value,omitempty"`
+	FlatAmount    *kernel.DecimalValue   `protobuf:"bytes,1,opt,name=flat_amount,json=flatAmount,proto3" json:"flat_amount,omitempty"`
+	FromValue     *kernel.DecimalValue   `protobuf:"bytes,2,opt,name=from_value,json=fromValue,proto3" json:"from_value,omitempty"`
+	Rate          *kernel.DecimalValue   `protobuf:"bytes,3,opt,name=rate,proto3" json:"rate,omitempty"`
+	ToValue       *kernel.DecimalValue   `protobuf:"bytes,4,opt,name=to_value,json=toValue,proto3,oneof" json:"to_value,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GraduatedPercentageRange) Reset() {
 	*x = GraduatedPercentageRange{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[70]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[64]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15662,7 +14874,7 @@ func (x *GraduatedPercentageRange) String() string {
 func (*GraduatedPercentageRange) ProtoMessage() {}
 
 func (x *GraduatedPercentageRange) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[70]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[64]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15675,50 +14887,50 @@ func (x *GraduatedPercentageRange) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GraduatedPercentageRange.ProtoReflect.Descriptor instead.
 func (*GraduatedPercentageRange) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{70}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{64}
 }
 
-func (x *GraduatedPercentageRange) GetFlatAmount() string {
+func (x *GraduatedPercentageRange) GetFlatAmount() *kernel.DecimalValue {
 	if x != nil {
 		return x.FlatAmount
 	}
-	return ""
+	return nil
 }
 
-func (x *GraduatedPercentageRange) GetFromValue() float64 {
+func (x *GraduatedPercentageRange) GetFromValue() *kernel.DecimalValue {
 	if x != nil {
 		return x.FromValue
 	}
-	return 0
+	return nil
 }
 
-func (x *GraduatedPercentageRange) GetRate() string {
+func (x *GraduatedPercentageRange) GetRate() *kernel.DecimalValue {
 	if x != nil {
 		return x.Rate
 	}
-	return ""
+	return nil
 }
 
-func (x *GraduatedPercentageRange) GetToValue() float64 {
-	if x != nil && x.ToValue != nil {
-		return *x.ToValue
+func (x *GraduatedPercentageRange) GetToValue() *kernel.DecimalValue {
+	if x != nil {
+		return x.ToValue
 	}
-	return 0
+	return nil
 }
 
 type GraduatedPercentageRangeInput struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	FlatAmount    string                 `protobuf:"bytes,1,opt,name=flat_amount,json=flatAmount,proto3" json:"flat_amount,omitempty"`
-	FromValue     float64                `protobuf:"fixed64,2,opt,name=from_value,json=fromValue,proto3" json:"from_value,omitempty"`
-	Rate          string                 `protobuf:"bytes,3,opt,name=rate,proto3" json:"rate,omitempty"`
-	ToValue       *float64               `protobuf:"fixed64,4,opt,name=to_value,json=toValue,proto3,oneof" json:"to_value,omitempty"`
+	FlatAmount    *kernel.DecimalValue   `protobuf:"bytes,1,opt,name=flat_amount,json=flatAmount,proto3" json:"flat_amount,omitempty"`
+	FromValue     *kernel.DecimalValue   `protobuf:"bytes,2,opt,name=from_value,json=fromValue,proto3" json:"from_value,omitempty"`
+	Rate          *kernel.DecimalValue   `protobuf:"bytes,3,opt,name=rate,proto3" json:"rate,omitempty"`
+	ToValue       *kernel.DecimalValue   `protobuf:"bytes,4,opt,name=to_value,json=toValue,proto3,oneof" json:"to_value,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GraduatedPercentageRangeInput) Reset() {
 	*x = GraduatedPercentageRangeInput{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[71]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[65]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15730,7 +14942,7 @@ func (x *GraduatedPercentageRangeInput) String() string {
 func (*GraduatedPercentageRangeInput) ProtoMessage() {}
 
 func (x *GraduatedPercentageRangeInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[71]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[65]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15743,50 +14955,50 @@ func (x *GraduatedPercentageRangeInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GraduatedPercentageRangeInput.ProtoReflect.Descriptor instead.
 func (*GraduatedPercentageRangeInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{71}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{65}
 }
 
-func (x *GraduatedPercentageRangeInput) GetFlatAmount() string {
+func (x *GraduatedPercentageRangeInput) GetFlatAmount() *kernel.DecimalValue {
 	if x != nil {
 		return x.FlatAmount
 	}
-	return ""
+	return nil
 }
 
-func (x *GraduatedPercentageRangeInput) GetFromValue() float64 {
+func (x *GraduatedPercentageRangeInput) GetFromValue() *kernel.DecimalValue {
 	if x != nil {
 		return x.FromValue
 	}
-	return 0
+	return nil
 }
 
-func (x *GraduatedPercentageRangeInput) GetRate() string {
+func (x *GraduatedPercentageRangeInput) GetRate() *kernel.DecimalValue {
 	if x != nil {
 		return x.Rate
 	}
-	return ""
+	return nil
 }
 
-func (x *GraduatedPercentageRangeInput) GetToValue() float64 {
-	if x != nil && x.ToValue != nil {
-		return *x.ToValue
+func (x *GraduatedPercentageRangeInput) GetToValue() *kernel.DecimalValue {
+	if x != nil {
+		return x.ToValue
 	}
-	return 0
+	return nil
 }
 
 type GraduatedRange struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	FlatAmount    string                 `protobuf:"bytes,1,opt,name=flat_amount,json=flatAmount,proto3" json:"flat_amount,omitempty"`
-	FromValue     float64                `protobuf:"fixed64,2,opt,name=from_value,json=fromValue,proto3" json:"from_value,omitempty"`
-	PerUnitAmount string                 `protobuf:"bytes,3,opt,name=per_unit_amount,json=perUnitAmount,proto3" json:"per_unit_amount,omitempty"`
-	ToValue       *float64               `protobuf:"fixed64,4,opt,name=to_value,json=toValue,proto3,oneof" json:"to_value,omitempty"`
+	FlatAmount    *kernel.DecimalValue   `protobuf:"bytes,1,opt,name=flat_amount,json=flatAmount,proto3" json:"flat_amount,omitempty"`
+	FromValue     *kernel.DecimalValue   `protobuf:"bytes,2,opt,name=from_value,json=fromValue,proto3" json:"from_value,omitempty"`
+	PerUnitAmount *kernel.DecimalValue   `protobuf:"bytes,3,opt,name=per_unit_amount,json=perUnitAmount,proto3" json:"per_unit_amount,omitempty"`
+	ToValue       *kernel.DecimalValue   `protobuf:"bytes,4,opt,name=to_value,json=toValue,proto3,oneof" json:"to_value,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GraduatedRange) Reset() {
 	*x = GraduatedRange{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[72]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[66]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15798,7 +15010,7 @@ func (x *GraduatedRange) String() string {
 func (*GraduatedRange) ProtoMessage() {}
 
 func (x *GraduatedRange) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[72]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[66]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15811,50 +15023,50 @@ func (x *GraduatedRange) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GraduatedRange.ProtoReflect.Descriptor instead.
 func (*GraduatedRange) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{72}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{66}
 }
 
-func (x *GraduatedRange) GetFlatAmount() string {
+func (x *GraduatedRange) GetFlatAmount() *kernel.DecimalValue {
 	if x != nil {
 		return x.FlatAmount
 	}
-	return ""
+	return nil
 }
 
-func (x *GraduatedRange) GetFromValue() float64 {
+func (x *GraduatedRange) GetFromValue() *kernel.DecimalValue {
 	if x != nil {
 		return x.FromValue
 	}
-	return 0
+	return nil
 }
 
-func (x *GraduatedRange) GetPerUnitAmount() string {
+func (x *GraduatedRange) GetPerUnitAmount() *kernel.DecimalValue {
 	if x != nil {
 		return x.PerUnitAmount
 	}
-	return ""
+	return nil
 }
 
-func (x *GraduatedRange) GetToValue() float64 {
-	if x != nil && x.ToValue != nil {
-		return *x.ToValue
+func (x *GraduatedRange) GetToValue() *kernel.DecimalValue {
+	if x != nil {
+		return x.ToValue
 	}
-	return 0
+	return nil
 }
 
 type GraduatedRangeInput struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	FlatAmount    string                 `protobuf:"bytes,1,opt,name=flat_amount,json=flatAmount,proto3" json:"flat_amount,omitempty"`
-	FromValue     float64                `protobuf:"fixed64,2,opt,name=from_value,json=fromValue,proto3" json:"from_value,omitempty"`
-	PerUnitAmount string                 `protobuf:"bytes,3,opt,name=per_unit_amount,json=perUnitAmount,proto3" json:"per_unit_amount,omitempty"`
-	ToValue       *float64               `protobuf:"fixed64,4,opt,name=to_value,json=toValue,proto3,oneof" json:"to_value,omitempty"`
+	FlatAmount    *kernel.DecimalValue   `protobuf:"bytes,1,opt,name=flat_amount,json=flatAmount,proto3" json:"flat_amount,omitempty"`
+	FromValue     *kernel.DecimalValue   `protobuf:"bytes,2,opt,name=from_value,json=fromValue,proto3" json:"from_value,omitempty"`
+	PerUnitAmount *kernel.DecimalValue   `protobuf:"bytes,3,opt,name=per_unit_amount,json=perUnitAmount,proto3" json:"per_unit_amount,omitempty"`
+	ToValue       *kernel.DecimalValue   `protobuf:"bytes,4,opt,name=to_value,json=toValue,proto3,oneof" json:"to_value,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GraduatedRangeInput) Reset() {
 	*x = GraduatedRangeInput{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[73]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[67]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15866,7 +15078,7 @@ func (x *GraduatedRangeInput) String() string {
 func (*GraduatedRangeInput) ProtoMessage() {}
 
 func (x *GraduatedRangeInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[73]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[67]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15879,35 +15091,35 @@ func (x *GraduatedRangeInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GraduatedRangeInput.ProtoReflect.Descriptor instead.
 func (*GraduatedRangeInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{73}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{67}
 }
 
-func (x *GraduatedRangeInput) GetFlatAmount() string {
+func (x *GraduatedRangeInput) GetFlatAmount() *kernel.DecimalValue {
 	if x != nil {
 		return x.FlatAmount
 	}
-	return ""
+	return nil
 }
 
-func (x *GraduatedRangeInput) GetFromValue() float64 {
+func (x *GraduatedRangeInput) GetFromValue() *kernel.DecimalValue {
 	if x != nil {
 		return x.FromValue
 	}
-	return 0
+	return nil
 }
 
-func (x *GraduatedRangeInput) GetPerUnitAmount() string {
+func (x *GraduatedRangeInput) GetPerUnitAmount() *kernel.DecimalValue {
 	if x != nil {
 		return x.PerUnitAmount
 	}
-	return ""
+	return nil
 }
 
-func (x *GraduatedRangeInput) GetToValue() float64 {
-	if x != nil && x.ToValue != nil {
-		return *x.ToValue
+func (x *GraduatedRangeInput) GetToValue() *kernel.DecimalValue {
+	if x != nil {
+		return x.ToValue
 	}
-	return 0
+	return nil
 }
 
 type GroupedChargeUsage struct {
@@ -15918,14 +15130,14 @@ type GroupedChargeUsage struct {
 	GroupedBy              *structpb.Struct       `protobuf:"bytes,4,opt,name=grouped_by,json=groupedBy,proto3,oneof" json:"grouped_by,omitempty"`
 	Id                     string                 `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
 	PricingUnitAmountCents *int64                 `protobuf:"varint,6,opt,name=pricing_unit_amount_cents,json=pricingUnitAmountCents,proto3,oneof" json:"pricing_unit_amount_cents,omitempty"`
-	Units                  float64                `protobuf:"fixed64,7,opt,name=units,proto3" json:"units,omitempty"`
+	Units                  *kernel.DecimalValue   `protobuf:"bytes,7,opt,name=units,proto3" json:"units,omitempty"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
 }
 
 func (x *GroupedChargeUsage) Reset() {
 	*x = GroupedChargeUsage{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[74]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[68]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15937,7 +15149,7 @@ func (x *GroupedChargeUsage) String() string {
 func (*GroupedChargeUsage) ProtoMessage() {}
 
 func (x *GroupedChargeUsage) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[74]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[68]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15950,7 +15162,7 @@ func (x *GroupedChargeUsage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GroupedChargeUsage.ProtoReflect.Descriptor instead.
 func (*GroupedChargeUsage) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{74}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{68}
 }
 
 func (x *GroupedChargeUsage) GetAmountCents() int64 {
@@ -15995,103 +15207,11 @@ func (x *GroupedChargeUsage) GetPricingUnitAmountCents() int64 {
 	return 0
 }
 
-func (x *GroupedChargeUsage) GetUnits() float64 {
+func (x *GroupedChargeUsage) GetUnits() *kernel.DecimalValue {
 	if x != nil {
 		return x.Units
 	}
-	return 0
-}
-
-type HubspotCustomer struct {
-	state              protoimpl.MessageState      `protogen:"open.v1"`
-	ExternalCustomerId *string                     `protobuf:"bytes,1,opt,name=external_customer_id,json=externalCustomerId,proto3,oneof" json:"external_customer_id,omitempty"`
-	Id                 string                      `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
-	IntegrationCode    *string                     `protobuf:"bytes,3,opt,name=integration_code,json=integrationCode,proto3,oneof" json:"integration_code,omitempty"`
-	IntegrationId      *string                     `protobuf:"bytes,4,opt,name=integration_id,json=integrationId,proto3,oneof" json:"integration_id,omitempty"`
-	IntegrationType    *IntegrationTypeEnum        `protobuf:"varint,5,opt,name=integration_type,json=integrationType,proto3,enum=invora.billing.common.v2.IntegrationTypeEnum,oneof" json:"integration_type,omitempty"`
-	SyncWithProvider   *bool                       `protobuf:"varint,6,opt,name=sync_with_provider,json=syncWithProvider,proto3,oneof" json:"sync_with_provider,omitempty"`
-	TargetedObject     *HubspotTargetedObjectsEnum `protobuf:"varint,7,opt,name=targeted_object,json=targetedObject,proto3,enum=invora.billing.common.v2.HubspotTargetedObjectsEnum,oneof" json:"targeted_object,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *HubspotCustomer) Reset() {
-	*x = HubspotCustomer{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[75]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *HubspotCustomer) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*HubspotCustomer) ProtoMessage() {}
-
-func (x *HubspotCustomer) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[75]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use HubspotCustomer.ProtoReflect.Descriptor instead.
-func (*HubspotCustomer) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{75}
-}
-
-func (x *HubspotCustomer) GetExternalCustomerId() string {
-	if x != nil && x.ExternalCustomerId != nil {
-		return *x.ExternalCustomerId
-	}
-	return ""
-}
-
-func (x *HubspotCustomer) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *HubspotCustomer) GetIntegrationCode() string {
-	if x != nil && x.IntegrationCode != nil {
-		return *x.IntegrationCode
-	}
-	return ""
-}
-
-func (x *HubspotCustomer) GetIntegrationId() string {
-	if x != nil && x.IntegrationId != nil {
-		return *x.IntegrationId
-	}
-	return ""
-}
-
-func (x *HubspotCustomer) GetIntegrationType() IntegrationTypeEnum {
-	if x != nil && x.IntegrationType != nil {
-		return *x.IntegrationType
-	}
-	return IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_UNSPECIFIED
-}
-
-func (x *HubspotCustomer) GetSyncWithProvider() bool {
-	if x != nil && x.SyncWithProvider != nil {
-		return *x.SyncWithProvider
-	}
-	return false
-}
-
-func (x *HubspotCustomer) GetTargetedObject() HubspotTargetedObjectsEnum {
-	if x != nil && x.TargetedObject != nil {
-		return *x.TargetedObject
-	}
-	return HubspotTargetedObjectsEnum_HUBSPOT_TARGETED_OBJECTS_ENUM_UNSPECIFIED
+	return nil
 }
 
 // External catalog item (account, product, tax code) from an integrated
@@ -16110,7 +15230,7 @@ type IntegrationItem struct {
 
 func (x *IntegrationItem) Reset() {
 	*x = IntegrationItem{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[76]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[69]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16122,7 +15242,7 @@ func (x *IntegrationItem) String() string {
 func (*IntegrationItem) ProtoMessage() {}
 
 func (x *IntegrationItem) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[76]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[69]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16135,7 +15255,7 @@ func (x *IntegrationItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IntegrationItem.ProtoReflect.Descriptor instead.
 func (*IntegrationItem) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{76}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{69}
 }
 
 func (x *IntegrationItem) GetExternalAccountCode() string {
@@ -16181,29 +15301,29 @@ func (x *IntegrationItem) GetItemType() IntegrationItemTypeEnum {
 }
 
 type InvoiceAppliedTax struct {
-	state                 protoimpl.MessageState                   `protogen:"open.v1"`
-	AmountCents           int64                                    `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
-	AmountCurrency        CurrencyEnum                             `protobuf:"varint,2,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"amount_currency,omitempty"`
-	AppliedOnWholeInvoice bool                                     `protobuf:"varint,3,opt,name=applied_on_whole_invoice,json=appliedOnWholeInvoice,proto3" json:"applied_on_whole_invoice,omitempty"`
-	CreatedAt             *timestamppb.Timestamp                   `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	EnumedTaxCode         *InvoiceAppliedTaxOnWholeInvoiceCodeEnum `protobuf:"varint,5,opt,name=enumed_tax_code,json=enumedTaxCode,proto3,enum=invora.billing.common.v2.InvoiceAppliedTaxOnWholeInvoiceCodeEnum,oneof" json:"enumed_tax_code,omitempty"`
-	FeesAmountCents       int64                                    `protobuf:"varint,6,opt,name=fees_amount_cents,json=feesAmountCents,proto3" json:"fees_amount_cents,omitempty"`
-	Id                    string                                   `protobuf:"bytes,7,opt,name=id,proto3" json:"id,omitempty"`
-	Invoice               *BillingInvoice                          `protobuf:"bytes,8,opt,name=invoice,proto3" json:"invoice,omitempty"`
-	Tax                   *BillingTax                              `protobuf:"bytes,9,opt,name=tax,proto3,oneof" json:"tax,omitempty"`
-	TaxCode               string                                   `protobuf:"bytes,10,opt,name=tax_code,json=taxCode,proto3" json:"tax_code,omitempty"`
-	TaxDescription        *string                                  `protobuf:"bytes,11,opt,name=tax_description,json=taxDescription,proto3,oneof" json:"tax_description,omitempty"`
-	TaxName               string                                   `protobuf:"bytes,12,opt,name=tax_name,json=taxName,proto3" json:"tax_name,omitempty"`
-	TaxRate               float64                                  `protobuf:"fixed64,13,opt,name=tax_rate,json=taxRate,proto3" json:"tax_rate,omitempty"`
-	TaxableAmountCents    int64                                    `protobuf:"varint,14,opt,name=taxable_amount_cents,json=taxableAmountCents,proto3" json:"taxable_amount_cents,omitempty"`
-	UpdatedAt             *timestamppb.Timestamp                   `protobuf:"bytes,15,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	state                 protoimpl.MessageState               `protogen:"open.v1"`
+	AmountCents           int64                                `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
+	AmountCurrency        CurrencyEnum                         `protobuf:"varint,2,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"amount_currency,omitempty"`
+	AppliedOnWholeInvoice bool                                 `protobuf:"varint,3,opt,name=applied_on_whole_invoice,json=appliedOnWholeInvoice,proto3" json:"applied_on_whole_invoice,omitempty"`
+	CreatedAt             *timestamppb.Timestamp               `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	EnumedTaxCode         *InvoiceAppliedTaxOnWholeInvoiceCode `protobuf:"varint,5,opt,name=enumed_tax_code,json=enumedTaxCode,proto3,enum=invora.billing.common.v2.InvoiceAppliedTaxOnWholeInvoiceCode,oneof" json:"enumed_tax_code,omitempty"`
+	FeesAmountCents       int64                                `protobuf:"varint,6,opt,name=fees_amount_cents,json=feesAmountCents,proto3" json:"fees_amount_cents,omitempty"`
+	Id                    string                               `protobuf:"bytes,7,opt,name=id,proto3" json:"id,omitempty"`
+	Invoice               *BillingInvoice                      `protobuf:"bytes,8,opt,name=invoice,proto3" json:"invoice,omitempty"`
+	Tax                   *BillingTax                          `protobuf:"bytes,9,opt,name=tax,proto3,oneof" json:"tax,omitempty"`
+	TaxCode               string                               `protobuf:"bytes,10,opt,name=tax_code,json=taxCode,proto3" json:"tax_code,omitempty"`
+	TaxDescription        *string                              `protobuf:"bytes,11,opt,name=tax_description,json=taxDescription,proto3,oneof" json:"tax_description,omitempty"`
+	TaxName               string                               `protobuf:"bytes,12,opt,name=tax_name,json=taxName,proto3" json:"tax_name,omitempty"`
+	TaxRate               *kernel.DecimalValue                 `protobuf:"bytes,13,opt,name=tax_rate,json=taxRate,proto3" json:"tax_rate,omitempty"`
+	TaxableAmountCents    int64                                `protobuf:"varint,14,opt,name=taxable_amount_cents,json=taxableAmountCents,proto3" json:"taxable_amount_cents,omitempty"`
+	UpdatedAt             *timestamppb.Timestamp               `protobuf:"bytes,15,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
 
 func (x *InvoiceAppliedTax) Reset() {
 	*x = InvoiceAppliedTax{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[77]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[70]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16215,7 +15335,7 @@ func (x *InvoiceAppliedTax) String() string {
 func (*InvoiceAppliedTax) ProtoMessage() {}
 
 func (x *InvoiceAppliedTax) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[77]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[70]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16228,7 +15348,7 @@ func (x *InvoiceAppliedTax) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InvoiceAppliedTax.ProtoReflect.Descriptor instead.
 func (*InvoiceAppliedTax) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{77}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{70}
 }
 
 func (x *InvoiceAppliedTax) GetAmountCents() int64 {
@@ -16259,11 +15379,11 @@ func (x *InvoiceAppliedTax) GetCreatedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *InvoiceAppliedTax) GetEnumedTaxCode() InvoiceAppliedTaxOnWholeInvoiceCodeEnum {
+func (x *InvoiceAppliedTax) GetEnumedTaxCode() InvoiceAppliedTaxOnWholeInvoiceCode {
 	if x != nil && x.EnumedTaxCode != nil {
 		return *x.EnumedTaxCode
 	}
-	return InvoiceAppliedTaxOnWholeInvoiceCodeEnum_INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_UNSPECIFIED
+	return InvoiceAppliedTaxOnWholeInvoiceCode_INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_UNSPECIFIED
 }
 
 func (x *InvoiceAppliedTax) GetFeesAmountCents() int64 {
@@ -16315,11 +15435,11 @@ func (x *InvoiceAppliedTax) GetTaxName() string {
 	return ""
 }
 
-func (x *InvoiceAppliedTax) GetTaxRate() float64 {
+func (x *InvoiceAppliedTax) GetTaxRate() *kernel.DecimalValue {
 	if x != nil {
 		return x.TaxRate
 	}
-	return 0
+	return nil
 }
 
 func (x *InvoiceAppliedTax) GetTaxableAmountCents() int64 {
@@ -16351,7 +15471,7 @@ type InvoiceCustomSection struct {
 
 func (x *InvoiceCustomSection) Reset() {
 	*x = InvoiceCustomSection{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[78]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[71]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16363,7 +15483,7 @@ func (x *InvoiceCustomSection) String() string {
 func (*InvoiceCustomSection) ProtoMessage() {}
 
 func (x *InvoiceCustomSection) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[78]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[71]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16376,7 +15496,7 @@ func (x *InvoiceCustomSection) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InvoiceCustomSection.ProtoReflect.Descriptor instead.
 func (*InvoiceCustomSection) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{78}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{71}
 }
 
 func (x *InvoiceCustomSection) GetCode() string {
@@ -16438,7 +15558,7 @@ type InvoiceCustomSectionsReferenceInput struct {
 
 func (x *InvoiceCustomSectionsReferenceInput) Reset() {
 	*x = InvoiceCustomSectionsReferenceInput{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[79]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[72]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16450,7 +15570,7 @@ func (x *InvoiceCustomSectionsReferenceInput) String() string {
 func (*InvoiceCustomSectionsReferenceInput) ProtoMessage() {}
 
 func (x *InvoiceCustomSectionsReferenceInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[79]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[72]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16463,7 +15583,7 @@ func (x *InvoiceCustomSectionsReferenceInput) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use InvoiceCustomSectionsReferenceInput.ProtoReflect.Descriptor instead.
 func (*InvoiceCustomSectionsReferenceInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{79}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{72}
 }
 
 func (x *InvoiceCustomSectionsReferenceInput) GetInvoiceCustomSectionIds() []string {
@@ -16494,7 +15614,7 @@ type InvoiceMetadata struct {
 
 func (x *InvoiceMetadata) Reset() {
 	*x = InvoiceMetadata{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[80]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[73]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16506,7 +15626,7 @@ func (x *InvoiceMetadata) String() string {
 func (*InvoiceMetadata) ProtoMessage() {}
 
 func (x *InvoiceMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[80]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[73]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16519,7 +15639,7 @@ func (x *InvoiceMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InvoiceMetadata.ProtoReflect.Descriptor instead.
 func (*InvoiceMetadata) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{80}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{73}
 }
 
 func (x *InvoiceMetadata) GetCreatedAt() *timestamppb.Timestamp {
@@ -16578,7 +15698,7 @@ type InvoiceSubscription struct {
 
 func (x *InvoiceSubscription) Reset() {
 	*x = InvoiceSubscription{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[81]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[74]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16590,7 +15710,7 @@ func (x *InvoiceSubscription) String() string {
 func (*InvoiceSubscription) ProtoMessage() {}
 
 func (x *InvoiceSubscription) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[81]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[74]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16603,7 +15723,7 @@ func (x *InvoiceSubscription) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InvoiceSubscription.ProtoReflect.Descriptor instead.
 func (*InvoiceSubscription) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{81}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{74}
 }
 
 func (x *InvoiceSubscription) GetAcceptNewChargeFees() bool {
@@ -16708,7 +15828,7 @@ type ItemMetadata struct {
 
 func (x *ItemMetadata) Reset() {
 	*x = ItemMetadata{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[82]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[75]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16720,7 +15840,7 @@ func (x *ItemMetadata) String() string {
 func (*ItemMetadata) ProtoMessage() {}
 
 func (x *ItemMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[82]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[75]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16733,7 +15853,7 @@ func (x *ItemMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ItemMetadata.ProtoReflect.Descriptor instead.
 func (*ItemMetadata) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{82}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{75}
 }
 
 func (x *ItemMetadata) GetKey() string {
@@ -16766,7 +15886,7 @@ type Mapping struct {
 
 func (x *Mapping) Reset() {
 	*x = Mapping{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[83]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[76]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16778,7 +15898,7 @@ func (x *Mapping) String() string {
 func (*Mapping) ProtoMessage() {}
 
 func (x *Mapping) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[83]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[76]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16791,7 +15911,7 @@ func (x *Mapping) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Mapping.ProtoReflect.Descriptor instead.
 func (*Mapping) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{83}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{76}
 }
 
 func (x *Mapping) GetBillingEntityId() string {
@@ -16861,7 +15981,7 @@ type MetadataInput struct {
 
 func (x *MetadataInput) Reset() {
 	*x = MetadataInput{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[84]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[77]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16873,7 +15993,7 @@ func (x *MetadataInput) String() string {
 func (*MetadataInput) ProtoMessage() {}
 
 func (x *MetadataInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[84]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[77]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16886,7 +16006,7 @@ func (x *MetadataInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MetadataInput.ProtoReflect.Descriptor instead.
 func (*MetadataInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{84}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{77}
 }
 
 func (x *MetadataInput) GetKey() string {
@@ -16905,7 +16025,6 @@ func (x *MetadataInput) GetValue() string {
 
 type MoneyhashProvider struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
-	ApiKey             *string                `protobuf:"bytes,1,opt,name=api_key,json=apiKey,proto3,oneof" json:"api_key,omitempty"`
 	Code               string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
 	FlowId             *string                `protobuf:"bytes,3,opt,name=flow_id,json=flowId,proto3,oneof" json:"flow_id,omitempty"`
 	Id                 string                 `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
@@ -16917,7 +16036,7 @@ type MoneyhashProvider struct {
 
 func (x *MoneyhashProvider) Reset() {
 	*x = MoneyhashProvider{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[85]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[78]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16929,7 +16048,7 @@ func (x *MoneyhashProvider) String() string {
 func (*MoneyhashProvider) ProtoMessage() {}
 
 func (x *MoneyhashProvider) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[85]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[78]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16942,14 +16061,7 @@ func (x *MoneyhashProvider) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MoneyhashProvider.ProtoReflect.Descriptor instead.
 func (*MoneyhashProvider) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{85}
-}
-
-func (x *MoneyhashProvider) GetApiKey() string {
-	if x != nil && x.ApiKey != nil {
-		return *x.ApiKey
-	}
-	return ""
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{78}
 }
 
 func (x *MoneyhashProvider) GetCode() string {
@@ -16987,98 +16099,6 @@ func (x *MoneyhashProvider) GetSuccessRedirectUrl() string {
 	return ""
 }
 
-type NetsuiteCustomer struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	ExternalCustomerId *string                `protobuf:"bytes,1,opt,name=external_customer_id,json=externalCustomerId,proto3,oneof" json:"external_customer_id,omitempty"`
-	Id                 string                 `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
-	IntegrationCode    *string                `protobuf:"bytes,3,opt,name=integration_code,json=integrationCode,proto3,oneof" json:"integration_code,omitempty"`
-	IntegrationId      *string                `protobuf:"bytes,4,opt,name=integration_id,json=integrationId,proto3,oneof" json:"integration_id,omitempty"`
-	IntegrationType    *IntegrationTypeEnum   `protobuf:"varint,5,opt,name=integration_type,json=integrationType,proto3,enum=invora.billing.common.v2.IntegrationTypeEnum,oneof" json:"integration_type,omitempty"`
-	SubsidiaryId       *string                `protobuf:"bytes,6,opt,name=subsidiary_id,json=subsidiaryId,proto3,oneof" json:"subsidiary_id,omitempty"`
-	SyncWithProvider   *bool                  `protobuf:"varint,7,opt,name=sync_with_provider,json=syncWithProvider,proto3,oneof" json:"sync_with_provider,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *NetsuiteCustomer) Reset() {
-	*x = NetsuiteCustomer{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[86]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *NetsuiteCustomer) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*NetsuiteCustomer) ProtoMessage() {}
-
-func (x *NetsuiteCustomer) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[86]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use NetsuiteCustomer.ProtoReflect.Descriptor instead.
-func (*NetsuiteCustomer) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{86}
-}
-
-func (x *NetsuiteCustomer) GetExternalCustomerId() string {
-	if x != nil && x.ExternalCustomerId != nil {
-		return *x.ExternalCustomerId
-	}
-	return ""
-}
-
-func (x *NetsuiteCustomer) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *NetsuiteCustomer) GetIntegrationCode() string {
-	if x != nil && x.IntegrationCode != nil {
-		return *x.IntegrationCode
-	}
-	return ""
-}
-
-func (x *NetsuiteCustomer) GetIntegrationId() string {
-	if x != nil && x.IntegrationId != nil {
-		return *x.IntegrationId
-	}
-	return ""
-}
-
-func (x *NetsuiteCustomer) GetIntegrationType() IntegrationTypeEnum {
-	if x != nil && x.IntegrationType != nil {
-		return *x.IntegrationType
-	}
-	return IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_UNSPECIFIED
-}
-
-func (x *NetsuiteCustomer) GetSubsidiaryId() string {
-	if x != nil && x.SubsidiaryId != nil {
-		return *x.SubsidiaryId
-	}
-	return ""
-}
-
-func (x *NetsuiteCustomer) GetSyncWithProvider() bool {
-	if x != nil && x.SyncWithProvider != nil {
-		return *x.SyncWithProvider
-	}
-	return false
-}
-
 // Safe Organization Type
 type Organization struct {
 	state                      protoimpl.MessageState            `protogen:"open.v1"`
@@ -17089,14 +16109,14 @@ type Organization struct {
 	Id                         string                            `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
 	LogoUrl                    *string                           `protobuf:"bytes,6,opt,name=logo_url,json=logoUrl,proto3,oneof" json:"logo_url,omitempty"`
 	Name                       string                            `protobuf:"bytes,7,opt,name=name,proto3" json:"name,omitempty"`
-	Timezone                   *TimezoneEnum                     `protobuf:"varint,8,opt,name=timezone,proto3,enum=invora.billing.common.v2.TimezoneEnum,oneof" json:"timezone,omitempty"`
+	Timezone                   *Timezone                         `protobuf:"varint,8,opt,name=timezone,proto3,enum=invora.billing.common.v2.Timezone,oneof" json:"timezone,omitempty"`
 	unknownFields              protoimpl.UnknownFields
 	sizeCache                  protoimpl.SizeCache
 }
 
 func (x *Organization) Reset() {
 	*x = Organization{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[87]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[79]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17108,7 +16128,7 @@ func (x *Organization) String() string {
 func (*Organization) ProtoMessage() {}
 
 func (x *Organization) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[87]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[79]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17121,7 +16141,7 @@ func (x *Organization) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Organization.ProtoReflect.Descriptor instead.
 func (*Organization) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{87}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{79}
 }
 
 func (x *Organization) GetAccessibleByCurrentSession() bool {
@@ -17173,11 +16193,11 @@ func (x *Organization) GetName() string {
 	return ""
 }
 
-func (x *Organization) GetTimezone() TimezoneEnum {
+func (x *Organization) GetTimezone() Timezone {
 	if x != nil && x.Timezone != nil {
 		return *x.Timezone
 	}
-	return TimezoneEnum_TIMEZONE_ENUM_UNSPECIFIED
+	return Timezone_TIMEZONE_UNSPECIFIED
 }
 
 type OrganizationBillingConfiguration struct {
@@ -17192,7 +16212,7 @@ type OrganizationBillingConfiguration struct {
 
 func (x *OrganizationBillingConfiguration) Reset() {
 	*x = OrganizationBillingConfiguration{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[88]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[80]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17204,7 +16224,7 @@ func (x *OrganizationBillingConfiguration) String() string {
 func (*OrganizationBillingConfiguration) ProtoMessage() {}
 
 func (x *OrganizationBillingConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[88]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[80]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17217,7 +16237,7 @@ func (x *OrganizationBillingConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OrganizationBillingConfiguration.ProtoReflect.Descriptor instead.
 func (*OrganizationBillingConfiguration) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{88}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{80}
 }
 
 func (x *OrganizationBillingConfiguration) GetDocumentLocale() string {
@@ -17260,7 +16280,7 @@ type OverdueBalance struct {
 
 func (x *OverdueBalance) Reset() {
 	*x = OverdueBalance{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[89]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[81]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17272,7 +16292,7 @@ func (x *OverdueBalance) String() string {
 func (*OverdueBalance) ProtoMessage() {}
 
 func (x *OverdueBalance) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[89]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[81]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17285,7 +16305,7 @@ func (x *OverdueBalance) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OverdueBalance.ProtoReflect.Descriptor instead.
 func (*OverdueBalance) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{89}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{81}
 }
 
 func (x *OverdueBalance) GetAmountCents() int64 {
@@ -17329,7 +16349,7 @@ type Payable struct {
 
 func (x *Payable) Reset() {
 	*x = Payable{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[90]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[82]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17341,7 +16361,7 @@ func (x *Payable) String() string {
 func (*Payable) ProtoMessage() {}
 
 func (x *Payable) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[90]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[82]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17354,7 +16374,7 @@ func (x *Payable) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Payable.ProtoReflect.Descriptor instead.
 func (*Payable) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{90}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{82}
 }
 
 func (x *Payable) GetValue() isPayable_Value {
@@ -17409,7 +16429,7 @@ type PaymentMethod struct {
 	PaymentProviderCode       *string                `protobuf:"bytes,7,opt,name=payment_provider_code,json=paymentProviderCode,proto3,oneof" json:"payment_provider_code,omitempty"`
 	PaymentProviderCustomerId *string                `protobuf:"bytes,8,opt,name=payment_provider_customer_id,json=paymentProviderCustomerId,proto3,oneof" json:"payment_provider_customer_id,omitempty"`
 	PaymentProviderName       *string                `protobuf:"bytes,9,opt,name=payment_provider_name,json=paymentProviderName,proto3,oneof" json:"payment_provider_name,omitempty"`
-	PaymentProviderType       *ProviderTypeEnum      `protobuf:"varint,10,opt,name=payment_provider_type,json=paymentProviderType,proto3,enum=invora.billing.common.v2.ProviderTypeEnum,oneof" json:"payment_provider_type,omitempty"`
+	PaymentProviderType       *ProviderType          `protobuf:"varint,10,opt,name=payment_provider_type,json=paymentProviderType,proto3,enum=invora.billing.common.v2.ProviderType,oneof" json:"payment_provider_type,omitempty"`
 	ProviderMethodId          string                 `protobuf:"bytes,11,opt,name=provider_method_id,json=providerMethodId,proto3" json:"provider_method_id,omitempty"`
 	UpdatedAt                 *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=updated_at,json=updatedAt,proto3,oneof" json:"updated_at,omitempty"`
 	unknownFields             protoimpl.UnknownFields
@@ -17418,7 +16438,7 @@ type PaymentMethod struct {
 
 func (x *PaymentMethod) Reset() {
 	*x = PaymentMethod{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[91]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[83]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17430,7 +16450,7 @@ func (x *PaymentMethod) String() string {
 func (*PaymentMethod) ProtoMessage() {}
 
 func (x *PaymentMethod) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[91]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[83]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17443,7 +16463,7 @@ func (x *PaymentMethod) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PaymentMethod.ProtoReflect.Descriptor instead.
 func (*PaymentMethod) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{91}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{83}
 }
 
 func (x *PaymentMethod) GetCreatedAt() *timestamppb.Timestamp {
@@ -17509,11 +16529,11 @@ func (x *PaymentMethod) GetPaymentProviderName() string {
 	return ""
 }
 
-func (x *PaymentMethod) GetPaymentProviderType() ProviderTypeEnum {
+func (x *PaymentMethod) GetPaymentProviderType() ProviderType {
 	if x != nil && x.PaymentProviderType != nil {
 		return *x.PaymentProviderType
 	}
-	return ProviderTypeEnum_PROVIDER_TYPE_ENUM_UNSPECIFIED
+	return ProviderType_PROVIDER_TYPE_UNSPECIFIED
 }
 
 func (x *PaymentMethod) GetProviderMethodId() string {
@@ -17543,7 +16563,7 @@ type PaymentMethodDetails struct {
 
 func (x *PaymentMethodDetails) Reset() {
 	*x = PaymentMethodDetails{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[92]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[84]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17555,7 +16575,7 @@ func (x *PaymentMethodDetails) String() string {
 func (*PaymentMethodDetails) ProtoMessage() {}
 
 func (x *PaymentMethodDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[92]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[84]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17568,7 +16588,7 @@ func (x *PaymentMethodDetails) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PaymentMethodDetails.ProtoReflect.Descriptor instead.
 func (*PaymentMethodDetails) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{92}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{84}
 }
 
 func (x *PaymentMethodDetails) GetBrand() string {
@@ -17609,14 +16629,14 @@ func (x *PaymentMethodDetails) GetType() string {
 type PaymentMethodReferenceInput struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	PaymentMethodId   *string                `protobuf:"bytes,1,opt,name=payment_method_id,json=paymentMethodId,proto3,oneof" json:"payment_method_id,omitempty"`
-	PaymentMethodType *PaymentMethodTypeEnum `protobuf:"varint,2,opt,name=payment_method_type,json=paymentMethodType,proto3,enum=invora.billing.common.v2.PaymentMethodTypeEnum,oneof" json:"payment_method_type,omitempty"`
+	PaymentMethodType *PaymentMethodType     `protobuf:"varint,2,opt,name=payment_method_type,json=paymentMethodType,proto3,enum=invora.billing.common.v2.PaymentMethodType,oneof" json:"payment_method_type,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
 
 func (x *PaymentMethodReferenceInput) Reset() {
 	*x = PaymentMethodReferenceInput{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[93]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[85]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17628,7 +16648,7 @@ func (x *PaymentMethodReferenceInput) String() string {
 func (*PaymentMethodReferenceInput) ProtoMessage() {}
 
 func (x *PaymentMethodReferenceInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[93]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[85]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17641,7 +16661,7 @@ func (x *PaymentMethodReferenceInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PaymentMethodReferenceInput.ProtoReflect.Descriptor instead.
 func (*PaymentMethodReferenceInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{93}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{85}
 }
 
 func (x *PaymentMethodReferenceInput) GetPaymentMethodId() string {
@@ -17651,11 +16671,11 @@ func (x *PaymentMethodReferenceInput) GetPaymentMethodId() string {
 	return ""
 }
 
-func (x *PaymentMethodReferenceInput) GetPaymentMethodType() PaymentMethodTypeEnum {
+func (x *PaymentMethodReferenceInput) GetPaymentMethodType() PaymentMethodType {
 	if x != nil && x.PaymentMethodType != nil {
 		return *x.PaymentMethodType
 	}
-	return PaymentMethodTypeEnum_PAYMENT_METHOD_TYPE_ENUM_UNSPECIFIED
+	return PaymentMethodType_PAYMENT_METHOD_TYPE_UNSPECIFIED
 }
 
 type PaymentProvider struct {
@@ -17676,7 +16696,7 @@ type PaymentProvider struct {
 
 func (x *PaymentProvider) Reset() {
 	*x = PaymentProvider{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[94]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[86]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17688,7 +16708,7 @@ func (x *PaymentProvider) String() string {
 func (*PaymentProvider) ProtoMessage() {}
 
 func (x *PaymentProvider) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[94]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[86]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17701,7 +16721,7 @@ func (x *PaymentProvider) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PaymentProvider.ProtoReflect.Descriptor instead.
 func (*PaymentProvider) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{94}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{86}
 }
 
 func (x *PaymentProvider) GetValue() isPaymentProvider_Value {
@@ -17832,7 +16852,7 @@ type PlanEntitlement struct {
 
 func (x *PlanEntitlement) Reset() {
 	*x = PlanEntitlement{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[95]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[87]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17844,7 +16864,7 @@ func (x *PlanEntitlement) String() string {
 func (*PlanEntitlement) ProtoMessage() {}
 
 func (x *PlanEntitlement) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[95]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[87]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17857,7 +16877,7 @@ func (x *PlanEntitlement) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PlanEntitlement.ProtoReflect.Descriptor instead.
 func (*PlanEntitlement) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{95}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{87}
 }
 
 func (x *PlanEntitlement) GetCode() string {
@@ -17901,7 +16921,7 @@ type PlanEntitlementPrivilegeObject struct {
 
 func (x *PlanEntitlementPrivilegeObject) Reset() {
 	*x = PlanEntitlementPrivilegeObject{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[96]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[88]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17913,7 +16933,7 @@ func (x *PlanEntitlementPrivilegeObject) String() string {
 func (*PlanEntitlementPrivilegeObject) ProtoMessage() {}
 
 func (x *PlanEntitlementPrivilegeObject) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[96]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[88]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17926,7 +16946,7 @@ func (x *PlanEntitlementPrivilegeObject) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PlanEntitlementPrivilegeObject.ProtoReflect.Descriptor instead.
 func (*PlanEntitlementPrivilegeObject) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{96}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{88}
 }
 
 func (x *PlanEntitlementPrivilegeObject) GetCode() string {
@@ -17979,7 +16999,7 @@ type PricingUnit struct {
 
 func (x *PricingUnit) Reset() {
 	*x = PricingUnit{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[97]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[89]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17991,7 +17011,7 @@ func (x *PricingUnit) String() string {
 func (*PricingUnit) ProtoMessage() {}
 
 func (x *PricingUnit) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[97]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[89]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18004,7 +17024,7 @@ func (x *PricingUnit) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PricingUnit.ProtoReflect.Descriptor instead.
 func (*PricingUnit) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{97}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{89}
 }
 
 func (x *PricingUnit) GetCode() string {
@@ -18059,11 +17079,11 @@ func (x *PricingUnit) GetUpdatedAt() *timestamppb.Timestamp {
 type PricingUnitUsage struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	AmountCents        int64                  `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
-	ConversionRate     float64                `protobuf:"fixed64,2,opt,name=conversion_rate,json=conversionRate,proto3" json:"conversion_rate,omitempty"`
+	ConversionRate     *kernel.DecimalValue   `protobuf:"bytes,2,opt,name=conversion_rate,json=conversionRate,proto3" json:"conversion_rate,omitempty"`
 	CreatedAt          *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	Id                 string                 `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
-	PreciseAmountCents float64                `protobuf:"fixed64,5,opt,name=precise_amount_cents,json=preciseAmountCents,proto3" json:"precise_amount_cents,omitempty"`
-	PreciseUnitAmount  float64                `protobuf:"fixed64,6,opt,name=precise_unit_amount,json=preciseUnitAmount,proto3" json:"precise_unit_amount,omitempty"`
+	PreciseAmountCents *kernel.DecimalValue   `protobuf:"bytes,5,opt,name=precise_amount_cents,json=preciseAmountCents,proto3" json:"precise_amount_cents,omitempty"`
+	PreciseUnitAmount  *kernel.DecimalValue   `protobuf:"bytes,6,opt,name=precise_unit_amount,json=preciseUnitAmount,proto3" json:"precise_unit_amount,omitempty"`
 	PricingUnit        *PricingUnit           `protobuf:"bytes,7,opt,name=pricing_unit,json=pricingUnit,proto3" json:"pricing_unit,omitempty"`
 	ShortName          string                 `protobuf:"bytes,8,opt,name=short_name,json=shortName,proto3" json:"short_name,omitempty"`
 	UnitAmountCents    int64                  `protobuf:"varint,9,opt,name=unit_amount_cents,json=unitAmountCents,proto3" json:"unit_amount_cents,omitempty"`
@@ -18074,7 +17094,7 @@ type PricingUnitUsage struct {
 
 func (x *PricingUnitUsage) Reset() {
 	*x = PricingUnitUsage{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[98]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[90]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18086,7 +17106,7 @@ func (x *PricingUnitUsage) String() string {
 func (*PricingUnitUsage) ProtoMessage() {}
 
 func (x *PricingUnitUsage) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[98]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[90]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18099,7 +17119,7 @@ func (x *PricingUnitUsage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PricingUnitUsage.ProtoReflect.Descriptor instead.
 func (*PricingUnitUsage) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{98}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{90}
 }
 
 func (x *PricingUnitUsage) GetAmountCents() int64 {
@@ -18109,11 +17129,11 @@ func (x *PricingUnitUsage) GetAmountCents() int64 {
 	return 0
 }
 
-func (x *PricingUnitUsage) GetConversionRate() float64 {
+func (x *PricingUnitUsage) GetConversionRate() *kernel.DecimalValue {
 	if x != nil {
 		return x.ConversionRate
 	}
-	return 0
+	return nil
 }
 
 func (x *PricingUnitUsage) GetCreatedAt() *timestamppb.Timestamp {
@@ -18130,18 +17150,18 @@ func (x *PricingUnitUsage) GetId() string {
 	return ""
 }
 
-func (x *PricingUnitUsage) GetPreciseAmountCents() float64 {
+func (x *PricingUnitUsage) GetPreciseAmountCents() *kernel.DecimalValue {
 	if x != nil {
 		return x.PreciseAmountCents
 	}
-	return 0
+	return nil
 }
 
-func (x *PricingUnitUsage) GetPreciseUnitAmount() float64 {
+func (x *PricingUnitUsage) GetPreciseUnitAmount() *kernel.DecimalValue {
 	if x != nil {
 		return x.PreciseUnitAmount
 	}
-	return 0
+	return nil
 }
 
 func (x *PricingUnitUsage) GetPricingUnit() *PricingUnit {
@@ -18183,7 +17203,7 @@ type PrivilegeConfigObject struct {
 
 func (x *PrivilegeConfigObject) Reset() {
 	*x = PrivilegeConfigObject{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[99]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[91]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18195,7 +17215,7 @@ func (x *PrivilegeConfigObject) String() string {
 func (*PrivilegeConfigObject) ProtoMessage() {}
 
 func (x *PrivilegeConfigObject) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[99]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[91]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18208,7 +17228,7 @@ func (x *PrivilegeConfigObject) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PrivilegeConfigObject.ProtoReflect.Descriptor instead.
 func (*PrivilegeConfigObject) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{99}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{91}
 }
 
 func (x *PrivilegeConfigObject) GetSelectOptions() []string {
@@ -18231,7 +17251,7 @@ type PrivilegeObject struct {
 
 func (x *PrivilegeObject) Reset() {
 	*x = PrivilegeObject{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[100]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[92]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18243,7 +17263,7 @@ func (x *PrivilegeObject) String() string {
 func (*PrivilegeObject) ProtoMessage() {}
 
 func (x *PrivilegeObject) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[100]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[92]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18256,7 +17276,7 @@ func (x *PrivilegeObject) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PrivilegeObject.ProtoReflect.Descriptor instead.
 func (*PrivilegeObject) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{100}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{92}
 }
 
 func (x *PrivilegeObject) GetCode() string {
@@ -18303,8 +17323,8 @@ type ProjectedChargeFilterUsage struct {
 	PricingUnitAmountCents          *int64                 `protobuf:"varint,5,opt,name=pricing_unit_amount_cents,json=pricingUnitAmountCents,proto3,oneof" json:"pricing_unit_amount_cents,omitempty"`
 	PricingUnitProjectedAmountCents *int64                 `protobuf:"varint,6,opt,name=pricing_unit_projected_amount_cents,json=pricingUnitProjectedAmountCents,proto3,oneof" json:"pricing_unit_projected_amount_cents,omitempty"`
 	ProjectedAmountCents            int64                  `protobuf:"varint,7,opt,name=projected_amount_cents,json=projectedAmountCents,proto3" json:"projected_amount_cents,omitempty"`
-	ProjectedUnits                  float64                `protobuf:"fixed64,8,opt,name=projected_units,json=projectedUnits,proto3" json:"projected_units,omitempty"`
-	Units                           float64                `protobuf:"fixed64,9,opt,name=units,proto3" json:"units,omitempty"`
+	ProjectedUnits                  *kernel.DecimalValue   `protobuf:"bytes,8,opt,name=projected_units,json=projectedUnits,proto3" json:"projected_units,omitempty"`
+	Units                           *kernel.DecimalValue   `protobuf:"bytes,9,opt,name=units,proto3" json:"units,omitempty"`
 	Values                          *structpb.Struct       `protobuf:"bytes,10,opt,name=values,proto3" json:"values,omitempty"`
 	unknownFields                   protoimpl.UnknownFields
 	sizeCache                       protoimpl.SizeCache
@@ -18312,7 +17332,7 @@ type ProjectedChargeFilterUsage struct {
 
 func (x *ProjectedChargeFilterUsage) Reset() {
 	*x = ProjectedChargeFilterUsage{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[101]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[93]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18324,7 +17344,7 @@ func (x *ProjectedChargeFilterUsage) String() string {
 func (*ProjectedChargeFilterUsage) ProtoMessage() {}
 
 func (x *ProjectedChargeFilterUsage) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[101]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[93]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18337,7 +17357,7 @@ func (x *ProjectedChargeFilterUsage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProjectedChargeFilterUsage.ProtoReflect.Descriptor instead.
 func (*ProjectedChargeFilterUsage) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{101}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{93}
 }
 
 func (x *ProjectedChargeFilterUsage) GetAmountCents() int64 {
@@ -18389,18 +17409,18 @@ func (x *ProjectedChargeFilterUsage) GetProjectedAmountCents() int64 {
 	return 0
 }
 
-func (x *ProjectedChargeFilterUsage) GetProjectedUnits() float64 {
+func (x *ProjectedChargeFilterUsage) GetProjectedUnits() *kernel.DecimalValue {
 	if x != nil {
 		return x.ProjectedUnits
 	}
-	return 0
+	return nil
 }
 
-func (x *ProjectedChargeFilterUsage) GetUnits() float64 {
+func (x *ProjectedChargeFilterUsage) GetUnits() *kernel.DecimalValue {
 	if x != nil {
 		return x.Units
 	}
-	return 0
+	return nil
 }
 
 func (x *ProjectedChargeFilterUsage) GetValues() *structpb.Struct {
@@ -18422,15 +17442,15 @@ type ProjectedChargeUsage struct {
 	PricingUnitAmountCents          *int64                         `protobuf:"varint,8,opt,name=pricing_unit_amount_cents,json=pricingUnitAmountCents,proto3,oneof" json:"pricing_unit_amount_cents,omitempty"`
 	PricingUnitProjectedAmountCents *int64                         `protobuf:"varint,9,opt,name=pricing_unit_projected_amount_cents,json=pricingUnitProjectedAmountCents,proto3,oneof" json:"pricing_unit_projected_amount_cents,omitempty"`
 	ProjectedAmountCents            int64                          `protobuf:"varint,10,opt,name=projected_amount_cents,json=projectedAmountCents,proto3" json:"projected_amount_cents,omitempty"`
-	ProjectedUnits                  float64                        `protobuf:"fixed64,11,opt,name=projected_units,json=projectedUnits,proto3" json:"projected_units,omitempty"`
-	Units                           float64                        `protobuf:"fixed64,12,opt,name=units,proto3" json:"units,omitempty"`
+	ProjectedUnits                  *kernel.DecimalValue           `protobuf:"bytes,11,opt,name=projected_units,json=projectedUnits,proto3" json:"projected_units,omitempty"`
+	Units                           *kernel.DecimalValue           `protobuf:"bytes,12,opt,name=units,proto3" json:"units,omitempty"`
 	unknownFields                   protoimpl.UnknownFields
 	sizeCache                       protoimpl.SizeCache
 }
 
 func (x *ProjectedChargeUsage) Reset() {
 	*x = ProjectedChargeUsage{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[102]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[94]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18442,7 +17462,7 @@ func (x *ProjectedChargeUsage) String() string {
 func (*ProjectedChargeUsage) ProtoMessage() {}
 
 func (x *ProjectedChargeUsage) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[102]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[94]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18455,7 +17475,7 @@ func (x *ProjectedChargeUsage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProjectedChargeUsage.ProtoReflect.Descriptor instead.
 func (*ProjectedChargeUsage) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{102}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{94}
 }
 
 func (x *ProjectedChargeUsage) GetAmountCents() int64 {
@@ -18528,18 +17548,18 @@ func (x *ProjectedChargeUsage) GetProjectedAmountCents() int64 {
 	return 0
 }
 
-func (x *ProjectedChargeUsage) GetProjectedUnits() float64 {
+func (x *ProjectedChargeUsage) GetProjectedUnits() *kernel.DecimalValue {
 	if x != nil {
 		return x.ProjectedUnits
 	}
-	return 0
+	return nil
 }
 
-func (x *ProjectedChargeUsage) GetUnits() float64 {
+func (x *ProjectedChargeUsage) GetUnits() *kernel.DecimalValue {
 	if x != nil {
 		return x.Units
 	}
-	return 0
+	return nil
 }
 
 type ProjectedGroupedChargeUsage struct {
@@ -18552,15 +17572,15 @@ type ProjectedGroupedChargeUsage struct {
 	PricingUnitAmountCents          *int64                        `protobuf:"varint,6,opt,name=pricing_unit_amount_cents,json=pricingUnitAmountCents,proto3,oneof" json:"pricing_unit_amount_cents,omitempty"`
 	PricingUnitProjectedAmountCents *int64                        `protobuf:"varint,7,opt,name=pricing_unit_projected_amount_cents,json=pricingUnitProjectedAmountCents,proto3,oneof" json:"pricing_unit_projected_amount_cents,omitempty"`
 	ProjectedAmountCents            int64                         `protobuf:"varint,8,opt,name=projected_amount_cents,json=projectedAmountCents,proto3" json:"projected_amount_cents,omitempty"`
-	ProjectedUnits                  float64                       `protobuf:"fixed64,9,opt,name=projected_units,json=projectedUnits,proto3" json:"projected_units,omitempty"`
-	Units                           float64                       `protobuf:"fixed64,10,opt,name=units,proto3" json:"units,omitempty"`
+	ProjectedUnits                  *kernel.DecimalValue          `protobuf:"bytes,9,opt,name=projected_units,json=projectedUnits,proto3" json:"projected_units,omitempty"`
+	Units                           *kernel.DecimalValue          `protobuf:"bytes,10,opt,name=units,proto3" json:"units,omitempty"`
 	unknownFields                   protoimpl.UnknownFields
 	sizeCache                       protoimpl.SizeCache
 }
 
 func (x *ProjectedGroupedChargeUsage) Reset() {
 	*x = ProjectedGroupedChargeUsage{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[103]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[95]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18572,7 +17592,7 @@ func (x *ProjectedGroupedChargeUsage) String() string {
 func (*ProjectedGroupedChargeUsage) ProtoMessage() {}
 
 func (x *ProjectedGroupedChargeUsage) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[103]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[95]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18585,7 +17605,7 @@ func (x *ProjectedGroupedChargeUsage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProjectedGroupedChargeUsage.ProtoReflect.Descriptor instead.
 func (*ProjectedGroupedChargeUsage) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{103}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{95}
 }
 
 func (x *ProjectedGroupedChargeUsage) GetAmountCents() int64 {
@@ -18644,35 +17664,35 @@ func (x *ProjectedGroupedChargeUsage) GetProjectedAmountCents() int64 {
 	return 0
 }
 
-func (x *ProjectedGroupedChargeUsage) GetProjectedUnits() float64 {
+func (x *ProjectedGroupedChargeUsage) GetProjectedUnits() *kernel.DecimalValue {
 	if x != nil {
 		return x.ProjectedUnits
 	}
-	return 0
+	return nil
 }
 
-func (x *ProjectedGroupedChargeUsage) GetUnits() float64 {
+func (x *ProjectedGroupedChargeUsage) GetUnits() *kernel.DecimalValue {
 	if x != nil {
 		return x.Units
 	}
-	return 0
+	return nil
 }
 
 type Properties struct {
 	state                        protoimpl.MessageState      `protogen:"open.v1"`
-	Amount                       *string                     `protobuf:"bytes,1,opt,name=amount,proto3,oneof" json:"amount,omitempty"`
+	Amount                       *kernel.DecimalValue        `protobuf:"bytes,1,opt,name=amount,proto3,oneof" json:"amount,omitempty"`
 	CustomProperties             *structpb.Struct            `protobuf:"bytes,2,opt,name=custom_properties,json=customProperties,proto3,oneof" json:"custom_properties,omitempty"`
 	FixedAmount                  *string                     `protobuf:"bytes,3,opt,name=fixed_amount,json=fixedAmount,proto3,oneof" json:"fixed_amount,omitempty"`
 	FreeUnits                    *int64                      `protobuf:"varint,4,opt,name=free_units,json=freeUnits,proto3,oneof" json:"free_units,omitempty"`
 	FreeUnitsPerEvents           *int64                      `protobuf:"varint,5,opt,name=free_units_per_events,json=freeUnitsPerEvents,proto3,oneof" json:"free_units_per_events,omitempty"`
-	FreeUnitsPerTotalAggregation *string                     `protobuf:"bytes,6,opt,name=free_units_per_total_aggregation,json=freeUnitsPerTotalAggregation,proto3,oneof" json:"free_units_per_total_aggregation,omitempty"`
+	FreeUnitsPerTotalAggregation *kernel.DecimalValue        `protobuf:"bytes,6,opt,name=free_units_per_total_aggregation,json=freeUnitsPerTotalAggregation,proto3,oneof" json:"free_units_per_total_aggregation,omitempty"`
 	GraduatedPercentageRanges    []*GraduatedPercentageRange `protobuf:"bytes,7,rep,name=graduated_percentage_ranges,json=graduatedPercentageRanges,proto3" json:"graduated_percentage_ranges,omitempty"`
 	GraduatedRanges              []*GraduatedRange           `protobuf:"bytes,8,rep,name=graduated_ranges,json=graduatedRanges,proto3" json:"graduated_ranges,omitempty"`
 	PackageSize                  *int64                      `protobuf:"varint,9,opt,name=package_size,json=packageSize,proto3,oneof" json:"package_size,omitempty"`
 	PerTransactionMaxAmount      *string                     `protobuf:"bytes,10,opt,name=per_transaction_max_amount,json=perTransactionMaxAmount,proto3,oneof" json:"per_transaction_max_amount,omitempty"`
 	PerTransactionMinAmount      *string                     `protobuf:"bytes,11,opt,name=per_transaction_min_amount,json=perTransactionMinAmount,proto3,oneof" json:"per_transaction_min_amount,omitempty"`
 	PricingGroupKeys             []string                    `protobuf:"bytes,12,rep,name=pricing_group_keys,json=pricingGroupKeys,proto3" json:"pricing_group_keys,omitempty"`
-	Rate                         *string                     `protobuf:"bytes,13,opt,name=rate,proto3,oneof" json:"rate,omitempty"`
+	Rate                         *kernel.DecimalValue        `protobuf:"bytes,13,opt,name=rate,proto3,oneof" json:"rate,omitempty"`
 	VolumeRanges                 []*VolumeRange              `protobuf:"bytes,14,rep,name=volume_ranges,json=volumeRanges,proto3" json:"volume_ranges,omitempty"`
 	unknownFields                protoimpl.UnknownFields
 	sizeCache                    protoimpl.SizeCache
@@ -18680,7 +17700,7 @@ type Properties struct {
 
 func (x *Properties) Reset() {
 	*x = Properties{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[104]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[96]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18692,7 +17712,7 @@ func (x *Properties) String() string {
 func (*Properties) ProtoMessage() {}
 
 func (x *Properties) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[104]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[96]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18705,14 +17725,14 @@ func (x *Properties) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Properties.ProtoReflect.Descriptor instead.
 func (*Properties) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{104}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{96}
 }
 
-func (x *Properties) GetAmount() string {
-	if x != nil && x.Amount != nil {
-		return *x.Amount
+func (x *Properties) GetAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.Amount
 	}
-	return ""
+	return nil
 }
 
 func (x *Properties) GetCustomProperties() *structpb.Struct {
@@ -18743,11 +17763,11 @@ func (x *Properties) GetFreeUnitsPerEvents() int64 {
 	return 0
 }
 
-func (x *Properties) GetFreeUnitsPerTotalAggregation() string {
-	if x != nil && x.FreeUnitsPerTotalAggregation != nil {
-		return *x.FreeUnitsPerTotalAggregation
+func (x *Properties) GetFreeUnitsPerTotalAggregation() *kernel.DecimalValue {
+	if x != nil {
+		return x.FreeUnitsPerTotalAggregation
 	}
-	return ""
+	return nil
 }
 
 func (x *Properties) GetGraduatedPercentageRanges() []*GraduatedPercentageRange {
@@ -18792,11 +17812,11 @@ func (x *Properties) GetPricingGroupKeys() []string {
 	return nil
 }
 
-func (x *Properties) GetRate() string {
-	if x != nil && x.Rate != nil {
-		return *x.Rate
+func (x *Properties) GetRate() *kernel.DecimalValue {
+	if x != nil {
+		return x.Rate
 	}
-	return ""
+	return nil
 }
 
 func (x *Properties) GetVolumeRanges() []*VolumeRange {
@@ -18808,19 +17828,19 @@ func (x *Properties) GetVolumeRanges() []*VolumeRange {
 
 type PropertiesInput struct {
 	state                        protoimpl.MessageState           `protogen:"open.v1"`
-	Amount                       *string                          `protobuf:"bytes,1,opt,name=amount,proto3,oneof" json:"amount,omitempty"`
+	Amount                       *kernel.DecimalValue             `protobuf:"bytes,1,opt,name=amount,proto3,oneof" json:"amount,omitempty"`
 	CustomProperties             *structpb.Struct                 `protobuf:"bytes,2,opt,name=custom_properties,json=customProperties,proto3,oneof" json:"custom_properties,omitempty"`
 	FixedAmount                  *string                          `protobuf:"bytes,3,opt,name=fixed_amount,json=fixedAmount,proto3,oneof" json:"fixed_amount,omitempty"`
 	FreeUnits                    *int64                           `protobuf:"varint,4,opt,name=free_units,json=freeUnits,proto3,oneof" json:"free_units,omitempty"`
 	FreeUnitsPerEvents           *int64                           `protobuf:"varint,5,opt,name=free_units_per_events,json=freeUnitsPerEvents,proto3,oneof" json:"free_units_per_events,omitempty"`
-	FreeUnitsPerTotalAggregation *string                          `protobuf:"bytes,6,opt,name=free_units_per_total_aggregation,json=freeUnitsPerTotalAggregation,proto3,oneof" json:"free_units_per_total_aggregation,omitempty"`
+	FreeUnitsPerTotalAggregation *kernel.DecimalValue             `protobuf:"bytes,6,opt,name=free_units_per_total_aggregation,json=freeUnitsPerTotalAggregation,proto3,oneof" json:"free_units_per_total_aggregation,omitempty"`
 	GraduatedPercentageRanges    []*GraduatedPercentageRangeInput `protobuf:"bytes,7,rep,name=graduated_percentage_ranges,json=graduatedPercentageRanges,proto3" json:"graduated_percentage_ranges,omitempty"`
 	GraduatedRanges              []*GraduatedRangeInput           `protobuf:"bytes,8,rep,name=graduated_ranges,json=graduatedRanges,proto3" json:"graduated_ranges,omitempty"`
 	PackageSize                  *int64                           `protobuf:"varint,9,opt,name=package_size,json=packageSize,proto3,oneof" json:"package_size,omitempty"`
 	PerTransactionMaxAmount      *string                          `protobuf:"bytes,10,opt,name=per_transaction_max_amount,json=perTransactionMaxAmount,proto3,oneof" json:"per_transaction_max_amount,omitempty"`
 	PerTransactionMinAmount      *string                          `protobuf:"bytes,11,opt,name=per_transaction_min_amount,json=perTransactionMinAmount,proto3,oneof" json:"per_transaction_min_amount,omitempty"`
 	PricingGroupKeys             []string                         `protobuf:"bytes,12,rep,name=pricing_group_keys,json=pricingGroupKeys,proto3" json:"pricing_group_keys,omitempty"`
-	Rate                         *string                          `protobuf:"bytes,13,opt,name=rate,proto3,oneof" json:"rate,omitempty"`
+	Rate                         *kernel.DecimalValue             `protobuf:"bytes,13,opt,name=rate,proto3,oneof" json:"rate,omitempty"`
 	VolumeRanges                 []*VolumeRangeInput              `protobuf:"bytes,14,rep,name=volume_ranges,json=volumeRanges,proto3" json:"volume_ranges,omitempty"`
 	unknownFields                protoimpl.UnknownFields
 	sizeCache                    protoimpl.SizeCache
@@ -18828,7 +17848,7 @@ type PropertiesInput struct {
 
 func (x *PropertiesInput) Reset() {
 	*x = PropertiesInput{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[105]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[97]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18840,7 +17860,7 @@ func (x *PropertiesInput) String() string {
 func (*PropertiesInput) ProtoMessage() {}
 
 func (x *PropertiesInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[105]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[97]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18853,14 +17873,14 @@ func (x *PropertiesInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PropertiesInput.ProtoReflect.Descriptor instead.
 func (*PropertiesInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{105}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{97}
 }
 
-func (x *PropertiesInput) GetAmount() string {
-	if x != nil && x.Amount != nil {
-		return *x.Amount
+func (x *PropertiesInput) GetAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.Amount
 	}
-	return ""
+	return nil
 }
 
 func (x *PropertiesInput) GetCustomProperties() *structpb.Struct {
@@ -18891,11 +17911,11 @@ func (x *PropertiesInput) GetFreeUnitsPerEvents() int64 {
 	return 0
 }
 
-func (x *PropertiesInput) GetFreeUnitsPerTotalAggregation() string {
-	if x != nil && x.FreeUnitsPerTotalAggregation != nil {
-		return *x.FreeUnitsPerTotalAggregation
+func (x *PropertiesInput) GetFreeUnitsPerTotalAggregation() *kernel.DecimalValue {
+	if x != nil {
+		return x.FreeUnitsPerTotalAggregation
 	}
-	return ""
+	return nil
 }
 
 func (x *PropertiesInput) GetGraduatedPercentageRanges() []*GraduatedPercentageRangeInput {
@@ -18940,11 +17960,11 @@ func (x *PropertiesInput) GetPricingGroupKeys() []string {
 	return nil
 }
 
-func (x *PropertiesInput) GetRate() string {
-	if x != nil && x.Rate != nil {
-		return *x.Rate
+func (x *PropertiesInput) GetRate() *kernel.DecimalValue {
+	if x != nil {
+		return x.Rate
 	}
-	return ""
+	return nil
 }
 
 func (x *PropertiesInput) GetVolumeRanges() []*VolumeRangeInput {
@@ -18954,102 +17974,34 @@ func (x *PropertiesInput) GetVolumeRanges() []*VolumeRangeInput {
 	return nil
 }
 
-type ProviderCustomer struct {
-	state                  protoimpl.MessageState       `protogen:"open.v1"`
-	Id                     string                       `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	ProviderCustomerId     *string                      `protobuf:"bytes,2,opt,name=provider_customer_id,json=providerCustomerId,proto3,oneof" json:"provider_customer_id,omitempty"`
-	ProviderPaymentMethods []ProviderPaymentMethodsEnum `protobuf:"varint,3,rep,packed,name=provider_payment_methods,json=providerPaymentMethods,proto3,enum=invora.billing.common.v2.ProviderPaymentMethodsEnum" json:"provider_payment_methods,omitempty"`
-	SyncWithProvider       *bool                        `protobuf:"varint,4,opt,name=sync_with_provider,json=syncWithProvider,proto3,oneof" json:"sync_with_provider,omitempty"`
-	unknownFields          protoimpl.UnknownFields
-	sizeCache              protoimpl.SizeCache
-}
-
-func (x *ProviderCustomer) Reset() {
-	*x = ProviderCustomer{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[106]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ProviderCustomer) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ProviderCustomer) ProtoMessage() {}
-
-func (x *ProviderCustomer) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[106]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ProviderCustomer.ProtoReflect.Descriptor instead.
-func (*ProviderCustomer) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{106}
-}
-
-func (x *ProviderCustomer) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *ProviderCustomer) GetProviderCustomerId() string {
-	if x != nil && x.ProviderCustomerId != nil {
-		return *x.ProviderCustomerId
-	}
-	return ""
-}
-
-func (x *ProviderCustomer) GetProviderPaymentMethods() []ProviderPaymentMethodsEnum {
-	if x != nil {
-		return x.ProviderPaymentMethods
-	}
-	return nil
-}
-
-func (x *ProviderCustomer) GetSyncWithProvider() bool {
-	if x != nil && x.SyncWithProvider != nil {
-		return *x.SyncWithProvider
-	}
-	return false
-}
-
 type RecurringTransactionRule struct {
-	state                            protoimpl.MessageState            `protogen:"open.v1"`
-	CreatedAt                        *timestamppb.Timestamp            `protobuf:"bytes,1,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	ExpirationAt                     *timestamppb.Timestamp            `protobuf:"bytes,2,opt,name=expiration_at,json=expirationAt,proto3,oneof" json:"expiration_at,omitempty"`
-	GrantedCredits                   string                            `protobuf:"bytes,3,opt,name=granted_credits,json=grantedCredits,proto3" json:"granted_credits,omitempty"`
-	IgnorePaidTopUpLimits            bool                              `protobuf:"varint,4,opt,name=ignore_paid_top_up_limits,json=ignorePaidTopUpLimits,proto3" json:"ignore_paid_top_up_limits,omitempty"`
-	Interval                         *RecurringTransactionIntervalEnum `protobuf:"varint,5,opt,name=interval,proto3,enum=invora.billing.common.v2.RecurringTransactionIntervalEnum,oneof" json:"interval,omitempty"`
-	InvoiceRequiresSuccessfulPayment bool                              `protobuf:"varint,6,opt,name=invoice_requires_successful_payment,json=invoiceRequiresSuccessfulPayment,proto3" json:"invoice_requires_successful_payment,omitempty"`
-	BillingProviderId                string                            `protobuf:"bytes,7,opt,name=billing_provider_id,json=billingProviderId,proto3" json:"billing_provider_id,omitempty"`
-	Method                           RecurringTransactionMethodEnum    `protobuf:"varint,8,opt,name=method,proto3,enum=invora.billing.common.v2.RecurringTransactionMethodEnum" json:"method,omitempty"`
-	PaidCredits                      string                            `protobuf:"bytes,9,opt,name=paid_credits,json=paidCredits,proto3" json:"paid_credits,omitempty"`
-	PaymentMethod                    *PaymentMethod                    `protobuf:"bytes,10,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
-	PaymentMethodType                *PaymentMethodTypeEnum            `protobuf:"varint,11,opt,name=payment_method_type,json=paymentMethodType,proto3,enum=invora.billing.common.v2.PaymentMethodTypeEnum,oneof" json:"payment_method_type,omitempty"`
-	SelectedInvoiceCustomSections    []*InvoiceCustomSection           `protobuf:"bytes,12,rep,name=selected_invoice_custom_sections,json=selectedInvoiceCustomSections,proto3" json:"selected_invoice_custom_sections,omitempty"`
-	SkipInvoiceCustomSections        *bool                             `protobuf:"varint,13,opt,name=skip_invoice_custom_sections,json=skipInvoiceCustomSections,proto3,oneof" json:"skip_invoice_custom_sections,omitempty"`
-	StartedAt                        *timestamppb.Timestamp            `protobuf:"bytes,14,opt,name=started_at,json=startedAt,proto3,oneof" json:"started_at,omitempty"`
-	TargetOngoingBalance             *string                           `protobuf:"bytes,15,opt,name=target_ongoing_balance,json=targetOngoingBalance,proto3,oneof" json:"target_ongoing_balance,omitempty"`
-	ThresholdCredits                 *string                           `protobuf:"bytes,16,opt,name=threshold_credits,json=thresholdCredits,proto3,oneof" json:"threshold_credits,omitempty"`
-	TransactionMetadata              []*TransactionMetadata            `protobuf:"bytes,17,rep,name=transaction_metadata,json=transactionMetadata,proto3" json:"transaction_metadata,omitempty"`
-	TransactionName                  *string                           `protobuf:"bytes,18,opt,name=transaction_name,json=transactionName,proto3,oneof" json:"transaction_name,omitempty"`
-	Trigger                          RecurringTransactionTriggerEnum   `protobuf:"varint,19,opt,name=trigger,proto3,enum=invora.billing.common.v2.RecurringTransactionTriggerEnum" json:"trigger,omitempty"`
+	state                            protoimpl.MessageState        `protogen:"open.v1"`
+	CreatedAt                        *timestamppb.Timestamp        `protobuf:"bytes,1,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	ExpirationAt                     *timestamppb.Timestamp        `protobuf:"bytes,2,opt,name=expiration_at,json=expirationAt,proto3,oneof" json:"expiration_at,omitempty"`
+	GrantedCredits                   *kernel.DecimalValue          `protobuf:"bytes,3,opt,name=granted_credits,json=grantedCredits,proto3" json:"granted_credits,omitempty"`
+	IgnorePaidTopUpLimits            bool                          `protobuf:"varint,4,opt,name=ignore_paid_top_up_limits,json=ignorePaidTopUpLimits,proto3" json:"ignore_paid_top_up_limits,omitempty"`
+	Interval                         *RecurringTransactionInterval `protobuf:"varint,5,opt,name=interval,proto3,enum=invora.billing.common.v2.RecurringTransactionInterval,oneof" json:"interval,omitempty"`
+	InvoiceRequiresSuccessfulPayment bool                          `protobuf:"varint,6,opt,name=invoice_requires_successful_payment,json=invoiceRequiresSuccessfulPayment,proto3" json:"invoice_requires_successful_payment,omitempty"`
+	BillingProviderId                string                        `protobuf:"bytes,7,opt,name=billing_provider_id,json=billingProviderId,proto3" json:"billing_provider_id,omitempty"`
+	Method                           RecurringTransactionMethod    `protobuf:"varint,8,opt,name=method,proto3,enum=invora.billing.common.v2.RecurringTransactionMethod" json:"method,omitempty"`
+	PaidCredits                      *kernel.DecimalValue          `protobuf:"bytes,9,opt,name=paid_credits,json=paidCredits,proto3" json:"paid_credits,omitempty"`
+	PaymentMethod                    *PaymentMethod                `protobuf:"bytes,10,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
+	PaymentMethodType                *PaymentMethodType            `protobuf:"varint,11,opt,name=payment_method_type,json=paymentMethodType,proto3,enum=invora.billing.common.v2.PaymentMethodType,oneof" json:"payment_method_type,omitempty"`
+	SelectedInvoiceCustomSections    []*InvoiceCustomSection       `protobuf:"bytes,12,rep,name=selected_invoice_custom_sections,json=selectedInvoiceCustomSections,proto3" json:"selected_invoice_custom_sections,omitempty"`
+	SkipInvoiceCustomSections        *bool                         `protobuf:"varint,13,opt,name=skip_invoice_custom_sections,json=skipInvoiceCustomSections,proto3,oneof" json:"skip_invoice_custom_sections,omitempty"`
+	StartedAt                        *timestamppb.Timestamp        `protobuf:"bytes,14,opt,name=started_at,json=startedAt,proto3,oneof" json:"started_at,omitempty"`
+	TargetOngoingBalance             *string                       `protobuf:"bytes,15,opt,name=target_ongoing_balance,json=targetOngoingBalance,proto3,oneof" json:"target_ongoing_balance,omitempty"`
+	ThresholdCredits                 *string                       `protobuf:"bytes,16,opt,name=threshold_credits,json=thresholdCredits,proto3,oneof" json:"threshold_credits,omitempty"`
+	TransactionMetadata              []*TransactionMetadata        `protobuf:"bytes,17,rep,name=transaction_metadata,json=transactionMetadata,proto3" json:"transaction_metadata,omitempty"`
+	TransactionName                  *string                       `protobuf:"bytes,18,opt,name=transaction_name,json=transactionName,proto3,oneof" json:"transaction_name,omitempty"`
+	Trigger                          RecurringTransactionTrigger   `protobuf:"varint,19,opt,name=trigger,proto3,enum=invora.billing.common.v2.RecurringTransactionTrigger" json:"trigger,omitempty"`
 	unknownFields                    protoimpl.UnknownFields
 	sizeCache                        protoimpl.SizeCache
 }
 
 func (x *RecurringTransactionRule) Reset() {
 	*x = RecurringTransactionRule{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[107]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[98]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19061,7 +18013,7 @@ func (x *RecurringTransactionRule) String() string {
 func (*RecurringTransactionRule) ProtoMessage() {}
 
 func (x *RecurringTransactionRule) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[107]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[98]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19074,7 +18026,7 @@ func (x *RecurringTransactionRule) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RecurringTransactionRule.ProtoReflect.Descriptor instead.
 func (*RecurringTransactionRule) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{107}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{98}
 }
 
 func (x *RecurringTransactionRule) GetCreatedAt() *timestamppb.Timestamp {
@@ -19091,11 +18043,11 @@ func (x *RecurringTransactionRule) GetExpirationAt() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *RecurringTransactionRule) GetGrantedCredits() string {
+func (x *RecurringTransactionRule) GetGrantedCredits() *kernel.DecimalValue {
 	if x != nil {
 		return x.GrantedCredits
 	}
-	return ""
+	return nil
 }
 
 func (x *RecurringTransactionRule) GetIgnorePaidTopUpLimits() bool {
@@ -19105,11 +18057,11 @@ func (x *RecurringTransactionRule) GetIgnorePaidTopUpLimits() bool {
 	return false
 }
 
-func (x *RecurringTransactionRule) GetInterval() RecurringTransactionIntervalEnum {
+func (x *RecurringTransactionRule) GetInterval() RecurringTransactionInterval {
 	if x != nil && x.Interval != nil {
 		return *x.Interval
 	}
-	return RecurringTransactionIntervalEnum_RECURRING_TRANSACTION_INTERVAL_ENUM_UNSPECIFIED
+	return RecurringTransactionInterval_RECURRING_TRANSACTION_INTERVAL_UNSPECIFIED
 }
 
 func (x *RecurringTransactionRule) GetInvoiceRequiresSuccessfulPayment() bool {
@@ -19126,18 +18078,18 @@ func (x *RecurringTransactionRule) GetBillingProviderId() string {
 	return ""
 }
 
-func (x *RecurringTransactionRule) GetMethod() RecurringTransactionMethodEnum {
+func (x *RecurringTransactionRule) GetMethod() RecurringTransactionMethod {
 	if x != nil {
 		return x.Method
 	}
-	return RecurringTransactionMethodEnum_RECURRING_TRANSACTION_METHOD_ENUM_UNSPECIFIED
+	return RecurringTransactionMethod_RECURRING_TRANSACTION_METHOD_UNSPECIFIED
 }
 
-func (x *RecurringTransactionRule) GetPaidCredits() string {
+func (x *RecurringTransactionRule) GetPaidCredits() *kernel.DecimalValue {
 	if x != nil {
 		return x.PaidCredits
 	}
-	return ""
+	return nil
 }
 
 func (x *RecurringTransactionRule) GetPaymentMethod() *PaymentMethod {
@@ -19147,11 +18099,11 @@ func (x *RecurringTransactionRule) GetPaymentMethod() *PaymentMethod {
 	return nil
 }
 
-func (x *RecurringTransactionRule) GetPaymentMethodType() PaymentMethodTypeEnum {
+func (x *RecurringTransactionRule) GetPaymentMethodType() PaymentMethodType {
 	if x != nil && x.PaymentMethodType != nil {
 		return *x.PaymentMethodType
 	}
-	return PaymentMethodTypeEnum_PAYMENT_METHOD_TYPE_ENUM_UNSPECIFIED
+	return PaymentMethodType_PAYMENT_METHOD_TYPE_UNSPECIFIED
 }
 
 func (x *RecurringTransactionRule) GetSelectedInvoiceCustomSections() []*InvoiceCustomSection {
@@ -19203,95 +18155,11 @@ func (x *RecurringTransactionRule) GetTransactionName() string {
 	return ""
 }
 
-func (x *RecurringTransactionRule) GetTrigger() RecurringTransactionTriggerEnum {
+func (x *RecurringTransactionRule) GetTrigger() RecurringTransactionTrigger {
 	if x != nil {
 		return x.Trigger
 	}
-	return RecurringTransactionTriggerEnum_RECURRING_TRANSACTION_TRIGGER_ENUM_UNSPECIFIED
-}
-
-type SalesforceCustomer struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	ExternalCustomerId *string                `protobuf:"bytes,1,opt,name=external_customer_id,json=externalCustomerId,proto3,oneof" json:"external_customer_id,omitempty"`
-	Id                 string                 `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
-	IntegrationCode    *string                `protobuf:"bytes,3,opt,name=integration_code,json=integrationCode,proto3,oneof" json:"integration_code,omitempty"`
-	IntegrationId      *string                `protobuf:"bytes,4,opt,name=integration_id,json=integrationId,proto3,oneof" json:"integration_id,omitempty"`
-	IntegrationType    *IntegrationTypeEnum   `protobuf:"varint,5,opt,name=integration_type,json=integrationType,proto3,enum=invora.billing.common.v2.IntegrationTypeEnum,oneof" json:"integration_type,omitempty"`
-	SyncWithProvider   *bool                  `protobuf:"varint,6,opt,name=sync_with_provider,json=syncWithProvider,proto3,oneof" json:"sync_with_provider,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *SalesforceCustomer) Reset() {
-	*x = SalesforceCustomer{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[108]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SalesforceCustomer) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SalesforceCustomer) ProtoMessage() {}
-
-func (x *SalesforceCustomer) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[108]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SalesforceCustomer.ProtoReflect.Descriptor instead.
-func (*SalesforceCustomer) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{108}
-}
-
-func (x *SalesforceCustomer) GetExternalCustomerId() string {
-	if x != nil && x.ExternalCustomerId != nil {
-		return *x.ExternalCustomerId
-	}
-	return ""
-}
-
-func (x *SalesforceCustomer) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *SalesforceCustomer) GetIntegrationCode() string {
-	if x != nil && x.IntegrationCode != nil {
-		return *x.IntegrationCode
-	}
-	return ""
-}
-
-func (x *SalesforceCustomer) GetIntegrationId() string {
-	if x != nil && x.IntegrationId != nil {
-		return *x.IntegrationId
-	}
-	return ""
-}
-
-func (x *SalesforceCustomer) GetIntegrationType() IntegrationTypeEnum {
-	if x != nil && x.IntegrationType != nil {
-		return *x.IntegrationType
-	}
-	return IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_UNSPECIFIED
-}
-
-func (x *SalesforceCustomer) GetSyncWithProvider() bool {
-	if x != nil && x.SyncWithProvider != nil {
-		return *x.SyncWithProvider
-	}
-	return false
+	return RecurringTransactionTrigger_RECURRING_TRANSACTION_TRIGGER_UNSPECIFIED
 }
 
 type SanitizedApiKey struct {
@@ -19302,14 +18170,14 @@ type SanitizedApiKey struct {
 	LastUsedAt    *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=last_used_at,json=lastUsedAt,proto3,oneof" json:"last_used_at,omitempty"`
 	Name          *string                `protobuf:"bytes,5,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	Permissions   *structpb.Struct       `protobuf:"bytes,6,opt,name=permissions,proto3" json:"permissions,omitempty"`
-	Value         string                 `protobuf:"bytes,7,opt,name=value,proto3" json:"value,omitempty"`
+	MaskedValue   string                 `protobuf:"bytes,7,opt,name=masked_value,json=maskedValue,proto3" json:"masked_value,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *SanitizedApiKey) Reset() {
 	*x = SanitizedApiKey{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[109]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[99]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19321,7 +18189,7 @@ func (x *SanitizedApiKey) String() string {
 func (*SanitizedApiKey) ProtoMessage() {}
 
 func (x *SanitizedApiKey) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[109]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[99]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19334,7 +18202,7 @@ func (x *SanitizedApiKey) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SanitizedApiKey.ProtoReflect.Descriptor instead.
 func (*SanitizedApiKey) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{109}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{99}
 }
 
 func (x *SanitizedApiKey) GetCreatedAt() *timestamppb.Timestamp {
@@ -19379,9 +18247,9 @@ func (x *SanitizedApiKey) GetPermissions() *structpb.Struct {
 	return nil
 }
 
-func (x *SanitizedApiKey) GetValue() string {
+func (x *SanitizedApiKey) GetMaskedValue() string {
 	if x != nil {
-		return x.Value
+		return x.MaskedValue
 	}
 	return ""
 }
@@ -19391,7 +18259,6 @@ type StripeProvider struct {
 	Code               string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
 	Id                 string                 `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
 	Name               string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	SecretKey          *string                `protobuf:"bytes,4,opt,name=secret_key,json=secretKey,proto3,oneof" json:"secret_key,omitempty"`
 	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
 	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
 	unknownFields      protoimpl.UnknownFields
@@ -19400,7 +18267,7 @@ type StripeProvider struct {
 
 func (x *StripeProvider) Reset() {
 	*x = StripeProvider{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[110]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[100]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19412,7 +18279,7 @@ func (x *StripeProvider) String() string {
 func (*StripeProvider) ProtoMessage() {}
 
 func (x *StripeProvider) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[110]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[100]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19425,7 +18292,7 @@ func (x *StripeProvider) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StripeProvider.ProtoReflect.Descriptor instead.
 func (*StripeProvider) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{110}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{100}
 }
 
 func (x *StripeProvider) GetCode() string {
@@ -19449,13 +18316,6 @@ func (x *StripeProvider) GetName() string {
 	return ""
 }
 
-func (x *StripeProvider) GetSecretKey() string {
-	if x != nil && x.SecretKey != nil {
-		return *x.SecretKey
-	}
-	return ""
-}
-
 func (x *StripeProvider) GetSuccessRedirectUrl() string {
 	if x != nil && x.SuccessRedirectUrl != nil {
 		return *x.SuccessRedirectUrl
@@ -19474,7 +18334,7 @@ type SubscriptionLifetimeUsage struct {
 	state                    protoimpl.MessageState `protogen:"open.v1"`
 	LastThresholdAmountCents *int64                 `protobuf:"varint,1,opt,name=last_threshold_amount_cents,json=lastThresholdAmountCents,proto3,oneof" json:"last_threshold_amount_cents,omitempty"`
 	NextThresholdAmountCents *int64                 `protobuf:"varint,2,opt,name=next_threshold_amount_cents,json=nextThresholdAmountCents,proto3,oneof" json:"next_threshold_amount_cents,omitempty"`
-	NextThresholdRatio       *float64               `protobuf:"fixed64,3,opt,name=next_threshold_ratio,json=nextThresholdRatio,proto3,oneof" json:"next_threshold_ratio,omitempty"`
+	NextThresholdRatio       *kernel.DecimalValue   `protobuf:"bytes,3,opt,name=next_threshold_ratio,json=nextThresholdRatio,proto3,oneof" json:"next_threshold_ratio,omitempty"`
 	TotalUsageAmountCents    int64                  `protobuf:"varint,4,opt,name=total_usage_amount_cents,json=totalUsageAmountCents,proto3" json:"total_usage_amount_cents,omitempty"`
 	TotalUsageFromDatetime   *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=total_usage_from_datetime,json=totalUsageFromDatetime,proto3" json:"total_usage_from_datetime,omitempty"`
 	TotalUsageToDatetime     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=total_usage_to_datetime,json=totalUsageToDatetime,proto3" json:"total_usage_to_datetime,omitempty"`
@@ -19484,7 +18344,7 @@ type SubscriptionLifetimeUsage struct {
 
 func (x *SubscriptionLifetimeUsage) Reset() {
 	*x = SubscriptionLifetimeUsage{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[111]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[101]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19496,7 +18356,7 @@ func (x *SubscriptionLifetimeUsage) String() string {
 func (*SubscriptionLifetimeUsage) ProtoMessage() {}
 
 func (x *SubscriptionLifetimeUsage) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[111]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[101]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19509,7 +18369,7 @@ func (x *SubscriptionLifetimeUsage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubscriptionLifetimeUsage.ProtoReflect.Descriptor instead.
 func (*SubscriptionLifetimeUsage) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{111}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{101}
 }
 
 func (x *SubscriptionLifetimeUsage) GetLastThresholdAmountCents() int64 {
@@ -19526,11 +18386,11 @@ func (x *SubscriptionLifetimeUsage) GetNextThresholdAmountCents() int64 {
 	return 0
 }
 
-func (x *SubscriptionLifetimeUsage) GetNextThresholdRatio() float64 {
-	if x != nil && x.NextThresholdRatio != nil {
-		return *x.NextThresholdRatio
+func (x *SubscriptionLifetimeUsage) GetNextThresholdRatio() *kernel.DecimalValue {
+	if x != nil {
+		return x.NextThresholdRatio
 	}
-	return 0
+	return nil
 }
 
 func (x *SubscriptionLifetimeUsage) GetTotalUsageAmountCents() int64 {
@@ -19555,11 +18415,10 @@ func (x *SubscriptionLifetimeUsage) GetTotalUsageToDatetime() *timestamppb.Times
 }
 
 type TapProvider struct {
-	state  protoimpl.MessageState `protogen:"open.v1"`
-	ApiKey *string                `protobuf:"bytes,1,opt,name=api_key,json=apiKey,proto3,oneof" json:"api_key,omitempty"`
-	Code   string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
-	Id     string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Name   string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Code  string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
+	Id    string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	Name  string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
 	// When enabled, the first charge saves the card for recurring merchant-initiated payments. Requires Tap KYC onboarding.
 	SaveCardEnabled    *bool   `protobuf:"varint,5,opt,name=save_card_enabled,json=saveCardEnabled,proto3,oneof" json:"save_card_enabled,omitempty"`
 	SuccessRedirectUrl *string `protobuf:"bytes,6,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
@@ -19570,7 +18429,7 @@ type TapProvider struct {
 
 func (x *TapProvider) Reset() {
 	*x = TapProvider{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[112]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[102]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19582,7 +18441,7 @@ func (x *TapProvider) String() string {
 func (*TapProvider) ProtoMessage() {}
 
 func (x *TapProvider) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[112]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[102]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19595,14 +18454,7 @@ func (x *TapProvider) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TapProvider.ProtoReflect.Descriptor instead.
 func (*TapProvider) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{112}
-}
-
-func (x *TapProvider) GetApiKey() string {
-	if x != nil && x.ApiKey != nil {
-		return *x.ApiKey
-	}
-	return ""
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{102}
 }
 
 func (x *TapProvider) GetCode() string {
@@ -19657,7 +18509,7 @@ type TransactionMetadata struct {
 
 func (x *TransactionMetadata) Reset() {
 	*x = TransactionMetadata{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[113]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[103]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19669,7 +18521,7 @@ func (x *TransactionMetadata) String() string {
 func (*TransactionMetadata) ProtoMessage() {}
 
 func (x *TransactionMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[113]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[103]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19682,7 +18534,7 @@ func (x *TransactionMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TransactionMetadata.ProtoReflect.Descriptor instead.
 func (*TransactionMetadata) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{113}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{103}
 }
 
 func (x *TransactionMetadata) GetKey() string {
@@ -19711,7 +18563,7 @@ type UsageThreshold struct {
 
 func (x *UsageThreshold) Reset() {
 	*x = UsageThreshold{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[114]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[104]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19723,7 +18575,7 @@ func (x *UsageThreshold) String() string {
 func (*UsageThreshold) ProtoMessage() {}
 
 func (x *UsageThreshold) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[114]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[104]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19736,7 +18588,7 @@ func (x *UsageThreshold) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UsageThreshold.ProtoReflect.Descriptor instead.
 func (*UsageThreshold) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{114}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{104}
 }
 
 func (x *UsageThreshold) GetAmountCents() int64 {
@@ -19778,7 +18630,7 @@ type UsageThresholdInput struct {
 
 func (x *UsageThresholdInput) Reset() {
 	*x = UsageThresholdInput{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[115]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[105]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19790,7 +18642,7 @@ func (x *UsageThresholdInput) String() string {
 func (*UsageThresholdInput) ProtoMessage() {}
 
 func (x *UsageThresholdInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[115]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[105]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19803,7 +18655,7 @@ func (x *UsageThresholdInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UsageThresholdInput.ProtoReflect.Descriptor instead.
 func (*UsageThresholdInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{115}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{105}
 }
 
 func (x *UsageThresholdInput) GetAmountCents() int64 {
@@ -19829,9 +18681,9 @@ func (x *UsageThresholdInput) GetThresholdDisplayName() string {
 
 type VolumeRange struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	FlatAmount    string                 `protobuf:"bytes,1,opt,name=flat_amount,json=flatAmount,proto3" json:"flat_amount,omitempty"`
+	FlatAmount    *kernel.DecimalValue   `protobuf:"bytes,1,opt,name=flat_amount,json=flatAmount,proto3" json:"flat_amount,omitempty"`
 	FromValue     int64                  `protobuf:"varint,2,opt,name=from_value,json=fromValue,proto3" json:"from_value,omitempty"`
-	PerUnitAmount string                 `protobuf:"bytes,3,opt,name=per_unit_amount,json=perUnitAmount,proto3" json:"per_unit_amount,omitempty"`
+	PerUnitAmount *kernel.DecimalValue   `protobuf:"bytes,3,opt,name=per_unit_amount,json=perUnitAmount,proto3" json:"per_unit_amount,omitempty"`
 	ToValue       *int64                 `protobuf:"varint,4,opt,name=to_value,json=toValue,proto3,oneof" json:"to_value,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -19839,7 +18691,7 @@ type VolumeRange struct {
 
 func (x *VolumeRange) Reset() {
 	*x = VolumeRange{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[116]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[106]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19851,7 +18703,7 @@ func (x *VolumeRange) String() string {
 func (*VolumeRange) ProtoMessage() {}
 
 func (x *VolumeRange) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[116]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[106]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19864,14 +18716,14 @@ func (x *VolumeRange) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VolumeRange.ProtoReflect.Descriptor instead.
 func (*VolumeRange) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{116}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{106}
 }
 
-func (x *VolumeRange) GetFlatAmount() string {
+func (x *VolumeRange) GetFlatAmount() *kernel.DecimalValue {
 	if x != nil {
 		return x.FlatAmount
 	}
-	return ""
+	return nil
 }
 
 func (x *VolumeRange) GetFromValue() int64 {
@@ -19881,11 +18733,11 @@ func (x *VolumeRange) GetFromValue() int64 {
 	return 0
 }
 
-func (x *VolumeRange) GetPerUnitAmount() string {
+func (x *VolumeRange) GetPerUnitAmount() *kernel.DecimalValue {
 	if x != nil {
 		return x.PerUnitAmount
 	}
-	return ""
+	return nil
 }
 
 func (x *VolumeRange) GetToValue() int64 {
@@ -19897,9 +18749,9 @@ func (x *VolumeRange) GetToValue() int64 {
 
 type VolumeRangeInput struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	FlatAmount    string                 `protobuf:"bytes,1,opt,name=flat_amount,json=flatAmount,proto3" json:"flat_amount,omitempty"`
+	FlatAmount    *kernel.DecimalValue   `protobuf:"bytes,1,opt,name=flat_amount,json=flatAmount,proto3" json:"flat_amount,omitempty"`
 	FromValue     int64                  `protobuf:"varint,2,opt,name=from_value,json=fromValue,proto3" json:"from_value,omitempty"`
-	PerUnitAmount string                 `protobuf:"bytes,3,opt,name=per_unit_amount,json=perUnitAmount,proto3" json:"per_unit_amount,omitempty"`
+	PerUnitAmount *kernel.DecimalValue   `protobuf:"bytes,3,opt,name=per_unit_amount,json=perUnitAmount,proto3" json:"per_unit_amount,omitempty"`
 	ToValue       *int64                 `protobuf:"varint,4,opt,name=to_value,json=toValue,proto3,oneof" json:"to_value,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -19907,7 +18759,7 @@ type VolumeRangeInput struct {
 
 func (x *VolumeRangeInput) Reset() {
 	*x = VolumeRangeInput{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[117]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[107]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19919,7 +18771,7 @@ func (x *VolumeRangeInput) String() string {
 func (*VolumeRangeInput) ProtoMessage() {}
 
 func (x *VolumeRangeInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[117]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[107]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19932,14 +18784,14 @@ func (x *VolumeRangeInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VolumeRangeInput.ProtoReflect.Descriptor instead.
 func (*VolumeRangeInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{117}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{107}
 }
 
-func (x *VolumeRangeInput) GetFlatAmount() string {
+func (x *VolumeRangeInput) GetFlatAmount() *kernel.DecimalValue {
 	if x != nil {
 		return x.FlatAmount
 	}
-	return ""
+	return nil
 }
 
 func (x *VolumeRangeInput) GetFromValue() int64 {
@@ -19949,11 +18801,11 @@ func (x *VolumeRangeInput) GetFromValue() int64 {
 	return 0
 }
 
-func (x *VolumeRangeInput) GetPerUnitAmount() string {
+func (x *VolumeRangeInput) GetPerUnitAmount() *kernel.DecimalValue {
 	if x != nil {
 		return x.PerUnitAmount
 	}
-	return ""
+	return nil
 }
 
 func (x *VolumeRangeInput) GetToValue() int64 {
@@ -19966,14 +18818,14 @@ func (x *VolumeRangeInput) GetToValue() int64 {
 type WalletAppliesTo struct {
 	state           protoimpl.MessageState   `protogen:"open.v1"`
 	BillableMetrics []*BillingBillableMetric `protobuf:"bytes,1,rep,name=billable_metrics,json=billableMetrics,proto3" json:"billable_metrics,omitempty"`
-	FeeTypes        []FeeTypesEnum           `protobuf:"varint,2,rep,packed,name=fee_types,json=feeTypes,proto3,enum=invora.billing.common.v2.FeeTypesEnum" json:"fee_types,omitempty"`
+	FeeTypes        []FeeTypes               `protobuf:"varint,2,rep,packed,name=fee_types,json=feeTypes,proto3,enum=invora.billing.common.v2.FeeTypes" json:"fee_types,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
 
 func (x *WalletAppliesTo) Reset() {
 	*x = WalletAppliesTo{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[118]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[108]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19985,7 +18837,7 @@ func (x *WalletAppliesTo) String() string {
 func (*WalletAppliesTo) ProtoMessage() {}
 
 func (x *WalletAppliesTo) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[118]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[108]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19998,7 +18850,7 @@ func (x *WalletAppliesTo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WalletAppliesTo.ProtoReflect.Descriptor instead.
 func (*WalletAppliesTo) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{118}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{108}
 }
 
 func (x *WalletAppliesTo) GetBillableMetrics() []*BillingBillableMetric {
@@ -20008,7 +18860,7 @@ func (x *WalletAppliesTo) GetBillableMetrics() []*BillingBillableMetric {
 	return nil
 }
 
-func (x *WalletAppliesTo) GetFeeTypes() []FeeTypesEnum {
+func (x *WalletAppliesTo) GetFeeTypes() []FeeTypes {
 	if x != nil {
 		return x.FeeTypes
 	}
@@ -20025,7 +18877,7 @@ type WalletTransactionMetadataObject struct {
 
 func (x *WalletTransactionMetadataObject) Reset() {
 	*x = WalletTransactionMetadataObject{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[119]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[109]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -20037,7 +18889,7 @@ func (x *WalletTransactionMetadataObject) String() string {
 func (*WalletTransactionMetadataObject) ProtoMessage() {}
 
 func (x *WalletTransactionMetadataObject) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[119]
+	mi := &file_invora_billing_common_v2_models_proto_msgTypes[109]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -20050,7 +18902,7 @@ func (x *WalletTransactionMetadataObject) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WalletTransactionMetadataObject.ProtoReflect.Descriptor instead.
 func (*WalletTransactionMetadataObject) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{119}
+	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{109}
 }
 
 func (x *WalletTransactionMetadataObject) GetKey() string {
@@ -20067,176 +18919,70 @@ func (x *WalletTransactionMetadataObject) GetValue() string {
 	return ""
 }
 
-type XeroCustomer struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	ExternalCustomerId *string                `protobuf:"bytes,1,opt,name=external_customer_id,json=externalCustomerId,proto3,oneof" json:"external_customer_id,omitempty"`
-	Id                 string                 `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
-	IntegrationCode    *string                `protobuf:"bytes,3,opt,name=integration_code,json=integrationCode,proto3,oneof" json:"integration_code,omitempty"`
-	IntegrationId      *string                `protobuf:"bytes,4,opt,name=integration_id,json=integrationId,proto3,oneof" json:"integration_id,omitempty"`
-	IntegrationType    *IntegrationTypeEnum   `protobuf:"varint,5,opt,name=integration_type,json=integrationType,proto3,enum=invora.billing.common.v2.IntegrationTypeEnum,oneof" json:"integration_type,omitempty"`
-	SyncWithProvider   *bool                  `protobuf:"varint,6,opt,name=sync_with_provider,json=syncWithProvider,proto3,oneof" json:"sync_with_provider,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *XeroCustomer) Reset() {
-	*x = XeroCustomer{}
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[120]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *XeroCustomer) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*XeroCustomer) ProtoMessage() {}
-
-func (x *XeroCustomer) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_common_v2_models_proto_msgTypes[120]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use XeroCustomer.ProtoReflect.Descriptor instead.
-func (*XeroCustomer) Descriptor() ([]byte, []int) {
-	return file_invora_billing_common_v2_models_proto_rawDescGZIP(), []int{120}
-}
-
-func (x *XeroCustomer) GetExternalCustomerId() string {
-	if x != nil && x.ExternalCustomerId != nil {
-		return *x.ExternalCustomerId
-	}
-	return ""
-}
-
-func (x *XeroCustomer) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *XeroCustomer) GetIntegrationCode() string {
-	if x != nil && x.IntegrationCode != nil {
-		return *x.IntegrationCode
-	}
-	return ""
-}
-
-func (x *XeroCustomer) GetIntegrationId() string {
-	if x != nil && x.IntegrationId != nil {
-		return *x.IntegrationId
-	}
-	return ""
-}
-
-func (x *XeroCustomer) GetIntegrationType() IntegrationTypeEnum {
-	if x != nil && x.IntegrationType != nil {
-		return *x.IntegrationType
-	}
-	return IntegrationTypeEnum_INTEGRATION_TYPE_ENUM_UNSPECIFIED
-}
-
-func (x *XeroCustomer) GetSyncWithProvider() bool {
-	if x != nil && x.SyncWithProvider != nil {
-		return *x.SyncWithProvider
-	}
-	return false
-}
-
 var File_invora_billing_common_v2_models_proto protoreflect.FileDescriptor
 
 const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\n" +
-	"%invora/billing/common/v2/models.proto\x12\x18invora.billing.common.v2\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x16google/type/date.proto\x1a\x14kernel/decimal.proto\"\xce(\n" +
-	"\x0fBillingCustomer\x12T\n" +
-	"\faccount_type\x18\x01 \x01(\x0e21.invora.billing.common.v2.CustomerAccountTypeEnumR\vaccountType\x12<\n" +
-	"\x1aactive_subscriptions_count\x18\x02 \x01(\x05R\x18activeSubscriptionsCount\x12J\n" +
-	"\ractivity_logs\x18\x03 \x03(\v2%.invora.billing.common.v2.ActivityLogR\factivityLogs\x12(\n" +
+	"%invora/billing/common/v2/models.proto\x12\x18invora.billing.common.v2\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x16google/type/date.proto\x1a\x14kernel/decimal.proto\"\x97\x1b\n" +
+	"\x0fBillingCustomer\x12P\n" +
+	"\faccount_type\x18\x01 \x01(\x0e2-.invora.billing.common.v2.CustomerAccountTypeR\vaccountType\x12<\n" +
+	"\x1aactive_subscriptions_count\x18\x02 \x01(\x05R\x18activeSubscriptionsCount\x12(\n" +
 	"\raddress_line1\x18\x04 \x01(\tH\x00R\faddressLine1\x88\x01\x01\x12(\n" +
 	"\raddress_line2\x18\x05 \x01(\tH\x01R\faddressLine2\x88\x01\x01\x12S\n" +
-	"\x0eanrok_customer\x18\x06 \x01(\v2'.invora.billing.common.v2.AnrokCustomerH\x02R\ranrokCustomer\x88\x01\x01\x12W\n" +
-	"\x13applicable_timezone\x18\a \x01(\x0e2&.invora.billing.common.v2.TimezoneEnumR\x12applicableTimezone\x12N\n" +
+	"\x13applicable_timezone\x18\a \x01(\x0e2\".invora.billing.common.v2.TimezoneR\x12applicableTimezone\x12N\n" +
 	"\x0fapplied_add_ons\x18\b \x03(\v2&.invora.billing.common.v2.AppliedAddOnR\rappliedAddOns\x12P\n" +
-	"\x0fapplied_coupons\x18\t \x03(\v2'.invora.billing.common.v2.AppliedCouponR\x0eappliedCoupons\x12h\n" +
-	"\x18applied_dunning_campaign\x18\n" +
-	" \x01(\v2).invora.billing.common.v2.DunningCampaignH\x03R\x16appliedDunningCampaign\x88\x01\x01\x12Y\n" +
-	"\x10avalara_customer\x18\v \x01(\v2).invora.billing.common.v2.AvalaraCustomerH\x04R\x0favalaraCustomer\x88\x01\x01\x12p\n" +
-	"\x15billing_configuration\x18\f \x01(\v26.invora.billing.common.v2.CustomerBillingConfigurationH\x05R\x14billingConfiguration\x88\x01\x01\x12N\n" +
-	"\x0ebilling_entity\x18\r \x01(\v2'.invora.billing.common.v2.BillingEntityR\rbillingEntity\x12.\n" +
-	"\x13can_edit_attributes\x18\x0e \x01(\bR\x11canEditAttributes\x12\x17\n" +
-	"\x04city\x18\x0f \x01(\tH\x06R\x04city\x88\x01\x01\x12\x7f\n" +
+	"\x0fapplied_coupons\x18\t \x03(\v2'.invora.billing.common.v2.AppliedCouponR\x0eappliedCoupons\x12p\n" +
+	"\x15billing_configuration\x18\f \x01(\v26.invora.billing.common.v2.CustomerBillingConfigurationH\x02R\x14billingConfiguration\x88\x01\x01\x12N\n" +
+	"\x0ebilling_entity\x18\r \x01(\v2'.invora.billing.common.v2.BillingEntityR\rbillingEntity\x12\x17\n" +
+	"\x04city\x18\x0f \x01(\tH\x03R\x04city\x88\x01\x01\x12\x7f\n" +
 	"$configurable_invoice_custom_sections\x18\x10 \x03(\v2..invora.billing.common.v2.InvoiceCustomSectionR!configurableInvoiceCustomSections\x12D\n" +
-	"\acountry\x18\x11 \x01(\x0e2%.invora.billing.common.v2.CountryCodeH\aR\acountry\x88\x01\x01\x129\n" +
+	"\acountry\x18\x11 \x01(\x0e2%.invora.billing.common.v2.CountryCodeH\x04R\acountry\x88\x01\x01\x129\n" +
 	"\n" +
 	"created_at\x18\x12 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12N\n" +
 	"\fcredit_notes\x18\x13 \x03(\v2+.invora.billing.common.v2.BillingCreditNoteR\vcreditNotes\x12H\n" +
 	"!credit_notes_balance_amount_cents\x18\x14 \x01(\x03R\x1dcreditNotesBalanceAmountCents\x12N\n" +
 	"$credit_notes_credits_available_count\x18\x15 \x01(\x05R creditNotesCreditsAvailableCount\x12G\n" +
-	"\bcurrency\x18\x16 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\bR\bcurrency\x88\x01\x01\x12T\n" +
-	"\rcustomer_type\x18\x17 \x01(\x0e2*.invora.billing.common.v2.CustomerTypeEnumH\tR\fcustomerType\x88\x01\x01\x12>\n" +
+	"\bcurrency\x18\x16 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\x05R\bcurrency\x88\x01\x01\x12P\n" +
+	"\rcustomer_type\x18\x17 \x01(\x0e2&.invora.billing.common.v2.CustomerTypeH\x06R\fcustomerType\x88\x01\x01\x12>\n" +
 	"\n" +
-	"deleted_at\x18\x18 \x01(\v2\x1a.google.protobuf.TimestampH\n" +
-	"R\tdeletedAt\x88\x01\x01\x12!\n" +
+	"deleted_at\x18\x18 \x01(\v2\x1a.google.protobuf.TimestampH\aR\tdeletedAt\x88\x01\x01\x12!\n" +
 	"\fdisplay_name\x18\x19 \x01(\tR\vdisplayName\x12\x19\n" +
-	"\x05email\x18\x1a \x01(\tH\vR\x05email\x88\x01\x01\x12J\n" +
-	"\rerror_details\x18\x1b \x03(\v2%.invora.billing.common.v2.ErrorDetailR\ferrorDetails\x12A\n" +
-	"\x1dexclude_from_dunning_campaign\x18\x1c \x01(\bR\x1aexcludeFromDunningCampaign\x12\x1f\n" +
+	"\x05email\x18\x1a \x01(\tH\bR\x05email\x88\x01\x01\x12\x1f\n" +
 	"\vexternal_id\x18\x1d \x01(\tR\n" +
 	"externalId\x129\n" +
-	"\x16external_salesforce_id\x18\x1e \x01(\tH\fR\x14externalSalesforceId\x88\x01\x01\x12}\n" +
-	"\x1cfinalize_zero_amount_invoice\x18\x1f \x01(\x0e27.invora.billing.common.v2.FinalizeZeroAmountInvoiceEnumH\rR\x19finalizeZeroAmountInvoice\x88\x01\x01\x12!\n" +
-	"\tfirstname\x18  \x01(\tH\x0eR\tfirstname\x88\x01\x01\x12*\n" +
-	"\x11has_active_wallet\x18! \x01(\bR\x0fhasActiveWallet\x12(\n" +
-	"\x10has_credit_notes\x18\" \x01(\bR\x0ehasCreditNotes\x120\n" +
-	"\x14has_overdue_invoices\x18# \x01(\bR\x12hasOverdueInvoices\x12l\n" +
-	"1has_overwritten_invoice_custom_sections_selection\x18$ \x01(\bH\x0fR,hasOverwrittenInvoiceCustomSectionsSelection\x88\x01\x01\x12Y\n" +
-	"\x10hubspot_customer\x18% \x01(\v2).invora.billing.common.v2.HubspotCustomerH\x10R\x0fhubspotCustomer\x88\x01\x01\x12\x0e\n" +
+	"\x16external_salesforce_id\x18\x1e \x01(\tH\tR\x14externalSalesforceId\x88\x01\x01\x12y\n" +
+	"\x1cfinalize_zero_amount_invoice\x18\x1f \x01(\x0e23.invora.billing.common.v2.FinalizeZeroAmountInvoiceH\n" +
+	"R\x19finalizeZeroAmountInvoice\x88\x01\x01\x12!\n" +
+	"\tfirstname\x18  \x01(\tH\vR\tfirstname\x88\x01\x01\x12\x0e\n" +
 	"\x02id\x18& \x01(\tR\x02id\x125\n" +
-	"\x14invoice_grace_period\x18' \x01(\x05H\x11R\x12invoiceGracePeriod\x88\x01\x01\x12D\n" +
-	"\binvoices\x18( \x03(\v2(.invora.billing.common.v2.BillingInvoiceR\binvoices\x12A\n" +
-	"\x1dlast_dunning_campaign_attempt\x18) \x01(\x05R\x1alastDunningCampaignAttempt\x12g\n" +
-	" last_dunning_campaign_attempt_at\x18* \x01(\v2\x1a.google.protobuf.TimestampH\x12R\x1clastDunningCampaignAttemptAt\x88\x01\x01\x12\x1f\n" +
-	"\blastname\x18+ \x01(\tH\x13R\blastname\x88\x01\x01\x12\"\n" +
+	"\x14invoice_grace_period\x18' \x01(\x05H\fR\x12invoiceGracePeriod\x88\x01\x01\x12D\n" +
+	"\binvoices\x18( \x03(\v2(.invora.billing.common.v2.BillingInvoiceR\binvoices\x12\x1f\n" +
+	"\blastname\x18+ \x01(\tH\rR\blastname\x88\x01\x01\x12\"\n" +
 	"\n" +
-	"legal_name\x18, \x01(\tH\x14R\tlegalName\x88\x01\x01\x12&\n" +
-	"\flegal_number\x18- \x01(\tH\x15R\vlegalNumber\x88\x01\x01\x12\x1e\n" +
-	"\blogo_url\x18. \x01(\tH\x16R\alogoUrl\x88\x01\x01\x12F\n" +
+	"legal_name\x18, \x01(\tH\x0eR\tlegalName\x88\x01\x01\x12&\n" +
+	"\flegal_number\x18- \x01(\tH\x0fR\vlegalNumber\x88\x01\x01\x12\x1e\n" +
+	"\blogo_url\x18. \x01(\tH\x10R\alogoUrl\x88\x01\x01\x12F\n" +
 	"\bmetadata\x18/ \x03(\v2*.invora.billing.common.v2.CustomerMetadataR\bmetadata\x12\x17\n" +
-	"\x04name\x180 \x01(\tH\x17R\x04name\x88\x01\x01\x12-\n" +
-	"\x10net_payment_term\x181 \x01(\x05H\x18R\x0enetPaymentTerm\x88\x01\x01\x12\\\n" +
-	"\x11netsuite_customer\x182 \x01(\v2*.invora.billing.common.v2.NetsuiteCustomerH\x19R\x10netsuiteCustomer\x88\x01\x01\x12Z\n" +
-	"\x10payment_provider\x183 \x01(\x0e2*.invora.billing.common.v2.ProviderTypeEnumH\x1aR\x0fpaymentProvider\x88\x01\x01\x127\n" +
-	"\x15payment_provider_code\x184 \x01(\tH\x1bR\x13paymentProviderCode\x88\x01\x01\x12\x19\n" +
-	"\x05phone\x185 \x01(\tH\x1cR\x05phone\x88\x01\x01\x12\\\n" +
-	"\x11provider_customer\x186 \x01(\v2*.invora.billing.common.v2.ProviderCustomerH\x1dR\x10providerCustomer\x88\x01\x01\x12b\n" +
-	"\x13salesforce_customer\x187 \x01(\v2,.invora.billing.common.v2.SalesforceCustomerH\x1eR\x12salesforceCustomer\x88\x01\x01\x12#\n" +
+	"\x04name\x180 \x01(\tH\x11R\x04name\x88\x01\x01\x12-\n" +
+	"\x10net_payment_term\x181 \x01(\x05H\x12R\x0enetPaymentTerm\x88\x01\x01\x12V\n" +
+	"\x10payment_provider\x183 \x01(\x0e2&.invora.billing.common.v2.ProviderTypeH\x13R\x0fpaymentProvider\x88\x01\x01\x127\n" +
+	"\x15payment_provider_code\x184 \x01(\tH\x14R\x13paymentProviderCode\x88\x01\x01\x12\x19\n" +
+	"\x05phone\x185 \x01(\tH\x15R\x05phone\x88\x01\x01\x12#\n" +
 	"\rsequential_id\x188 \x01(\tR\fsequentialId\x12Y\n" +
-	"\x10shipping_address\x189 \x01(\v2).invora.billing.common.v2.CustomerAddressH\x1fR\x0fshippingAddress\x88\x01\x01\x12D\n" +
-	"\x1cskip_invoice_custom_sections\x18: \x01(\bH R\x19skipInvoiceCustomSections\x88\x01\x01\x12\x12\n" +
+	"\x10shipping_address\x189 \x01(\v2).invora.billing.common.v2.CustomerAddressH\x16R\x0fshippingAddress\x88\x01\x01\x12D\n" +
+	"\x1cskip_invoice_custom_sections\x18: \x01(\bH\x17R\x19skipInvoiceCustomSections\x88\x01\x01\x12\x12\n" +
 	"\x04slug\x18; \x01(\tR\x04slug\x12\x19\n" +
-	"\x05state\x18< \x01(\tH!R\x05state\x88\x01\x01\x12S\n" +
+	"\x05state\x18< \x01(\tH\x18R\x05state\x88\x01\x01\x12S\n" +
 	"\rsubscriptions\x18= \x03(\v2-.invora.billing.common.v2.BillingSubscriptionR\rsubscriptions\x12?\n" +
-	"\x19tax_identification_number\x18> \x01(\tH\"R\x17taxIdentificationNumber\x88\x01\x01\x12:\n" +
-	"\x05taxes\x18? \x03(\v2$.invora.billing.common.v2.BillingTaxR\x05taxes\x12G\n" +
-	"\btimezone\x18@ \x01(\x0e2&.invora.billing.common.v2.TimezoneEnumH#R\btimezone\x88\x01\x01\x129\n" +
+	"\x19tax_identification_number\x18> \x01(\tH\x19R\x17taxIdentificationNumber\x88\x01\x01\x12:\n" +
+	"\x05taxes\x18? \x03(\v2$.invora.billing.common.v2.BillingTaxR\x05taxes\x12C\n" +
+	"\btimezone\x18@ \x01(\x0e2\".invora.billing.common.v2.TimezoneH\x1aR\btimezone\x88\x01\x01\x129\n" +
 	"\n" +
 	"updated_at\x18A \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12\x15\n" +
-	"\x03url\x18B \x01(\tH$R\x03url\x88\x01\x01\x12P\n" +
-	"\rxero_customer\x18C \x01(\v2&.invora.billing.common.v2.XeroCustomerH%R\fxeroCustomer\x88\x01\x01\x12\x1d\n" +
-	"\azipcode\x18D \x01(\tH&R\azipcode\x88\x01\x01B\x10\n" +
+	"\x03url\x18B \x01(\tH\x1bR\x03url\x88\x01\x01\x12\x1d\n" +
+	"\azipcode\x18D \x01(\tH\x1cR\azipcode\x88\x01\x01B\x10\n" +
 	"\x0e_address_line1B\x10\n" +
-	"\x0e_address_line2B\x11\n" +
-	"\x0f_anrok_customerB\x1b\n" +
-	"\x19_applied_dunning_campaignB\x13\n" +
-	"\x11_avalara_customerB\x18\n" +
+	"\x0e_address_line2B\x18\n" +
 	"\x16_billing_configurationB\a\n" +
 	"\x05_cityB\n" +
 	"\n" +
@@ -20248,35 +18994,27 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x17_external_salesforce_idB\x1f\n" +
 	"\x1d_finalize_zero_amount_invoiceB\f\n" +
 	"\n" +
-	"_firstnameB4\n" +
-	"2_has_overwritten_invoice_custom_sections_selectionB\x13\n" +
-	"\x11_hubspot_customerB\x17\n" +
-	"\x15_invoice_grace_periodB#\n" +
-	"!_last_dunning_campaign_attempt_atB\v\n" +
+	"_firstnameB\x17\n" +
+	"\x15_invoice_grace_periodB\v\n" +
 	"\t_lastnameB\r\n" +
 	"\v_legal_nameB\x0f\n" +
 	"\r_legal_numberB\v\n" +
 	"\t_logo_urlB\a\n" +
 	"\x05_nameB\x13\n" +
-	"\x11_net_payment_termB\x14\n" +
-	"\x12_netsuite_customerB\x13\n" +
+	"\x11_net_payment_termB\x13\n" +
 	"\x11_payment_providerB\x18\n" +
 	"\x16_payment_provider_codeB\b\n" +
-	"\x06_phoneB\x14\n" +
-	"\x12_provider_customerB\x16\n" +
-	"\x14_salesforce_customerB\x13\n" +
+	"\x06_phoneB\x13\n" +
 	"\x11_shipping_addressB\x1f\n" +
 	"\x1d_skip_invoice_custom_sectionsB\b\n" +
 	"\x06_stateB\x1c\n" +
 	"\x1a_tax_identification_numberB\v\n" +
 	"\t_timezoneB\x06\n" +
-	"\x04_urlB\x10\n" +
-	"\x0e_xero_customerB\n" +
+	"\x04_urlB\n" +
 	"\n" +
-	"\b_zipcode\"\xa7\x18\n" +
-	"\x13BillingSubscription\x12J\n" +
-	"\ractivity_logs\x18\x01 \x03(\v2%.invora.billing.common.v2.ActivityLogR\factivityLogs\x12Q\n" +
-	"\fbilling_time\x18\x02 \x01(\x0e2).invora.billing.common.v2.BillingTimeEnumH\x00R\vbillingTime\x88\x01\x01\x12@\n" +
+	"\b_zipcode\"\xc3\x17\n" +
+	"\x13BillingSubscription\x12M\n" +
+	"\fbilling_time\x18\x02 \x01(\x0e2%.invora.billing.common.v2.BillingTimeH\x00R\vbillingTime\x88\x01\x01\x12@\n" +
 	"\vcanceled_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampH\x01R\n" +
 	"canceledAt\x88\x01\x01\x12:\n" +
 	"\acharges\x18\x04 \x03(\v2 .invora.billing.common.v2.ChargeR\acharges\x129\n" +
@@ -20298,20 +19036,20 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\tnext_plan\x18\x11 \x01(\v2%.invora.billing.common.v2.BillingPlanH\bR\bnextPlan\x88\x01\x01\x12_\n" +
 	"\x11next_subscription\x18\x12 \x01(\v2-.invora.billing.common.v2.BillingSubscriptionH\tR\x10nextSubscription\x88\x01\x01\x12Q\n" +
 	"\x14next_subscription_at\x18\x13 \x01(\v2\x1a.google.protobuf.TimestampH\n" +
-	"R\x12nextSubscriptionAt\x88\x01\x01\x12m\n" +
-	"\x16next_subscription_type\x18\x14 \x01(\x0e22.invora.billing.common.v2.NextSubscriptionTypeEnumH\vR\x14nextSubscriptionType\x88\x01\x01\x12w\n" +
-	"\x1aon_termination_credit_note\x18\x15 \x01(\x0e25.invora.billing.common.v2.OnTerminationCreditNoteEnumH\fR\x17onTerminationCreditNote\x88\x01\x01\x12h\n" +
-	"\x16on_termination_invoice\x18\x16 \x01(\x0e22.invora.billing.common.v2.OnTerminationInvoiceEnumR\x14onTerminationInvoice\x12S\n" +
-	"\x0epayment_method\x18\x17 \x01(\v2'.invora.billing.common.v2.PaymentMethodH\rR\rpaymentMethod\x88\x01\x01\x12d\n" +
-	"\x13payment_method_type\x18\x18 \x01(\x0e2/.invora.billing.common.v2.PaymentMethodTypeEnumH\x0eR\x11paymentMethodType\x88\x01\x01\x12>\n" +
+	"R\x12nextSubscriptionAt\x88\x01\x01\x12i\n" +
+	"\x16next_subscription_type\x18\x14 \x01(\x0e2..invora.billing.common.v2.NextSubscriptionTypeH\vR\x14nextSubscriptionType\x88\x01\x01\x12s\n" +
+	"\x1aon_termination_credit_note\x18\x15 \x01(\x0e21.invora.billing.common.v2.OnTerminationCreditNoteH\fR\x17onTerminationCreditNote\x88\x01\x01\x12d\n" +
+	"\x16on_termination_invoice\x18\x16 \x01(\x0e2..invora.billing.common.v2.OnTerminationInvoiceR\x14onTerminationInvoice\x12S\n" +
+	"\x0epayment_method\x18\x17 \x01(\v2'.invora.billing.common.v2.PaymentMethodH\rR\rpaymentMethod\x88\x01\x01\x12`\n" +
+	"\x13payment_method_type\x18\x18 \x01(\x0e2+.invora.billing.common.v2.PaymentMethodTypeH\x0eR\x11paymentMethodType\x88\x01\x01\x12>\n" +
 	"\x0fperiod_end_date\x18\x19 \x01(\v2\x11.google.type.DateH\x0fR\rperiodEndDate\x88\x01\x01\x129\n" +
 	"\x04plan\x18\x1a \x01(\v2%.invora.billing.common.v2.BillingPlanR\x04plan\x12E\n" +
 	"\x1cprogressive_billing_disabled\x18\x1b \x01(\bH\x10R\x1aprogressiveBillingDisabled\x88\x01\x01\x12w\n" +
 	" selected_invoice_custom_sections\x18\x1c \x03(\v2..invora.billing.common.v2.InvoiceCustomSectionR\x1dselectedInvoiceCustomSections\x12D\n" +
 	"\x1cskip_invoice_custom_sections\x18\x1d \x01(\bH\x11R\x19skipInvoiceCustomSections\x88\x01\x01\x12>\n" +
 	"\n" +
-	"started_at\x18\x1e \x01(\v2\x1a.google.protobuf.TimestampH\x12R\tstartedAt\x88\x01\x01\x12E\n" +
-	"\x06status\x18\x1f \x01(\x0e2(.invora.billing.common.v2.StatusTypeEnumH\x13R\x06status\x88\x01\x01\x12H\n" +
+	"started_at\x18\x1e \x01(\v2\x1a.google.protobuf.TimestampH\x12R\tstartedAt\x88\x01\x01\x12A\n" +
+	"\x06status\x18\x1f \x01(\x0e2$.invora.billing.common.v2.StatusTypeH\x13R\x06status\x88\x01\x01\x12H\n" +
 	"\x0fsubscription_at\x18  \x01(\v2\x1a.google.protobuf.TimestampH\x14R\x0esubscriptionAt\x88\x01\x01\x12D\n" +
 	"\rterminated_at\x18! \x01(\v2\x1a.google.protobuf.TimestampH\x15R\fterminatedAt\x88\x01\x01\x129\n" +
 	"\n" +
@@ -20341,9 +19079,8 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\v_started_atB\t\n" +
 	"\a_statusB\x12\n" +
 	"\x10_subscription_atB\x10\n" +
-	"\x0e_terminated_at\"\xbc#\n" +
-	"\x0eBillingInvoice\x12J\n" +
-	"\ractivity_logs\x18\x01 \x03(\v2%.invora.billing.common.v2.ActivityLogR\factivityLogs\x121\n" +
+	"\x0e_terminated_at\"\xaa\"\n" +
+	"\x0eBillingInvoice\x121\n" +
 	"\x15all_charges_have_fees\x18\x02 \x01(\bR\x12allChargesHaveFees\x12<\n" +
 	"\x1ball_fixed_charges_have_fees\x18\x03 \x01(\bR\x17allFixedChargesHaveFees\x12P\n" +
 	"\rapplied_taxes\x18\x04 \x03(\v2+.invora.billing.common.v2.InvoiceAppliedTaxR\fappliedTaxes\x12G\n" +
@@ -20359,8 +19096,7 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x19credit_notes_amount_cents\x18\f \x01(\x03R\x16creditNotesAmountCents\x126\n" +
 	"\x17creditable_amount_cents\x18\r \x01(\x03R\x15creditableAmountCents\x12G\n" +
 	"\bcurrency\x18\x0e \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\x00R\bcurrency\x88\x01\x01\x12E\n" +
-	"\bcustomer\x18\x0f \x01(\v2).invora.billing.common.v2.BillingCustomerR\bcustomer\x12J\n" +
-	"\rerror_details\x18\x10 \x03(\v2%.invora.billing.common.v2.ErrorDetailR\ferrorDetails\x12O\n" +
+	"\bcustomer\x18\x0f \x01(\v2).invora.billing.common.v2.BillingCustomerR\bcustomer\x12O\n" +
 	"\x1aexpected_finalization_date\x18\x11 \x01(\v2\x11.google.type.DateR\x18expectedFinalizationDate\x12J\n" +
 	"\x1fexternal_hubspot_integration_id\x18\x12 \x01(\tH\x01R\x1cexternalHubspotIntegrationId\x88\x01\x01\x12;\n" +
 	"\x17external_integration_id\x18\x13 \x01(\tH\x02R\x15externalIntegrationId\x88\x01\x01\x12P\n" +
@@ -20372,8 +19108,8 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x1cintegration_hubspot_syncable\x18\x19 \x01(\bR\x1aintegrationHubspotSyncable\x12F\n" +
 	"\x1fintegration_salesforce_syncable\x18\x1a \x01(\bR\x1dintegrationSalesforceSyncable\x121\n" +
 	"\x14integration_syncable\x18\x1b \x01(\bR\x13integrationSyncable\x12b\n" +
-	"\x15invoice_subscriptions\x18\x1c \x03(\v2-.invora.billing.common.v2.InvoiceSubscriptionR\x14invoiceSubscriptions\x12L\n" +
-	"\finvoice_type\x18\x1d \x01(\x0e2).invora.billing.common.v2.InvoiceTypeEnumR\vinvoiceType\x124\n" +
+	"\x15invoice_subscriptions\x18\x1c \x03(\v2-.invora.billing.common.v2.InvoiceSubscriptionR\x14invoiceSubscriptions\x12H\n" +
+	"\finvoice_type\x18\x1d \x01(\x0e2%.invora.billing.common.v2.InvoiceTypeR\vinvoiceType\x124\n" +
 	"\fissuing_date\x18\x1e \x01(\v2\x11.google.type.DateR\vissuingDate\x12E\n" +
 	"\bmetadata\x18\x1f \x03(\v2).invora.billing.common.v2.InvoiceMetadataR\bmetadata\x12\x16\n" +
 	"\x06number\x18  \x01(\tR\x06number\x128\n" +
@@ -20382,8 +19118,8 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x17payment_dispute_losable\x18# \x01(\bR\x15paymentDisputeLosable\x12V\n" +
 	"\x17payment_dispute_lost_at\x18$ \x01(\v2\x1a.google.protobuf.TimestampH\x05R\x14paymentDisputeLostAt\x88\x01\x01\x12;\n" +
 	"\x10payment_due_date\x18% \x01(\v2\x11.google.type.DateR\x0epaymentDueDate\x12'\n" +
-	"\x0fpayment_overdue\x18& \x01(\bR\x0epaymentOverdue\x12]\n" +
-	"\x0epayment_status\x18' \x01(\x0e26.invora.billing.common.v2.InvoicePaymentStatusTypeEnumR\rpaymentStatus\x12D\n" +
+	"\x0fpayment_overdue\x18& \x01(\bR\x0epaymentOverdue\x12Y\n" +
+	"\x0epayment_status\x18' \x01(\x0e22.invora.billing.common.v2.InvoicePaymentStatusTypeR\rpaymentStatus\x12D\n" +
 	"\bpayments\x18( \x03(\v2(.invora.billing.common.v2.BillingPaymentR\bpayments\x12=\n" +
 	"\x1bprepaid_credit_amount_cents\x18) \x01(\x03R\x18prepaidCreditAmountCents\x12Q\n" +
 	"#prepaid_granted_credit_amount_cents\x18* \x01(\x03H\x06R\x1fprepaidGrantedCreditAmountCents\x88\x01\x01\x12U\n" +
@@ -20394,19 +19130,19 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x16regenerated_invoice_id\x18/ \x01(\tH\bR\x14regeneratedInvoiceId\x88\x01\x01\x12\x1f\n" +
 	"\vself_billed\x180 \x01(\bR\n" +
 	"selfBilled\x12#\n" +
-	"\rsequential_id\x181 \x01(\tR\fsequentialId\x12G\n" +
-	"\x06status\x182 \x01(\x0e2/.invora.billing.common.v2.InvoiceStatusTypeEnumR\x06status\x12Q\n" +
+	"\rsequential_id\x181 \x01(\tR\fsequentialId\x12C\n" +
+	"\x06status\x182 \x01(\x0e2+.invora.billing.common.v2.InvoiceStatusTypeR\x06status\x12Q\n" +
 	"&sub_total_excluding_taxes_amount_cents\x183 \x01(\x03R!subTotalExcludingTaxesAmountCents\x12Q\n" +
 	"&sub_total_including_taxes_amount_cents\x184 \x01(\x03R!subTotalIncludingTaxesAmountCents\x12S\n" +
 	"\rsubscriptions\x185 \x03(\v2-.invora.billing.common.v2.BillingSubscriptionR\rsubscriptions\x12+\n" +
 	"\x0ftax_provider_id\x186 \x01(\tH\tR\rtaxProviderId\x88\x01\x01\x122\n" +
-	"\x15tax_provider_voidable\x187 \x01(\bR\x13taxProviderVoidable\x12V\n" +
+	"\x15tax_provider_voidable\x187 \x01(\bR\x13taxProviderVoidable\x12R\n" +
 	"\n" +
-	"tax_status\x188 \x01(\x0e22.invora.billing.common.v2.InvoiceTaxStatusTypeEnumH\n" +
+	"tax_status\x188 \x01(\x0e2..invora.billing.common.v2.InvoiceTaxStatusTypeH\n" +
 	"R\ttaxStatus\x88\x01\x01\x12,\n" +
-	"\x12taxes_amount_cents\x189 \x01(\x03R\x10taxesAmountCents\x12\x1d\n" +
+	"\x12taxes_amount_cents\x189 \x01(\x03R\x10taxesAmountCents\x123\n" +
 	"\n" +
-	"taxes_rate\x18: \x01(\x01R\ttaxesRate\x12,\n" +
+	"taxes_rate\x18: \x01(\v2\x14.kernel.DecimalValueR\ttaxesRate\x12,\n" +
 	"\x12total_amount_cents\x18; \x01(\x03R\x10totalAmountCents\x123\n" +
 	"\x16total_due_amount_cents\x18< \x01(\x03R\x13totalDueAmountCents\x125\n" +
 	"\x17total_paid_amount_cents\x18= \x01(\x03R\x14totalPaidAmountCents\x12;\n" +
@@ -20433,9 +19169,8 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"_voided_atB\x14\n" +
 	"\x12_voided_invoice_idB\n" +
 	"\n" +
-	"\b_xml_url\"\x81\x12\n" +
-	"\x11BillingCreditNote\x12J\n" +
-	"\ractivity_logs\x18\x01 \x03(\v2%.invora.billing.common.v2.ActivityLogR\factivityLogs\x12S\n" +
+	"\b_xml_url\"\xf3\x10\n" +
+	"\x11BillingCreditNote\x12S\n" +
 	"\rapplied_taxes\x18\x02 \x03(\v2..invora.billing.common.v2.CreditNoteAppliedTaxR\fappliedTaxes\x120\n" +
 	"\x14balance_amount_cents\x18\x03 \x01(\x03R\x12balanceAmountCents\x12N\n" +
 	"\x0ebilling_entity\x18\x04 \x01(\v2'.invora.billing.common.v2.BillingEntityR\rbillingEntity\x12\"\n" +
@@ -20443,13 +19178,12 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x1fcoupons_adjustment_amount_cents\x18\x06 \x01(\x03R\x1ccouponsAdjustmentAmountCents\x129\n" +
 	"\n" +
 	"created_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12.\n" +
-	"\x13credit_amount_cents\x18\b \x01(\x03R\x11creditAmountCents\x12^\n" +
-	"\rcredit_status\x18\t \x01(\x0e24.invora.billing.common.v2.CreditNoteCreditStatusEnumH\x00R\fcreditStatus\x88\x01\x01\x12B\n" +
+	"\x13credit_amount_cents\x18\b \x01(\x03R\x11creditAmountCents\x12Z\n" +
+	"\rcredit_status\x18\t \x01(\x0e20.invora.billing.common.v2.CreditNoteCreditStatusH\x00R\fcreditStatus\x88\x01\x01\x12B\n" +
 	"\bcurrency\x18\n" +
 	" \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\bcurrency\x12E\n" +
 	"\bcustomer\x18\v \x01(\v2).invora.billing.common.v2.BillingCustomerR\bcustomer\x12%\n" +
-	"\vdescription\x18\f \x01(\tH\x01R\vdescription\x88\x01\x01\x12J\n" +
-	"\rerror_details\x18\r \x03(\v2%.invora.billing.common.v2.ErrorDetailR\ferrorDetails\x12;\n" +
+	"\vdescription\x18\f \x01(\tH\x01R\vdescription\x88\x01\x01\x12;\n" +
 	"\x17external_integration_id\x18\x0e \x01(\tH\x02R\x15externalIntegrationId\x88\x01\x01\x12\x1e\n" +
 	"\bfile_url\x18\x0f \x01(\tH\x03R\afileUrl\x88\x01\x01\x12\x0e\n" +
 	"\x02id\x18\x10 \x01(\tR\x02id\x121\n" +
@@ -20459,19 +19193,19 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x05items\x18\x14 \x03(\v2(.invora.billing.common.v2.CreditNoteItemR\x05items\x12B\n" +
 	"\bmetadata\x18\x15 \x03(\v2&.invora.billing.common.v2.ItemMetadataR\bmetadata\x12\x16\n" +
 	"\x06number\x18\x16 \x01(\tR\x06number\x12.\n" +
-	"\x13offset_amount_cents\x18\x17 \x01(\x03R\x11offsetAmountCents\x12F\n" +
-	"\x06reason\x18\x18 \x01(\x0e2..invora.billing.common.v2.CreditNoteReasonEnumR\x06reason\x12.\n" +
-	"\x13refund_amount_cents\x18\x19 \x01(\x03R\x11refundAmountCents\x12^\n" +
-	"\rrefund_status\x18\x1a \x01(\x0e24.invora.billing.common.v2.CreditNoteRefundStatusEnumH\x05R\frefundStatus\x88\x01\x01\x12@\n" +
+	"\x13offset_amount_cents\x18\x17 \x01(\x03R\x11offsetAmountCents\x12B\n" +
+	"\x06reason\x18\x18 \x01(\x0e2*.invora.billing.common.v2.CreditNoteReasonR\x06reason\x12.\n" +
+	"\x13refund_amount_cents\x18\x19 \x01(\x03R\x11refundAmountCents\x12Z\n" +
+	"\rrefund_status\x18\x1a \x01(\x0e20.invora.billing.common.v2.CreditNoteRefundStatusH\x05R\frefundStatus\x88\x01\x01\x12@\n" +
 	"\vrefunded_at\x18\x1b \x01(\v2\x1a.google.protobuf.TimestampH\x06R\n" +
 	"refundedAt\x88\x01\x01\x12#\n" +
 	"\rsequential_id\x18\x1c \x01(\tR\fsequentialId\x12Q\n" +
 	"&sub_total_excluding_taxes_amount_cents\x18\x1d \x01(\x03R!subTotalExcludingTaxesAmountCents\x12+\n" +
 	"\x0ftax_provider_id\x18\x1e \x01(\tH\aR\rtaxProviderId\x88\x01\x01\x122\n" +
 	"\x15tax_provider_syncable\x18\x1f \x01(\bR\x13taxProviderSyncable\x12,\n" +
-	"\x12taxes_amount_cents\x18  \x01(\x03R\x10taxesAmountCents\x12\x1d\n" +
+	"\x12taxes_amount_cents\x18  \x01(\x03R\x10taxesAmountCents\x123\n" +
 	"\n" +
-	"taxes_rate\x18! \x01(\x01R\ttaxesRate\x12,\n" +
+	"taxes_rate\x18! \x01(\v2\x14.kernel.DecimalValueR\ttaxesRate\x12,\n" +
 	"\x12total_amount_cents\x18\" \x01(\x03R\x10totalAmountCents\x129\n" +
 	"\n" +
 	"updated_at\x18# \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12<\n" +
@@ -20489,10 +19223,9 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\n" +
 	"_voided_atB\n" +
 	"\n" +
-	"\b_xml_url\"\xf8\x12\n" +
+	"\b_xml_url\"\xac\x12\n" +
 	"\vBillingPlan\x12<\n" +
-	"\x1aactive_subscriptions_count\x18\x01 \x01(\x05R\x18activeSubscriptionsCount\x12J\n" +
-	"\ractivity_logs\x18\x02 \x03(\v2%.invora.billing.common.v2.ActivityLogR\factivityLogs\x12!\n" +
+	"\x1aactive_subscriptions_count\x18\x01 \x01(\x05R\x18activeSubscriptionsCount\x12!\n" +
 	"\famount_cents\x18\x03 \x01(\x03R\vamountCents\x12O\n" +
 	"\x0famount_currency\x18\x04 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0eamountCurrency\x12h\n" +
 	"\x1bapplicable_usage_thresholds\x18\x05 \x03(\v2(.invora.billing.common.v2.UsageThresholdR\x19applicableUsageThresholds\x125\n" +
@@ -20545,21 +19278,20 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x13_minimum_commitmentB\x0f\n" +
 	"\r_organizationB\t\n" +
 	"\a_parentB\x0f\n" +
-	"\r_trial_period\"\xb0\x15\n" +
-	"\rBillingWallet\x12J\n" +
-	"\ractivity_logs\x18\x01 \x03(\v2%.invora.billing.common.v2.ActivityLogR\factivityLogs\x12M\n" +
+	"\r_trial_period\"\xca\x15\n" +
+	"\rBillingWallet\x12M\n" +
 	"\n" +
 	"applies_to\x18\x02 \x01(\v2).invora.billing.common.v2.WalletAppliesToH\x00R\tappliesTo\x88\x01\x01\x12#\n" +
 	"\rbalance_cents\x18\x03 \x01(\x03R\fbalanceCents\x12\x17\n" +
 	"\x04code\x18\x04 \x01(\tH\x01R\x04code\x88\x01\x01\x122\n" +
-	"\x15consumed_amount_cents\x18\x05 \x01(\x03R\x13consumedAmountCents\x12)\n" +
-	"\x10consumed_credits\x18\x06 \x01(\x01R\x0fconsumedCredits\x129\n" +
+	"\x15consumed_amount_cents\x18\x05 \x01(\x03R\x13consumedAmountCents\x12?\n" +
+	"\x10consumed_credits\x18\x06 \x01(\v2\x14.kernel.DecimalValueR\x0fconsumedCredits\x129\n" +
 	"\n" +
-	"created_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12'\n" +
-	"\x0fcredits_balance\x18\b \x01(\x01R\x0ecreditsBalance\x126\n" +
-	"\x17credits_ongoing_balance\x18\t \x01(\x01R\x15creditsOngoingBalance\x12A\n" +
+	"created_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12=\n" +
+	"\x0fcredits_balance\x18\b \x01(\v2\x14.kernel.DecimalValueR\x0ecreditsBalance\x12L\n" +
+	"\x17credits_ongoing_balance\x18\t \x01(\v2\x14.kernel.DecimalValueR\x15creditsOngoingBalance\x12W\n" +
 	"\x1dcredits_ongoing_usage_balance\x18\n" +
-	" \x01(\x01R\x1acreditsOngoingUsageBalance\x12B\n" +
+	" \x01(\v2\x14.kernel.DecimalValueR\x1acreditsOngoingUsageBalance\x12B\n" +
 	"\bcurrency\x18\v \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\bcurrency\x12J\n" +
 	"\bcustomer\x18\f \x01(\v2).invora.billing.common.v2.BillingCustomerH\x02R\bcustomer\x88\x01\x01\x12D\n" +
 	"\rexpiration_at\x18\r \x01(\v2\x1a.google.protobuf.TimestampH\x03R\fexpirationAt\x88\x01\x01\x12\x0e\n" +
@@ -20577,15 +19309,15 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x1cpaid_top_up_min_amount_cents\x18\x19 \x01(\x03H\n" +
 	"R\x17paidTopUpMinAmountCents\x88\x01\x01\x129\n" +
 	"\x17paid_top_up_min_credits\x18\x1a \x01(\x03H\vR\x13paidTopUpMinCredits\x88\x01\x01\x12S\n" +
-	"\x0epayment_method\x18\x1b \x01(\v2'.invora.billing.common.v2.PaymentMethodH\fR\rpaymentMethod\x88\x01\x01\x12d\n" +
-	"\x13payment_method_type\x18\x1c \x01(\x0e2/.invora.billing.common.v2.PaymentMethodTypeEnumH\rR\x11paymentMethodType\x88\x01\x01\x12\x1a\n" +
-	"\bpriority\x18\x1d \x01(\x05R\bpriority\x12\x1f\n" +
-	"\vrate_amount\x18\x1e \x01(\x01R\n" +
+	"\x0epayment_method\x18\x1b \x01(\v2'.invora.billing.common.v2.PaymentMethodH\fR\rpaymentMethod\x88\x01\x01\x12`\n" +
+	"\x13payment_method_type\x18\x1c \x01(\x0e2+.invora.billing.common.v2.PaymentMethodTypeH\rR\x11paymentMethodType\x88\x01\x01\x12\x1a\n" +
+	"\bpriority\x18\x1d \x01(\x05R\bpriority\x125\n" +
+	"\vrate_amount\x18\x1e \x01(\v2\x14.kernel.DecimalValueR\n" +
 	"rateAmount\x12r\n" +
 	"\x1brecurring_transaction_rules\x18\x1f \x03(\v22.invora.billing.common.v2.RecurringTransactionRuleR\x19recurringTransactionRules\x12w\n" +
 	" selected_invoice_custom_sections\x18  \x03(\v2..invora.billing.common.v2.InvoiceCustomSectionR\x1dselectedInvoiceCustomSections\x12D\n" +
-	"\x1cskip_invoice_custom_sections\x18! \x01(\bH\x0eR\x19skipInvoiceCustomSections\x88\x01\x01\x12B\n" +
-	"\x06status\x18\" \x01(\x0e2*.invora.billing.common.v2.WalletStatusEnumR\x06status\x12D\n" +
+	"\x1cskip_invoice_custom_sections\x18! \x01(\bH\x0eR\x19skipInvoiceCustomSections\x88\x01\x01\x12>\n" +
+	"\x06status\x18\" \x01(\x0e2&.invora.billing.common.v2.WalletStatusR\x06status\x12D\n" +
 	"\rterminated_at\x18# \x01(\v2\x1a.google.protobuf.TimestampH\x0fR\fterminatedAt\x88\x01\x01\x12\x1c\n" +
 	"\ttraceable\x18$ \x01(\bR\ttraceable\x129\n" +
 	"\n" +
@@ -20605,12 +19337,12 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x0f_payment_methodB\x16\n" +
 	"\x14_payment_method_typeB\x1f\n" +
 	"\x1d_skip_invoice_custom_sectionsB\x10\n" +
-	"\x0e_terminated_at\"\xaa\r\n" +
-	"\x18BillingWalletTransaction\x12\x16\n" +
-	"\x06amount\x18\x01 \x01(\tR\x06amount\x129\n" +
+	"\x0e_terminated_at\"\xdc\r\n" +
+	"\x18BillingWalletTransaction\x12,\n" +
+	"\x06amount\x18\x01 \x01(\v2\x14.kernel.DecimalValueR\x06amount\x129\n" +
 	"\n" +
-	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12#\n" +
-	"\rcredit_amount\x18\x03 \x01(\tR\fcreditAmount\x12<\n" +
+	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"\rcredit_amount\x18\x03 \x01(\v2\x14.kernel.DecimalValueR\fcreditAmount\x12<\n" +
 	"\tfailed_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\bfailedAt\x88\x01\x01\x12\x0e\n" +
 	"\x02id\x18\x05 \x01(\tR\x02id\x12G\n" +
 	"\ainvoice\x18\x06 \x01(\v2(.invora.billing.common.v2.BillingInvoiceH\x01R\ainvoice\x88\x01\x01\x12M\n" +
@@ -20619,16 +19351,16 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x04name\x18\t \x01(\tH\x02R\x04name\x88\x01\x01\x12\x1a\n" +
 	"\bpriority\x18\n" +
 	" \x01(\x05R\bpriority\x129\n" +
-	"\x16remaining_amount_cents\x18\v \x01(\x03H\x03R\x14remainingAmountCents\x88\x01\x01\x12;\n" +
-	"\x17remaining_credit_amount\x18\f \x01(\tH\x04R\x15remainingCreditAmount\x88\x01\x01\x12w\n" +
+	"\x16remaining_amount_cents\x18\v \x01(\x03H\x03R\x14remainingAmountCents\x88\x01\x01\x12Q\n" +
+	"\x17remaining_credit_amount\x18\f \x01(\v2\x14.kernel.DecimalValueH\x04R\x15remainingCreditAmount\x88\x01\x01\x12w\n" +
 	" selected_invoice_custom_sections\x18\r \x03(\v2..invora.billing.common.v2.InvoiceCustomSectionR\x1dselectedInvoiceCustomSections\x12>\n" +
 	"\n" +
 	"settled_at\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampH\x05R\tsettledAt\x88\x01\x01\x12D\n" +
-	"\x1cskip_invoice_custom_sections\x18\x0f \x01(\bH\x06R\x19skipInvoiceCustomSections\x88\x01\x01\x12M\n" +
-	"\x06source\x18\x10 \x01(\x0e25.invora.billing.common.v2.WalletTransactionSourceEnumR\x06source\x12M\n" +
-	"\x06status\x18\x11 \x01(\x0e25.invora.billing.common.v2.WalletTransactionStatusEnumR\x06status\x12o\n" +
-	"\x12transaction_status\x18\x12 \x01(\x0e2@.invora.billing.common.v2.WalletTransactionTransactionStatusEnumR\x11transactionStatus\x12i\n" +
-	"\x10transaction_type\x18\x13 \x01(\x0e2>.invora.billing.common.v2.WalletTransactionTransactionTypeEnumR\x0ftransactionType\x129\n" +
+	"\x1cskip_invoice_custom_sections\x18\x0f \x01(\bH\x06R\x19skipInvoiceCustomSections\x88\x01\x01\x12I\n" +
+	"\x06source\x18\x10 \x01(\x0e21.invora.billing.common.v2.WalletTransactionSourceR\x06source\x12I\n" +
+	"\x06status\x18\x11 \x01(\x0e21.invora.billing.common.v2.WalletTransactionStatusR\x06status\x12k\n" +
+	"\x12transaction_status\x18\x12 \x01(\x0e2<.invora.billing.common.v2.WalletTransactionTransactionStatusR\x11transactionStatus\x12e\n" +
+	"\x10transaction_type\x18\x13 \x01(\x0e2:.invora.billing.common.v2.WalletTransactionTransactionTypeR\x0ftransactionType\x129\n" +
 	"\n" +
 	"updated_at\x18\x14 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12T\n" +
 	"\x0evoided_invoice\x18\x15 \x01(\v2(.invora.billing.common.v2.BillingInvoiceH\aR\rvoidedInvoice\x88\x01\x01\x12D\n" +
@@ -20646,12 +19378,12 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x1d_skip_invoice_custom_sectionsB\x11\n" +
 	"\x0f_voided_invoiceB\t\n" +
 	"\a_walletB\x0e\n" +
-	"\f_wallet_name\"\xf4\x12\n" +
+	"\f_wallet_name\"\xae\x13\n" +
 	"\n" +
 	"BillingFee\x12B\n" +
 	"\x06add_on\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAddOnH\x00R\x05addOn\x88\x01\x01\x12!\n" +
-	"\fadjusted_fee\x18\x02 \x01(\bR\vadjustedFee\x12^\n" +
-	"\x11adjusted_fee_type\x18\x03 \x01(\x0e2-.invora.billing.common.v2.AdjustedFeeTypeEnumH\x01R\x0fadjustedFeeType\x88\x01\x01\x12!\n" +
+	"\fadjusted_fee\x18\x02 \x01(\bR\vadjustedFee\x12Z\n" +
+	"\x11adjusted_fee_type\x18\x03 \x01(\x0e2).invora.billing.common.v2.AdjustedFeeTypeH\x01R\x0fadjustedFeeType\x88\x01\x01\x12!\n" +
 	"\famount_cents\x18\x04 \x01(\x03R\vamountCents\x12O\n" +
 	"\x0famount_currency\x18\x05 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0eamountCurrency\x12V\n" +
 	"\x0eamount_details\x18\x06 \x01(\v2*.invora.billing.common.v2.FeeAmountDetailsH\x02R\ramountDetails\x88\x01\x01\x12L\n" +
@@ -20662,8 +19394,8 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	" \x01(\x03R\x15creditableAmountCents\x12B\n" +
 	"\bcurrency\x18\v \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\bcurrency\x12%\n" +
 	"\vdescription\x18\f \x01(\tH\x05R\vdescription\x88\x01\x01\x12&\n" +
-	"\fevents_count\x18\r \x01(\x03H\x06R\veventsCount\x88\x01\x01\x12A\n" +
-	"\bfee_type\x18\x0e \x01(\x0e2&.invora.billing.common.v2.FeeTypesEnumR\afeeType\x12M\n" +
+	"\fevents_count\x18\r \x01(\x03H\x06R\veventsCount\x88\x01\x01\x12=\n" +
+	"\bfee_type\x18\x0e \x01(\x0e2\".invora.billing.common.v2.FeeTypesR\afeeType\x12M\n" +
 	"\ffixed_charge\x18\x0f \x01(\v2%.invora.billing.common.v2.FixedChargeH\aR\vfixedCharge\x88\x01\x01\x126\n" +
 	"\n" +
 	"grouped_by\x18\x10 \x01(\v2\x17.google.protobuf.StructR\tgroupedBy\x12\x0e\n" +
@@ -20676,20 +19408,20 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\titem_code\x18\x15 \x01(\tR\bitemCode\x12\x1b\n" +
 	"\titem_name\x18\x16 \x01(\tR\bitemName\x12\x1b\n" +
 	"\titem_type\x18\x17 \x01(\tR\bitemType\x128\n" +
-	"\x18offsettable_amount_cents\x18\x18 \x01(\x03R\x16offsettableAmountCents\x12.\n" +
-	"\x13precise_unit_amount\x18\x19 \x01(\x01R\x11preciseUnitAmount\x12]\n" +
+	"\x18offsettable_amount_cents\x18\x18 \x01(\x03R\x16offsettableAmountCents\x12D\n" +
+	"\x13precise_unit_amount\x18\x19 \x01(\v2\x14.kernel.DecimalValueR\x11preciseUnitAmount\x12]\n" +
 	"\x12pricing_unit_usage\x18\x1a \x01(\v2*.invora.billing.common.v2.PricingUnitUsageH\vR\x10pricingUnitUsage\x88\x01\x01\x12L\n" +
 	"\n" +
 	"properties\x18\x1b \x01(\v2'.invora.billing.common.v2.FeePropertiesH\fR\n" +
 	"properties\x88\x01\x01\x12V\n" +
 	"\fsubscription\x18\x1c \x01(\v2-.invora.billing.common.v2.BillingSubscriptionH\rR\fsubscription\x88\x01\x01\x12B\n" +
 	"\fsucceeded_at\x18\x1d \x01(\v2\x1a.google.protobuf.TimestampH\x0eR\vsucceededAt\x88\x01\x01\x12,\n" +
-	"\x12taxes_amount_cents\x18\x1e \x01(\x03R\x10taxesAmountCents\x12\"\n" +
+	"\x12taxes_amount_cents\x18\x1e \x01(\x03R\x10taxesAmountCents\x128\n" +
 	"\n" +
-	"taxes_rate\x18\x1f \x01(\x01H\x0fR\ttaxesRate\x88\x01\x01\x12I\n" +
+	"taxes_rate\x18\x1f \x01(\v2\x14.kernel.DecimalValueH\x0fR\ttaxesRate\x88\x01\x01\x12I\n" +
 	"\vtrue_up_fee\x18  \x01(\v2$.invora.billing.common.v2.BillingFeeH\x10R\ttrueUpFee\x88\x01\x01\x12V\n" +
-	"\x12true_up_parent_fee\x18! \x01(\v2$.invora.billing.common.v2.BillingFeeH\x11R\x0ftrueUpParentFee\x88\x01\x01\x12\x14\n" +
-	"\x05units\x18\" \x01(\x01R\x05units\x12f\n" +
+	"\x12true_up_parent_fee\x18! \x01(\v2$.invora.billing.common.v2.BillingFeeH\x11R\x0ftrueUpParentFee\x88\x01\x01\x12*\n" +
+	"\x05units\x18\" \x01(\v2\x14.kernel.DecimalValueR\x05units\x12f\n" +
 	"\x12wallet_transaction\x18# \x01(\v22.invora.billing.common.v2.BillingWalletTransactionH\x12R\x11walletTransaction\x88\x01\x01B\t\n" +
 	"\a_add_onB\x14\n" +
 	"\x12_adjusted_fee_typeB\x11\n" +
@@ -20709,7 +19441,7 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\v_taxes_rateB\x0e\n" +
 	"\f_true_up_feeB\x15\n" +
 	"\x13_true_up_parent_feeB\x15\n" +
-	"\x13_wallet_transaction\"\xd9\x04\n" +
+	"\x13_wallet_transaction\"\xef\x04\n" +
 	"\n" +
 	"BillingTax\x12\"\n" +
 	"\radd_ons_count\x18\x01 \x01(\x05R\vaddOnsCount\x126\n" +
@@ -20726,20 +19458,19 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	" \x01(\tR\x04name\x12O\n" +
 	"\forganization\x18\v \x01(\v2&.invora.billing.common.v2.OrganizationH\x01R\forganization\x88\x01\x01\x12\x1f\n" +
 	"\vplans_count\x18\f \x01(\x05R\n" +
-	"plansCount\x12\x12\n" +
-	"\x04rate\x18\r \x01(\x01R\x04rate\x129\n" +
+	"plansCount\x12(\n" +
+	"\x04rate\x18\r \x01(\v2\x14.kernel.DecimalValueR\x04rate\x129\n" +
 	"\n" +
 	"updated_at\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAtB\x0e\n" +
 	"\f_descriptionB\x0f\n" +
-	"\r_organization\"\xa5\f\n" +
-	"\rBillingCoupon\x12J\n" +
-	"\ractivity_logs\x18\x01 \x03(\v2%.invora.billing.common.v2.ActivityLogR\factivityLogs\x12&\n" +
+	"\r_organization\"\xe7\v\n" +
+	"\rBillingCoupon\x12&\n" +
 	"\famount_cents\x18\x02 \x01(\x03H\x00R\vamountCents\x88\x01\x01\x12T\n" +
 	"\x0famount_currency\x18\x03 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\x01R\x0eamountCurrency\x88\x01\x01\x122\n" +
 	"\x15applied_coupons_count\x18\x04 \x01(\x05R\x13appliedCouponsCount\x12Z\n" +
 	"\x10billable_metrics\x18\x05 \x03(\v2/.invora.billing.common.v2.BillingBillableMetricR\x0fbillableMetrics\x12\x17\n" +
-	"\x04code\x18\x06 \x01(\tH\x02R\x04code\x88\x01\x01\x12I\n" +
-	"\vcoupon_type\x18\a \x01(\x0e2(.invora.billing.common.v2.CouponTypeEnumR\n" +
+	"\x04code\x18\x06 \x01(\tH\x02R\x04code\x88\x01\x01\x12E\n" +
+	"\vcoupon_type\x18\a \x01(\x0e2$.invora.billing.common.v2.CouponTypeR\n" +
 	"couponType\x129\n" +
 	"\n" +
 	"created_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12'\n" +
@@ -20756,11 +19487,11 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x18limited_billable_metrics\x18\x10 \x01(\bR\x16limitedBillableMetrics\x12#\n" +
 	"\rlimited_plans\x18\x11 \x01(\bR\flimitedPlans\x12\x12\n" +
 	"\x04name\x18\x12 \x01(\tR\x04name\x12O\n" +
-	"\forganization\x18\x13 \x01(\v2&.invora.billing.common.v2.OrganizationH\x06R\forganization\x88\x01\x01\x12,\n" +
-	"\x0fpercentage_rate\x18\x14 \x01(\x01H\aR\x0epercentageRate\x88\x01\x01\x12;\n" +
+	"\forganization\x18\x13 \x01(\v2&.invora.billing.common.v2.OrganizationH\x06R\forganization\x88\x01\x01\x12B\n" +
+	"\x0fpercentage_rate\x18\x14 \x01(\v2\x14.kernel.DecimalValueH\aR\x0epercentageRate\x88\x01\x01\x12;\n" +
 	"\x05plans\x18\x15 \x03(\v2%.invora.billing.common.v2.BillingPlanR\x05plans\x12\x1a\n" +
-	"\breusable\x18\x16 \x01(\bR\breusable\x12B\n" +
-	"\x06status\x18\x17 \x01(\x0e2*.invora.billing.common.v2.CouponStatusEnumR\x06status\x12D\n" +
+	"\breusable\x18\x16 \x01(\bR\breusable\x12>\n" +
+	"\x06status\x18\x17 \x01(\x0e2&.invora.billing.common.v2.CouponStatusR\x06status\x12D\n" +
 	"\rterminated_at\x18\x18 \x01(\v2\x1a.google.protobuf.TimestampH\bR\fterminatedAt\x88\x01\x01\x129\n" +
 	"\n" +
 	"updated_at\x18\x19 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAtB\x0f\n" +
@@ -20796,11 +19527,10 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\v_deleted_atB\x0e\n" +
 	"\f_descriptionB\x17\n" +
 	"\x15_invoice_display_nameB\x0f\n" +
-	"\r_organization\"\xe5\n" +
+	"\r_organization\"\x8d\n" +
 	"\n" +
-	"\x15BillingBillableMetric\x12J\n" +
-	"\ractivity_logs\x18\x01 \x03(\v2%.invora.billing.common.v2.ActivityLogR\factivityLogs\x12X\n" +
-	"\x10aggregation_type\x18\x02 \x01(\x0e2-.invora.billing.common.v2.AggregationTypeEnumR\x0faggregationType\x12\x12\n" +
+	"\x15BillingBillableMetric\x12T\n" +
+	"\x10aggregation_type\x18\x02 \x01(\x0e2).invora.billing.common.v2.AggregationTypeR\x0faggregationType\x12\x12\n" +
 	"\x04code\x18\x03 \x01(\tR\x04code\x129\n" +
 	"\n" +
 	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12>\n" +
@@ -20822,12 +19552,12 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x14integration_mappings\x18\x0f \x03(\v2!.invora.billing.common.v2.MappingR\x13integrationMappings\x12\x12\n" +
 	"\x04name\x18\x10 \x01(\tR\x04name\x12O\n" +
 	"\forganization\x18\x11 \x01(\v2&.invora.billing.common.v2.OrganizationH\x04R\forganization\x88\x01\x01\x12\x1c\n" +
-	"\trecurring\x18\x12 \x01(\bR\trecurring\x12`\n" +
-	"\x11rounding_function\x18\x13 \x01(\x0e2..invora.billing.common.v2.RoundingFunctionEnumH\x05R\x10roundingFunction\x88\x01\x01\x122\n" +
+	"\trecurring\x18\x12 \x01(\bR\trecurring\x12\\\n" +
+	"\x11rounding_function\x18\x13 \x01(\x0e2*.invora.billing.common.v2.RoundingFunctionH\x05R\x10roundingFunction\x88\x01\x01\x122\n" +
 	"\x12rounding_precision\x18\x14 \x01(\x05H\x06R\x11roundingPrecision\x88\x01\x01\x129\n" +
 	"\n" +
-	"updated_at\x18\x15 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12`\n" +
-	"\x11weighted_interval\x18\x16 \x01(\x0e2..invora.billing.common.v2.WeightedIntervalEnumH\aR\x10weightedInterval\x88\x01\x01B\r\n" +
+	"updated_at\x18\x15 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12\\\n" +
+	"\x11weighted_interval\x18\x16 \x01(\x0e2*.invora.billing.common.v2.WeightedIntervalH\aR\x10weightedInterval\x88\x01\x01B\r\n" +
 	"\v_deleted_atB\x0e\n" +
 	"\f_descriptionB\r\n" +
 	"\v_expressionB\r\n" +
@@ -20835,7 +19565,7 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\r_organizationB\x14\n" +
 	"\x12_rounding_functionB\x15\n" +
 	"\x13_rounding_precisionB\x14\n" +
-	"\x12_weighted_interval\"\xb6\x04\n" +
+	"\x12_weighted_interval\"\xb2\x04\n" +
 	"\x15BillingPaymentRequest\x12!\n" +
 	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12O\n" +
 	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0eamountCurrency\x129\n" +
@@ -20845,8 +19575,8 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x05email\x18\x05 \x01(\tR\x05email\x12\x0e\n" +
 	"\x02id\x18\x06 \x01(\tR\x02id\x12D\n" +
 	"\binvoices\x18\a \x03(\v2(.invora.billing.common.v2.BillingInvoiceR\binvoices\x12!\n" +
-	"\fpayable_type\x18\b \x01(\tR\vpayableType\x12]\n" +
-	"\x0epayment_status\x18\t \x01(\x0e26.invora.billing.common.v2.InvoicePaymentStatusTypeEnumR\rpaymentStatus\x129\n" +
+	"\fpayable_type\x18\b \x01(\tR\vpayableType\x12Y\n" +
+	"\x0epayment_status\x18\t \x01(\x0e22.invora.billing.common.v2.InvoicePaymentStatusTypeR\rpaymentStatus\x129\n" +
 	"\n" +
 	"updated_at\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"\xe1\x02\n" +
@@ -20861,7 +19591,7 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\axml_url\x18\a \x01(\tH\x01R\x06xmlUrl\x88\x01\x01B\v\n" +
 	"\t_file_urlB\n" +
 	"\n" +
-	"\b_xml_url\"\xa1\t\n" +
+	"\b_xml_url\"\x95\t\n" +
 	"\x0eBillingPayment\x12!\n" +
 	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12O\n" +
 	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0eamountCurrency\x129\n" +
@@ -20869,14 +19599,14 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"created_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12E\n" +
 	"\bcustomer\x18\x04 \x01(\v2).invora.billing.common.v2.BillingCustomerR\bcustomer\x12\x0e\n" +
 	"\x02id\x18\x05 \x01(\tR\x02id\x12;\n" +
-	"\apayable\x18\x06 \x01(\v2!.invora.billing.common.v2.PayableR\apayable\x12m\n" +
-	"\x16payable_payment_status\x18\a \x01(\x0e22.invora.billing.common.v2.PayablePaymentStatusEnumH\x00R\x14payablePaymentStatus\x88\x01\x01\x12/\n" +
+	"\apayable\x18\x06 \x01(\v2!.invora.billing.common.v2.PayableR\apayable\x12i\n" +
+	"\x16payable_payment_status\x18\a \x01(\x0e2..invora.billing.common.v2.PayablePaymentStatusH\x00R\x14payablePaymentStatus\x88\x01\x01\x12/\n" +
 	"\x11payment_method_id\x18\b \x01(\tH\x01R\x0fpaymentMethodId\x88\x01\x01\x12Y\n" +
-	"\x10payment_provider\x18\t \x01(\v2).invora.billing.common.v2.PaymentProviderH\x02R\x0fpaymentProvider\x88\x01\x01\x12c\n" +
+	"\x10payment_provider\x18\t \x01(\v2).invora.billing.common.v2.PaymentProviderH\x02R\x0fpaymentProvider\x88\x01\x01\x12_\n" +
 	"\x15payment_provider_type\x18\n" +
-	" \x01(\x0e2*.invora.billing.common.v2.ProviderTypeEnumH\x03R\x13paymentProviderType\x88\x01\x01\x12]\n" +
-	"\x0fpayment_receipt\x18\v \x01(\v2/.invora.billing.common.v2.BillingPaymentReceiptH\x04R\x0epaymentReceipt\x88\x01\x01\x12L\n" +
-	"\fpayment_type\x18\f \x01(\x0e2).invora.billing.common.v2.PaymentTypeEnumR\vpaymentType\x123\n" +
+	" \x01(\x0e2&.invora.billing.common.v2.ProviderTypeH\x03R\x13paymentProviderType\x88\x01\x01\x12]\n" +
+	"\x0fpayment_receipt\x18\v \x01(\v2/.invora.billing.common.v2.BillingPaymentReceiptH\x04R\x0epaymentReceipt\x88\x01\x01\x12H\n" +
+	"\fpayment_type\x18\f \x01(\x0e2%.invora.billing.common.v2.PaymentTypeR\vpaymentType\x123\n" +
 	"\x13provider_payment_id\x18\r \x01(\tH\x05R\x11providerPaymentId\x88\x01\x01\x12!\n" +
 	"\treference\x18\x0e \x01(\tH\x06R\treference\x88\x01\x01\x12>\n" +
 	"\n" +
@@ -21007,44 +19737,25 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	" \x01(\v2%.invora.billing.common.v2.BillingPlanH\x00R\vbillingPlan\x12b\n" +
 	"\x14billing_subscription\x18\v \x01(\v2-.invora.billing.common.v2.BillingSubscriptionH\x00R\x13billingSubscription\x12P\n" +
 	"\x0ebilling_wallet\x18\f \x01(\v2'.invora.billing.common.v2.BillingWalletH\x00R\rbillingWalletB\a\n" +
-	"\x05value\"\xe9\x02\n" +
-	"\rAdyenProvider\x12\x1c\n" +
-	"\aapi_key\x18\x01 \x01(\tH\x00R\x06apiKey\x88\x01\x01\x12\x12\n" +
-	"\x04code\x18\x02 \x01(\tR\x04code\x12\x1e\n" +
-	"\bhmac_key\x18\x03 \x01(\tH\x01R\ahmacKey\x88\x01\x01\x12\x0e\n" +
+	"\x05value\"\x92\x02\n" +
+	"\rAdyenProvider\x12\x12\n" +
+	"\x04code\x18\x02 \x01(\tR\x04code\x12\x0e\n" +
 	"\x02id\x18\x04 \x01(\tR\x02id\x12$\n" +
-	"\vlive_prefix\x18\x05 \x01(\tH\x02R\n" +
+	"\vlive_prefix\x18\x05 \x01(\tH\x00R\n" +
 	"livePrefix\x88\x01\x01\x12.\n" +
-	"\x10merchant_account\x18\x06 \x01(\tH\x03R\x0fmerchantAccount\x88\x01\x01\x12\x12\n" +
+	"\x10merchant_account\x18\x06 \x01(\tH\x01R\x0fmerchantAccount\x88\x01\x01\x12\x12\n" +
 	"\x04name\x18\a \x01(\tR\x04name\x125\n" +
-	"\x14success_redirect_url\x18\b \x01(\tH\x04R\x12successRedirectUrl\x88\x01\x01B\n" +
-	"\n" +
-	"\b_api_keyB\v\n" +
-	"\t_hmac_keyB\x0e\n" +
+	"\x14success_redirect_url\x18\b \x01(\tH\x02R\x12successRedirectUrl\x88\x01\x01B\x0e\n" +
 	"\f_live_prefixB\x13\n" +
 	"\x11_merchant_accountB\x17\n" +
-	"\x15_success_redirect_url\"\xfe\x03\n" +
-	"\rAnrokCustomer\x123\n" +
-	"\x13external_account_id\x18\x01 \x01(\tH\x00R\x11externalAccountId\x88\x01\x01\x125\n" +
-	"\x14external_customer_id\x18\x02 \x01(\tH\x01R\x12externalCustomerId\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\x12.\n" +
-	"\x10integration_code\x18\x04 \x01(\tH\x02R\x0fintegrationCode\x88\x01\x01\x12*\n" +
-	"\x0eintegration_id\x18\x05 \x01(\tH\x03R\rintegrationId\x88\x01\x01\x12]\n" +
-	"\x10integration_type\x18\x06 \x01(\x0e2-.invora.billing.common.v2.IntegrationTypeEnumH\x04R\x0fintegrationType\x88\x01\x01\x121\n" +
-	"\x12sync_with_provider\x18\a \x01(\bH\x05R\x10syncWithProvider\x88\x01\x01B\x16\n" +
-	"\x14_external_account_idB\x17\n" +
-	"\x15_external_customer_idB\x13\n" +
-	"\x11_integration_codeB\x11\n" +
-	"\x0f_integration_idB\x13\n" +
-	"\x11_integration_typeB\x15\n" +
-	"\x13_sync_with_provider\"\x8c\x02\n" +
+	"\x15_success_redirect_url\"\x8c\x02\n" +
 	"\fAppliedAddOn\x12=\n" +
 	"\x06add_on\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAddOnR\x05addOn\x12!\n" +
 	"\famount_cents\x18\x02 \x01(\x03R\vamountCents\x12O\n" +
 	"\x0famount_currency\x18\x03 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0eamountCurrency\x129\n" +
 	"\n" +
 	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x0e\n" +
-	"\x02id\x18\x05 \x01(\tR\x02id\"\xbc\a\n" +
+	"\x02id\x18\x05 \x01(\tR\x02id\"\xce\a\n" +
 	"\rAppliedCoupon\x12&\n" +
 	"\famount_cents\x18\x01 \x01(\x03H\x00R\vamountCents\x88\x01\x01\x129\n" +
 	"\x16amount_cents_remaining\x18\x02 \x01(\x03H\x01R\x14amountCentsRemaining\x88\x01\x01\x12T\n" +
@@ -21057,9 +19768,9 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x12frequency_duration\x18\b \x01(\x05H\x03R\x11frequencyDuration\x88\x01\x01\x12E\n" +
 	"\x1cfrequency_duration_remaining\x18\t \x01(\x05H\x04R\x1afrequencyDurationRemaining\x88\x01\x01\x12\x0e\n" +
 	"\x02id\x18\n" +
-	" \x01(\tR\x02id\x12,\n" +
-	"\x0fpercentage_rate\x18\v \x01(\x01H\x05R\x0epercentageRate\x88\x01\x01\x12I\n" +
-	"\x06status\x18\f \x01(\x0e21.invora.billing.common.v2.AppliedCouponStatusEnumR\x06status\x12D\n" +
+	" \x01(\tR\x02id\x12B\n" +
+	"\x0fpercentage_rate\x18\v \x01(\v2\x14.kernel.DecimalValueH\x05R\x0epercentageRate\x88\x01\x01\x12E\n" +
+	"\x06status\x18\f \x01(\x0e2-.invora.billing.common.v2.AppliedCouponStatusR\x06status\x12D\n" +
 	"\rterminated_at\x18\r \x01(\v2\x1a.google.protobuf.TimestampH\x06R\fterminatedAt\x88\x01\x01B\x0f\n" +
 	"\r_amount_centsB\x19\n" +
 	"\x17_amount_cents_remainingB\x12\n" +
@@ -21067,73 +19778,59 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x13_frequency_durationB\x1f\n" +
 	"\x1d_frequency_duration_remainingB\x12\n" +
 	"\x10_percentage_rateB\x10\n" +
-	"\x0e_terminated_at\"\x8d\x02\n" +
-	"\x12AppliedPricingUnit\x12'\n" +
-	"\x0fconversion_rate\x18\x01 \x01(\x01R\x0econversionRate\x129\n" +
+	"\x0e_terminated_at\"\xa3\x02\n" +
+	"\x12AppliedPricingUnit\x12=\n" +
+	"\x0fconversion_rate\x18\x01 \x01(\v2\x14.kernel.DecimalValueR\x0econversionRate\x129\n" +
 	"\n" +
 	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x0e\n" +
 	"\x02id\x18\x03 \x01(\tR\x02id\x12H\n" +
 	"\fpricing_unit\x18\x04 \x01(\v2%.invora.billing.common.v2.PricingUnitR\vpricingUnit\x129\n" +
 	"\n" +
-	"updated_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"\xb3\x03\n" +
-	"\x0fAvalaraCustomer\x125\n" +
-	"\x14external_customer_id\x18\x01 \x01(\tH\x00R\x12externalCustomerId\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\tR\x02id\x12.\n" +
-	"\x10integration_code\x18\x03 \x01(\tH\x01R\x0fintegrationCode\x88\x01\x01\x12*\n" +
-	"\x0eintegration_id\x18\x04 \x01(\tH\x02R\rintegrationId\x88\x01\x01\x12]\n" +
-	"\x10integration_type\x18\x05 \x01(\x0e2-.invora.billing.common.v2.IntegrationTypeEnumH\x03R\x0fintegrationType\x88\x01\x01\x121\n" +
-	"\x12sync_with_provider\x18\x06 \x01(\bH\x04R\x10syncWithProvider\x88\x01\x01B\x17\n" +
-	"\x15_external_customer_idB\x13\n" +
-	"\x11_integration_codeB\x11\n" +
-	"\x0f_integration_idB\x13\n" +
-	"\x11_integration_typeB\x15\n" +
-	"\x13_sync_with_provider\"P\n" +
+	"updated_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"P\n" +
 	"\x14BillableMetricFilter\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x10\n" +
 	"\x03key\x18\x02 \x01(\tR\x03key\x12\x16\n" +
-	"\x06values\x18\x03 \x03(\tR\x06values\"\xf6\x0e\n" +
+	"\x06values\x18\x03 \x03(\tR\x06values\"\xe3\r\n" +
 	"\rBillingEntity\x12(\n" +
 	"\raddress_line1\x18\x01 \x01(\tH\x00R\faddressLine1\x88\x01\x01\x12(\n" +
-	"\raddress_line2\x18\x02 \x01(\tH\x01R\faddressLine2\x88\x01\x01\x12h\n" +
-	"\x18applied_dunning_campaign\x18\x03 \x01(\v2).invora.billing.common.v2.DunningCampaignH\x02R\x16appliedDunningCampaign\x88\x01\x01\x12u\n" +
-	"\x15billing_configuration\x18\x04 \x01(\v2;.invora.billing.common.v2.BillingEntityBillingConfigurationH\x03R\x14billingConfiguration\x88\x01\x01\x12\x17\n" +
-	"\x04city\x18\x05 \x01(\tH\x04R\x04city\x88\x01\x01\x12\x12\n" +
+	"\raddress_line2\x18\x02 \x01(\tH\x01R\faddressLine2\x88\x01\x01\x12u\n" +
+	"\x15billing_configuration\x18\x04 \x01(\v2;.invora.billing.common.v2.BillingEntityBillingConfigurationH\x02R\x14billingConfiguration\x88\x01\x01\x12\x17\n" +
+	"\x04city\x18\x05 \x01(\tH\x03R\x04city\x88\x01\x01\x12\x12\n" +
 	"\x04code\x18\x06 \x01(\tR\x04code\x12D\n" +
-	"\acountry\x18\a \x01(\x0e2%.invora.billing.common.v2.CountryCodeH\x05R\acountry\x88\x01\x01\x129\n" +
+	"\acountry\x18\a \x01(\x0e2%.invora.billing.common.v2.CountryCodeH\x04R\acountry\x88\x01\x01\x129\n" +
 	"\n" +
 	"created_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12Q\n" +
 	"\x10default_currency\x18\t \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0fdefaultCurrency\x124\n" +
 	"\x16document_number_prefix\x18\n" +
-	" \x01(\tR\x14documentNumberPrefix\x12k\n" +
-	"\x12document_numbering\x18\v \x01(\x0e2<.invora.billing.common.v2.BillingEntityDocumentNumberingEnumR\x11documentNumbering\x12\x1e\n" +
+	" \x01(\tR\x14documentNumberPrefix\x12g\n" +
+	"\x12document_numbering\x18\v \x01(\x0e28.invora.billing.common.v2.BillingEntityDocumentNumberingR\x11documentNumbering\x12\x1e\n" +
 	"\n" +
 	"einvoicing\x18\f \x01(\bR\n" +
 	"einvoicing\x12\x19\n" +
-	"\x05email\x18\r \x01(\tH\x06R\x05email\x88\x01\x01\x12_\n" +
-	"\x0eemail_settings\x18\x0e \x03(\x0e28.invora.billing.common.v2.BillingEntityEmailSettingsEnumR\remailSettings\x12*\n" +
+	"\x05email\x18\r \x01(\tH\x05R\x05email\x88\x01\x01\x12[\n" +
+	"\x0eemail_settings\x18\x0e \x03(\x0e24.invora.billing.common.v2.BillingEntityEmailSettingsR\remailSettings\x12*\n" +
 	"\x11eu_tax_management\x18\x0f \x01(\bR\x0feuTaxManagement\x12?\n" +
 	"\x1cfinalize_zero_amount_invoice\x18\x10 \x01(\bR\x19finalizeZeroAmountInvoice\x12\x0e\n" +
 	"\x02id\x18\x11 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
 	"is_default\x18\x12 \x01(\bR\tisDefault\x12\"\n" +
 	"\n" +
-	"legal_name\x18\x13 \x01(\tH\aR\tlegalName\x88\x01\x01\x12&\n" +
-	"\flegal_number\x18\x14 \x01(\tH\bR\vlegalNumber\x88\x01\x01\x12\x1e\n" +
-	"\blogo_url\x18\x15 \x01(\tH\tR\alogoUrl\x88\x01\x01\x12\x12\n" +
+	"legal_name\x18\x13 \x01(\tH\x06R\tlegalName\x88\x01\x01\x12&\n" +
+	"\flegal_number\x18\x14 \x01(\tH\aR\vlegalNumber\x88\x01\x01\x12\x1e\n" +
+	"\blogo_url\x18\x15 \x01(\tH\bR\alogoUrl\x88\x01\x01\x12\x12\n" +
 	"\x04name\x18\x16 \x01(\tR\x04name\x12(\n" +
 	"\x10net_payment_term\x18\x17 \x01(\x05R\x0enetPaymentTerm\x12J\n" +
 	"\forganization\x18\x18 \x01(\v2&.invora.billing.common.v2.OrganizationR\forganization\x12w\n" +
 	" selected_invoice_custom_sections\x18\x19 \x03(\v2..invora.billing.common.v2.InvoiceCustomSectionR\x1dselectedInvoiceCustomSections\x12\x19\n" +
-	"\x05state\x18\x1a \x01(\tH\n" +
-	"R\x05state\x88\x01\x01\x12?\n" +
-	"\x19tax_identification_number\x18\x1b \x01(\tH\vR\x17taxIdentificationNumber\x88\x01\x01\x12G\n" +
-	"\btimezone\x18\x1c \x01(\x0e2&.invora.billing.common.v2.TimezoneEnumH\fR\btimezone\x88\x01\x01\x129\n" +
+	"\x05state\x18\x1a \x01(\tH\tR\x05state\x88\x01\x01\x12?\n" +
+	"\x19tax_identification_number\x18\x1b \x01(\tH\n" +
+	"R\x17taxIdentificationNumber\x88\x01\x01\x12C\n" +
+	"\btimezone\x18\x1c \x01(\x0e2\".invora.billing.common.v2.TimezoneH\vR\btimezone\x88\x01\x01\x129\n" +
 	"\n" +
 	"updated_at\x18\x1d \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12\x1d\n" +
-	"\azipcode\x18\x1e \x01(\tH\rR\azipcode\x88\x01\x01B\x10\n" +
+	"\azipcode\x18\x1e \x01(\tH\fR\azipcode\x88\x01\x01B\x10\n" +
 	"\x0e_address_line1B\x10\n" +
-	"\x0e_address_line2B\x1b\n" +
-	"\x19_applied_dunning_campaignB\x18\n" +
+	"\x0e_address_line2B\x18\n" +
 	"\x16_billing_configurationB\a\n" +
 	"\x05_cityB\n" +
 	"\n" +
@@ -21146,31 +19843,29 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x1a_tax_identification_numberB\v\n" +
 	"\t_timezoneB\n" +
 	"\n" +
-	"\b_zipcode\"\xc6\x04\n" +
+	"\b_zipcode\"\xbe\x04\n" +
 	"!BillingEntityBillingConfiguration\x12,\n" +
 	"\x0fdocument_locale\x18\x01 \x01(\tH\x00R\x0edocumentLocale\x88\x01\x01\x12\x0e\n" +
 	"\x02id\x18\x02 \x01(\tR\x02id\x12*\n" +
 	"\x0einvoice_footer\x18\x03 \x01(\tH\x01R\rinvoiceFooter\x88\x01\x01\x120\n" +
-	"\x14invoice_grace_period\x18\x04 \x01(\x05R\x12invoiceGracePeriod\x12\xb3\x01\n" +
-	",subscription_invoice_issuing_date_adjustment\x18\x05 \x01(\x0e2S.invora.billing.common.v2.BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnumR(subscriptionInvoiceIssuingDateAdjustment\x12\xa7\x01\n" +
-	"(subscription_invoice_issuing_date_anchor\x18\x06 \x01(\x0e2O.invora.billing.common.v2.BillingEntitySubscriptionInvoiceIssuingDateAnchorEnumR$subscriptionInvoiceIssuingDateAnchorB\x12\n" +
+	"\x14invoice_grace_period\x18\x04 \x01(\x05R\x12invoiceGracePeriod\x12\xaf\x01\n" +
+	",subscription_invoice_issuing_date_adjustment\x18\x05 \x01(\x0e2O.invora.billing.common.v2.BillingEntitySubscriptionInvoiceIssuingDateAdjustmentR(subscriptionInvoiceIssuingDateAdjustment\x12\xa3\x01\n" +
+	"(subscription_invoice_issuing_date_anchor\x18\x06 \x01(\x0e2K.invora.billing.common.v2.BillingEntitySubscriptionInvoiceIssuingDateAnchorR$subscriptionInvoiceIssuingDateAnchorB\x12\n" +
 	"\x10_document_localeB\x11\n" +
-	"\x0f_invoice_footer\"\x86\x02\n" +
+	"\x0f_invoice_footer\"\xca\x01\n" +
 	"\x10CashfreeProvider\x12 \n" +
-	"\tclient_id\x18\x01 \x01(\tH\x00R\bclientId\x88\x01\x01\x12(\n" +
-	"\rclient_secret\x18\x02 \x01(\tH\x01R\fclientSecret\x88\x01\x01\x12\x12\n" +
+	"\tclient_id\x18\x01 \x01(\tH\x00R\bclientId\x88\x01\x01\x12\x12\n" +
 	"\x04code\x18\x03 \x01(\tR\x04code\x12\x0e\n" +
 	"\x02id\x18\x04 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x05 \x01(\tR\x04name\x125\n" +
-	"\x14success_redirect_url\x18\x06 \x01(\tH\x02R\x12successRedirectUrl\x88\x01\x01B\f\n" +
+	"\x14success_redirect_url\x18\x06 \x01(\tH\x01R\x12successRedirectUrl\x88\x01\x01B\f\n" +
 	"\n" +
-	"_client_idB\x10\n" +
-	"\x0e_client_secretB\x17\n" +
-	"\x15_success_redirect_url\"\x81\t\n" +
+	"_client_idB\x17\n" +
+	"\x15_success_redirect_url\"\xf9\b\n" +
 	"\x06Charge\x12c\n" +
 	"\x14applied_pricing_unit\x18\x01 \x01(\v2,.invora.billing.common.v2.AppliedPricingUnitH\x00R\x12appliedPricingUnit\x88\x01\x01\x12X\n" +
-	"\x0fbillable_metric\x18\x02 \x01(\v2/.invora.billing.common.v2.BillingBillableMetricR\x0ebillableMetric\x12L\n" +
-	"\fcharge_model\x18\x03 \x01(\x0e2).invora.billing.common.v2.ChargeModelEnumR\vchargeModel\x12\x17\n" +
+	"\x0fbillable_metric\x18\x02 \x01(\v2/.invora.billing.common.v2.BillingBillableMetricR\x0ebillableMetric\x12H\n" +
+	"\fcharge_model\x18\x03 \x01(\x0e2%.invora.billing.common.v2.ChargeModelR\vchargeModel\x12\x17\n" +
 	"\x04code\x18\x04 \x01(\tH\x01R\x04code\x88\x01\x01\x129\n" +
 	"\n" +
 	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12>\n" +
@@ -21187,8 +19882,8 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\n" +
 	"properties\x18\x0e \x01(\v2$.invora.billing.common.v2.PropertiesH\x05R\n" +
 	"properties\x88\x01\x01\x12\x1a\n" +
-	"\bprorated\x18\x0f \x01(\bR\bprorated\x12^\n" +
-	"\x11regroup_paid_fees\x18\x10 \x01(\x0e2-.invora.billing.common.v2.RegroupPaidFeesEnumH\x06R\x0fregroupPaidFees\x88\x01\x01\x12:\n" +
+	"\bprorated\x18\x0f \x01(\bR\bprorated\x12Z\n" +
+	"\x11regroup_paid_fees\x18\x10 \x01(\x0e2).invora.billing.common.v2.RegroupPaidFeesH\x06R\x0fregroupPaidFees\x88\x01\x01\x12:\n" +
 	"\x05taxes\x18\x11 \x03(\v2$.invora.billing.common.v2.BillingTaxR\x05taxes\x129\n" +
 	"\n" +
 	"updated_at\x18\x12 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAtB\x17\n" +
@@ -21217,18 +19912,18 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"properties\x18\x02 \x01(\v2).invora.billing.common.v2.PropertiesInputR\n" +
 	"properties\x12/\n" +
 	"\x06values\x18\x03 \x01(\v2\x17.google.protobuf.StructR\x06valuesB\x17\n" +
-	"\x15_invoice_display_name\"\xea\x02\n" +
+	"\x15_invoice_display_name\"\x80\x03\n" +
 	"\x11ChargeFilterUsage\x12!\n" +
 	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12!\n" +
 	"\fevents_count\x18\x02 \x01(\x05R\veventsCount\x12\x13\n" +
 	"\x02id\x18\x03 \x01(\tH\x00R\x02id\x88\x01\x01\x125\n" +
 	"\x14invoice_display_name\x18\x04 \x01(\tH\x01R\x12invoiceDisplayName\x88\x01\x01\x12>\n" +
-	"\x19pricing_unit_amount_cents\x18\x05 \x01(\x03H\x02R\x16pricingUnitAmountCents\x88\x01\x01\x12\x14\n" +
-	"\x05units\x18\x06 \x01(\x01R\x05units\x12/\n" +
+	"\x19pricing_unit_amount_cents\x18\x05 \x01(\x03H\x02R\x16pricingUnitAmountCents\x88\x01\x01\x12*\n" +
+	"\x05units\x18\x06 \x01(\v2\x14.kernel.DecimalValueR\x05units\x12/\n" +
 	"\x06values\x18\a \x01(\v2\x17.google.protobuf.StructR\x06valuesB\x05\n" +
 	"\x03_idB\x17\n" +
 	"\x15_invoice_display_nameB\x1c\n" +
-	"\x1a_pricing_unit_amount_cents\"\x85\x04\n" +
+	"\x1a_pricing_unit_amount_cents\"\x9b\x04\n" +
 	"\vChargeUsage\x12!\n" +
 	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12X\n" +
 	"\x0fbillable_metric\x18\x02 \x01(\v2/.invora.billing.common.v2.BillingBillableMetricR\x0ebillableMetric\x128\n" +
@@ -21237,8 +19932,8 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\afilters\x18\x05 \x03(\v2+.invora.billing.common.v2.ChargeFilterUsageR\afilters\x12Q\n" +
 	"\rgrouped_usage\x18\x06 \x03(\v2,.invora.billing.common.v2.GroupedChargeUsageR\fgroupedUsage\x12\x0e\n" +
 	"\x02id\x18\a \x01(\tR\x02id\x12>\n" +
-	"\x19pricing_unit_amount_cents\x18\b \x01(\x03H\x00R\x16pricingUnitAmountCents\x88\x01\x01\x12\x14\n" +
-	"\x05units\x18\t \x01(\x01R\x05unitsB\x1c\n" +
+	"\x19pricing_unit_amount_cents\x18\b \x01(\x03H\x00R\x16pricingUnitAmountCents\x88\x01\x01\x12*\n" +
+	"\x05units\x18\t \x01(\v2\x14.kernel.DecimalValueR\x05unitsB\x1c\n" +
 	"\x1a_pricing_unit_amount_cents\"\xfd\x04\n" +
 	"\x11CollectionMapping\x12/\n" +
 	"\x11billing_entity_id\x18\x01 \x01(\tH\x00R\x0fbillingEntityId\x88\x01\x01\x12M\n" +
@@ -21263,19 +19958,11 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\t_tax_codeB\f\n" +
 	"\n" +
 	"_tax_nexusB\v\n" +
-	"\t_tax_type\"\x9a\x01\n" +
-	"\x12CollectionMetadata\x12!\n" +
-	"\fcurrent_page\x18\x01 \x01(\x05R\vcurrentPage\x12\x1f\n" +
-	"\vlimit_value\x18\x02 \x01(\x05R\n" +
-	"limitValue\x12\x1f\n" +
-	"\vtotal_count\x18\x03 \x01(\x05R\n" +
-	"totalCount\x12\x1f\n" +
-	"\vtotal_pages\x18\x04 \x01(\x05R\n" +
-	"totalPages\"\xd3\x03\n" +
+	"\t_tax_type\"\xcf\x03\n" +
 	"\n" +
 	"Commitment\x12!\n" +
-	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12U\n" +
-	"\x0fcommitment_type\x18\x02 \x01(\x0e2,.invora.billing.common.v2.CommitmentTypeEnumR\x0ecommitmentType\x129\n" +
+	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12Q\n" +
+	"\x0fcommitment_type\x18\x02 \x01(\x0e2(.invora.billing.common.v2.CommitmentTypeR\x0ecommitmentType\x129\n" +
 	"\n" +
 	"created_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x0e\n" +
 	"\x02id\x18\x04 \x01(\tR\x02id\x125\n" +
@@ -21284,17 +19971,17 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x05taxes\x18\a \x03(\v2$.invora.billing.common.v2.BillingTaxR\x05taxes\x129\n" +
 	"\n" +
 	"updated_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAtB\x17\n" +
-	"\x15_invoice_display_name\"\xc3\x02\n" +
+	"\x15_invoice_display_name\"\xbf\x02\n" +
 	"\x0fCommitmentInput\x12&\n" +
-	"\famount_cents\x18\x01 \x01(\x03H\x00R\vamountCents\x88\x01\x01\x12Z\n" +
-	"\x0fcommitment_type\x18\x02 \x01(\x0e2,.invora.billing.common.v2.CommitmentTypeEnumH\x01R\x0ecommitmentType\x88\x01\x01\x12\x13\n" +
+	"\famount_cents\x18\x01 \x01(\x03H\x00R\vamountCents\x88\x01\x01\x12V\n" +
+	"\x0fcommitment_type\x18\x02 \x01(\x0e2(.invora.billing.common.v2.CommitmentTypeH\x01R\x0ecommitmentType\x88\x01\x01\x12\x13\n" +
 	"\x02id\x18\x03 \x01(\tH\x02R\x02id\x88\x01\x01\x125\n" +
 	"\x14invoice_display_name\x18\x04 \x01(\tH\x03R\x12invoiceDisplayName\x88\x01\x01\x12\x1b\n" +
 	"\ttax_codes\x18\x05 \x03(\tR\btaxCodesB\x0f\n" +
 	"\r_amount_centsB\x12\n" +
 	"\x10_commitment_typeB\x05\n" +
 	"\x03_idB\x17\n" +
-	"\x15_invoice_display_name\"\xe2\x04\n" +
+	"\x15_invoice_display_name\"\xf8\x04\n" +
 	"\x14CreditNoteAppliedTax\x12!\n" +
 	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12O\n" +
 	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0eamountCurrency\x12*\n" +
@@ -21308,8 +19995,8 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\btax_code\x18\b \x01(\tR\ataxCode\x12,\n" +
 	"\x0ftax_description\x18\t \x01(\tH\x01R\x0etaxDescription\x88\x01\x01\x12\x19\n" +
 	"\btax_name\x18\n" +
-	" \x01(\tR\ataxName\x12\x19\n" +
-	"\btax_rate\x18\v \x01(\x01R\ataxRate\x129\n" +
+	" \x01(\tR\ataxName\x12/\n" +
+	"\btax_rate\x18\v \x01(\v2\x14.kernel.DecimalValueR\ataxRate\x129\n" +
 	"\n" +
 	"updated_at\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAtB\x06\n" +
 	"\x04_taxB\x12\n" +
@@ -21349,12 +20036,12 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\b_countryB\b\n" +
 	"\x06_stateB\n" +
 	"\n" +
-	"\b_zipcode\"\xae\x04\n" +
+	"\b_zipcode\"\xa6\x04\n" +
 	"\x1cCustomerBillingConfiguration\x12,\n" +
 	"\x0fdocument_locale\x18\x01 \x01(\tH\x00R\x0edocumentLocale\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\tR\x02id\x12\xb3\x01\n" +
-	",subscription_invoice_issuing_date_adjustment\x18\x03 \x01(\x0e2N.invora.billing.common.v2.CustomerSubscriptionInvoiceIssuingDateAdjustmentEnumH\x01R(subscriptionInvoiceIssuingDateAdjustment\x88\x01\x01\x12\xa7\x01\n" +
-	"(subscription_invoice_issuing_date_anchor\x18\x04 \x01(\x0e2J.invora.billing.common.v2.CustomerSubscriptionInvoiceIssuingDateAnchorEnumH\x02R$subscriptionInvoiceIssuingDateAnchor\x88\x01\x01B\x12\n" +
+	"\x02id\x18\x02 \x01(\tR\x02id\x12\xaf\x01\n" +
+	",subscription_invoice_issuing_date_adjustment\x18\x03 \x01(\x0e2J.invora.billing.common.v2.CustomerSubscriptionInvoiceIssuingDateAdjustmentH\x01R(subscriptionInvoiceIssuingDateAdjustment\x88\x01\x01\x12\xa3\x01\n" +
+	"(subscription_invoice_issuing_date_anchor\x18\x04 \x01(\x0e2F.invora.billing.common.v2.CustomerSubscriptionInvoiceIssuingDateAnchorH\x02R$subscriptionInvoiceIssuingDateAnchor\x88\x01\x01B\x12\n" +
 	"\x10_document_localeB/\n" +
 	"-_subscription_invoice_issuing_date_adjustmentB+\n" +
 	")_subscription_invoice_issuing_date_anchor\"\xee\x01\n" +
@@ -21366,19 +20053,19 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x03key\x18\x04 \x01(\tR\x03key\x129\n" +
 	"\n" +
 	"updated_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12\x14\n" +
-	"\x05value\x18\x06 \x01(\tR\x05value\"\x8a\f\n" +
-	"\x16CustomerPortalCustomer\x12T\n" +
-	"\faccount_type\x18\x01 \x01(\x0e21.invora.billing.common.v2.CustomerAccountTypeEnumR\vaccountType\x12(\n" +
+	"\x05value\x18\x06 \x01(\tR\x05value\"\xe4\v\n" +
+	"\x16CustomerPortalCustomer\x12P\n" +
+	"\faccount_type\x18\x01 \x01(\x0e2-.invora.billing.common.v2.CustomerAccountTypeR\vaccountType\x12(\n" +
 	"\raddress_line1\x18\x02 \x01(\tH\x00R\faddressLine1\x88\x01\x01\x12(\n" +
-	"\raddress_line2\x18\x03 \x01(\tH\x01R\faddressLine2\x88\x01\x01\x12W\n" +
-	"\x13applicable_timezone\x18\x04 \x01(\x0e2&.invora.billing.common.v2.TimezoneEnumR\x12applicableTimezone\x12p\n" +
+	"\raddress_line2\x18\x03 \x01(\tH\x01R\faddressLine2\x88\x01\x01\x12S\n" +
+	"\x13applicable_timezone\x18\x04 \x01(\x0e2\".invora.billing.common.v2.TimezoneR\x12applicableTimezone\x12p\n" +
 	"\x15billing_configuration\x18\x05 \x01(\v26.invora.billing.common.v2.CustomerBillingConfigurationH\x02R\x14billingConfiguration\x88\x01\x01\x12\x8c\x01\n" +
 	"$billing_entity_billing_configuration\x18\x06 \x01(\v2;.invora.billing.common.v2.BillingEntityBillingConfigurationR!billingEntityBillingConfiguration\x12\x17\n" +
 	"\x04city\x18\a \x01(\tH\x03R\x04city\x88\x01\x01\x12D\n" +
 	"\acountry\x18\b \x01(\x0e2%.invora.billing.common.v2.CountryCodeH\x04R\acountry\x88\x01\x01\x12G\n" +
-	"\bcurrency\x18\t \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\x05R\bcurrency\x88\x01\x01\x12T\n" +
+	"\bcurrency\x18\t \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\x05R\bcurrency\x88\x01\x01\x12P\n" +
 	"\rcustomer_type\x18\n" +
-	" \x01(\x0e2*.invora.billing.common.v2.CustomerTypeEnumH\x06R\fcustomerType\x88\x01\x01\x12!\n" +
+	" \x01(\x0e2&.invora.billing.common.v2.CustomerTypeH\x06R\fcustomerType\x88\x01\x01\x12!\n" +
 	"\fdisplay_name\x18\v \x01(\tR\vdisplayName\x12\x19\n" +
 	"\x05email\x18\f \x01(\tH\aR\x05email\x88\x01\x01\x12!\n" +
 	"\tfirstname\x18\r \x01(\tH\bR\tfirstname\x88\x01\x01\x12\x0e\n" +
@@ -21388,8 +20075,7 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"legal_name\x18\x10 \x01(\tH\n" +
 	"R\tlegalName\x88\x01\x01\x12&\n" +
 	"\flegal_number\x18\x11 \x01(\tH\vR\vlegalNumber\x88\x01\x01\x12\x17\n" +
-	"\x04name\x18\x12 \x01(\tH\fR\x04name\x88\x01\x01\x12\x18\n" +
-	"\apremium\x18\x13 \x01(\bR\apremium\x12Y\n" +
+	"\x04name\x18\x12 \x01(\tH\fR\x04name\x88\x01\x01\x12Y\n" +
 	"\x10shipping_address\x18\x14 \x01(\v2).invora.billing.common.v2.CustomerAddressH\rR\x0fshippingAddress\x88\x01\x01\x12\x19\n" +
 	"\x05state\x18\x15 \x01(\tH\x0eR\x05state\x88\x01\x01\x12?\n" +
 	"\x19tax_identification_number\x18\x16 \x01(\tH\x0fR\x17taxIdentificationNumber\x88\x01\x01\x12\x1d\n" +
@@ -21413,14 +20099,15 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x06_stateB\x1c\n" +
 	"\x1a_tax_identification_numberB\n" +
 	"\n" +
-	"\b_zipcode\"\xc2\t\n" +
+	"\b_zipcode\"\x96\n" +
+	"\n" +
 	"\x14CustomerPortalWallet\x12#\n" +
 	"\rbalance_cents\x18\x01 \x01(\x03R\fbalanceCents\x12\x17\n" +
 	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x122\n" +
-	"\x15consumed_amount_cents\x18\x03 \x01(\x03R\x13consumedAmountCents\x12)\n" +
-	"\x10consumed_credits\x18\x04 \x01(\x01R\x0fconsumedCredits\x12'\n" +
-	"\x0fcredits_balance\x18\x05 \x01(\x01R\x0ecreditsBalance\x126\n" +
-	"\x17credits_ongoing_balance\x18\x06 \x01(\x01R\x15creditsOngoingBalance\x12B\n" +
+	"\x15consumed_amount_cents\x18\x03 \x01(\x03R\x13consumedAmountCents\x12?\n" +
+	"\x10consumed_credits\x18\x04 \x01(\v2\x14.kernel.DecimalValueR\x0fconsumedCredits\x12=\n" +
+	"\x0fcredits_balance\x18\x05 \x01(\v2\x14.kernel.DecimalValueR\x0ecreditsBalance\x12L\n" +
+	"\x17credits_ongoing_balance\x18\x06 \x01(\v2\x14.kernel.DecimalValueR\x15creditsOngoingBalance\x12B\n" +
 	"\bcurrency\x18\a \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\bcurrency\x12D\n" +
 	"\rexpiration_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampH\x01R\fexpirationAt\x88\x01\x01\x12\x0e\n" +
 	"\x02id\x18\t \x01(\tR\x02id\x12P\n" +
@@ -21433,10 +20120,10 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x17paid_top_up_max_credits\x18\x0f \x01(\x03H\x05R\x13paidTopUpMaxCredits\x88\x01\x01\x12B\n" +
 	"\x1cpaid_top_up_min_amount_cents\x18\x10 \x01(\x03H\x06R\x17paidTopUpMinAmountCents\x88\x01\x01\x129\n" +
 	"\x17paid_top_up_min_credits\x18\x11 \x01(\x03H\aR\x13paidTopUpMinCredits\x88\x01\x01\x12\x1a\n" +
-	"\bpriority\x18\x12 \x01(\x05R\bpriority\x12\x1f\n" +
-	"\vrate_amount\x18\x13 \x01(\x01R\n" +
-	"rateAmount\x12B\n" +
-	"\x06status\x18\x14 \x01(\x0e2*.invora.billing.common.v2.WalletStatusEnumR\x06statusB\a\n" +
+	"\bpriority\x18\x12 \x01(\x05R\bpriority\x125\n" +
+	"\vrate_amount\x18\x13 \x01(\v2\x14.kernel.DecimalValueR\n" +
+	"rateAmount\x12>\n" +
+	"\x06status\x18\x14 \x01(\x0e2&.invora.billing.common.v2.WalletStatusR\x06statusB\a\n" +
 	"\x05_codeB\x10\n" +
 	"\x0e_expiration_atB\x17\n" +
 	"\x15_last_balance_sync_atB\a\n" +
@@ -21465,35 +20152,11 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x12taxes_amount_cents\x18\x06 \x01(\x03R\x10taxesAmountCents\x12;\n" +
 	"\vto_datetime\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"toDatetime\x12,\n" +
-	"\x12total_amount_cents\x18\b \x01(\x03R\x10totalAmountCents\"d\n" +
+	"\x12total_amount_cents\x18\b \x01(\x03R\x10totalAmountCents\"`\n" +
 	"\n" +
 	"DataExport\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12F\n" +
-	"\x06status\x18\x02 \x01(\x0e2..invora.billing.common.v2.DataExportStatusEnumR\x06status\"\xa1\x04\n" +
-	"\x0fDunningCampaign\x126\n" +
-	"\x17applied_to_organization\x18\x01 \x01(\bR\x15appliedToOrganization\x12\x1d\n" +
-	"\n" +
-	"bcc_emails\x18\x02 \x03(\tR\tbccEmails\x12\x12\n" +
-	"\x04code\x18\x03 \x01(\tR\x04code\x129\n" +
-	"\n" +
-	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12'\n" +
-	"\x0fcustomers_count\x18\x05 \x01(\x05R\x0ecustomersCount\x122\n" +
-	"\x15days_between_attempts\x18\x06 \x01(\x05R\x13daysBetweenAttempts\x12%\n" +
-	"\vdescription\x18\a \x01(\tH\x00R\vdescription\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\b \x01(\tR\x02id\x12!\n" +
-	"\fmax_attempts\x18\t \x01(\x05R\vmaxAttempts\x12\x12\n" +
-	"\x04name\x18\n" +
-	" \x01(\tR\x04name\x12R\n" +
-	"\n" +
-	"thresholds\x18\v \x03(\v22.invora.billing.common.v2.DunningCampaignThresholdR\n" +
-	"thresholds\x129\n" +
-	"\n" +
-	"updated_at\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAtB\x0e\n" +
-	"\f_description\"\x91\x01\n" +
-	"\x18DunningCampaignThreshold\x12!\n" +
-	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12B\n" +
-	"\bcurrency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\bcurrency\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\"\x8a\x01\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12B\n" +
+	"\x06status\x18\x02 \x01(\x0e2*.invora.billing.common.v2.DataExportStatusR\x06status\"\x8a\x01\n" +
 	"\x10EntitlementInput\x12!\n" +
 	"\ffeature_code\x18\x01 \x01(\tR\vfeatureCode\x12S\n" +
 	"\n" +
@@ -21501,13 +20164,7 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"privileges\"X\n" +
 	"\x19EntitlementPrivilegeInput\x12%\n" +
 	"\x0eprivilege_code\x18\x01 \x01(\tR\rprivilegeCode\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value\"\xa2\x01\n" +
-	"\vErrorDetail\x12G\n" +
-	"\n" +
-	"error_code\x18\x01 \x01(\x0e2(.invora.billing.common.v2.ErrorCodesEnumR\terrorCode\x12(\n" +
-	"\rerror_details\x18\x02 \x01(\tH\x00R\ferrorDetails\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02idB\x10\n" +
-	"\x0e_error_details\"\x87\x03\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value\"\x87\x03\n" +
 	"\rFeatureObject\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x129\n" +
 	"\n" +
@@ -21521,30 +20178,30 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"privileges\x12/\n" +
 	"\x13subscriptions_count\x18\b \x01(\x05R\x12subscriptionsCountB\x0e\n" +
 	"\f_descriptionB\a\n" +
-	"\x05_name\"\x9e\t\n" +
-	"\x10FeeAmountDetails\x128\n" +
-	"\x16fixed_fee_total_amount\x18\x01 \x01(\tH\x00R\x13fixedFeeTotalAmount\x88\x01\x01\x126\n" +
-	"\x15fixed_fee_unit_amount\x18\x02 \x01(\tH\x01R\x12fixedFeeUnitAmount\x88\x01\x01\x12-\n" +
-	"\x10flat_unit_amount\x18\x03 \x01(\tH\x02R\x0eflatUnitAmount\x88\x01\x01\x12$\n" +
+	"\x05_name\"\x90\v\n" +
+	"\x10FeeAmountDetails\x12N\n" +
+	"\x16fixed_fee_total_amount\x18\x01 \x01(\v2\x14.kernel.DecimalValueH\x00R\x13fixedFeeTotalAmount\x88\x01\x01\x12L\n" +
+	"\x15fixed_fee_unit_amount\x18\x02 \x01(\v2\x14.kernel.DecimalValueH\x01R\x12fixedFeeUnitAmount\x88\x01\x01\x12C\n" +
+	"\x10flat_unit_amount\x18\x03 \x01(\v2\x14.kernel.DecimalValueH\x02R\x0eflatUnitAmount\x88\x01\x01\x12$\n" +
 	"\vfree_events\x18\x04 \x01(\x05H\x03R\n" +
-	"freeEvents\x88\x01\x01\x12\"\n" +
+	"freeEvents\x88\x01\x01\x128\n" +
 	"\n" +
-	"free_units\x18\x05 \x01(\tH\x04R\tfreeUnits\x88\x01\x01\x12\x82\x01\n" +
+	"free_units\x18\x05 \x01(\v2\x14.kernel.DecimalValueH\x04R\tfreeUnits\x88\x01\x01\x12\x82\x01\n" +
 	"\x1bgraduated_percentage_ranges\x18\x06 \x03(\v2B.invora.billing.common.v2.FeeAmountDetailsGraduatedPercentageRangeR\x19graduatedPercentageRanges\x12c\n" +
-	"\x10graduated_ranges\x18\a \x03(\v28.invora.billing.common.v2.FeeAmountDetailsGraduatedRangeR\x0fgraduatedRanges\x12I\n" +
-	"\x1fmin_max_adjustment_total_amount\x18\b \x01(\tH\x05R\x1bminMaxAdjustmentTotalAmount\x88\x01\x01\x12$\n" +
+	"\x10graduated_ranges\x18\a \x03(\v28.invora.billing.common.v2.FeeAmountDetailsGraduatedRangeR\x0fgraduatedRanges\x12_\n" +
+	"\x1fmin_max_adjustment_total_amount\x18\b \x01(\v2\x14.kernel.DecimalValueH\x05R\x1bminMaxAdjustmentTotalAmount\x88\x01\x01\x12$\n" +
 	"\vpaid_events\x18\t \x01(\x05H\x06R\n" +
-	"paidEvents\x88\x01\x01\x12\"\n" +
+	"paidEvents\x88\x01\x01\x128\n" +
 	"\n" +
 	"paid_units\x18\n" +
-	" \x01(\tH\aR\tpaidUnits\x88\x01\x01\x12-\n" +
-	"\x10per_package_size\x18\v \x01(\x05H\bR\x0eperPackageSize\x88\x01\x01\x12:\n" +
-	"\x17per_package_unit_amount\x18\f \x01(\tH\tR\x14perPackageUnitAmount\x88\x01\x01\x12+\n" +
-	"\x0fper_unit_amount\x18\r \x01(\tH\n" +
-	"R\rperUnitAmount\x88\x01\x01\x126\n" +
-	"\x15per_unit_total_amount\x18\x0e \x01(\tH\vR\x12perUnitTotalAmount\x88\x01\x01\x12\x17\n" +
-	"\x04rate\x18\x0f \x01(\tH\fR\x04rate\x88\x01\x01\x12\x19\n" +
-	"\x05units\x18\x10 \x01(\tH\rR\x05units\x88\x01\x01B\x19\n" +
+	" \x01(\v2\x14.kernel.DecimalValueH\aR\tpaidUnits\x88\x01\x01\x12-\n" +
+	"\x10per_package_size\x18\v \x01(\x05H\bR\x0eperPackageSize\x88\x01\x01\x12P\n" +
+	"\x17per_package_unit_amount\x18\f \x01(\v2\x14.kernel.DecimalValueH\tR\x14perPackageUnitAmount\x88\x01\x01\x12A\n" +
+	"\x0fper_unit_amount\x18\r \x01(\v2\x14.kernel.DecimalValueH\n" +
+	"R\rperUnitAmount\x88\x01\x01\x12L\n" +
+	"\x15per_unit_total_amount\x18\x0e \x01(\v2\x14.kernel.DecimalValueH\vR\x12perUnitTotalAmount\x88\x01\x01\x12-\n" +
+	"\x04rate\x18\x0f \x01(\v2\x14.kernel.DecimalValueH\fR\x04rate\x88\x01\x01\x12/\n" +
+	"\x05units\x18\x10 \x01(\v2\x14.kernel.DecimalValueH\rR\x05units\x88\x01\x01B\x19\n" +
 	"\x17_fixed_fee_total_amountB\x18\n" +
 	"\x16_fixed_fee_unit_amountB\x13\n" +
 	"\x11_flat_unit_amountB\x0e\n" +
@@ -21558,39 +20215,39 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x10_per_unit_amountB\x18\n" +
 	"\x16_per_unit_total_amountB\a\n" +
 	"\x05_rateB\b\n" +
-	"\x06_units\"\xbc\x03\n" +
-	"(FeeAmountDetailsGraduatedPercentageRange\x12-\n" +
-	"\x10flat_unit_amount\x18\x01 \x01(\tH\x00R\x0eflatUnitAmount\x88\x01\x01\x12\"\n" +
+	"\x06_units\"\xaa\x04\n" +
+	"(FeeAmountDetailsGraduatedPercentageRange\x12C\n" +
+	"\x10flat_unit_amount\x18\x01 \x01(\v2\x14.kernel.DecimalValueH\x00R\x0eflatUnitAmount\x88\x01\x01\x12\"\n" +
 	"\n" +
-	"from_value\x18\x02 \x01(\x03H\x01R\tfromValue\x88\x01\x01\x126\n" +
-	"\x15per_unit_total_amount\x18\x03 \x01(\tH\x02R\x12perUnitTotalAmount\x88\x01\x01\x12\x17\n" +
-	"\x04rate\x18\x04 \x01(\tH\x03R\x04rate\x88\x01\x01\x12\x1e\n" +
-	"\bto_value\x18\x05 \x01(\x03H\x04R\atoValue\x88\x01\x01\x128\n" +
-	"\x16total_with_flat_amount\x18\x06 \x01(\tH\x05R\x13totalWithFlatAmount\x88\x01\x01\x12\x19\n" +
-	"\x05units\x18\a \x01(\tH\x06R\x05units\x88\x01\x01B\x13\n" +
+	"from_value\x18\x02 \x01(\x03H\x01R\tfromValue\x88\x01\x01\x12L\n" +
+	"\x15per_unit_total_amount\x18\x03 \x01(\v2\x14.kernel.DecimalValueH\x02R\x12perUnitTotalAmount\x88\x01\x01\x12-\n" +
+	"\x04rate\x18\x04 \x01(\v2\x14.kernel.DecimalValueH\x03R\x04rate\x88\x01\x01\x12\x1e\n" +
+	"\bto_value\x18\x05 \x01(\x03H\x04R\atoValue\x88\x01\x01\x12N\n" +
+	"\x16total_with_flat_amount\x18\x06 \x01(\v2\x14.kernel.DecimalValueH\x05R\x13totalWithFlatAmount\x88\x01\x01\x12/\n" +
+	"\x05units\x18\a \x01(\v2\x14.kernel.DecimalValueH\x06R\x05units\x88\x01\x01B\x13\n" +
 	"\x11_flat_unit_amountB\r\n" +
 	"\v_from_valueB\x18\n" +
 	"\x16_per_unit_total_amountB\a\n" +
 	"\x05_rateB\v\n" +
 	"\t_to_valueB\x19\n" +
 	"\x17_total_with_flat_amountB\b\n" +
-	"\x06_units\"\xd1\x03\n" +
-	"\x1eFeeAmountDetailsGraduatedRange\x12-\n" +
-	"\x10flat_unit_amount\x18\x01 \x01(\tH\x00R\x0eflatUnitAmount\x88\x01\x01\x12\"\n" +
+	"\x06_units\"\xeb\x04\n" +
+	"\x1eFeeAmountDetailsGraduatedRange\x12C\n" +
+	"\x10flat_unit_amount\x18\x01 \x01(\v2\x14.kernel.DecimalValueH\x00R\x0eflatUnitAmount\x88\x01\x01\x128\n" +
 	"\n" +
-	"from_value\x18\x02 \x01(\x01H\x01R\tfromValue\x88\x01\x01\x12+\n" +
-	"\x0fper_unit_amount\x18\x03 \x01(\tH\x02R\rperUnitAmount\x88\x01\x01\x126\n" +
-	"\x15per_unit_total_amount\x18\x04 \x01(\tH\x03R\x12perUnitTotalAmount\x88\x01\x01\x12\x1e\n" +
-	"\bto_value\x18\x05 \x01(\x01H\x04R\atoValue\x88\x01\x01\x128\n" +
-	"\x16total_with_flat_amount\x18\x06 \x01(\tH\x05R\x13totalWithFlatAmount\x88\x01\x01\x12\x19\n" +
-	"\x05units\x18\a \x01(\tH\x06R\x05units\x88\x01\x01B\x13\n" +
+	"from_value\x18\x02 \x01(\v2\x14.kernel.DecimalValueH\x01R\tfromValue\x88\x01\x01\x12A\n" +
+	"\x0fper_unit_amount\x18\x03 \x01(\v2\x14.kernel.DecimalValueH\x02R\rperUnitAmount\x88\x01\x01\x12L\n" +
+	"\x15per_unit_total_amount\x18\x04 \x01(\v2\x14.kernel.DecimalValueH\x03R\x12perUnitTotalAmount\x88\x01\x01\x124\n" +
+	"\bto_value\x18\x05 \x01(\v2\x14.kernel.DecimalValueH\x04R\atoValue\x88\x01\x01\x12N\n" +
+	"\x16total_with_flat_amount\x18\x06 \x01(\v2\x14.kernel.DecimalValueH\x05R\x13totalWithFlatAmount\x88\x01\x01\x12/\n" +
+	"\x05units\x18\a \x01(\v2\x14.kernel.DecimalValueH\x06R\x05units\x88\x01\x01B\x13\n" +
 	"\x11_flat_unit_amountB\r\n" +
 	"\v_from_valueB\x12\n" +
 	"\x10_per_unit_amountB\x18\n" +
 	"\x16_per_unit_total_amountB\v\n" +
 	"\t_to_valueB\x19\n" +
 	"\x17_total_with_flat_amountB\b\n" +
-	"\x06_units\"\x99\x04\n" +
+	"\x06_units\"\xaf\x04\n" +
 	"\rFeeAppliedTax\x12!\n" +
 	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12O\n" +
 	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0eamountCurrency\x129\n" +
@@ -21601,9 +20258,9 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x03tax\x18\x06 \x01(\v2$.invora.billing.common.v2.BillingTaxH\x00R\x03tax\x88\x01\x01\x12\x19\n" +
 	"\btax_code\x18\a \x01(\tR\ataxCode\x12,\n" +
 	"\x0ftax_description\x18\b \x01(\tH\x01R\x0etaxDescription\x88\x01\x01\x12\x19\n" +
-	"\btax_name\x18\t \x01(\tR\ataxName\x12\x19\n" +
+	"\btax_name\x18\t \x01(\tR\ataxName\x12/\n" +
 	"\btax_rate\x18\n" +
-	" \x01(\x01R\ataxRate\x129\n" +
+	" \x01(\v2\x14.kernel.DecimalValueR\ataxRate\x129\n" +
 	"\n" +
 	"updated_at\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAtB\x06\n" +
 	"\x04_taxB\x12\n" +
@@ -21613,18 +20270,18 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\vto_datetime\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampH\x01R\n" +
 	"toDatetime\x88\x01\x01B\x10\n" +
 	"\x0e_from_datetimeB\x0e\n" +
-	"\f_to_datetime\"\xe5\x02\n" +
+	"\f_to_datetime\"\xe1\x02\n" +
 	"\x1aFinalizedInvoiceCollection\x12!\n" +
 	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12G\n" +
 	"\bcurrency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\x00R\bcurrency\x88\x01\x01\x12%\n" +
 	"\x0einvoices_count\x18\x03 \x01(\x03R\rinvoicesCount\x120\n" +
-	"\x05month\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x05month\x12b\n" +
-	"\x0epayment_status\x18\x05 \x01(\x0e26.invora.billing.common.v2.InvoicePaymentStatusTypeEnumH\x01R\rpaymentStatus\x88\x01\x01B\v\n" +
+	"\x05month\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x05month\x12^\n" +
+	"\x0epayment_status\x18\x05 \x01(\x0e22.invora.billing.common.v2.InvoicePaymentStatusTypeH\x01R\rpaymentStatus\x88\x01\x01B\v\n" +
 	"\t_currencyB\x11\n" +
-	"\x0f_payment_status\"\x95\x06\n" +
+	"\x0f_payment_status\"\xa7\x06\n" +
 	"\vFixedCharge\x12=\n" +
-	"\x06add_on\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAddOnR\x05addOn\x12W\n" +
-	"\fcharge_model\x18\x02 \x01(\x0e24.invora.billing.common.v2.FixedChargeChargeModelEnumR\vchargeModel\x12\x17\n" +
+	"\x06add_on\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAddOnR\x05addOn\x12S\n" +
+	"\fcharge_model\x18\x02 \x01(\x0e20.invora.billing.common.v2.FixedChargeChargeModelR\vchargeModel\x12\x17\n" +
 	"\x04code\x18\x03 \x01(\tH\x00R\x04code\x88\x01\x01\x129\n" +
 	"\n" +
 	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12>\n" +
@@ -21639,8 +20296,8 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	" \x01(\v2/.invora.billing.common.v2.FixedChargePropertiesH\x04R\n" +
 	"properties\x88\x01\x01\x12\x1a\n" +
 	"\bprorated\x18\v \x01(\bR\bprorated\x12:\n" +
-	"\x05taxes\x18\f \x03(\v2$.invora.billing.common.v2.BillingTaxR\x05taxes\x12\x14\n" +
-	"\x05units\x18\r \x01(\tR\x05units\x129\n" +
+	"\x05taxes\x18\f \x03(\v2$.invora.billing.common.v2.BillingTaxR\x05taxes\x12*\n" +
+	"\x05units\x18\r \x01(\v2\x14.kernel.DecimalValueR\x05units\x129\n" +
 	"\n" +
 	"updated_at\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAtB\a\n" +
 	"\x05_codeB\r\n" +
@@ -21648,70 +20305,63 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x15_invoice_display_nameB\f\n" +
 	"\n" +
 	"_parent_idB\r\n" +
-	"\v_properties\"\xe0\x01\n" +
-	"\x15FixedChargeProperties\x12\x1b\n" +
-	"\x06amount\x18\x01 \x01(\tH\x00R\x06amount\x88\x01\x01\x12S\n" +
+	"\v_properties\"\xf6\x01\n" +
+	"\x15FixedChargeProperties\x121\n" +
+	"\x06amount\x18\x01 \x01(\v2\x14.kernel.DecimalValueH\x00R\x06amount\x88\x01\x01\x12S\n" +
 	"\x10graduated_ranges\x18\x02 \x03(\v2(.invora.billing.common.v2.GraduatedRangeR\x0fgraduatedRanges\x12J\n" +
 	"\rvolume_ranges\x18\x03 \x03(\v2%.invora.billing.common.v2.VolumeRangeR\fvolumeRangesB\t\n" +
-	"\a_amount\"\xef\x01\n" +
-	"\x1aFixedChargePropertiesInput\x12\x1b\n" +
-	"\x06amount\x18\x01 \x01(\tH\x00R\x06amount\x88\x01\x01\x12X\n" +
+	"\a_amount\"\x85\x02\n" +
+	"\x1aFixedChargePropertiesInput\x121\n" +
+	"\x06amount\x18\x01 \x01(\v2\x14.kernel.DecimalValueH\x00R\x06amount\x88\x01\x01\x12X\n" +
 	"\x10graduated_ranges\x18\x02 \x03(\v2-.invora.billing.common.v2.GraduatedRangeInputR\x0fgraduatedRanges\x12O\n" +
 	"\rvolume_ranges\x18\x03 \x03(\v2*.invora.billing.common.v2.VolumeRangeInputR\fvolumeRangesB\t\n" +
-	"\a_amount\"\x8f\x02\n" +
+	"\a_amount\"\x9d\x01\n" +
 	"\x13FlutterwaveProvider\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x12\x0e\n" +
 	"\x02id\x18\x02 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\x12\"\n" +
-	"\n" +
-	"secret_key\x18\x04 \x01(\tH\x00R\tsecretKey\x88\x01\x01\x125\n" +
-	"\x14success_redirect_url\x18\x05 \x01(\tH\x01R\x12successRedirectUrl\x88\x01\x01\x12*\n" +
-	"\x0ewebhook_secret\x18\x06 \x01(\tH\x02R\rwebhookSecret\x88\x01\x01B\r\n" +
-	"\v_secret_keyB\x17\n" +
-	"\x15_success_redirect_urlB\x11\n" +
-	"\x0f_webhook_secret\"\x9f\x02\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x125\n" +
+	"\x14success_redirect_url\x18\x05 \x01(\tH\x00R\x12successRedirectUrl\x88\x01\x01B\x17\n" +
+	"\x15_success_redirect_url\"\xe0\x01\n" +
 	"\x12GocardlessProvider\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x12-\n" +
 	"\x10has_access_token\x18\x02 \x01(\bH\x00R\x0ehasAccessToken\x88\x01\x01\x12\x0e\n" +
 	"\x02id\x18\x03 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x04 \x01(\tR\x04name\x125\n" +
-	"\x14success_redirect_url\x18\x05 \x01(\tH\x01R\x12successRedirectUrl\x88\x01\x01\x12*\n" +
-	"\x0ewebhook_secret\x18\x06 \x01(\tH\x02R\rwebhookSecret\x88\x01\x01B\x13\n" +
+	"\x14success_redirect_url\x18\x05 \x01(\tH\x01R\x12successRedirectUrl\x88\x01\x01B\x13\n" +
 	"\x11_has_access_tokenB\x17\n" +
-	"\x15_success_redirect_urlB\x11\n" +
-	"\x0f_webhook_secret\"\x9b\x01\n" +
-	"\x18GraduatedPercentageRange\x12\x1f\n" +
-	"\vflat_amount\x18\x01 \x01(\tR\n" +
-	"flatAmount\x12\x1d\n" +
+	"\x15_success_redirect_url\"\xf3\x01\n" +
+	"\x18GraduatedPercentageRange\x125\n" +
+	"\vflat_amount\x18\x01 \x01(\v2\x14.kernel.DecimalValueR\n" +
+	"flatAmount\x123\n" +
 	"\n" +
-	"from_value\x18\x02 \x01(\x01R\tfromValue\x12\x12\n" +
-	"\x04rate\x18\x03 \x01(\tR\x04rate\x12\x1e\n" +
-	"\bto_value\x18\x04 \x01(\x01H\x00R\atoValue\x88\x01\x01B\v\n" +
-	"\t_to_value\"\xa0\x01\n" +
-	"\x1dGraduatedPercentageRangeInput\x12\x1f\n" +
-	"\vflat_amount\x18\x01 \x01(\tR\n" +
-	"flatAmount\x12\x1d\n" +
+	"from_value\x18\x02 \x01(\v2\x14.kernel.DecimalValueR\tfromValue\x12(\n" +
+	"\x04rate\x18\x03 \x01(\v2\x14.kernel.DecimalValueR\x04rate\x124\n" +
+	"\bto_value\x18\x04 \x01(\v2\x14.kernel.DecimalValueH\x00R\atoValue\x88\x01\x01B\v\n" +
+	"\t_to_value\"\xf8\x01\n" +
+	"\x1dGraduatedPercentageRangeInput\x125\n" +
+	"\vflat_amount\x18\x01 \x01(\v2\x14.kernel.DecimalValueR\n" +
+	"flatAmount\x123\n" +
 	"\n" +
-	"from_value\x18\x02 \x01(\x01R\tfromValue\x12\x12\n" +
-	"\x04rate\x18\x03 \x01(\tR\x04rate\x12\x1e\n" +
-	"\bto_value\x18\x04 \x01(\x01H\x00R\atoValue\x88\x01\x01B\v\n" +
-	"\t_to_value\"\xa5\x01\n" +
-	"\x0eGraduatedRange\x12\x1f\n" +
-	"\vflat_amount\x18\x01 \x01(\tR\n" +
-	"flatAmount\x12\x1d\n" +
+	"from_value\x18\x02 \x01(\v2\x14.kernel.DecimalValueR\tfromValue\x12(\n" +
+	"\x04rate\x18\x03 \x01(\v2\x14.kernel.DecimalValueR\x04rate\x124\n" +
+	"\bto_value\x18\x04 \x01(\v2\x14.kernel.DecimalValueH\x00R\atoValue\x88\x01\x01B\v\n" +
+	"\t_to_value\"\xfd\x01\n" +
+	"\x0eGraduatedRange\x125\n" +
+	"\vflat_amount\x18\x01 \x01(\v2\x14.kernel.DecimalValueR\n" +
+	"flatAmount\x123\n" +
 	"\n" +
-	"from_value\x18\x02 \x01(\x01R\tfromValue\x12&\n" +
-	"\x0fper_unit_amount\x18\x03 \x01(\tR\rperUnitAmount\x12\x1e\n" +
-	"\bto_value\x18\x04 \x01(\x01H\x00R\atoValue\x88\x01\x01B\v\n" +
-	"\t_to_value\"\xaa\x01\n" +
-	"\x13GraduatedRangeInput\x12\x1f\n" +
-	"\vflat_amount\x18\x01 \x01(\tR\n" +
-	"flatAmount\x12\x1d\n" +
+	"from_value\x18\x02 \x01(\v2\x14.kernel.DecimalValueR\tfromValue\x12<\n" +
+	"\x0fper_unit_amount\x18\x03 \x01(\v2\x14.kernel.DecimalValueR\rperUnitAmount\x124\n" +
+	"\bto_value\x18\x04 \x01(\v2\x14.kernel.DecimalValueH\x00R\atoValue\x88\x01\x01B\v\n" +
+	"\t_to_value\"\x82\x02\n" +
+	"\x13GraduatedRangeInput\x125\n" +
+	"\vflat_amount\x18\x01 \x01(\v2\x14.kernel.DecimalValueR\n" +
+	"flatAmount\x123\n" +
 	"\n" +
-	"from_value\x18\x02 \x01(\x01R\tfromValue\x12&\n" +
-	"\x0fper_unit_amount\x18\x03 \x01(\tR\rperUnitAmount\x12\x1e\n" +
-	"\bto_value\x18\x04 \x01(\x01H\x00R\atoValue\x88\x01\x01B\v\n" +
-	"\t_to_value\"\xf1\x02\n" +
+	"from_value\x18\x02 \x01(\v2\x14.kernel.DecimalValueR\tfromValue\x12<\n" +
+	"\x0fper_unit_amount\x18\x03 \x01(\v2\x14.kernel.DecimalValueR\rperUnitAmount\x124\n" +
+	"\bto_value\x18\x04 \x01(\v2\x14.kernel.DecimalValueH\x00R\atoValue\x88\x01\x01B\v\n" +
+	"\t_to_value\"\x87\x03\n" +
 	"\x12GroupedChargeUsage\x12!\n" +
 	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12!\n" +
 	"\fevents_count\x18\x02 \x01(\x05R\veventsCount\x12E\n" +
@@ -21719,24 +20369,10 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\n" +
 	"grouped_by\x18\x04 \x01(\v2\x17.google.protobuf.StructH\x00R\tgroupedBy\x88\x01\x01\x12\x0e\n" +
 	"\x02id\x18\x05 \x01(\tR\x02id\x12>\n" +
-	"\x19pricing_unit_amount_cents\x18\x06 \x01(\x03H\x01R\x16pricingUnitAmountCents\x88\x01\x01\x12\x14\n" +
-	"\x05units\x18\a \x01(\x01R\x05unitsB\r\n" +
+	"\x19pricing_unit_amount_cents\x18\x06 \x01(\x03H\x01R\x16pricingUnitAmountCents\x88\x01\x01\x12*\n" +
+	"\x05units\x18\a \x01(\v2\x14.kernel.DecimalValueR\x05unitsB\r\n" +
 	"\v_grouped_byB\x1c\n" +
-	"\x1a_pricing_unit_amount_cents\"\xab\x04\n" +
-	"\x0fHubspotCustomer\x125\n" +
-	"\x14external_customer_id\x18\x01 \x01(\tH\x00R\x12externalCustomerId\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\tR\x02id\x12.\n" +
-	"\x10integration_code\x18\x03 \x01(\tH\x01R\x0fintegrationCode\x88\x01\x01\x12*\n" +
-	"\x0eintegration_id\x18\x04 \x01(\tH\x02R\rintegrationId\x88\x01\x01\x12]\n" +
-	"\x10integration_type\x18\x05 \x01(\x0e2-.invora.billing.common.v2.IntegrationTypeEnumH\x03R\x0fintegrationType\x88\x01\x01\x121\n" +
-	"\x12sync_with_provider\x18\x06 \x01(\bH\x04R\x10syncWithProvider\x88\x01\x01\x12b\n" +
-	"\x0ftargeted_object\x18\a \x01(\x0e24.invora.billing.common.v2.HubspotTargetedObjectsEnumH\x05R\x0etargetedObject\x88\x01\x01B\x17\n" +
-	"\x15_external_customer_idB\x13\n" +
-	"\x11_integration_codeB\x11\n" +
-	"\x0f_integration_idB\x13\n" +
-	"\x11_integration_typeB\x15\n" +
-	"\x13_sync_with_providerB\x12\n" +
-	"\x10_targeted_object\"\xc8\x02\n" +
+	"\x1a_pricing_unit_amount_cents\"\xc8\x02\n" +
 	"\x0fIntegrationItem\x127\n" +
 	"\x15external_account_code\x18\x01 \x01(\tH\x00R\x13externalAccountCode\x88\x01\x01\x12\x1f\n" +
 	"\vexternal_id\x18\x02 \x01(\tR\n" +
@@ -21746,14 +20382,14 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x0eintegration_id\x18\x05 \x01(\tR\rintegrationId\x12N\n" +
 	"\titem_type\x18\x06 \x01(\x0e21.invora.billing.common.v2.IntegrationItemTypeEnumR\bitemTypeB\x18\n" +
 	"\x16_external_account_codeB\x10\n" +
-	"\x0e_external_name\"\xc4\x06\n" +
+	"\x0e_external_name\"\xd6\x06\n" +
 	"\x11InvoiceAppliedTax\x12!\n" +
 	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12O\n" +
 	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0eamountCurrency\x127\n" +
 	"\x18applied_on_whole_invoice\x18\x03 \x01(\bR\x15appliedOnWholeInvoice\x129\n" +
 	"\n" +
-	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12n\n" +
-	"\x0fenumed_tax_code\x18\x05 \x01(\x0e2A.invora.billing.common.v2.InvoiceAppliedTaxOnWholeInvoiceCodeEnumH\x00R\renumedTaxCode\x88\x01\x01\x12*\n" +
+	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12j\n" +
+	"\x0fenumed_tax_code\x18\x05 \x01(\x0e2=.invora.billing.common.v2.InvoiceAppliedTaxOnWholeInvoiceCodeH\x00R\renumedTaxCode\x88\x01\x01\x12*\n" +
 	"\x11fees_amount_cents\x18\x06 \x01(\x03R\x0ffeesAmountCents\x12\x0e\n" +
 	"\x02id\x18\a \x01(\tR\x02id\x12B\n" +
 	"\ainvoice\x18\b \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\x12;\n" +
@@ -21761,8 +20397,8 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\btax_code\x18\n" +
 	" \x01(\tR\ataxCode\x12,\n" +
 	"\x0ftax_description\x18\v \x01(\tH\x02R\x0etaxDescription\x88\x01\x01\x12\x19\n" +
-	"\btax_name\x18\f \x01(\tR\ataxName\x12\x19\n" +
-	"\btax_rate\x18\r \x01(\x01R\ataxRate\x120\n" +
+	"\btax_name\x18\f \x01(\tR\ataxName\x12/\n" +
+	"\btax_rate\x18\r \x01(\v2\x14.kernel.DecimalValueR\ataxRate\x120\n" +
 	"\x14taxable_amount_cents\x18\x0e \x01(\x03R\x12taxableAmountCents\x129\n" +
 	"\n" +
 	"updated_at\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAtB\x12\n" +
@@ -21837,33 +20473,16 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\rMetadataInput\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x19\n" +
 	"\x05value\x18\x02 \x01(\tH\x00R\x05value\x88\x01\x01B\b\n" +
-	"\x06_value\"\xef\x01\n" +
-	"\x11MoneyhashProvider\x12\x1c\n" +
-	"\aapi_key\x18\x01 \x01(\tH\x00R\x06apiKey\x88\x01\x01\x12\x12\n" +
+	"\x06_value\"\xc5\x01\n" +
+	"\x11MoneyhashProvider\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\tR\x04code\x12\x1c\n" +
-	"\aflow_id\x18\x03 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x0e\n" +
+	"\aflow_id\x18\x03 \x01(\tH\x00R\x06flowId\x88\x01\x01\x12\x0e\n" +
 	"\x02id\x18\x04 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x05 \x01(\tR\x04name\x125\n" +
-	"\x14success_redirect_url\x18\x06 \x01(\tH\x02R\x12successRedirectUrl\x88\x01\x01B\n" +
-	"\n" +
-	"\b_api_keyB\n" +
+	"\x14success_redirect_url\x18\x06 \x01(\tH\x01R\x12successRedirectUrl\x88\x01\x01B\n" +
 	"\n" +
 	"\b_flow_idB\x17\n" +
-	"\x15_success_redirect_url\"\xf0\x03\n" +
-	"\x10NetsuiteCustomer\x125\n" +
-	"\x14external_customer_id\x18\x01 \x01(\tH\x00R\x12externalCustomerId\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\tR\x02id\x12.\n" +
-	"\x10integration_code\x18\x03 \x01(\tH\x01R\x0fintegrationCode\x88\x01\x01\x12*\n" +
-	"\x0eintegration_id\x18\x04 \x01(\tH\x02R\rintegrationId\x88\x01\x01\x12]\n" +
-	"\x10integration_type\x18\x05 \x01(\x0e2-.invora.billing.common.v2.IntegrationTypeEnumH\x03R\x0fintegrationType\x88\x01\x01\x12(\n" +
-	"\rsubsidiary_id\x18\x06 \x01(\tH\x04R\fsubsidiaryId\x88\x01\x01\x121\n" +
-	"\x12sync_with_provider\x18\a \x01(\bH\x05R\x10syncWithProvider\x88\x01\x01B\x17\n" +
-	"\x15_external_customer_idB\x13\n" +
-	"\x11_integration_codeB\x11\n" +
-	"\x0f_integration_idB\x13\n" +
-	"\x11_integration_typeB\x10\n" +
-	"\x0e_subsidiary_idB\x15\n" +
-	"\x13_sync_with_provider\"\x96\x04\n" +
+	"\x15_success_redirect_url\"\x92\x04\n" +
 	"\fOrganization\x12A\n" +
 	"\x1daccessible_by_current_session\x18\x01 \x01(\bR\x1aaccessibleByCurrentSession\x12t\n" +
 	"\x15billing_configuration\x18\x02 \x01(\v2:.invora.billing.common.v2.OrganizationBillingConfigurationH\x00R\x14billingConfiguration\x88\x01\x01\x129\n" +
@@ -21871,8 +20490,8 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x10default_currency\x18\x04 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0fdefaultCurrency\x12\x0e\n" +
 	"\x02id\x18\x05 \x01(\tR\x02id\x12\x1e\n" +
 	"\blogo_url\x18\x06 \x01(\tH\x01R\alogoUrl\x88\x01\x01\x12\x12\n" +
-	"\x04name\x18\a \x01(\tR\x04name\x12G\n" +
-	"\btimezone\x18\b \x01(\x0e2&.invora.billing.common.v2.TimezoneEnumH\x02R\btimezone\x88\x01\x01B\x18\n" +
+	"\x04name\x18\a \x01(\tR\x04name\x12C\n" +
+	"\btimezone\x18\b \x01(\x0e2\".invora.billing.common.v2.TimezoneH\x02R\btimezone\x88\x01\x01B\x18\n" +
 	"\x16_billing_configurationB\v\n" +
 	"\t_logo_urlB\v\n" +
 	"\t_timezone\"\xe5\x01\n" +
@@ -21891,7 +20510,7 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\aPayable\x12S\n" +
 	"\x0fbilling_invoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceH\x00R\x0ebillingInvoice\x12i\n" +
 	"\x17billing_payment_request\x18\x02 \x01(\v2/.invora.billing.common.v2.BillingPaymentRequestH\x00R\x15billingPaymentRequestB\a\n" +
-	"\x05value\"\xf3\x06\n" +
+	"\x05value\"\xef\x06\n" +
 	"\rPaymentMethod\x129\n" +
 	"\n" +
 	"created_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12E\n" +
@@ -21904,9 +20523,9 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"is_default\x18\x06 \x01(\bR\tisDefault\x127\n" +
 	"\x15payment_provider_code\x18\a \x01(\tH\x02R\x13paymentProviderCode\x88\x01\x01\x12D\n" +
 	"\x1cpayment_provider_customer_id\x18\b \x01(\tH\x03R\x19paymentProviderCustomerId\x88\x01\x01\x127\n" +
-	"\x15payment_provider_name\x18\t \x01(\tH\x04R\x13paymentProviderName\x88\x01\x01\x12c\n" +
+	"\x15payment_provider_name\x18\t \x01(\tH\x04R\x13paymentProviderName\x88\x01\x01\x12_\n" +
 	"\x15payment_provider_type\x18\n" +
-	" \x01(\x0e2*.invora.billing.common.v2.ProviderTypeEnumH\x05R\x13paymentProviderType\x88\x01\x01\x12,\n" +
+	" \x01(\x0e2&.invora.billing.common.v2.ProviderTypeH\x05R\x13paymentProviderType\x88\x01\x01\x12,\n" +
 	"\x12provider_method_id\x18\v \x01(\tR\x10providerMethodId\x12>\n" +
 	"\n" +
 	"updated_at\x18\f \x01(\v2\x1a.google.protobuf.TimestampH\x06R\tupdatedAt\x88\x01\x01B\r\n" +
@@ -21928,10 +20547,10 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x11_expiration_monthB\x12\n" +
 	"\x10_expiration_yearB\b\n" +
 	"\x06_last4B\a\n" +
-	"\x05_type\"\xe2\x01\n" +
+	"\x05_type\"\xde\x01\n" +
 	"\x1bPaymentMethodReferenceInput\x12/\n" +
-	"\x11payment_method_id\x18\x01 \x01(\tH\x00R\x0fpaymentMethodId\x88\x01\x01\x12d\n" +
-	"\x13payment_method_type\x18\x02 \x01(\x0e2/.invora.billing.common.v2.PaymentMethodTypeEnumH\x01R\x11paymentMethodType\x88\x01\x01B\x14\n" +
+	"\x11payment_method_id\x18\x01 \x01(\tH\x00R\x0fpaymentMethodId\x88\x01\x01\x12`\n" +
+	"\x13payment_method_type\x18\x02 \x01(\x0e2+.invora.billing.common.v2.PaymentMethodTypeH\x01R\x11paymentMethodType\x88\x01\x01B\x14\n" +
 	"\x12_payment_method_idB\x16\n" +
 	"\x14_payment_method_type\"\x8b\x05\n" +
 	"\x0fPaymentProvider\x12P\n" +
@@ -21970,15 +20589,15 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"short_name\x18\x06 \x01(\tR\tshortName\x129\n" +
 	"\n" +
 	"updated_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAtB\x0e\n" +
-	"\f_description\"\xdb\x03\n" +
+	"\f_description\"\x9d\x04\n" +
 	"\x10PricingUnitUsage\x12!\n" +
-	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12'\n" +
-	"\x0fconversion_rate\x18\x02 \x01(\x01R\x0econversionRate\x129\n" +
+	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12=\n" +
+	"\x0fconversion_rate\x18\x02 \x01(\v2\x14.kernel.DecimalValueR\x0econversionRate\x129\n" +
 	"\n" +
 	"created_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x0e\n" +
-	"\x02id\x18\x04 \x01(\tR\x02id\x120\n" +
-	"\x14precise_amount_cents\x18\x05 \x01(\x01R\x12preciseAmountCents\x12.\n" +
-	"\x13precise_unit_amount\x18\x06 \x01(\x01R\x11preciseUnitAmount\x12H\n" +
+	"\x02id\x18\x04 \x01(\tR\x02id\x12F\n" +
+	"\x14precise_amount_cents\x18\x05 \x01(\v2\x14.kernel.DecimalValueR\x12preciseAmountCents\x12D\n" +
+	"\x13precise_unit_amount\x18\x06 \x01(\v2\x14.kernel.DecimalValueR\x11preciseUnitAmount\x12H\n" +
 	"\fpricing_unit\x18\a \x01(\v2%.invora.billing.common.v2.PricingUnitR\vpricingUnit\x12\x1d\n" +
 	"\n" +
 	"short_name\x18\b \x01(\tR\tshortName\x12*\n" +
@@ -21995,7 +20614,7 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x04name\x18\x04 \x01(\tH\x00R\x04name\x88\x01\x01\x12O\n" +
 	"\n" +
 	"value_type\x18\x05 \x01(\x0e20.invora.billing.common.v2.PrivilegeValueTypeEnumR\tvalueTypeB\a\n" +
-	"\x05_name\"\xcd\x04\n" +
+	"\x05_name\"\xf9\x04\n" +
 	"\x1aProjectedChargeFilterUsage\x12!\n" +
 	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12!\n" +
 	"\fevents_count\x18\x02 \x01(\x05R\veventsCount\x12\x13\n" +
@@ -22003,15 +20622,15 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x14invoice_display_name\x18\x04 \x01(\tH\x01R\x12invoiceDisplayName\x88\x01\x01\x12>\n" +
 	"\x19pricing_unit_amount_cents\x18\x05 \x01(\x03H\x02R\x16pricingUnitAmountCents\x88\x01\x01\x12Q\n" +
 	"#pricing_unit_projected_amount_cents\x18\x06 \x01(\x03H\x03R\x1fpricingUnitProjectedAmountCents\x88\x01\x01\x124\n" +
-	"\x16projected_amount_cents\x18\a \x01(\x03R\x14projectedAmountCents\x12'\n" +
-	"\x0fprojected_units\x18\b \x01(\x01R\x0eprojectedUnits\x12\x14\n" +
-	"\x05units\x18\t \x01(\x01R\x05units\x12/\n" +
+	"\x16projected_amount_cents\x18\a \x01(\x03R\x14projectedAmountCents\x12=\n" +
+	"\x0fprojected_units\x18\b \x01(\v2\x14.kernel.DecimalValueR\x0eprojectedUnits\x12*\n" +
+	"\x05units\x18\t \x01(\v2\x14.kernel.DecimalValueR\x05units\x12/\n" +
 	"\x06values\x18\n" +
 	" \x01(\v2\x17.google.protobuf.StructR\x06valuesB\x05\n" +
 	"\x03_idB\x17\n" +
 	"\x15_invoice_display_nameB\x1c\n" +
 	"\x1a_pricing_unit_amount_centsB&\n" +
-	"$_pricing_unit_projected_amount_cents\"\xfa\x05\n" +
+	"$_pricing_unit_projected_amount_cents\"\xa6\x06\n" +
 	"\x14ProjectedChargeUsage\x12!\n" +
 	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12X\n" +
 	"\x0fbillable_metric\x18\x02 \x01(\v2/.invora.billing.common.v2.BillingBillableMetricR\x0ebillableMetric\x128\n" +
@@ -22023,11 +20642,11 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x19pricing_unit_amount_cents\x18\b \x01(\x03H\x00R\x16pricingUnitAmountCents\x88\x01\x01\x12Q\n" +
 	"#pricing_unit_projected_amount_cents\x18\t \x01(\x03H\x01R\x1fpricingUnitProjectedAmountCents\x88\x01\x01\x124\n" +
 	"\x16projected_amount_cents\x18\n" +
-	" \x01(\x03R\x14projectedAmountCents\x12'\n" +
-	"\x0fprojected_units\x18\v \x01(\x01R\x0eprojectedUnits\x12\x14\n" +
-	"\x05units\x18\f \x01(\x01R\x05unitsB\x1c\n" +
+	" \x01(\x03R\x14projectedAmountCents\x12=\n" +
+	"\x0fprojected_units\x18\v \x01(\v2\x14.kernel.DecimalValueR\x0eprojectedUnits\x12*\n" +
+	"\x05units\x18\f \x01(\v2\x14.kernel.DecimalValueR\x05unitsB\x1c\n" +
 	"\x1a_pricing_unit_amount_centsB&\n" +
-	"$_pricing_unit_projected_amount_cents\"\xdd\x04\n" +
+	"$_pricing_unit_projected_amount_cents\"\x89\x05\n" +
 	"\x1bProjectedGroupedChargeUsage\x12!\n" +
 	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12!\n" +
 	"\fevents_count\x18\x02 \x01(\x05R\veventsCount\x12N\n" +
@@ -22037,30 +20656,30 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x02id\x18\x05 \x01(\tR\x02id\x12>\n" +
 	"\x19pricing_unit_amount_cents\x18\x06 \x01(\x03H\x01R\x16pricingUnitAmountCents\x88\x01\x01\x12Q\n" +
 	"#pricing_unit_projected_amount_cents\x18\a \x01(\x03H\x02R\x1fpricingUnitProjectedAmountCents\x88\x01\x01\x124\n" +
-	"\x16projected_amount_cents\x18\b \x01(\x03R\x14projectedAmountCents\x12'\n" +
-	"\x0fprojected_units\x18\t \x01(\x01R\x0eprojectedUnits\x12\x14\n" +
+	"\x16projected_amount_cents\x18\b \x01(\x03R\x14projectedAmountCents\x12=\n" +
+	"\x0fprojected_units\x18\t \x01(\v2\x14.kernel.DecimalValueR\x0eprojectedUnits\x12*\n" +
 	"\x05units\x18\n" +
-	" \x01(\x01R\x05unitsB\r\n" +
+	" \x01(\v2\x14.kernel.DecimalValueR\x05unitsB\r\n" +
 	"\v_grouped_byB\x1c\n" +
 	"\x1a_pricing_unit_amount_centsB&\n" +
-	"$_pricing_unit_projected_amount_cents\"\xa5\b\n" +
+	"$_pricing_unit_projected_amount_cents\"\xe7\b\n" +
 	"\n" +
-	"Properties\x12\x1b\n" +
-	"\x06amount\x18\x01 \x01(\tH\x00R\x06amount\x88\x01\x01\x12I\n" +
+	"Properties\x121\n" +
+	"\x06amount\x18\x01 \x01(\v2\x14.kernel.DecimalValueH\x00R\x06amount\x88\x01\x01\x12I\n" +
 	"\x11custom_properties\x18\x02 \x01(\v2\x17.google.protobuf.StructH\x01R\x10customProperties\x88\x01\x01\x12&\n" +
 	"\ffixed_amount\x18\x03 \x01(\tH\x02R\vfixedAmount\x88\x01\x01\x12\"\n" +
 	"\n" +
 	"free_units\x18\x04 \x01(\x03H\x03R\tfreeUnits\x88\x01\x01\x126\n" +
-	"\x15free_units_per_events\x18\x05 \x01(\x03H\x04R\x12freeUnitsPerEvents\x88\x01\x01\x12K\n" +
-	" free_units_per_total_aggregation\x18\x06 \x01(\tH\x05R\x1cfreeUnitsPerTotalAggregation\x88\x01\x01\x12r\n" +
+	"\x15free_units_per_events\x18\x05 \x01(\x03H\x04R\x12freeUnitsPerEvents\x88\x01\x01\x12a\n" +
+	" free_units_per_total_aggregation\x18\x06 \x01(\v2\x14.kernel.DecimalValueH\x05R\x1cfreeUnitsPerTotalAggregation\x88\x01\x01\x12r\n" +
 	"\x1bgraduated_percentage_ranges\x18\a \x03(\v22.invora.billing.common.v2.GraduatedPercentageRangeR\x19graduatedPercentageRanges\x12S\n" +
 	"\x10graduated_ranges\x18\b \x03(\v2(.invora.billing.common.v2.GraduatedRangeR\x0fgraduatedRanges\x12&\n" +
 	"\fpackage_size\x18\t \x01(\x03H\x06R\vpackageSize\x88\x01\x01\x12@\n" +
 	"\x1aper_transaction_max_amount\x18\n" +
 	" \x01(\tH\aR\x17perTransactionMaxAmount\x88\x01\x01\x12@\n" +
 	"\x1aper_transaction_min_amount\x18\v \x01(\tH\bR\x17perTransactionMinAmount\x88\x01\x01\x12,\n" +
-	"\x12pricing_group_keys\x18\f \x03(\tR\x10pricingGroupKeys\x12\x17\n" +
-	"\x04rate\x18\r \x01(\tH\tR\x04rate\x88\x01\x01\x12J\n" +
+	"\x12pricing_group_keys\x18\f \x03(\tR\x10pricingGroupKeys\x12-\n" +
+	"\x04rate\x18\r \x01(\v2\x14.kernel.DecimalValueH\tR\x04rate\x88\x01\x01\x12J\n" +
 	"\rvolume_ranges\x18\x0e \x03(\v2%.invora.billing.common.v2.VolumeRangeR\fvolumeRangesB\t\n" +
 	"\a_amountB\x14\n" +
 	"\x12_custom_propertiesB\x0f\n" +
@@ -22071,23 +20690,23 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\r_package_sizeB\x1d\n" +
 	"\x1b_per_transaction_max_amountB\x1d\n" +
 	"\x1b_per_transaction_min_amountB\a\n" +
-	"\x05_rate\"\xb9\b\n" +
-	"\x0fPropertiesInput\x12\x1b\n" +
-	"\x06amount\x18\x01 \x01(\tH\x00R\x06amount\x88\x01\x01\x12I\n" +
+	"\x05_rate\"\xfb\b\n" +
+	"\x0fPropertiesInput\x121\n" +
+	"\x06amount\x18\x01 \x01(\v2\x14.kernel.DecimalValueH\x00R\x06amount\x88\x01\x01\x12I\n" +
 	"\x11custom_properties\x18\x02 \x01(\v2\x17.google.protobuf.StructH\x01R\x10customProperties\x88\x01\x01\x12&\n" +
 	"\ffixed_amount\x18\x03 \x01(\tH\x02R\vfixedAmount\x88\x01\x01\x12\"\n" +
 	"\n" +
 	"free_units\x18\x04 \x01(\x03H\x03R\tfreeUnits\x88\x01\x01\x126\n" +
-	"\x15free_units_per_events\x18\x05 \x01(\x03H\x04R\x12freeUnitsPerEvents\x88\x01\x01\x12K\n" +
-	" free_units_per_total_aggregation\x18\x06 \x01(\tH\x05R\x1cfreeUnitsPerTotalAggregation\x88\x01\x01\x12w\n" +
+	"\x15free_units_per_events\x18\x05 \x01(\x03H\x04R\x12freeUnitsPerEvents\x88\x01\x01\x12a\n" +
+	" free_units_per_total_aggregation\x18\x06 \x01(\v2\x14.kernel.DecimalValueH\x05R\x1cfreeUnitsPerTotalAggregation\x88\x01\x01\x12w\n" +
 	"\x1bgraduated_percentage_ranges\x18\a \x03(\v27.invora.billing.common.v2.GraduatedPercentageRangeInputR\x19graduatedPercentageRanges\x12X\n" +
 	"\x10graduated_ranges\x18\b \x03(\v2-.invora.billing.common.v2.GraduatedRangeInputR\x0fgraduatedRanges\x12&\n" +
 	"\fpackage_size\x18\t \x01(\x03H\x06R\vpackageSize\x88\x01\x01\x12@\n" +
 	"\x1aper_transaction_max_amount\x18\n" +
 	" \x01(\tH\aR\x17perTransactionMaxAmount\x88\x01\x01\x12@\n" +
 	"\x1aper_transaction_min_amount\x18\v \x01(\tH\bR\x17perTransactionMinAmount\x88\x01\x01\x12,\n" +
-	"\x12pricing_group_keys\x18\f \x03(\tR\x10pricingGroupKeys\x12\x17\n" +
-	"\x04rate\x18\r \x01(\tH\tR\x04rate\x88\x01\x01\x12O\n" +
+	"\x12pricing_group_keys\x18\f \x03(\tR\x10pricingGroupKeys\x12-\n" +
+	"\x04rate\x18\r \x01(\v2\x14.kernel.DecimalValueH\tR\x04rate\x88\x01\x01\x12O\n" +
 	"\rvolume_ranges\x18\x0e \x03(\v2*.invora.billing.common.v2.VolumeRangeInputR\fvolumeRangesB\t\n" +
 	"\a_amountB\x14\n" +
 	"\x12_custom_propertiesB\x0f\n" +
@@ -22098,28 +20717,21 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\r_package_sizeB\x1d\n" +
 	"\x1b_per_transaction_max_amountB\x1d\n" +
 	"\x1b_per_transaction_min_amountB\a\n" +
-	"\x05_rate\"\xac\x02\n" +
-	"\x10ProviderCustomer\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x125\n" +
-	"\x14provider_customer_id\x18\x02 \x01(\tH\x00R\x12providerCustomerId\x88\x01\x01\x12n\n" +
-	"\x18provider_payment_methods\x18\x03 \x03(\x0e24.invora.billing.common.v2.ProviderPaymentMethodsEnumR\x16providerPaymentMethods\x121\n" +
-	"\x12sync_with_provider\x18\x04 \x01(\bH\x01R\x10syncWithProvider\x88\x01\x01B\x17\n" +
-	"\x15_provider_customer_idB\x15\n" +
-	"\x13_sync_with_provider\"\x9d\f\n" +
+	"\x05_rate\"\xb9\f\n" +
 	"\x18RecurringTransactionRule\x129\n" +
 	"\n" +
 	"created_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12D\n" +
-	"\rexpiration_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\fexpirationAt\x88\x01\x01\x12'\n" +
-	"\x0fgranted_credits\x18\x03 \x01(\tR\x0egrantedCredits\x128\n" +
-	"\x19ignore_paid_top_up_limits\x18\x04 \x01(\bR\x15ignorePaidTopUpLimits\x12[\n" +
-	"\binterval\x18\x05 \x01(\x0e2:.invora.billing.common.v2.RecurringTransactionIntervalEnumH\x01R\binterval\x88\x01\x01\x12M\n" +
+	"\rexpiration_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\fexpirationAt\x88\x01\x01\x12=\n" +
+	"\x0fgranted_credits\x18\x03 \x01(\v2\x14.kernel.DecimalValueR\x0egrantedCredits\x128\n" +
+	"\x19ignore_paid_top_up_limits\x18\x04 \x01(\bR\x15ignorePaidTopUpLimits\x12W\n" +
+	"\binterval\x18\x05 \x01(\x0e26.invora.billing.common.v2.RecurringTransactionIntervalH\x01R\binterval\x88\x01\x01\x12M\n" +
 	"#invoice_requires_successful_payment\x18\x06 \x01(\bR invoiceRequiresSuccessfulPayment\x12.\n" +
-	"\x13billing_provider_id\x18\a \x01(\tR\x11billingProviderId\x12P\n" +
-	"\x06method\x18\b \x01(\x0e28.invora.billing.common.v2.RecurringTransactionMethodEnumR\x06method\x12!\n" +
-	"\fpaid_credits\x18\t \x01(\tR\vpaidCredits\x12S\n" +
+	"\x13billing_provider_id\x18\a \x01(\tR\x11billingProviderId\x12L\n" +
+	"\x06method\x18\b \x01(\x0e24.invora.billing.common.v2.RecurringTransactionMethodR\x06method\x127\n" +
+	"\fpaid_credits\x18\t \x01(\v2\x14.kernel.DecimalValueR\vpaidCredits\x12S\n" +
 	"\x0epayment_method\x18\n" +
-	" \x01(\v2'.invora.billing.common.v2.PaymentMethodH\x02R\rpaymentMethod\x88\x01\x01\x12d\n" +
-	"\x13payment_method_type\x18\v \x01(\x0e2/.invora.billing.common.v2.PaymentMethodTypeEnumH\x03R\x11paymentMethodType\x88\x01\x01\x12w\n" +
+	" \x01(\v2'.invora.billing.common.v2.PaymentMethodH\x02R\rpaymentMethod\x88\x01\x01\x12`\n" +
+	"\x13payment_method_type\x18\v \x01(\x0e2+.invora.billing.common.v2.PaymentMethodTypeH\x03R\x11paymentMethodType\x88\x01\x01\x12w\n" +
 	" selected_invoice_custom_sections\x18\f \x03(\v2..invora.billing.common.v2.InvoiceCustomSectionR\x1dselectedInvoiceCustomSections\x12D\n" +
 	"\x1cskip_invoice_custom_sections\x18\r \x01(\bH\x04R\x19skipInvoiceCustomSections\x88\x01\x01\x12>\n" +
 	"\n" +
@@ -22127,8 +20739,8 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x16target_ongoing_balance\x18\x0f \x01(\tH\x06R\x14targetOngoingBalance\x88\x01\x01\x120\n" +
 	"\x11threshold_credits\x18\x10 \x01(\tH\aR\x10thresholdCredits\x88\x01\x01\x12`\n" +
 	"\x14transaction_metadata\x18\x11 \x03(\v2-.invora.billing.common.v2.TransactionMetadataR\x13transactionMetadata\x12.\n" +
-	"\x10transaction_name\x18\x12 \x01(\tH\bR\x0ftransactionName\x88\x01\x01\x12S\n" +
-	"\atrigger\x18\x13 \x01(\x0e29.invora.billing.common.v2.RecurringTransactionTriggerEnumR\atriggerB\x10\n" +
+	"\x10transaction_name\x18\x12 \x01(\tH\bR\x0ftransactionName\x88\x01\x01\x12O\n" +
+	"\atrigger\x18\x13 \x01(\x0e25.invora.billing.common.v2.RecurringTransactionTriggerR\atriggerB\x10\n" +
 	"\x0e_expiration_atB\v\n" +
 	"\t_intervalB\x11\n" +
 	"\x0f_payment_methodB\x16\n" +
@@ -22137,19 +20749,7 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\v_started_atB\x19\n" +
 	"\x17_target_ongoing_balanceB\x14\n" +
 	"\x12_threshold_creditsB\x13\n" +
-	"\x11_transaction_name\"\xb6\x03\n" +
-	"\x12SalesforceCustomer\x125\n" +
-	"\x14external_customer_id\x18\x01 \x01(\tH\x00R\x12externalCustomerId\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\tR\x02id\x12.\n" +
-	"\x10integration_code\x18\x03 \x01(\tH\x01R\x0fintegrationCode\x88\x01\x01\x12*\n" +
-	"\x0eintegration_id\x18\x04 \x01(\tH\x02R\rintegrationId\x88\x01\x01\x12]\n" +
-	"\x10integration_type\x18\x05 \x01(\x0e2-.invora.billing.common.v2.IntegrationTypeEnumH\x03R\x0fintegrationType\x88\x01\x01\x121\n" +
-	"\x12sync_with_provider\x18\x06 \x01(\bH\x04R\x10syncWithProvider\x88\x01\x01B\x17\n" +
-	"\x15_external_customer_idB\x13\n" +
-	"\x11_integration_codeB\x11\n" +
-	"\x0f_integration_idB\x13\n" +
-	"\x11_integration_typeB\x15\n" +
-	"\x13_sync_with_provider\"\xf2\x02\n" +
+	"\x11_transaction_name\"\xff\x02\n" +
 	"\x0fSanitizedApiKey\x129\n" +
 	"\n" +
 	"created_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12>\n" +
@@ -22159,42 +20759,36 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\flast_used_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampH\x01R\n" +
 	"lastUsedAt\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x05 \x01(\tH\x02R\x04name\x88\x01\x01\x129\n" +
-	"\vpermissions\x18\x06 \x01(\v2\x17.google.protobuf.StructR\vpermissions\x12\x14\n" +
-	"\x05value\x18\a \x01(\tR\x05valueB\r\n" +
+	"\vpermissions\x18\x06 \x01(\v2\x17.google.protobuf.StructR\vpermissions\x12!\n" +
+	"\fmasked_value\x18\a \x01(\tR\vmaskedValueB\r\n" +
 	"\v_expires_atB\x0f\n" +
 	"\r_last_used_atB\a\n" +
-	"\x05_name\"\x82\x02\n" +
+	"\x05_name\"\xcf\x01\n" +
 	"\x0eStripeProvider\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x12\x0e\n" +
 	"\x02id\x18\x02 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\x12\"\n" +
-	"\n" +
-	"secret_key\x18\x04 \x01(\tH\x00R\tsecretKey\x88\x01\x01\x125\n" +
-	"\x14success_redirect_url\x18\x05 \x01(\tH\x01R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
-	"\vsupports3ds\x18\x06 \x01(\bH\x02R\vsupports3ds\x88\x01\x01B\r\n" +
-	"\v_secret_keyB\x17\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x125\n" +
+	"\x14success_redirect_url\x18\x05 \x01(\tH\x00R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
+	"\vsupports3ds\x18\x06 \x01(\bH\x01R\vsupports3ds\x88\x01\x01B\x17\n" +
 	"\x15_success_redirect_urlB\x0e\n" +
-	"\f_supports3ds\"\x96\x04\n" +
+	"\f_supports3ds\"\xac\x04\n" +
 	"\x19SubscriptionLifetimeUsage\x12B\n" +
 	"\x1blast_threshold_amount_cents\x18\x01 \x01(\x03H\x00R\x18lastThresholdAmountCents\x88\x01\x01\x12B\n" +
-	"\x1bnext_threshold_amount_cents\x18\x02 \x01(\x03H\x01R\x18nextThresholdAmountCents\x88\x01\x01\x125\n" +
-	"\x14next_threshold_ratio\x18\x03 \x01(\x01H\x02R\x12nextThresholdRatio\x88\x01\x01\x127\n" +
+	"\x1bnext_threshold_amount_cents\x18\x02 \x01(\x03H\x01R\x18nextThresholdAmountCents\x88\x01\x01\x12K\n" +
+	"\x14next_threshold_ratio\x18\x03 \x01(\v2\x14.kernel.DecimalValueH\x02R\x12nextThresholdRatio\x88\x01\x01\x127\n" +
 	"\x18total_usage_amount_cents\x18\x04 \x01(\x03R\x15totalUsageAmountCents\x12U\n" +
 	"\x19total_usage_from_datetime\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\x16totalUsageFromDatetime\x12Q\n" +
 	"\x17total_usage_to_datetime\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\x14totalUsageToDatetimeB\x1e\n" +
 	"\x1c_last_threshold_amount_centsB\x1e\n" +
 	"\x1c_next_threshold_amount_centsB\x17\n" +
-	"\x15_next_threshold_ratio\"\xbd\x02\n" +
-	"\vTapProvider\x12\x1c\n" +
-	"\aapi_key\x18\x01 \x01(\tH\x00R\x06apiKey\x88\x01\x01\x12\x12\n" +
+	"\x15_next_threshold_ratio\"\x93\x02\n" +
+	"\vTapProvider\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\tR\x04code\x12\x0e\n" +
 	"\x02id\x18\x03 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x04 \x01(\tR\x04name\x12/\n" +
-	"\x11save_card_enabled\x18\x05 \x01(\bH\x01R\x0fsaveCardEnabled\x88\x01\x01\x125\n" +
-	"\x14success_redirect_url\x18\x06 \x01(\tH\x02R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
-	"\vsupports3ds\x18\a \x01(\bH\x03R\vsupports3ds\x88\x01\x01B\n" +
-	"\n" +
-	"\b_api_keyB\x14\n" +
+	"\x11save_card_enabled\x18\x05 \x01(\bH\x00R\x0fsaveCardEnabled\x88\x01\x01\x125\n" +
+	"\x14success_redirect_url\x18\x06 \x01(\tH\x01R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
+	"\vsupports3ds\x18\a \x01(\bH\x02R\vsupports3ds\x88\x01\x01B\x14\n" +
 	"\x12_save_card_enabledB\x17\n" +
 	"\x15_success_redirect_urlB\x0e\n" +
 	"\f_supports3ds\"=\n" +
@@ -22213,52 +20807,40 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x16threshold_display_name\x18\x03 \x01(\tH\x01R\x14thresholdDisplayName\x88\x01\x01B\f\n" +
 	"\n" +
 	"_recurringB\x19\n" +
-	"\x17_threshold_display_name\"\xa2\x01\n" +
-	"\vVolumeRange\x12\x1f\n" +
-	"\vflat_amount\x18\x01 \x01(\tR\n" +
+	"\x17_threshold_display_name\"\xce\x01\n" +
+	"\vVolumeRange\x125\n" +
+	"\vflat_amount\x18\x01 \x01(\v2\x14.kernel.DecimalValueR\n" +
 	"flatAmount\x12\x1d\n" +
 	"\n" +
-	"from_value\x18\x02 \x01(\x03R\tfromValue\x12&\n" +
-	"\x0fper_unit_amount\x18\x03 \x01(\tR\rperUnitAmount\x12\x1e\n" +
+	"from_value\x18\x02 \x01(\x03R\tfromValue\x12<\n" +
+	"\x0fper_unit_amount\x18\x03 \x01(\v2\x14.kernel.DecimalValueR\rperUnitAmount\x12\x1e\n" +
 	"\bto_value\x18\x04 \x01(\x03H\x00R\atoValue\x88\x01\x01B\v\n" +
-	"\t_to_value\"\xa7\x01\n" +
-	"\x10VolumeRangeInput\x12\x1f\n" +
-	"\vflat_amount\x18\x01 \x01(\tR\n" +
+	"\t_to_value\"\xd3\x01\n" +
+	"\x10VolumeRangeInput\x125\n" +
+	"\vflat_amount\x18\x01 \x01(\v2\x14.kernel.DecimalValueR\n" +
 	"flatAmount\x12\x1d\n" +
 	"\n" +
-	"from_value\x18\x02 \x01(\x03R\tfromValue\x12&\n" +
-	"\x0fper_unit_amount\x18\x03 \x01(\tR\rperUnitAmount\x12\x1e\n" +
+	"from_value\x18\x02 \x01(\x03R\tfromValue\x12<\n" +
+	"\x0fper_unit_amount\x18\x03 \x01(\v2\x14.kernel.DecimalValueR\rperUnitAmount\x12\x1e\n" +
 	"\bto_value\x18\x04 \x01(\x03H\x00R\atoValue\x88\x01\x01B\v\n" +
-	"\t_to_value\"\xb2\x01\n" +
+	"\t_to_value\"\xae\x01\n" +
 	"\x0fWalletAppliesTo\x12Z\n" +
-	"\x10billable_metrics\x18\x01 \x03(\v2/.invora.billing.common.v2.BillingBillableMetricR\x0fbillableMetrics\x12C\n" +
-	"\tfee_types\x18\x02 \x03(\x0e2&.invora.billing.common.v2.FeeTypesEnumR\bfeeTypes\"I\n" +
+	"\x10billable_metrics\x18\x01 \x03(\v2/.invora.billing.common.v2.BillingBillableMetricR\x0fbillableMetrics\x12?\n" +
+	"\tfee_types\x18\x02 \x03(\x0e2\".invora.billing.common.v2.FeeTypesR\bfeeTypes\"I\n" +
 	"\x1fWalletTransactionMetadataObject\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value\"\xb0\x03\n" +
-	"\fXeroCustomer\x125\n" +
-	"\x14external_customer_id\x18\x01 \x01(\tH\x00R\x12externalCustomerId\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\tR\x02id\x12.\n" +
-	"\x10integration_code\x18\x03 \x01(\tH\x01R\x0fintegrationCode\x88\x01\x01\x12*\n" +
-	"\x0eintegration_id\x18\x04 \x01(\tH\x02R\rintegrationId\x88\x01\x01\x12]\n" +
-	"\x10integration_type\x18\x05 \x01(\x0e2-.invora.billing.common.v2.IntegrationTypeEnumH\x03R\x0fintegrationType\x88\x01\x01\x121\n" +
-	"\x12sync_with_provider\x18\x06 \x01(\bH\x04R\x10syncWithProvider\x88\x01\x01B\x17\n" +
-	"\x15_external_customer_idB\x13\n" +
-	"\x11_integration_codeB\x11\n" +
-	"\x0f_integration_idB\x13\n" +
-	"\x11_integration_typeB\x15\n" +
-	"\x13_sync_with_provider*\xc2\x01\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value*;\n" +
+	"\x04View\x12\x14\n" +
+	"\x10VIEW_UNSPECIFIED\x10\x00\x12\x0e\n" +
+	"\n" +
+	"VIEW_BASIC\x10\x01\x12\r\n" +
+	"\tVIEW_FULL\x10\x02*\xc2\x01\n" +
 	"\x10BillingOrgStatus\x12\"\n" +
 	"\x1eBILLING_ORG_STATUS_UNSPECIFIED\x10\x00\x12#\n" +
 	"\x1fBILLING_ORG_STATUS_PROVISIONING\x10\x01\x12\x1d\n" +
 	"\x19BILLING_ORG_STATUS_ACTIVE\x10\x02\x12 \n" +
 	"\x1cBILLING_ORG_STATUS_SUSPENDED\x10\x03\x12$\n" +
-	" BILLING_ORG_STATUS_DEPROVISIONED\x10\x04*\xa0\x01\n" +
-	"\x13AnalyticsPeriodEnum\x12%\n" +
-	"!ANALYTICS_PERIOD_ENUM_UNSPECIFIED\x10\x00\x12\x1f\n" +
-	"\x1bANALYTICS_PERIOD_ENUM_MONTH\x10\x01\x12!\n" +
-	"\x1dANALYTICS_PERIOD_ENUM_QUARTER\x10\x02\x12\x1e\n" +
-	"\x1aANALYTICS_PERIOD_ENUM_YEAR\x10\x03*\x99\x01\n" +
+	" BILLING_ORG_STATUS_DEPROVISIONED\x10\x04*\x99\x01\n" +
 	"\x12ActivitySourceEnum\x12$\n" +
 	" ACTIVITY_SOURCE_ENUM_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18ACTIVITY_SOURCE_ENUM_API\x10\x01\x12\x1e\n" +
@@ -22313,58 +20895,58 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"-ACTIVITY_TYPE_ENUM_WALLET_TRANSACTION_CREATED\x10,\x129\n" +
 	"5ACTIVITY_TYPE_ENUM_WALLET_TRANSACTION_PAYMENT_FAILURE\x10-\x121\n" +
 	"-ACTIVITY_TYPE_ENUM_WALLET_TRANSACTION_UPDATED\x10.\x12%\n" +
-	"!ACTIVITY_TYPE_ENUM_WALLET_UPDATED\x10/*\x94\x01\n" +
-	"\x13AdjustedFeeTypeEnum\x12&\n" +
-	"\"ADJUSTED_FEE_TYPE_ENUM_UNSPECIFIED\x10\x00\x12*\n" +
-	"&ADJUSTED_FEE_TYPE_ENUM_ADJUSTED_AMOUNT\x10\x01\x12)\n" +
-	"%ADJUSTED_FEE_TYPE_ENUM_ADJUSTED_UNITS\x10\x02*\xcb\x02\n" +
-	"\x13AggregationTypeEnum\x12%\n" +
-	"!AGGREGATION_TYPE_ENUM_UNSPECIFIED\x10\x00\x12#\n" +
-	"\x1fAGGREGATION_TYPE_ENUM_COUNT_AGG\x10\x01\x12$\n" +
-	" AGGREGATION_TYPE_ENUM_CUSTOM_AGG\x10\x02\x12$\n" +
-	" AGGREGATION_TYPE_ENUM_LATEST_AGG\x10\x03\x12!\n" +
-	"\x1dAGGREGATION_TYPE_ENUM_MAX_AGG\x10\x04\x12!\n" +
-	"\x1dAGGREGATION_TYPE_ENUM_SUM_AGG\x10\x05\x12*\n" +
-	"&AGGREGATION_TYPE_ENUM_UNIQUE_COUNT_AGG\x10\x06\x12*\n" +
-	"&AGGREGATION_TYPE_ENUM_WEIGHTED_SUM_AGG\x10\a*\x97\x01\n" +
-	"\x17AppliedCouponStatusEnum\x12*\n" +
-	"&APPLIED_COUPON_STATUS_ENUM_UNSPECIFIED\x10\x00\x12%\n" +
-	"!APPLIED_COUPON_STATUS_ENUM_ACTIVE\x10\x01\x12)\n" +
-	"%APPLIED_COUPON_STATUS_ENUM_TERMINATED\x10\x02*\xd4\x01\n" +
-	"\"BillingEntityDocumentNumberingEnum\x126\n" +
-	"2BILLING_ENTITY_DOCUMENT_NUMBERING_ENUM_UNSPECIFIED\x10\x00\x12=\n" +
-	"9BILLING_ENTITY_DOCUMENT_NUMBERING_ENUM_PER_BILLING_ENTITY\x10\x01\x127\n" +
-	"3BILLING_ENTITY_DOCUMENT_NUMBERING_ENUM_PER_CUSTOMER\x10\x02*\x8a\x02\n" +
-	"\x1eBillingEntityEmailSettingsEnum\x122\n" +
-	".BILLING_ENTITY_EMAIL_SETTINGS_ENUM_UNSPECIFIED\x10\x00\x12:\n" +
-	"6BILLING_ENTITY_EMAIL_SETTINGS_ENUM_CREDIT_NOTE_CREATED\x10\x01\x128\n" +
-	"4BILLING_ENTITY_EMAIL_SETTINGS_ENUM_INVOICE_FINALIZED\x10\x02\x12>\n" +
-	":BILLING_ENTITY_EMAIL_SETTINGS_ENUM_PAYMENT_RECEIPT_CREATED\x10\x03*\xc2\x02\n" +
-	"9BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum\x12P\n" +
-	"LBILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_UNSPECIFIED\x10\x00\x12a\n" +
-	"]BILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_ALIGN_WITH_FINALIZATION_DATE\x10\x01\x12P\n" +
-	"LBILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_KEEP_ANCHOR\x10\x02*\xae\x02\n" +
-	"5BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum\x12L\n" +
-	"HBILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_UNSPECIFIED\x10\x00\x12S\n" +
-	"OBILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_CURRENT_PERIOD_END\x10\x01\x12R\n" +
-	"NBILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_NEXT_PERIOD_START\x10\x02*w\n" +
-	"\x0fBillingTimeEnum\x12!\n" +
-	"\x1dBILLING_TIME_ENUM_UNSPECIFIED\x10\x00\x12!\n" +
-	"\x1dBILLING_TIME_ENUM_ANNIVERSARY\x10\x01\x12\x1e\n" +
-	"\x1aBILLING_TIME_ENUM_CALENDAR\x10\x02*\xbd\x02\n" +
-	"\x0fChargeModelEnum\x12!\n" +
-	"\x1dCHARGE_MODEL_ENUM_UNSPECIFIED\x10\x00\x12\x1c\n" +
-	"\x18CHARGE_MODEL_ENUM_CUSTOM\x10\x01\x12\x1d\n" +
-	"\x19CHARGE_MODEL_ENUM_DYNAMIC\x10\x02\x12\x1f\n" +
-	"\x1bCHARGE_MODEL_ENUM_GRADUATED\x10\x03\x12*\n" +
-	"&CHARGE_MODEL_ENUM_GRADUATED_PERCENTAGE\x10\x04\x12\x1d\n" +
-	"\x19CHARGE_MODEL_ENUM_PACKAGE\x10\x05\x12 \n" +
-	"\x1cCHARGE_MODEL_ENUM_PERCENTAGE\x10\x06\x12\x1e\n" +
-	"\x1aCHARGE_MODEL_ENUM_STANDARD\x10\a\x12\x1c\n" +
-	"\x18CHARGE_MODEL_ENUM_VOLUME\x10\b*g\n" +
-	"\x12CommitmentTypeEnum\x12$\n" +
-	" COMMITMENT_TYPE_ENUM_UNSPECIFIED\x10\x00\x12+\n" +
-	"'COMMITMENT_TYPE_ENUM_MINIMUM_COMMITMENT\x10\x01*\xa8*\n" +
+	"!ACTIVITY_TYPE_ENUM_WALLET_UPDATED\x10/*\x81\x01\n" +
+	"\x0fAdjustedFeeType\x12!\n" +
+	"\x1dADJUSTED_FEE_TYPE_UNSPECIFIED\x10\x00\x12%\n" +
+	"!ADJUSTED_FEE_TYPE_ADJUSTED_AMOUNT\x10\x01\x12$\n" +
+	" ADJUSTED_FEE_TYPE_ADJUSTED_UNITS\x10\x02*\x9f\x02\n" +
+	"\x0fAggregationType\x12 \n" +
+	"\x1cAGGREGATION_TYPE_UNSPECIFIED\x10\x00\x12\x1e\n" +
+	"\x1aAGGREGATION_TYPE_COUNT_AGG\x10\x01\x12\x1f\n" +
+	"\x1bAGGREGATION_TYPE_CUSTOM_AGG\x10\x02\x12\x1f\n" +
+	"\x1bAGGREGATION_TYPE_LATEST_AGG\x10\x03\x12\x1c\n" +
+	"\x18AGGREGATION_TYPE_MAX_AGG\x10\x04\x12\x1c\n" +
+	"\x18AGGREGATION_TYPE_SUM_AGG\x10\x05\x12%\n" +
+	"!AGGREGATION_TYPE_UNIQUE_COUNT_AGG\x10\x06\x12%\n" +
+	"!AGGREGATION_TYPE_WEIGHTED_SUM_AGG\x10\a*\x84\x01\n" +
+	"\x13AppliedCouponStatus\x12%\n" +
+	"!APPLIED_COUPON_STATUS_UNSPECIFIED\x10\x00\x12 \n" +
+	"\x1cAPPLIED_COUPON_STATUS_ACTIVE\x10\x01\x12$\n" +
+	" APPLIED_COUPON_STATUS_TERMINATED\x10\x02*\xc1\x01\n" +
+	"\x1eBillingEntityDocumentNumbering\x121\n" +
+	"-BILLING_ENTITY_DOCUMENT_NUMBERING_UNSPECIFIED\x10\x00\x128\n" +
+	"4BILLING_ENTITY_DOCUMENT_NUMBERING_PER_BILLING_ENTITY\x10\x01\x122\n" +
+	".BILLING_ENTITY_DOCUMENT_NUMBERING_PER_CUSTOMER\x10\x02*\xf2\x01\n" +
+	"\x1aBillingEntityEmailSettings\x12-\n" +
+	")BILLING_ENTITY_EMAIL_SETTINGS_UNSPECIFIED\x10\x00\x125\n" +
+	"1BILLING_ENTITY_EMAIL_SETTINGS_CREDIT_NOTE_CREATED\x10\x01\x123\n" +
+	"/BILLING_ENTITY_EMAIL_SETTINGS_INVOICE_FINALIZED\x10\x02\x129\n" +
+	"5BILLING_ENTITY_EMAIL_SETTINGS_PAYMENT_RECEIPT_CREATED\x10\x03*\xaf\x02\n" +
+	"5BillingEntitySubscriptionInvoiceIssuingDateAdjustment\x12K\n" +
+	"GBILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_UNSPECIFIED\x10\x00\x12\\\n" +
+	"XBILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ALIGN_WITH_FINALIZATION_DATE\x10\x01\x12K\n" +
+	"GBILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_KEEP_ANCHOR\x10\x02*\x9b\x02\n" +
+	"1BillingEntitySubscriptionInvoiceIssuingDateAnchor\x12G\n" +
+	"CBILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_UNSPECIFIED\x10\x00\x12N\n" +
+	"JBILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_CURRENT_PERIOD_END\x10\x01\x12M\n" +
+	"IBILLING_ENTITY_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_NEXT_PERIOD_START\x10\x02*d\n" +
+	"\vBillingTime\x12\x1c\n" +
+	"\x18BILLING_TIME_UNSPECIFIED\x10\x00\x12\x1c\n" +
+	"\x18BILLING_TIME_ANNIVERSARY\x10\x01\x12\x19\n" +
+	"\x15BILLING_TIME_CALENDAR\x10\x02*\x8c\x02\n" +
+	"\vChargeModel\x12\x1c\n" +
+	"\x18CHARGE_MODEL_UNSPECIFIED\x10\x00\x12\x17\n" +
+	"\x13CHARGE_MODEL_CUSTOM\x10\x01\x12\x18\n" +
+	"\x14CHARGE_MODEL_DYNAMIC\x10\x02\x12\x1a\n" +
+	"\x16CHARGE_MODEL_GRADUATED\x10\x03\x12%\n" +
+	"!CHARGE_MODEL_GRADUATED_PERCENTAGE\x10\x04\x12\x18\n" +
+	"\x14CHARGE_MODEL_PACKAGE\x10\x05\x12\x1b\n" +
+	"\x17CHARGE_MODEL_PERCENTAGE\x10\x06\x12\x19\n" +
+	"\x15CHARGE_MODEL_STANDARD\x10\a\x12\x17\n" +
+	"\x13CHARGE_MODEL_VOLUME\x10\b*Y\n" +
+	"\x0eCommitmentType\x12\x1f\n" +
+	"\x1bCOMMITMENT_TYPE_UNSPECIFIED\x10\x00\x12&\n" +
+	"\"COMMITMENT_TYPE_MINIMUM_COMMITMENT\x10\x01*\xa8*\n" +
 	"\vCountryCode\x12\x1c\n" +
 	"\x18COUNTRY_CODE_UNSPECIFIED\x10\x00\x12\x13\n" +
 	"\x0fCOUNTRY_CODE_AD\x10\x01\x12\x13\n" +
@@ -22626,33 +21208,34 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x1cCOUPON_FREQUENCY_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18COUPON_FREQUENCY_FOREVER\x10\x01\x12\x19\n" +
 	"\x15COUPON_FREQUENCY_ONCE\x10\x02\x12\x1e\n" +
-	"\x1aCOUPON_FREQUENCY_RECURRING\x10\x03*x\n" +
-	"\x10CouponStatusEnum\x12\"\n" +
-	"\x1eCOUPON_STATUS_ENUM_UNSPECIFIED\x10\x00\x12\x1d\n" +
-	"\x19COUPON_STATUS_ENUM_ACTIVE\x10\x01\x12!\n" +
-	"\x1dCOUPON_STATUS_ENUM_TERMINATED\x10\x02*v\n" +
-	"\x0eCouponTypeEnum\x12 \n" +
-	"\x1cCOUPON_TYPE_ENUM_UNSPECIFIED\x10\x00\x12!\n" +
-	"\x1dCOUPON_TYPE_ENUM_FIXED_AMOUNT\x10\x01\x12\x1f\n" +
-	"\x1bCOUPON_TYPE_ENUM_PERCENTAGE\x10\x02*\xd2\x01\n" +
-	"\x1aCreditNoteCreditStatusEnum\x12.\n" +
-	"*CREDIT_NOTE_CREDIT_STATUS_ENUM_UNSPECIFIED\x10\x00\x12,\n" +
-	"(CREDIT_NOTE_CREDIT_STATUS_ENUM_AVAILABLE\x10\x01\x12+\n" +
-	"'CREDIT_NOTE_CREDIT_STATUS_ENUM_CONSUMED\x10\x02\x12)\n" +
-	"%CREDIT_NOTE_CREDIT_STATUS_ENUM_VOIDED\x10\x03*\xce\x02\n" +
-	"\x14CreditNoteReasonEnum\x12'\n" +
-	"#CREDIT_NOTE_REASON_ENUM_UNSPECIFIED\x10\x00\x12-\n" +
-	")CREDIT_NOTE_REASON_ENUM_DUPLICATED_CHARGE\x10\x01\x12-\n" +
-	")CREDIT_NOTE_REASON_ENUM_FRAUDULENT_CHARGE\x10\x02\x12.\n" +
-	"*CREDIT_NOTE_REASON_ENUM_ORDER_CANCELLATION\x10\x03\x12(\n" +
-	"$CREDIT_NOTE_REASON_ENUM_ORDER_CHANGE\x10\x04\x12!\n" +
-	"\x1dCREDIT_NOTE_REASON_ENUM_OTHER\x10\x05\x122\n" +
-	".CREDIT_NOTE_REASON_ENUM_PRODUCT_UNSATISFACTORY\x10\x06*\xd1\x01\n" +
-	"\x1aCreditNoteRefundStatusEnum\x12.\n" +
-	"*CREDIT_NOTE_REFUND_STATUS_ENUM_UNSPECIFIED\x10\x00\x12)\n" +
-	"%CREDIT_NOTE_REFUND_STATUS_ENUM_FAILED\x10\x01\x12*\n" +
-	"&CREDIT_NOTE_REFUND_STATUS_ENUM_PENDING\x10\x02\x12,\n" +
-	"(CREDIT_NOTE_REFUND_STATUS_ENUM_SUCCEEDED\x10\x03*\xfe\x19\n" +
+	"\x1aCOUPON_FREQUENCY_RECURRING\x10\x03*e\n" +
+	"\fCouponStatus\x12\x1d\n" +
+	"\x19COUPON_STATUS_UNSPECIFIED\x10\x00\x12\x18\n" +
+	"\x14COUPON_STATUS_ACTIVE\x10\x01\x12\x1c\n" +
+	"\x18COUPON_STATUS_TERMINATED\x10\x02*c\n" +
+	"\n" +
+	"CouponType\x12\x1b\n" +
+	"\x17COUPON_TYPE_UNSPECIFIED\x10\x00\x12\x1c\n" +
+	"\x18COUPON_TYPE_FIXED_AMOUNT\x10\x01\x12\x1a\n" +
+	"\x16COUPON_TYPE_PERCENTAGE\x10\x02*\xba\x01\n" +
+	"\x16CreditNoteCreditStatus\x12)\n" +
+	"%CREDIT_NOTE_CREDIT_STATUS_UNSPECIFIED\x10\x00\x12'\n" +
+	"#CREDIT_NOTE_CREDIT_STATUS_AVAILABLE\x10\x01\x12&\n" +
+	"\"CREDIT_NOTE_CREDIT_STATUS_CONSUMED\x10\x02\x12$\n" +
+	" CREDIT_NOTE_CREDIT_STATUS_VOIDED\x10\x03*\xa7\x02\n" +
+	"\x10CreditNoteReason\x12\"\n" +
+	"\x1eCREDIT_NOTE_REASON_UNSPECIFIED\x10\x00\x12(\n" +
+	"$CREDIT_NOTE_REASON_DUPLICATED_CHARGE\x10\x01\x12(\n" +
+	"$CREDIT_NOTE_REASON_FRAUDULENT_CHARGE\x10\x02\x12)\n" +
+	"%CREDIT_NOTE_REASON_ORDER_CANCELLATION\x10\x03\x12#\n" +
+	"\x1fCREDIT_NOTE_REASON_ORDER_CHANGE\x10\x04\x12\x1c\n" +
+	"\x18CREDIT_NOTE_REASON_OTHER\x10\x05\x12-\n" +
+	")CREDIT_NOTE_REASON_PRODUCT_UNSATISFACTORY\x10\x06*\xb9\x01\n" +
+	"\x16CreditNoteRefundStatus\x12)\n" +
+	"%CREDIT_NOTE_REFUND_STATUS_UNSPECIFIED\x10\x00\x12$\n" +
+	" CREDIT_NOTE_REFUND_STATUS_FAILED\x10\x01\x12%\n" +
+	"!CREDIT_NOTE_REFUND_STATUS_PENDING\x10\x02\x12'\n" +
+	"#CREDIT_NOTE_REFUND_STATUS_SUCCEEDED\x10\x03*\xfe\x19\n" +
 	"\fCurrencyEnum\x12\x1d\n" +
 	"\x19CURRENCY_ENUM_UNSPECIFIED\x10\x00\x12\x15\n" +
 	"\x11CURRENCY_ENUM_AED\x10\x01\x12\x15\n" +
@@ -22797,56 +21380,57 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x11CURRENCY_ENUM_XPF\x10\x8b\x01\x12\x16\n" +
 	"\x11CURRENCY_ENUM_YER\x10\x8c\x01\x12\x16\n" +
 	"\x11CURRENCY_ENUM_ZAR\x10\x8d\x01\x12\x16\n" +
-	"\x11CURRENCY_ENUM_ZMW\x10\x8e\x01*\x96\x01\n" +
-	"\x17CustomerAccountTypeEnum\x12*\n" +
-	"&CUSTOMER_ACCOUNT_TYPE_ENUM_UNSPECIFIED\x10\x00\x12'\n" +
-	"#CUSTOMER_ACCOUNT_TYPE_ENUM_CUSTOMER\x10\x01\x12&\n" +
-	"\"CUSTOMER_ACCOUNT_TYPE_ENUM_PARTNER\x10\x02*\xab\x02\n" +
-	"4CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum\x12J\n" +
-	"FCUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_UNSPECIFIED\x10\x00\x12[\n" +
-	"WCUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_ALIGN_WITH_FINALIZATION_DATE\x10\x01\x12J\n" +
-	"FCUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ENUM_KEEP_ANCHOR\x10\x02*\x97\x02\n" +
-	"0CustomerSubscriptionInvoiceIssuingDateAnchorEnum\x12F\n" +
-	"BCUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_UNSPECIFIED\x10\x00\x12M\n" +
-	"ICUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_CURRENT_PERIOD_END\x10\x01\x12L\n" +
-	"HCUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_ENUM_NEXT_PERIOD_START\x10\x02*y\n" +
-	"\x10CustomerTypeEnum\x12\"\n" +
-	"\x1eCUSTOMER_TYPE_ENUM_UNSPECIFIED\x10\x00\x12\x1e\n" +
-	"\x1aCUSTOMER_TYPE_ENUM_COMPANY\x10\x01\x12!\n" +
-	"\x1dCUSTOMER_TYPE_ENUM_INDIVIDUAL\x10\x02*n\n" +
-	"\x18DataExportFormatTypeEnum\x12,\n" +
-	"(DATA_EXPORT_FORMAT_TYPE_ENUM_UNSPECIFIED\x10\x00\x12$\n" +
-	" DATA_EXPORT_FORMAT_TYPE_ENUM_CSV\x10\x01*\xd7\x01\n" +
-	"\x14DataExportStatusEnum\x12'\n" +
-	"#DATA_EXPORT_STATUS_ENUM_UNSPECIFIED\x10\x00\x12%\n" +
-	"!DATA_EXPORT_STATUS_ENUM_COMPLETED\x10\x01\x12\"\n" +
-	"\x1eDATA_EXPORT_STATUS_ENUM_FAILED\x10\x02\x12#\n" +
-	"\x1fDATA_EXPORT_STATUS_ENUM_PENDING\x10\x03\x12&\n" +
-	"\"DATA_EXPORT_STATUS_ENUM_PROCESSING\x10\x04*\xcc\x01\n" +
-	"\x0eErrorCodesEnum\x12 \n" +
-	"\x1cERROR_CODES_ENUM_UNSPECIFIED\x10\x00\x12-\n" +
-	")ERROR_CODES_ENUM_INVOICE_GENERATION_ERROR\x10\x01\x12!\n" +
-	"\x1dERROR_CODES_ENUM_NOT_PROVIDED\x10\x02\x12\x1e\n" +
-	"\x1aERROR_CODES_ENUM_TAX_ERROR\x10\x03\x12&\n" +
-	"\"ERROR_CODES_ENUM_TAX_VOIDING_ERROR\x10\x04*\xe0\x01\n" +
-	"\fFeeTypesEnum\x12\x1e\n" +
-	"\x1aFEE_TYPES_ENUM_UNSPECIFIED\x10\x00\x12\x19\n" +
-	"\x15FEE_TYPES_ENUM_ADD_ON\x10\x01\x12\x19\n" +
-	"\x15FEE_TYPES_ENUM_CHARGE\x10\x02\x12\x1d\n" +
-	"\x19FEE_TYPES_ENUM_COMMITMENT\x10\x03\x12\x19\n" +
-	"\x15FEE_TYPES_ENUM_CREDIT\x10\x04\x12\x1f\n" +
-	"\x1bFEE_TYPES_ENUM_FIXED_CHARGE\x10\x05\x12\x1f\n" +
-	"\x1bFEE_TYPES_ENUM_SUBSCRIPTION\x10\x06*\xdd\x01\n" +
-	"\x1dFinalizeZeroAmountInvoiceEnum\x121\n" +
-	"-FINALIZE_ZERO_AMOUNT_INVOICE_ENUM_UNSPECIFIED\x10\x00\x12.\n" +
-	"*FINALIZE_ZERO_AMOUNT_INVOICE_ENUM_FINALIZE\x10\x01\x12-\n" +
-	")FINALIZE_ZERO_AMOUNT_INVOICE_ENUM_INHERIT\x10\x02\x12*\n" +
-	"&FINALIZE_ZERO_AMOUNT_INVOICE_ENUM_SKIP\x10\x03*\xd2\x01\n" +
-	"\x1aFixedChargeChargeModelEnum\x12.\n" +
-	"*FIXED_CHARGE_CHARGE_MODEL_ENUM_UNSPECIFIED\x10\x00\x12,\n" +
-	"(FIXED_CHARGE_CHARGE_MODEL_ENUM_GRADUATED\x10\x01\x12+\n" +
-	"'FIXED_CHARGE_CHARGE_MODEL_ENUM_STANDARD\x10\x02\x12)\n" +
-	"%FIXED_CHARGE_CHARGE_MODEL_ENUM_VOLUME\x10\x03*\xa4\x01\n" +
+	"\x11CURRENCY_ENUM_ZMW\x10\x8e\x01*\x83\x01\n" +
+	"\x13CustomerAccountType\x12%\n" +
+	"!CUSTOMER_ACCOUNT_TYPE_UNSPECIFIED\x10\x00\x12\"\n" +
+	"\x1eCUSTOMER_ACCOUNT_TYPE_CUSTOMER\x10\x01\x12!\n" +
+	"\x1dCUSTOMER_ACCOUNT_TYPE_PARTNER\x10\x02*\x98\x02\n" +
+	"0CustomerSubscriptionInvoiceIssuingDateAdjustment\x12E\n" +
+	"ACUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_UNSPECIFIED\x10\x00\x12V\n" +
+	"RCUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ALIGN_WITH_FINALIZATION_DATE\x10\x01\x12E\n" +
+	"ACUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_KEEP_ANCHOR\x10\x02*\x84\x02\n" +
+	",CustomerSubscriptionInvoiceIssuingDateAnchor\x12A\n" +
+	"=CUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_UNSPECIFIED\x10\x00\x12H\n" +
+	"DCUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_CURRENT_PERIOD_END\x10\x01\x12G\n" +
+	"CCUSTOMER_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_NEXT_PERIOD_START\x10\x02*f\n" +
+	"\fCustomerType\x12\x1d\n" +
+	"\x19CUSTOMER_TYPE_UNSPECIFIED\x10\x00\x12\x19\n" +
+	"\x15CUSTOMER_TYPE_COMPANY\x10\x01\x12\x1c\n" +
+	"\x18CUSTOMER_TYPE_INDIVIDUAL\x10\x02*`\n" +
+	"\x14DataExportFormatType\x12'\n" +
+	"#DATA_EXPORT_FORMAT_TYPE_UNSPECIFIED\x10\x00\x12\x1f\n" +
+	"\x1bDATA_EXPORT_FORMAT_TYPE_CSV\x10\x01*\xba\x01\n" +
+	"\x10DataExportStatus\x12\"\n" +
+	"\x1eDATA_EXPORT_STATUS_UNSPECIFIED\x10\x00\x12 \n" +
+	"\x1cDATA_EXPORT_STATUS_COMPLETED\x10\x01\x12\x1d\n" +
+	"\x19DATA_EXPORT_STATUS_FAILED\x10\x02\x12\x1e\n" +
+	"\x1aDATA_EXPORT_STATUS_PENDING\x10\x03\x12!\n" +
+	"\x1dDATA_EXPORT_STATUS_PROCESSING\x10\x04*\xaf\x01\n" +
+	"\n" +
+	"ErrorCodes\x12\x1b\n" +
+	"\x17ERROR_CODES_UNSPECIFIED\x10\x00\x12(\n" +
+	"$ERROR_CODES_INVOICE_GENERATION_ERROR\x10\x01\x12\x1c\n" +
+	"\x18ERROR_CODES_NOT_PROVIDED\x10\x02\x12\x19\n" +
+	"\x15ERROR_CODES_TAX_ERROR\x10\x03\x12!\n" +
+	"\x1dERROR_CODES_TAX_VOIDING_ERROR\x10\x04*\xb9\x01\n" +
+	"\bFeeTypes\x12\x19\n" +
+	"\x15FEE_TYPES_UNSPECIFIED\x10\x00\x12\x14\n" +
+	"\x10FEE_TYPES_ADD_ON\x10\x01\x12\x14\n" +
+	"\x10FEE_TYPES_CHARGE\x10\x02\x12\x18\n" +
+	"\x14FEE_TYPES_COMMITMENT\x10\x03\x12\x14\n" +
+	"\x10FEE_TYPES_CREDIT\x10\x04\x12\x1a\n" +
+	"\x16FEE_TYPES_FIXED_CHARGE\x10\x05\x12\x1a\n" +
+	"\x16FEE_TYPES_SUBSCRIPTION\x10\x06*\xc5\x01\n" +
+	"\x19FinalizeZeroAmountInvoice\x12,\n" +
+	"(FINALIZE_ZERO_AMOUNT_INVOICE_UNSPECIFIED\x10\x00\x12)\n" +
+	"%FINALIZE_ZERO_AMOUNT_INVOICE_FINALIZE\x10\x01\x12(\n" +
+	"$FINALIZE_ZERO_AMOUNT_INVOICE_INHERIT\x10\x02\x12%\n" +
+	"!FINALIZE_ZERO_AMOUNT_INVOICE_SKIP\x10\x03*\xba\x01\n" +
+	"\x16FixedChargeChargeModel\x12)\n" +
+	"%FIXED_CHARGE_CHARGE_MODEL_UNSPECIFIED\x10\x00\x12'\n" +
+	"#FIXED_CHARGE_CHARGE_MODEL_GRADUATED\x10\x01\x12&\n" +
+	"\"FIXED_CHARGE_CHARGE_MODEL_STANDARD\x10\x02\x12$\n" +
+	" FIXED_CHARGE_CHARGE_MODEL_VOLUME\x10\x03*\xa4\x01\n" +
 	"\x1aHubspotTargetedObjectsEnum\x12-\n" +
 	")HUBSPOT_TARGETED_OBJECTS_ENUM_UNSPECIFIED\x10\x00\x12+\n" +
 	"'HUBSPOT_TARGETED_OBJECTS_ENUM_COMPANIES\x10\x01\x12*\n" +
@@ -22855,76 +21439,76 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"&INTEGRATION_ITEM_TYPE_ENUM_UNSPECIFIED\x10\x00\x12&\n" +
 	"\"INTEGRATION_ITEM_TYPE_ENUM_ACCOUNT\x10\x01\x12'\n" +
 	"#INTEGRATION_ITEM_TYPE_ENUM_STANDARD\x10\x02\x12\"\n" +
-	"\x1eINTEGRATION_ITEM_TYPE_ENUM_TAX\x10\x03*\xfc\t\n" +
-	"\x13IntegrationTypeEnum\x12%\n" +
-	"!INTEGRATION_TYPE_ENUM_UNSPECIFIED\x10\x00\x12.\n" +
-	"*INTEGRATION_TYPE_ENUM_ANALYTICS_DASHBOARDS\x10\x01\x12\x1f\n" +
-	"\x1bINTEGRATION_TYPE_ENUM_ANROK\x10\x02\x12)\n" +
-	"%INTEGRATION_TYPE_ENUM_API_PERMISSIONS\x10\x03\x12&\n" +
-	"\"INTEGRATION_TYPE_ENUM_AUTO_DUNNING\x10\x04\x12!\n" +
-	"\x1dINTEGRATION_TYPE_ENUM_AVALARA\x10\x05\x124\n" +
-	"0INTEGRATION_TYPE_ENUM_BETA_PAYMENT_AUTHORIZATION\x10\x06\x12&\n" +
-	"\"INTEGRATION_TYPE_ENUM_CUSTOM_ROLES\x10\a\x122\n" +
-	".INTEGRATION_TYPE_ENUM_EVENTS_TARGETING_WALLETS\x10\b\x12*\n" +
-	"&INTEGRATION_TYPE_ENUM_FORECASTED_USAGE\x10\t\x12$\n" +
-	" INTEGRATION_TYPE_ENUM_FROM_EMAIL\x10\n" +
-	"\x121\n" +
-	"-INTEGRATION_TYPE_ENUM_GRANULAR_LIFETIME_USAGE\x10\v\x12!\n" +
-	"\x1dINTEGRATION_TYPE_ENUM_HUBSPOT\x10\f\x12 \n" +
-	"\x1cINTEGRATION_TYPE_ENUM_INVORA\x10\r\x12(\n" +
-	"$INTEGRATION_TYPE_ENUM_ISSUE_RECEIPTS\x10\x0e\x12(\n" +
-	"$INTEGRATION_TYPE_ENUM_LIFETIME_USAGE\x10\x0f\x12)\n" +
-	"%INTEGRATION_TYPE_ENUM_MANUAL_PAYMENTS\x10\x10\x123\n" +
-	"/INTEGRATION_TYPE_ENUM_MULTI_ENTITIES_ENTERPRISE\x10\x11\x12,\n" +
-	"(INTEGRATION_TYPE_ENUM_MULTI_ENTITIES_PRO\x10\x12\x12\"\n" +
-	"\x1eINTEGRATION_TYPE_ENUM_NETSUITE\x10\x13\x12\x1e\n" +
-	"\x1aINTEGRATION_TYPE_ENUM_OKTA\x10\x14\x12!\n" +
-	"\x1dINTEGRATION_TYPE_ENUM_PREVIEW\x10\x15\x12-\n" +
-	")INTEGRATION_TYPE_ENUM_PROGRESSIVE_BILLING\x10\x16\x12)\n" +
-	"%INTEGRATION_TYPE_ENUM_PROJECTED_USAGE\x10\x17\x123\n" +
-	"/INTEGRATION_TYPE_ENUM_REMOVE_BRANDING_WATERMARK\x10\x18\x12+\n" +
-	"'INTEGRATION_TYPE_ENUM_REVENUE_ANALYTICS\x10\x19\x12'\n" +
-	"#INTEGRATION_TYPE_ENUM_REVENUE_SHARE\x10\x1a\x12$\n" +
-	" INTEGRATION_TYPE_ENUM_SALESFORCE\x10\x1b\x12'\n" +
-	"#INTEGRATION_TYPE_ENUM_SECURITY_LOGS\x10\x1c\x12\x1e\n" +
-	"\x1aINTEGRATION_TYPE_ENUM_XERO\x10\x1d*\xc8\x04\n" +
-	"'InvoiceAppliedTaxOnWholeInvoiceCodeEnum\x12>\n" +
-	":INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_UNSPECIFIED\x10\x00\x12B\n" +
-	">INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_CUSTOMER_EXEMPT\x10\x01\x12C\n" +
-	"?INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_JURIS_HAS_NO_TAX\x10\x02\x12B\n" +
-	">INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_JURIS_NOT_TAXED\x10\x03\x12A\n" +
-	"=INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_NOT_COLLECTING\x10\x04\x12A\n" +
-	"=INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_REVERSE_CHARGE\x10\x05\x12E\n" +
-	"AINVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_TRANSACTION_EXEMPT\x10\x06\x12C\n" +
-	"?INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_ENUM_UNKNOWN_TAXATION\x10\a*\xdb\x01\n" +
-	"\x1cInvoicePaymentStatusTypeEnum\x120\n" +
-	",INVOICE_PAYMENT_STATUS_TYPE_ENUM_UNSPECIFIED\x10\x00\x12+\n" +
-	"'INVOICE_PAYMENT_STATUS_TYPE_ENUM_FAILED\x10\x01\x12,\n" +
-	"(INVOICE_PAYMENT_STATUS_TYPE_ENUM_PENDING\x10\x02\x12.\n" +
-	"*INVOICE_PAYMENT_STATUS_TYPE_ENUM_SUCCEEDED\x10\x03*\xee\x02\n" +
-	"\x15InvoiceStatusTypeEnum\x12(\n" +
-	"$INVOICE_STATUS_TYPE_ENUM_UNSPECIFIED\x10\x00\x12#\n" +
-	"\x1fINVOICE_STATUS_TYPE_ENUM_CLOSED\x10\x01\x12\"\n" +
-	"\x1eINVOICE_STATUS_TYPE_ENUM_DRAFT\x10\x02\x12#\n" +
-	"\x1fINVOICE_STATUS_TYPE_ENUM_FAILED\x10\x03\x12&\n" +
-	"\"INVOICE_STATUS_TYPE_ENUM_FINALIZED\x10\x04\x12'\n" +
-	"#INVOICE_STATUS_TYPE_ENUM_GENERATING\x10\x05\x12!\n" +
-	"\x1dINVOICE_STATUS_TYPE_ENUM_OPEN\x10\x06\x12$\n" +
-	" INVOICE_STATUS_TYPE_ENUM_PENDING\x10\a\x12#\n" +
-	"\x1fINVOICE_STATUS_TYPE_ENUM_VOIDED\x10\b*\xc7\x01\n" +
-	"\x18InvoiceTaxStatusTypeEnum\x12,\n" +
-	"(INVOICE_TAX_STATUS_TYPE_ENUM_UNSPECIFIED\x10\x00\x12'\n" +
-	"#INVOICE_TAX_STATUS_TYPE_ENUM_FAILED\x10\x01\x12(\n" +
-	"$INVOICE_TAX_STATUS_TYPE_ENUM_PENDING\x10\x02\x12*\n" +
-	"&INVOICE_TAX_STATUS_TYPE_ENUM_SUCCEEDED\x10\x03*\x85\x02\n" +
-	"\x0fInvoiceTypeEnum\x12!\n" +
-	"\x1dINVOICE_TYPE_ENUM_UNSPECIFIED\x10\x00\x12\x1c\n" +
-	"\x18INVOICE_TYPE_ENUM_ADD_ON\x10\x01\x12%\n" +
-	"!INVOICE_TYPE_ENUM_ADVANCE_CHARGES\x10\x02\x12\x1c\n" +
-	"\x18INVOICE_TYPE_ENUM_CREDIT\x10\x03\x12\x1d\n" +
-	"\x19INVOICE_TYPE_ENUM_ONE_OFF\x10\x04\x12)\n" +
-	"%INVOICE_TYPE_ENUM_PROGRESSIVE_BILLING\x10\x05\x12\"\n" +
-	"\x1eINVOICE_TYPE_ENUM_SUBSCRIPTION\x10\x06*{\n" +
+	"\x1eINTEGRATION_ITEM_TYPE_ENUM_TAX\x10\x03*\xe2\b\n" +
+	"\x0fIntegrationType\x12 \n" +
+	"\x1cINTEGRATION_TYPE_UNSPECIFIED\x10\x00\x12)\n" +
+	"%INTEGRATION_TYPE_ANALYTICS_DASHBOARDS\x10\x01\x12\x1a\n" +
+	"\x16INTEGRATION_TYPE_ANROK\x10\x02\x12$\n" +
+	" INTEGRATION_TYPE_API_PERMISSIONS\x10\x03\x12!\n" +
+	"\x1dINTEGRATION_TYPE_AUTO_DUNNING\x10\x04\x12\x1c\n" +
+	"\x18INTEGRATION_TYPE_AVALARA\x10\x05\x12/\n" +
+	"+INTEGRATION_TYPE_BETA_PAYMENT_AUTHORIZATION\x10\x06\x12!\n" +
+	"\x1dINTEGRATION_TYPE_CUSTOM_ROLES\x10\a\x12-\n" +
+	")INTEGRATION_TYPE_EVENTS_TARGETING_WALLETS\x10\b\x12%\n" +
+	"!INTEGRATION_TYPE_FORECASTED_USAGE\x10\t\x12\x1f\n" +
+	"\x1bINTEGRATION_TYPE_FROM_EMAIL\x10\n" +
+	"\x12,\n" +
+	"(INTEGRATION_TYPE_GRANULAR_LIFETIME_USAGE\x10\v\x12\x1c\n" +
+	"\x18INTEGRATION_TYPE_HUBSPOT\x10\f\x12\x1b\n" +
+	"\x17INTEGRATION_TYPE_INVORA\x10\r\x12#\n" +
+	"\x1fINTEGRATION_TYPE_ISSUE_RECEIPTS\x10\x0e\x12#\n" +
+	"\x1fINTEGRATION_TYPE_LIFETIME_USAGE\x10\x0f\x12$\n" +
+	" INTEGRATION_TYPE_MANUAL_PAYMENTS\x10\x10\x12.\n" +
+	"*INTEGRATION_TYPE_MULTI_ENTITIES_ENTERPRISE\x10\x11\x12'\n" +
+	"#INTEGRATION_TYPE_MULTI_ENTITIES_PRO\x10\x12\x12\x1d\n" +
+	"\x19INTEGRATION_TYPE_NETSUITE\x10\x13\x12\x19\n" +
+	"\x15INTEGRATION_TYPE_OKTA\x10\x14\x12\x1c\n" +
+	"\x18INTEGRATION_TYPE_PREVIEW\x10\x15\x12(\n" +
+	"$INTEGRATION_TYPE_PROGRESSIVE_BILLING\x10\x16\x12$\n" +
+	" INTEGRATION_TYPE_PROJECTED_USAGE\x10\x17\x12.\n" +
+	"*INTEGRATION_TYPE_REMOVE_BRANDING_WATERMARK\x10\x18\x12&\n" +
+	"\"INTEGRATION_TYPE_REVENUE_ANALYTICS\x10\x19\x12\"\n" +
+	"\x1eINTEGRATION_TYPE_REVENUE_SHARE\x10\x1a\x12\x1f\n" +
+	"\x1bINTEGRATION_TYPE_SALESFORCE\x10\x1b\x12\"\n" +
+	"\x1eINTEGRATION_TYPE_SECURITY_LOGS\x10\x1c\x12\x19\n" +
+	"\x15INTEGRATION_TYPE_XERO\x10\x1d*\x9c\x04\n" +
+	"#InvoiceAppliedTaxOnWholeInvoiceCode\x129\n" +
+	"5INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_UNSPECIFIED\x10\x00\x12=\n" +
+	"9INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_CUSTOMER_EXEMPT\x10\x01\x12>\n" +
+	":INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_JURIS_HAS_NO_TAX\x10\x02\x12=\n" +
+	"9INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_JURIS_NOT_TAXED\x10\x03\x12<\n" +
+	"8INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_NOT_COLLECTING\x10\x04\x12<\n" +
+	"8INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_REVERSE_CHARGE\x10\x05\x12@\n" +
+	"<INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_TRANSACTION_EXEMPT\x10\x06\x12>\n" +
+	":INVOICE_APPLIED_TAX_ON_WHOLE_INVOICE_CODE_UNKNOWN_TAXATION\x10\a*\xc3\x01\n" +
+	"\x18InvoicePaymentStatusType\x12+\n" +
+	"'INVOICE_PAYMENT_STATUS_TYPE_UNSPECIFIED\x10\x00\x12&\n" +
+	"\"INVOICE_PAYMENT_STATUS_TYPE_FAILED\x10\x01\x12'\n" +
+	"#INVOICE_PAYMENT_STATUS_TYPE_PENDING\x10\x02\x12)\n" +
+	"%INVOICE_PAYMENT_STATUS_TYPE_SUCCEEDED\x10\x03*\xbd\x02\n" +
+	"\x11InvoiceStatusType\x12#\n" +
+	"\x1fINVOICE_STATUS_TYPE_UNSPECIFIED\x10\x00\x12\x1e\n" +
+	"\x1aINVOICE_STATUS_TYPE_CLOSED\x10\x01\x12\x1d\n" +
+	"\x19INVOICE_STATUS_TYPE_DRAFT\x10\x02\x12\x1e\n" +
+	"\x1aINVOICE_STATUS_TYPE_FAILED\x10\x03\x12!\n" +
+	"\x1dINVOICE_STATUS_TYPE_FINALIZED\x10\x04\x12\"\n" +
+	"\x1eINVOICE_STATUS_TYPE_GENERATING\x10\x05\x12\x1c\n" +
+	"\x18INVOICE_STATUS_TYPE_OPEN\x10\x06\x12\x1f\n" +
+	"\x1bINVOICE_STATUS_TYPE_PENDING\x10\a\x12\x1e\n" +
+	"\x1aINVOICE_STATUS_TYPE_VOIDED\x10\b*\xaf\x01\n" +
+	"\x14InvoiceTaxStatusType\x12'\n" +
+	"#INVOICE_TAX_STATUS_TYPE_UNSPECIFIED\x10\x00\x12\"\n" +
+	"\x1eINVOICE_TAX_STATUS_TYPE_FAILED\x10\x01\x12#\n" +
+	"\x1fINVOICE_TAX_STATUS_TYPE_PENDING\x10\x02\x12%\n" +
+	"!INVOICE_TAX_STATUS_TYPE_SUCCEEDED\x10\x03*\xde\x01\n" +
+	"\vInvoiceType\x12\x1c\n" +
+	"\x18INVOICE_TYPE_UNSPECIFIED\x10\x00\x12\x17\n" +
+	"\x13INVOICE_TYPE_ADD_ON\x10\x01\x12 \n" +
+	"\x1cINVOICE_TYPE_ADVANCE_CHARGES\x10\x02\x12\x17\n" +
+	"\x13INVOICE_TYPE_CREDIT\x10\x03\x12\x18\n" +
+	"\x14INVOICE_TYPE_ONE_OFF\x10\x04\x12$\n" +
+	" INVOICE_TYPE_PROGRESSIVE_BILLING\x10\x05\x12\x1d\n" +
+	"\x19INVOICE_TYPE_SUBSCRIPTION\x10\x06*{\n" +
 	"\x10MappableTypeEnum\x12\"\n" +
 	"\x1eMAPPABLE_TYPE_ENUM_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18MAPPABLE_TYPE_ENUM_ADDON\x10\x01\x12%\n" +
@@ -22939,35 +21523,35 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"$MAPPING_TYPE_ENUM_MINIMUM_COMMITMENT\x10\x06\x12$\n" +
 	" MAPPING_TYPE_ENUM_PREPAID_CREDIT\x10\a\x12&\n" +
 	"\"MAPPING_TYPE_ENUM_SUBSCRIPTION_FEE\x10\b\x12\x19\n" +
-	"\x15MAPPING_TYPE_ENUM_TAX\x10\t*\x9b\x01\n" +
-	"\x18NextSubscriptionTypeEnum\x12+\n" +
-	"'NEXT_SUBSCRIPTION_TYPE_ENUM_UNSPECIFIED\x10\x00\x12)\n" +
-	"%NEXT_SUBSCRIPTION_TYPE_ENUM_DOWNGRADE\x10\x01\x12'\n" +
-	"#NEXT_SUBSCRIPTION_TYPE_ENUM_UPGRADE\x10\x02*\xfc\x01\n" +
-	"\x1bOnTerminationCreditNoteEnum\x12/\n" +
-	"+ON_TERMINATION_CREDIT_NOTE_ENUM_UNSPECIFIED\x10\x00\x12*\n" +
-	"&ON_TERMINATION_CREDIT_NOTE_ENUM_CREDIT\x10\x01\x12*\n" +
-	"&ON_TERMINATION_CREDIT_NOTE_ENUM_OFFSET\x10\x02\x12*\n" +
-	"&ON_TERMINATION_CREDIT_NOTE_ENUM_REFUND\x10\x03\x12(\n" +
-	"$ON_TERMINATION_CREDIT_NOTE_ENUM_SKIP\x10\x04*\x97\x01\n" +
-	"\x18OnTerminationInvoiceEnum\x12+\n" +
-	"'ON_TERMINATION_INVOICE_ENUM_UNSPECIFIED\x10\x00\x12(\n" +
-	"$ON_TERMINATION_INVOICE_ENUM_GENERATE\x10\x01\x12$\n" +
-	" ON_TERMINATION_INVOICE_ENUM_SKIP\x10\x02*\xef\x01\n" +
-	"\x18PayablePaymentStatusEnum\x12+\n" +
-	"'PAYABLE_PAYMENT_STATUS_ENUM_UNSPECIFIED\x10\x00\x12&\n" +
-	"\"PAYABLE_PAYMENT_STATUS_ENUM_FAILED\x10\x01\x12'\n" +
-	"#PAYABLE_PAYMENT_STATUS_ENUM_PENDING\x10\x02\x12*\n" +
-	"&PAYABLE_PAYMENT_STATUS_ENUM_PROCESSING\x10\x03\x12)\n" +
-	"%PAYABLE_PAYMENT_STATUS_ENUM_SUCCEEDED\x10\x04*\x8d\x01\n" +
-	"\x15PaymentMethodTypeEnum\x12(\n" +
-	"$PAYMENT_METHOD_TYPE_ENUM_UNSPECIFIED\x10\x00\x12#\n" +
-	"\x1fPAYMENT_METHOD_TYPE_ENUM_MANUAL\x10\x01\x12%\n" +
-	"!PAYMENT_METHOD_TYPE_ENUM_PROVIDER\x10\x02*r\n" +
-	"\x0fPaymentTypeEnum\x12!\n" +
-	"\x1dPAYMENT_TYPE_ENUM_UNSPECIFIED\x10\x00\x12\x1c\n" +
-	"\x18PAYMENT_TYPE_ENUM_MANUAL\x10\x01\x12\x1e\n" +
-	"\x1aPAYMENT_TYPE_ENUM_PROVIDER\x10\x02*\xb7\x01\n" +
+	"\x15MAPPING_TYPE_ENUM_TAX\x10\t*\x88\x01\n" +
+	"\x14NextSubscriptionType\x12&\n" +
+	"\"NEXT_SUBSCRIPTION_TYPE_UNSPECIFIED\x10\x00\x12$\n" +
+	" NEXT_SUBSCRIPTION_TYPE_DOWNGRADE\x10\x01\x12\"\n" +
+	"\x1eNEXT_SUBSCRIPTION_TYPE_UPGRADE\x10\x02*\xdf\x01\n" +
+	"\x17OnTerminationCreditNote\x12*\n" +
+	"&ON_TERMINATION_CREDIT_NOTE_UNSPECIFIED\x10\x00\x12%\n" +
+	"!ON_TERMINATION_CREDIT_NOTE_CREDIT\x10\x01\x12%\n" +
+	"!ON_TERMINATION_CREDIT_NOTE_OFFSET\x10\x02\x12%\n" +
+	"!ON_TERMINATION_CREDIT_NOTE_REFUND\x10\x03\x12#\n" +
+	"\x1fON_TERMINATION_CREDIT_NOTE_SKIP\x10\x04*\x84\x01\n" +
+	"\x14OnTerminationInvoice\x12&\n" +
+	"\"ON_TERMINATION_INVOICE_UNSPECIFIED\x10\x00\x12#\n" +
+	"\x1fON_TERMINATION_INVOICE_GENERATE\x10\x01\x12\x1f\n" +
+	"\x1bON_TERMINATION_INVOICE_SKIP\x10\x02*\xd2\x01\n" +
+	"\x14PayablePaymentStatus\x12&\n" +
+	"\"PAYABLE_PAYMENT_STATUS_UNSPECIFIED\x10\x00\x12!\n" +
+	"\x1dPAYABLE_PAYMENT_STATUS_FAILED\x10\x01\x12\"\n" +
+	"\x1ePAYABLE_PAYMENT_STATUS_PENDING\x10\x02\x12%\n" +
+	"!PAYABLE_PAYMENT_STATUS_PROCESSING\x10\x03\x12$\n" +
+	" PAYABLE_PAYMENT_STATUS_SUCCEEDED\x10\x04*z\n" +
+	"\x11PaymentMethodType\x12#\n" +
+	"\x1fPAYMENT_METHOD_TYPE_UNSPECIFIED\x10\x00\x12\x1e\n" +
+	"\x1aPAYMENT_METHOD_TYPE_MANUAL\x10\x01\x12 \n" +
+	"\x1cPAYMENT_METHOD_TYPE_PROVIDER\x10\x02*_\n" +
+	"\vPaymentType\x12\x1c\n" +
+	"\x18PAYMENT_TYPE_UNSPECIFIED\x10\x00\x12\x17\n" +
+	"\x13PAYMENT_TYPE_MANUAL\x10\x01\x12\x19\n" +
+	"\x15PAYMENT_TYPE_PROVIDER\x10\x02*\xb7\x01\n" +
 	"\fPlanInterval\x12\x1d\n" +
 	"\x19PLAN_INTERVAL_UNSPECIFIED\x10\x00\x12\x19\n" +
 	"\x15PLAN_INTERVAL_MONTHLY\x10\x01\x12\x1b\n" +
@@ -22980,221 +21564,222 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"!PRIVILEGE_VALUE_TYPE_ENUM_BOOLEAN\x10\x01\x12%\n" +
 	"!PRIVILEGE_VALUE_TYPE_ENUM_INTEGER\x10\x02\x12$\n" +
 	" PRIVILEGE_VALUE_TYPE_ENUM_SELECT\x10\x03\x12$\n" +
-	" PRIVILEGE_VALUE_TYPE_ENUM_STRING\x10\x04*\xb2\x03\n" +
-	"\x1aProviderPaymentMethodsEnum\x12-\n" +
-	")PROVIDER_PAYMENT_METHODS_ENUM_UNSPECIFIED\x10\x00\x12,\n" +
-	"(PROVIDER_PAYMENT_METHODS_ENUM_BACS_DEBIT\x10\x01\x12(\n" +
-	"$PROVIDER_PAYMENT_METHODS_ENUM_BOLETO\x10\x02\x12&\n" +
-	"\"PROVIDER_PAYMENT_METHODS_ENUM_CARD\x10\x03\x12(\n" +
-	"$PROVIDER_PAYMENT_METHODS_ENUM_CRYPTO\x10\x04\x122\n" +
-	".PROVIDER_PAYMENT_METHODS_ENUM_CUSTOMER_BALANCE\x10\x05\x12&\n" +
-	"\"PROVIDER_PAYMENT_METHODS_ENUM_LINK\x10\x06\x12,\n" +
-	"(PROVIDER_PAYMENT_METHODS_ENUM_SEPA_DEBIT\x10\a\x121\n" +
-	"-PROVIDER_PAYMENT_METHODS_ENUM_US_BANK_ACCOUNT\x10\b*\x99\x02\n" +
-	"\x10ProviderTypeEnum\x12\"\n" +
-	"\x1ePROVIDER_TYPE_ENUM_UNSPECIFIED\x10\x00\x12\x1c\n" +
-	"\x18PROVIDER_TYPE_ENUM_ADYEN\x10\x01\x12\x1f\n" +
-	"\x1bPROVIDER_TYPE_ENUM_CASHFREE\x10\x02\x12\"\n" +
-	"\x1ePROVIDER_TYPE_ENUM_FLUTTERWAVE\x10\x03\x12!\n" +
-	"\x1dPROVIDER_TYPE_ENUM_GOCARDLESS\x10\x04\x12 \n" +
-	"\x1cPROVIDER_TYPE_ENUM_MONEYHASH\x10\x05\x12\x1d\n" +
-	"\x19PROVIDER_TYPE_ENUM_STRIPE\x10\x06\x12\x1a\n" +
-	"\x16PROVIDER_TYPE_ENUM_TAP\x10\a*\xcf\x02\n" +
-	" RecurringTransactionIntervalEnum\x123\n" +
-	"/RECURRING_TRANSACTION_INTERVAL_ENUM_UNSPECIFIED\x10\x00\x12/\n" +
-	"+RECURRING_TRANSACTION_INTERVAL_ENUM_MONTHLY\x10\x01\x121\n" +
-	"-RECURRING_TRANSACTION_INTERVAL_ENUM_QUARTERLY\x10\x02\x122\n" +
-	".RECURRING_TRANSACTION_INTERVAL_ENUM_SEMIANNUAL\x10\x03\x12.\n" +
-	"*RECURRING_TRANSACTION_INTERVAL_ENUM_WEEKLY\x10\x04\x12.\n" +
-	"*RECURRING_TRANSACTION_INTERVAL_ENUM_YEARLY\x10\x05*\xae\x01\n" +
-	"\x1eRecurringTransactionMethodEnum\x121\n" +
-	"-RECURRING_TRANSACTION_METHOD_ENUM_UNSPECIFIED\x10\x00\x12+\n" +
-	"'RECURRING_TRANSACTION_METHOD_ENUM_FIXED\x10\x01\x12,\n" +
-	"(RECURRING_TRANSACTION_METHOD_ENUM_TARGET\x10\x02*\xb8\x01\n" +
-	"\x1fRecurringTransactionTriggerEnum\x122\n" +
-	".RECURRING_TRANSACTION_TRIGGER_ENUM_UNSPECIFIED\x10\x00\x12/\n" +
-	"+RECURRING_TRANSACTION_TRIGGER_ENUM_INTERVAL\x10\x01\x120\n" +
-	",RECURRING_TRANSACTION_TRIGGER_ENUM_THRESHOLD\x10\x02*a\n" +
-	"\x13RegroupPaidFeesEnum\x12&\n" +
-	"\"REGROUP_PAID_FEES_ENUM_UNSPECIFIED\x10\x00\x12\"\n" +
-	"\x1eREGROUP_PAID_FEES_ENUM_INVOICE\x10\x01*\xa3\x01\n" +
-	"\x14RoundingFunctionEnum\x12&\n" +
-	"\"ROUNDING_FUNCTION_ENUM_UNSPECIFIED\x10\x00\x12\x1f\n" +
-	"\x1bROUNDING_FUNCTION_ENUM_CEIL\x10\x01\x12 \n" +
-	"\x1cROUNDING_FUNCTION_ENUM_FLOOR\x10\x02\x12 \n" +
-	"\x1cROUNDING_FUNCTION_ENUM_ROUND\x10\x03*\xad\x01\n" +
-	"\x0eStatusTypeEnum\x12 \n" +
-	"\x1cSTATUS_TYPE_ENUM_UNSPECIFIED\x10\x00\x12\x1b\n" +
-	"\x17STATUS_TYPE_ENUM_ACTIVE\x10\x01\x12\x1d\n" +
-	"\x19STATUS_TYPE_ENUM_CANCELED\x10\x02\x12\x1c\n" +
-	"\x18STATUS_TYPE_ENUM_PENDING\x10\x03\x12\x1f\n" +
-	"\x1bSTATUS_TYPE_ENUM_TERMINATED\x10\x04*\x9d(\n" +
-	"\fTimezoneEnum\x12\x1d\n" +
-	"\x19TIMEZONE_ENUM_UNSPECIFIED\x10\x00\x12#\n" +
-	"\x1fTIMEZONE_ENUM_TZ_AFRICA_ALGIERS\x10\x01\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_AFRICA_CAIRO\x10\x02\x12&\n" +
-	"\"TIMEZONE_ENUM_TZ_AFRICA_CASABLANCA\x10\x03\x12\"\n" +
-	"\x1eTIMEZONE_ENUM_TZ_AFRICA_HARARE\x10\x04\x12(\n" +
-	"$TIMEZONE_ENUM_TZ_AFRICA_JOHANNESBURG\x10\x05\x12$\n" +
-	" TIMEZONE_ENUM_TZ_AFRICA_MONROVIA\x10\x06\x12#\n" +
-	"\x1fTIMEZONE_ENUM_TZ_AFRICA_NAIROBI\x10\a\x123\n" +
-	"/TIMEZONE_ENUM_TZ_AMERICA_ARGENTINA_BUENOS_AIRES\x10\b\x12#\n" +
-	"\x1fTIMEZONE_ENUM_TZ_AMERICA_BOGOTA\x10\t\x12$\n" +
-	" TIMEZONE_ENUM_TZ_AMERICA_CARACAS\x10\n" +
-	"\x12$\n" +
-	" TIMEZONE_ENUM_TZ_AMERICA_CHICAGO\x10\v\x12&\n" +
-	"\"TIMEZONE_ENUM_TZ_AMERICA_CHIHUAHUA\x10\f\x12#\n" +
-	"\x1fTIMEZONE_ENUM_TZ_AMERICA_DENVER\x10\r\x12&\n" +
-	"\"TIMEZONE_ENUM_TZ_AMERICA_GUATEMALA\x10\x0e\x12#\n" +
-	"\x1fTIMEZONE_ENUM_TZ_AMERICA_GUYANA\x10\x0f\x12$\n" +
-	" TIMEZONE_ENUM_TZ_AMERICA_HALIFAX\x10\x10\x121\n" +
-	"-TIMEZONE_ENUM_TZ_AMERICA_INDIANA_INDIANAPOLIS\x10\x11\x12#\n" +
-	"\x1fTIMEZONE_ENUM_TZ_AMERICA_JUNEAU\x10\x12\x12#\n" +
-	"\x1fTIMEZONE_ENUM_TZ_AMERICA_LA_PAZ\x10\x13\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_AMERICA_LIMA\x10\x14\x12(\n" +
-	"$TIMEZONE_ENUM_TZ_AMERICA_LOS_ANGELES\x10\x15\x12%\n" +
-	"!TIMEZONE_ENUM_TZ_AMERICA_MAZATLAN\x10\x16\x12(\n" +
-	"$TIMEZONE_ENUM_TZ_AMERICA_MEXICO_CITY\x10\x17\x12&\n" +
-	"\"TIMEZONE_ENUM_TZ_AMERICA_MONTERREY\x10\x18\x12'\n" +
-	"#TIMEZONE_ENUM_TZ_AMERICA_MONTEVIDEO\x10\x19\x12%\n" +
-	"!TIMEZONE_ENUM_TZ_AMERICA_NEW_YORK\x10\x1a\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_AMERICA_NUUK\x10\x1b\x12$\n" +
-	" TIMEZONE_ENUM_TZ_AMERICA_PHOENIX\x10\x1c\x12(\n" +
-	"$TIMEZONE_ENUM_TZ_AMERICA_PUERTO_RICO\x10\x1d\x12#\n" +
-	"\x1fTIMEZONE_ENUM_TZ_AMERICA_REGINA\x10\x1e\x12%\n" +
-	"!TIMEZONE_ENUM_TZ_AMERICA_SANTIAGO\x10\x1f\x12&\n" +
-	"\"TIMEZONE_ENUM_TZ_AMERICA_SAO_PAULO\x10 \x12%\n" +
-	"!TIMEZONE_ENUM_TZ_AMERICA_ST_JOHNS\x10!\x12$\n" +
-	" TIMEZONE_ENUM_TZ_AMERICA_TIJUANA\x10\"\x12 \n" +
-	"\x1cTIMEZONE_ENUM_TZ_ASIA_ALMATY\x10#\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_ASIA_BAGHDAD\x10$\x12\x1e\n" +
-	"\x1aTIMEZONE_ENUM_TZ_ASIA_BAKU\x10%\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_ASIA_BANGKOK\x10&\x12#\n" +
-	"\x1fTIMEZONE_ENUM_TZ_ASIA_CHONGQING\x10'\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_ASIA_COLOMBO\x10(\x12\x1f\n" +
-	"\x1bTIMEZONE_ENUM_TZ_ASIA_DHAKA\x10)\x12#\n" +
-	"\x1fTIMEZONE_ENUM_TZ_ASIA_HONG_KONG\x10*\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_ASIA_IRKUTSK\x10+\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_ASIA_JAKARTA\x10,\x12#\n" +
-	"\x1fTIMEZONE_ENUM_TZ_ASIA_JERUSALEM\x10-\x12\x1f\n" +
-	"\x1bTIMEZONE_ENUM_TZ_ASIA_KABUL\x10.\x12#\n" +
-	"\x1fTIMEZONE_ENUM_TZ_ASIA_KAMCHATKA\x10/\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_ASIA_KARACHI\x100\x12#\n" +
-	"\x1fTIMEZONE_ENUM_TZ_ASIA_KATHMANDU\x101\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_ASIA_KOLKATA\x102\x12%\n" +
-	"!TIMEZONE_ENUM_TZ_ASIA_KRASNOYARSK\x103\x12&\n" +
-	"\"TIMEZONE_ENUM_TZ_ASIA_KUALA_LUMPUR\x104\x12 \n" +
-	"\x1cTIMEZONE_ENUM_TZ_ASIA_KUWAIT\x105\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_ASIA_MAGADAN\x106\x12 \n" +
-	"\x1cTIMEZONE_ENUM_TZ_ASIA_MUSCAT\x107\x12%\n" +
-	"!TIMEZONE_ENUM_TZ_ASIA_NOVOSIBIRSK\x108\x12 \n" +
-	"\x1cTIMEZONE_ENUM_TZ_ASIA_RIYADH\x109\x12\x1f\n" +
-	"\x1bTIMEZONE_ENUM_TZ_ASIA_SEOUL\x10:\x12\"\n" +
-	"\x1eTIMEZONE_ENUM_TZ_ASIA_SHANGHAI\x10;\x12#\n" +
-	"\x1fTIMEZONE_ENUM_TZ_ASIA_SINGAPORE\x10<\x12'\n" +
-	"#TIMEZONE_ENUM_TZ_ASIA_SREDNEKOLYMSK\x10=\x12 \n" +
-	"\x1cTIMEZONE_ENUM_TZ_ASIA_TAIPEI\x10>\x12\"\n" +
-	"\x1eTIMEZONE_ENUM_TZ_ASIA_TASHKENT\x10?\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_ASIA_TBILISI\x10@\x12 \n" +
-	"\x1cTIMEZONE_ENUM_TZ_ASIA_TEHRAN\x10A\x12\x1f\n" +
-	"\x1bTIMEZONE_ENUM_TZ_ASIA_TOKYO\x10B\x12%\n" +
-	"!TIMEZONE_ENUM_TZ_ASIA_ULAANBAATAR\x10C\x12 \n" +
-	"\x1cTIMEZONE_ENUM_TZ_ASIA_URUMQI\x10D\x12%\n" +
-	"!TIMEZONE_ENUM_TZ_ASIA_VLADIVOSTOK\x10E\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_ASIA_YAKUTSK\x10F\x12 \n" +
-	"\x1cTIMEZONE_ENUM_TZ_ASIA_YANGON\x10G\x12'\n" +
-	"#TIMEZONE_ENUM_TZ_ASIA_YEKATERINBURG\x10H\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_ASIA_YEREVAN\x10I\x12$\n" +
-	" TIMEZONE_ENUM_TZ_ATLANTIC_AZORES\x10J\x12(\n" +
-	"$TIMEZONE_ENUM_TZ_ATLANTIC_CAPE_VERDE\x10K\x12+\n" +
-	"'TIMEZONE_ENUM_TZ_ATLANTIC_SOUTH_GEORGIA\x10L\x12'\n" +
-	"#TIMEZONE_ENUM_TZ_AUSTRALIA_ADELAIDE\x10M\x12'\n" +
-	"#TIMEZONE_ENUM_TZ_AUSTRALIA_BRISBANE\x10N\x12'\n" +
-	"#TIMEZONE_ENUM_TZ_AUSTRALIA_CANBERRA\x10O\x12%\n" +
-	"!TIMEZONE_ENUM_TZ_AUSTRALIA_DARWIN\x10P\x12%\n" +
-	"!TIMEZONE_ENUM_TZ_AUSTRALIA_HOBART\x10Q\x12(\n" +
-	"$TIMEZONE_ENUM_TZ_AUSTRALIA_MELBOURNE\x10R\x12$\n" +
-	" TIMEZONE_ENUM_TZ_AUSTRALIA_PERTH\x10S\x12%\n" +
-	"!TIMEZONE_ENUM_TZ_AUSTRALIA_SYDNEY\x10T\x12\x1f\n" +
-	"\x1bTIMEZONE_ENUM_TZ_ETC_GMT_12\x10U\x12%\n" +
-	"!TIMEZONE_ENUM_TZ_EUROPE_AMSTERDAM\x10V\x12\"\n" +
-	"\x1eTIMEZONE_ENUM_TZ_EUROPE_ATHENS\x10W\x12$\n" +
-	" TIMEZONE_ENUM_TZ_EUROPE_BELGRADE\x10X\x12\"\n" +
-	"\x1eTIMEZONE_ENUM_TZ_EUROPE_BERLIN\x10Y\x12&\n" +
-	"\"TIMEZONE_ENUM_TZ_EUROPE_BRATISLAVA\x10Z\x12$\n" +
-	" TIMEZONE_ENUM_TZ_EUROPE_BRUSSELS\x10[\x12%\n" +
-	"!TIMEZONE_ENUM_TZ_EUROPE_BUCHAREST\x10\\\x12$\n" +
-	" TIMEZONE_ENUM_TZ_EUROPE_BUDAPEST\x10]\x12&\n" +
-	"\"TIMEZONE_ENUM_TZ_EUROPE_COPENHAGEN\x10^\x12\"\n" +
-	"\x1eTIMEZONE_ENUM_TZ_EUROPE_DUBLIN\x10_\x12$\n" +
-	" TIMEZONE_ENUM_TZ_EUROPE_HELSINKI\x10`\x12$\n" +
-	" TIMEZONE_ENUM_TZ_EUROPE_ISTANBUL\x10a\x12'\n" +
-	"#TIMEZONE_ENUM_TZ_EUROPE_KALININGRAD\x10b\x12 \n" +
-	"\x1cTIMEZONE_ENUM_TZ_EUROPE_KYIV\x10c\x12\"\n" +
-	"\x1eTIMEZONE_ENUM_TZ_EUROPE_LISBON\x10d\x12%\n" +
-	"!TIMEZONE_ENUM_TZ_EUROPE_LJUBLJANA\x10e\x12\"\n" +
-	"\x1eTIMEZONE_ENUM_TZ_EUROPE_LONDON\x10f\x12\"\n" +
-	"\x1eTIMEZONE_ENUM_TZ_EUROPE_MADRID\x10g\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_EUROPE_MINSK\x10h\x12\"\n" +
-	"\x1eTIMEZONE_ENUM_TZ_EUROPE_MOSCOW\x10i\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_EUROPE_PARIS\x10j\x12\"\n" +
-	"\x1eTIMEZONE_ENUM_TZ_EUROPE_PRAGUE\x10k\x12 \n" +
-	"\x1cTIMEZONE_ENUM_TZ_EUROPE_RIGA\x10l\x12 \n" +
-	"\x1cTIMEZONE_ENUM_TZ_EUROPE_ROME\x10m\x12\"\n" +
-	"\x1eTIMEZONE_ENUM_TZ_EUROPE_SAMARA\x10n\x12$\n" +
-	" TIMEZONE_ENUM_TZ_EUROPE_SARAJEVO\x10o\x12\"\n" +
-	"\x1eTIMEZONE_ENUM_TZ_EUROPE_SKOPJE\x10p\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_EUROPE_SOFIA\x10q\x12%\n" +
-	"!TIMEZONE_ENUM_TZ_EUROPE_STOCKHOLM\x10r\x12#\n" +
-	"\x1fTIMEZONE_ENUM_TZ_EUROPE_TALLINN\x10s\x12\"\n" +
-	"\x1eTIMEZONE_ENUM_TZ_EUROPE_VIENNA\x10t\x12#\n" +
-	"\x1fTIMEZONE_ENUM_TZ_EUROPE_VILNIUS\x10u\x12%\n" +
-	"!TIMEZONE_ENUM_TZ_EUROPE_VOLGOGRAD\x10v\x12\"\n" +
-	"\x1eTIMEZONE_ENUM_TZ_EUROPE_WARSAW\x10w\x12\"\n" +
-	"\x1eTIMEZONE_ENUM_TZ_EUROPE_ZAGREB\x10x\x12\"\n" +
-	"\x1eTIMEZONE_ENUM_TZ_EUROPE_ZURICH\x10y\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_PACIFIC_APIA\x10z\x12%\n" +
-	"!TIMEZONE_ENUM_TZ_PACIFIC_AUCKLAND\x10{\x12$\n" +
-	" TIMEZONE_ENUM_TZ_PACIFIC_CHATHAM\x10|\x12$\n" +
-	" TIMEZONE_ENUM_TZ_PACIFIC_FAKAOFO\x10}\x12!\n" +
-	"\x1dTIMEZONE_ENUM_TZ_PACIFIC_FIJI\x10~\x12(\n" +
-	"$TIMEZONE_ENUM_TZ_PACIFIC_GUADALCANAL\x10\x7f\x12\"\n" +
-	"\x1dTIMEZONE_ENUM_TZ_PACIFIC_GUAM\x10\x80\x01\x12&\n" +
-	"!TIMEZONE_ENUM_TZ_PACIFIC_HONOLULU\x10\x81\x01\x12$\n" +
-	"\x1fTIMEZONE_ENUM_TZ_PACIFIC_MAJURO\x10\x82\x01\x12$\n" +
-	"\x1fTIMEZONE_ENUM_TZ_PACIFIC_MIDWAY\x10\x83\x01\x12$\n" +
-	"\x1fTIMEZONE_ENUM_TZ_PACIFIC_NOUMEA\x10\x84\x01\x12'\n" +
-	"\"TIMEZONE_ENUM_TZ_PACIFIC_PAGO_PAGO\x10\x85\x01\x12*\n" +
-	"%TIMEZONE_ENUM_TZ_PACIFIC_PORT_MORESBY\x10\x86\x01\x12'\n" +
-	"\"TIMEZONE_ENUM_TZ_PACIFIC_TONGATAPU\x10\x87\x01\x12\x19\n" +
-	"\x14TIMEZONE_ENUM_TZ_UTC\x10\x88\x01*x\n" +
-	"\x10WalletStatusEnum\x12\"\n" +
-	"\x1eWALLET_STATUS_ENUM_UNSPECIFIED\x10\x00\x12\x1d\n" +
-	"\x19WALLET_STATUS_ENUM_ACTIVE\x10\x01\x12!\n" +
-	"\x1dWALLET_STATUS_ENUM_TERMINATED\x10\x02*\xd3\x01\n" +
-	"\x1bWalletTransactionSourceEnum\x12.\n" +
-	"*WALLET_TRANSACTION_SOURCE_ENUM_UNSPECIFIED\x10\x00\x12+\n" +
-	"'WALLET_TRANSACTION_SOURCE_ENUM_INTERVAL\x10\x01\x12)\n" +
-	"%WALLET_TRANSACTION_SOURCE_ENUM_MANUAL\x10\x02\x12,\n" +
-	"(WALLET_TRANSACTION_SOURCE_ENUM_THRESHOLD\x10\x03*\xd0\x01\n" +
-	"\x1bWalletTransactionStatusEnum\x12.\n" +
-	"*WALLET_TRANSACTION_STATUS_ENUM_UNSPECIFIED\x10\x00\x12)\n" +
-	"%WALLET_TRANSACTION_STATUS_ENUM_FAILED\x10\x01\x12*\n" +
-	"&WALLET_TRANSACTION_STATUS_ENUM_PENDING\x10\x02\x12*\n" +
-	"&WALLET_TRANSACTION_STATUS_ENUM_SETTLED\x10\x03*\xc6\x02\n" +
-	"&WalletTransactionTransactionStatusEnum\x12:\n" +
-	"6WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_UNSPECIFIED\x10\x00\x126\n" +
-	"2WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_GRANTED\x10\x01\x127\n" +
-	"3WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_INVOICED\x10\x02\x128\n" +
-	"4WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_PURCHASED\x10\x03\x125\n" +
-	"1WALLET_TRANSACTION_TRANSACTION_STATUS_ENUM_VOIDED\x10\x04*\xcd\x01\n" +
-	"$WalletTransactionTransactionTypeEnum\x128\n" +
-	"4WALLET_TRANSACTION_TRANSACTION_TYPE_ENUM_UNSPECIFIED\x10\x00\x124\n" +
-	"0WALLET_TRANSACTION_TRANSACTION_TYPE_ENUM_INBOUND\x10\x01\x125\n" +
-	"1WALLET_TRANSACTION_TRANSACTION_TYPE_ENUM_OUTBOUND\x10\x02*b\n" +
-	"\x14WeightedIntervalEnum\x12&\n" +
-	"\"WEIGHTED_INTERVAL_ENUM_UNSPECIFIED\x10\x00\x12\"\n" +
-	"\x1eWEIGHTED_INTERVAL_ENUM_SECONDS\x10\x01B\xfc\x01\n" +
+	" PRIVILEGE_VALUE_TYPE_ENUM_STRING\x10\x04*\x81\x03\n" +
+	"\x16ProviderPaymentMethods\x12(\n" +
+	"$PROVIDER_PAYMENT_METHODS_UNSPECIFIED\x10\x00\x12'\n" +
+	"#PROVIDER_PAYMENT_METHODS_BACS_DEBIT\x10\x01\x12#\n" +
+	"\x1fPROVIDER_PAYMENT_METHODS_BOLETO\x10\x02\x12!\n" +
+	"\x1dPROVIDER_PAYMENT_METHODS_CARD\x10\x03\x12#\n" +
+	"\x1fPROVIDER_PAYMENT_METHODS_CRYPTO\x10\x04\x12-\n" +
+	")PROVIDER_PAYMENT_METHODS_CUSTOMER_BALANCE\x10\x05\x12!\n" +
+	"\x1dPROVIDER_PAYMENT_METHODS_LINK\x10\x06\x12'\n" +
+	"#PROVIDER_PAYMENT_METHODS_SEPA_DEBIT\x10\a\x12,\n" +
+	"(PROVIDER_PAYMENT_METHODS_US_BANK_ACCOUNT\x10\b*\xed\x01\n" +
+	"\fProviderType\x12\x1d\n" +
+	"\x19PROVIDER_TYPE_UNSPECIFIED\x10\x00\x12\x17\n" +
+	"\x13PROVIDER_TYPE_ADYEN\x10\x01\x12\x1a\n" +
+	"\x16PROVIDER_TYPE_CASHFREE\x10\x02\x12\x1d\n" +
+	"\x19PROVIDER_TYPE_FLUTTERWAVE\x10\x03\x12\x1c\n" +
+	"\x18PROVIDER_TYPE_GOCARDLESS\x10\x04\x12\x1b\n" +
+	"\x17PROVIDER_TYPE_MONEYHASH\x10\x05\x12\x18\n" +
+	"\x14PROVIDER_TYPE_STRIPE\x10\x06\x12\x15\n" +
+	"\x11PROVIDER_TYPE_TAP\x10\a*\xad\x02\n" +
+	"\x1cRecurringTransactionInterval\x12.\n" +
+	"*RECURRING_TRANSACTION_INTERVAL_UNSPECIFIED\x10\x00\x12*\n" +
+	"&RECURRING_TRANSACTION_INTERVAL_MONTHLY\x10\x01\x12,\n" +
+	"(RECURRING_TRANSACTION_INTERVAL_QUARTERLY\x10\x02\x12-\n" +
+	")RECURRING_TRANSACTION_INTERVAL_SEMIANNUAL\x10\x03\x12)\n" +
+	"%RECURRING_TRANSACTION_INTERVAL_WEEKLY\x10\x04\x12)\n" +
+	"%RECURRING_TRANSACTION_INTERVAL_YEARLY\x10\x05*\x9b\x01\n" +
+	"\x1aRecurringTransactionMethod\x12,\n" +
+	"(RECURRING_TRANSACTION_METHOD_UNSPECIFIED\x10\x00\x12&\n" +
+	"\"RECURRING_TRANSACTION_METHOD_FIXED\x10\x01\x12'\n" +
+	"#RECURRING_TRANSACTION_METHOD_TARGET\x10\x02*\xa5\x01\n" +
+	"\x1bRecurringTransactionTrigger\x12-\n" +
+	")RECURRING_TRANSACTION_TRIGGER_UNSPECIFIED\x10\x00\x12*\n" +
+	"&RECURRING_TRANSACTION_TRIGGER_INTERVAL\x10\x01\x12+\n" +
+	"'RECURRING_TRANSACTION_TRIGGER_THRESHOLD\x10\x02*S\n" +
+	"\x0fRegroupPaidFees\x12!\n" +
+	"\x1dREGROUP_PAID_FEES_UNSPECIFIED\x10\x00\x12\x1d\n" +
+	"\x19REGROUP_PAID_FEES_INVOICE\x10\x01*\x8b\x01\n" +
+	"\x10RoundingFunction\x12!\n" +
+	"\x1dROUNDING_FUNCTION_UNSPECIFIED\x10\x00\x12\x1a\n" +
+	"\x16ROUNDING_FUNCTION_CEIL\x10\x01\x12\x1b\n" +
+	"\x17ROUNDING_FUNCTION_FLOOR\x10\x02\x12\x1b\n" +
+	"\x17ROUNDING_FUNCTION_ROUND\x10\x03*\x90\x01\n" +
+	"\n" +
+	"StatusType\x12\x1b\n" +
+	"\x17STATUS_TYPE_UNSPECIFIED\x10\x00\x12\x16\n" +
+	"\x12STATUS_TYPE_ACTIVE\x10\x01\x12\x18\n" +
+	"\x14STATUS_TYPE_CANCELED\x10\x02\x12\x17\n" +
+	"\x13STATUS_TYPE_PENDING\x10\x03\x12\x1a\n" +
+	"\x16STATUS_TYPE_TERMINATED\x10\x04*\xec\"\n" +
+	"\bTimezone\x12\x18\n" +
+	"\x14TIMEZONE_UNSPECIFIED\x10\x00\x12\x1e\n" +
+	"\x1aTIMEZONE_TZ_AFRICA_ALGIERS\x10\x01\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_AFRICA_CAIRO\x10\x02\x12!\n" +
+	"\x1dTIMEZONE_TZ_AFRICA_CASABLANCA\x10\x03\x12\x1d\n" +
+	"\x19TIMEZONE_TZ_AFRICA_HARARE\x10\x04\x12#\n" +
+	"\x1fTIMEZONE_TZ_AFRICA_JOHANNESBURG\x10\x05\x12\x1f\n" +
+	"\x1bTIMEZONE_TZ_AFRICA_MONROVIA\x10\x06\x12\x1e\n" +
+	"\x1aTIMEZONE_TZ_AFRICA_NAIROBI\x10\a\x12.\n" +
+	"*TIMEZONE_TZ_AMERICA_ARGENTINA_BUENOS_AIRES\x10\b\x12\x1e\n" +
+	"\x1aTIMEZONE_TZ_AMERICA_BOGOTA\x10\t\x12\x1f\n" +
+	"\x1bTIMEZONE_TZ_AMERICA_CARACAS\x10\n" +
+	"\x12\x1f\n" +
+	"\x1bTIMEZONE_TZ_AMERICA_CHICAGO\x10\v\x12!\n" +
+	"\x1dTIMEZONE_TZ_AMERICA_CHIHUAHUA\x10\f\x12\x1e\n" +
+	"\x1aTIMEZONE_TZ_AMERICA_DENVER\x10\r\x12!\n" +
+	"\x1dTIMEZONE_TZ_AMERICA_GUATEMALA\x10\x0e\x12\x1e\n" +
+	"\x1aTIMEZONE_TZ_AMERICA_GUYANA\x10\x0f\x12\x1f\n" +
+	"\x1bTIMEZONE_TZ_AMERICA_HALIFAX\x10\x10\x12,\n" +
+	"(TIMEZONE_TZ_AMERICA_INDIANA_INDIANAPOLIS\x10\x11\x12\x1e\n" +
+	"\x1aTIMEZONE_TZ_AMERICA_JUNEAU\x10\x12\x12\x1e\n" +
+	"\x1aTIMEZONE_TZ_AMERICA_LA_PAZ\x10\x13\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_AMERICA_LIMA\x10\x14\x12#\n" +
+	"\x1fTIMEZONE_TZ_AMERICA_LOS_ANGELES\x10\x15\x12 \n" +
+	"\x1cTIMEZONE_TZ_AMERICA_MAZATLAN\x10\x16\x12#\n" +
+	"\x1fTIMEZONE_TZ_AMERICA_MEXICO_CITY\x10\x17\x12!\n" +
+	"\x1dTIMEZONE_TZ_AMERICA_MONTERREY\x10\x18\x12\"\n" +
+	"\x1eTIMEZONE_TZ_AMERICA_MONTEVIDEO\x10\x19\x12 \n" +
+	"\x1cTIMEZONE_TZ_AMERICA_NEW_YORK\x10\x1a\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_AMERICA_NUUK\x10\x1b\x12\x1f\n" +
+	"\x1bTIMEZONE_TZ_AMERICA_PHOENIX\x10\x1c\x12#\n" +
+	"\x1fTIMEZONE_TZ_AMERICA_PUERTO_RICO\x10\x1d\x12\x1e\n" +
+	"\x1aTIMEZONE_TZ_AMERICA_REGINA\x10\x1e\x12 \n" +
+	"\x1cTIMEZONE_TZ_AMERICA_SANTIAGO\x10\x1f\x12!\n" +
+	"\x1dTIMEZONE_TZ_AMERICA_SAO_PAULO\x10 \x12 \n" +
+	"\x1cTIMEZONE_TZ_AMERICA_ST_JOHNS\x10!\x12\x1f\n" +
+	"\x1bTIMEZONE_TZ_AMERICA_TIJUANA\x10\"\x12\x1b\n" +
+	"\x17TIMEZONE_TZ_ASIA_ALMATY\x10#\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_ASIA_BAGHDAD\x10$\x12\x19\n" +
+	"\x15TIMEZONE_TZ_ASIA_BAKU\x10%\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_ASIA_BANGKOK\x10&\x12\x1e\n" +
+	"\x1aTIMEZONE_TZ_ASIA_CHONGQING\x10'\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_ASIA_COLOMBO\x10(\x12\x1a\n" +
+	"\x16TIMEZONE_TZ_ASIA_DHAKA\x10)\x12\x1e\n" +
+	"\x1aTIMEZONE_TZ_ASIA_HONG_KONG\x10*\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_ASIA_IRKUTSK\x10+\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_ASIA_JAKARTA\x10,\x12\x1e\n" +
+	"\x1aTIMEZONE_TZ_ASIA_JERUSALEM\x10-\x12\x1a\n" +
+	"\x16TIMEZONE_TZ_ASIA_KABUL\x10.\x12\x1e\n" +
+	"\x1aTIMEZONE_TZ_ASIA_KAMCHATKA\x10/\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_ASIA_KARACHI\x100\x12\x1e\n" +
+	"\x1aTIMEZONE_TZ_ASIA_KATHMANDU\x101\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_ASIA_KOLKATA\x102\x12 \n" +
+	"\x1cTIMEZONE_TZ_ASIA_KRASNOYARSK\x103\x12!\n" +
+	"\x1dTIMEZONE_TZ_ASIA_KUALA_LUMPUR\x104\x12\x1b\n" +
+	"\x17TIMEZONE_TZ_ASIA_KUWAIT\x105\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_ASIA_MAGADAN\x106\x12\x1b\n" +
+	"\x17TIMEZONE_TZ_ASIA_MUSCAT\x107\x12 \n" +
+	"\x1cTIMEZONE_TZ_ASIA_NOVOSIBIRSK\x108\x12\x1b\n" +
+	"\x17TIMEZONE_TZ_ASIA_RIYADH\x109\x12\x1a\n" +
+	"\x16TIMEZONE_TZ_ASIA_SEOUL\x10:\x12\x1d\n" +
+	"\x19TIMEZONE_TZ_ASIA_SHANGHAI\x10;\x12\x1e\n" +
+	"\x1aTIMEZONE_TZ_ASIA_SINGAPORE\x10<\x12\"\n" +
+	"\x1eTIMEZONE_TZ_ASIA_SREDNEKOLYMSK\x10=\x12\x1b\n" +
+	"\x17TIMEZONE_TZ_ASIA_TAIPEI\x10>\x12\x1d\n" +
+	"\x19TIMEZONE_TZ_ASIA_TASHKENT\x10?\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_ASIA_TBILISI\x10@\x12\x1b\n" +
+	"\x17TIMEZONE_TZ_ASIA_TEHRAN\x10A\x12\x1a\n" +
+	"\x16TIMEZONE_TZ_ASIA_TOKYO\x10B\x12 \n" +
+	"\x1cTIMEZONE_TZ_ASIA_ULAANBAATAR\x10C\x12\x1b\n" +
+	"\x17TIMEZONE_TZ_ASIA_URUMQI\x10D\x12 \n" +
+	"\x1cTIMEZONE_TZ_ASIA_VLADIVOSTOK\x10E\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_ASIA_YAKUTSK\x10F\x12\x1b\n" +
+	"\x17TIMEZONE_TZ_ASIA_YANGON\x10G\x12\"\n" +
+	"\x1eTIMEZONE_TZ_ASIA_YEKATERINBURG\x10H\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_ASIA_YEREVAN\x10I\x12\x1f\n" +
+	"\x1bTIMEZONE_TZ_ATLANTIC_AZORES\x10J\x12#\n" +
+	"\x1fTIMEZONE_TZ_ATLANTIC_CAPE_VERDE\x10K\x12&\n" +
+	"\"TIMEZONE_TZ_ATLANTIC_SOUTH_GEORGIA\x10L\x12\"\n" +
+	"\x1eTIMEZONE_TZ_AUSTRALIA_ADELAIDE\x10M\x12\"\n" +
+	"\x1eTIMEZONE_TZ_AUSTRALIA_BRISBANE\x10N\x12\"\n" +
+	"\x1eTIMEZONE_TZ_AUSTRALIA_CANBERRA\x10O\x12 \n" +
+	"\x1cTIMEZONE_TZ_AUSTRALIA_DARWIN\x10P\x12 \n" +
+	"\x1cTIMEZONE_TZ_AUSTRALIA_HOBART\x10Q\x12#\n" +
+	"\x1fTIMEZONE_TZ_AUSTRALIA_MELBOURNE\x10R\x12\x1f\n" +
+	"\x1bTIMEZONE_TZ_AUSTRALIA_PERTH\x10S\x12 \n" +
+	"\x1cTIMEZONE_TZ_AUSTRALIA_SYDNEY\x10T\x12\x1a\n" +
+	"\x16TIMEZONE_TZ_ETC_GMT_12\x10U\x12 \n" +
+	"\x1cTIMEZONE_TZ_EUROPE_AMSTERDAM\x10V\x12\x1d\n" +
+	"\x19TIMEZONE_TZ_EUROPE_ATHENS\x10W\x12\x1f\n" +
+	"\x1bTIMEZONE_TZ_EUROPE_BELGRADE\x10X\x12\x1d\n" +
+	"\x19TIMEZONE_TZ_EUROPE_BERLIN\x10Y\x12!\n" +
+	"\x1dTIMEZONE_TZ_EUROPE_BRATISLAVA\x10Z\x12\x1f\n" +
+	"\x1bTIMEZONE_TZ_EUROPE_BRUSSELS\x10[\x12 \n" +
+	"\x1cTIMEZONE_TZ_EUROPE_BUCHAREST\x10\\\x12\x1f\n" +
+	"\x1bTIMEZONE_TZ_EUROPE_BUDAPEST\x10]\x12!\n" +
+	"\x1dTIMEZONE_TZ_EUROPE_COPENHAGEN\x10^\x12\x1d\n" +
+	"\x19TIMEZONE_TZ_EUROPE_DUBLIN\x10_\x12\x1f\n" +
+	"\x1bTIMEZONE_TZ_EUROPE_HELSINKI\x10`\x12\x1f\n" +
+	"\x1bTIMEZONE_TZ_EUROPE_ISTANBUL\x10a\x12\"\n" +
+	"\x1eTIMEZONE_TZ_EUROPE_KALININGRAD\x10b\x12\x1b\n" +
+	"\x17TIMEZONE_TZ_EUROPE_KYIV\x10c\x12\x1d\n" +
+	"\x19TIMEZONE_TZ_EUROPE_LISBON\x10d\x12 \n" +
+	"\x1cTIMEZONE_TZ_EUROPE_LJUBLJANA\x10e\x12\x1d\n" +
+	"\x19TIMEZONE_TZ_EUROPE_LONDON\x10f\x12\x1d\n" +
+	"\x19TIMEZONE_TZ_EUROPE_MADRID\x10g\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_EUROPE_MINSK\x10h\x12\x1d\n" +
+	"\x19TIMEZONE_TZ_EUROPE_MOSCOW\x10i\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_EUROPE_PARIS\x10j\x12\x1d\n" +
+	"\x19TIMEZONE_TZ_EUROPE_PRAGUE\x10k\x12\x1b\n" +
+	"\x17TIMEZONE_TZ_EUROPE_RIGA\x10l\x12\x1b\n" +
+	"\x17TIMEZONE_TZ_EUROPE_ROME\x10m\x12\x1d\n" +
+	"\x19TIMEZONE_TZ_EUROPE_SAMARA\x10n\x12\x1f\n" +
+	"\x1bTIMEZONE_TZ_EUROPE_SARAJEVO\x10o\x12\x1d\n" +
+	"\x19TIMEZONE_TZ_EUROPE_SKOPJE\x10p\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_EUROPE_SOFIA\x10q\x12 \n" +
+	"\x1cTIMEZONE_TZ_EUROPE_STOCKHOLM\x10r\x12\x1e\n" +
+	"\x1aTIMEZONE_TZ_EUROPE_TALLINN\x10s\x12\x1d\n" +
+	"\x19TIMEZONE_TZ_EUROPE_VIENNA\x10t\x12\x1e\n" +
+	"\x1aTIMEZONE_TZ_EUROPE_VILNIUS\x10u\x12 \n" +
+	"\x1cTIMEZONE_TZ_EUROPE_VOLGOGRAD\x10v\x12\x1d\n" +
+	"\x19TIMEZONE_TZ_EUROPE_WARSAW\x10w\x12\x1d\n" +
+	"\x19TIMEZONE_TZ_EUROPE_ZAGREB\x10x\x12\x1d\n" +
+	"\x19TIMEZONE_TZ_EUROPE_ZURICH\x10y\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_PACIFIC_APIA\x10z\x12 \n" +
+	"\x1cTIMEZONE_TZ_PACIFIC_AUCKLAND\x10{\x12\x1f\n" +
+	"\x1bTIMEZONE_TZ_PACIFIC_CHATHAM\x10|\x12\x1f\n" +
+	"\x1bTIMEZONE_TZ_PACIFIC_FAKAOFO\x10}\x12\x1c\n" +
+	"\x18TIMEZONE_TZ_PACIFIC_FIJI\x10~\x12#\n" +
+	"\x1fTIMEZONE_TZ_PACIFIC_GUADALCANAL\x10\x7f\x12\x1d\n" +
+	"\x18TIMEZONE_TZ_PACIFIC_GUAM\x10\x80\x01\x12!\n" +
+	"\x1cTIMEZONE_TZ_PACIFIC_HONOLULU\x10\x81\x01\x12\x1f\n" +
+	"\x1aTIMEZONE_TZ_PACIFIC_MAJURO\x10\x82\x01\x12\x1f\n" +
+	"\x1aTIMEZONE_TZ_PACIFIC_MIDWAY\x10\x83\x01\x12\x1f\n" +
+	"\x1aTIMEZONE_TZ_PACIFIC_NOUMEA\x10\x84\x01\x12\"\n" +
+	"\x1dTIMEZONE_TZ_PACIFIC_PAGO_PAGO\x10\x85\x01\x12%\n" +
+	" TIMEZONE_TZ_PACIFIC_PORT_MORESBY\x10\x86\x01\x12\"\n" +
+	"\x1dTIMEZONE_TZ_PACIFIC_TONGATAPU\x10\x87\x01\x12\x14\n" +
+	"\x0fTIMEZONE_TZ_UTC\x10\x88\x01*e\n" +
+	"\fWalletStatus\x12\x1d\n" +
+	"\x19WALLET_STATUS_UNSPECIFIED\x10\x00\x12\x18\n" +
+	"\x14WALLET_STATUS_ACTIVE\x10\x01\x12\x1c\n" +
+	"\x18WALLET_STATUS_TERMINATED\x10\x02*\xbb\x01\n" +
+	"\x17WalletTransactionSource\x12)\n" +
+	"%WALLET_TRANSACTION_SOURCE_UNSPECIFIED\x10\x00\x12&\n" +
+	"\"WALLET_TRANSACTION_SOURCE_INTERVAL\x10\x01\x12$\n" +
+	" WALLET_TRANSACTION_SOURCE_MANUAL\x10\x02\x12'\n" +
+	"#WALLET_TRANSACTION_SOURCE_THRESHOLD\x10\x03*\xb8\x01\n" +
+	"\x17WalletTransactionStatus\x12)\n" +
+	"%WALLET_TRANSACTION_STATUS_UNSPECIFIED\x10\x00\x12$\n" +
+	" WALLET_TRANSACTION_STATUS_FAILED\x10\x01\x12%\n" +
+	"!WALLET_TRANSACTION_STATUS_PENDING\x10\x02\x12%\n" +
+	"!WALLET_TRANSACTION_STATUS_SETTLED\x10\x03*\xa9\x02\n" +
+	"\"WalletTransactionTransactionStatus\x125\n" +
+	"1WALLET_TRANSACTION_TRANSACTION_STATUS_UNSPECIFIED\x10\x00\x121\n" +
+	"-WALLET_TRANSACTION_TRANSACTION_STATUS_GRANTED\x10\x01\x122\n" +
+	".WALLET_TRANSACTION_TRANSACTION_STATUS_INVOICED\x10\x02\x123\n" +
+	"/WALLET_TRANSACTION_TRANSACTION_STATUS_PURCHASED\x10\x03\x120\n" +
+	",WALLET_TRANSACTION_TRANSACTION_STATUS_VOIDED\x10\x04*\xba\x01\n" +
+	" WalletTransactionTransactionType\x123\n" +
+	"/WALLET_TRANSACTION_TRANSACTION_TYPE_UNSPECIFIED\x10\x00\x12/\n" +
+	"+WALLET_TRANSACTION_TRANSACTION_TYPE_INBOUND\x10\x01\x120\n" +
+	",WALLET_TRANSACTION_TRANSACTION_TYPE_OUTBOUND\x10\x02*T\n" +
+	"\x10WeightedInterval\x12!\n" +
+	"\x1dWEIGHTED_INTERVAL_UNSPECIFIED\x10\x00\x12\x1d\n" +
+	"\x19WEIGHTED_INTERVAL_SECONDS\x10\x01B\xfc\x01\n" +
 	"\x1ccom.invora.billing.common.v2B\vModelsProtoP\x01ZLgithub.com/invoraapp/invora-controller/gen/invora/billing/common/v2;commonv2\xa2\x02\x03IBC\xaa\x02\x18Invora.Billing.Common.V2\xca\x02\x18Invora\\Billing\\Common\\V2\xe2\x02$Invora\\Billing\\Common\\V2\\GPBMetadata\xea\x02\x1bInvora::Billing::Common::V2b\x06proto3"
 
 var (
@@ -23210,679 +21795,725 @@ func file_invora_billing_common_v2_models_proto_rawDescGZIP() []byte {
 }
 
 var file_invora_billing_common_v2_models_proto_enumTypes = make([]protoimpl.EnumInfo, 66)
-var file_invora_billing_common_v2_models_proto_msgTypes = make([]protoimpl.MessageInfo, 121)
+var file_invora_billing_common_v2_models_proto_msgTypes = make([]protoimpl.MessageInfo, 110)
 var file_invora_billing_common_v2_models_proto_goTypes = []any{
-	(BillingOrgStatus)(0),                                          // 0: invora.billing.common.v2.BillingOrgStatus
-	(AnalyticsPeriodEnum)(0),                                       // 1: invora.billing.common.v2.AnalyticsPeriodEnum
-	(ActivitySourceEnum)(0),                                        // 2: invora.billing.common.v2.ActivitySourceEnum
-	(ActivityTypeEnum)(0),                                          // 3: invora.billing.common.v2.ActivityTypeEnum
-	(AdjustedFeeTypeEnum)(0),                                       // 4: invora.billing.common.v2.AdjustedFeeTypeEnum
-	(AggregationTypeEnum)(0),                                       // 5: invora.billing.common.v2.AggregationTypeEnum
-	(AppliedCouponStatusEnum)(0),                                   // 6: invora.billing.common.v2.AppliedCouponStatusEnum
-	(BillingEntityDocumentNumberingEnum)(0),                        // 7: invora.billing.common.v2.BillingEntityDocumentNumberingEnum
-	(BillingEntityEmailSettingsEnum)(0),                            // 8: invora.billing.common.v2.BillingEntityEmailSettingsEnum
-	(BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum)(0), // 9: invora.billing.common.v2.BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum
-	(BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum)(0),     // 10: invora.billing.common.v2.BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum
-	(BillingTimeEnum)(0),                                           // 11: invora.billing.common.v2.BillingTimeEnum
-	(ChargeModelEnum)(0),                                           // 12: invora.billing.common.v2.ChargeModelEnum
-	(CommitmentTypeEnum)(0),                                        // 13: invora.billing.common.v2.CommitmentTypeEnum
-	(CountryCode)(0),                                               // 14: invora.billing.common.v2.CountryCode
-	(CouponExpiration)(0),                                          // 15: invora.billing.common.v2.CouponExpiration
-	(CouponFrequency)(0),                                           // 16: invora.billing.common.v2.CouponFrequency
-	(CouponStatusEnum)(0),                                          // 17: invora.billing.common.v2.CouponStatusEnum
-	(CouponTypeEnum)(0),                                            // 18: invora.billing.common.v2.CouponTypeEnum
-	(CreditNoteCreditStatusEnum)(0),                                // 19: invora.billing.common.v2.CreditNoteCreditStatusEnum
-	(CreditNoteReasonEnum)(0),                                      // 20: invora.billing.common.v2.CreditNoteReasonEnum
-	(CreditNoteRefundStatusEnum)(0),                                // 21: invora.billing.common.v2.CreditNoteRefundStatusEnum
-	(CurrencyEnum)(0),                                              // 22: invora.billing.common.v2.CurrencyEnum
-	(CustomerAccountTypeEnum)(0),                                   // 23: invora.billing.common.v2.CustomerAccountTypeEnum
-	(CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum)(0),      // 24: invora.billing.common.v2.CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum
-	(CustomerSubscriptionInvoiceIssuingDateAnchorEnum)(0),          // 25: invora.billing.common.v2.CustomerSubscriptionInvoiceIssuingDateAnchorEnum
-	(CustomerTypeEnum)(0),                                          // 26: invora.billing.common.v2.CustomerTypeEnum
-	(DataExportFormatTypeEnum)(0),                                  // 27: invora.billing.common.v2.DataExportFormatTypeEnum
-	(DataExportStatusEnum)(0),                                      // 28: invora.billing.common.v2.DataExportStatusEnum
-	(ErrorCodesEnum)(0),                                            // 29: invora.billing.common.v2.ErrorCodesEnum
-	(FeeTypesEnum)(0),                                              // 30: invora.billing.common.v2.FeeTypesEnum
-	(FinalizeZeroAmountInvoiceEnum)(0),                             // 31: invora.billing.common.v2.FinalizeZeroAmountInvoiceEnum
-	(FixedChargeChargeModelEnum)(0),                                // 32: invora.billing.common.v2.FixedChargeChargeModelEnum
-	(HubspotTargetedObjectsEnum)(0),                                // 33: invora.billing.common.v2.HubspotTargetedObjectsEnum
-	(IntegrationItemTypeEnum)(0),                                   // 34: invora.billing.common.v2.IntegrationItemTypeEnum
-	(IntegrationTypeEnum)(0),                                       // 35: invora.billing.common.v2.IntegrationTypeEnum
-	(InvoiceAppliedTaxOnWholeInvoiceCodeEnum)(0),                   // 36: invora.billing.common.v2.InvoiceAppliedTaxOnWholeInvoiceCodeEnum
-	(InvoicePaymentStatusTypeEnum)(0),                              // 37: invora.billing.common.v2.InvoicePaymentStatusTypeEnum
-	(InvoiceStatusTypeEnum)(0),                                     // 38: invora.billing.common.v2.InvoiceStatusTypeEnum
-	(InvoiceTaxStatusTypeEnum)(0),                                  // 39: invora.billing.common.v2.InvoiceTaxStatusTypeEnum
-	(InvoiceTypeEnum)(0),                                           // 40: invora.billing.common.v2.InvoiceTypeEnum
-	(MappableTypeEnum)(0),                                          // 41: invora.billing.common.v2.MappableTypeEnum
-	(MappingTypeEnum)(0),                                           // 42: invora.billing.common.v2.MappingTypeEnum
-	(NextSubscriptionTypeEnum)(0),                                  // 43: invora.billing.common.v2.NextSubscriptionTypeEnum
-	(OnTerminationCreditNoteEnum)(0),                               // 44: invora.billing.common.v2.OnTerminationCreditNoteEnum
-	(OnTerminationInvoiceEnum)(0),                                  // 45: invora.billing.common.v2.OnTerminationInvoiceEnum
-	(PayablePaymentStatusEnum)(0),                                  // 46: invora.billing.common.v2.PayablePaymentStatusEnum
-	(PaymentMethodTypeEnum)(0),                                     // 47: invora.billing.common.v2.PaymentMethodTypeEnum
-	(PaymentTypeEnum)(0),                                           // 48: invora.billing.common.v2.PaymentTypeEnum
-	(PlanInterval)(0),                                              // 49: invora.billing.common.v2.PlanInterval
-	(PrivilegeValueTypeEnum)(0),                                    // 50: invora.billing.common.v2.PrivilegeValueTypeEnum
-	(ProviderPaymentMethodsEnum)(0),                                // 51: invora.billing.common.v2.ProviderPaymentMethodsEnum
-	(ProviderTypeEnum)(0),                                          // 52: invora.billing.common.v2.ProviderTypeEnum
-	(RecurringTransactionIntervalEnum)(0),                          // 53: invora.billing.common.v2.RecurringTransactionIntervalEnum
-	(RecurringTransactionMethodEnum)(0),                            // 54: invora.billing.common.v2.RecurringTransactionMethodEnum
-	(RecurringTransactionTriggerEnum)(0),                           // 55: invora.billing.common.v2.RecurringTransactionTriggerEnum
-	(RegroupPaidFeesEnum)(0),                                       // 56: invora.billing.common.v2.RegroupPaidFeesEnum
-	(RoundingFunctionEnum)(0),                                      // 57: invora.billing.common.v2.RoundingFunctionEnum
-	(StatusTypeEnum)(0),                                            // 58: invora.billing.common.v2.StatusTypeEnum
-	(TimezoneEnum)(0),                                              // 59: invora.billing.common.v2.TimezoneEnum
-	(WalletStatusEnum)(0),                                          // 60: invora.billing.common.v2.WalletStatusEnum
-	(WalletTransactionSourceEnum)(0),                               // 61: invora.billing.common.v2.WalletTransactionSourceEnum
-	(WalletTransactionStatusEnum)(0),                               // 62: invora.billing.common.v2.WalletTransactionStatusEnum
-	(WalletTransactionTransactionStatusEnum)(0),                    // 63: invora.billing.common.v2.WalletTransactionTransactionStatusEnum
-	(WalletTransactionTransactionTypeEnum)(0),                      // 64: invora.billing.common.v2.WalletTransactionTransactionTypeEnum
-	(WeightedIntervalEnum)(0),                                      // 65: invora.billing.common.v2.WeightedIntervalEnum
-	(*BillingCustomer)(nil),                                        // 66: invora.billing.common.v2.BillingCustomer
-	(*BillingSubscription)(nil),                                    // 67: invora.billing.common.v2.BillingSubscription
-	(*BillingInvoice)(nil),                                         // 68: invora.billing.common.v2.BillingInvoice
-	(*BillingCreditNote)(nil),                                      // 69: invora.billing.common.v2.BillingCreditNote
-	(*BillingPlan)(nil),                                            // 70: invora.billing.common.v2.BillingPlan
-	(*BillingWallet)(nil),                                          // 71: invora.billing.common.v2.BillingWallet
-	(*BillingWalletTransaction)(nil),                               // 72: invora.billing.common.v2.BillingWalletTransaction
-	(*BillingFee)(nil),                                             // 73: invora.billing.common.v2.BillingFee
-	(*BillingTax)(nil),                                             // 74: invora.billing.common.v2.BillingTax
-	(*BillingCoupon)(nil),                                          // 75: invora.billing.common.v2.BillingCoupon
-	(*BillingAddOn)(nil),                                           // 76: invora.billing.common.v2.BillingAddOn
-	(*BillingBillableMetric)(nil),                                  // 77: invora.billing.common.v2.BillingBillableMetric
-	(*BillingPaymentRequest)(nil),                                  // 78: invora.billing.common.v2.BillingPaymentRequest
-	(*BillingPaymentReceipt)(nil),                                  // 79: invora.billing.common.v2.BillingPaymentReceipt
-	(*BillingPayment)(nil),                                         // 80: invora.billing.common.v2.BillingPayment
-	(*BillingWebhookEndpoint)(nil),                                 // 81: invora.billing.common.v2.BillingWebhookEndpoint
-	(*BillingWebhook)(nil),                                         // 82: invora.billing.common.v2.BillingWebhook
-	(*BillingAlert)(nil),                                           // 83: invora.billing.common.v2.BillingAlert
-	(*BillingOrg)(nil),                                             // 84: invora.billing.common.v2.BillingOrg
-	(*UsageSummary)(nil),                                           // 85: invora.billing.common.v2.UsageSummary
-	(*ActivityLog)(nil),                                            // 86: invora.billing.common.v2.ActivityLog
-	(*ActivityLogResourceObject)(nil),                              // 87: invora.billing.common.v2.ActivityLogResourceObject
-	(*AdyenProvider)(nil),                                          // 88: invora.billing.common.v2.AdyenProvider
-	(*AnrokCustomer)(nil),                                          // 89: invora.billing.common.v2.AnrokCustomer
-	(*AppliedAddOn)(nil),                                           // 90: invora.billing.common.v2.AppliedAddOn
-	(*AppliedCoupon)(nil),                                          // 91: invora.billing.common.v2.AppliedCoupon
-	(*AppliedPricingUnit)(nil),                                     // 92: invora.billing.common.v2.AppliedPricingUnit
-	(*AvalaraCustomer)(nil),                                        // 93: invora.billing.common.v2.AvalaraCustomer
-	(*BillableMetricFilter)(nil),                                   // 94: invora.billing.common.v2.BillableMetricFilter
-	(*BillingEntity)(nil),                                          // 95: invora.billing.common.v2.BillingEntity
-	(*BillingEntityBillingConfiguration)(nil),                      // 96: invora.billing.common.v2.BillingEntityBillingConfiguration
-	(*CashfreeProvider)(nil),                                       // 97: invora.billing.common.v2.CashfreeProvider
-	(*Charge)(nil),                                                 // 98: invora.billing.common.v2.Charge
-	(*ChargeFilter)(nil),                                           // 99: invora.billing.common.v2.ChargeFilter
-	(*ChargeFilterInput)(nil),                                      // 100: invora.billing.common.v2.ChargeFilterInput
-	(*ChargeFilterUsage)(nil),                                      // 101: invora.billing.common.v2.ChargeFilterUsage
-	(*ChargeUsage)(nil),                                            // 102: invora.billing.common.v2.ChargeUsage
-	(*CollectionMapping)(nil),                                      // 103: invora.billing.common.v2.CollectionMapping
-	(*CollectionMetadata)(nil),                                     // 104: invora.billing.common.v2.CollectionMetadata
-	(*Commitment)(nil),                                             // 105: invora.billing.common.v2.Commitment
-	(*CommitmentInput)(nil),                                        // 106: invora.billing.common.v2.CommitmentInput
-	(*CreditNoteAppliedTax)(nil),                                   // 107: invora.billing.common.v2.CreditNoteAppliedTax
-	(*CreditNoteItem)(nil),                                         // 108: invora.billing.common.v2.CreditNoteItem
-	(*CurrencyMappingItem)(nil),                                    // 109: invora.billing.common.v2.CurrencyMappingItem
-	(*CurrencyMappingItemInput)(nil),                               // 110: invora.billing.common.v2.CurrencyMappingItemInput
-	(*CustomerAddress)(nil),                                        // 111: invora.billing.common.v2.CustomerAddress
-	(*CustomerBillingConfiguration)(nil),                           // 112: invora.billing.common.v2.CustomerBillingConfiguration
-	(*CustomerMetadata)(nil),                                       // 113: invora.billing.common.v2.CustomerMetadata
-	(*CustomerPortalCustomer)(nil),                                 // 114: invora.billing.common.v2.CustomerPortalCustomer
-	(*CustomerPortalWallet)(nil),                                   // 115: invora.billing.common.v2.CustomerPortalWallet
-	(*CustomerProjectedUsage)(nil),                                 // 116: invora.billing.common.v2.CustomerProjectedUsage
-	(*CustomerUsage)(nil),                                          // 117: invora.billing.common.v2.CustomerUsage
-	(*DataExport)(nil),                                             // 118: invora.billing.common.v2.DataExport
-	(*DunningCampaign)(nil),                                        // 119: invora.billing.common.v2.DunningCampaign
-	(*DunningCampaignThreshold)(nil),                               // 120: invora.billing.common.v2.DunningCampaignThreshold
-	(*EntitlementInput)(nil),                                       // 121: invora.billing.common.v2.EntitlementInput
-	(*EntitlementPrivilegeInput)(nil),                              // 122: invora.billing.common.v2.EntitlementPrivilegeInput
-	(*ErrorDetail)(nil),                                            // 123: invora.billing.common.v2.ErrorDetail
-	(*FeatureObject)(nil),                                          // 124: invora.billing.common.v2.FeatureObject
-	(*FeeAmountDetails)(nil),                                       // 125: invora.billing.common.v2.FeeAmountDetails
-	(*FeeAmountDetailsGraduatedPercentageRange)(nil),               // 126: invora.billing.common.v2.FeeAmountDetailsGraduatedPercentageRange
-	(*FeeAmountDetailsGraduatedRange)(nil),                         // 127: invora.billing.common.v2.FeeAmountDetailsGraduatedRange
-	(*FeeAppliedTax)(nil),                                          // 128: invora.billing.common.v2.FeeAppliedTax
-	(*FeeProperties)(nil),                                          // 129: invora.billing.common.v2.FeeProperties
-	(*FinalizedInvoiceCollection)(nil),                             // 130: invora.billing.common.v2.FinalizedInvoiceCollection
-	(*FixedCharge)(nil),                                            // 131: invora.billing.common.v2.FixedCharge
-	(*FixedChargeProperties)(nil),                                  // 132: invora.billing.common.v2.FixedChargeProperties
-	(*FixedChargePropertiesInput)(nil),                             // 133: invora.billing.common.v2.FixedChargePropertiesInput
-	(*FlutterwaveProvider)(nil),                                    // 134: invora.billing.common.v2.FlutterwaveProvider
-	(*GocardlessProvider)(nil),                                     // 135: invora.billing.common.v2.GocardlessProvider
-	(*GraduatedPercentageRange)(nil),                               // 136: invora.billing.common.v2.GraduatedPercentageRange
-	(*GraduatedPercentageRangeInput)(nil),                          // 137: invora.billing.common.v2.GraduatedPercentageRangeInput
-	(*GraduatedRange)(nil),                                         // 138: invora.billing.common.v2.GraduatedRange
-	(*GraduatedRangeInput)(nil),                                    // 139: invora.billing.common.v2.GraduatedRangeInput
-	(*GroupedChargeUsage)(nil),                                     // 140: invora.billing.common.v2.GroupedChargeUsage
-	(*HubspotCustomer)(nil),                                        // 141: invora.billing.common.v2.HubspotCustomer
-	(*IntegrationItem)(nil),                                        // 142: invora.billing.common.v2.IntegrationItem
-	(*InvoiceAppliedTax)(nil),                                      // 143: invora.billing.common.v2.InvoiceAppliedTax
-	(*InvoiceCustomSection)(nil),                                   // 144: invora.billing.common.v2.InvoiceCustomSection
-	(*InvoiceCustomSectionsReferenceInput)(nil),                    // 145: invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
-	(*InvoiceMetadata)(nil),                                        // 146: invora.billing.common.v2.InvoiceMetadata
-	(*InvoiceSubscription)(nil),                                    // 147: invora.billing.common.v2.InvoiceSubscription
-	(*ItemMetadata)(nil),                                           // 148: invora.billing.common.v2.ItemMetadata
-	(*Mapping)(nil),                                                // 149: invora.billing.common.v2.Mapping
-	(*MetadataInput)(nil),                                          // 150: invora.billing.common.v2.MetadataInput
-	(*MoneyhashProvider)(nil),                                      // 151: invora.billing.common.v2.MoneyhashProvider
-	(*NetsuiteCustomer)(nil),                                       // 152: invora.billing.common.v2.NetsuiteCustomer
-	(*Organization)(nil),                                           // 153: invora.billing.common.v2.Organization
-	(*OrganizationBillingConfiguration)(nil),                       // 154: invora.billing.common.v2.OrganizationBillingConfiguration
-	(*OverdueBalance)(nil),                                         // 155: invora.billing.common.v2.OverdueBalance
-	(*Payable)(nil),                                                // 156: invora.billing.common.v2.Payable
-	(*PaymentMethod)(nil),                                          // 157: invora.billing.common.v2.PaymentMethod
-	(*PaymentMethodDetails)(nil),                                   // 158: invora.billing.common.v2.PaymentMethodDetails
-	(*PaymentMethodReferenceInput)(nil),                            // 159: invora.billing.common.v2.PaymentMethodReferenceInput
-	(*PaymentProvider)(nil),                                        // 160: invora.billing.common.v2.PaymentProvider
-	(*PlanEntitlement)(nil),                                        // 161: invora.billing.common.v2.PlanEntitlement
-	(*PlanEntitlementPrivilegeObject)(nil),                         // 162: invora.billing.common.v2.PlanEntitlementPrivilegeObject
-	(*PricingUnit)(nil),                                            // 163: invora.billing.common.v2.PricingUnit
-	(*PricingUnitUsage)(nil),                                       // 164: invora.billing.common.v2.PricingUnitUsage
-	(*PrivilegeConfigObject)(nil),                                  // 165: invora.billing.common.v2.PrivilegeConfigObject
-	(*PrivilegeObject)(nil),                                        // 166: invora.billing.common.v2.PrivilegeObject
-	(*ProjectedChargeFilterUsage)(nil),                             // 167: invora.billing.common.v2.ProjectedChargeFilterUsage
-	(*ProjectedChargeUsage)(nil),                                   // 168: invora.billing.common.v2.ProjectedChargeUsage
-	(*ProjectedGroupedChargeUsage)(nil),                            // 169: invora.billing.common.v2.ProjectedGroupedChargeUsage
-	(*Properties)(nil),                                             // 170: invora.billing.common.v2.Properties
-	(*PropertiesInput)(nil),                                        // 171: invora.billing.common.v2.PropertiesInput
-	(*ProviderCustomer)(nil),                                       // 172: invora.billing.common.v2.ProviderCustomer
-	(*RecurringTransactionRule)(nil),                               // 173: invora.billing.common.v2.RecurringTransactionRule
-	(*SalesforceCustomer)(nil),                                     // 174: invora.billing.common.v2.SalesforceCustomer
-	(*SanitizedApiKey)(nil),                                        // 175: invora.billing.common.v2.SanitizedApiKey
-	(*StripeProvider)(nil),                                         // 176: invora.billing.common.v2.StripeProvider
-	(*SubscriptionLifetimeUsage)(nil),                              // 177: invora.billing.common.v2.SubscriptionLifetimeUsage
-	(*TapProvider)(nil),                                            // 178: invora.billing.common.v2.TapProvider
-	(*TransactionMetadata)(nil),                                    // 179: invora.billing.common.v2.TransactionMetadata
-	(*UsageThreshold)(nil),                                         // 180: invora.billing.common.v2.UsageThreshold
-	(*UsageThresholdInput)(nil),                                    // 181: invora.billing.common.v2.UsageThresholdInput
-	(*VolumeRange)(nil),                                            // 182: invora.billing.common.v2.VolumeRange
-	(*VolumeRangeInput)(nil),                                       // 183: invora.billing.common.v2.VolumeRangeInput
-	(*WalletAppliesTo)(nil),                                        // 184: invora.billing.common.v2.WalletAppliesTo
-	(*WalletTransactionMetadataObject)(nil),                        // 185: invora.billing.common.v2.WalletTransactionMetadataObject
-	(*XeroCustomer)(nil),                                           // 186: invora.billing.common.v2.XeroCustomer
-	(*timestamppb.Timestamp)(nil),                                  // 187: google.protobuf.Timestamp
-	(*date.Date)(nil),                                              // 188: google.type.Date
-	(*structpb.Struct)(nil),                                        // 189: google.protobuf.Struct
-	(*kernel.DecimalValue)(nil),                                    // 190: kernel.DecimalValue
+	(View)(0),                           // 0: invora.billing.common.v2.View
+	(BillingOrgStatus)(0),               // 1: invora.billing.common.v2.BillingOrgStatus
+	(ActivitySourceEnum)(0),             // 2: invora.billing.common.v2.ActivitySourceEnum
+	(ActivityTypeEnum)(0),               // 3: invora.billing.common.v2.ActivityTypeEnum
+	(AdjustedFeeType)(0),                // 4: invora.billing.common.v2.AdjustedFeeType
+	(AggregationType)(0),                // 5: invora.billing.common.v2.AggregationType
+	(AppliedCouponStatus)(0),            // 6: invora.billing.common.v2.AppliedCouponStatus
+	(BillingEntityDocumentNumbering)(0), // 7: invora.billing.common.v2.BillingEntityDocumentNumbering
+	(BillingEntityEmailSettings)(0),     // 8: invora.billing.common.v2.BillingEntityEmailSettings
+	(BillingEntitySubscriptionInvoiceIssuingDateAdjustment)(0), // 9: invora.billing.common.v2.BillingEntitySubscriptionInvoiceIssuingDateAdjustment
+	(BillingEntitySubscriptionInvoiceIssuingDateAnchor)(0),     // 10: invora.billing.common.v2.BillingEntitySubscriptionInvoiceIssuingDateAnchor
+	(BillingTime)(0),            // 11: invora.billing.common.v2.BillingTime
+	(ChargeModel)(0),            // 12: invora.billing.common.v2.ChargeModel
+	(CommitmentType)(0),         // 13: invora.billing.common.v2.CommitmentType
+	(CountryCode)(0),            // 14: invora.billing.common.v2.CountryCode
+	(CouponExpiration)(0),       // 15: invora.billing.common.v2.CouponExpiration
+	(CouponFrequency)(0),        // 16: invora.billing.common.v2.CouponFrequency
+	(CouponStatus)(0),           // 17: invora.billing.common.v2.CouponStatus
+	(CouponType)(0),             // 18: invora.billing.common.v2.CouponType
+	(CreditNoteCreditStatus)(0), // 19: invora.billing.common.v2.CreditNoteCreditStatus
+	(CreditNoteReason)(0),       // 20: invora.billing.common.v2.CreditNoteReason
+	(CreditNoteRefundStatus)(0), // 21: invora.billing.common.v2.CreditNoteRefundStatus
+	(CurrencyEnum)(0),           // 22: invora.billing.common.v2.CurrencyEnum
+	(CustomerAccountType)(0),    // 23: invora.billing.common.v2.CustomerAccountType
+	(CustomerSubscriptionInvoiceIssuingDateAdjustment)(0), // 24: invora.billing.common.v2.CustomerSubscriptionInvoiceIssuingDateAdjustment
+	(CustomerSubscriptionInvoiceIssuingDateAnchor)(0),     // 25: invora.billing.common.v2.CustomerSubscriptionInvoiceIssuingDateAnchor
+	(CustomerType)(0),                                // 26: invora.billing.common.v2.CustomerType
+	(DataExportFormatType)(0),                        // 27: invora.billing.common.v2.DataExportFormatType
+	(DataExportStatus)(0),                            // 28: invora.billing.common.v2.DataExportStatus
+	(ErrorCodes)(0),                                  // 29: invora.billing.common.v2.ErrorCodes
+	(FeeTypes)(0),                                    // 30: invora.billing.common.v2.FeeTypes
+	(FinalizeZeroAmountInvoice)(0),                   // 31: invora.billing.common.v2.FinalizeZeroAmountInvoice
+	(FixedChargeChargeModel)(0),                      // 32: invora.billing.common.v2.FixedChargeChargeModel
+	(HubspotTargetedObjectsEnum)(0),                  // 33: invora.billing.common.v2.HubspotTargetedObjectsEnum
+	(IntegrationItemTypeEnum)(0),                     // 34: invora.billing.common.v2.IntegrationItemTypeEnum
+	(IntegrationType)(0),                             // 35: invora.billing.common.v2.IntegrationType
+	(InvoiceAppliedTaxOnWholeInvoiceCode)(0),         // 36: invora.billing.common.v2.InvoiceAppliedTaxOnWholeInvoiceCode
+	(InvoicePaymentStatusType)(0),                    // 37: invora.billing.common.v2.InvoicePaymentStatusType
+	(InvoiceStatusType)(0),                           // 38: invora.billing.common.v2.InvoiceStatusType
+	(InvoiceTaxStatusType)(0),                        // 39: invora.billing.common.v2.InvoiceTaxStatusType
+	(InvoiceType)(0),                                 // 40: invora.billing.common.v2.InvoiceType
+	(MappableTypeEnum)(0),                            // 41: invora.billing.common.v2.MappableTypeEnum
+	(MappingTypeEnum)(0),                             // 42: invora.billing.common.v2.MappingTypeEnum
+	(NextSubscriptionType)(0),                        // 43: invora.billing.common.v2.NextSubscriptionType
+	(OnTerminationCreditNote)(0),                     // 44: invora.billing.common.v2.OnTerminationCreditNote
+	(OnTerminationInvoice)(0),                        // 45: invora.billing.common.v2.OnTerminationInvoice
+	(PayablePaymentStatus)(0),                        // 46: invora.billing.common.v2.PayablePaymentStatus
+	(PaymentMethodType)(0),                           // 47: invora.billing.common.v2.PaymentMethodType
+	(PaymentType)(0),                                 // 48: invora.billing.common.v2.PaymentType
+	(PlanInterval)(0),                                // 49: invora.billing.common.v2.PlanInterval
+	(PrivilegeValueTypeEnum)(0),                      // 50: invora.billing.common.v2.PrivilegeValueTypeEnum
+	(ProviderPaymentMethods)(0),                      // 51: invora.billing.common.v2.ProviderPaymentMethods
+	(ProviderType)(0),                                // 52: invora.billing.common.v2.ProviderType
+	(RecurringTransactionInterval)(0),                // 53: invora.billing.common.v2.RecurringTransactionInterval
+	(RecurringTransactionMethod)(0),                  // 54: invora.billing.common.v2.RecurringTransactionMethod
+	(RecurringTransactionTrigger)(0),                 // 55: invora.billing.common.v2.RecurringTransactionTrigger
+	(RegroupPaidFees)(0),                             // 56: invora.billing.common.v2.RegroupPaidFees
+	(RoundingFunction)(0),                            // 57: invora.billing.common.v2.RoundingFunction
+	(StatusType)(0),                                  // 58: invora.billing.common.v2.StatusType
+	(Timezone)(0),                                    // 59: invora.billing.common.v2.Timezone
+	(WalletStatus)(0),                                // 60: invora.billing.common.v2.WalletStatus
+	(WalletTransactionSource)(0),                     // 61: invora.billing.common.v2.WalletTransactionSource
+	(WalletTransactionStatus)(0),                     // 62: invora.billing.common.v2.WalletTransactionStatus
+	(WalletTransactionTransactionStatus)(0),          // 63: invora.billing.common.v2.WalletTransactionTransactionStatus
+	(WalletTransactionTransactionType)(0),            // 64: invora.billing.common.v2.WalletTransactionTransactionType
+	(WeightedInterval)(0),                            // 65: invora.billing.common.v2.WeightedInterval
+	(*BillingCustomer)(nil),                          // 66: invora.billing.common.v2.BillingCustomer
+	(*BillingSubscription)(nil),                      // 67: invora.billing.common.v2.BillingSubscription
+	(*BillingInvoice)(nil),                           // 68: invora.billing.common.v2.BillingInvoice
+	(*BillingCreditNote)(nil),                        // 69: invora.billing.common.v2.BillingCreditNote
+	(*BillingPlan)(nil),                              // 70: invora.billing.common.v2.BillingPlan
+	(*BillingWallet)(nil),                            // 71: invora.billing.common.v2.BillingWallet
+	(*BillingWalletTransaction)(nil),                 // 72: invora.billing.common.v2.BillingWalletTransaction
+	(*BillingFee)(nil),                               // 73: invora.billing.common.v2.BillingFee
+	(*BillingTax)(nil),                               // 74: invora.billing.common.v2.BillingTax
+	(*BillingCoupon)(nil),                            // 75: invora.billing.common.v2.BillingCoupon
+	(*BillingAddOn)(nil),                             // 76: invora.billing.common.v2.BillingAddOn
+	(*BillingBillableMetric)(nil),                    // 77: invora.billing.common.v2.BillingBillableMetric
+	(*BillingPaymentRequest)(nil),                    // 78: invora.billing.common.v2.BillingPaymentRequest
+	(*BillingPaymentReceipt)(nil),                    // 79: invora.billing.common.v2.BillingPaymentReceipt
+	(*BillingPayment)(nil),                           // 80: invora.billing.common.v2.BillingPayment
+	(*BillingWebhookEndpoint)(nil),                   // 81: invora.billing.common.v2.BillingWebhookEndpoint
+	(*BillingWebhook)(nil),                           // 82: invora.billing.common.v2.BillingWebhook
+	(*BillingAlert)(nil),                             // 83: invora.billing.common.v2.BillingAlert
+	(*BillingOrg)(nil),                               // 84: invora.billing.common.v2.BillingOrg
+	(*UsageSummary)(nil),                             // 85: invora.billing.common.v2.UsageSummary
+	(*ActivityLog)(nil),                              // 86: invora.billing.common.v2.ActivityLog
+	(*ActivityLogResourceObject)(nil),                // 87: invora.billing.common.v2.ActivityLogResourceObject
+	(*AdyenProvider)(nil),                            // 88: invora.billing.common.v2.AdyenProvider
+	(*AppliedAddOn)(nil),                             // 89: invora.billing.common.v2.AppliedAddOn
+	(*AppliedCoupon)(nil),                            // 90: invora.billing.common.v2.AppliedCoupon
+	(*AppliedPricingUnit)(nil),                       // 91: invora.billing.common.v2.AppliedPricingUnit
+	(*BillableMetricFilter)(nil),                     // 92: invora.billing.common.v2.BillableMetricFilter
+	(*BillingEntity)(nil),                            // 93: invora.billing.common.v2.BillingEntity
+	(*BillingEntityBillingConfiguration)(nil),        // 94: invora.billing.common.v2.BillingEntityBillingConfiguration
+	(*CashfreeProvider)(nil),                         // 95: invora.billing.common.v2.CashfreeProvider
+	(*Charge)(nil),                                   // 96: invora.billing.common.v2.Charge
+	(*ChargeFilter)(nil),                             // 97: invora.billing.common.v2.ChargeFilter
+	(*ChargeFilterInput)(nil),                        // 98: invora.billing.common.v2.ChargeFilterInput
+	(*ChargeFilterUsage)(nil),                        // 99: invora.billing.common.v2.ChargeFilterUsage
+	(*ChargeUsage)(nil),                              // 100: invora.billing.common.v2.ChargeUsage
+	(*CollectionMapping)(nil),                        // 101: invora.billing.common.v2.CollectionMapping
+	(*Commitment)(nil),                               // 102: invora.billing.common.v2.Commitment
+	(*CommitmentInput)(nil),                          // 103: invora.billing.common.v2.CommitmentInput
+	(*CreditNoteAppliedTax)(nil),                     // 104: invora.billing.common.v2.CreditNoteAppliedTax
+	(*CreditNoteItem)(nil),                           // 105: invora.billing.common.v2.CreditNoteItem
+	(*CurrencyMappingItem)(nil),                      // 106: invora.billing.common.v2.CurrencyMappingItem
+	(*CurrencyMappingItemInput)(nil),                 // 107: invora.billing.common.v2.CurrencyMappingItemInput
+	(*CustomerAddress)(nil),                          // 108: invora.billing.common.v2.CustomerAddress
+	(*CustomerBillingConfiguration)(nil),             // 109: invora.billing.common.v2.CustomerBillingConfiguration
+	(*CustomerMetadata)(nil),                         // 110: invora.billing.common.v2.CustomerMetadata
+	(*CustomerPortalCustomer)(nil),                   // 111: invora.billing.common.v2.CustomerPortalCustomer
+	(*CustomerPortalWallet)(nil),                     // 112: invora.billing.common.v2.CustomerPortalWallet
+	(*CustomerProjectedUsage)(nil),                   // 113: invora.billing.common.v2.CustomerProjectedUsage
+	(*CustomerUsage)(nil),                            // 114: invora.billing.common.v2.CustomerUsage
+	(*DataExport)(nil),                               // 115: invora.billing.common.v2.DataExport
+	(*EntitlementInput)(nil),                         // 116: invora.billing.common.v2.EntitlementInput
+	(*EntitlementPrivilegeInput)(nil),                // 117: invora.billing.common.v2.EntitlementPrivilegeInput
+	(*FeatureObject)(nil),                            // 118: invora.billing.common.v2.FeatureObject
+	(*FeeAmountDetails)(nil),                         // 119: invora.billing.common.v2.FeeAmountDetails
+	(*FeeAmountDetailsGraduatedPercentageRange)(nil), // 120: invora.billing.common.v2.FeeAmountDetailsGraduatedPercentageRange
+	(*FeeAmountDetailsGraduatedRange)(nil),           // 121: invora.billing.common.v2.FeeAmountDetailsGraduatedRange
+	(*FeeAppliedTax)(nil),                            // 122: invora.billing.common.v2.FeeAppliedTax
+	(*FeeProperties)(nil),                            // 123: invora.billing.common.v2.FeeProperties
+	(*FinalizedInvoiceCollection)(nil),               // 124: invora.billing.common.v2.FinalizedInvoiceCollection
+	(*FixedCharge)(nil),                              // 125: invora.billing.common.v2.FixedCharge
+	(*FixedChargeProperties)(nil),                    // 126: invora.billing.common.v2.FixedChargeProperties
+	(*FixedChargePropertiesInput)(nil),               // 127: invora.billing.common.v2.FixedChargePropertiesInput
+	(*FlutterwaveProvider)(nil),                      // 128: invora.billing.common.v2.FlutterwaveProvider
+	(*GocardlessProvider)(nil),                       // 129: invora.billing.common.v2.GocardlessProvider
+	(*GraduatedPercentageRange)(nil),                 // 130: invora.billing.common.v2.GraduatedPercentageRange
+	(*GraduatedPercentageRangeInput)(nil),            // 131: invora.billing.common.v2.GraduatedPercentageRangeInput
+	(*GraduatedRange)(nil),                           // 132: invora.billing.common.v2.GraduatedRange
+	(*GraduatedRangeInput)(nil),                      // 133: invora.billing.common.v2.GraduatedRangeInput
+	(*GroupedChargeUsage)(nil),                       // 134: invora.billing.common.v2.GroupedChargeUsage
+	(*IntegrationItem)(nil),                          // 135: invora.billing.common.v2.IntegrationItem
+	(*InvoiceAppliedTax)(nil),                        // 136: invora.billing.common.v2.InvoiceAppliedTax
+	(*InvoiceCustomSection)(nil),                     // 137: invora.billing.common.v2.InvoiceCustomSection
+	(*InvoiceCustomSectionsReferenceInput)(nil),      // 138: invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
+	(*InvoiceMetadata)(nil),                          // 139: invora.billing.common.v2.InvoiceMetadata
+	(*InvoiceSubscription)(nil),                      // 140: invora.billing.common.v2.InvoiceSubscription
+	(*ItemMetadata)(nil),                             // 141: invora.billing.common.v2.ItemMetadata
+	(*Mapping)(nil),                                  // 142: invora.billing.common.v2.Mapping
+	(*MetadataInput)(nil),                            // 143: invora.billing.common.v2.MetadataInput
+	(*MoneyhashProvider)(nil),                        // 144: invora.billing.common.v2.MoneyhashProvider
+	(*Organization)(nil),                             // 145: invora.billing.common.v2.Organization
+	(*OrganizationBillingConfiguration)(nil),         // 146: invora.billing.common.v2.OrganizationBillingConfiguration
+	(*OverdueBalance)(nil),                           // 147: invora.billing.common.v2.OverdueBalance
+	(*Payable)(nil),                                  // 148: invora.billing.common.v2.Payable
+	(*PaymentMethod)(nil),                            // 149: invora.billing.common.v2.PaymentMethod
+	(*PaymentMethodDetails)(nil),                     // 150: invora.billing.common.v2.PaymentMethodDetails
+	(*PaymentMethodReferenceInput)(nil),              // 151: invora.billing.common.v2.PaymentMethodReferenceInput
+	(*PaymentProvider)(nil),                          // 152: invora.billing.common.v2.PaymentProvider
+	(*PlanEntitlement)(nil),                          // 153: invora.billing.common.v2.PlanEntitlement
+	(*PlanEntitlementPrivilegeObject)(nil),           // 154: invora.billing.common.v2.PlanEntitlementPrivilegeObject
+	(*PricingUnit)(nil),                              // 155: invora.billing.common.v2.PricingUnit
+	(*PricingUnitUsage)(nil),                         // 156: invora.billing.common.v2.PricingUnitUsage
+	(*PrivilegeConfigObject)(nil),                    // 157: invora.billing.common.v2.PrivilegeConfigObject
+	(*PrivilegeObject)(nil),                          // 158: invora.billing.common.v2.PrivilegeObject
+	(*ProjectedChargeFilterUsage)(nil),               // 159: invora.billing.common.v2.ProjectedChargeFilterUsage
+	(*ProjectedChargeUsage)(nil),                     // 160: invora.billing.common.v2.ProjectedChargeUsage
+	(*ProjectedGroupedChargeUsage)(nil),              // 161: invora.billing.common.v2.ProjectedGroupedChargeUsage
+	(*Properties)(nil),                               // 162: invora.billing.common.v2.Properties
+	(*PropertiesInput)(nil),                          // 163: invora.billing.common.v2.PropertiesInput
+	(*RecurringTransactionRule)(nil),                 // 164: invora.billing.common.v2.RecurringTransactionRule
+	(*SanitizedApiKey)(nil),                          // 165: invora.billing.common.v2.SanitizedApiKey
+	(*StripeProvider)(nil),                           // 166: invora.billing.common.v2.StripeProvider
+	(*SubscriptionLifetimeUsage)(nil),                // 167: invora.billing.common.v2.SubscriptionLifetimeUsage
+	(*TapProvider)(nil),                              // 168: invora.billing.common.v2.TapProvider
+	(*TransactionMetadata)(nil),                      // 169: invora.billing.common.v2.TransactionMetadata
+	(*UsageThreshold)(nil),                           // 170: invora.billing.common.v2.UsageThreshold
+	(*UsageThresholdInput)(nil),                      // 171: invora.billing.common.v2.UsageThresholdInput
+	(*VolumeRange)(nil),                              // 172: invora.billing.common.v2.VolumeRange
+	(*VolumeRangeInput)(nil),                         // 173: invora.billing.common.v2.VolumeRangeInput
+	(*WalletAppliesTo)(nil),                          // 174: invora.billing.common.v2.WalletAppliesTo
+	(*WalletTransactionMetadataObject)(nil),          // 175: invora.billing.common.v2.WalletTransactionMetadataObject
+	(*timestamppb.Timestamp)(nil),                    // 176: google.protobuf.Timestamp
+	(*date.Date)(nil),                                // 177: google.type.Date
+	(*kernel.DecimalValue)(nil),                      // 178: kernel.DecimalValue
+	(*structpb.Struct)(nil),                          // 179: google.protobuf.Struct
 }
 var file_invora_billing_common_v2_models_proto_depIdxs = []int32{
-	23,  // 0: invora.billing.common.v2.BillingCustomer.account_type:type_name -> invora.billing.common.v2.CustomerAccountTypeEnum
-	86,  // 1: invora.billing.common.v2.BillingCustomer.activity_logs:type_name -> invora.billing.common.v2.ActivityLog
-	89,  // 2: invora.billing.common.v2.BillingCustomer.anrok_customer:type_name -> invora.billing.common.v2.AnrokCustomer
-	59,  // 3: invora.billing.common.v2.BillingCustomer.applicable_timezone:type_name -> invora.billing.common.v2.TimezoneEnum
-	90,  // 4: invora.billing.common.v2.BillingCustomer.applied_add_ons:type_name -> invora.billing.common.v2.AppliedAddOn
-	91,  // 5: invora.billing.common.v2.BillingCustomer.applied_coupons:type_name -> invora.billing.common.v2.AppliedCoupon
-	119, // 6: invora.billing.common.v2.BillingCustomer.applied_dunning_campaign:type_name -> invora.billing.common.v2.DunningCampaign
-	93,  // 7: invora.billing.common.v2.BillingCustomer.avalara_customer:type_name -> invora.billing.common.v2.AvalaraCustomer
-	112, // 8: invora.billing.common.v2.BillingCustomer.billing_configuration:type_name -> invora.billing.common.v2.CustomerBillingConfiguration
-	95,  // 9: invora.billing.common.v2.BillingCustomer.billing_entity:type_name -> invora.billing.common.v2.BillingEntity
-	144, // 10: invora.billing.common.v2.BillingCustomer.configurable_invoice_custom_sections:type_name -> invora.billing.common.v2.InvoiceCustomSection
-	14,  // 11: invora.billing.common.v2.BillingCustomer.country:type_name -> invora.billing.common.v2.CountryCode
-	187, // 12: invora.billing.common.v2.BillingCustomer.created_at:type_name -> google.protobuf.Timestamp
-	69,  // 13: invora.billing.common.v2.BillingCustomer.credit_notes:type_name -> invora.billing.common.v2.BillingCreditNote
-	22,  // 14: invora.billing.common.v2.BillingCustomer.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	26,  // 15: invora.billing.common.v2.BillingCustomer.customer_type:type_name -> invora.billing.common.v2.CustomerTypeEnum
-	187, // 16: invora.billing.common.v2.BillingCustomer.deleted_at:type_name -> google.protobuf.Timestamp
-	123, // 17: invora.billing.common.v2.BillingCustomer.error_details:type_name -> invora.billing.common.v2.ErrorDetail
-	31,  // 18: invora.billing.common.v2.BillingCustomer.finalize_zero_amount_invoice:type_name -> invora.billing.common.v2.FinalizeZeroAmountInvoiceEnum
-	141, // 19: invora.billing.common.v2.BillingCustomer.hubspot_customer:type_name -> invora.billing.common.v2.HubspotCustomer
-	68,  // 20: invora.billing.common.v2.BillingCustomer.invoices:type_name -> invora.billing.common.v2.BillingInvoice
-	187, // 21: invora.billing.common.v2.BillingCustomer.last_dunning_campaign_attempt_at:type_name -> google.protobuf.Timestamp
-	113, // 22: invora.billing.common.v2.BillingCustomer.metadata:type_name -> invora.billing.common.v2.CustomerMetadata
-	152, // 23: invora.billing.common.v2.BillingCustomer.netsuite_customer:type_name -> invora.billing.common.v2.NetsuiteCustomer
-	52,  // 24: invora.billing.common.v2.BillingCustomer.payment_provider:type_name -> invora.billing.common.v2.ProviderTypeEnum
-	172, // 25: invora.billing.common.v2.BillingCustomer.provider_customer:type_name -> invora.billing.common.v2.ProviderCustomer
-	174, // 26: invora.billing.common.v2.BillingCustomer.salesforce_customer:type_name -> invora.billing.common.v2.SalesforceCustomer
-	111, // 27: invora.billing.common.v2.BillingCustomer.shipping_address:type_name -> invora.billing.common.v2.CustomerAddress
-	67,  // 28: invora.billing.common.v2.BillingCustomer.subscriptions:type_name -> invora.billing.common.v2.BillingSubscription
-	74,  // 29: invora.billing.common.v2.BillingCustomer.taxes:type_name -> invora.billing.common.v2.BillingTax
-	59,  // 30: invora.billing.common.v2.BillingCustomer.timezone:type_name -> invora.billing.common.v2.TimezoneEnum
-	187, // 31: invora.billing.common.v2.BillingCustomer.updated_at:type_name -> google.protobuf.Timestamp
-	186, // 32: invora.billing.common.v2.BillingCustomer.xero_customer:type_name -> invora.billing.common.v2.XeroCustomer
-	86,  // 33: invora.billing.common.v2.BillingSubscription.activity_logs:type_name -> invora.billing.common.v2.ActivityLog
-	11,  // 34: invora.billing.common.v2.BillingSubscription.billing_time:type_name -> invora.billing.common.v2.BillingTimeEnum
-	187, // 35: invora.billing.common.v2.BillingSubscription.canceled_at:type_name -> google.protobuf.Timestamp
-	98,  // 36: invora.billing.common.v2.BillingSubscription.charges:type_name -> invora.billing.common.v2.Charge
-	187, // 37: invora.billing.common.v2.BillingSubscription.created_at:type_name -> google.protobuf.Timestamp
-	187, // 38: invora.billing.common.v2.BillingSubscription.current_billing_period_ending_at:type_name -> google.protobuf.Timestamp
-	187, // 39: invora.billing.common.v2.BillingSubscription.current_billing_period_started_at:type_name -> google.protobuf.Timestamp
-	66,  // 40: invora.billing.common.v2.BillingSubscription.customer:type_name -> invora.billing.common.v2.BillingCustomer
-	187, // 41: invora.billing.common.v2.BillingSubscription.ending_at:type_name -> google.protobuf.Timestamp
-	73,  // 42: invora.billing.common.v2.BillingSubscription.fees:type_name -> invora.billing.common.v2.BillingFee
-	131, // 43: invora.billing.common.v2.BillingSubscription.fixed_charges:type_name -> invora.billing.common.v2.FixedCharge
-	177, // 44: invora.billing.common.v2.BillingSubscription.lifetime_usage:type_name -> invora.billing.common.v2.SubscriptionLifetimeUsage
-	70,  // 45: invora.billing.common.v2.BillingSubscription.next_plan:type_name -> invora.billing.common.v2.BillingPlan
-	67,  // 46: invora.billing.common.v2.BillingSubscription.next_subscription:type_name -> invora.billing.common.v2.BillingSubscription
-	187, // 47: invora.billing.common.v2.BillingSubscription.next_subscription_at:type_name -> google.protobuf.Timestamp
-	43,  // 48: invora.billing.common.v2.BillingSubscription.next_subscription_type:type_name -> invora.billing.common.v2.NextSubscriptionTypeEnum
-	44,  // 49: invora.billing.common.v2.BillingSubscription.on_termination_credit_note:type_name -> invora.billing.common.v2.OnTerminationCreditNoteEnum
-	45,  // 50: invora.billing.common.v2.BillingSubscription.on_termination_invoice:type_name -> invora.billing.common.v2.OnTerminationInvoiceEnum
-	157, // 51: invora.billing.common.v2.BillingSubscription.payment_method:type_name -> invora.billing.common.v2.PaymentMethod
-	47,  // 52: invora.billing.common.v2.BillingSubscription.payment_method_type:type_name -> invora.billing.common.v2.PaymentMethodTypeEnum
-	188, // 53: invora.billing.common.v2.BillingSubscription.period_end_date:type_name -> google.type.Date
-	70,  // 54: invora.billing.common.v2.BillingSubscription.plan:type_name -> invora.billing.common.v2.BillingPlan
-	144, // 55: invora.billing.common.v2.BillingSubscription.selected_invoice_custom_sections:type_name -> invora.billing.common.v2.InvoiceCustomSection
-	187, // 56: invora.billing.common.v2.BillingSubscription.started_at:type_name -> google.protobuf.Timestamp
-	58,  // 57: invora.billing.common.v2.BillingSubscription.status:type_name -> invora.billing.common.v2.StatusTypeEnum
-	187, // 58: invora.billing.common.v2.BillingSubscription.subscription_at:type_name -> google.protobuf.Timestamp
-	187, // 59: invora.billing.common.v2.BillingSubscription.terminated_at:type_name -> google.protobuf.Timestamp
-	187, // 60: invora.billing.common.v2.BillingSubscription.updated_at:type_name -> google.protobuf.Timestamp
-	180, // 61: invora.billing.common.v2.BillingSubscription.usage_thresholds:type_name -> invora.billing.common.v2.UsageThreshold
-	86,  // 62: invora.billing.common.v2.BillingInvoice.activity_logs:type_name -> invora.billing.common.v2.ActivityLog
-	143, // 63: invora.billing.common.v2.BillingInvoice.applied_taxes:type_name -> invora.billing.common.v2.InvoiceAppliedTax
-	95,  // 64: invora.billing.common.v2.BillingInvoice.billing_entity:type_name -> invora.billing.common.v2.BillingEntity
-	187, // 65: invora.billing.common.v2.BillingInvoice.created_at:type_name -> google.protobuf.Timestamp
-	69,  // 66: invora.billing.common.v2.BillingInvoice.credit_notes:type_name -> invora.billing.common.v2.BillingCreditNote
-	22,  // 67: invora.billing.common.v2.BillingInvoice.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	66,  // 68: invora.billing.common.v2.BillingInvoice.customer:type_name -> invora.billing.common.v2.BillingCustomer
-	123, // 69: invora.billing.common.v2.BillingInvoice.error_details:type_name -> invora.billing.common.v2.ErrorDetail
-	188, // 70: invora.billing.common.v2.BillingInvoice.expected_finalization_date:type_name -> google.type.Date
-	73,  // 71: invora.billing.common.v2.BillingInvoice.fees:type_name -> invora.billing.common.v2.BillingFee
-	147, // 72: invora.billing.common.v2.BillingInvoice.invoice_subscriptions:type_name -> invora.billing.common.v2.InvoiceSubscription
-	40,  // 73: invora.billing.common.v2.BillingInvoice.invoice_type:type_name -> invora.billing.common.v2.InvoiceTypeEnum
-	188, // 74: invora.billing.common.v2.BillingInvoice.issuing_date:type_name -> google.type.Date
-	146, // 75: invora.billing.common.v2.BillingInvoice.metadata:type_name -> invora.billing.common.v2.InvoiceMetadata
-	187, // 76: invora.billing.common.v2.BillingInvoice.payment_dispute_lost_at:type_name -> google.protobuf.Timestamp
-	188, // 77: invora.billing.common.v2.BillingInvoice.payment_due_date:type_name -> google.type.Date
-	37,  // 78: invora.billing.common.v2.BillingInvoice.payment_status:type_name -> invora.billing.common.v2.InvoicePaymentStatusTypeEnum
-	80,  // 79: invora.billing.common.v2.BillingInvoice.payments:type_name -> invora.billing.common.v2.BillingPayment
-	38,  // 80: invora.billing.common.v2.BillingInvoice.status:type_name -> invora.billing.common.v2.InvoiceStatusTypeEnum
-	67,  // 81: invora.billing.common.v2.BillingInvoice.subscriptions:type_name -> invora.billing.common.v2.BillingSubscription
-	39,  // 82: invora.billing.common.v2.BillingInvoice.tax_status:type_name -> invora.billing.common.v2.InvoiceTaxStatusTypeEnum
-	187, // 83: invora.billing.common.v2.BillingInvoice.updated_at:type_name -> google.protobuf.Timestamp
-	187, // 84: invora.billing.common.v2.BillingInvoice.voided_at:type_name -> google.protobuf.Timestamp
-	86,  // 85: invora.billing.common.v2.BillingCreditNote.activity_logs:type_name -> invora.billing.common.v2.ActivityLog
-	107, // 86: invora.billing.common.v2.BillingCreditNote.applied_taxes:type_name -> invora.billing.common.v2.CreditNoteAppliedTax
-	95,  // 87: invora.billing.common.v2.BillingCreditNote.billing_entity:type_name -> invora.billing.common.v2.BillingEntity
-	187, // 88: invora.billing.common.v2.BillingCreditNote.created_at:type_name -> google.protobuf.Timestamp
-	19,  // 89: invora.billing.common.v2.BillingCreditNote.credit_status:type_name -> invora.billing.common.v2.CreditNoteCreditStatusEnum
-	22,  // 90: invora.billing.common.v2.BillingCreditNote.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	66,  // 91: invora.billing.common.v2.BillingCreditNote.customer:type_name -> invora.billing.common.v2.BillingCustomer
-	123, // 92: invora.billing.common.v2.BillingCreditNote.error_details:type_name -> invora.billing.common.v2.ErrorDetail
-	68,  // 93: invora.billing.common.v2.BillingCreditNote.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	188, // 94: invora.billing.common.v2.BillingCreditNote.issuing_date:type_name -> google.type.Date
-	108, // 95: invora.billing.common.v2.BillingCreditNote.items:type_name -> invora.billing.common.v2.CreditNoteItem
-	148, // 96: invora.billing.common.v2.BillingCreditNote.metadata:type_name -> invora.billing.common.v2.ItemMetadata
-	20,  // 97: invora.billing.common.v2.BillingCreditNote.reason:type_name -> invora.billing.common.v2.CreditNoteReasonEnum
-	21,  // 98: invora.billing.common.v2.BillingCreditNote.refund_status:type_name -> invora.billing.common.v2.CreditNoteRefundStatusEnum
-	187, // 99: invora.billing.common.v2.BillingCreditNote.refunded_at:type_name -> google.protobuf.Timestamp
-	187, // 100: invora.billing.common.v2.BillingCreditNote.updated_at:type_name -> google.protobuf.Timestamp
-	187, // 101: invora.billing.common.v2.BillingCreditNote.voided_at:type_name -> google.protobuf.Timestamp
-	86,  // 102: invora.billing.common.v2.BillingPlan.activity_logs:type_name -> invora.billing.common.v2.ActivityLog
-	22,  // 103: invora.billing.common.v2.BillingPlan.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	180, // 104: invora.billing.common.v2.BillingPlan.applicable_usage_thresholds:type_name -> invora.billing.common.v2.UsageThreshold
-	98,  // 105: invora.billing.common.v2.BillingPlan.charges:type_name -> invora.billing.common.v2.Charge
-	187, // 106: invora.billing.common.v2.BillingPlan.created_at:type_name -> google.protobuf.Timestamp
-	187, // 107: invora.billing.common.v2.BillingPlan.deleted_at:type_name -> google.protobuf.Timestamp
-	161, // 108: invora.billing.common.v2.BillingPlan.entitlements:type_name -> invora.billing.common.v2.PlanEntitlement
-	131, // 109: invora.billing.common.v2.BillingPlan.fixed_charges:type_name -> invora.billing.common.v2.FixedCharge
-	49,  // 110: invora.billing.common.v2.BillingPlan.interval:type_name -> invora.billing.common.v2.PlanInterval
-	148, // 111: invora.billing.common.v2.BillingPlan.metadata:type_name -> invora.billing.common.v2.ItemMetadata
-	105, // 112: invora.billing.common.v2.BillingPlan.minimum_commitment:type_name -> invora.billing.common.v2.Commitment
-	153, // 113: invora.billing.common.v2.BillingPlan.organization:type_name -> invora.billing.common.v2.Organization
-	70,  // 114: invora.billing.common.v2.BillingPlan.parent:type_name -> invora.billing.common.v2.BillingPlan
-	74,  // 115: invora.billing.common.v2.BillingPlan.taxes:type_name -> invora.billing.common.v2.BillingTax
-	187, // 116: invora.billing.common.v2.BillingPlan.updated_at:type_name -> google.protobuf.Timestamp
-	180, // 117: invora.billing.common.v2.BillingPlan.usage_thresholds:type_name -> invora.billing.common.v2.UsageThreshold
-	86,  // 118: invora.billing.common.v2.BillingWallet.activity_logs:type_name -> invora.billing.common.v2.ActivityLog
-	184, // 119: invora.billing.common.v2.BillingWallet.applies_to:type_name -> invora.billing.common.v2.WalletAppliesTo
-	187, // 120: invora.billing.common.v2.BillingWallet.created_at:type_name -> google.protobuf.Timestamp
-	22,  // 121: invora.billing.common.v2.BillingWallet.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	66,  // 122: invora.billing.common.v2.BillingWallet.customer:type_name -> invora.billing.common.v2.BillingCustomer
-	187, // 123: invora.billing.common.v2.BillingWallet.expiration_at:type_name -> google.protobuf.Timestamp
-	187, // 124: invora.billing.common.v2.BillingWallet.last_balance_sync_at:type_name -> google.protobuf.Timestamp
-	187, // 125: invora.billing.common.v2.BillingWallet.last_consumed_credit_at:type_name -> google.protobuf.Timestamp
-	187, // 126: invora.billing.common.v2.BillingWallet.last_ongoing_balance_sync_at:type_name -> google.protobuf.Timestamp
-	148, // 127: invora.billing.common.v2.BillingWallet.metadata:type_name -> invora.billing.common.v2.ItemMetadata
-	157, // 128: invora.billing.common.v2.BillingWallet.payment_method:type_name -> invora.billing.common.v2.PaymentMethod
-	47,  // 129: invora.billing.common.v2.BillingWallet.payment_method_type:type_name -> invora.billing.common.v2.PaymentMethodTypeEnum
-	173, // 130: invora.billing.common.v2.BillingWallet.recurring_transaction_rules:type_name -> invora.billing.common.v2.RecurringTransactionRule
-	144, // 131: invora.billing.common.v2.BillingWallet.selected_invoice_custom_sections:type_name -> invora.billing.common.v2.InvoiceCustomSection
-	60,  // 132: invora.billing.common.v2.BillingWallet.status:type_name -> invora.billing.common.v2.WalletStatusEnum
-	187, // 133: invora.billing.common.v2.BillingWallet.terminated_at:type_name -> google.protobuf.Timestamp
-	187, // 134: invora.billing.common.v2.BillingWallet.updated_at:type_name -> google.protobuf.Timestamp
-	187, // 135: invora.billing.common.v2.BillingWalletTransaction.created_at:type_name -> google.protobuf.Timestamp
-	187, // 136: invora.billing.common.v2.BillingWalletTransaction.failed_at:type_name -> google.protobuf.Timestamp
-	68,  // 137: invora.billing.common.v2.BillingWalletTransaction.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	185, // 138: invora.billing.common.v2.BillingWalletTransaction.metadata:type_name -> invora.billing.common.v2.WalletTransactionMetadataObject
-	144, // 139: invora.billing.common.v2.BillingWalletTransaction.selected_invoice_custom_sections:type_name -> invora.billing.common.v2.InvoiceCustomSection
-	187, // 140: invora.billing.common.v2.BillingWalletTransaction.settled_at:type_name -> google.protobuf.Timestamp
-	61,  // 141: invora.billing.common.v2.BillingWalletTransaction.source:type_name -> invora.billing.common.v2.WalletTransactionSourceEnum
-	62,  // 142: invora.billing.common.v2.BillingWalletTransaction.status:type_name -> invora.billing.common.v2.WalletTransactionStatusEnum
-	63,  // 143: invora.billing.common.v2.BillingWalletTransaction.transaction_status:type_name -> invora.billing.common.v2.WalletTransactionTransactionStatusEnum
-	64,  // 144: invora.billing.common.v2.BillingWalletTransaction.transaction_type:type_name -> invora.billing.common.v2.WalletTransactionTransactionTypeEnum
-	187, // 145: invora.billing.common.v2.BillingWalletTransaction.updated_at:type_name -> google.protobuf.Timestamp
-	68,  // 146: invora.billing.common.v2.BillingWalletTransaction.voided_invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	71,  // 147: invora.billing.common.v2.BillingWalletTransaction.wallet:type_name -> invora.billing.common.v2.BillingWallet
-	76,  // 148: invora.billing.common.v2.BillingFee.add_on:type_name -> invora.billing.common.v2.BillingAddOn
-	4,   // 149: invora.billing.common.v2.BillingFee.adjusted_fee_type:type_name -> invora.billing.common.v2.AdjustedFeeTypeEnum
-	22,  // 150: invora.billing.common.v2.BillingFee.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	125, // 151: invora.billing.common.v2.BillingFee.amount_details:type_name -> invora.billing.common.v2.FeeAmountDetails
-	128, // 152: invora.billing.common.v2.BillingFee.applied_taxes:type_name -> invora.billing.common.v2.FeeAppliedTax
-	98,  // 153: invora.billing.common.v2.BillingFee.charge:type_name -> invora.billing.common.v2.Charge
-	99,  // 154: invora.billing.common.v2.BillingFee.charge_filter:type_name -> invora.billing.common.v2.ChargeFilter
-	22,  // 155: invora.billing.common.v2.BillingFee.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	30,  // 156: invora.billing.common.v2.BillingFee.fee_type:type_name -> invora.billing.common.v2.FeeTypesEnum
-	131, // 157: invora.billing.common.v2.BillingFee.fixed_charge:type_name -> invora.billing.common.v2.FixedCharge
-	189, // 158: invora.billing.common.v2.BillingFee.grouped_by:type_name -> google.protobuf.Struct
-	164, // 159: invora.billing.common.v2.BillingFee.pricing_unit_usage:type_name -> invora.billing.common.v2.PricingUnitUsage
-	129, // 160: invora.billing.common.v2.BillingFee.properties:type_name -> invora.billing.common.v2.FeeProperties
-	67,  // 161: invora.billing.common.v2.BillingFee.subscription:type_name -> invora.billing.common.v2.BillingSubscription
-	187, // 162: invora.billing.common.v2.BillingFee.succeeded_at:type_name -> google.protobuf.Timestamp
-	73,  // 163: invora.billing.common.v2.BillingFee.true_up_fee:type_name -> invora.billing.common.v2.BillingFee
-	73,  // 164: invora.billing.common.v2.BillingFee.true_up_parent_fee:type_name -> invora.billing.common.v2.BillingFee
-	72,  // 165: invora.billing.common.v2.BillingFee.wallet_transaction:type_name -> invora.billing.common.v2.BillingWalletTransaction
-	187, // 166: invora.billing.common.v2.BillingTax.created_at:type_name -> google.protobuf.Timestamp
-	153, // 167: invora.billing.common.v2.BillingTax.organization:type_name -> invora.billing.common.v2.Organization
-	187, // 168: invora.billing.common.v2.BillingTax.updated_at:type_name -> google.protobuf.Timestamp
-	86,  // 169: invora.billing.common.v2.BillingCoupon.activity_logs:type_name -> invora.billing.common.v2.ActivityLog
-	22,  // 170: invora.billing.common.v2.BillingCoupon.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	77,  // 171: invora.billing.common.v2.BillingCoupon.billable_metrics:type_name -> invora.billing.common.v2.BillingBillableMetric
-	18,  // 172: invora.billing.common.v2.BillingCoupon.coupon_type:type_name -> invora.billing.common.v2.CouponTypeEnum
-	187, // 173: invora.billing.common.v2.BillingCoupon.created_at:type_name -> google.protobuf.Timestamp
-	15,  // 174: invora.billing.common.v2.BillingCoupon.expiration:type_name -> invora.billing.common.v2.CouponExpiration
-	187, // 175: invora.billing.common.v2.BillingCoupon.expiration_at:type_name -> google.protobuf.Timestamp
-	16,  // 176: invora.billing.common.v2.BillingCoupon.frequency:type_name -> invora.billing.common.v2.CouponFrequency
-	153, // 177: invora.billing.common.v2.BillingCoupon.organization:type_name -> invora.billing.common.v2.Organization
-	70,  // 178: invora.billing.common.v2.BillingCoupon.plans:type_name -> invora.billing.common.v2.BillingPlan
-	17,  // 179: invora.billing.common.v2.BillingCoupon.status:type_name -> invora.billing.common.v2.CouponStatusEnum
-	187, // 180: invora.billing.common.v2.BillingCoupon.terminated_at:type_name -> google.protobuf.Timestamp
-	187, // 181: invora.billing.common.v2.BillingCoupon.updated_at:type_name -> google.protobuf.Timestamp
-	22,  // 182: invora.billing.common.v2.BillingAddOn.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	187, // 183: invora.billing.common.v2.BillingAddOn.created_at:type_name -> google.protobuf.Timestamp
-	187, // 184: invora.billing.common.v2.BillingAddOn.deleted_at:type_name -> google.protobuf.Timestamp
-	149, // 185: invora.billing.common.v2.BillingAddOn.integration_mappings:type_name -> invora.billing.common.v2.Mapping
-	153, // 186: invora.billing.common.v2.BillingAddOn.organization:type_name -> invora.billing.common.v2.Organization
-	74,  // 187: invora.billing.common.v2.BillingAddOn.taxes:type_name -> invora.billing.common.v2.BillingTax
-	187, // 188: invora.billing.common.v2.BillingAddOn.updated_at:type_name -> google.protobuf.Timestamp
-	86,  // 189: invora.billing.common.v2.BillingBillableMetric.activity_logs:type_name -> invora.billing.common.v2.ActivityLog
-	5,   // 190: invora.billing.common.v2.BillingBillableMetric.aggregation_type:type_name -> invora.billing.common.v2.AggregationTypeEnum
-	187, // 191: invora.billing.common.v2.BillingBillableMetric.created_at:type_name -> google.protobuf.Timestamp
-	187, // 192: invora.billing.common.v2.BillingBillableMetric.deleted_at:type_name -> google.protobuf.Timestamp
-	94,  // 193: invora.billing.common.v2.BillingBillableMetric.filters:type_name -> invora.billing.common.v2.BillableMetricFilter
-	149, // 194: invora.billing.common.v2.BillingBillableMetric.integration_mappings:type_name -> invora.billing.common.v2.Mapping
-	153, // 195: invora.billing.common.v2.BillingBillableMetric.organization:type_name -> invora.billing.common.v2.Organization
-	57,  // 196: invora.billing.common.v2.BillingBillableMetric.rounding_function:type_name -> invora.billing.common.v2.RoundingFunctionEnum
-	187, // 197: invora.billing.common.v2.BillingBillableMetric.updated_at:type_name -> google.protobuf.Timestamp
-	65,  // 198: invora.billing.common.v2.BillingBillableMetric.weighted_interval:type_name -> invora.billing.common.v2.WeightedIntervalEnum
-	22,  // 199: invora.billing.common.v2.BillingPaymentRequest.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	187, // 200: invora.billing.common.v2.BillingPaymentRequest.created_at:type_name -> google.protobuf.Timestamp
-	66,  // 201: invora.billing.common.v2.BillingPaymentRequest.customer:type_name -> invora.billing.common.v2.BillingCustomer
-	68,  // 202: invora.billing.common.v2.BillingPaymentRequest.invoices:type_name -> invora.billing.common.v2.BillingInvoice
-	37,  // 203: invora.billing.common.v2.BillingPaymentRequest.payment_status:type_name -> invora.billing.common.v2.InvoicePaymentStatusTypeEnum
-	187, // 204: invora.billing.common.v2.BillingPaymentRequest.updated_at:type_name -> google.protobuf.Timestamp
-	187, // 205: invora.billing.common.v2.BillingPaymentReceipt.created_at:type_name -> google.protobuf.Timestamp
-	153, // 206: invora.billing.common.v2.BillingPaymentReceipt.organization:type_name -> invora.billing.common.v2.Organization
-	80,  // 207: invora.billing.common.v2.BillingPaymentReceipt.payment:type_name -> invora.billing.common.v2.BillingPayment
-	22,  // 208: invora.billing.common.v2.BillingPayment.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	187, // 209: invora.billing.common.v2.BillingPayment.created_at:type_name -> google.protobuf.Timestamp
-	66,  // 210: invora.billing.common.v2.BillingPayment.customer:type_name -> invora.billing.common.v2.BillingCustomer
-	156, // 211: invora.billing.common.v2.BillingPayment.payable:type_name -> invora.billing.common.v2.Payable
-	46,  // 212: invora.billing.common.v2.BillingPayment.payable_payment_status:type_name -> invora.billing.common.v2.PayablePaymentStatusEnum
-	160, // 213: invora.billing.common.v2.BillingPayment.payment_provider:type_name -> invora.billing.common.v2.PaymentProvider
-	52,  // 214: invora.billing.common.v2.BillingPayment.payment_provider_type:type_name -> invora.billing.common.v2.ProviderTypeEnum
-	79,  // 215: invora.billing.common.v2.BillingPayment.payment_receipt:type_name -> invora.billing.common.v2.BillingPaymentReceipt
-	48,  // 216: invora.billing.common.v2.BillingPayment.payment_type:type_name -> invora.billing.common.v2.PaymentTypeEnum
-	187, // 217: invora.billing.common.v2.BillingPayment.updated_at:type_name -> google.protobuf.Timestamp
-	187, // 218: invora.billing.common.v2.BillingWebhookEndpoint.created_at:type_name -> google.protobuf.Timestamp
-	153, // 219: invora.billing.common.v2.BillingWebhookEndpoint.organization:type_name -> invora.billing.common.v2.Organization
-	187, // 220: invora.billing.common.v2.BillingWebhookEndpoint.updated_at:type_name -> google.protobuf.Timestamp
-	187, // 221: invora.billing.common.v2.BillingWebhook.created_at:type_name -> google.protobuf.Timestamp
-	187, // 222: invora.billing.common.v2.BillingWebhook.last_retried_at:type_name -> google.protobuf.Timestamp
-	187, // 223: invora.billing.common.v2.BillingWebhook.updated_at:type_name -> google.protobuf.Timestamp
-	81,  // 224: invora.billing.common.v2.BillingWebhook.webhook_endpoint:type_name -> invora.billing.common.v2.BillingWebhookEndpoint
-	77,  // 225: invora.billing.common.v2.BillingAlert.billable_metric:type_name -> invora.billing.common.v2.BillingBillableMetric
-	187, // 226: invora.billing.common.v2.BillingAlert.created_at:type_name -> google.protobuf.Timestamp
-	187, // 227: invora.billing.common.v2.BillingAlert.deleted_at:type_name -> google.protobuf.Timestamp
-	187, // 228: invora.billing.common.v2.BillingAlert.updated_at:type_name -> google.protobuf.Timestamp
-	0,   // 229: invora.billing.common.v2.BillingOrg.status:type_name -> invora.billing.common.v2.BillingOrgStatus
-	187, // 230: invora.billing.common.v2.BillingOrg.created_at:type_name -> google.protobuf.Timestamp
-	187, // 231: invora.billing.common.v2.BillingOrg.updated_at:type_name -> google.protobuf.Timestamp
-	187, // 232: invora.billing.common.v2.UsageSummary.from_datetime:type_name -> google.protobuf.Timestamp
-	187, // 233: invora.billing.common.v2.UsageSummary.to_datetime:type_name -> google.protobuf.Timestamp
-	190, // 234: invora.billing.common.v2.UsageSummary.total_amount:type_name -> kernel.DecimalValue
-	189, // 235: invora.billing.common.v2.ActivityLog.activity_object:type_name -> google.protobuf.Struct
-	189, // 236: invora.billing.common.v2.ActivityLog.activity_object_changes:type_name -> google.protobuf.Struct
-	2,   // 237: invora.billing.common.v2.ActivityLog.activity_source:type_name -> invora.billing.common.v2.ActivitySourceEnum
-	3,   // 238: invora.billing.common.v2.ActivityLog.activity_type:type_name -> invora.billing.common.v2.ActivityTypeEnum
-	175, // 239: invora.billing.common.v2.ActivityLog.api_key:type_name -> invora.billing.common.v2.SanitizedApiKey
-	187, // 240: invora.billing.common.v2.ActivityLog.created_at:type_name -> google.protobuf.Timestamp
-	187, // 241: invora.billing.common.v2.ActivityLog.logged_at:type_name -> google.protobuf.Timestamp
-	153, // 242: invora.billing.common.v2.ActivityLog.organization:type_name -> invora.billing.common.v2.Organization
-	87,  // 243: invora.billing.common.v2.ActivityLog.resource:type_name -> invora.billing.common.v2.ActivityLogResourceObject
-	77,  // 244: invora.billing.common.v2.ActivityLogResourceObject.billing_billable_metric:type_name -> invora.billing.common.v2.BillingBillableMetric
-	95,  // 245: invora.billing.common.v2.ActivityLogResourceObject.billing_entity:type_name -> invora.billing.common.v2.BillingEntity
-	75,  // 246: invora.billing.common.v2.ActivityLogResourceObject.billing_coupon:type_name -> invora.billing.common.v2.BillingCoupon
-	69,  // 247: invora.billing.common.v2.ActivityLogResourceObject.billing_credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
-	66,  // 248: invora.billing.common.v2.ActivityLogResourceObject.billing_customer:type_name -> invora.billing.common.v2.BillingCustomer
-	124, // 249: invora.billing.common.v2.ActivityLogResourceObject.feature_object:type_name -> invora.billing.common.v2.FeatureObject
-	68,  // 250: invora.billing.common.v2.ActivityLogResourceObject.billing_invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	79,  // 251: invora.billing.common.v2.ActivityLogResourceObject.billing_payment_receipt:type_name -> invora.billing.common.v2.BillingPaymentReceipt
-	78,  // 252: invora.billing.common.v2.ActivityLogResourceObject.billing_payment_request:type_name -> invora.billing.common.v2.BillingPaymentRequest
-	70,  // 253: invora.billing.common.v2.ActivityLogResourceObject.billing_plan:type_name -> invora.billing.common.v2.BillingPlan
-	67,  // 254: invora.billing.common.v2.ActivityLogResourceObject.billing_subscription:type_name -> invora.billing.common.v2.BillingSubscription
-	71,  // 255: invora.billing.common.v2.ActivityLogResourceObject.billing_wallet:type_name -> invora.billing.common.v2.BillingWallet
-	35,  // 256: invora.billing.common.v2.AnrokCustomer.integration_type:type_name -> invora.billing.common.v2.IntegrationTypeEnum
-	76,  // 257: invora.billing.common.v2.AppliedAddOn.add_on:type_name -> invora.billing.common.v2.BillingAddOn
-	22,  // 258: invora.billing.common.v2.AppliedAddOn.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	187, // 259: invora.billing.common.v2.AppliedAddOn.created_at:type_name -> google.protobuf.Timestamp
-	22,  // 260: invora.billing.common.v2.AppliedCoupon.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	75,  // 261: invora.billing.common.v2.AppliedCoupon.coupon:type_name -> invora.billing.common.v2.BillingCoupon
-	187, // 262: invora.billing.common.v2.AppliedCoupon.created_at:type_name -> google.protobuf.Timestamp
-	66,  // 263: invora.billing.common.v2.AppliedCoupon.customer:type_name -> invora.billing.common.v2.BillingCustomer
-	16,  // 264: invora.billing.common.v2.AppliedCoupon.frequency:type_name -> invora.billing.common.v2.CouponFrequency
-	6,   // 265: invora.billing.common.v2.AppliedCoupon.status:type_name -> invora.billing.common.v2.AppliedCouponStatusEnum
-	187, // 266: invora.billing.common.v2.AppliedCoupon.terminated_at:type_name -> google.protobuf.Timestamp
-	187, // 267: invora.billing.common.v2.AppliedPricingUnit.created_at:type_name -> google.protobuf.Timestamp
-	163, // 268: invora.billing.common.v2.AppliedPricingUnit.pricing_unit:type_name -> invora.billing.common.v2.PricingUnit
-	187, // 269: invora.billing.common.v2.AppliedPricingUnit.updated_at:type_name -> google.protobuf.Timestamp
-	35,  // 270: invora.billing.common.v2.AvalaraCustomer.integration_type:type_name -> invora.billing.common.v2.IntegrationTypeEnum
-	119, // 271: invora.billing.common.v2.BillingEntity.applied_dunning_campaign:type_name -> invora.billing.common.v2.DunningCampaign
-	96,  // 272: invora.billing.common.v2.BillingEntity.billing_configuration:type_name -> invora.billing.common.v2.BillingEntityBillingConfiguration
-	14,  // 273: invora.billing.common.v2.BillingEntity.country:type_name -> invora.billing.common.v2.CountryCode
-	187, // 274: invora.billing.common.v2.BillingEntity.created_at:type_name -> google.protobuf.Timestamp
-	22,  // 275: invora.billing.common.v2.BillingEntity.default_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	7,   // 276: invora.billing.common.v2.BillingEntity.document_numbering:type_name -> invora.billing.common.v2.BillingEntityDocumentNumberingEnum
-	8,   // 277: invora.billing.common.v2.BillingEntity.email_settings:type_name -> invora.billing.common.v2.BillingEntityEmailSettingsEnum
-	153, // 278: invora.billing.common.v2.BillingEntity.organization:type_name -> invora.billing.common.v2.Organization
-	144, // 279: invora.billing.common.v2.BillingEntity.selected_invoice_custom_sections:type_name -> invora.billing.common.v2.InvoiceCustomSection
-	59,  // 280: invora.billing.common.v2.BillingEntity.timezone:type_name -> invora.billing.common.v2.TimezoneEnum
-	187, // 281: invora.billing.common.v2.BillingEntity.updated_at:type_name -> google.protobuf.Timestamp
-	9,   // 282: invora.billing.common.v2.BillingEntityBillingConfiguration.subscription_invoice_issuing_date_adjustment:type_name -> invora.billing.common.v2.BillingEntitySubscriptionInvoiceIssuingDateAdjustmentEnum
-	10,  // 283: invora.billing.common.v2.BillingEntityBillingConfiguration.subscription_invoice_issuing_date_anchor:type_name -> invora.billing.common.v2.BillingEntitySubscriptionInvoiceIssuingDateAnchorEnum
-	92,  // 284: invora.billing.common.v2.Charge.applied_pricing_unit:type_name -> invora.billing.common.v2.AppliedPricingUnit
-	77,  // 285: invora.billing.common.v2.Charge.billable_metric:type_name -> invora.billing.common.v2.BillingBillableMetric
-	12,  // 286: invora.billing.common.v2.Charge.charge_model:type_name -> invora.billing.common.v2.ChargeModelEnum
-	187, // 287: invora.billing.common.v2.Charge.created_at:type_name -> google.protobuf.Timestamp
-	187, // 288: invora.billing.common.v2.Charge.deleted_at:type_name -> google.protobuf.Timestamp
-	99,  // 289: invora.billing.common.v2.Charge.filters:type_name -> invora.billing.common.v2.ChargeFilter
-	170, // 290: invora.billing.common.v2.Charge.properties:type_name -> invora.billing.common.v2.Properties
-	56,  // 291: invora.billing.common.v2.Charge.regroup_paid_fees:type_name -> invora.billing.common.v2.RegroupPaidFeesEnum
-	74,  // 292: invora.billing.common.v2.Charge.taxes:type_name -> invora.billing.common.v2.BillingTax
-	187, // 293: invora.billing.common.v2.Charge.updated_at:type_name -> google.protobuf.Timestamp
-	170, // 294: invora.billing.common.v2.ChargeFilter.properties:type_name -> invora.billing.common.v2.Properties
-	189, // 295: invora.billing.common.v2.ChargeFilter.values:type_name -> google.protobuf.Struct
-	171, // 296: invora.billing.common.v2.ChargeFilterInput.properties:type_name -> invora.billing.common.v2.PropertiesInput
-	189, // 297: invora.billing.common.v2.ChargeFilterInput.values:type_name -> google.protobuf.Struct
-	189, // 298: invora.billing.common.v2.ChargeFilterUsage.values:type_name -> google.protobuf.Struct
-	77,  // 299: invora.billing.common.v2.ChargeUsage.billable_metric:type_name -> invora.billing.common.v2.BillingBillableMetric
-	98,  // 300: invora.billing.common.v2.ChargeUsage.charge:type_name -> invora.billing.common.v2.Charge
-	101, // 301: invora.billing.common.v2.ChargeUsage.filters:type_name -> invora.billing.common.v2.ChargeFilterUsage
-	140, // 302: invora.billing.common.v2.ChargeUsage.grouped_usage:type_name -> invora.billing.common.v2.GroupedChargeUsage
-	109, // 303: invora.billing.common.v2.CollectionMapping.currencies:type_name -> invora.billing.common.v2.CurrencyMappingItem
-	42,  // 304: invora.billing.common.v2.CollectionMapping.mapping_type:type_name -> invora.billing.common.v2.MappingTypeEnum
-	13,  // 305: invora.billing.common.v2.Commitment.commitment_type:type_name -> invora.billing.common.v2.CommitmentTypeEnum
-	187, // 306: invora.billing.common.v2.Commitment.created_at:type_name -> google.protobuf.Timestamp
-	70,  // 307: invora.billing.common.v2.Commitment.plan:type_name -> invora.billing.common.v2.BillingPlan
-	74,  // 308: invora.billing.common.v2.Commitment.taxes:type_name -> invora.billing.common.v2.BillingTax
-	187, // 309: invora.billing.common.v2.Commitment.updated_at:type_name -> google.protobuf.Timestamp
-	13,  // 310: invora.billing.common.v2.CommitmentInput.commitment_type:type_name -> invora.billing.common.v2.CommitmentTypeEnum
-	22,  // 311: invora.billing.common.v2.CreditNoteAppliedTax.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	187, // 312: invora.billing.common.v2.CreditNoteAppliedTax.created_at:type_name -> google.protobuf.Timestamp
-	69,  // 313: invora.billing.common.v2.CreditNoteAppliedTax.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
-	74,  // 314: invora.billing.common.v2.CreditNoteAppliedTax.tax:type_name -> invora.billing.common.v2.BillingTax
-	187, // 315: invora.billing.common.v2.CreditNoteAppliedTax.updated_at:type_name -> google.protobuf.Timestamp
-	22,  // 316: invora.billing.common.v2.CreditNoteItem.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	187, // 317: invora.billing.common.v2.CreditNoteItem.created_at:type_name -> google.protobuf.Timestamp
-	73,  // 318: invora.billing.common.v2.CreditNoteItem.fee:type_name -> invora.billing.common.v2.BillingFee
-	22,  // 319: invora.billing.common.v2.CurrencyMappingItem.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	22,  // 320: invora.billing.common.v2.CurrencyMappingItemInput.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	14,  // 321: invora.billing.common.v2.CustomerAddress.country:type_name -> invora.billing.common.v2.CountryCode
-	24,  // 322: invora.billing.common.v2.CustomerBillingConfiguration.subscription_invoice_issuing_date_adjustment:type_name -> invora.billing.common.v2.CustomerSubscriptionInvoiceIssuingDateAdjustmentEnum
-	25,  // 323: invora.billing.common.v2.CustomerBillingConfiguration.subscription_invoice_issuing_date_anchor:type_name -> invora.billing.common.v2.CustomerSubscriptionInvoiceIssuingDateAnchorEnum
-	187, // 324: invora.billing.common.v2.CustomerMetadata.created_at:type_name -> google.protobuf.Timestamp
-	187, // 325: invora.billing.common.v2.CustomerMetadata.updated_at:type_name -> google.protobuf.Timestamp
-	23,  // 326: invora.billing.common.v2.CustomerPortalCustomer.account_type:type_name -> invora.billing.common.v2.CustomerAccountTypeEnum
-	59,  // 327: invora.billing.common.v2.CustomerPortalCustomer.applicable_timezone:type_name -> invora.billing.common.v2.TimezoneEnum
-	112, // 328: invora.billing.common.v2.CustomerPortalCustomer.billing_configuration:type_name -> invora.billing.common.v2.CustomerBillingConfiguration
-	96,  // 329: invora.billing.common.v2.CustomerPortalCustomer.billing_entity_billing_configuration:type_name -> invora.billing.common.v2.BillingEntityBillingConfiguration
-	14,  // 330: invora.billing.common.v2.CustomerPortalCustomer.country:type_name -> invora.billing.common.v2.CountryCode
-	22,  // 331: invora.billing.common.v2.CustomerPortalCustomer.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	26,  // 332: invora.billing.common.v2.CustomerPortalCustomer.customer_type:type_name -> invora.billing.common.v2.CustomerTypeEnum
-	111, // 333: invora.billing.common.v2.CustomerPortalCustomer.shipping_address:type_name -> invora.billing.common.v2.CustomerAddress
+	23,  // 0: invora.billing.common.v2.BillingCustomer.account_type:type_name -> invora.billing.common.v2.CustomerAccountType
+	59,  // 1: invora.billing.common.v2.BillingCustomer.applicable_timezone:type_name -> invora.billing.common.v2.Timezone
+	89,  // 2: invora.billing.common.v2.BillingCustomer.applied_add_ons:type_name -> invora.billing.common.v2.AppliedAddOn
+	90,  // 3: invora.billing.common.v2.BillingCustomer.applied_coupons:type_name -> invora.billing.common.v2.AppliedCoupon
+	109, // 4: invora.billing.common.v2.BillingCustomer.billing_configuration:type_name -> invora.billing.common.v2.CustomerBillingConfiguration
+	93,  // 5: invora.billing.common.v2.BillingCustomer.billing_entity:type_name -> invora.billing.common.v2.BillingEntity
+	137, // 6: invora.billing.common.v2.BillingCustomer.configurable_invoice_custom_sections:type_name -> invora.billing.common.v2.InvoiceCustomSection
+	14,  // 7: invora.billing.common.v2.BillingCustomer.country:type_name -> invora.billing.common.v2.CountryCode
+	176, // 8: invora.billing.common.v2.BillingCustomer.created_at:type_name -> google.protobuf.Timestamp
+	69,  // 9: invora.billing.common.v2.BillingCustomer.credit_notes:type_name -> invora.billing.common.v2.BillingCreditNote
+	22,  // 10: invora.billing.common.v2.BillingCustomer.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	26,  // 11: invora.billing.common.v2.BillingCustomer.customer_type:type_name -> invora.billing.common.v2.CustomerType
+	176, // 12: invora.billing.common.v2.BillingCustomer.deleted_at:type_name -> google.protobuf.Timestamp
+	31,  // 13: invora.billing.common.v2.BillingCustomer.finalize_zero_amount_invoice:type_name -> invora.billing.common.v2.FinalizeZeroAmountInvoice
+	68,  // 14: invora.billing.common.v2.BillingCustomer.invoices:type_name -> invora.billing.common.v2.BillingInvoice
+	110, // 15: invora.billing.common.v2.BillingCustomer.metadata:type_name -> invora.billing.common.v2.CustomerMetadata
+	52,  // 16: invora.billing.common.v2.BillingCustomer.payment_provider:type_name -> invora.billing.common.v2.ProviderType
+	108, // 17: invora.billing.common.v2.BillingCustomer.shipping_address:type_name -> invora.billing.common.v2.CustomerAddress
+	67,  // 18: invora.billing.common.v2.BillingCustomer.subscriptions:type_name -> invora.billing.common.v2.BillingSubscription
+	74,  // 19: invora.billing.common.v2.BillingCustomer.taxes:type_name -> invora.billing.common.v2.BillingTax
+	59,  // 20: invora.billing.common.v2.BillingCustomer.timezone:type_name -> invora.billing.common.v2.Timezone
+	176, // 21: invora.billing.common.v2.BillingCustomer.updated_at:type_name -> google.protobuf.Timestamp
+	11,  // 22: invora.billing.common.v2.BillingSubscription.billing_time:type_name -> invora.billing.common.v2.BillingTime
+	176, // 23: invora.billing.common.v2.BillingSubscription.canceled_at:type_name -> google.protobuf.Timestamp
+	96,  // 24: invora.billing.common.v2.BillingSubscription.charges:type_name -> invora.billing.common.v2.Charge
+	176, // 25: invora.billing.common.v2.BillingSubscription.created_at:type_name -> google.protobuf.Timestamp
+	176, // 26: invora.billing.common.v2.BillingSubscription.current_billing_period_ending_at:type_name -> google.protobuf.Timestamp
+	176, // 27: invora.billing.common.v2.BillingSubscription.current_billing_period_started_at:type_name -> google.protobuf.Timestamp
+	66,  // 28: invora.billing.common.v2.BillingSubscription.customer:type_name -> invora.billing.common.v2.BillingCustomer
+	176, // 29: invora.billing.common.v2.BillingSubscription.ending_at:type_name -> google.protobuf.Timestamp
+	73,  // 30: invora.billing.common.v2.BillingSubscription.fees:type_name -> invora.billing.common.v2.BillingFee
+	125, // 31: invora.billing.common.v2.BillingSubscription.fixed_charges:type_name -> invora.billing.common.v2.FixedCharge
+	167, // 32: invora.billing.common.v2.BillingSubscription.lifetime_usage:type_name -> invora.billing.common.v2.SubscriptionLifetimeUsage
+	70,  // 33: invora.billing.common.v2.BillingSubscription.next_plan:type_name -> invora.billing.common.v2.BillingPlan
+	67,  // 34: invora.billing.common.v2.BillingSubscription.next_subscription:type_name -> invora.billing.common.v2.BillingSubscription
+	176, // 35: invora.billing.common.v2.BillingSubscription.next_subscription_at:type_name -> google.protobuf.Timestamp
+	43,  // 36: invora.billing.common.v2.BillingSubscription.next_subscription_type:type_name -> invora.billing.common.v2.NextSubscriptionType
+	44,  // 37: invora.billing.common.v2.BillingSubscription.on_termination_credit_note:type_name -> invora.billing.common.v2.OnTerminationCreditNote
+	45,  // 38: invora.billing.common.v2.BillingSubscription.on_termination_invoice:type_name -> invora.billing.common.v2.OnTerminationInvoice
+	149, // 39: invora.billing.common.v2.BillingSubscription.payment_method:type_name -> invora.billing.common.v2.PaymentMethod
+	47,  // 40: invora.billing.common.v2.BillingSubscription.payment_method_type:type_name -> invora.billing.common.v2.PaymentMethodType
+	177, // 41: invora.billing.common.v2.BillingSubscription.period_end_date:type_name -> google.type.Date
+	70,  // 42: invora.billing.common.v2.BillingSubscription.plan:type_name -> invora.billing.common.v2.BillingPlan
+	137, // 43: invora.billing.common.v2.BillingSubscription.selected_invoice_custom_sections:type_name -> invora.billing.common.v2.InvoiceCustomSection
+	176, // 44: invora.billing.common.v2.BillingSubscription.started_at:type_name -> google.protobuf.Timestamp
+	58,  // 45: invora.billing.common.v2.BillingSubscription.status:type_name -> invora.billing.common.v2.StatusType
+	176, // 46: invora.billing.common.v2.BillingSubscription.subscription_at:type_name -> google.protobuf.Timestamp
+	176, // 47: invora.billing.common.v2.BillingSubscription.terminated_at:type_name -> google.protobuf.Timestamp
+	176, // 48: invora.billing.common.v2.BillingSubscription.updated_at:type_name -> google.protobuf.Timestamp
+	170, // 49: invora.billing.common.v2.BillingSubscription.usage_thresholds:type_name -> invora.billing.common.v2.UsageThreshold
+	136, // 50: invora.billing.common.v2.BillingInvoice.applied_taxes:type_name -> invora.billing.common.v2.InvoiceAppliedTax
+	93,  // 51: invora.billing.common.v2.BillingInvoice.billing_entity:type_name -> invora.billing.common.v2.BillingEntity
+	176, // 52: invora.billing.common.v2.BillingInvoice.created_at:type_name -> google.protobuf.Timestamp
+	69,  // 53: invora.billing.common.v2.BillingInvoice.credit_notes:type_name -> invora.billing.common.v2.BillingCreditNote
+	22,  // 54: invora.billing.common.v2.BillingInvoice.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	66,  // 55: invora.billing.common.v2.BillingInvoice.customer:type_name -> invora.billing.common.v2.BillingCustomer
+	177, // 56: invora.billing.common.v2.BillingInvoice.expected_finalization_date:type_name -> google.type.Date
+	73,  // 57: invora.billing.common.v2.BillingInvoice.fees:type_name -> invora.billing.common.v2.BillingFee
+	140, // 58: invora.billing.common.v2.BillingInvoice.invoice_subscriptions:type_name -> invora.billing.common.v2.InvoiceSubscription
+	40,  // 59: invora.billing.common.v2.BillingInvoice.invoice_type:type_name -> invora.billing.common.v2.InvoiceType
+	177, // 60: invora.billing.common.v2.BillingInvoice.issuing_date:type_name -> google.type.Date
+	139, // 61: invora.billing.common.v2.BillingInvoice.metadata:type_name -> invora.billing.common.v2.InvoiceMetadata
+	176, // 62: invora.billing.common.v2.BillingInvoice.payment_dispute_lost_at:type_name -> google.protobuf.Timestamp
+	177, // 63: invora.billing.common.v2.BillingInvoice.payment_due_date:type_name -> google.type.Date
+	37,  // 64: invora.billing.common.v2.BillingInvoice.payment_status:type_name -> invora.billing.common.v2.InvoicePaymentStatusType
+	80,  // 65: invora.billing.common.v2.BillingInvoice.payments:type_name -> invora.billing.common.v2.BillingPayment
+	38,  // 66: invora.billing.common.v2.BillingInvoice.status:type_name -> invora.billing.common.v2.InvoiceStatusType
+	67,  // 67: invora.billing.common.v2.BillingInvoice.subscriptions:type_name -> invora.billing.common.v2.BillingSubscription
+	39,  // 68: invora.billing.common.v2.BillingInvoice.tax_status:type_name -> invora.billing.common.v2.InvoiceTaxStatusType
+	178, // 69: invora.billing.common.v2.BillingInvoice.taxes_rate:type_name -> kernel.DecimalValue
+	176, // 70: invora.billing.common.v2.BillingInvoice.updated_at:type_name -> google.protobuf.Timestamp
+	176, // 71: invora.billing.common.v2.BillingInvoice.voided_at:type_name -> google.protobuf.Timestamp
+	104, // 72: invora.billing.common.v2.BillingCreditNote.applied_taxes:type_name -> invora.billing.common.v2.CreditNoteAppliedTax
+	93,  // 73: invora.billing.common.v2.BillingCreditNote.billing_entity:type_name -> invora.billing.common.v2.BillingEntity
+	176, // 74: invora.billing.common.v2.BillingCreditNote.created_at:type_name -> google.protobuf.Timestamp
+	19,  // 75: invora.billing.common.v2.BillingCreditNote.credit_status:type_name -> invora.billing.common.v2.CreditNoteCreditStatus
+	22,  // 76: invora.billing.common.v2.BillingCreditNote.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	66,  // 77: invora.billing.common.v2.BillingCreditNote.customer:type_name -> invora.billing.common.v2.BillingCustomer
+	68,  // 78: invora.billing.common.v2.BillingCreditNote.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	177, // 79: invora.billing.common.v2.BillingCreditNote.issuing_date:type_name -> google.type.Date
+	105, // 80: invora.billing.common.v2.BillingCreditNote.items:type_name -> invora.billing.common.v2.CreditNoteItem
+	141, // 81: invora.billing.common.v2.BillingCreditNote.metadata:type_name -> invora.billing.common.v2.ItemMetadata
+	20,  // 82: invora.billing.common.v2.BillingCreditNote.reason:type_name -> invora.billing.common.v2.CreditNoteReason
+	21,  // 83: invora.billing.common.v2.BillingCreditNote.refund_status:type_name -> invora.billing.common.v2.CreditNoteRefundStatus
+	176, // 84: invora.billing.common.v2.BillingCreditNote.refunded_at:type_name -> google.protobuf.Timestamp
+	178, // 85: invora.billing.common.v2.BillingCreditNote.taxes_rate:type_name -> kernel.DecimalValue
+	176, // 86: invora.billing.common.v2.BillingCreditNote.updated_at:type_name -> google.protobuf.Timestamp
+	176, // 87: invora.billing.common.v2.BillingCreditNote.voided_at:type_name -> google.protobuf.Timestamp
+	22,  // 88: invora.billing.common.v2.BillingPlan.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	170, // 89: invora.billing.common.v2.BillingPlan.applicable_usage_thresholds:type_name -> invora.billing.common.v2.UsageThreshold
+	96,  // 90: invora.billing.common.v2.BillingPlan.charges:type_name -> invora.billing.common.v2.Charge
+	176, // 91: invora.billing.common.v2.BillingPlan.created_at:type_name -> google.protobuf.Timestamp
+	176, // 92: invora.billing.common.v2.BillingPlan.deleted_at:type_name -> google.protobuf.Timestamp
+	153, // 93: invora.billing.common.v2.BillingPlan.entitlements:type_name -> invora.billing.common.v2.PlanEntitlement
+	125, // 94: invora.billing.common.v2.BillingPlan.fixed_charges:type_name -> invora.billing.common.v2.FixedCharge
+	49,  // 95: invora.billing.common.v2.BillingPlan.interval:type_name -> invora.billing.common.v2.PlanInterval
+	141, // 96: invora.billing.common.v2.BillingPlan.metadata:type_name -> invora.billing.common.v2.ItemMetadata
+	102, // 97: invora.billing.common.v2.BillingPlan.minimum_commitment:type_name -> invora.billing.common.v2.Commitment
+	145, // 98: invora.billing.common.v2.BillingPlan.organization:type_name -> invora.billing.common.v2.Organization
+	70,  // 99: invora.billing.common.v2.BillingPlan.parent:type_name -> invora.billing.common.v2.BillingPlan
+	74,  // 100: invora.billing.common.v2.BillingPlan.taxes:type_name -> invora.billing.common.v2.BillingTax
+	176, // 101: invora.billing.common.v2.BillingPlan.updated_at:type_name -> google.protobuf.Timestamp
+	170, // 102: invora.billing.common.v2.BillingPlan.usage_thresholds:type_name -> invora.billing.common.v2.UsageThreshold
+	174, // 103: invora.billing.common.v2.BillingWallet.applies_to:type_name -> invora.billing.common.v2.WalletAppliesTo
+	178, // 104: invora.billing.common.v2.BillingWallet.consumed_credits:type_name -> kernel.DecimalValue
+	176, // 105: invora.billing.common.v2.BillingWallet.created_at:type_name -> google.protobuf.Timestamp
+	178, // 106: invora.billing.common.v2.BillingWallet.credits_balance:type_name -> kernel.DecimalValue
+	178, // 107: invora.billing.common.v2.BillingWallet.credits_ongoing_balance:type_name -> kernel.DecimalValue
+	178, // 108: invora.billing.common.v2.BillingWallet.credits_ongoing_usage_balance:type_name -> kernel.DecimalValue
+	22,  // 109: invora.billing.common.v2.BillingWallet.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	66,  // 110: invora.billing.common.v2.BillingWallet.customer:type_name -> invora.billing.common.v2.BillingCustomer
+	176, // 111: invora.billing.common.v2.BillingWallet.expiration_at:type_name -> google.protobuf.Timestamp
+	176, // 112: invora.billing.common.v2.BillingWallet.last_balance_sync_at:type_name -> google.protobuf.Timestamp
+	176, // 113: invora.billing.common.v2.BillingWallet.last_consumed_credit_at:type_name -> google.protobuf.Timestamp
+	176, // 114: invora.billing.common.v2.BillingWallet.last_ongoing_balance_sync_at:type_name -> google.protobuf.Timestamp
+	141, // 115: invora.billing.common.v2.BillingWallet.metadata:type_name -> invora.billing.common.v2.ItemMetadata
+	149, // 116: invora.billing.common.v2.BillingWallet.payment_method:type_name -> invora.billing.common.v2.PaymentMethod
+	47,  // 117: invora.billing.common.v2.BillingWallet.payment_method_type:type_name -> invora.billing.common.v2.PaymentMethodType
+	178, // 118: invora.billing.common.v2.BillingWallet.rate_amount:type_name -> kernel.DecimalValue
+	164, // 119: invora.billing.common.v2.BillingWallet.recurring_transaction_rules:type_name -> invora.billing.common.v2.RecurringTransactionRule
+	137, // 120: invora.billing.common.v2.BillingWallet.selected_invoice_custom_sections:type_name -> invora.billing.common.v2.InvoiceCustomSection
+	60,  // 121: invora.billing.common.v2.BillingWallet.status:type_name -> invora.billing.common.v2.WalletStatus
+	176, // 122: invora.billing.common.v2.BillingWallet.terminated_at:type_name -> google.protobuf.Timestamp
+	176, // 123: invora.billing.common.v2.BillingWallet.updated_at:type_name -> google.protobuf.Timestamp
+	178, // 124: invora.billing.common.v2.BillingWalletTransaction.amount:type_name -> kernel.DecimalValue
+	176, // 125: invora.billing.common.v2.BillingWalletTransaction.created_at:type_name -> google.protobuf.Timestamp
+	178, // 126: invora.billing.common.v2.BillingWalletTransaction.credit_amount:type_name -> kernel.DecimalValue
+	176, // 127: invora.billing.common.v2.BillingWalletTransaction.failed_at:type_name -> google.protobuf.Timestamp
+	68,  // 128: invora.billing.common.v2.BillingWalletTransaction.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	175, // 129: invora.billing.common.v2.BillingWalletTransaction.metadata:type_name -> invora.billing.common.v2.WalletTransactionMetadataObject
+	178, // 130: invora.billing.common.v2.BillingWalletTransaction.remaining_credit_amount:type_name -> kernel.DecimalValue
+	137, // 131: invora.billing.common.v2.BillingWalletTransaction.selected_invoice_custom_sections:type_name -> invora.billing.common.v2.InvoiceCustomSection
+	176, // 132: invora.billing.common.v2.BillingWalletTransaction.settled_at:type_name -> google.protobuf.Timestamp
+	61,  // 133: invora.billing.common.v2.BillingWalletTransaction.source:type_name -> invora.billing.common.v2.WalletTransactionSource
+	62,  // 134: invora.billing.common.v2.BillingWalletTransaction.status:type_name -> invora.billing.common.v2.WalletTransactionStatus
+	63,  // 135: invora.billing.common.v2.BillingWalletTransaction.transaction_status:type_name -> invora.billing.common.v2.WalletTransactionTransactionStatus
+	64,  // 136: invora.billing.common.v2.BillingWalletTransaction.transaction_type:type_name -> invora.billing.common.v2.WalletTransactionTransactionType
+	176, // 137: invora.billing.common.v2.BillingWalletTransaction.updated_at:type_name -> google.protobuf.Timestamp
+	68,  // 138: invora.billing.common.v2.BillingWalletTransaction.voided_invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	71,  // 139: invora.billing.common.v2.BillingWalletTransaction.wallet:type_name -> invora.billing.common.v2.BillingWallet
+	76,  // 140: invora.billing.common.v2.BillingFee.add_on:type_name -> invora.billing.common.v2.BillingAddOn
+	4,   // 141: invora.billing.common.v2.BillingFee.adjusted_fee_type:type_name -> invora.billing.common.v2.AdjustedFeeType
+	22,  // 142: invora.billing.common.v2.BillingFee.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	119, // 143: invora.billing.common.v2.BillingFee.amount_details:type_name -> invora.billing.common.v2.FeeAmountDetails
+	122, // 144: invora.billing.common.v2.BillingFee.applied_taxes:type_name -> invora.billing.common.v2.FeeAppliedTax
+	96,  // 145: invora.billing.common.v2.BillingFee.charge:type_name -> invora.billing.common.v2.Charge
+	97,  // 146: invora.billing.common.v2.BillingFee.charge_filter:type_name -> invora.billing.common.v2.ChargeFilter
+	22,  // 147: invora.billing.common.v2.BillingFee.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	30,  // 148: invora.billing.common.v2.BillingFee.fee_type:type_name -> invora.billing.common.v2.FeeTypes
+	125, // 149: invora.billing.common.v2.BillingFee.fixed_charge:type_name -> invora.billing.common.v2.FixedCharge
+	179, // 150: invora.billing.common.v2.BillingFee.grouped_by:type_name -> google.protobuf.Struct
+	178, // 151: invora.billing.common.v2.BillingFee.precise_unit_amount:type_name -> kernel.DecimalValue
+	156, // 152: invora.billing.common.v2.BillingFee.pricing_unit_usage:type_name -> invora.billing.common.v2.PricingUnitUsage
+	123, // 153: invora.billing.common.v2.BillingFee.properties:type_name -> invora.billing.common.v2.FeeProperties
+	67,  // 154: invora.billing.common.v2.BillingFee.subscription:type_name -> invora.billing.common.v2.BillingSubscription
+	176, // 155: invora.billing.common.v2.BillingFee.succeeded_at:type_name -> google.protobuf.Timestamp
+	178, // 156: invora.billing.common.v2.BillingFee.taxes_rate:type_name -> kernel.DecimalValue
+	73,  // 157: invora.billing.common.v2.BillingFee.true_up_fee:type_name -> invora.billing.common.v2.BillingFee
+	73,  // 158: invora.billing.common.v2.BillingFee.true_up_parent_fee:type_name -> invora.billing.common.v2.BillingFee
+	178, // 159: invora.billing.common.v2.BillingFee.units:type_name -> kernel.DecimalValue
+	72,  // 160: invora.billing.common.v2.BillingFee.wallet_transaction:type_name -> invora.billing.common.v2.BillingWalletTransaction
+	176, // 161: invora.billing.common.v2.BillingTax.created_at:type_name -> google.protobuf.Timestamp
+	145, // 162: invora.billing.common.v2.BillingTax.organization:type_name -> invora.billing.common.v2.Organization
+	178, // 163: invora.billing.common.v2.BillingTax.rate:type_name -> kernel.DecimalValue
+	176, // 164: invora.billing.common.v2.BillingTax.updated_at:type_name -> google.protobuf.Timestamp
+	22,  // 165: invora.billing.common.v2.BillingCoupon.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	77,  // 166: invora.billing.common.v2.BillingCoupon.billable_metrics:type_name -> invora.billing.common.v2.BillingBillableMetric
+	18,  // 167: invora.billing.common.v2.BillingCoupon.coupon_type:type_name -> invora.billing.common.v2.CouponType
+	176, // 168: invora.billing.common.v2.BillingCoupon.created_at:type_name -> google.protobuf.Timestamp
+	15,  // 169: invora.billing.common.v2.BillingCoupon.expiration:type_name -> invora.billing.common.v2.CouponExpiration
+	176, // 170: invora.billing.common.v2.BillingCoupon.expiration_at:type_name -> google.protobuf.Timestamp
+	16,  // 171: invora.billing.common.v2.BillingCoupon.frequency:type_name -> invora.billing.common.v2.CouponFrequency
+	145, // 172: invora.billing.common.v2.BillingCoupon.organization:type_name -> invora.billing.common.v2.Organization
+	178, // 173: invora.billing.common.v2.BillingCoupon.percentage_rate:type_name -> kernel.DecimalValue
+	70,  // 174: invora.billing.common.v2.BillingCoupon.plans:type_name -> invora.billing.common.v2.BillingPlan
+	17,  // 175: invora.billing.common.v2.BillingCoupon.status:type_name -> invora.billing.common.v2.CouponStatus
+	176, // 176: invora.billing.common.v2.BillingCoupon.terminated_at:type_name -> google.protobuf.Timestamp
+	176, // 177: invora.billing.common.v2.BillingCoupon.updated_at:type_name -> google.protobuf.Timestamp
+	22,  // 178: invora.billing.common.v2.BillingAddOn.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	176, // 179: invora.billing.common.v2.BillingAddOn.created_at:type_name -> google.protobuf.Timestamp
+	176, // 180: invora.billing.common.v2.BillingAddOn.deleted_at:type_name -> google.protobuf.Timestamp
+	142, // 181: invora.billing.common.v2.BillingAddOn.integration_mappings:type_name -> invora.billing.common.v2.Mapping
+	145, // 182: invora.billing.common.v2.BillingAddOn.organization:type_name -> invora.billing.common.v2.Organization
+	74,  // 183: invora.billing.common.v2.BillingAddOn.taxes:type_name -> invora.billing.common.v2.BillingTax
+	176, // 184: invora.billing.common.v2.BillingAddOn.updated_at:type_name -> google.protobuf.Timestamp
+	5,   // 185: invora.billing.common.v2.BillingBillableMetric.aggregation_type:type_name -> invora.billing.common.v2.AggregationType
+	176, // 186: invora.billing.common.v2.BillingBillableMetric.created_at:type_name -> google.protobuf.Timestamp
+	176, // 187: invora.billing.common.v2.BillingBillableMetric.deleted_at:type_name -> google.protobuf.Timestamp
+	92,  // 188: invora.billing.common.v2.BillingBillableMetric.filters:type_name -> invora.billing.common.v2.BillableMetricFilter
+	142, // 189: invora.billing.common.v2.BillingBillableMetric.integration_mappings:type_name -> invora.billing.common.v2.Mapping
+	145, // 190: invora.billing.common.v2.BillingBillableMetric.organization:type_name -> invora.billing.common.v2.Organization
+	57,  // 191: invora.billing.common.v2.BillingBillableMetric.rounding_function:type_name -> invora.billing.common.v2.RoundingFunction
+	176, // 192: invora.billing.common.v2.BillingBillableMetric.updated_at:type_name -> google.protobuf.Timestamp
+	65,  // 193: invora.billing.common.v2.BillingBillableMetric.weighted_interval:type_name -> invora.billing.common.v2.WeightedInterval
+	22,  // 194: invora.billing.common.v2.BillingPaymentRequest.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	176, // 195: invora.billing.common.v2.BillingPaymentRequest.created_at:type_name -> google.protobuf.Timestamp
+	66,  // 196: invora.billing.common.v2.BillingPaymentRequest.customer:type_name -> invora.billing.common.v2.BillingCustomer
+	68,  // 197: invora.billing.common.v2.BillingPaymentRequest.invoices:type_name -> invora.billing.common.v2.BillingInvoice
+	37,  // 198: invora.billing.common.v2.BillingPaymentRequest.payment_status:type_name -> invora.billing.common.v2.InvoicePaymentStatusType
+	176, // 199: invora.billing.common.v2.BillingPaymentRequest.updated_at:type_name -> google.protobuf.Timestamp
+	176, // 200: invora.billing.common.v2.BillingPaymentReceipt.created_at:type_name -> google.protobuf.Timestamp
+	145, // 201: invora.billing.common.v2.BillingPaymentReceipt.organization:type_name -> invora.billing.common.v2.Organization
+	80,  // 202: invora.billing.common.v2.BillingPaymentReceipt.payment:type_name -> invora.billing.common.v2.BillingPayment
+	22,  // 203: invora.billing.common.v2.BillingPayment.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	176, // 204: invora.billing.common.v2.BillingPayment.created_at:type_name -> google.protobuf.Timestamp
+	66,  // 205: invora.billing.common.v2.BillingPayment.customer:type_name -> invora.billing.common.v2.BillingCustomer
+	148, // 206: invora.billing.common.v2.BillingPayment.payable:type_name -> invora.billing.common.v2.Payable
+	46,  // 207: invora.billing.common.v2.BillingPayment.payable_payment_status:type_name -> invora.billing.common.v2.PayablePaymentStatus
+	152, // 208: invora.billing.common.v2.BillingPayment.payment_provider:type_name -> invora.billing.common.v2.PaymentProvider
+	52,  // 209: invora.billing.common.v2.BillingPayment.payment_provider_type:type_name -> invora.billing.common.v2.ProviderType
+	79,  // 210: invora.billing.common.v2.BillingPayment.payment_receipt:type_name -> invora.billing.common.v2.BillingPaymentReceipt
+	48,  // 211: invora.billing.common.v2.BillingPayment.payment_type:type_name -> invora.billing.common.v2.PaymentType
+	176, // 212: invora.billing.common.v2.BillingPayment.updated_at:type_name -> google.protobuf.Timestamp
+	176, // 213: invora.billing.common.v2.BillingWebhookEndpoint.created_at:type_name -> google.protobuf.Timestamp
+	145, // 214: invora.billing.common.v2.BillingWebhookEndpoint.organization:type_name -> invora.billing.common.v2.Organization
+	176, // 215: invora.billing.common.v2.BillingWebhookEndpoint.updated_at:type_name -> google.protobuf.Timestamp
+	176, // 216: invora.billing.common.v2.BillingWebhook.created_at:type_name -> google.protobuf.Timestamp
+	176, // 217: invora.billing.common.v2.BillingWebhook.last_retried_at:type_name -> google.protobuf.Timestamp
+	176, // 218: invora.billing.common.v2.BillingWebhook.updated_at:type_name -> google.protobuf.Timestamp
+	81,  // 219: invora.billing.common.v2.BillingWebhook.webhook_endpoint:type_name -> invora.billing.common.v2.BillingWebhookEndpoint
+	77,  // 220: invora.billing.common.v2.BillingAlert.billable_metric:type_name -> invora.billing.common.v2.BillingBillableMetric
+	176, // 221: invora.billing.common.v2.BillingAlert.created_at:type_name -> google.protobuf.Timestamp
+	176, // 222: invora.billing.common.v2.BillingAlert.deleted_at:type_name -> google.protobuf.Timestamp
+	176, // 223: invora.billing.common.v2.BillingAlert.updated_at:type_name -> google.protobuf.Timestamp
+	1,   // 224: invora.billing.common.v2.BillingOrg.status:type_name -> invora.billing.common.v2.BillingOrgStatus
+	176, // 225: invora.billing.common.v2.BillingOrg.created_at:type_name -> google.protobuf.Timestamp
+	176, // 226: invora.billing.common.v2.BillingOrg.updated_at:type_name -> google.protobuf.Timestamp
+	176, // 227: invora.billing.common.v2.UsageSummary.from_datetime:type_name -> google.protobuf.Timestamp
+	176, // 228: invora.billing.common.v2.UsageSummary.to_datetime:type_name -> google.protobuf.Timestamp
+	178, // 229: invora.billing.common.v2.UsageSummary.total_amount:type_name -> kernel.DecimalValue
+	179, // 230: invora.billing.common.v2.ActivityLog.activity_object:type_name -> google.protobuf.Struct
+	179, // 231: invora.billing.common.v2.ActivityLog.activity_object_changes:type_name -> google.protobuf.Struct
+	2,   // 232: invora.billing.common.v2.ActivityLog.activity_source:type_name -> invora.billing.common.v2.ActivitySourceEnum
+	3,   // 233: invora.billing.common.v2.ActivityLog.activity_type:type_name -> invora.billing.common.v2.ActivityTypeEnum
+	165, // 234: invora.billing.common.v2.ActivityLog.api_key:type_name -> invora.billing.common.v2.SanitizedApiKey
+	176, // 235: invora.billing.common.v2.ActivityLog.created_at:type_name -> google.protobuf.Timestamp
+	176, // 236: invora.billing.common.v2.ActivityLog.logged_at:type_name -> google.protobuf.Timestamp
+	145, // 237: invora.billing.common.v2.ActivityLog.organization:type_name -> invora.billing.common.v2.Organization
+	87,  // 238: invora.billing.common.v2.ActivityLog.resource:type_name -> invora.billing.common.v2.ActivityLogResourceObject
+	77,  // 239: invora.billing.common.v2.ActivityLogResourceObject.billing_billable_metric:type_name -> invora.billing.common.v2.BillingBillableMetric
+	93,  // 240: invora.billing.common.v2.ActivityLogResourceObject.billing_entity:type_name -> invora.billing.common.v2.BillingEntity
+	75,  // 241: invora.billing.common.v2.ActivityLogResourceObject.billing_coupon:type_name -> invora.billing.common.v2.BillingCoupon
+	69,  // 242: invora.billing.common.v2.ActivityLogResourceObject.billing_credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
+	66,  // 243: invora.billing.common.v2.ActivityLogResourceObject.billing_customer:type_name -> invora.billing.common.v2.BillingCustomer
+	118, // 244: invora.billing.common.v2.ActivityLogResourceObject.feature_object:type_name -> invora.billing.common.v2.FeatureObject
+	68,  // 245: invora.billing.common.v2.ActivityLogResourceObject.billing_invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	79,  // 246: invora.billing.common.v2.ActivityLogResourceObject.billing_payment_receipt:type_name -> invora.billing.common.v2.BillingPaymentReceipt
+	78,  // 247: invora.billing.common.v2.ActivityLogResourceObject.billing_payment_request:type_name -> invora.billing.common.v2.BillingPaymentRequest
+	70,  // 248: invora.billing.common.v2.ActivityLogResourceObject.billing_plan:type_name -> invora.billing.common.v2.BillingPlan
+	67,  // 249: invora.billing.common.v2.ActivityLogResourceObject.billing_subscription:type_name -> invora.billing.common.v2.BillingSubscription
+	71,  // 250: invora.billing.common.v2.ActivityLogResourceObject.billing_wallet:type_name -> invora.billing.common.v2.BillingWallet
+	76,  // 251: invora.billing.common.v2.AppliedAddOn.add_on:type_name -> invora.billing.common.v2.BillingAddOn
+	22,  // 252: invora.billing.common.v2.AppliedAddOn.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	176, // 253: invora.billing.common.v2.AppliedAddOn.created_at:type_name -> google.protobuf.Timestamp
+	22,  // 254: invora.billing.common.v2.AppliedCoupon.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	75,  // 255: invora.billing.common.v2.AppliedCoupon.coupon:type_name -> invora.billing.common.v2.BillingCoupon
+	176, // 256: invora.billing.common.v2.AppliedCoupon.created_at:type_name -> google.protobuf.Timestamp
+	66,  // 257: invora.billing.common.v2.AppliedCoupon.customer:type_name -> invora.billing.common.v2.BillingCustomer
+	16,  // 258: invora.billing.common.v2.AppliedCoupon.frequency:type_name -> invora.billing.common.v2.CouponFrequency
+	178, // 259: invora.billing.common.v2.AppliedCoupon.percentage_rate:type_name -> kernel.DecimalValue
+	6,   // 260: invora.billing.common.v2.AppliedCoupon.status:type_name -> invora.billing.common.v2.AppliedCouponStatus
+	176, // 261: invora.billing.common.v2.AppliedCoupon.terminated_at:type_name -> google.protobuf.Timestamp
+	178, // 262: invora.billing.common.v2.AppliedPricingUnit.conversion_rate:type_name -> kernel.DecimalValue
+	176, // 263: invora.billing.common.v2.AppliedPricingUnit.created_at:type_name -> google.protobuf.Timestamp
+	155, // 264: invora.billing.common.v2.AppliedPricingUnit.pricing_unit:type_name -> invora.billing.common.v2.PricingUnit
+	176, // 265: invora.billing.common.v2.AppliedPricingUnit.updated_at:type_name -> google.protobuf.Timestamp
+	94,  // 266: invora.billing.common.v2.BillingEntity.billing_configuration:type_name -> invora.billing.common.v2.BillingEntityBillingConfiguration
+	14,  // 267: invora.billing.common.v2.BillingEntity.country:type_name -> invora.billing.common.v2.CountryCode
+	176, // 268: invora.billing.common.v2.BillingEntity.created_at:type_name -> google.protobuf.Timestamp
+	22,  // 269: invora.billing.common.v2.BillingEntity.default_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	7,   // 270: invora.billing.common.v2.BillingEntity.document_numbering:type_name -> invora.billing.common.v2.BillingEntityDocumentNumbering
+	8,   // 271: invora.billing.common.v2.BillingEntity.email_settings:type_name -> invora.billing.common.v2.BillingEntityEmailSettings
+	145, // 272: invora.billing.common.v2.BillingEntity.organization:type_name -> invora.billing.common.v2.Organization
+	137, // 273: invora.billing.common.v2.BillingEntity.selected_invoice_custom_sections:type_name -> invora.billing.common.v2.InvoiceCustomSection
+	59,  // 274: invora.billing.common.v2.BillingEntity.timezone:type_name -> invora.billing.common.v2.Timezone
+	176, // 275: invora.billing.common.v2.BillingEntity.updated_at:type_name -> google.protobuf.Timestamp
+	9,   // 276: invora.billing.common.v2.BillingEntityBillingConfiguration.subscription_invoice_issuing_date_adjustment:type_name -> invora.billing.common.v2.BillingEntitySubscriptionInvoiceIssuingDateAdjustment
+	10,  // 277: invora.billing.common.v2.BillingEntityBillingConfiguration.subscription_invoice_issuing_date_anchor:type_name -> invora.billing.common.v2.BillingEntitySubscriptionInvoiceIssuingDateAnchor
+	91,  // 278: invora.billing.common.v2.Charge.applied_pricing_unit:type_name -> invora.billing.common.v2.AppliedPricingUnit
+	77,  // 279: invora.billing.common.v2.Charge.billable_metric:type_name -> invora.billing.common.v2.BillingBillableMetric
+	12,  // 280: invora.billing.common.v2.Charge.charge_model:type_name -> invora.billing.common.v2.ChargeModel
+	176, // 281: invora.billing.common.v2.Charge.created_at:type_name -> google.protobuf.Timestamp
+	176, // 282: invora.billing.common.v2.Charge.deleted_at:type_name -> google.protobuf.Timestamp
+	97,  // 283: invora.billing.common.v2.Charge.filters:type_name -> invora.billing.common.v2.ChargeFilter
+	162, // 284: invora.billing.common.v2.Charge.properties:type_name -> invora.billing.common.v2.Properties
+	56,  // 285: invora.billing.common.v2.Charge.regroup_paid_fees:type_name -> invora.billing.common.v2.RegroupPaidFees
+	74,  // 286: invora.billing.common.v2.Charge.taxes:type_name -> invora.billing.common.v2.BillingTax
+	176, // 287: invora.billing.common.v2.Charge.updated_at:type_name -> google.protobuf.Timestamp
+	162, // 288: invora.billing.common.v2.ChargeFilter.properties:type_name -> invora.billing.common.v2.Properties
+	179, // 289: invora.billing.common.v2.ChargeFilter.values:type_name -> google.protobuf.Struct
+	163, // 290: invora.billing.common.v2.ChargeFilterInput.properties:type_name -> invora.billing.common.v2.PropertiesInput
+	179, // 291: invora.billing.common.v2.ChargeFilterInput.values:type_name -> google.protobuf.Struct
+	178, // 292: invora.billing.common.v2.ChargeFilterUsage.units:type_name -> kernel.DecimalValue
+	179, // 293: invora.billing.common.v2.ChargeFilterUsage.values:type_name -> google.protobuf.Struct
+	77,  // 294: invora.billing.common.v2.ChargeUsage.billable_metric:type_name -> invora.billing.common.v2.BillingBillableMetric
+	96,  // 295: invora.billing.common.v2.ChargeUsage.charge:type_name -> invora.billing.common.v2.Charge
+	99,  // 296: invora.billing.common.v2.ChargeUsage.filters:type_name -> invora.billing.common.v2.ChargeFilterUsage
+	134, // 297: invora.billing.common.v2.ChargeUsage.grouped_usage:type_name -> invora.billing.common.v2.GroupedChargeUsage
+	178, // 298: invora.billing.common.v2.ChargeUsage.units:type_name -> kernel.DecimalValue
+	106, // 299: invora.billing.common.v2.CollectionMapping.currencies:type_name -> invora.billing.common.v2.CurrencyMappingItem
+	42,  // 300: invora.billing.common.v2.CollectionMapping.mapping_type:type_name -> invora.billing.common.v2.MappingTypeEnum
+	13,  // 301: invora.billing.common.v2.Commitment.commitment_type:type_name -> invora.billing.common.v2.CommitmentType
+	176, // 302: invora.billing.common.v2.Commitment.created_at:type_name -> google.protobuf.Timestamp
+	70,  // 303: invora.billing.common.v2.Commitment.plan:type_name -> invora.billing.common.v2.BillingPlan
+	74,  // 304: invora.billing.common.v2.Commitment.taxes:type_name -> invora.billing.common.v2.BillingTax
+	176, // 305: invora.billing.common.v2.Commitment.updated_at:type_name -> google.protobuf.Timestamp
+	13,  // 306: invora.billing.common.v2.CommitmentInput.commitment_type:type_name -> invora.billing.common.v2.CommitmentType
+	22,  // 307: invora.billing.common.v2.CreditNoteAppliedTax.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	176, // 308: invora.billing.common.v2.CreditNoteAppliedTax.created_at:type_name -> google.protobuf.Timestamp
+	69,  // 309: invora.billing.common.v2.CreditNoteAppliedTax.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
+	74,  // 310: invora.billing.common.v2.CreditNoteAppliedTax.tax:type_name -> invora.billing.common.v2.BillingTax
+	178, // 311: invora.billing.common.v2.CreditNoteAppliedTax.tax_rate:type_name -> kernel.DecimalValue
+	176, // 312: invora.billing.common.v2.CreditNoteAppliedTax.updated_at:type_name -> google.protobuf.Timestamp
+	22,  // 313: invora.billing.common.v2.CreditNoteItem.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	176, // 314: invora.billing.common.v2.CreditNoteItem.created_at:type_name -> google.protobuf.Timestamp
+	73,  // 315: invora.billing.common.v2.CreditNoteItem.fee:type_name -> invora.billing.common.v2.BillingFee
+	22,  // 316: invora.billing.common.v2.CurrencyMappingItem.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	22,  // 317: invora.billing.common.v2.CurrencyMappingItemInput.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	14,  // 318: invora.billing.common.v2.CustomerAddress.country:type_name -> invora.billing.common.v2.CountryCode
+	24,  // 319: invora.billing.common.v2.CustomerBillingConfiguration.subscription_invoice_issuing_date_adjustment:type_name -> invora.billing.common.v2.CustomerSubscriptionInvoiceIssuingDateAdjustment
+	25,  // 320: invora.billing.common.v2.CustomerBillingConfiguration.subscription_invoice_issuing_date_anchor:type_name -> invora.billing.common.v2.CustomerSubscriptionInvoiceIssuingDateAnchor
+	176, // 321: invora.billing.common.v2.CustomerMetadata.created_at:type_name -> google.protobuf.Timestamp
+	176, // 322: invora.billing.common.v2.CustomerMetadata.updated_at:type_name -> google.protobuf.Timestamp
+	23,  // 323: invora.billing.common.v2.CustomerPortalCustomer.account_type:type_name -> invora.billing.common.v2.CustomerAccountType
+	59,  // 324: invora.billing.common.v2.CustomerPortalCustomer.applicable_timezone:type_name -> invora.billing.common.v2.Timezone
+	109, // 325: invora.billing.common.v2.CustomerPortalCustomer.billing_configuration:type_name -> invora.billing.common.v2.CustomerBillingConfiguration
+	94,  // 326: invora.billing.common.v2.CustomerPortalCustomer.billing_entity_billing_configuration:type_name -> invora.billing.common.v2.BillingEntityBillingConfiguration
+	14,  // 327: invora.billing.common.v2.CustomerPortalCustomer.country:type_name -> invora.billing.common.v2.CountryCode
+	22,  // 328: invora.billing.common.v2.CustomerPortalCustomer.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	26,  // 329: invora.billing.common.v2.CustomerPortalCustomer.customer_type:type_name -> invora.billing.common.v2.CustomerType
+	108, // 330: invora.billing.common.v2.CustomerPortalCustomer.shipping_address:type_name -> invora.billing.common.v2.CustomerAddress
+	178, // 331: invora.billing.common.v2.CustomerPortalWallet.consumed_credits:type_name -> kernel.DecimalValue
+	178, // 332: invora.billing.common.v2.CustomerPortalWallet.credits_balance:type_name -> kernel.DecimalValue
+	178, // 333: invora.billing.common.v2.CustomerPortalWallet.credits_ongoing_balance:type_name -> kernel.DecimalValue
 	22,  // 334: invora.billing.common.v2.CustomerPortalWallet.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	187, // 335: invora.billing.common.v2.CustomerPortalWallet.expiration_at:type_name -> google.protobuf.Timestamp
-	187, // 336: invora.billing.common.v2.CustomerPortalWallet.last_balance_sync_at:type_name -> google.protobuf.Timestamp
-	60,  // 337: invora.billing.common.v2.CustomerPortalWallet.status:type_name -> invora.billing.common.v2.WalletStatusEnum
-	168, // 338: invora.billing.common.v2.CustomerProjectedUsage.charges_usage:type_name -> invora.billing.common.v2.ProjectedChargeUsage
-	22,  // 339: invora.billing.common.v2.CustomerProjectedUsage.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	187, // 340: invora.billing.common.v2.CustomerProjectedUsage.from_datetime:type_name -> google.protobuf.Timestamp
-	188, // 341: invora.billing.common.v2.CustomerProjectedUsage.issuing_date:type_name -> google.type.Date
-	187, // 342: invora.billing.common.v2.CustomerProjectedUsage.to_datetime:type_name -> google.protobuf.Timestamp
-	102, // 343: invora.billing.common.v2.CustomerUsage.charges_usage:type_name -> invora.billing.common.v2.ChargeUsage
-	22,  // 344: invora.billing.common.v2.CustomerUsage.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	187, // 345: invora.billing.common.v2.CustomerUsage.from_datetime:type_name -> google.protobuf.Timestamp
-	188, // 346: invora.billing.common.v2.CustomerUsage.issuing_date:type_name -> google.type.Date
-	187, // 347: invora.billing.common.v2.CustomerUsage.to_datetime:type_name -> google.protobuf.Timestamp
-	28,  // 348: invora.billing.common.v2.DataExport.status:type_name -> invora.billing.common.v2.DataExportStatusEnum
-	187, // 349: invora.billing.common.v2.DunningCampaign.created_at:type_name -> google.protobuf.Timestamp
-	120, // 350: invora.billing.common.v2.DunningCampaign.thresholds:type_name -> invora.billing.common.v2.DunningCampaignThreshold
-	187, // 351: invora.billing.common.v2.DunningCampaign.updated_at:type_name -> google.protobuf.Timestamp
-	22,  // 352: invora.billing.common.v2.DunningCampaignThreshold.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	122, // 353: invora.billing.common.v2.EntitlementInput.privileges:type_name -> invora.billing.common.v2.EntitlementPrivilegeInput
-	29,  // 354: invora.billing.common.v2.ErrorDetail.error_code:type_name -> invora.billing.common.v2.ErrorCodesEnum
-	187, // 355: invora.billing.common.v2.FeatureObject.created_at:type_name -> google.protobuf.Timestamp
-	148, // 356: invora.billing.common.v2.FeatureObject.metadata:type_name -> invora.billing.common.v2.ItemMetadata
-	166, // 357: invora.billing.common.v2.FeatureObject.privileges:type_name -> invora.billing.common.v2.PrivilegeObject
-	126, // 358: invora.billing.common.v2.FeeAmountDetails.graduated_percentage_ranges:type_name -> invora.billing.common.v2.FeeAmountDetailsGraduatedPercentageRange
-	127, // 359: invora.billing.common.v2.FeeAmountDetails.graduated_ranges:type_name -> invora.billing.common.v2.FeeAmountDetailsGraduatedRange
-	22,  // 360: invora.billing.common.v2.FeeAppliedTax.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	187, // 361: invora.billing.common.v2.FeeAppliedTax.created_at:type_name -> google.protobuf.Timestamp
-	73,  // 362: invora.billing.common.v2.FeeAppliedTax.fee:type_name -> invora.billing.common.v2.BillingFee
-	74,  // 363: invora.billing.common.v2.FeeAppliedTax.tax:type_name -> invora.billing.common.v2.BillingTax
-	187, // 364: invora.billing.common.v2.FeeAppliedTax.updated_at:type_name -> google.protobuf.Timestamp
-	187, // 365: invora.billing.common.v2.FeeProperties.from_datetime:type_name -> google.protobuf.Timestamp
-	187, // 366: invora.billing.common.v2.FeeProperties.to_datetime:type_name -> google.protobuf.Timestamp
-	22,  // 367: invora.billing.common.v2.FinalizedInvoiceCollection.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	187, // 368: invora.billing.common.v2.FinalizedInvoiceCollection.month:type_name -> google.protobuf.Timestamp
-	37,  // 369: invora.billing.common.v2.FinalizedInvoiceCollection.payment_status:type_name -> invora.billing.common.v2.InvoicePaymentStatusTypeEnum
-	76,  // 370: invora.billing.common.v2.FixedCharge.add_on:type_name -> invora.billing.common.v2.BillingAddOn
-	32,  // 371: invora.billing.common.v2.FixedCharge.charge_model:type_name -> invora.billing.common.v2.FixedChargeChargeModelEnum
-	187, // 372: invora.billing.common.v2.FixedCharge.created_at:type_name -> google.protobuf.Timestamp
-	187, // 373: invora.billing.common.v2.FixedCharge.deleted_at:type_name -> google.protobuf.Timestamp
-	132, // 374: invora.billing.common.v2.FixedCharge.properties:type_name -> invora.billing.common.v2.FixedChargeProperties
-	74,  // 375: invora.billing.common.v2.FixedCharge.taxes:type_name -> invora.billing.common.v2.BillingTax
-	187, // 376: invora.billing.common.v2.FixedCharge.updated_at:type_name -> google.protobuf.Timestamp
-	138, // 377: invora.billing.common.v2.FixedChargeProperties.graduated_ranges:type_name -> invora.billing.common.v2.GraduatedRange
-	182, // 378: invora.billing.common.v2.FixedChargeProperties.volume_ranges:type_name -> invora.billing.common.v2.VolumeRange
-	139, // 379: invora.billing.common.v2.FixedChargePropertiesInput.graduated_ranges:type_name -> invora.billing.common.v2.GraduatedRangeInput
-	183, // 380: invora.billing.common.v2.FixedChargePropertiesInput.volume_ranges:type_name -> invora.billing.common.v2.VolumeRangeInput
-	101, // 381: invora.billing.common.v2.GroupedChargeUsage.filters:type_name -> invora.billing.common.v2.ChargeFilterUsage
-	189, // 382: invora.billing.common.v2.GroupedChargeUsage.grouped_by:type_name -> google.protobuf.Struct
-	35,  // 383: invora.billing.common.v2.HubspotCustomer.integration_type:type_name -> invora.billing.common.v2.IntegrationTypeEnum
-	33,  // 384: invora.billing.common.v2.HubspotCustomer.targeted_object:type_name -> invora.billing.common.v2.HubspotTargetedObjectsEnum
-	34,  // 385: invora.billing.common.v2.IntegrationItem.item_type:type_name -> invora.billing.common.v2.IntegrationItemTypeEnum
-	22,  // 386: invora.billing.common.v2.InvoiceAppliedTax.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	187, // 387: invora.billing.common.v2.InvoiceAppliedTax.created_at:type_name -> google.protobuf.Timestamp
-	36,  // 388: invora.billing.common.v2.InvoiceAppliedTax.enumed_tax_code:type_name -> invora.billing.common.v2.InvoiceAppliedTaxOnWholeInvoiceCodeEnum
-	68,  // 389: invora.billing.common.v2.InvoiceAppliedTax.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	74,  // 390: invora.billing.common.v2.InvoiceAppliedTax.tax:type_name -> invora.billing.common.v2.BillingTax
-	187, // 391: invora.billing.common.v2.InvoiceAppliedTax.updated_at:type_name -> google.protobuf.Timestamp
-	153, // 392: invora.billing.common.v2.InvoiceCustomSection.organization:type_name -> invora.billing.common.v2.Organization
-	187, // 393: invora.billing.common.v2.InvoiceMetadata.created_at:type_name -> google.protobuf.Timestamp
-	187, // 394: invora.billing.common.v2.InvoiceMetadata.updated_at:type_name -> google.protobuf.Timestamp
-	187, // 395: invora.billing.common.v2.InvoiceSubscription.charges_from_datetime:type_name -> google.protobuf.Timestamp
-	187, // 396: invora.billing.common.v2.InvoiceSubscription.charges_to_datetime:type_name -> google.protobuf.Timestamp
-	73,  // 397: invora.billing.common.v2.InvoiceSubscription.fees:type_name -> invora.billing.common.v2.BillingFee
-	187, // 398: invora.billing.common.v2.InvoiceSubscription.from_datetime:type_name -> google.protobuf.Timestamp
-	187, // 399: invora.billing.common.v2.InvoiceSubscription.in_advance_charges_from_datetime:type_name -> google.protobuf.Timestamp
-	187, // 400: invora.billing.common.v2.InvoiceSubscription.in_advance_charges_to_datetime:type_name -> google.protobuf.Timestamp
-	68,  // 401: invora.billing.common.v2.InvoiceSubscription.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	67,  // 402: invora.billing.common.v2.InvoiceSubscription.subscription:type_name -> invora.billing.common.v2.BillingSubscription
-	187, // 403: invora.billing.common.v2.InvoiceSubscription.to_datetime:type_name -> google.protobuf.Timestamp
-	41,  // 404: invora.billing.common.v2.Mapping.mappable_type:type_name -> invora.billing.common.v2.MappableTypeEnum
-	35,  // 405: invora.billing.common.v2.NetsuiteCustomer.integration_type:type_name -> invora.billing.common.v2.IntegrationTypeEnum
-	154, // 406: invora.billing.common.v2.Organization.billing_configuration:type_name -> invora.billing.common.v2.OrganizationBillingConfiguration
-	22,  // 407: invora.billing.common.v2.Organization.default_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	59,  // 408: invora.billing.common.v2.Organization.timezone:type_name -> invora.billing.common.v2.TimezoneEnum
-	22,  // 409: invora.billing.common.v2.OverdueBalance.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	187, // 410: invora.billing.common.v2.OverdueBalance.month:type_name -> google.protobuf.Timestamp
-	68,  // 411: invora.billing.common.v2.Payable.billing_invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	78,  // 412: invora.billing.common.v2.Payable.billing_payment_request:type_name -> invora.billing.common.v2.BillingPaymentRequest
-	187, // 413: invora.billing.common.v2.PaymentMethod.created_at:type_name -> google.protobuf.Timestamp
-	66,  // 414: invora.billing.common.v2.PaymentMethod.customer:type_name -> invora.billing.common.v2.BillingCustomer
-	187, // 415: invora.billing.common.v2.PaymentMethod.deleted_at:type_name -> google.protobuf.Timestamp
-	158, // 416: invora.billing.common.v2.PaymentMethod.details:type_name -> invora.billing.common.v2.PaymentMethodDetails
-	52,  // 417: invora.billing.common.v2.PaymentMethod.payment_provider_type:type_name -> invora.billing.common.v2.ProviderTypeEnum
-	187, // 418: invora.billing.common.v2.PaymentMethod.updated_at:type_name -> google.protobuf.Timestamp
-	47,  // 419: invora.billing.common.v2.PaymentMethodReferenceInput.payment_method_type:type_name -> invora.billing.common.v2.PaymentMethodTypeEnum
-	88,  // 420: invora.billing.common.v2.PaymentProvider.adyen_provider:type_name -> invora.billing.common.v2.AdyenProvider
-	97,  // 421: invora.billing.common.v2.PaymentProvider.cashfree_provider:type_name -> invora.billing.common.v2.CashfreeProvider
-	134, // 422: invora.billing.common.v2.PaymentProvider.flutterwave_provider:type_name -> invora.billing.common.v2.FlutterwaveProvider
-	135, // 423: invora.billing.common.v2.PaymentProvider.gocardless_provider:type_name -> invora.billing.common.v2.GocardlessProvider
-	151, // 424: invora.billing.common.v2.PaymentProvider.moneyhash_provider:type_name -> invora.billing.common.v2.MoneyhashProvider
-	176, // 425: invora.billing.common.v2.PaymentProvider.stripe_provider:type_name -> invora.billing.common.v2.StripeProvider
-	178, // 426: invora.billing.common.v2.PaymentProvider.tap_provider:type_name -> invora.billing.common.v2.TapProvider
-	162, // 427: invora.billing.common.v2.PlanEntitlement.privileges:type_name -> invora.billing.common.v2.PlanEntitlementPrivilegeObject
-	165, // 428: invora.billing.common.v2.PlanEntitlementPrivilegeObject.config:type_name -> invora.billing.common.v2.PrivilegeConfigObject
-	50,  // 429: invora.billing.common.v2.PlanEntitlementPrivilegeObject.value_type:type_name -> invora.billing.common.v2.PrivilegeValueTypeEnum
-	187, // 430: invora.billing.common.v2.PricingUnit.created_at:type_name -> google.protobuf.Timestamp
-	187, // 431: invora.billing.common.v2.PricingUnit.updated_at:type_name -> google.protobuf.Timestamp
-	187, // 432: invora.billing.common.v2.PricingUnitUsage.created_at:type_name -> google.protobuf.Timestamp
-	163, // 433: invora.billing.common.v2.PricingUnitUsage.pricing_unit:type_name -> invora.billing.common.v2.PricingUnit
-	187, // 434: invora.billing.common.v2.PricingUnitUsage.updated_at:type_name -> google.protobuf.Timestamp
-	165, // 435: invora.billing.common.v2.PrivilegeObject.config:type_name -> invora.billing.common.v2.PrivilegeConfigObject
-	50,  // 436: invora.billing.common.v2.PrivilegeObject.value_type:type_name -> invora.billing.common.v2.PrivilegeValueTypeEnum
-	189, // 437: invora.billing.common.v2.ProjectedChargeFilterUsage.values:type_name -> google.protobuf.Struct
-	77,  // 438: invora.billing.common.v2.ProjectedChargeUsage.billable_metric:type_name -> invora.billing.common.v2.BillingBillableMetric
-	98,  // 439: invora.billing.common.v2.ProjectedChargeUsage.charge:type_name -> invora.billing.common.v2.Charge
-	167, // 440: invora.billing.common.v2.ProjectedChargeUsage.filters:type_name -> invora.billing.common.v2.ProjectedChargeFilterUsage
-	169, // 441: invora.billing.common.v2.ProjectedChargeUsage.grouped_usage:type_name -> invora.billing.common.v2.ProjectedGroupedChargeUsage
-	167, // 442: invora.billing.common.v2.ProjectedGroupedChargeUsage.filters:type_name -> invora.billing.common.v2.ProjectedChargeFilterUsage
-	189, // 443: invora.billing.common.v2.ProjectedGroupedChargeUsage.grouped_by:type_name -> google.protobuf.Struct
-	189, // 444: invora.billing.common.v2.Properties.custom_properties:type_name -> google.protobuf.Struct
-	136, // 445: invora.billing.common.v2.Properties.graduated_percentage_ranges:type_name -> invora.billing.common.v2.GraduatedPercentageRange
-	138, // 446: invora.billing.common.v2.Properties.graduated_ranges:type_name -> invora.billing.common.v2.GraduatedRange
-	182, // 447: invora.billing.common.v2.Properties.volume_ranges:type_name -> invora.billing.common.v2.VolumeRange
-	189, // 448: invora.billing.common.v2.PropertiesInput.custom_properties:type_name -> google.protobuf.Struct
-	137, // 449: invora.billing.common.v2.PropertiesInput.graduated_percentage_ranges:type_name -> invora.billing.common.v2.GraduatedPercentageRangeInput
-	139, // 450: invora.billing.common.v2.PropertiesInput.graduated_ranges:type_name -> invora.billing.common.v2.GraduatedRangeInput
-	183, // 451: invora.billing.common.v2.PropertiesInput.volume_ranges:type_name -> invora.billing.common.v2.VolumeRangeInput
-	51,  // 452: invora.billing.common.v2.ProviderCustomer.provider_payment_methods:type_name -> invora.billing.common.v2.ProviderPaymentMethodsEnum
-	187, // 453: invora.billing.common.v2.RecurringTransactionRule.created_at:type_name -> google.protobuf.Timestamp
-	187, // 454: invora.billing.common.v2.RecurringTransactionRule.expiration_at:type_name -> google.protobuf.Timestamp
-	53,  // 455: invora.billing.common.v2.RecurringTransactionRule.interval:type_name -> invora.billing.common.v2.RecurringTransactionIntervalEnum
-	54,  // 456: invora.billing.common.v2.RecurringTransactionRule.method:type_name -> invora.billing.common.v2.RecurringTransactionMethodEnum
-	157, // 457: invora.billing.common.v2.RecurringTransactionRule.payment_method:type_name -> invora.billing.common.v2.PaymentMethod
-	47,  // 458: invora.billing.common.v2.RecurringTransactionRule.payment_method_type:type_name -> invora.billing.common.v2.PaymentMethodTypeEnum
-	144, // 459: invora.billing.common.v2.RecurringTransactionRule.selected_invoice_custom_sections:type_name -> invora.billing.common.v2.InvoiceCustomSection
-	187, // 460: invora.billing.common.v2.RecurringTransactionRule.started_at:type_name -> google.protobuf.Timestamp
-	179, // 461: invora.billing.common.v2.RecurringTransactionRule.transaction_metadata:type_name -> invora.billing.common.v2.TransactionMetadata
-	55,  // 462: invora.billing.common.v2.RecurringTransactionRule.trigger:type_name -> invora.billing.common.v2.RecurringTransactionTriggerEnum
-	35,  // 463: invora.billing.common.v2.SalesforceCustomer.integration_type:type_name -> invora.billing.common.v2.IntegrationTypeEnum
-	187, // 464: invora.billing.common.v2.SanitizedApiKey.created_at:type_name -> google.protobuf.Timestamp
-	187, // 465: invora.billing.common.v2.SanitizedApiKey.expires_at:type_name -> google.protobuf.Timestamp
-	187, // 466: invora.billing.common.v2.SanitizedApiKey.last_used_at:type_name -> google.protobuf.Timestamp
-	189, // 467: invora.billing.common.v2.SanitizedApiKey.permissions:type_name -> google.protobuf.Struct
-	187, // 468: invora.billing.common.v2.SubscriptionLifetimeUsage.total_usage_from_datetime:type_name -> google.protobuf.Timestamp
-	187, // 469: invora.billing.common.v2.SubscriptionLifetimeUsage.total_usage_to_datetime:type_name -> google.protobuf.Timestamp
-	77,  // 470: invora.billing.common.v2.WalletAppliesTo.billable_metrics:type_name -> invora.billing.common.v2.BillingBillableMetric
-	30,  // 471: invora.billing.common.v2.WalletAppliesTo.fee_types:type_name -> invora.billing.common.v2.FeeTypesEnum
-	35,  // 472: invora.billing.common.v2.XeroCustomer.integration_type:type_name -> invora.billing.common.v2.IntegrationTypeEnum
-	473, // [473:473] is the sub-list for method output_type
-	473, // [473:473] is the sub-list for method input_type
-	473, // [473:473] is the sub-list for extension type_name
-	473, // [473:473] is the sub-list for extension extendee
-	0,   // [0:473] is the sub-list for field type_name
+	176, // 335: invora.billing.common.v2.CustomerPortalWallet.expiration_at:type_name -> google.protobuf.Timestamp
+	176, // 336: invora.billing.common.v2.CustomerPortalWallet.last_balance_sync_at:type_name -> google.protobuf.Timestamp
+	178, // 337: invora.billing.common.v2.CustomerPortalWallet.rate_amount:type_name -> kernel.DecimalValue
+	60,  // 338: invora.billing.common.v2.CustomerPortalWallet.status:type_name -> invora.billing.common.v2.WalletStatus
+	160, // 339: invora.billing.common.v2.CustomerProjectedUsage.charges_usage:type_name -> invora.billing.common.v2.ProjectedChargeUsage
+	22,  // 340: invora.billing.common.v2.CustomerProjectedUsage.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	176, // 341: invora.billing.common.v2.CustomerProjectedUsage.from_datetime:type_name -> google.protobuf.Timestamp
+	177, // 342: invora.billing.common.v2.CustomerProjectedUsage.issuing_date:type_name -> google.type.Date
+	176, // 343: invora.billing.common.v2.CustomerProjectedUsage.to_datetime:type_name -> google.protobuf.Timestamp
+	100, // 344: invora.billing.common.v2.CustomerUsage.charges_usage:type_name -> invora.billing.common.v2.ChargeUsage
+	22,  // 345: invora.billing.common.v2.CustomerUsage.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	176, // 346: invora.billing.common.v2.CustomerUsage.from_datetime:type_name -> google.protobuf.Timestamp
+	177, // 347: invora.billing.common.v2.CustomerUsage.issuing_date:type_name -> google.type.Date
+	176, // 348: invora.billing.common.v2.CustomerUsage.to_datetime:type_name -> google.protobuf.Timestamp
+	28,  // 349: invora.billing.common.v2.DataExport.status:type_name -> invora.billing.common.v2.DataExportStatus
+	117, // 350: invora.billing.common.v2.EntitlementInput.privileges:type_name -> invora.billing.common.v2.EntitlementPrivilegeInput
+	176, // 351: invora.billing.common.v2.FeatureObject.created_at:type_name -> google.protobuf.Timestamp
+	141, // 352: invora.billing.common.v2.FeatureObject.metadata:type_name -> invora.billing.common.v2.ItemMetadata
+	158, // 353: invora.billing.common.v2.FeatureObject.privileges:type_name -> invora.billing.common.v2.PrivilegeObject
+	178, // 354: invora.billing.common.v2.FeeAmountDetails.fixed_fee_total_amount:type_name -> kernel.DecimalValue
+	178, // 355: invora.billing.common.v2.FeeAmountDetails.fixed_fee_unit_amount:type_name -> kernel.DecimalValue
+	178, // 356: invora.billing.common.v2.FeeAmountDetails.flat_unit_amount:type_name -> kernel.DecimalValue
+	178, // 357: invora.billing.common.v2.FeeAmountDetails.free_units:type_name -> kernel.DecimalValue
+	120, // 358: invora.billing.common.v2.FeeAmountDetails.graduated_percentage_ranges:type_name -> invora.billing.common.v2.FeeAmountDetailsGraduatedPercentageRange
+	121, // 359: invora.billing.common.v2.FeeAmountDetails.graduated_ranges:type_name -> invora.billing.common.v2.FeeAmountDetailsGraduatedRange
+	178, // 360: invora.billing.common.v2.FeeAmountDetails.min_max_adjustment_total_amount:type_name -> kernel.DecimalValue
+	178, // 361: invora.billing.common.v2.FeeAmountDetails.paid_units:type_name -> kernel.DecimalValue
+	178, // 362: invora.billing.common.v2.FeeAmountDetails.per_package_unit_amount:type_name -> kernel.DecimalValue
+	178, // 363: invora.billing.common.v2.FeeAmountDetails.per_unit_amount:type_name -> kernel.DecimalValue
+	178, // 364: invora.billing.common.v2.FeeAmountDetails.per_unit_total_amount:type_name -> kernel.DecimalValue
+	178, // 365: invora.billing.common.v2.FeeAmountDetails.rate:type_name -> kernel.DecimalValue
+	178, // 366: invora.billing.common.v2.FeeAmountDetails.units:type_name -> kernel.DecimalValue
+	178, // 367: invora.billing.common.v2.FeeAmountDetailsGraduatedPercentageRange.flat_unit_amount:type_name -> kernel.DecimalValue
+	178, // 368: invora.billing.common.v2.FeeAmountDetailsGraduatedPercentageRange.per_unit_total_amount:type_name -> kernel.DecimalValue
+	178, // 369: invora.billing.common.v2.FeeAmountDetailsGraduatedPercentageRange.rate:type_name -> kernel.DecimalValue
+	178, // 370: invora.billing.common.v2.FeeAmountDetailsGraduatedPercentageRange.total_with_flat_amount:type_name -> kernel.DecimalValue
+	178, // 371: invora.billing.common.v2.FeeAmountDetailsGraduatedPercentageRange.units:type_name -> kernel.DecimalValue
+	178, // 372: invora.billing.common.v2.FeeAmountDetailsGraduatedRange.flat_unit_amount:type_name -> kernel.DecimalValue
+	178, // 373: invora.billing.common.v2.FeeAmountDetailsGraduatedRange.from_value:type_name -> kernel.DecimalValue
+	178, // 374: invora.billing.common.v2.FeeAmountDetailsGraduatedRange.per_unit_amount:type_name -> kernel.DecimalValue
+	178, // 375: invora.billing.common.v2.FeeAmountDetailsGraduatedRange.per_unit_total_amount:type_name -> kernel.DecimalValue
+	178, // 376: invora.billing.common.v2.FeeAmountDetailsGraduatedRange.to_value:type_name -> kernel.DecimalValue
+	178, // 377: invora.billing.common.v2.FeeAmountDetailsGraduatedRange.total_with_flat_amount:type_name -> kernel.DecimalValue
+	178, // 378: invora.billing.common.v2.FeeAmountDetailsGraduatedRange.units:type_name -> kernel.DecimalValue
+	22,  // 379: invora.billing.common.v2.FeeAppliedTax.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	176, // 380: invora.billing.common.v2.FeeAppliedTax.created_at:type_name -> google.protobuf.Timestamp
+	73,  // 381: invora.billing.common.v2.FeeAppliedTax.fee:type_name -> invora.billing.common.v2.BillingFee
+	74,  // 382: invora.billing.common.v2.FeeAppliedTax.tax:type_name -> invora.billing.common.v2.BillingTax
+	178, // 383: invora.billing.common.v2.FeeAppliedTax.tax_rate:type_name -> kernel.DecimalValue
+	176, // 384: invora.billing.common.v2.FeeAppliedTax.updated_at:type_name -> google.protobuf.Timestamp
+	176, // 385: invora.billing.common.v2.FeeProperties.from_datetime:type_name -> google.protobuf.Timestamp
+	176, // 386: invora.billing.common.v2.FeeProperties.to_datetime:type_name -> google.protobuf.Timestamp
+	22,  // 387: invora.billing.common.v2.FinalizedInvoiceCollection.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	176, // 388: invora.billing.common.v2.FinalizedInvoiceCollection.month:type_name -> google.protobuf.Timestamp
+	37,  // 389: invora.billing.common.v2.FinalizedInvoiceCollection.payment_status:type_name -> invora.billing.common.v2.InvoicePaymentStatusType
+	76,  // 390: invora.billing.common.v2.FixedCharge.add_on:type_name -> invora.billing.common.v2.BillingAddOn
+	32,  // 391: invora.billing.common.v2.FixedCharge.charge_model:type_name -> invora.billing.common.v2.FixedChargeChargeModel
+	176, // 392: invora.billing.common.v2.FixedCharge.created_at:type_name -> google.protobuf.Timestamp
+	176, // 393: invora.billing.common.v2.FixedCharge.deleted_at:type_name -> google.protobuf.Timestamp
+	126, // 394: invora.billing.common.v2.FixedCharge.properties:type_name -> invora.billing.common.v2.FixedChargeProperties
+	74,  // 395: invora.billing.common.v2.FixedCharge.taxes:type_name -> invora.billing.common.v2.BillingTax
+	178, // 396: invora.billing.common.v2.FixedCharge.units:type_name -> kernel.DecimalValue
+	176, // 397: invora.billing.common.v2.FixedCharge.updated_at:type_name -> google.protobuf.Timestamp
+	178, // 398: invora.billing.common.v2.FixedChargeProperties.amount:type_name -> kernel.DecimalValue
+	132, // 399: invora.billing.common.v2.FixedChargeProperties.graduated_ranges:type_name -> invora.billing.common.v2.GraduatedRange
+	172, // 400: invora.billing.common.v2.FixedChargeProperties.volume_ranges:type_name -> invora.billing.common.v2.VolumeRange
+	178, // 401: invora.billing.common.v2.FixedChargePropertiesInput.amount:type_name -> kernel.DecimalValue
+	133, // 402: invora.billing.common.v2.FixedChargePropertiesInput.graduated_ranges:type_name -> invora.billing.common.v2.GraduatedRangeInput
+	173, // 403: invora.billing.common.v2.FixedChargePropertiesInput.volume_ranges:type_name -> invora.billing.common.v2.VolumeRangeInput
+	178, // 404: invora.billing.common.v2.GraduatedPercentageRange.flat_amount:type_name -> kernel.DecimalValue
+	178, // 405: invora.billing.common.v2.GraduatedPercentageRange.from_value:type_name -> kernel.DecimalValue
+	178, // 406: invora.billing.common.v2.GraduatedPercentageRange.rate:type_name -> kernel.DecimalValue
+	178, // 407: invora.billing.common.v2.GraduatedPercentageRange.to_value:type_name -> kernel.DecimalValue
+	178, // 408: invora.billing.common.v2.GraduatedPercentageRangeInput.flat_amount:type_name -> kernel.DecimalValue
+	178, // 409: invora.billing.common.v2.GraduatedPercentageRangeInput.from_value:type_name -> kernel.DecimalValue
+	178, // 410: invora.billing.common.v2.GraduatedPercentageRangeInput.rate:type_name -> kernel.DecimalValue
+	178, // 411: invora.billing.common.v2.GraduatedPercentageRangeInput.to_value:type_name -> kernel.DecimalValue
+	178, // 412: invora.billing.common.v2.GraduatedRange.flat_amount:type_name -> kernel.DecimalValue
+	178, // 413: invora.billing.common.v2.GraduatedRange.from_value:type_name -> kernel.DecimalValue
+	178, // 414: invora.billing.common.v2.GraduatedRange.per_unit_amount:type_name -> kernel.DecimalValue
+	178, // 415: invora.billing.common.v2.GraduatedRange.to_value:type_name -> kernel.DecimalValue
+	178, // 416: invora.billing.common.v2.GraduatedRangeInput.flat_amount:type_name -> kernel.DecimalValue
+	178, // 417: invora.billing.common.v2.GraduatedRangeInput.from_value:type_name -> kernel.DecimalValue
+	178, // 418: invora.billing.common.v2.GraduatedRangeInput.per_unit_amount:type_name -> kernel.DecimalValue
+	178, // 419: invora.billing.common.v2.GraduatedRangeInput.to_value:type_name -> kernel.DecimalValue
+	99,  // 420: invora.billing.common.v2.GroupedChargeUsage.filters:type_name -> invora.billing.common.v2.ChargeFilterUsage
+	179, // 421: invora.billing.common.v2.GroupedChargeUsage.grouped_by:type_name -> google.protobuf.Struct
+	178, // 422: invora.billing.common.v2.GroupedChargeUsage.units:type_name -> kernel.DecimalValue
+	34,  // 423: invora.billing.common.v2.IntegrationItem.item_type:type_name -> invora.billing.common.v2.IntegrationItemTypeEnum
+	22,  // 424: invora.billing.common.v2.InvoiceAppliedTax.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	176, // 425: invora.billing.common.v2.InvoiceAppliedTax.created_at:type_name -> google.protobuf.Timestamp
+	36,  // 426: invora.billing.common.v2.InvoiceAppliedTax.enumed_tax_code:type_name -> invora.billing.common.v2.InvoiceAppliedTaxOnWholeInvoiceCode
+	68,  // 427: invora.billing.common.v2.InvoiceAppliedTax.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	74,  // 428: invora.billing.common.v2.InvoiceAppliedTax.tax:type_name -> invora.billing.common.v2.BillingTax
+	178, // 429: invora.billing.common.v2.InvoiceAppliedTax.tax_rate:type_name -> kernel.DecimalValue
+	176, // 430: invora.billing.common.v2.InvoiceAppliedTax.updated_at:type_name -> google.protobuf.Timestamp
+	145, // 431: invora.billing.common.v2.InvoiceCustomSection.organization:type_name -> invora.billing.common.v2.Organization
+	176, // 432: invora.billing.common.v2.InvoiceMetadata.created_at:type_name -> google.protobuf.Timestamp
+	176, // 433: invora.billing.common.v2.InvoiceMetadata.updated_at:type_name -> google.protobuf.Timestamp
+	176, // 434: invora.billing.common.v2.InvoiceSubscription.charges_from_datetime:type_name -> google.protobuf.Timestamp
+	176, // 435: invora.billing.common.v2.InvoiceSubscription.charges_to_datetime:type_name -> google.protobuf.Timestamp
+	73,  // 436: invora.billing.common.v2.InvoiceSubscription.fees:type_name -> invora.billing.common.v2.BillingFee
+	176, // 437: invora.billing.common.v2.InvoiceSubscription.from_datetime:type_name -> google.protobuf.Timestamp
+	176, // 438: invora.billing.common.v2.InvoiceSubscription.in_advance_charges_from_datetime:type_name -> google.protobuf.Timestamp
+	176, // 439: invora.billing.common.v2.InvoiceSubscription.in_advance_charges_to_datetime:type_name -> google.protobuf.Timestamp
+	68,  // 440: invora.billing.common.v2.InvoiceSubscription.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	67,  // 441: invora.billing.common.v2.InvoiceSubscription.subscription:type_name -> invora.billing.common.v2.BillingSubscription
+	176, // 442: invora.billing.common.v2.InvoiceSubscription.to_datetime:type_name -> google.protobuf.Timestamp
+	41,  // 443: invora.billing.common.v2.Mapping.mappable_type:type_name -> invora.billing.common.v2.MappableTypeEnum
+	146, // 444: invora.billing.common.v2.Organization.billing_configuration:type_name -> invora.billing.common.v2.OrganizationBillingConfiguration
+	22,  // 445: invora.billing.common.v2.Organization.default_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	59,  // 446: invora.billing.common.v2.Organization.timezone:type_name -> invora.billing.common.v2.Timezone
+	22,  // 447: invora.billing.common.v2.OverdueBalance.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	176, // 448: invora.billing.common.v2.OverdueBalance.month:type_name -> google.protobuf.Timestamp
+	68,  // 449: invora.billing.common.v2.Payable.billing_invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	78,  // 450: invora.billing.common.v2.Payable.billing_payment_request:type_name -> invora.billing.common.v2.BillingPaymentRequest
+	176, // 451: invora.billing.common.v2.PaymentMethod.created_at:type_name -> google.protobuf.Timestamp
+	66,  // 452: invora.billing.common.v2.PaymentMethod.customer:type_name -> invora.billing.common.v2.BillingCustomer
+	176, // 453: invora.billing.common.v2.PaymentMethod.deleted_at:type_name -> google.protobuf.Timestamp
+	150, // 454: invora.billing.common.v2.PaymentMethod.details:type_name -> invora.billing.common.v2.PaymentMethodDetails
+	52,  // 455: invora.billing.common.v2.PaymentMethod.payment_provider_type:type_name -> invora.billing.common.v2.ProviderType
+	176, // 456: invora.billing.common.v2.PaymentMethod.updated_at:type_name -> google.protobuf.Timestamp
+	47,  // 457: invora.billing.common.v2.PaymentMethodReferenceInput.payment_method_type:type_name -> invora.billing.common.v2.PaymentMethodType
+	88,  // 458: invora.billing.common.v2.PaymentProvider.adyen_provider:type_name -> invora.billing.common.v2.AdyenProvider
+	95,  // 459: invora.billing.common.v2.PaymentProvider.cashfree_provider:type_name -> invora.billing.common.v2.CashfreeProvider
+	128, // 460: invora.billing.common.v2.PaymentProvider.flutterwave_provider:type_name -> invora.billing.common.v2.FlutterwaveProvider
+	129, // 461: invora.billing.common.v2.PaymentProvider.gocardless_provider:type_name -> invora.billing.common.v2.GocardlessProvider
+	144, // 462: invora.billing.common.v2.PaymentProvider.moneyhash_provider:type_name -> invora.billing.common.v2.MoneyhashProvider
+	166, // 463: invora.billing.common.v2.PaymentProvider.stripe_provider:type_name -> invora.billing.common.v2.StripeProvider
+	168, // 464: invora.billing.common.v2.PaymentProvider.tap_provider:type_name -> invora.billing.common.v2.TapProvider
+	154, // 465: invora.billing.common.v2.PlanEntitlement.privileges:type_name -> invora.billing.common.v2.PlanEntitlementPrivilegeObject
+	157, // 466: invora.billing.common.v2.PlanEntitlementPrivilegeObject.config:type_name -> invora.billing.common.v2.PrivilegeConfigObject
+	50,  // 467: invora.billing.common.v2.PlanEntitlementPrivilegeObject.value_type:type_name -> invora.billing.common.v2.PrivilegeValueTypeEnum
+	176, // 468: invora.billing.common.v2.PricingUnit.created_at:type_name -> google.protobuf.Timestamp
+	176, // 469: invora.billing.common.v2.PricingUnit.updated_at:type_name -> google.protobuf.Timestamp
+	178, // 470: invora.billing.common.v2.PricingUnitUsage.conversion_rate:type_name -> kernel.DecimalValue
+	176, // 471: invora.billing.common.v2.PricingUnitUsage.created_at:type_name -> google.protobuf.Timestamp
+	178, // 472: invora.billing.common.v2.PricingUnitUsage.precise_amount_cents:type_name -> kernel.DecimalValue
+	178, // 473: invora.billing.common.v2.PricingUnitUsage.precise_unit_amount:type_name -> kernel.DecimalValue
+	155, // 474: invora.billing.common.v2.PricingUnitUsage.pricing_unit:type_name -> invora.billing.common.v2.PricingUnit
+	176, // 475: invora.billing.common.v2.PricingUnitUsage.updated_at:type_name -> google.protobuf.Timestamp
+	157, // 476: invora.billing.common.v2.PrivilegeObject.config:type_name -> invora.billing.common.v2.PrivilegeConfigObject
+	50,  // 477: invora.billing.common.v2.PrivilegeObject.value_type:type_name -> invora.billing.common.v2.PrivilegeValueTypeEnum
+	178, // 478: invora.billing.common.v2.ProjectedChargeFilterUsage.projected_units:type_name -> kernel.DecimalValue
+	178, // 479: invora.billing.common.v2.ProjectedChargeFilterUsage.units:type_name -> kernel.DecimalValue
+	179, // 480: invora.billing.common.v2.ProjectedChargeFilterUsage.values:type_name -> google.protobuf.Struct
+	77,  // 481: invora.billing.common.v2.ProjectedChargeUsage.billable_metric:type_name -> invora.billing.common.v2.BillingBillableMetric
+	96,  // 482: invora.billing.common.v2.ProjectedChargeUsage.charge:type_name -> invora.billing.common.v2.Charge
+	159, // 483: invora.billing.common.v2.ProjectedChargeUsage.filters:type_name -> invora.billing.common.v2.ProjectedChargeFilterUsage
+	161, // 484: invora.billing.common.v2.ProjectedChargeUsage.grouped_usage:type_name -> invora.billing.common.v2.ProjectedGroupedChargeUsage
+	178, // 485: invora.billing.common.v2.ProjectedChargeUsage.projected_units:type_name -> kernel.DecimalValue
+	178, // 486: invora.billing.common.v2.ProjectedChargeUsage.units:type_name -> kernel.DecimalValue
+	159, // 487: invora.billing.common.v2.ProjectedGroupedChargeUsage.filters:type_name -> invora.billing.common.v2.ProjectedChargeFilterUsage
+	179, // 488: invora.billing.common.v2.ProjectedGroupedChargeUsage.grouped_by:type_name -> google.protobuf.Struct
+	178, // 489: invora.billing.common.v2.ProjectedGroupedChargeUsage.projected_units:type_name -> kernel.DecimalValue
+	178, // 490: invora.billing.common.v2.ProjectedGroupedChargeUsage.units:type_name -> kernel.DecimalValue
+	178, // 491: invora.billing.common.v2.Properties.amount:type_name -> kernel.DecimalValue
+	179, // 492: invora.billing.common.v2.Properties.custom_properties:type_name -> google.protobuf.Struct
+	178, // 493: invora.billing.common.v2.Properties.free_units_per_total_aggregation:type_name -> kernel.DecimalValue
+	130, // 494: invora.billing.common.v2.Properties.graduated_percentage_ranges:type_name -> invora.billing.common.v2.GraduatedPercentageRange
+	132, // 495: invora.billing.common.v2.Properties.graduated_ranges:type_name -> invora.billing.common.v2.GraduatedRange
+	178, // 496: invora.billing.common.v2.Properties.rate:type_name -> kernel.DecimalValue
+	172, // 497: invora.billing.common.v2.Properties.volume_ranges:type_name -> invora.billing.common.v2.VolumeRange
+	178, // 498: invora.billing.common.v2.PropertiesInput.amount:type_name -> kernel.DecimalValue
+	179, // 499: invora.billing.common.v2.PropertiesInput.custom_properties:type_name -> google.protobuf.Struct
+	178, // 500: invora.billing.common.v2.PropertiesInput.free_units_per_total_aggregation:type_name -> kernel.DecimalValue
+	131, // 501: invora.billing.common.v2.PropertiesInput.graduated_percentage_ranges:type_name -> invora.billing.common.v2.GraduatedPercentageRangeInput
+	133, // 502: invora.billing.common.v2.PropertiesInput.graduated_ranges:type_name -> invora.billing.common.v2.GraduatedRangeInput
+	178, // 503: invora.billing.common.v2.PropertiesInput.rate:type_name -> kernel.DecimalValue
+	173, // 504: invora.billing.common.v2.PropertiesInput.volume_ranges:type_name -> invora.billing.common.v2.VolumeRangeInput
+	176, // 505: invora.billing.common.v2.RecurringTransactionRule.created_at:type_name -> google.protobuf.Timestamp
+	176, // 506: invora.billing.common.v2.RecurringTransactionRule.expiration_at:type_name -> google.protobuf.Timestamp
+	178, // 507: invora.billing.common.v2.RecurringTransactionRule.granted_credits:type_name -> kernel.DecimalValue
+	53,  // 508: invora.billing.common.v2.RecurringTransactionRule.interval:type_name -> invora.billing.common.v2.RecurringTransactionInterval
+	54,  // 509: invora.billing.common.v2.RecurringTransactionRule.method:type_name -> invora.billing.common.v2.RecurringTransactionMethod
+	178, // 510: invora.billing.common.v2.RecurringTransactionRule.paid_credits:type_name -> kernel.DecimalValue
+	149, // 511: invora.billing.common.v2.RecurringTransactionRule.payment_method:type_name -> invora.billing.common.v2.PaymentMethod
+	47,  // 512: invora.billing.common.v2.RecurringTransactionRule.payment_method_type:type_name -> invora.billing.common.v2.PaymentMethodType
+	137, // 513: invora.billing.common.v2.RecurringTransactionRule.selected_invoice_custom_sections:type_name -> invora.billing.common.v2.InvoiceCustomSection
+	176, // 514: invora.billing.common.v2.RecurringTransactionRule.started_at:type_name -> google.protobuf.Timestamp
+	169, // 515: invora.billing.common.v2.RecurringTransactionRule.transaction_metadata:type_name -> invora.billing.common.v2.TransactionMetadata
+	55,  // 516: invora.billing.common.v2.RecurringTransactionRule.trigger:type_name -> invora.billing.common.v2.RecurringTransactionTrigger
+	176, // 517: invora.billing.common.v2.SanitizedApiKey.created_at:type_name -> google.protobuf.Timestamp
+	176, // 518: invora.billing.common.v2.SanitizedApiKey.expires_at:type_name -> google.protobuf.Timestamp
+	176, // 519: invora.billing.common.v2.SanitizedApiKey.last_used_at:type_name -> google.protobuf.Timestamp
+	179, // 520: invora.billing.common.v2.SanitizedApiKey.permissions:type_name -> google.protobuf.Struct
+	178, // 521: invora.billing.common.v2.SubscriptionLifetimeUsage.next_threshold_ratio:type_name -> kernel.DecimalValue
+	176, // 522: invora.billing.common.v2.SubscriptionLifetimeUsage.total_usage_from_datetime:type_name -> google.protobuf.Timestamp
+	176, // 523: invora.billing.common.v2.SubscriptionLifetimeUsage.total_usage_to_datetime:type_name -> google.protobuf.Timestamp
+	178, // 524: invora.billing.common.v2.VolumeRange.flat_amount:type_name -> kernel.DecimalValue
+	178, // 525: invora.billing.common.v2.VolumeRange.per_unit_amount:type_name -> kernel.DecimalValue
+	178, // 526: invora.billing.common.v2.VolumeRangeInput.flat_amount:type_name -> kernel.DecimalValue
+	178, // 527: invora.billing.common.v2.VolumeRangeInput.per_unit_amount:type_name -> kernel.DecimalValue
+	77,  // 528: invora.billing.common.v2.WalletAppliesTo.billable_metrics:type_name -> invora.billing.common.v2.BillingBillableMetric
+	30,  // 529: invora.billing.common.v2.WalletAppliesTo.fee_types:type_name -> invora.billing.common.v2.FeeTypes
+	530, // [530:530] is the sub-list for method output_type
+	530, // [530:530] is the sub-list for method input_type
+	530, // [530:530] is the sub-list for extension type_name
+	530, // [530:530] is the sub-list for extension extendee
+	0,   // [0:530] is the sub-list for field type_name
 }
 
 func init() { file_invora_billing_common_v2_models_proto_init() }
@@ -23923,9 +22554,9 @@ func file_invora_billing_common_v2_models_proto_init() {
 		(*ActivityLogResourceObject_BillingWallet)(nil),
 	}
 	file_invora_billing_common_v2_models_proto_msgTypes[22].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[23].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[25].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[24].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[27].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[28].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[29].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[30].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[31].OneofWrappers = []any{}
@@ -23935,16 +22566,18 @@ func file_invora_billing_common_v2_models_proto_init() {
 	file_invora_billing_common_v2_models_proto_msgTypes[35].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[36].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[37].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[39].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[38].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[40].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[41].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[42].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[43].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[44].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[45].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[46].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[48].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[49].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[52].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[53].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[54].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[55].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[56].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[57].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[58].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[59].OneofWrappers = []any{}
@@ -23961,29 +22594,21 @@ func file_invora_billing_common_v2_models_proto_init() {
 	file_invora_billing_common_v2_models_proto_msgTypes[70].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[71].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[72].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[73].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[74].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[75].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[76].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[77].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[78].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[79].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[81].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[82].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[83].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[84].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[85].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[86].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[87].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[88].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[90].OneofWrappers = []any{
+	file_invora_billing_common_v2_models_proto_msgTypes[80].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[82].OneofWrappers = []any{
 		(*Payable_BillingInvoice)(nil),
 		(*Payable_BillingPaymentRequest)(nil),
 	}
-	file_invora_billing_common_v2_models_proto_msgTypes[91].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[92].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[93].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[94].OneofWrappers = []any{
+	file_invora_billing_common_v2_models_proto_msgTypes[83].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[84].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[85].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[86].OneofWrappers = []any{
 		(*PaymentProvider_AdyenProvider)(nil),
 		(*PaymentProvider_CashfreeProvider)(nil),
 		(*PaymentProvider_FlutterwaveProvider)(nil),
@@ -23992,34 +22617,31 @@ func file_invora_billing_common_v2_models_proto_init() {
 		(*PaymentProvider_StripeProvider)(nil),
 		(*PaymentProvider_TapProvider)(nil),
 	}
+	file_invora_billing_common_v2_models_proto_msgTypes[87].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[88].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[89].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[92].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[93].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[94].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[95].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[96].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[97].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[98].OneofWrappers = []any{}
+	file_invora_billing_common_v2_models_proto_msgTypes[99].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[100].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[101].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[102].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[103].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[104].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[105].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[106].OneofWrappers = []any{}
 	file_invora_billing_common_v2_models_proto_msgTypes[107].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[108].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[109].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[110].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[111].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[112].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[114].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[115].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[116].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[117].OneofWrappers = []any{}
-	file_invora_billing_common_v2_models_proto_msgTypes[120].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_billing_common_v2_models_proto_rawDesc), len(file_invora_billing_common_v2_models_proto_rawDesc)),
 			NumEnums:      66,
-			NumMessages:   121,
+			NumMessages:   110,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

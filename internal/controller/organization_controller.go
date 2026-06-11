@@ -11,6 +11,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
+	adminpb "github.com/invoraapp/invora-controller/gen/invora/admin/billing/v2"
 	customerspb "github.com/invoraapp/invora-controller/gen/invora/billing/customers/v2"
 	"github.com/invoraapp/invora-controller/internal/billingclient"
 )
@@ -118,11 +119,13 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 		return r.updateOrgStatusSuccess(ctx, &org, "InSync")
 	}
 
-	// No org ID -> create via billing admin API
+	// No org ID -> create via billing admin gRPC API
 	logger.Info("creating organization in billing", "name", org.Spec.Name)
 
-	// Search for existing org by name
-	orgs, err := instCtx.admin.ListOrganizations(ctx)
+	adminSvc := adminpb.NewBillingOrgAdminServiceClient(instCtx.Conn())
+
+	// Search for existing org by tenant_id (K8s resource name)
+	listResp, err := adminSvc.ListOrgs(instCtx.GrpcCtx(ctx), &adminpb.ListOrgsRequest{})
 	if err != nil {
 		SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
 			metav1.ConditionFalse, "SearchFailed", err.Error(), org.Generation)
@@ -130,10 +133,10 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 	}
 
-	for _, existing := range orgs {
-		if existing.Name == org.Spec.Name {
-			logger.Info("found existing org, adopting", "id", existing.ID)
-			org.Status.OrganizationID = existing.ID
+	for _, existing := range listResp.GetItems() {
+		if existing.GetTenantId() == org.Name {
+			logger.Info("found existing org, adopting", "id", existing.GetOrganizationId())
+			org.Status.OrganizationID = existing.GetOrganizationId()
 
 			if err := r.ensureApiKey(ctx, instCtx, &org); err != nil {
 				SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
@@ -147,11 +150,9 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 	}
 
 	// Create new org
-	created, err := instCtx.admin.CreateOrganization(ctx, billingclient.CreateOrganizationInput{
-		Name:              org.Spec.Name,
-		Email:             org.Spec.Email,
-		Timezone:          org.Spec.Timezone,
-		DocumentNumbering: org.Spec.DocumentNumbering,
+	provisionResp, err := adminSvc.ProvisionOrg(instCtx.GrpcCtx(ctx), &adminpb.ProvisionOrgRequest{
+		TenantId:    org.Name,
+		DisplayName: org.Spec.Name,
 	})
 	if err != nil {
 		SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
@@ -159,7 +160,7 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 		_ = r.Status().Update(ctx, &org)
 		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 	}
-	org.Status.OrganizationID = created.ID
+	org.Status.OrganizationID = provisionResp.GetOrg().GetOrganizationId()
 
 	// Generate and store API key
 	if err := r.ensureApiKey(ctx, instCtx, &org); err != nil {
@@ -172,15 +173,15 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 	return r.updateOrgStatusSuccess(ctx, &org, "Created")
 }
 
-// ensureApiKey ensures the org's API key is written to the Secret.
-// If the org has no apiKeyId yet, it fetches the key list and regenerates.
+// ensureApiKey checks whether the org's API key Secret already exists.
+// The BillingOrgAdminService proto does not expose API key RPCs (no
+// ListApiKeys, RotateApiKey, etc.), so this method cannot generate new keys.
+// If the Secret is missing or empty, it returns an error describing the gap.
 func (r *InvoraBillingOrganizationReconciler) ensureApiKey(
 	ctx context.Context,
 	instCtx *instanceAdminContext,
 	org *billingv1alpha1.InvoraBillingOrganization,
 ) error {
-	logger := log.FromContext(ctx)
-
 	// Check if Secret already has a valid key
 	secretRef := org.Spec.WriteSecretToRef
 	secretNS := secretRef.Namespace
@@ -191,45 +192,20 @@ func (r *InvoraBillingOrganizationReconciler) ensureApiKey(
 	// owns WriteSecretToRef and may target a different namespace (e.g. invora-dev).
 	// This is a trusted internal caller — no tenant-authored CR is involved here.
 	existingKey, err := billingclient.ResolveSecretValue(ctx, r.Client, secretRef.Name, secretNS, "apiKey", "")
-	if err == nil && existingKey != "" && org.Status.ApiKeyID != "" {
+	if err == nil && existingKey != "" {
 		// Secret exists and has a key, nothing to do
 		SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionCredentialsWritten,
 			metav1.ConditionTrue, "SecretExists", "API key Secret is up to date", org.Generation)
 		return nil
 	}
 
-	// Need to generate/regenerate API key
-	logger.Info("generating API key for organization", "orgID", org.Status.OrganizationID)
-
-	// Get the org's API key IDs
-	apiKeys, err := instCtx.admin.GetOrganizationApiKeys(ctx, org.Status.OrganizationID)
-	if err != nil {
-		return fmt.Errorf("getting org API keys: %w", err)
-	}
-	if len(apiKeys) == 0 {
-		return fmt.Errorf("organization %s has no API keys", org.Status.OrganizationID)
-	}
-
-	apiKeyID := apiKeys[0].ID
-	org.Status.ApiKeyID = apiKeyID
-
-	// Regenerate the key to get the plaintext value
-	keyValue, err := instCtx.admin.RegenerateOrganizationApiKey(ctx, org.Status.OrganizationID, apiKeyID)
-	if err != nil {
-		return fmt.Errorf("regenerating API key: %w", err)
-	}
-
-	// Write to Secret
-	if err := r.WriteSecret(ctx, org, org.Spec.WriteSecretToRef, org.Namespace, map[string][]byte{
-		"apiKey": []byte(keyValue),
-	}); err != nil {
-		return fmt.Errorf("writing API key Secret: %w", err)
-	}
-
-	SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionCredentialsWritten,
-		metav1.ConditionTrue, "SecretWritten", "API key written to Secret", org.Generation)
-
-	return nil
+	// CONTRACT GAP: BillingOrgAdminService proto does not include API key
+	// management RPCs. The old REST-based AdminClient had ListApiKeys and
+	// RotateApiKey, but these have no gRPC equivalent yet. Until the admin
+	// proto adds API key RPCs, keys must be provisioned out-of-band or the
+	// Secret must be pre-populated manually.
+	return fmt.Errorf("API key Secret %s/%s is missing or empty and cannot be auto-provisioned: "+
+		"BillingOrgAdminService proto has no API key RPCs (CONTRACT GAP)", secretNS, secretRef.Name)
 }
 
 func (r *InvoraBillingOrganizationReconciler) updateOrgStatusSuccess(
@@ -307,12 +283,10 @@ func (r *InvoraBillingOrganizationReconciler) reconcileParentDualWrite(
 	name := org.Spec.Name
 	logger.V(1).Info("upserting tenant customer in parent org",
 		"parent", parentRef.Name, "externalId", externalID)
-	svc := customerspb.NewCustomerServiceClient(parentOrc.Conn())
+	svc := customerspb.NewCustomersServiceClient(parentOrc.Conn())
 	created, err := svc.Create(parentOrc.GrpcCtx(ctx), &customerspb.CreateRequest{
-		Input: &customerspb.CreateCustomerInput{
-			ExternalId: externalID,
-			Name:       &name,
-		},
+		ExternalId: externalID,
+		Name:       &name,
 	})
 	if err != nil {
 		return fmt.Errorf("upserting customer in parent org: %w", err)
@@ -348,9 +322,9 @@ func (r *InvoraBillingOrganizationReconciler) deleteParentCustomer(
 	if result != nil {
 		return fmt.Errorf("resolving parent org %s/%s: not ready", ns, parentRef.Name)
 	}
-	svc := customerspb.NewCustomerServiceClient(parentOrc.Conn())
+	svc := customerspb.NewCustomersServiceClient(parentOrc.Conn())
 	_, err := svc.Delete(parentOrc.GrpcCtx(ctx), &customerspb.DeleteRequest{
-		Input: &customerspb.DestroyCustomerInput{Id: externalID},
+		Id: externalID,
 	})
 	if err != nil {
 		if isGrpcNotFound(err) {
@@ -399,7 +373,11 @@ func (r *InvoraBillingOrganizationReconciler) handleDeletion(
 				return ctrl.Result{RequeueAfter: 15 * time.Second}, nil
 			}
 
-			if err := instCtx.admin.DestroyOrganization(ctx, org.Status.OrganizationID); err != nil {
+			delSvc := adminpb.NewBillingOrgAdminServiceClient(instCtx.Conn())
+			_, err = delSvc.DeprovisionOrg(instCtx.GrpcCtx(ctx), &adminpb.DeprovisionOrgRequest{
+				TenantId: org.Name,
+			})
+			if err != nil && !isGrpcNotFound(err) {
 				SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionDeletionBlocked,
 					metav1.ConditionTrue, "DeleteFailed", err.Error(), org.Generation)
 				_ = r.Status().Update(ctx, org)

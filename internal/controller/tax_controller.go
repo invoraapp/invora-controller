@@ -34,9 +34,9 @@ func (r *InvoraBillingTaxReconciler) Reconcile(ctx context.Context, req ctrl.Req
 			tax.Spec.OrganizationRef, tax.Spec.DeletionPolicy,
 			tax.Status.ExternalID, &tax.Status.Conditions, tax.Generation,
 			func(ctx context.Context, orc *orgResourceContext) error {
-				svc := taxespb.NewTaxServiceClient(orc.Conn())
+				svc := taxespb.NewTaxesServiceClient(orc.Conn())
 				_, err := svc.Delete(orc.GrpcCtx(ctx), &taxespb.DeleteRequest{
-					Input: &taxespb.DestroyTaxInput{Id: tax.Status.ExternalID},
+					Id: tax.Status.ExternalID,
 				})
 				return err
 			})
@@ -66,7 +66,7 @@ func (r *InvoraBillingTaxReconciler) Reconcile(ctx context.Context, req ctrl.Req
 		return SuccessResult(&tax), nil
 	}
 
-	svc := taxespb.NewTaxServiceClient(orc.Conn())
+	svc := taxespb.NewTaxesServiceClient(orc.Conn())
 	grpcCtx := orc.GrpcCtx(ctx)
 
 	if tax.Status.ExternalID != "" {
@@ -81,9 +81,7 @@ func (r *InvoraBillingTaxReconciler) Reconcile(ctx context.Context, req ctrl.Req
 			}
 		}
 		if tax.Status.ExternalID != "" {
-			_, err := svc.Update(grpcCtx, &taxespb.UpdateRequest{
-				Input: buildTaxUpdateInput(&tax),
-			})
+			_, err := svc.Update(grpcCtx, buildTaxUpdateRequest(&tax))
 			if err != nil {
 				SetCondition(&tax.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "UpdateFailed", err.Error(), tax.Generation)
 				_ = r.Status().Update(ctx, &tax)
@@ -96,9 +94,7 @@ func (r *InvoraBillingTaxReconciler) Reconcile(ctx context.Context, req ctrl.Req
 	}
 
 	logger.Info("creating tax", "code", tax.Spec.Code)
-	created, err := svc.Create(grpcCtx, &taxespb.CreateRequest{
-		Input: buildTaxCreateInput(&tax),
-	})
+	created, err := svc.Create(grpcCtx, buildTaxCreateRequest(&tax))
 	if err != nil {
 		SetCondition(&tax.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "CreateFailed", err.Error(), tax.Generation)
 		_ = r.Status().Update(ctx, &tax)
@@ -113,8 +109,8 @@ func (r *InvoraBillingTaxReconciler) Reconcile(ctx context.Context, req ctrl.Req
 	return SuccessResult(&tax), nil
 }
 
-func buildTaxCreateInput(tax *billingv1alpha1.InvoraBillingTax) *taxespb.TaxCreateInput {
-	in := &taxespb.TaxCreateInput{
+func buildTaxCreateRequest(tax *billingv1alpha1.InvoraBillingTax) *taxespb.CreateRequest {
+	in := &taxespb.CreateRequest{
 		Code: tax.Spec.Code,
 		Name: tax.Spec.Name,
 		Rate: convert.TaxRate(tax.Spec.Rate),
@@ -125,13 +121,12 @@ func buildTaxCreateInput(tax *billingv1alpha1.InvoraBillingTax) *taxespb.TaxCrea
 	return in
 }
 
-func buildTaxUpdateInput(tax *billingv1alpha1.InvoraBillingTax) *taxespb.TaxUpdateInput {
-	rate := convert.TaxRate(tax.Spec.Rate)
-	in := &taxespb.TaxUpdateInput{
+func buildTaxUpdateRequest(tax *billingv1alpha1.InvoraBillingTax) *taxespb.UpdateRequest {
+	in := &taxespb.UpdateRequest{
 		Id:   tax.Status.ExternalID,
 		Code: &tax.Spec.Code,
 		Name: &tax.Spec.Name,
-		Rate: &rate,
+		Rate: convert.TaxRate(tax.Spec.Rate),
 	}
 	if tax.Spec.Description != "" {
 		in.Description = &tax.Spec.Description

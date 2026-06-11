@@ -19,583 +19,591 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	CreditNoteService_Create_FullMethodName                    = "/invora.billing.credit_notes.v2.CreditNoteService/Create"
-	CreditNoteService_Get_FullMethodName                       = "/invora.billing.credit_notes.v2.CreditNoteService/Get"
-	CreditNoteService_List_FullMethodName                      = "/invora.billing.credit_notes.v2.CreditNoteService/List"
-	CreditNoteService_Update_FullMethodName                    = "/invora.billing.credit_notes.v2.CreditNoteService/Update"
-	CreditNoteService_CreatesDataExport_FullMethodName         = "/invora.billing.credit_notes.v2.CreditNoteService/CreatesDataExport"
-	CreditNoteService_DownloadCreditNote_FullMethodName        = "/invora.billing.credit_notes.v2.CreditNoteService/DownloadCreditNote"
-	CreditNoteService_DownloadXmlCreditNote_FullMethodName     = "/invora.billing.credit_notes.v2.CreditNoteService/DownloadXmlCreditNote"
-	CreditNoteService_GetEstimate_FullMethodName               = "/invora.billing.credit_notes.v2.CreditNoteService/GetEstimate"
-	CreditNoteService_InvoiceCreditNotes_FullMethodName        = "/invora.billing.credit_notes.v2.CreditNoteService/InvoiceCreditNotes"
-	CreditNoteService_ResendCreditNoteEmail_FullMethodName     = "/invora.billing.credit_notes.v2.CreditNoteService/ResendCreditNoteEmail"
-	CreditNoteService_RetryTaxReporting_FullMethodName         = "/invora.billing.credit_notes.v2.CreditNoteService/RetryTaxReporting"
-	CreditNoteService_SyncIntegrationCreditNote_FullMethodName = "/invora.billing.credit_notes.v2.CreditNoteService/SyncIntegrationCreditNote"
-	CreditNoteService_VoidCreditNote_FullMethodName            = "/invora.billing.credit_notes.v2.CreditNoteService/VoidCreditNote"
+	CreditNotesService_List_FullMethodName                   = "/invora.billing.credit_notes.v2.CreditNotesService/List"
+	CreditNotesService_Get_FullMethodName                    = "/invora.billing.credit_notes.v2.CreditNotesService/Get"
+	CreditNotesService_Create_FullMethodName                 = "/invora.billing.credit_notes.v2.CreditNotesService/Create"
+	CreditNotesService_Update_FullMethodName                 = "/invora.billing.credit_notes.v2.CreditNotesService/Update"
+	CreditNotesService_GetEstimate_FullMethodName            = "/invora.billing.credit_notes.v2.CreditNotesService/GetEstimate"
+	CreditNotesService_ListInvoiceCreditNotes_FullMethodName = "/invora.billing.credit_notes.v2.CreditNotesService/ListInvoiceCreditNotes"
+	CreditNotesService_Download_FullMethodName               = "/invora.billing.credit_notes.v2.CreditNotesService/Download"
+	CreditNotesService_DownloadXml_FullMethodName            = "/invora.billing.credit_notes.v2.CreditNotesService/DownloadXml"
+	CreditNotesService_VoidCreditNote_FullMethodName         = "/invora.billing.credit_notes.v2.CreditNotesService/VoidCreditNote"
+	CreditNotesService_ResendEmail_FullMethodName            = "/invora.billing.credit_notes.v2.CreditNotesService/ResendEmail"
+	CreditNotesService_RetryTaxReporting_FullMethodName      = "/invora.billing.credit_notes.v2.CreditNotesService/RetryTaxReporting"
+	CreditNotesService_SyncIntegration_FullMethodName        = "/invora.billing.credit_notes.v2.CreditNotesService/SyncIntegration"
+	CreditNotesService_CreateDataExport_FullMethodName       = "/invora.billing.credit_notes.v2.CreditNotesService/CreateDataExport"
 )
 
-// CreditNoteServiceClient is the client API for CreditNoteService service.
+// CreditNotesServiceClient is the client API for CreditNotesService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type CreditNoteServiceClient interface {
-	// Creates a new Credit Note
-	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
-	// Query a single credit note
-	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
-	// Query credit notes
+//
+// Manage credit notes issued against invoices.
+// Supports creation, voiding, PDF/XML download, email resend,
+// tax-reporting retry, integration sync, and data export.
+type CreditNotesServiceClient interface {
+	// List credit notes with filtering and sorting.
 	List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error)
-	// Updates an existing Credit Note
+	// Retrieve a single credit note by ID.
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
+	// Create a new credit note against an invoice.
+	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
+	// Update an existing credit note's metadata or refund status.
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
-	// Request data export of credit notes
-	CreatesDataExport(ctx context.Context, in *CreatesDataExportRequest, opts ...grpc.CallOption) (*CreatesDataExportResponse, error)
-	// Download a Credit Note PDF
-	DownloadCreditNote(ctx context.Context, in *DownloadCreditNoteRequest, opts ...grpc.CallOption) (*DownloadCreditNoteResponse, error)
-	// Download a Credit Note XML
-	DownloadXmlCreditNote(ctx context.Context, in *DownloadXmlCreditNoteRequest, opts ...grpc.CallOption) (*DownloadXmlCreditNoteResponse, error)
-	// Fetch amounts for credit note creation
+	// Fetch estimated amounts for credit note creation against an invoice.
 	GetEstimate(ctx context.Context, in *GetEstimateRequest, opts ...grpc.CallOption) (*GetEstimateResponse, error)
-	// Query invoice's credit note
-	InvoiceCreditNotes(ctx context.Context, in *InvoiceCreditNotesRequest, opts ...grpc.CallOption) (*InvoiceCreditNotesResponse, error)
-	// Resend credit note email with optional custom recipients
-	ResendCreditNoteEmail(ctx context.Context, in *ResendCreditNoteEmailRequest, opts ...grpc.CallOption) (*ResendCreditNoteEmailResponse, error)
-	// Retry tax reporting
-	RetryTaxReporting(ctx context.Context, in *RetryTaxReportingRequest, opts ...grpc.CallOption) (*RetryTaxReportingResponse, error)
-	// Sync integration credit note
-	SyncIntegrationCreditNote(ctx context.Context, in *SyncIntegrationCreditNoteRequest, opts ...grpc.CallOption) (*SyncIntegrationCreditNoteResponse, error)
-	// Voids a Credit Note
+	// List credit notes associated with a specific invoice.
+	ListInvoiceCreditNotes(ctx context.Context, in *ListInvoiceCreditNotesRequest, opts ...grpc.CallOption) (*ListInvoiceCreditNotesResponse, error)
+	// Download a credit note as PDF.
+	Download(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (*DownloadResponse, error)
+	// Download a credit note as XML.
+	DownloadXml(ctx context.Context, in *DownloadXmlRequest, opts ...grpc.CallOption) (*DownloadXmlResponse, error)
+	// Void a credit note (irreversible).
 	VoidCreditNote(ctx context.Context, in *VoidCreditNoteRequest, opts ...grpc.CallOption) (*VoidCreditNoteResponse, error)
+	// Resend credit note email with optional custom recipients.
+	ResendEmail(ctx context.Context, in *ResendEmailRequest, opts ...grpc.CallOption) (*ResendEmailResponse, error)
+	// Retry failed tax reporting for a credit note.
+	RetryTaxReporting(ctx context.Context, in *RetryTaxReportingRequest, opts ...grpc.CallOption) (*RetryTaxReportingResponse, error)
+	// Sync a credit note with an external integration.
+	SyncIntegration(ctx context.Context, in *SyncIntegrationRequest, opts ...grpc.CallOption) (*SyncIntegrationResponse, error)
+	// Request a data export of credit notes.
+	CreateDataExport(ctx context.Context, in *CreateDataExportRequest, opts ...grpc.CallOption) (*CreateDataExportResponse, error)
 }
 
-type creditNoteServiceClient struct {
+type creditNotesServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewCreditNoteServiceClient(cc grpc.ClientConnInterface) CreditNoteServiceClient {
-	return &creditNoteServiceClient{cc}
+func NewCreditNotesServiceClient(cc grpc.ClientConnInterface) CreditNotesServiceClient {
+	return &creditNotesServiceClient{cc}
 }
 
-func (c *creditNoteServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateResponse)
-	err := c.cc.Invoke(ctx, CreditNoteService_Create_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *creditNoteServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetResponse)
-	err := c.cc.Invoke(ctx, CreditNoteService_Get_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *creditNoteServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
+func (c *creditNotesServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListResponse)
-	err := c.cc.Invoke(ctx, CreditNoteService_List_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, CreditNotesService_List_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *creditNoteServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
+func (c *creditNotesServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetResponse)
+	err := c.cc.Invoke(ctx, CreditNotesService_Get_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *creditNotesServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateResponse)
+	err := c.cc.Invoke(ctx, CreditNotesService_Create_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *creditNotesServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UpdateResponse)
-	err := c.cc.Invoke(ctx, CreditNoteService_Update_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, CreditNotesService_Update_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *creditNoteServiceClient) CreatesDataExport(ctx context.Context, in *CreatesDataExportRequest, opts ...grpc.CallOption) (*CreatesDataExportResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreatesDataExportResponse)
-	err := c.cc.Invoke(ctx, CreditNoteService_CreatesDataExport_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *creditNoteServiceClient) DownloadCreditNote(ctx context.Context, in *DownloadCreditNoteRequest, opts ...grpc.CallOption) (*DownloadCreditNoteResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DownloadCreditNoteResponse)
-	err := c.cc.Invoke(ctx, CreditNoteService_DownloadCreditNote_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *creditNoteServiceClient) DownloadXmlCreditNote(ctx context.Context, in *DownloadXmlCreditNoteRequest, opts ...grpc.CallOption) (*DownloadXmlCreditNoteResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DownloadXmlCreditNoteResponse)
-	err := c.cc.Invoke(ctx, CreditNoteService_DownloadXmlCreditNote_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *creditNoteServiceClient) GetEstimate(ctx context.Context, in *GetEstimateRequest, opts ...grpc.CallOption) (*GetEstimateResponse, error) {
+func (c *creditNotesServiceClient) GetEstimate(ctx context.Context, in *GetEstimateRequest, opts ...grpc.CallOption) (*GetEstimateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetEstimateResponse)
-	err := c.cc.Invoke(ctx, CreditNoteService_GetEstimate_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, CreditNotesService_GetEstimate_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *creditNoteServiceClient) InvoiceCreditNotes(ctx context.Context, in *InvoiceCreditNotesRequest, opts ...grpc.CallOption) (*InvoiceCreditNotesResponse, error) {
+func (c *creditNotesServiceClient) ListInvoiceCreditNotes(ctx context.Context, in *ListInvoiceCreditNotesRequest, opts ...grpc.CallOption) (*ListInvoiceCreditNotesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(InvoiceCreditNotesResponse)
-	err := c.cc.Invoke(ctx, CreditNoteService_InvoiceCreditNotes_FullMethodName, in, out, cOpts...)
+	out := new(ListInvoiceCreditNotesResponse)
+	err := c.cc.Invoke(ctx, CreditNotesService_ListInvoiceCreditNotes_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *creditNoteServiceClient) ResendCreditNoteEmail(ctx context.Context, in *ResendCreditNoteEmailRequest, opts ...grpc.CallOption) (*ResendCreditNoteEmailResponse, error) {
+func (c *creditNotesServiceClient) Download(ctx context.Context, in *DownloadRequest, opts ...grpc.CallOption) (*DownloadResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ResendCreditNoteEmailResponse)
-	err := c.cc.Invoke(ctx, CreditNoteService_ResendCreditNoteEmail_FullMethodName, in, out, cOpts...)
+	out := new(DownloadResponse)
+	err := c.cc.Invoke(ctx, CreditNotesService_Download_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *creditNoteServiceClient) RetryTaxReporting(ctx context.Context, in *RetryTaxReportingRequest, opts ...grpc.CallOption) (*RetryTaxReportingResponse, error) {
+func (c *creditNotesServiceClient) DownloadXml(ctx context.Context, in *DownloadXmlRequest, opts ...grpc.CallOption) (*DownloadXmlResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RetryTaxReportingResponse)
-	err := c.cc.Invoke(ctx, CreditNoteService_RetryTaxReporting_FullMethodName, in, out, cOpts...)
+	out := new(DownloadXmlResponse)
+	err := c.cc.Invoke(ctx, CreditNotesService_DownloadXml_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *creditNoteServiceClient) SyncIntegrationCreditNote(ctx context.Context, in *SyncIntegrationCreditNoteRequest, opts ...grpc.CallOption) (*SyncIntegrationCreditNoteResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SyncIntegrationCreditNoteResponse)
-	err := c.cc.Invoke(ctx, CreditNoteService_SyncIntegrationCreditNote_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *creditNoteServiceClient) VoidCreditNote(ctx context.Context, in *VoidCreditNoteRequest, opts ...grpc.CallOption) (*VoidCreditNoteResponse, error) {
+func (c *creditNotesServiceClient) VoidCreditNote(ctx context.Context, in *VoidCreditNoteRequest, opts ...grpc.CallOption) (*VoidCreditNoteResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(VoidCreditNoteResponse)
-	err := c.cc.Invoke(ctx, CreditNoteService_VoidCreditNote_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, CreditNotesService_VoidCreditNote_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// CreditNoteServiceServer is the server API for CreditNoteService service.
-// All implementations must embed UnimplementedCreditNoteServiceServer
-// for forward compatibility.
-type CreditNoteServiceServer interface {
-	// Creates a new Credit Note
-	Create(context.Context, *CreateRequest) (*CreateResponse, error)
-	// Query a single credit note
-	Get(context.Context, *GetRequest) (*GetResponse, error)
-	// Query credit notes
-	List(context.Context, *ListRequest) (*ListResponse, error)
-	// Updates an existing Credit Note
-	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
-	// Request data export of credit notes
-	CreatesDataExport(context.Context, *CreatesDataExportRequest) (*CreatesDataExportResponse, error)
-	// Download a Credit Note PDF
-	DownloadCreditNote(context.Context, *DownloadCreditNoteRequest) (*DownloadCreditNoteResponse, error)
-	// Download a Credit Note XML
-	DownloadXmlCreditNote(context.Context, *DownloadXmlCreditNoteRequest) (*DownloadXmlCreditNoteResponse, error)
-	// Fetch amounts for credit note creation
-	GetEstimate(context.Context, *GetEstimateRequest) (*GetEstimateResponse, error)
-	// Query invoice's credit note
-	InvoiceCreditNotes(context.Context, *InvoiceCreditNotesRequest) (*InvoiceCreditNotesResponse, error)
-	// Resend credit note email with optional custom recipients
-	ResendCreditNoteEmail(context.Context, *ResendCreditNoteEmailRequest) (*ResendCreditNoteEmailResponse, error)
-	// Retry tax reporting
-	RetryTaxReporting(context.Context, *RetryTaxReportingRequest) (*RetryTaxReportingResponse, error)
-	// Sync integration credit note
-	SyncIntegrationCreditNote(context.Context, *SyncIntegrationCreditNoteRequest) (*SyncIntegrationCreditNoteResponse, error)
-	// Voids a Credit Note
-	VoidCreditNote(context.Context, *VoidCreditNoteRequest) (*VoidCreditNoteResponse, error)
-	mustEmbedUnimplementedCreditNoteServiceServer()
+func (c *creditNotesServiceClient) ResendEmail(ctx context.Context, in *ResendEmailRequest, opts ...grpc.CallOption) (*ResendEmailResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ResendEmailResponse)
+	err := c.cc.Invoke(ctx, CreditNotesService_ResendEmail_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// UnimplementedCreditNoteServiceServer must be embedded to have
+func (c *creditNotesServiceClient) RetryTaxReporting(ctx context.Context, in *RetryTaxReportingRequest, opts ...grpc.CallOption) (*RetryTaxReportingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RetryTaxReportingResponse)
+	err := c.cc.Invoke(ctx, CreditNotesService_RetryTaxReporting_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *creditNotesServiceClient) SyncIntegration(ctx context.Context, in *SyncIntegrationRequest, opts ...grpc.CallOption) (*SyncIntegrationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SyncIntegrationResponse)
+	err := c.cc.Invoke(ctx, CreditNotesService_SyncIntegration_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *creditNotesServiceClient) CreateDataExport(ctx context.Context, in *CreateDataExportRequest, opts ...grpc.CallOption) (*CreateDataExportResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateDataExportResponse)
+	err := c.cc.Invoke(ctx, CreditNotesService_CreateDataExport_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// CreditNotesServiceServer is the server API for CreditNotesService service.
+// All implementations must embed UnimplementedCreditNotesServiceServer
+// for forward compatibility.
+//
+// Manage credit notes issued against invoices.
+// Supports creation, voiding, PDF/XML download, email resend,
+// tax-reporting retry, integration sync, and data export.
+type CreditNotesServiceServer interface {
+	// List credit notes with filtering and sorting.
+	List(context.Context, *ListRequest) (*ListResponse, error)
+	// Retrieve a single credit note by ID.
+	Get(context.Context, *GetRequest) (*GetResponse, error)
+	// Create a new credit note against an invoice.
+	Create(context.Context, *CreateRequest) (*CreateResponse, error)
+	// Update an existing credit note's metadata or refund status.
+	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
+	// Fetch estimated amounts for credit note creation against an invoice.
+	GetEstimate(context.Context, *GetEstimateRequest) (*GetEstimateResponse, error)
+	// List credit notes associated with a specific invoice.
+	ListInvoiceCreditNotes(context.Context, *ListInvoiceCreditNotesRequest) (*ListInvoiceCreditNotesResponse, error)
+	// Download a credit note as PDF.
+	Download(context.Context, *DownloadRequest) (*DownloadResponse, error)
+	// Download a credit note as XML.
+	DownloadXml(context.Context, *DownloadXmlRequest) (*DownloadXmlResponse, error)
+	// Void a credit note (irreversible).
+	VoidCreditNote(context.Context, *VoidCreditNoteRequest) (*VoidCreditNoteResponse, error)
+	// Resend credit note email with optional custom recipients.
+	ResendEmail(context.Context, *ResendEmailRequest) (*ResendEmailResponse, error)
+	// Retry failed tax reporting for a credit note.
+	RetryTaxReporting(context.Context, *RetryTaxReportingRequest) (*RetryTaxReportingResponse, error)
+	// Sync a credit note with an external integration.
+	SyncIntegration(context.Context, *SyncIntegrationRequest) (*SyncIntegrationResponse, error)
+	// Request a data export of credit notes.
+	CreateDataExport(context.Context, *CreateDataExportRequest) (*CreateDataExportResponse, error)
+	mustEmbedUnimplementedCreditNotesServiceServer()
+}
+
+// UnimplementedCreditNotesServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedCreditNoteServiceServer struct{}
+type UnimplementedCreditNotesServiceServer struct{}
 
-func (UnimplementedCreditNoteServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
-}
-func (UnimplementedCreditNoteServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
-}
-func (UnimplementedCreditNoteServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
+func (UnimplementedCreditNotesServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method List not implemented")
 }
-func (UnimplementedCreditNoteServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
+func (UnimplementedCreditNotesServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
+}
+func (UnimplementedCreditNotesServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedCreditNotesServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedCreditNoteServiceServer) CreatesDataExport(context.Context, *CreatesDataExportRequest) (*CreatesDataExportResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method CreatesDataExport not implemented")
-}
-func (UnimplementedCreditNoteServiceServer) DownloadCreditNote(context.Context, *DownloadCreditNoteRequest) (*DownloadCreditNoteResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method DownloadCreditNote not implemented")
-}
-func (UnimplementedCreditNoteServiceServer) DownloadXmlCreditNote(context.Context, *DownloadXmlCreditNoteRequest) (*DownloadXmlCreditNoteResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method DownloadXmlCreditNote not implemented")
-}
-func (UnimplementedCreditNoteServiceServer) GetEstimate(context.Context, *GetEstimateRequest) (*GetEstimateResponse, error) {
+func (UnimplementedCreditNotesServiceServer) GetEstimate(context.Context, *GetEstimateRequest) (*GetEstimateResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetEstimate not implemented")
 }
-func (UnimplementedCreditNoteServiceServer) InvoiceCreditNotes(context.Context, *InvoiceCreditNotesRequest) (*InvoiceCreditNotesResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method InvoiceCreditNotes not implemented")
+func (UnimplementedCreditNotesServiceServer) ListInvoiceCreditNotes(context.Context, *ListInvoiceCreditNotesRequest) (*ListInvoiceCreditNotesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListInvoiceCreditNotes not implemented")
 }
-func (UnimplementedCreditNoteServiceServer) ResendCreditNoteEmail(context.Context, *ResendCreditNoteEmailRequest) (*ResendCreditNoteEmailResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method ResendCreditNoteEmail not implemented")
+func (UnimplementedCreditNotesServiceServer) Download(context.Context, *DownloadRequest) (*DownloadResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Download not implemented")
 }
-func (UnimplementedCreditNoteServiceServer) RetryTaxReporting(context.Context, *RetryTaxReportingRequest) (*RetryTaxReportingResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method RetryTaxReporting not implemented")
+func (UnimplementedCreditNotesServiceServer) DownloadXml(context.Context, *DownloadXmlRequest) (*DownloadXmlResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DownloadXml not implemented")
 }
-func (UnimplementedCreditNoteServiceServer) SyncIntegrationCreditNote(context.Context, *SyncIntegrationCreditNoteRequest) (*SyncIntegrationCreditNoteResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method SyncIntegrationCreditNote not implemented")
-}
-func (UnimplementedCreditNoteServiceServer) VoidCreditNote(context.Context, *VoidCreditNoteRequest) (*VoidCreditNoteResponse, error) {
+func (UnimplementedCreditNotesServiceServer) VoidCreditNote(context.Context, *VoidCreditNoteRequest) (*VoidCreditNoteResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method VoidCreditNote not implemented")
 }
-func (UnimplementedCreditNoteServiceServer) mustEmbedUnimplementedCreditNoteServiceServer() {}
-func (UnimplementedCreditNoteServiceServer) testEmbeddedByValue()                           {}
+func (UnimplementedCreditNotesServiceServer) ResendEmail(context.Context, *ResendEmailRequest) (*ResendEmailResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ResendEmail not implemented")
+}
+func (UnimplementedCreditNotesServiceServer) RetryTaxReporting(context.Context, *RetryTaxReportingRequest) (*RetryTaxReportingResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RetryTaxReporting not implemented")
+}
+func (UnimplementedCreditNotesServiceServer) SyncIntegration(context.Context, *SyncIntegrationRequest) (*SyncIntegrationResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SyncIntegration not implemented")
+}
+func (UnimplementedCreditNotesServiceServer) CreateDataExport(context.Context, *CreateDataExportRequest) (*CreateDataExportResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateDataExport not implemented")
+}
+func (UnimplementedCreditNotesServiceServer) mustEmbedUnimplementedCreditNotesServiceServer() {}
+func (UnimplementedCreditNotesServiceServer) testEmbeddedByValue()                            {}
 
-// UnsafeCreditNoteServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to CreditNoteServiceServer will
+// UnsafeCreditNotesServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to CreditNotesServiceServer will
 // result in compilation errors.
-type UnsafeCreditNoteServiceServer interface {
-	mustEmbedUnimplementedCreditNoteServiceServer()
+type UnsafeCreditNotesServiceServer interface {
+	mustEmbedUnimplementedCreditNotesServiceServer()
 }
 
-func RegisterCreditNoteServiceServer(s grpc.ServiceRegistrar, srv CreditNoteServiceServer) {
-	// If the following call panics, it indicates UnimplementedCreditNoteServiceServer was
+func RegisterCreditNotesServiceServer(s grpc.ServiceRegistrar, srv CreditNotesServiceServer) {
+	// If the following call panics, it indicates UnimplementedCreditNotesServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&CreditNoteService_ServiceDesc, srv)
+	s.RegisterService(&CreditNotesService_ServiceDesc, srv)
 }
 
-func _CreditNoteService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CreditNoteServiceServer).Create(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CreditNoteService_Create_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreditNoteServiceServer).Create(ctx, req.(*CreateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CreditNoteService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CreditNoteServiceServer).Get(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CreditNoteService_Get_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreditNoteServiceServer).Get(ctx, req.(*GetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CreditNoteService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CreditNotesService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CreditNoteServiceServer).List(ctx, in)
+		return srv.(CreditNotesServiceServer).List(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CreditNoteService_List_FullMethodName,
+		FullMethod: CreditNotesService_List_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreditNoteServiceServer).List(ctx, req.(*ListRequest))
+		return srv.(CreditNotesServiceServer).List(ctx, req.(*ListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CreditNoteService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CreditNotesService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CreditNotesServiceServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CreditNotesService_Get_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CreditNotesServiceServer).Get(ctx, req.(*GetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CreditNotesService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CreditNotesServiceServer).Create(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CreditNotesService_Create_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CreditNotesServiceServer).Create(ctx, req.(*CreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CreditNotesService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CreditNoteServiceServer).Update(ctx, in)
+		return srv.(CreditNotesServiceServer).Update(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CreditNoteService_Update_FullMethodName,
+		FullMethod: CreditNotesService_Update_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreditNoteServiceServer).Update(ctx, req.(*UpdateRequest))
+		return srv.(CreditNotesServiceServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CreditNoteService_CreatesDataExport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreatesDataExportRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CreditNoteServiceServer).CreatesDataExport(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CreditNoteService_CreatesDataExport_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreditNoteServiceServer).CreatesDataExport(ctx, req.(*CreatesDataExportRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CreditNoteService_DownloadCreditNote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DownloadCreditNoteRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CreditNoteServiceServer).DownloadCreditNote(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CreditNoteService_DownloadCreditNote_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreditNoteServiceServer).DownloadCreditNote(ctx, req.(*DownloadCreditNoteRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CreditNoteService_DownloadXmlCreditNote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DownloadXmlCreditNoteRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CreditNoteServiceServer).DownloadXmlCreditNote(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CreditNoteService_DownloadXmlCreditNote_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreditNoteServiceServer).DownloadXmlCreditNote(ctx, req.(*DownloadXmlCreditNoteRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CreditNoteService_GetEstimate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CreditNotesService_GetEstimate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetEstimateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CreditNoteServiceServer).GetEstimate(ctx, in)
+		return srv.(CreditNotesServiceServer).GetEstimate(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CreditNoteService_GetEstimate_FullMethodName,
+		FullMethod: CreditNotesService_GetEstimate_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreditNoteServiceServer).GetEstimate(ctx, req.(*GetEstimateRequest))
+		return srv.(CreditNotesServiceServer).GetEstimate(ctx, req.(*GetEstimateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CreditNoteService_InvoiceCreditNotes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(InvoiceCreditNotesRequest)
+func _CreditNotesService_ListInvoiceCreditNotes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListInvoiceCreditNotesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CreditNoteServiceServer).InvoiceCreditNotes(ctx, in)
+		return srv.(CreditNotesServiceServer).ListInvoiceCreditNotes(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CreditNoteService_InvoiceCreditNotes_FullMethodName,
+		FullMethod: CreditNotesService_ListInvoiceCreditNotes_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreditNoteServiceServer).InvoiceCreditNotes(ctx, req.(*InvoiceCreditNotesRequest))
+		return srv.(CreditNotesServiceServer).ListInvoiceCreditNotes(ctx, req.(*ListInvoiceCreditNotesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CreditNoteService_ResendCreditNoteEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ResendCreditNoteEmailRequest)
+func _CreditNotesService_Download_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DownloadRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CreditNoteServiceServer).ResendCreditNoteEmail(ctx, in)
+		return srv.(CreditNotesServiceServer).Download(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CreditNoteService_ResendCreditNoteEmail_FullMethodName,
+		FullMethod: CreditNotesService_Download_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreditNoteServiceServer).ResendCreditNoteEmail(ctx, req.(*ResendCreditNoteEmailRequest))
+		return srv.(CreditNotesServiceServer).Download(ctx, req.(*DownloadRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CreditNoteService_RetryTaxReporting_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RetryTaxReportingRequest)
+func _CreditNotesService_DownloadXml_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DownloadXmlRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CreditNoteServiceServer).RetryTaxReporting(ctx, in)
+		return srv.(CreditNotesServiceServer).DownloadXml(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CreditNoteService_RetryTaxReporting_FullMethodName,
+		FullMethod: CreditNotesService_DownloadXml_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreditNoteServiceServer).RetryTaxReporting(ctx, req.(*RetryTaxReportingRequest))
+		return srv.(CreditNotesServiceServer).DownloadXml(ctx, req.(*DownloadXmlRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CreditNoteService_SyncIntegrationCreditNote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SyncIntegrationCreditNoteRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CreditNoteServiceServer).SyncIntegrationCreditNote(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CreditNoteService_SyncIntegrationCreditNote_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreditNoteServiceServer).SyncIntegrationCreditNote(ctx, req.(*SyncIntegrationCreditNoteRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CreditNoteService_VoidCreditNote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CreditNotesService_VoidCreditNote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(VoidCreditNoteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CreditNoteServiceServer).VoidCreditNote(ctx, in)
+		return srv.(CreditNotesServiceServer).VoidCreditNote(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CreditNoteService_VoidCreditNote_FullMethodName,
+		FullMethod: CreditNotesService_VoidCreditNote_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreditNoteServiceServer).VoidCreditNote(ctx, req.(*VoidCreditNoteRequest))
+		return srv.(CreditNotesServiceServer).VoidCreditNote(ctx, req.(*VoidCreditNoteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// CreditNoteService_ServiceDesc is the grpc.ServiceDesc for CreditNoteService service.
+func _CreditNotesService_ResendEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResendEmailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CreditNotesServiceServer).ResendEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CreditNotesService_ResendEmail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CreditNotesServiceServer).ResendEmail(ctx, req.(*ResendEmailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CreditNotesService_RetryTaxReporting_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RetryTaxReportingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CreditNotesServiceServer).RetryTaxReporting(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CreditNotesService_RetryTaxReporting_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CreditNotesServiceServer).RetryTaxReporting(ctx, req.(*RetryTaxReportingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CreditNotesService_SyncIntegration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SyncIntegrationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CreditNotesServiceServer).SyncIntegration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CreditNotesService_SyncIntegration_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CreditNotesServiceServer).SyncIntegration(ctx, req.(*SyncIntegrationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CreditNotesService_CreateDataExport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateDataExportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CreditNotesServiceServer).CreateDataExport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CreditNotesService_CreateDataExport_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CreditNotesServiceServer).CreateDataExport(ctx, req.(*CreateDataExportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// CreditNotesService_ServiceDesc is the grpc.ServiceDesc for CreditNotesService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var CreditNoteService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "invora.billing.credit_notes.v2.CreditNoteService",
-	HandlerType: (*CreditNoteServiceServer)(nil),
+var CreditNotesService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "invora.billing.credit_notes.v2.CreditNotesService",
+	HandlerType: (*CreditNotesServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Create",
-			Handler:    _CreditNoteService_Create_Handler,
+			MethodName: "List",
+			Handler:    _CreditNotesService_List_Handler,
 		},
 		{
 			MethodName: "Get",
-			Handler:    _CreditNoteService_Get_Handler,
+			Handler:    _CreditNotesService_Get_Handler,
 		},
 		{
-			MethodName: "List",
-			Handler:    _CreditNoteService_List_Handler,
+			MethodName: "Create",
+			Handler:    _CreditNotesService_Create_Handler,
 		},
 		{
 			MethodName: "Update",
-			Handler:    _CreditNoteService_Update_Handler,
-		},
-		{
-			MethodName: "CreatesDataExport",
-			Handler:    _CreditNoteService_CreatesDataExport_Handler,
-		},
-		{
-			MethodName: "DownloadCreditNote",
-			Handler:    _CreditNoteService_DownloadCreditNote_Handler,
-		},
-		{
-			MethodName: "DownloadXmlCreditNote",
-			Handler:    _CreditNoteService_DownloadXmlCreditNote_Handler,
+			Handler:    _CreditNotesService_Update_Handler,
 		},
 		{
 			MethodName: "GetEstimate",
-			Handler:    _CreditNoteService_GetEstimate_Handler,
+			Handler:    _CreditNotesService_GetEstimate_Handler,
 		},
 		{
-			MethodName: "InvoiceCreditNotes",
-			Handler:    _CreditNoteService_InvoiceCreditNotes_Handler,
+			MethodName: "ListInvoiceCreditNotes",
+			Handler:    _CreditNotesService_ListInvoiceCreditNotes_Handler,
 		},
 		{
-			MethodName: "ResendCreditNoteEmail",
-			Handler:    _CreditNoteService_ResendCreditNoteEmail_Handler,
+			MethodName: "Download",
+			Handler:    _CreditNotesService_Download_Handler,
 		},
 		{
-			MethodName: "RetryTaxReporting",
-			Handler:    _CreditNoteService_RetryTaxReporting_Handler,
-		},
-		{
-			MethodName: "SyncIntegrationCreditNote",
-			Handler:    _CreditNoteService_SyncIntegrationCreditNote_Handler,
+			MethodName: "DownloadXml",
+			Handler:    _CreditNotesService_DownloadXml_Handler,
 		},
 		{
 			MethodName: "VoidCreditNote",
-			Handler:    _CreditNoteService_VoidCreditNote_Handler,
+			Handler:    _CreditNotesService_VoidCreditNote_Handler,
+		},
+		{
+			MethodName: "ResendEmail",
+			Handler:    _CreditNotesService_ResendEmail_Handler,
+		},
+		{
+			MethodName: "RetryTaxReporting",
+			Handler:    _CreditNotesService_RetryTaxReporting_Handler,
+		},
+		{
+			MethodName: "SyncIntegration",
+			Handler:    _CreditNotesService_SyncIntegration_Handler,
+		},
+		{
+			MethodName: "CreateDataExport",
+			Handler:    _CreditNotesService_CreateDataExport_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

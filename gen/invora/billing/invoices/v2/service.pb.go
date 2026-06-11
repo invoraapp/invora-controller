@@ -15,7 +15,6 @@ import (
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
-	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -28,287 +27,101 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Controls response detail level for List and Get operations.
-type View int32
+// Export type for invoice data export.
+type InvoiceExportType int32
 
 const (
-	View_VIEW_UNSPECIFIED View = 0
-	View_VIEW_BASIC       View = 1
-	View_VIEW_FULL        View = 2
+	InvoiceExportType_INVOICE_EXPORT_TYPE_UNSPECIFIED  InvoiceExportType = 0
+	InvoiceExportType_INVOICE_EXPORT_TYPE_INVOICE_FEES InvoiceExportType = 1
+	InvoiceExportType_INVOICE_EXPORT_TYPE_INVOICES     InvoiceExportType = 2
 )
 
-// Enum value maps for View.
+// Enum value maps for InvoiceExportType.
 var (
-	View_name = map[int32]string{
-		0: "VIEW_UNSPECIFIED",
-		1: "VIEW_BASIC",
-		2: "VIEW_FULL",
+	InvoiceExportType_name = map[int32]string{
+		0: "INVOICE_EXPORT_TYPE_UNSPECIFIED",
+		1: "INVOICE_EXPORT_TYPE_INVOICE_FEES",
+		2: "INVOICE_EXPORT_TYPE_INVOICES",
 	}
-	View_value = map[string]int32{
-		"VIEW_UNSPECIFIED": 0,
-		"VIEW_BASIC":       1,
-		"VIEW_FULL":        2,
+	InvoiceExportType_value = map[string]int32{
+		"INVOICE_EXPORT_TYPE_UNSPECIFIED":  0,
+		"INVOICE_EXPORT_TYPE_INVOICE_FEES": 1,
+		"INVOICE_EXPORT_TYPE_INVOICES":     2,
 	}
 )
 
-func (x View) Enum() *View {
-	p := new(View)
+func (x InvoiceExportType) Enum() *InvoiceExportType {
+	p := new(InvoiceExportType)
 	*p = x
 	return p
 }
 
-func (x View) String() string {
+func (x InvoiceExportType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (View) Descriptor() protoreflect.EnumDescriptor {
+func (InvoiceExportType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_invoices_v2_service_proto_enumTypes[0].Descriptor()
 }
 
-func (View) Type() protoreflect.EnumType {
+func (InvoiceExportType) Type() protoreflect.EnumType {
 	return &file_invora_billing_invoices_v2_service_proto_enumTypes[0]
 }
 
-func (x View) Number() protoreflect.EnumNumber {
+func (x InvoiceExportType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use View.Descriptor instead.
-func (View) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use InvoiceExportType.Descriptor instead.
+func (InvoiceExportType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{0}
 }
 
-type InvoiceExportTypeEnum int32
+// Settlement type for invoices.
+type InvoiceSettlementType int32
 
 const (
-	InvoiceExportTypeEnum_INVOICE_EXPORT_TYPE_ENUM_UNSPECIFIED  InvoiceExportTypeEnum = 0
-	InvoiceExportTypeEnum_INVOICE_EXPORT_TYPE_ENUM_INVOICE_FEES InvoiceExportTypeEnum = 1
-	InvoiceExportTypeEnum_INVOICE_EXPORT_TYPE_ENUM_INVOICES     InvoiceExportTypeEnum = 2
+	InvoiceSettlementType_INVOICE_SETTLEMENT_TYPE_UNSPECIFIED InvoiceSettlementType = 0
+	InvoiceSettlementType_INVOICE_SETTLEMENT_TYPE_CREDIT_NOTE InvoiceSettlementType = 1
 )
 
-// Enum value maps for InvoiceExportTypeEnum.
+// Enum value maps for InvoiceSettlementType.
 var (
-	InvoiceExportTypeEnum_name = map[int32]string{
-		0: "INVOICE_EXPORT_TYPE_ENUM_UNSPECIFIED",
-		1: "INVOICE_EXPORT_TYPE_ENUM_INVOICE_FEES",
-		2: "INVOICE_EXPORT_TYPE_ENUM_INVOICES",
+	InvoiceSettlementType_name = map[int32]string{
+		0: "INVOICE_SETTLEMENT_TYPE_UNSPECIFIED",
+		1: "INVOICE_SETTLEMENT_TYPE_CREDIT_NOTE",
 	}
-	InvoiceExportTypeEnum_value = map[string]int32{
-		"INVOICE_EXPORT_TYPE_ENUM_UNSPECIFIED":  0,
-		"INVOICE_EXPORT_TYPE_ENUM_INVOICE_FEES": 1,
-		"INVOICE_EXPORT_TYPE_ENUM_INVOICES":     2,
+	InvoiceSettlementType_value = map[string]int32{
+		"INVOICE_SETTLEMENT_TYPE_UNSPECIFIED": 0,
+		"INVOICE_SETTLEMENT_TYPE_CREDIT_NOTE": 1,
 	}
 )
 
-func (x InvoiceExportTypeEnum) Enum() *InvoiceExportTypeEnum {
-	p := new(InvoiceExportTypeEnum)
+func (x InvoiceSettlementType) Enum() *InvoiceSettlementType {
+	p := new(InvoiceSettlementType)
 	*p = x
 	return p
 }
 
-func (x InvoiceExportTypeEnum) String() string {
+func (x InvoiceSettlementType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (InvoiceExportTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (InvoiceSettlementType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_invoices_v2_service_proto_enumTypes[1].Descriptor()
 }
 
-func (InvoiceExportTypeEnum) Type() protoreflect.EnumType {
+func (InvoiceSettlementType) Type() protoreflect.EnumType {
 	return &file_invora_billing_invoices_v2_service_proto_enumTypes[1]
 }
 
-func (x InvoiceExportTypeEnum) Number() protoreflect.EnumNumber {
+func (x InvoiceSettlementType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use InvoiceExportTypeEnum.Descriptor instead.
-func (InvoiceExportTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use InvoiceSettlementType.Descriptor instead.
+func (InvoiceSettlementType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{1}
-}
-
-type InvoiceSettlementTypeEnum int32
-
-const (
-	InvoiceSettlementTypeEnum_INVOICE_SETTLEMENT_TYPE_ENUM_UNSPECIFIED InvoiceSettlementTypeEnum = 0
-	InvoiceSettlementTypeEnum_INVOICE_SETTLEMENT_TYPE_ENUM_CREDIT_NOTE InvoiceSettlementTypeEnum = 1
-)
-
-// Enum value maps for InvoiceSettlementTypeEnum.
-var (
-	InvoiceSettlementTypeEnum_name = map[int32]string{
-		0: "INVOICE_SETTLEMENT_TYPE_ENUM_UNSPECIFIED",
-		1: "INVOICE_SETTLEMENT_TYPE_ENUM_CREDIT_NOTE",
-	}
-	InvoiceSettlementTypeEnum_value = map[string]int32{
-		"INVOICE_SETTLEMENT_TYPE_ENUM_UNSPECIFIED": 0,
-		"INVOICE_SETTLEMENT_TYPE_ENUM_CREDIT_NOTE": 1,
-	}
-)
-
-func (x InvoiceSettlementTypeEnum) Enum() *InvoiceSettlementTypeEnum {
-	p := new(InvoiceSettlementTypeEnum)
-	*p = x
-	return p
-}
-
-func (x InvoiceSettlementTypeEnum) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (InvoiceSettlementTypeEnum) Descriptor() protoreflect.EnumDescriptor {
-	return file_invora_billing_invoices_v2_service_proto_enumTypes[2].Descriptor()
-}
-
-func (InvoiceSettlementTypeEnum) Type() protoreflect.EnumType {
-	return &file_invora_billing_invoices_v2_service_proto_enumTypes[2]
-}
-
-func (x InvoiceSettlementTypeEnum) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use InvoiceSettlementTypeEnum.Descriptor instead.
-func (InvoiceSettlementTypeEnum) EnumDescriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{2}
-}
-
-type CustomerInvoicesRequest struct {
-	state      protoimpl.MessageState `protogen:"open.v1"`
-	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
-	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
-	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.invoices.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CustomerInvoicesRequest) Reset() {
-	*x = CustomerInvoicesRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CustomerInvoicesRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CustomerInvoicesRequest) ProtoMessage() {}
-
-func (x *CustomerInvoicesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CustomerInvoicesRequest.ProtoReflect.Descriptor instead.
-func (*CustomerInvoicesRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *CustomerInvoicesRequest) GetFilter() *ListFilter {
-	if x != nil {
-		return x.Filter
-	}
-	return nil
-}
-
-func (x *CustomerInvoicesRequest) GetSort() *ListSort {
-	if x != nil {
-		return x.Sort
-	}
-	return nil
-}
-
-func (x *CustomerInvoicesRequest) GetPagination() *kernel.PaginationInfo {
-	if x != nil {
-		return x.Pagination
-	}
-	return nil
-}
-
-func (x *CustomerInvoicesRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *CustomerInvoicesRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type CustomerInvoicesResponse struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Items          []*v2.BillingInvoice    `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *CustomerInvoicesResponse) Reset() {
-	*x = CustomerInvoicesResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CustomerInvoicesResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CustomerInvoicesResponse) ProtoMessage() {}
-
-func (x *CustomerInvoicesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CustomerInvoicesResponse.ProtoReflect.Descriptor instead.
-func (*CustomerInvoicesResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *CustomerInvoicesResponse) GetItems() []*v2.BillingInvoice {
-	if x != nil {
-		return x.Items
-	}
-	return nil
-}
-
-func (x *CustomerInvoicesResponse) GetTotalCount() uint64 {
-	if x != nil {
-		return x.TotalCount
-	}
-	return 0
-}
-
-func (x *CustomerInvoicesResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
-	}
-	return nil
 }
 
 type ListFilter struct {
@@ -322,7 +135,7 @@ type ListFilter struct {
 
 func (x *ListFilter) Reset() {
 	*x = ListFilter{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[2]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -334,7 +147,7 @@ func (x *ListFilter) String() string {
 func (*ListFilter) ProtoMessage() {}
 
 func (x *ListFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[2]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -347,7 +160,7 @@ func (x *ListFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListFilter.ProtoReflect.Descriptor instead.
 func (*ListFilter) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{2}
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *ListFilter) GetPart() *ListFilterPart {
@@ -364,50 +177,6 @@ func (x *ListFilter) GetTextSearch() string {
 	return ""
 }
 
-type ListStatusFilter struct {
-	state         protoimpl.MessageState     `protogen:"open.v1"`
-	InValues      []v2.InvoiceStatusTypeEnum `protobuf:"varint,1,rep,packed,name=in_values,json=inValues,proto3,enum=invora.billing.common.v2.InvoiceStatusTypeEnum" json:"in_values,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListStatusFilter) Reset() {
-	*x = ListStatusFilter{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListStatusFilter) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListStatusFilter) ProtoMessage() {}
-
-func (x *ListStatusFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListStatusFilter.ProtoReflect.Descriptor instead.
-func (*ListStatusFilter) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *ListStatusFilter) GetInValues() []v2.InvoiceStatusTypeEnum {
-	if x != nil {
-		return x.InValues
-	}
-	return nil
-}
-
 type ListFilterPart struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Types that are valid to be assigned to Type:
@@ -421,7 +190,7 @@ type ListFilterPart struct {
 
 func (x *ListFilterPart) Reset() {
 	*x = ListFilterPart{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[4]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -433,7 +202,7 @@ func (x *ListFilterPart) String() string {
 func (*ListFilterPart) ProtoMessage() {}
 
 func (x *ListFilterPart) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[4]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -446,7 +215,7 @@ func (x *ListFilterPart) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListFilterPart.ProtoReflect.Descriptor instead.
 func (*ListFilterPart) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{4}
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *ListFilterPart) GetType() isListFilterPart_Type {
@@ -490,6 +259,182 @@ func (*ListFilterPart_CustomerId) isListFilterPart_Type() {}
 
 func (*ListFilterPart_Status) isListFilterPart_Type() {}
 
+type ListStatusFilter struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	InValues      []v2.InvoiceStatusType `protobuf:"varint,1,rep,packed,name=in_values,json=inValues,proto3,enum=invora.billing.common.v2.InvoiceStatusType" json:"in_values,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListStatusFilter) Reset() {
+	*x = ListStatusFilter{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListStatusFilter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListStatusFilter) ProtoMessage() {}
+
+func (x *ListStatusFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListStatusFilter.ProtoReflect.Descriptor instead.
+func (*ListStatusFilter) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *ListStatusFilter) GetInValues() []v2.InvoiceStatusType {
+	if x != nil {
+		return x.InValues
+	}
+	return nil
+}
+
+type ListInvoiceTypeFilter struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	InValues      []v2.InvoiceType       `protobuf:"varint,1,rep,packed,name=in_values,json=inValues,proto3,enum=invora.billing.common.v2.InvoiceType" json:"in_values,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListInvoiceTypeFilter) Reset() {
+	*x = ListInvoiceTypeFilter{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListInvoiceTypeFilter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListInvoiceTypeFilter) ProtoMessage() {}
+
+func (x *ListInvoiceTypeFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListInvoiceTypeFilter.ProtoReflect.Descriptor instead.
+func (*ListInvoiceTypeFilter) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *ListInvoiceTypeFilter) GetInValues() []v2.InvoiceType {
+	if x != nil {
+		return x.InValues
+	}
+	return nil
+}
+
+type ListPaymentStatusFilter struct {
+	state         protoimpl.MessageState        `protogen:"open.v1"`
+	InValues      []v2.InvoicePaymentStatusType `protobuf:"varint,1,rep,packed,name=in_values,json=inValues,proto3,enum=invora.billing.common.v2.InvoicePaymentStatusType" json:"in_values,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListPaymentStatusFilter) Reset() {
+	*x = ListPaymentStatusFilter{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListPaymentStatusFilter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListPaymentStatusFilter) ProtoMessage() {}
+
+func (x *ListPaymentStatusFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListPaymentStatusFilter.ProtoReflect.Descriptor instead.
+func (*ListPaymentStatusFilter) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ListPaymentStatusFilter) GetInValues() []v2.InvoicePaymentStatusType {
+	if x != nil {
+		return x.InValues
+	}
+	return nil
+}
+
+type ListSettlementsFilter struct {
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	InValues      []InvoiceSettlementType `protobuf:"varint,1,rep,packed,name=in_values,json=inValues,proto3,enum=invora.billing.invoices.v2.InvoiceSettlementType" json:"in_values,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSettlementsFilter) Reset() {
+	*x = ListSettlementsFilter{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSettlementsFilter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSettlementsFilter) ProtoMessage() {}
+
+func (x *ListSettlementsFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSettlementsFilter.ProtoReflect.Descriptor instead.
+func (*ListSettlementsFilter) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ListSettlementsFilter) GetInValues() []InvoiceSettlementType {
+	if x != nil {
+		return x.InValues
+	}
+	return nil
+}
+
 type ListSort struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Rules         []*ListSortRule        `protobuf:"bytes,1,rep,name=rules,proto3" json:"rules,omitempty"`
@@ -499,7 +444,7 @@ type ListSort struct {
 
 func (x *ListSort) Reset() {
 	*x = ListSort{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[5]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -511,7 +456,7 @@ func (x *ListSort) String() string {
 func (*ListSort) ProtoMessage() {}
 
 func (x *ListSort) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[5]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -524,7 +469,7 @@ func (x *ListSort) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSort.ProtoReflect.Descriptor instead.
 func (*ListSort) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{5}
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ListSort) GetRules() []*ListSortRule {
@@ -546,7 +491,7 @@ type ListSortRule struct {
 
 func (x *ListSortRule) Reset() {
 	*x = ListSortRule{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[6]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -558,7 +503,7 @@ func (x *ListSortRule) String() string {
 func (*ListSortRule) ProtoMessage() {}
 
 func (x *ListSortRule) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[6]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -571,7 +516,7 @@ func (x *ListSortRule) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSortRule.ProtoReflect.Descriptor instead.
 func (*ListSortRule) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{6}
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ListSortRule) GetType() isListSortRule_Type {
@@ -600,316 +545,6 @@ type ListSortRule_CreatedAt struct {
 
 func (*ListSortRule_CreatedAt) isListSortRule_Type() {}
 
-type GetRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Uniq ID of the invoice
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.invoices.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetRequest) Reset() {
-	*x = GetRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[7]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetRequest) ProtoMessage() {}
-
-func (x *GetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[7]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
-func (*GetRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{7}
-}
-
-func (x *GetRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *GetRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *GetRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type GetResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetResponse) Reset() {
-	*x = GetResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[8]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetResponse) ProtoMessage() {}
-
-func (x *GetResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[8]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
-func (*GetResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{8}
-}
-
-func (x *GetResponse) GetInvoice() *v2.BillingInvoice {
-	if x != nil {
-		return x.Invoice
-	}
-	return nil
-}
-
-type GetCustomSectionRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Uniq ID of the invoice_custom_section
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.invoices.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetCustomSectionRequest) Reset() {
-	*x = GetCustomSectionRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[9]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetCustomSectionRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetCustomSectionRequest) ProtoMessage() {}
-
-func (x *GetCustomSectionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[9]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetCustomSectionRequest.ProtoReflect.Descriptor instead.
-func (*GetCustomSectionRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{9}
-}
-
-func (x *GetCustomSectionRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *GetCustomSectionRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *GetCustomSectionRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type GetCustomSectionResponse struct {
-	state                protoimpl.MessageState   `protogen:"open.v1"`
-	InvoiceCustomSection *v2.InvoiceCustomSection `protobuf:"bytes,1,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3" json:"invoice_custom_section,omitempty"`
-	unknownFields        protoimpl.UnknownFields
-	sizeCache            protoimpl.SizeCache
-}
-
-func (x *GetCustomSectionResponse) Reset() {
-	*x = GetCustomSectionResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[10]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetCustomSectionResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetCustomSectionResponse) ProtoMessage() {}
-
-func (x *GetCustomSectionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[10]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetCustomSectionResponse.ProtoReflect.Descriptor instead.
-func (*GetCustomSectionResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{10}
-}
-
-func (x *GetCustomSectionResponse) GetInvoiceCustomSection() *v2.InvoiceCustomSection {
-	if x != nil {
-		return x.InvoiceCustomSection
-	}
-	return nil
-}
-
-type ListCustomSectionsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListCustomSectionsRequest) Reset() {
-	*x = ListCustomSectionsRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[11]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListCustomSectionsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListCustomSectionsRequest) ProtoMessage() {}
-
-func (x *ListCustomSectionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[11]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListCustomSectionsRequest.ProtoReflect.Descriptor instead.
-func (*ListCustomSectionsRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{11}
-}
-
-type ListCustomSectionsResponse struct {
-	state          protoimpl.MessageState     `protogen:"open.v1"`
-	Items          []*v2.InvoiceCustomSection `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                     `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue    `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *ListCustomSectionsResponse) Reset() {
-	*x = ListCustomSectionsResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[12]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListCustomSectionsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListCustomSectionsResponse) ProtoMessage() {}
-
-func (x *ListCustomSectionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[12]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListCustomSectionsResponse.ProtoReflect.Descriptor instead.
-func (*ListCustomSectionsResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{12}
-}
-
-func (x *ListCustomSectionsResponse) GetItems() []*v2.InvoiceCustomSection {
-	if x != nil {
-		return x.Items
-	}
-	return nil
-}
-
-func (x *ListCustomSectionsResponse) GetTotalCount() uint64 {
-	if x != nil {
-		return x.TotalCount
-	}
-	return 0
-}
-
-func (x *ListCustomSectionsResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
-	}
-	return nil
-}
-
 type ListRequest struct {
 	state      protoimpl.MessageState `protogen:"open.v1"`
 	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
@@ -918,14 +553,14 @@ type ListRequest struct {
 	// Fields to return in the response.
 	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.invoices.v2.View" json:"view,omitempty"`
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListRequest) Reset() {
 	*x = ListRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[13]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -937,7 +572,7 @@ func (x *ListRequest) String() string {
 func (*ListRequest) ProtoMessage() {}
 
 func (x *ListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[13]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -950,7 +585,7 @@ func (x *ListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRequest.ProtoReflect.Descriptor instead.
 func (*ListRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{13}
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ListRequest) GetFilter() *ListFilter {
@@ -981,25 +616,25 @@ func (x *ListRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	return nil
 }
 
-func (x *ListRequest) GetView() View {
+func (x *ListRequest) GetView() v2.View {
 	if x != nil {
 		return x.View
 	}
-	return View_VIEW_UNSPECIFIED
+	return v2.View(0)
 }
 
 type ListResponse struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Items          []*v2.BillingInvoice    `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Items          []*v2.BillingInvoice   `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
 func (x *ListResponse) Reset() {
 	*x = ListResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[14]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1011,7 +646,7 @@ func (x *ListResponse) String() string {
 func (*ListResponse) ProtoMessage() {}
 
 func (x *ListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[14]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1024,7 +659,7 @@ func (x *ListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListResponse.ProtoReflect.Descriptor instead.
 func (*ListResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{14}
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ListResponse) GetItems() []*v2.BillingInvoice {
@@ -1041,35 +676,98 @@ func (x *ListResponse) GetTotalCount() uint64 {
 	return 0
 }
 
-func (x *ListResponse) GetNextPageCursor() *wrapperspb.StringValue {
+func (x *ListResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
+	}
+	return ""
+}
+
+type GetRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique ID of the invoice.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Fields to return in the response.
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	// Response detail level.
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetRequest) Reset() {
+	*x = GetRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetRequest) ProtoMessage() {}
+
+func (x *GetRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[10]
 	if x != nil {
-		return x.NextPageCursor
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
+func (*GetRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *GetRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *GetRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
 	}
 	return nil
 }
 
-type ListInvoiceTypeFilter struct {
+func (x *GetRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
+}
+
+type GetResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	InValues      []v2.InvoiceTypeEnum   `protobuf:"varint,1,rep,packed,name=in_values,json=inValues,proto3,enum=invora.billing.common.v2.InvoiceTypeEnum" json:"in_values,omitempty"`
+	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ListInvoiceTypeFilter) Reset() {
-	*x = ListInvoiceTypeFilter{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[15]
+func (x *GetResponse) Reset() {
+	*x = GetResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ListInvoiceTypeFilter) String() string {
+func (x *GetResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListInvoiceTypeFilter) ProtoMessage() {}
+func (*GetResponse) ProtoMessage() {}
 
-func (x *ListInvoiceTypeFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[15]
+func (x *GetResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1080,40 +778,46 @@ func (x *ListInvoiceTypeFilter) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListInvoiceTypeFilter.ProtoReflect.Descriptor instead.
-func (*ListInvoiceTypeFilter) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{15}
+// Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
+func (*GetResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *ListInvoiceTypeFilter) GetInValues() []v2.InvoiceTypeEnum {
+func (x *GetResponse) GetInvoice() *v2.BillingInvoice {
 	if x != nil {
-		return x.InValues
+		return x.Invoice
 	}
 	return nil
 }
 
-type ListPaymentStatusFilter struct {
-	state         protoimpl.MessageState            `protogen:"open.v1"`
-	InValues      []v2.InvoicePaymentStatusTypeEnum `protobuf:"varint,1,rep,packed,name=in_values,json=inValues,proto3,enum=invora.billing.common.v2.InvoicePaymentStatusTypeEnum" json:"in_values,omitempty"`
+type CustomerInvoicesRequest struct {
+	state      protoimpl.MessageState `protogen:"open.v1"`
+	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
+	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
+	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// Fields to return in the response.
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	// Response detail level.
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ListPaymentStatusFilter) Reset() {
-	*x = ListPaymentStatusFilter{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[16]
+func (x *CustomerInvoicesRequest) Reset() {
+	*x = CustomerInvoicesRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ListPaymentStatusFilter) String() string {
+func (x *CustomerInvoicesRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListPaymentStatusFilter) ProtoMessage() {}
+func (*CustomerInvoicesRequest) ProtoMessage() {}
 
-func (x *ListPaymentStatusFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[16]
+func (x *CustomerInvoicesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1124,40 +828,70 @@ func (x *ListPaymentStatusFilter) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListPaymentStatusFilter.ProtoReflect.Descriptor instead.
-func (*ListPaymentStatusFilter) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{16}
+// Deprecated: Use CustomerInvoicesRequest.ProtoReflect.Descriptor instead.
+func (*CustomerInvoicesRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *ListPaymentStatusFilter) GetInValues() []v2.InvoicePaymentStatusTypeEnum {
+func (x *CustomerInvoicesRequest) GetFilter() *ListFilter {
 	if x != nil {
-		return x.InValues
+		return x.Filter
 	}
 	return nil
 }
 
-type ListSettlementsFilter struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	InValues      []InvoiceSettlementTypeEnum `protobuf:"varint,1,rep,packed,name=in_values,json=inValues,proto3,enum=invora.billing.invoices.v2.InvoiceSettlementTypeEnum" json:"in_values,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+func (x *CustomerInvoicesRequest) GetSort() *ListSort {
+	if x != nil {
+		return x.Sort
+	}
+	return nil
 }
 
-func (x *ListSettlementsFilter) Reset() {
-	*x = ListSettlementsFilter{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[17]
+func (x *CustomerInvoicesRequest) GetPagination() *kernel.PaginationInfo {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *CustomerInvoicesRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
+	}
+	return nil
+}
+
+func (x *CustomerInvoicesRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
+}
+
+type CustomerInvoicesResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Items          []*v2.BillingInvoice   `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *CustomerInvoicesResponse) Reset() {
+	*x = CustomerInvoicesResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ListSettlementsFilter) String() string {
+func (x *CustomerInvoicesResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListSettlementsFilter) ProtoMessage() {}
+func (*CustomerInvoicesResponse) ProtoMessage() {}
 
-func (x *ListSettlementsFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[17]
+func (x *CustomerInvoicesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1168,28 +902,47 @@ func (x *ListSettlementsFilter) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListSettlementsFilter.ProtoReflect.Descriptor instead.
-func (*ListSettlementsFilter) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{17}
+// Deprecated: Use CustomerInvoicesResponse.ProtoReflect.Descriptor instead.
+func (*CustomerInvoicesResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *ListSettlementsFilter) GetInValues() []InvoiceSettlementTypeEnum {
+func (x *CustomerInvoicesResponse) GetItems() []*v2.BillingInvoice {
 	if x != nil {
-		return x.InValues
+		return x.Items
 	}
 	return nil
+}
+
+func (x *CustomerInvoicesResponse) GetTotalCount() uint64 {
+	if x != nil {
+		return x.TotalCount
+	}
+	return 0
+}
+
+func (x *CustomerInvoicesResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
+	}
+	return ""
 }
 
 type CreateRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *CreateInvoiceInput    `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                protoimpl.MessageState                  `protogen:"open.v1"`
+	Currency             *v2.CurrencyEnum                        `protobuf:"varint,1,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"currency,omitempty"`
+	CustomerId           string                                  `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	Fees                 []*FeeInput                             `protobuf:"bytes,3,rep,name=fees,proto3" json:"fees,omitempty"`
+	InvoiceCustomSection *v2.InvoiceCustomSectionsReferenceInput `protobuf:"bytes,4,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3,oneof" json:"invoice_custom_section,omitempty"`
+	PaymentMethod        *v2.PaymentMethodReferenceInput         `protobuf:"bytes,5,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
+	VoidedInvoiceId      *string                                 `protobuf:"bytes,6,opt,name=voided_invoice_id,json=voidedInvoiceId,proto3,oneof" json:"voided_invoice_id,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *CreateRequest) Reset() {
 	*x = CreateRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[18]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1201,7 +954,7 @@ func (x *CreateRequest) String() string {
 func (*CreateRequest) ProtoMessage() {}
 
 func (x *CreateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[18]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1214,14 +967,49 @@ func (x *CreateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateRequest.ProtoReflect.Descriptor instead.
 func (*CreateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{18}
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{14}
 }
 
-func (x *CreateRequest) GetInput() *CreateInvoiceInput {
+func (x *CreateRequest) GetCurrency() v2.CurrencyEnum {
+	if x != nil && x.Currency != nil {
+		return *x.Currency
+	}
+	return v2.CurrencyEnum(0)
+}
+
+func (x *CreateRequest) GetCustomerId() string {
 	if x != nil {
-		return x.Input
+		return x.CustomerId
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetFees() []*FeeInput {
+	if x != nil {
+		return x.Fees
 	}
 	return nil
+}
+
+func (x *CreateRequest) GetInvoiceCustomSection() *v2.InvoiceCustomSectionsReferenceInput {
+	if x != nil {
+		return x.InvoiceCustomSection
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetPaymentMethod() *v2.PaymentMethodReferenceInput {
+	if x != nil {
+		return x.PaymentMethod
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetVoidedInvoiceId() string {
+	if x != nil && x.VoidedInvoiceId != nil {
+		return *x.VoidedInvoiceId
+	}
+	return ""
 }
 
 type CreateResponse struct {
@@ -1233,7 +1021,7 @@ type CreateResponse struct {
 
 func (x *CreateResponse) Reset() {
 	*x = CreateResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[19]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1245,7 +1033,7 @@ func (x *CreateResponse) String() string {
 func (*CreateResponse) ProtoMessage() {}
 
 func (x *CreateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[19]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1258,7 +1046,7 @@ func (x *CreateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateResponse.ProtoReflect.Descriptor instead.
 func (*CreateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{19}
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *CreateResponse) GetInvoice() *v2.BillingInvoice {
@@ -1268,2526 +1056,7 @@ func (x *CreateResponse) GetInvoice() *v2.BillingInvoice {
 	return nil
 }
 
-type CreateCustomSectionRequest struct {
-	state         protoimpl.MessageState           `protogen:"open.v1"`
-	Input         *CreateInvoiceCustomSectionInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateCustomSectionRequest) Reset() {
-	*x = CreateCustomSectionRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[20]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateCustomSectionRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateCustomSectionRequest) ProtoMessage() {}
-
-func (x *CreateCustomSectionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[20]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateCustomSectionRequest.ProtoReflect.Descriptor instead.
-func (*CreateCustomSectionRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{20}
-}
-
-func (x *CreateCustomSectionRequest) GetInput() *CreateInvoiceCustomSectionInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type CreateCustomSectionResponse struct {
-	state                protoimpl.MessageState   `protogen:"open.v1"`
-	InvoiceCustomSection *v2.InvoiceCustomSection `protobuf:"bytes,1,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3" json:"invoice_custom_section,omitempty"`
-	unknownFields        protoimpl.UnknownFields
-	sizeCache            protoimpl.SizeCache
-}
-
-func (x *CreateCustomSectionResponse) Reset() {
-	*x = CreateCustomSectionResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[21]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateCustomSectionResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateCustomSectionResponse) ProtoMessage() {}
-
-func (x *CreateCustomSectionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[21]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateCustomSectionResponse.ProtoReflect.Descriptor instead.
-func (*CreateCustomSectionResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{21}
-}
-
-func (x *CreateCustomSectionResponse) GetInvoiceCustomSection() *v2.InvoiceCustomSection {
-	if x != nil {
-		return x.InvoiceCustomSection
-	}
-	return nil
-}
-
-type CreatesDataExportRequest struct {
-	state         protoimpl.MessageState          `protogen:"open.v1"`
-	Input         *CreateDataExportsInvoicesInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreatesDataExportRequest) Reset() {
-	*x = CreatesDataExportRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[22]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreatesDataExportRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreatesDataExportRequest) ProtoMessage() {}
-
-func (x *CreatesDataExportRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[22]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreatesDataExportRequest.ProtoReflect.Descriptor instead.
-func (*CreatesDataExportRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{22}
-}
-
-func (x *CreatesDataExportRequest) GetInput() *CreateDataExportsInvoicesInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type CreatesDataExportResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DataExport    *v2.DataExport         `protobuf:"bytes,1,opt,name=data_export,json=dataExport,proto3" json:"data_export,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreatesDataExportResponse) Reset() {
-	*x = CreatesDataExportResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[23]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreatesDataExportResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreatesDataExportResponse) ProtoMessage() {}
-
-func (x *CreatesDataExportResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[23]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreatesDataExportResponse.ProtoReflect.Descriptor instead.
-func (*CreatesDataExportResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{23}
-}
-
-func (x *CreatesDataExportResponse) GetDataExport() *v2.DataExport {
-	if x != nil {
-		return x.DataExport
-	}
-	return nil
-}
-
-type DeleteInvoiceCustomSectionRequest struct {
-	state         protoimpl.MessageState            `protogen:"open.v1"`
-	Input         *DestroyInvoiceCustomSectionInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteInvoiceCustomSectionRequest) Reset() {
-	*x = DeleteInvoiceCustomSectionRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[24]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteInvoiceCustomSectionRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteInvoiceCustomSectionRequest) ProtoMessage() {}
-
-func (x *DeleteInvoiceCustomSectionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[24]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteInvoiceCustomSectionRequest.ProtoReflect.Descriptor instead.
-func (*DeleteInvoiceCustomSectionRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{24}
-}
-
-func (x *DeleteInvoiceCustomSectionRequest) GetInput() *DestroyInvoiceCustomSectionInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type DeleteInvoiceCustomSectionResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteInvoiceCustomSectionResponse) Reset() {
-	*x = DeleteInvoiceCustomSectionResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[25]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteInvoiceCustomSectionResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteInvoiceCustomSectionResponse) ProtoMessage() {}
-
-func (x *DeleteInvoiceCustomSectionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[25]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteInvoiceCustomSectionResponse.ProtoReflect.Descriptor instead.
-func (*DeleteInvoiceCustomSectionResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{25}
-}
-
-type DownloadCustomerPortalInvoiceRequest struct {
-	state         protoimpl.MessageState              `protogen:"open.v1"`
-	Input         *DownloadCustomerPortalInvoiceInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DownloadCustomerPortalInvoiceRequest) Reset() {
-	*x = DownloadCustomerPortalInvoiceRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[26]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DownloadCustomerPortalInvoiceRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DownloadCustomerPortalInvoiceRequest) ProtoMessage() {}
-
-func (x *DownloadCustomerPortalInvoiceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[26]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DownloadCustomerPortalInvoiceRequest.ProtoReflect.Descriptor instead.
-func (*DownloadCustomerPortalInvoiceRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{26}
-}
-
-func (x *DownloadCustomerPortalInvoiceRequest) GetInput() *DownloadCustomerPortalInvoiceInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type DownloadCustomerPortalInvoiceResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DownloadCustomerPortalInvoiceResponse) Reset() {
-	*x = DownloadCustomerPortalInvoiceResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[27]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DownloadCustomerPortalInvoiceResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DownloadCustomerPortalInvoiceResponse) ProtoMessage() {}
-
-func (x *DownloadCustomerPortalInvoiceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[27]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DownloadCustomerPortalInvoiceResponse.ProtoReflect.Descriptor instead.
-func (*DownloadCustomerPortalInvoiceResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{27}
-}
-
-func (x *DownloadCustomerPortalInvoiceResponse) GetInvoice() *v2.BillingInvoice {
-	if x != nil {
-		return x.Invoice
-	}
-	return nil
-}
-
-type DownloadInvoiceRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *DownloadInvoiceInput  `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DownloadInvoiceRequest) Reset() {
-	*x = DownloadInvoiceRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[28]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DownloadInvoiceRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DownloadInvoiceRequest) ProtoMessage() {}
-
-func (x *DownloadInvoiceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[28]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DownloadInvoiceRequest.ProtoReflect.Descriptor instead.
-func (*DownloadInvoiceRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{28}
-}
-
-func (x *DownloadInvoiceRequest) GetInput() *DownloadInvoiceInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type DownloadInvoiceResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DownloadInvoiceResponse) Reset() {
-	*x = DownloadInvoiceResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[29]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DownloadInvoiceResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DownloadInvoiceResponse) ProtoMessage() {}
-
-func (x *DownloadInvoiceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[29]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DownloadInvoiceResponse.ProtoReflect.Descriptor instead.
-func (*DownloadInvoiceResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{29}
-}
-
-func (x *DownloadInvoiceResponse) GetInvoice() *v2.BillingInvoice {
-	if x != nil {
-		return x.Invoice
-	}
-	return nil
-}
-
-type DownloadInvoiceXmlRequest struct {
-	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Input         *DownloadXmlInvoiceInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DownloadInvoiceXmlRequest) Reset() {
-	*x = DownloadInvoiceXmlRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[30]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DownloadInvoiceXmlRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DownloadInvoiceXmlRequest) ProtoMessage() {}
-
-func (x *DownloadInvoiceXmlRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[30]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DownloadInvoiceXmlRequest.ProtoReflect.Descriptor instead.
-func (*DownloadInvoiceXmlRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{30}
-}
-
-func (x *DownloadInvoiceXmlRequest) GetInput() *DownloadXmlInvoiceInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type DownloadInvoiceXmlResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DownloadInvoiceXmlResponse) Reset() {
-	*x = DownloadInvoiceXmlResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[31]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DownloadInvoiceXmlResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DownloadInvoiceXmlResponse) ProtoMessage() {}
-
-func (x *DownloadInvoiceXmlResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[31]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DownloadInvoiceXmlResponse.ProtoReflect.Descriptor instead.
-func (*DownloadInvoiceXmlResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{31}
-}
-
-func (x *DownloadInvoiceXmlResponse) GetInvoice() *v2.BillingInvoice {
-	if x != nil {
-		return x.Invoice
-	}
-	return nil
-}
-
-type FetchDraftInvoiceTaxesRequest struct {
-	state      protoimpl.MessageState `protogen:"open.v1"`
-	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
-	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
-	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.invoices.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *FetchDraftInvoiceTaxesRequest) Reset() {
-	*x = FetchDraftInvoiceTaxesRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[32]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *FetchDraftInvoiceTaxesRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*FetchDraftInvoiceTaxesRequest) ProtoMessage() {}
-
-func (x *FetchDraftInvoiceTaxesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[32]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use FetchDraftInvoiceTaxesRequest.ProtoReflect.Descriptor instead.
-func (*FetchDraftInvoiceTaxesRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{32}
-}
-
-func (x *FetchDraftInvoiceTaxesRequest) GetFilter() *ListFilter {
-	if x != nil {
-		return x.Filter
-	}
-	return nil
-}
-
-func (x *FetchDraftInvoiceTaxesRequest) GetSort() *ListSort {
-	if x != nil {
-		return x.Sort
-	}
-	return nil
-}
-
-func (x *FetchDraftInvoiceTaxesRequest) GetPagination() *kernel.PaginationInfo {
-	if x != nil {
-		return x.Pagination
-	}
-	return nil
-}
-
-func (x *FetchDraftInvoiceTaxesRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *FetchDraftInvoiceTaxesRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type FetchDraftInvoiceTaxesResponse struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Items          []*TaxFeeObject         `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *FetchDraftInvoiceTaxesResponse) Reset() {
-	*x = FetchDraftInvoiceTaxesResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[33]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *FetchDraftInvoiceTaxesResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*FetchDraftInvoiceTaxesResponse) ProtoMessage() {}
-
-func (x *FetchDraftInvoiceTaxesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[33]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use FetchDraftInvoiceTaxesResponse.ProtoReflect.Descriptor instead.
-func (*FetchDraftInvoiceTaxesResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{33}
-}
-
-func (x *FetchDraftInvoiceTaxesResponse) GetItems() []*TaxFeeObject {
-	if x != nil {
-		return x.Items
-	}
-	return nil
-}
-
-func (x *FetchDraftInvoiceTaxesResponse) GetTotalCount() uint64 {
-	if x != nil {
-		return x.TotalCount
-	}
-	return 0
-}
-
-func (x *FetchDraftInvoiceTaxesResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
-	}
-	return nil
-}
-
-type FinalizeAllInvoicesRequest struct {
-	state      protoimpl.MessageState `protogen:"open.v1"`
-	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
-	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
-	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.invoices.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *FinalizeAllInvoicesRequest) Reset() {
-	*x = FinalizeAllInvoicesRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[34]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *FinalizeAllInvoicesRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*FinalizeAllInvoicesRequest) ProtoMessage() {}
-
-func (x *FinalizeAllInvoicesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[34]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use FinalizeAllInvoicesRequest.ProtoReflect.Descriptor instead.
-func (*FinalizeAllInvoicesRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{34}
-}
-
-func (x *FinalizeAllInvoicesRequest) GetFilter() *ListFilter {
-	if x != nil {
-		return x.Filter
-	}
-	return nil
-}
-
-func (x *FinalizeAllInvoicesRequest) GetSort() *ListSort {
-	if x != nil {
-		return x.Sort
-	}
-	return nil
-}
-
-func (x *FinalizeAllInvoicesRequest) GetPagination() *kernel.PaginationInfo {
-	if x != nil {
-		return x.Pagination
-	}
-	return nil
-}
-
-func (x *FinalizeAllInvoicesRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *FinalizeAllInvoicesRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type FinalizeAllInvoicesResponse struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Items          []*v2.BillingInvoice    `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *FinalizeAllInvoicesResponse) Reset() {
-	*x = FinalizeAllInvoicesResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[35]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *FinalizeAllInvoicesResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*FinalizeAllInvoicesResponse) ProtoMessage() {}
-
-func (x *FinalizeAllInvoicesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[35]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use FinalizeAllInvoicesResponse.ProtoReflect.Descriptor instead.
-func (*FinalizeAllInvoicesResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{35}
-}
-
-func (x *FinalizeAllInvoicesResponse) GetItems() []*v2.BillingInvoice {
-	if x != nil {
-		return x.Items
-	}
-	return nil
-}
-
-func (x *FinalizeAllInvoicesResponse) GetTotalCount() uint64 {
-	if x != nil {
-		return x.TotalCount
-	}
-	return 0
-}
-
-func (x *FinalizeAllInvoicesResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
-	}
-	return nil
-}
-
-type FinalizeRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *FinalizeInvoiceInput  `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *FinalizeRequest) Reset() {
-	*x = FinalizeRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[36]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *FinalizeRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*FinalizeRequest) ProtoMessage() {}
-
-func (x *FinalizeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[36]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use FinalizeRequest.ProtoReflect.Descriptor instead.
-func (*FinalizeRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{36}
-}
-
-func (x *FinalizeRequest) GetInput() *FinalizeInvoiceInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type FinalizeResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *FinalizeResponse) Reset() {
-	*x = FinalizeResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[37]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *FinalizeResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*FinalizeResponse) ProtoMessage() {}
-
-func (x *FinalizeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[37]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use FinalizeResponse.ProtoReflect.Descriptor instead.
-func (*FinalizeResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{37}
-}
-
-func (x *FinalizeResponse) GetInvoice() *v2.BillingInvoice {
-	if x != nil {
-		return x.Invoice
-	}
-	return nil
-}
-
-type LoseInvoiceDisputeRequest struct {
-	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Input         *LoseInvoiceDisputeInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *LoseInvoiceDisputeRequest) Reset() {
-	*x = LoseInvoiceDisputeRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[38]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *LoseInvoiceDisputeRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*LoseInvoiceDisputeRequest) ProtoMessage() {}
-
-func (x *LoseInvoiceDisputeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[38]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use LoseInvoiceDisputeRequest.ProtoReflect.Descriptor instead.
-func (*LoseInvoiceDisputeRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{38}
-}
-
-func (x *LoseInvoiceDisputeRequest) GetInput() *LoseInvoiceDisputeInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type LoseInvoiceDisputeResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *LoseInvoiceDisputeResponse) Reset() {
-	*x = LoseInvoiceDisputeResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[39]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *LoseInvoiceDisputeResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*LoseInvoiceDisputeResponse) ProtoMessage() {}
-
-func (x *LoseInvoiceDisputeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[39]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use LoseInvoiceDisputeResponse.ProtoReflect.Descriptor instead.
-func (*LoseInvoiceDisputeResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{39}
-}
-
-func (x *LoseInvoiceDisputeResponse) GetInvoice() *v2.BillingInvoice {
-	if x != nil {
-		return x.Invoice
-	}
-	return nil
-}
-
-type RefreshInvoiceRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *RefreshInvoiceInput   `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RefreshInvoiceRequest) Reset() {
-	*x = RefreshInvoiceRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[40]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RefreshInvoiceRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RefreshInvoiceRequest) ProtoMessage() {}
-
-func (x *RefreshInvoiceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[40]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RefreshInvoiceRequest.ProtoReflect.Descriptor instead.
-func (*RefreshInvoiceRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{40}
-}
-
-func (x *RefreshInvoiceRequest) GetInput() *RefreshInvoiceInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type RefreshInvoiceResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RefreshInvoiceResponse) Reset() {
-	*x = RefreshInvoiceResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[41]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RefreshInvoiceResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RefreshInvoiceResponse) ProtoMessage() {}
-
-func (x *RefreshInvoiceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[41]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RefreshInvoiceResponse.ProtoReflect.Descriptor instead.
-func (*RefreshInvoiceResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{41}
-}
-
-func (x *RefreshInvoiceResponse) GetInvoice() *v2.BillingInvoice {
-	if x != nil {
-		return x.Invoice
-	}
-	return nil
-}
-
-type RegenerateFromVoidedRequest struct {
-	state         protoimpl.MessageState  `protogen:"open.v1"`
-	Input         *RegenerateInvoiceInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RegenerateFromVoidedRequest) Reset() {
-	*x = RegenerateFromVoidedRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[42]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RegenerateFromVoidedRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RegenerateFromVoidedRequest) ProtoMessage() {}
-
-func (x *RegenerateFromVoidedRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[42]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RegenerateFromVoidedRequest.ProtoReflect.Descriptor instead.
-func (*RegenerateFromVoidedRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{42}
-}
-
-func (x *RegenerateFromVoidedRequest) GetInput() *RegenerateInvoiceInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type RegenerateFromVoidedResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RegenerateFromVoidedResponse) Reset() {
-	*x = RegenerateFromVoidedResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[43]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RegenerateFromVoidedResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RegenerateFromVoidedResponse) ProtoMessage() {}
-
-func (x *RegenerateFromVoidedResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[43]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RegenerateFromVoidedResponse.ProtoReflect.Descriptor instead.
-func (*RegenerateFromVoidedResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{43}
-}
-
-func (x *RegenerateFromVoidedResponse) GetInvoice() *v2.BillingInvoice {
-	if x != nil {
-		return x.Invoice
-	}
-	return nil
-}
-
-type ResendInvoiceEmailRequest struct {
-	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Input         *ResendInvoiceEmailInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ResendInvoiceEmailRequest) Reset() {
-	*x = ResendInvoiceEmailRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[44]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ResendInvoiceEmailRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ResendInvoiceEmailRequest) ProtoMessage() {}
-
-func (x *ResendInvoiceEmailRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[44]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ResendInvoiceEmailRequest.ProtoReflect.Descriptor instead.
-func (*ResendInvoiceEmailRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{44}
-}
-
-func (x *ResendInvoiceEmailRequest) GetInput() *ResendInvoiceEmailInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type ResendInvoiceEmailResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ResendInvoiceEmailResponse) Reset() {
-	*x = ResendInvoiceEmailResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[45]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ResendInvoiceEmailResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ResendInvoiceEmailResponse) ProtoMessage() {}
-
-func (x *ResendInvoiceEmailResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[45]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ResendInvoiceEmailResponse.ProtoReflect.Descriptor instead.
-func (*ResendInvoiceEmailResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{45}
-}
-
-func (x *ResendInvoiceEmailResponse) GetInvoice() *v2.BillingInvoice {
-	if x != nil {
-		return x.Invoice
-	}
-	return nil
-}
-
-type RetryAllInvoicePaymentsRequest struct {
-	state      protoimpl.MessageState `protogen:"open.v1"`
-	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
-	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
-	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.invoices.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RetryAllInvoicePaymentsRequest) Reset() {
-	*x = RetryAllInvoicePaymentsRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[46]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RetryAllInvoicePaymentsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RetryAllInvoicePaymentsRequest) ProtoMessage() {}
-
-func (x *RetryAllInvoicePaymentsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[46]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RetryAllInvoicePaymentsRequest.ProtoReflect.Descriptor instead.
-func (*RetryAllInvoicePaymentsRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{46}
-}
-
-func (x *RetryAllInvoicePaymentsRequest) GetFilter() *ListFilter {
-	if x != nil {
-		return x.Filter
-	}
-	return nil
-}
-
-func (x *RetryAllInvoicePaymentsRequest) GetSort() *ListSort {
-	if x != nil {
-		return x.Sort
-	}
-	return nil
-}
-
-func (x *RetryAllInvoicePaymentsRequest) GetPagination() *kernel.PaginationInfo {
-	if x != nil {
-		return x.Pagination
-	}
-	return nil
-}
-
-func (x *RetryAllInvoicePaymentsRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *RetryAllInvoicePaymentsRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type RetryAllInvoicePaymentsResponse struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Items          []*v2.BillingInvoice    `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *RetryAllInvoicePaymentsResponse) Reset() {
-	*x = RetryAllInvoicePaymentsResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[47]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RetryAllInvoicePaymentsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RetryAllInvoicePaymentsResponse) ProtoMessage() {}
-
-func (x *RetryAllInvoicePaymentsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[47]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RetryAllInvoicePaymentsResponse.ProtoReflect.Descriptor instead.
-func (*RetryAllInvoicePaymentsResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{47}
-}
-
-func (x *RetryAllInvoicePaymentsResponse) GetItems() []*v2.BillingInvoice {
-	if x != nil {
-		return x.Items
-	}
-	return nil
-}
-
-func (x *RetryAllInvoicePaymentsResponse) GetTotalCount() uint64 {
-	if x != nil {
-		return x.TotalCount
-	}
-	return 0
-}
-
-func (x *RetryAllInvoicePaymentsResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
-	}
-	return nil
-}
-
-type RetryAllInvoicesRequest struct {
-	state      protoimpl.MessageState `protogen:"open.v1"`
-	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
-	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
-	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.invoices.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RetryAllInvoicesRequest) Reset() {
-	*x = RetryAllInvoicesRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[48]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RetryAllInvoicesRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RetryAllInvoicesRequest) ProtoMessage() {}
-
-func (x *RetryAllInvoicesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[48]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RetryAllInvoicesRequest.ProtoReflect.Descriptor instead.
-func (*RetryAllInvoicesRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{48}
-}
-
-func (x *RetryAllInvoicesRequest) GetFilter() *ListFilter {
-	if x != nil {
-		return x.Filter
-	}
-	return nil
-}
-
-func (x *RetryAllInvoicesRequest) GetSort() *ListSort {
-	if x != nil {
-		return x.Sort
-	}
-	return nil
-}
-
-func (x *RetryAllInvoicesRequest) GetPagination() *kernel.PaginationInfo {
-	if x != nil {
-		return x.Pagination
-	}
-	return nil
-}
-
-func (x *RetryAllInvoicesRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *RetryAllInvoicesRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type RetryAllInvoicesResponse struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Items          []*v2.BillingInvoice    `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *RetryAllInvoicesResponse) Reset() {
-	*x = RetryAllInvoicesResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[49]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RetryAllInvoicesResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RetryAllInvoicesResponse) ProtoMessage() {}
-
-func (x *RetryAllInvoicesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[49]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RetryAllInvoicesResponse.ProtoReflect.Descriptor instead.
-func (*RetryAllInvoicesResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{49}
-}
-
-func (x *RetryAllInvoicesResponse) GetItems() []*v2.BillingInvoice {
-	if x != nil {
-		return x.Items
-	}
-	return nil
-}
-
-func (x *RetryAllInvoicesResponse) GetTotalCount() uint64 {
-	if x != nil {
-		return x.TotalCount
-	}
-	return 0
-}
-
-func (x *RetryAllInvoicesResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
-	}
-	return nil
-}
-
-type RetryInvoiceRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *RetryInvoiceInput     `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RetryInvoiceRequest) Reset() {
-	*x = RetryInvoiceRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[50]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RetryInvoiceRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RetryInvoiceRequest) ProtoMessage() {}
-
-func (x *RetryInvoiceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[50]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RetryInvoiceRequest.ProtoReflect.Descriptor instead.
-func (*RetryInvoiceRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{50}
-}
-
-func (x *RetryInvoiceRequest) GetInput() *RetryInvoiceInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type RetryInvoiceResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RetryInvoiceResponse) Reset() {
-	*x = RetryInvoiceResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[51]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RetryInvoiceResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RetryInvoiceResponse) ProtoMessage() {}
-
-func (x *RetryInvoiceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[51]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RetryInvoiceResponse.ProtoReflect.Descriptor instead.
-func (*RetryInvoiceResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{51}
-}
-
-func (x *RetryInvoiceResponse) GetInvoice() *v2.BillingInvoice {
-	if x != nil {
-		return x.Invoice
-	}
-	return nil
-}
-
-type RetryInvoicePaymentRequest struct {
-	state         protoimpl.MessageState    `protogen:"open.v1"`
-	Input         *RetryInvoicePaymentInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RetryInvoicePaymentRequest) Reset() {
-	*x = RetryInvoicePaymentRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[52]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RetryInvoicePaymentRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RetryInvoicePaymentRequest) ProtoMessage() {}
-
-func (x *RetryInvoicePaymentRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[52]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RetryInvoicePaymentRequest.ProtoReflect.Descriptor instead.
-func (*RetryInvoicePaymentRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{52}
-}
-
-func (x *RetryInvoicePaymentRequest) GetInput() *RetryInvoicePaymentInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type RetryInvoicePaymentResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RetryInvoicePaymentResponse) Reset() {
-	*x = RetryInvoicePaymentResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[53]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RetryInvoicePaymentResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RetryInvoicePaymentResponse) ProtoMessage() {}
-
-func (x *RetryInvoicePaymentResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[53]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RetryInvoicePaymentResponse.ProtoReflect.Descriptor instead.
-func (*RetryInvoicePaymentResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{53}
-}
-
-func (x *RetryInvoicePaymentResponse) GetInvoice() *v2.BillingInvoice {
-	if x != nil {
-		return x.Invoice
-	}
-	return nil
-}
-
-type RetryTaxProviderVoidingRequest struct {
-	state         protoimpl.MessageState        `protogen:"open.v1"`
-	Input         *RetryTaxProviderVoidingInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RetryTaxProviderVoidingRequest) Reset() {
-	*x = RetryTaxProviderVoidingRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[54]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RetryTaxProviderVoidingRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RetryTaxProviderVoidingRequest) ProtoMessage() {}
-
-func (x *RetryTaxProviderVoidingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[54]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RetryTaxProviderVoidingRequest.ProtoReflect.Descriptor instead.
-func (*RetryTaxProviderVoidingRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{54}
-}
-
-func (x *RetryTaxProviderVoidingRequest) GetInput() *RetryTaxProviderVoidingInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type RetryTaxProviderVoidingResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RetryTaxProviderVoidingResponse) Reset() {
-	*x = RetryTaxProviderVoidingResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[55]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RetryTaxProviderVoidingResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RetryTaxProviderVoidingResponse) ProtoMessage() {}
-
-func (x *RetryTaxProviderVoidingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[55]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RetryTaxProviderVoidingResponse.ProtoReflect.Descriptor instead.
-func (*RetryTaxProviderVoidingResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{55}
-}
-
-func (x *RetryTaxProviderVoidingResponse) GetInvoice() *v2.BillingInvoice {
-	if x != nil {
-		return x.Invoice
-	}
-	return nil
-}
-
-type SyncHubspotIntegrationInvoiceRequest struct {
-	state         protoimpl.MessageState              `protogen:"open.v1"`
-	Input         *SyncHubspotIntegrationInvoiceInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SyncHubspotIntegrationInvoiceRequest) Reset() {
-	*x = SyncHubspotIntegrationInvoiceRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[56]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SyncHubspotIntegrationInvoiceRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SyncHubspotIntegrationInvoiceRequest) ProtoMessage() {}
-
-func (x *SyncHubspotIntegrationInvoiceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[56]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SyncHubspotIntegrationInvoiceRequest.ProtoReflect.Descriptor instead.
-func (*SyncHubspotIntegrationInvoiceRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{56}
-}
-
-func (x *SyncHubspotIntegrationInvoiceRequest) GetInput() *SyncHubspotIntegrationInvoiceInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type SyncHubspotIntegrationInvoiceResponse struct {
-	state                     protoimpl.MessageState     `protogen:"open.v1"`
-	SyncHubspotInvoicePayload *SyncHubspotInvoicePayload `protobuf:"bytes,1,opt,name=sync_hubspot_invoice_payload,json=syncHubspotInvoicePayload,proto3" json:"sync_hubspot_invoice_payload,omitempty"`
-	unknownFields             protoimpl.UnknownFields
-	sizeCache                 protoimpl.SizeCache
-}
-
-func (x *SyncHubspotIntegrationInvoiceResponse) Reset() {
-	*x = SyncHubspotIntegrationInvoiceResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[57]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SyncHubspotIntegrationInvoiceResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SyncHubspotIntegrationInvoiceResponse) ProtoMessage() {}
-
-func (x *SyncHubspotIntegrationInvoiceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[57]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SyncHubspotIntegrationInvoiceResponse.ProtoReflect.Descriptor instead.
-func (*SyncHubspotIntegrationInvoiceResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{57}
-}
-
-func (x *SyncHubspotIntegrationInvoiceResponse) GetSyncHubspotInvoicePayload() *SyncHubspotInvoicePayload {
-	if x != nil {
-		return x.SyncHubspotInvoicePayload
-	}
-	return nil
-}
-
-type SyncIntegrationInvoiceRequest struct {
-	state         protoimpl.MessageState       `protogen:"open.v1"`
-	Input         *SyncIntegrationInvoiceInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SyncIntegrationInvoiceRequest) Reset() {
-	*x = SyncIntegrationInvoiceRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[58]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SyncIntegrationInvoiceRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SyncIntegrationInvoiceRequest) ProtoMessage() {}
-
-func (x *SyncIntegrationInvoiceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[58]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SyncIntegrationInvoiceRequest.ProtoReflect.Descriptor instead.
-func (*SyncIntegrationInvoiceRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{58}
-}
-
-func (x *SyncIntegrationInvoiceRequest) GetInput() *SyncIntegrationInvoiceInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type SyncIntegrationInvoiceResponse struct {
-	state                         protoimpl.MessageState         `protogen:"open.v1"`
-	SyncIntegrationInvoicePayload *SyncIntegrationInvoicePayload `protobuf:"bytes,1,opt,name=sync_integration_invoice_payload,json=syncIntegrationInvoicePayload,proto3" json:"sync_integration_invoice_payload,omitempty"`
-	unknownFields                 protoimpl.UnknownFields
-	sizeCache                     protoimpl.SizeCache
-}
-
-func (x *SyncIntegrationInvoiceResponse) Reset() {
-	*x = SyncIntegrationInvoiceResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[59]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SyncIntegrationInvoiceResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SyncIntegrationInvoiceResponse) ProtoMessage() {}
-
-func (x *SyncIntegrationInvoiceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[59]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SyncIntegrationInvoiceResponse.ProtoReflect.Descriptor instead.
-func (*SyncIntegrationInvoiceResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{59}
-}
-
-func (x *SyncIntegrationInvoiceResponse) GetSyncIntegrationInvoicePayload() *SyncIntegrationInvoicePayload {
-	if x != nil {
-		return x.SyncIntegrationInvoicePayload
-	}
-	return nil
-}
-
-type SyncSalesforceInvoiceRequest struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	Input         *SyncSalesforceInvoiceInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SyncSalesforceInvoiceRequest) Reset() {
-	*x = SyncSalesforceInvoiceRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[60]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SyncSalesforceInvoiceRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SyncSalesforceInvoiceRequest) ProtoMessage() {}
-
-func (x *SyncSalesforceInvoiceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[60]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SyncSalesforceInvoiceRequest.ProtoReflect.Descriptor instead.
-func (*SyncSalesforceInvoiceRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{60}
-}
-
-func (x *SyncSalesforceInvoiceRequest) GetInput() *SyncSalesforceInvoiceInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type SyncSalesforceInvoiceResponse struct {
-	state                        protoimpl.MessageState        `protogen:"open.v1"`
-	SyncSalesforceInvoicePayload *SyncSalesforceInvoicePayload `protobuf:"bytes,1,opt,name=sync_salesforce_invoice_payload,json=syncSalesforceInvoicePayload,proto3" json:"sync_salesforce_invoice_payload,omitempty"`
-	unknownFields                protoimpl.UnknownFields
-	sizeCache                    protoimpl.SizeCache
-}
-
-func (x *SyncSalesforceInvoiceResponse) Reset() {
-	*x = SyncSalesforceInvoiceResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[61]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SyncSalesforceInvoiceResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SyncSalesforceInvoiceResponse) ProtoMessage() {}
-
-func (x *SyncSalesforceInvoiceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[61]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SyncSalesforceInvoiceResponse.ProtoReflect.Descriptor instead.
-func (*SyncSalesforceInvoiceResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{61}
-}
-
-func (x *SyncSalesforceInvoiceResponse) GetSyncSalesforceInvoicePayload() *SyncSalesforceInvoicePayload {
-	if x != nil {
-		return x.SyncSalesforceInvoicePayload
-	}
-	return nil
-}
-
-type UpdateRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *UpdateInvoiceInput    `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateRequest) Reset() {
-	*x = UpdateRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[62]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateRequest) ProtoMessage() {}
-
-func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[62]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateRequest.ProtoReflect.Descriptor instead.
-func (*UpdateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{62}
-}
-
-func (x *UpdateRequest) GetInput() *UpdateInvoiceInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type UpdateResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateResponse) Reset() {
-	*x = UpdateResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[63]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateResponse) ProtoMessage() {}
-
-func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[63]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateResponse.ProtoReflect.Descriptor instead.
-func (*UpdateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{63}
-}
-
-func (x *UpdateResponse) GetInvoice() *v2.BillingInvoice {
-	if x != nil {
-		return x.Invoice
-	}
-	return nil
-}
-
-type UpdateInvoiceCustomSectionRequest struct {
-	state         protoimpl.MessageState           `protogen:"open.v1"`
-	Input         *UpdateInvoiceCustomSectionInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateInvoiceCustomSectionRequest) Reset() {
-	*x = UpdateInvoiceCustomSectionRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[64]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateInvoiceCustomSectionRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateInvoiceCustomSectionRequest) ProtoMessage() {}
-
-func (x *UpdateInvoiceCustomSectionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[64]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateInvoiceCustomSectionRequest.ProtoReflect.Descriptor instead.
-func (*UpdateInvoiceCustomSectionRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{64}
-}
-
-func (x *UpdateInvoiceCustomSectionRequest) GetInput() *UpdateInvoiceCustomSectionInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type UpdateInvoiceCustomSectionResponse struct {
-	state                protoimpl.MessageState   `protogen:"open.v1"`
-	InvoiceCustomSection *v2.InvoiceCustomSection `protobuf:"bytes,1,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3" json:"invoice_custom_section,omitempty"`
-	unknownFields        protoimpl.UnknownFields
-	sizeCache            protoimpl.SizeCache
-}
-
-func (x *UpdateInvoiceCustomSectionResponse) Reset() {
-	*x = UpdateInvoiceCustomSectionResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[65]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateInvoiceCustomSectionResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateInvoiceCustomSectionResponse) ProtoMessage() {}
-
-func (x *UpdateInvoiceCustomSectionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[65]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateInvoiceCustomSectionResponse.ProtoReflect.Descriptor instead.
-func (*UpdateInvoiceCustomSectionResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{65}
-}
-
-func (x *UpdateInvoiceCustomSectionResponse) GetInvoiceCustomSection() *v2.InvoiceCustomSection {
-	if x != nil {
-		return x.InvoiceCustomSection
-	}
-	return nil
-}
-
-type VoidInvoiceRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *VoidInvoiceInput      `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *VoidInvoiceRequest) Reset() {
-	*x = VoidInvoiceRequest{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[66]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *VoidInvoiceRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*VoidInvoiceRequest) ProtoMessage() {}
-
-func (x *VoidInvoiceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[66]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use VoidInvoiceRequest.ProtoReflect.Descriptor instead.
-func (*VoidInvoiceRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{66}
-}
-
-func (x *VoidInvoiceRequest) GetInput() *VoidInvoiceInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type VoidInvoiceResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *VoidInvoiceResponse) Reset() {
-	*x = VoidInvoiceResponse{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[67]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *VoidInvoiceResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*VoidInvoiceResponse) ProtoMessage() {}
-
-func (x *VoidInvoiceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[67]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use VoidInvoiceResponse.ProtoReflect.Descriptor instead.
-func (*VoidInvoiceResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{67}
-}
-
-func (x *VoidInvoiceResponse) GetInvoice() *v2.BillingInvoice {
-	if x != nil {
-		return x.Invoice
-	}
-	return nil
-}
-
-// Void Invoice input arguments
-type VoidInvoiceInput struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	CreditAmount       *int64                 `protobuf:"varint,1,opt,name=credit_amount,json=creditAmount,proto3,oneof" json:"credit_amount,omitempty"`
-	GenerateCreditNote *bool                  `protobuf:"varint,2,opt,name=generate_credit_note,json=generateCreditNote,proto3,oneof" json:"generate_credit_note,omitempty"`
-	Id                 string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	RefundAmount       *int64                 `protobuf:"varint,4,opt,name=refund_amount,json=refundAmount,proto3,oneof" json:"refund_amount,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *VoidInvoiceInput) Reset() {
-	*x = VoidInvoiceInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[68]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *VoidInvoiceInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*VoidInvoiceInput) ProtoMessage() {}
-
-func (x *VoidInvoiceInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[68]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use VoidInvoiceInput.ProtoReflect.Descriptor instead.
-func (*VoidInvoiceInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{68}
-}
-
-func (x *VoidInvoiceInput) GetCreditAmount() int64 {
-	if x != nil && x.CreditAmount != nil {
-		return *x.CreditAmount
-	}
-	return 0
-}
-
-func (x *VoidInvoiceInput) GetGenerateCreditNote() bool {
-	if x != nil && x.GenerateCreditNote != nil {
-		return *x.GenerateCreditNote
-	}
-	return false
-}
-
-func (x *VoidInvoiceInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *VoidInvoiceInput) GetRefundAmount() int64 {
-	if x != nil && x.RefundAmount != nil {
-		return *x.RefundAmount
-	}
-	return 0
-}
-
-// Autogenerated input type of UpdateInvoiceCustomSection
-type UpdateInvoiceCustomSectionInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Code          *string                `protobuf:"bytes,1,opt,name=code,proto3,oneof" json:"code,omitempty"`
-	Description   *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
-	Details       *string                `protobuf:"bytes,3,opt,name=details,proto3,oneof" json:"details,omitempty"`
-	DisplayName   *string                `protobuf:"bytes,4,opt,name=display_name,json=displayName,proto3,oneof" json:"display_name,omitempty"`
-	Id            string                 `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
-	Name          *string                `protobuf:"bytes,6,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateInvoiceCustomSectionInput) Reset() {
-	*x = UpdateInvoiceCustomSectionInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[69]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateInvoiceCustomSectionInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateInvoiceCustomSectionInput) ProtoMessage() {}
-
-func (x *UpdateInvoiceCustomSectionInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[69]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateInvoiceCustomSectionInput.ProtoReflect.Descriptor instead.
-func (*UpdateInvoiceCustomSectionInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{69}
-}
-
-func (x *UpdateInvoiceCustomSectionInput) GetCode() string {
-	if x != nil && x.Code != nil {
-		return *x.Code
-	}
-	return ""
-}
-
-func (x *UpdateInvoiceCustomSectionInput) GetDescription() string {
-	if x != nil && x.Description != nil {
-		return *x.Description
-	}
-	return ""
-}
-
-func (x *UpdateInvoiceCustomSectionInput) GetDetails() string {
-	if x != nil && x.Details != nil {
-		return *x.Details
-	}
-	return ""
-}
-
-func (x *UpdateInvoiceCustomSectionInput) GetDisplayName() string {
-	if x != nil && x.DisplayName != nil {
-		return *x.DisplayName
-	}
-	return ""
-}
-
-func (x *UpdateInvoiceCustomSectionInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *UpdateInvoiceCustomSectionInput) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
-	}
-	return ""
-}
-
-// Update Invoice input arguments
-type UpdateInvoiceInput struct {
-	state         protoimpl.MessageState           `protogen:"open.v1"`
-	Id            string                           `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Metadata      []*InvoiceMetadataInput          `protobuf:"bytes,2,rep,name=metadata,proto3" json:"metadata,omitempty"`
-	PaymentStatus *v2.InvoicePaymentStatusTypeEnum `protobuf:"varint,3,opt,name=payment_status,json=paymentStatus,proto3,enum=invora.billing.common.v2.InvoicePaymentStatusTypeEnum,oneof" json:"payment_status,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateInvoiceInput) Reset() {
-	*x = UpdateInvoiceInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[70]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateInvoiceInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateInvoiceInput) ProtoMessage() {}
-
-func (x *UpdateInvoiceInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[70]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateInvoiceInput.ProtoReflect.Descriptor instead.
-func (*UpdateInvoiceInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{70}
-}
-
-func (x *UpdateInvoiceInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *UpdateInvoiceInput) GetMetadata() []*InvoiceMetadataInput {
-	if x != nil {
-		return x.Metadata
-	}
-	return nil
-}
-
-func (x *UpdateInvoiceInput) GetPaymentStatus() v2.InvoicePaymentStatusTypeEnum {
-	if x != nil && x.PaymentStatus != nil {
-		return *x.PaymentStatus
-	}
-	return v2.InvoicePaymentStatusTypeEnum(0)
-}
-
-// Attributes for creating or updating invoice metadata object
+// Attributes for creating or updating invoice metadata.
 type InvoiceMetadataInput struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            *string                `protobuf:"bytes,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
@@ -3799,7 +1068,7 @@ type InvoiceMetadataInput struct {
 
 func (x *InvoiceMetadataInput) Reset() {
 	*x = InvoiceMetadataInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[71]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3811,7 +1080,7 @@ func (x *InvoiceMetadataInput) String() string {
 func (*InvoiceMetadataInput) ProtoMessage() {}
 
 func (x *InvoiceMetadataInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[71]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3824,7 +1093,7 @@ func (x *InvoiceMetadataInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InvoiceMetadataInput.ProtoReflect.Descriptor instead.
 func (*InvoiceMetadataInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{71}
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *InvoiceMetadataInput) GetId() string {
@@ -3848,29 +1117,31 @@ func (x *InvoiceMetadataInput) GetValue() string {
 	return ""
 }
 
-// Autogenerated input type of SyncSalesforceInvoice
-type SyncSalesforceInvoiceInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	InvoiceId     string                 `protobuf:"bytes,1,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
+type UpdateRequest struct {
+	state         protoimpl.MessageState       `protogen:"open.v1"`
+	Id            string                       `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Metadata      []*InvoiceMetadataInput      `protobuf:"bytes,2,rep,name=metadata,proto3" json:"metadata,omitempty"`
+	PaymentStatus *v2.InvoicePaymentStatusType `protobuf:"varint,3,opt,name=payment_status,json=paymentStatus,proto3,enum=invora.billing.common.v2.InvoicePaymentStatusType,oneof" json:"payment_status,omitempty"`
+	UpdateMask    *fieldmaskpb.FieldMask       `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SyncSalesforceInvoiceInput) Reset() {
-	*x = SyncSalesforceInvoiceInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[72]
+func (x *UpdateRequest) Reset() {
+	*x = UpdateRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SyncSalesforceInvoiceInput) String() string {
+func (x *UpdateRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SyncSalesforceInvoiceInput) ProtoMessage() {}
+func (*UpdateRequest) ProtoMessage() {}
 
-func (x *SyncSalesforceInvoiceInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[72]
+func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3881,312 +1152,61 @@ func (x *SyncSalesforceInvoiceInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SyncSalesforceInvoiceInput.ProtoReflect.Descriptor instead.
-func (*SyncSalesforceInvoiceInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{72}
+// Deprecated: Use UpdateRequest.ProtoReflect.Descriptor instead.
+func (*UpdateRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{17}
 }
 
-func (x *SyncSalesforceInvoiceInput) GetInvoiceId() string {
-	if x != nil {
-		return x.InvoiceId
-	}
-	return ""
-}
-
-// Autogenerated return type of SyncSalesforceInvoice.
-type SyncSalesforceInvoicePayload struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	InvoiceId     *string                `protobuf:"bytes,1,opt,name=invoice_id,json=invoiceId,proto3,oneof" json:"invoice_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SyncSalesforceInvoicePayload) Reset() {
-	*x = SyncSalesforceInvoicePayload{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[73]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SyncSalesforceInvoicePayload) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SyncSalesforceInvoicePayload) ProtoMessage() {}
-
-func (x *SyncSalesforceInvoicePayload) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[73]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SyncSalesforceInvoicePayload.ProtoReflect.Descriptor instead.
-func (*SyncSalesforceInvoicePayload) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{73}
-}
-
-func (x *SyncSalesforceInvoicePayload) GetInvoiceId() string {
-	if x != nil && x.InvoiceId != nil {
-		return *x.InvoiceId
-	}
-	return ""
-}
-
-// Autogenerated input type of SyncIntegrationInvoice
-type SyncIntegrationInvoiceInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	InvoiceId     string                 `protobuf:"bytes,1,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SyncIntegrationInvoiceInput) Reset() {
-	*x = SyncIntegrationInvoiceInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[74]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SyncIntegrationInvoiceInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SyncIntegrationInvoiceInput) ProtoMessage() {}
-
-func (x *SyncIntegrationInvoiceInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[74]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SyncIntegrationInvoiceInput.ProtoReflect.Descriptor instead.
-func (*SyncIntegrationInvoiceInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{74}
-}
-
-func (x *SyncIntegrationInvoiceInput) GetInvoiceId() string {
-	if x != nil {
-		return x.InvoiceId
-	}
-	return ""
-}
-
-// Autogenerated return type of SyncIntegrationInvoice.
-type SyncIntegrationInvoicePayload struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	InvoiceId     *string                `protobuf:"bytes,1,opt,name=invoice_id,json=invoiceId,proto3,oneof" json:"invoice_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SyncIntegrationInvoicePayload) Reset() {
-	*x = SyncIntegrationInvoicePayload{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[75]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SyncIntegrationInvoicePayload) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SyncIntegrationInvoicePayload) ProtoMessage() {}
-
-func (x *SyncIntegrationInvoicePayload) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[75]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SyncIntegrationInvoicePayload.ProtoReflect.Descriptor instead.
-func (*SyncIntegrationInvoicePayload) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{75}
-}
-
-func (x *SyncIntegrationInvoicePayload) GetInvoiceId() string {
-	if x != nil && x.InvoiceId != nil {
-		return *x.InvoiceId
-	}
-	return ""
-}
-
-// Autogenerated input type of SyncHubspotInvoice
-type SyncHubspotIntegrationInvoiceInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	InvoiceId     string                 `protobuf:"bytes,1,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SyncHubspotIntegrationInvoiceInput) Reset() {
-	*x = SyncHubspotIntegrationInvoiceInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[76]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SyncHubspotIntegrationInvoiceInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SyncHubspotIntegrationInvoiceInput) ProtoMessage() {}
-
-func (x *SyncHubspotIntegrationInvoiceInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[76]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SyncHubspotIntegrationInvoiceInput.ProtoReflect.Descriptor instead.
-func (*SyncHubspotIntegrationInvoiceInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{76}
-}
-
-func (x *SyncHubspotIntegrationInvoiceInput) GetInvoiceId() string {
-	if x != nil {
-		return x.InvoiceId
-	}
-	return ""
-}
-
-// Autogenerated return type of SyncHubspotInvoice.
-type SyncHubspotInvoicePayload struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	InvoiceId     *string                `protobuf:"bytes,1,opt,name=invoice_id,json=invoiceId,proto3,oneof" json:"invoice_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SyncHubspotInvoicePayload) Reset() {
-	*x = SyncHubspotInvoicePayload{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[77]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SyncHubspotInvoicePayload) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SyncHubspotInvoicePayload) ProtoMessage() {}
-
-func (x *SyncHubspotInvoicePayload) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[77]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SyncHubspotInvoicePayload.ProtoReflect.Descriptor instead.
-func (*SyncHubspotInvoicePayload) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{77}
-}
-
-func (x *SyncHubspotInvoicePayload) GetInvoiceId() string {
-	if x != nil && x.InvoiceId != nil {
-		return *x.InvoiceId
-	}
-	return ""
-}
-
-// Autogenerated input type of RetryTaxProviderVoiding
-type RetryTaxProviderVoidingInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RetryTaxProviderVoidingInput) Reset() {
-	*x = RetryTaxProviderVoidingInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[78]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RetryTaxProviderVoidingInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RetryTaxProviderVoidingInput) ProtoMessage() {}
-
-func (x *RetryTaxProviderVoidingInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[78]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RetryTaxProviderVoidingInput.ProtoReflect.Descriptor instead.
-func (*RetryTaxProviderVoidingInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{78}
-}
-
-func (x *RetryTaxProviderVoidingInput) GetId() string {
+func (x *UpdateRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-// Retry payment input arguments
-type RetryInvoicePaymentInput struct {
-	state         protoimpl.MessageState          `protogen:"open.v1"`
-	Id            string                          `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	PaymentMethod *v2.PaymentMethodReferenceInput `protobuf:"bytes,2,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
+func (x *UpdateRequest) GetMetadata() []*InvoiceMetadataInput {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetPaymentStatus() v2.InvoicePaymentStatusType {
+	if x != nil && x.PaymentStatus != nil {
+		return *x.PaymentStatus
+	}
+	return v2.InvoicePaymentStatusType(0)
+}
+
+func (x *UpdateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+type UpdateResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *RetryInvoicePaymentInput) Reset() {
-	*x = RetryInvoicePaymentInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[79]
+func (x *UpdateResponse) Reset() {
+	*x = UpdateResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *RetryInvoicePaymentInput) String() string {
+func (x *UpdateResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RetryInvoicePaymentInput) ProtoMessage() {}
+func (*UpdateResponse) ProtoMessage() {}
 
-func (x *RetryInvoicePaymentInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[79]
+func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4197,241 +1217,153 @@ func (x *RetryInvoicePaymentInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RetryInvoicePaymentInput.ProtoReflect.Descriptor instead.
-func (*RetryInvoicePaymentInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{79}
+// Deprecated: Use UpdateResponse.ProtoReflect.Descriptor instead.
+func (*UpdateResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{18}
 }
 
-func (x *RetryInvoicePaymentInput) GetId() string {
+func (x *UpdateResponse) GetInvoice() *v2.BillingInvoice {
 	if x != nil {
-		return x.Id
+		return x.Invoice
+	}
+	return nil
+}
+
+type FeeInput struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	AddOnId            *string                `protobuf:"bytes,1,opt,name=add_on_id,json=addOnId,proto3,oneof" json:"add_on_id,omitempty"`
+	Description        *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	FromDatetime       *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=from_datetime,json=fromDatetime,proto3" json:"from_datetime,omitempty"`
+	InvoiceDisplayName *string                `protobuf:"bytes,4,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
+	Name               *string                `protobuf:"bytes,5,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	TaxCodes           []string               `protobuf:"bytes,6,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
+	ToDatetime         *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=to_datetime,json=toDatetime,proto3" json:"to_datetime,omitempty"`
+	UnitAmountCents    *int64                 `protobuf:"varint,8,opt,name=unit_amount_cents,json=unitAmountCents,proto3,oneof" json:"unit_amount_cents,omitempty"`
+	Units              *kernel.DecimalValue   `protobuf:"bytes,9,opt,name=units,proto3,oneof" json:"units,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *FeeInput) Reset() {
+	*x = FeeInput{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FeeInput) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FeeInput) ProtoMessage() {}
+
+func (x *FeeInput) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FeeInput.ProtoReflect.Descriptor instead.
+func (*FeeInput) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *FeeInput) GetAddOnId() string {
+	if x != nil && x.AddOnId != nil {
+		return *x.AddOnId
 	}
 	return ""
 }
 
-func (x *RetryInvoicePaymentInput) GetPaymentMethod() *v2.PaymentMethodReferenceInput {
-	if x != nil {
-		return x.PaymentMethod
-	}
-	return nil
-}
-
-// Autogenerated input type of RetryInvoice
-type RetryInvoiceInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RetryInvoiceInput) Reset() {
-	*x = RetryInvoiceInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[80]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RetryInvoiceInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RetryInvoiceInput) ProtoMessage() {}
-
-func (x *RetryInvoiceInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[80]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RetryInvoiceInput.ProtoReflect.Descriptor instead.
-func (*RetryInvoiceInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{80}
-}
-
-func (x *RetryInvoiceInput) GetId() string {
-	if x != nil {
-		return x.Id
+func (x *FeeInput) GetDescription() string {
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
 
-// Autogenerated input type of RetryAllInvoices
-type RetryAllInvoicesInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RetryAllInvoicesInput) Reset() {
-	*x = RetryAllInvoicesInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[81]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RetryAllInvoicesInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RetryAllInvoicesInput) ProtoMessage() {}
-
-func (x *RetryAllInvoicesInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[81]
+func (x *FeeInput) GetFromDatetime() *timestamppb.Timestamp {
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RetryAllInvoicesInput.ProtoReflect.Descriptor instead.
-func (*RetryAllInvoicesInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{81}
-}
-
-// Autogenerated input type of RetryAllInvoicePayments
-type RetryAllInvoicePaymentsInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RetryAllInvoicePaymentsInput) Reset() {
-	*x = RetryAllInvoicePaymentsInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[82]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RetryAllInvoicePaymentsInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RetryAllInvoicePaymentsInput) ProtoMessage() {}
-
-func (x *RetryAllInvoicePaymentsInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[82]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RetryAllInvoicePaymentsInput.ProtoReflect.Descriptor instead.
-func (*RetryAllInvoicePaymentsInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{82}
-}
-
-// Resend email input arguments
-type ResendInvoiceEmailInput struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// BCC recipients
-	Bcc []string `protobuf:"bytes,1,rep,name=bcc,proto3" json:"bcc,omitempty"`
-	// CC recipients
-	Cc []string `protobuf:"bytes,2,rep,name=cc,proto3" json:"cc,omitempty"`
-	// Document ID
-	Id string `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	// Custom recipients (defaults to customer email)
-	To            []string `protobuf:"bytes,4,rep,name=to,proto3" json:"to,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ResendInvoiceEmailInput) Reset() {
-	*x = ResendInvoiceEmailInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[83]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ResendInvoiceEmailInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ResendInvoiceEmailInput) ProtoMessage() {}
-
-func (x *ResendInvoiceEmailInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[83]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ResendInvoiceEmailInput.ProtoReflect.Descriptor instead.
-func (*ResendInvoiceEmailInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{83}
-}
-
-func (x *ResendInvoiceEmailInput) GetBcc() []string {
-	if x != nil {
-		return x.Bcc
+		return x.FromDatetime
 	}
 	return nil
 }
 
-func (x *ResendInvoiceEmailInput) GetCc() []string {
-	if x != nil {
-		return x.Cc
-	}
-	return nil
-}
-
-func (x *ResendInvoiceEmailInput) GetId() string {
-	if x != nil {
-		return x.Id
+func (x *FeeInput) GetInvoiceDisplayName() string {
+	if x != nil && x.InvoiceDisplayName != nil {
+		return *x.InvoiceDisplayName
 	}
 	return ""
 }
 
-func (x *ResendInvoiceEmailInput) GetTo() []string {
+func (x *FeeInput) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *FeeInput) GetTaxCodes() []string {
 	if x != nil {
-		return x.To
+		return x.TaxCodes
 	}
 	return nil
 }
 
-// Autogenerated input type of RegenerateInvoice
-type RegenerateInvoiceInput struct {
-	state           protoimpl.MessageState   `protogen:"open.v1"`
-	Fees            []*VoidedInvoiceFeeInput `protobuf:"bytes,1,rep,name=fees,proto3" json:"fees,omitempty"`
-	VoidedInvoiceId string                   `protobuf:"bytes,2,opt,name=voided_invoice_id,json=voidedInvoiceId,proto3" json:"voided_invoice_id,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+func (x *FeeInput) GetToDatetime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ToDatetime
+	}
+	return nil
 }
 
-func (x *RegenerateInvoiceInput) Reset() {
-	*x = RegenerateInvoiceInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[84]
+func (x *FeeInput) GetUnitAmountCents() int64 {
+	if x != nil && x.UnitAmountCents != nil {
+		return *x.UnitAmountCents
+	}
+	return 0
+}
+
+func (x *FeeInput) GetUnits() *kernel.DecimalValue {
+	if x != nil {
+		return x.Units
+	}
+	return nil
+}
+
+type FetchDraftInvoiceTaxesRequest struct {
+	state                protoimpl.MessageState                  `protogen:"open.v1"`
+	Currency             *v2.CurrencyEnum                        `protobuf:"varint,1,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"currency,omitempty"`
+	CustomerId           string                                  `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	Fees                 []*FeeInput                             `protobuf:"bytes,3,rep,name=fees,proto3" json:"fees,omitempty"`
+	InvoiceCustomSection *v2.InvoiceCustomSectionsReferenceInput `protobuf:"bytes,4,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3,oneof" json:"invoice_custom_section,omitempty"`
+	PaymentMethod        *v2.PaymentMethodReferenceInput         `protobuf:"bytes,5,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
+	VoidedInvoiceId      *string                                 `protobuf:"bytes,6,opt,name=voided_invoice_id,json=voidedInvoiceId,proto3,oneof" json:"voided_invoice_id,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *FetchDraftInvoiceTaxesRequest) Reset() {
+	*x = FetchDraftInvoiceTaxesRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *RegenerateInvoiceInput) String() string {
+func (x *FetchDraftInvoiceTaxesRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RegenerateInvoiceInput) ProtoMessage() {}
+func (*FetchDraftInvoiceTaxesRequest) ProtoMessage() {}
 
-func (x *RegenerateInvoiceInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[84]
+func (x *FetchDraftInvoiceTaxesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4442,26 +1374,722 @@ func (x *RegenerateInvoiceInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RegenerateInvoiceInput.ProtoReflect.Descriptor instead.
-func (*RegenerateInvoiceInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{84}
+// Deprecated: Use FetchDraftInvoiceTaxesRequest.ProtoReflect.Descriptor instead.
+func (*FetchDraftInvoiceTaxesRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{20}
 }
 
-func (x *RegenerateInvoiceInput) GetFees() []*VoidedInvoiceFeeInput {
+func (x *FetchDraftInvoiceTaxesRequest) GetCurrency() v2.CurrencyEnum {
+	if x != nil && x.Currency != nil {
+		return *x.Currency
+	}
+	return v2.CurrencyEnum(0)
+}
+
+func (x *FetchDraftInvoiceTaxesRequest) GetCustomerId() string {
+	if x != nil {
+		return x.CustomerId
+	}
+	return ""
+}
+
+func (x *FetchDraftInvoiceTaxesRequest) GetFees() []*FeeInput {
 	if x != nil {
 		return x.Fees
 	}
 	return nil
 }
 
-func (x *RegenerateInvoiceInput) GetVoidedInvoiceId() string {
+func (x *FetchDraftInvoiceTaxesRequest) GetInvoiceCustomSection() *v2.InvoiceCustomSectionsReferenceInput {
 	if x != nil {
-		return x.VoidedInvoiceId
+		return x.InvoiceCustomSection
+	}
+	return nil
+}
+
+func (x *FetchDraftInvoiceTaxesRequest) GetPaymentMethod() *v2.PaymentMethodReferenceInput {
+	if x != nil {
+		return x.PaymentMethod
+	}
+	return nil
+}
+
+func (x *FetchDraftInvoiceTaxesRequest) GetVoidedInvoiceId() string {
+	if x != nil && x.VoidedInvoiceId != nil {
+		return *x.VoidedInvoiceId
 	}
 	return ""
 }
 
-// Fee input for creating or updating invoice from voided invoice
+type FetchDraftInvoiceTaxesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Items         []*TaxFeeObject        `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FetchDraftInvoiceTaxesResponse) Reset() {
+	*x = FetchDraftInvoiceTaxesResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FetchDraftInvoiceTaxesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FetchDraftInvoiceTaxesResponse) ProtoMessage() {}
+
+func (x *FetchDraftInvoiceTaxesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FetchDraftInvoiceTaxesResponse.ProtoReflect.Descriptor instead.
+func (*FetchDraftInvoiceTaxesResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *FetchDraftInvoiceTaxesResponse) GetItems() []*TaxFeeObject {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+type TaxFeeObject struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	AmountCents    *int64                 `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3,oneof" json:"amount_cents,omitempty"`
+	ItemCode       *string                `protobuf:"bytes,2,opt,name=item_code,json=itemCode,proto3,oneof" json:"item_code,omitempty"`
+	ItemId         *string                `protobuf:"bytes,3,opt,name=item_id,json=itemId,proto3,oneof" json:"item_id,omitempty"`
+	TaxAmountCents *int64                 `protobuf:"varint,4,opt,name=tax_amount_cents,json=taxAmountCents,proto3,oneof" json:"tax_amount_cents,omitempty"`
+	TaxBreakdown   []*TaxBreakdownObject  `protobuf:"bytes,5,rep,name=tax_breakdown,json=taxBreakdown,proto3" json:"tax_breakdown,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *TaxFeeObject) Reset() {
+	*x = TaxFeeObject{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TaxFeeObject) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TaxFeeObject) ProtoMessage() {}
+
+func (x *TaxFeeObject) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TaxFeeObject.ProtoReflect.Descriptor instead.
+func (*TaxFeeObject) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *TaxFeeObject) GetAmountCents() int64 {
+	if x != nil && x.AmountCents != nil {
+		return *x.AmountCents
+	}
+	return 0
+}
+
+func (x *TaxFeeObject) GetItemCode() string {
+	if x != nil && x.ItemCode != nil {
+		return *x.ItemCode
+	}
+	return ""
+}
+
+func (x *TaxFeeObject) GetItemId() string {
+	if x != nil && x.ItemId != nil {
+		return *x.ItemId
+	}
+	return ""
+}
+
+func (x *TaxFeeObject) GetTaxAmountCents() int64 {
+	if x != nil && x.TaxAmountCents != nil {
+		return *x.TaxAmountCents
+	}
+	return 0
+}
+
+func (x *TaxFeeObject) GetTaxBreakdown() []*TaxBreakdownObject {
+	if x != nil {
+		return x.TaxBreakdown
+	}
+	return nil
+}
+
+type TaxBreakdownObject struct {
+	state         protoimpl.MessageState                  `protogen:"open.v1"`
+	EnumedTaxCode *v2.InvoiceAppliedTaxOnWholeInvoiceCode `protobuf:"varint,1,opt,name=enumed_tax_code,json=enumedTaxCode,proto3,enum=invora.billing.common.v2.InvoiceAppliedTaxOnWholeInvoiceCode,oneof" json:"enumed_tax_code,omitempty"`
+	Name          *string                                 `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Rate          *kernel.DecimalValue                    `protobuf:"bytes,3,opt,name=rate,proto3,oneof" json:"rate,omitempty"`
+	TaxAmount     *int64                                  `protobuf:"varint,4,opt,name=tax_amount,json=taxAmount,proto3,oneof" json:"tax_amount,omitempty"`
+	Type          *string                                 `protobuf:"bytes,5,opt,name=type,proto3,oneof" json:"type,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TaxBreakdownObject) Reset() {
+	*x = TaxBreakdownObject{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TaxBreakdownObject) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TaxBreakdownObject) ProtoMessage() {}
+
+func (x *TaxBreakdownObject) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TaxBreakdownObject.ProtoReflect.Descriptor instead.
+func (*TaxBreakdownObject) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *TaxBreakdownObject) GetEnumedTaxCode() v2.InvoiceAppliedTaxOnWholeInvoiceCode {
+	if x != nil && x.EnumedTaxCode != nil {
+		return *x.EnumedTaxCode
+	}
+	return v2.InvoiceAppliedTaxOnWholeInvoiceCode(0)
+}
+
+func (x *TaxBreakdownObject) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *TaxBreakdownObject) GetRate() *kernel.DecimalValue {
+	if x != nil {
+		return x.Rate
+	}
+	return nil
+}
+
+func (x *TaxBreakdownObject) GetTaxAmount() int64 {
+	if x != nil && x.TaxAmount != nil {
+		return *x.TaxAmount
+	}
+	return 0
+}
+
+func (x *TaxBreakdownObject) GetType() string {
+	if x != nil && x.Type != nil {
+		return *x.Type
+	}
+	return ""
+}
+
+type FinalizeRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FinalizeRequest) Reset() {
+	*x = FinalizeRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FinalizeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FinalizeRequest) ProtoMessage() {}
+
+func (x *FinalizeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FinalizeRequest.ProtoReflect.Descriptor instead.
+func (*FinalizeRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *FinalizeRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type FinalizeResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FinalizeResponse) Reset() {
+	*x = FinalizeResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FinalizeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FinalizeResponse) ProtoMessage() {}
+
+func (x *FinalizeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FinalizeResponse.ProtoReflect.Descriptor instead.
+func (*FinalizeResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *FinalizeResponse) GetInvoice() *v2.BillingInvoice {
+	if x != nil {
+		return x.Invoice
+	}
+	return nil
+}
+
+type FinalizeAllInvoicesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	InvoiceIds    []string               `protobuf:"bytes,1,rep,name=invoice_ids,json=invoiceIds,proto3" json:"invoice_ids,omitempty"`
+	DryRun        bool                   `protobuf:"varint,2,opt,name=dry_run,json=dryRun,proto3" json:"dry_run,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FinalizeAllInvoicesRequest) Reset() {
+	*x = FinalizeAllInvoicesRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FinalizeAllInvoicesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FinalizeAllInvoicesRequest) ProtoMessage() {}
+
+func (x *FinalizeAllInvoicesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FinalizeAllInvoicesRequest.ProtoReflect.Descriptor instead.
+func (*FinalizeAllInvoicesRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *FinalizeAllInvoicesRequest) GetInvoiceIds() []string {
+	if x != nil {
+		return x.InvoiceIds
+	}
+	return nil
+}
+
+func (x *FinalizeAllInvoicesRequest) GetDryRun() bool {
+	if x != nil {
+		return x.DryRun
+	}
+	return false
+}
+
+type FinalizeAllInvoicesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Items         []*v2.BillingInvoice   `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FinalizeAllInvoicesResponse) Reset() {
+	*x = FinalizeAllInvoicesResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FinalizeAllInvoicesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FinalizeAllInvoicesResponse) ProtoMessage() {}
+
+func (x *FinalizeAllInvoicesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FinalizeAllInvoicesResponse.ProtoReflect.Descriptor instead.
+func (*FinalizeAllInvoicesResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *FinalizeAllInvoicesResponse) GetItems() []*v2.BillingInvoice {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+type VoidInvoiceRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Id                 string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	CreditAmount       *int64                 `protobuf:"varint,2,opt,name=credit_amount,json=creditAmount,proto3,oneof" json:"credit_amount,omitempty"`
+	GenerateCreditNote *bool                  `protobuf:"varint,3,opt,name=generate_credit_note,json=generateCreditNote,proto3,oneof" json:"generate_credit_note,omitempty"`
+	RefundAmount       *int64                 `protobuf:"varint,4,opt,name=refund_amount,json=refundAmount,proto3,oneof" json:"refund_amount,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *VoidInvoiceRequest) Reset() {
+	*x = VoidInvoiceRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VoidInvoiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VoidInvoiceRequest) ProtoMessage() {}
+
+func (x *VoidInvoiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VoidInvoiceRequest.ProtoReflect.Descriptor instead.
+func (*VoidInvoiceRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *VoidInvoiceRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *VoidInvoiceRequest) GetCreditAmount() int64 {
+	if x != nil && x.CreditAmount != nil {
+		return *x.CreditAmount
+	}
+	return 0
+}
+
+func (x *VoidInvoiceRequest) GetGenerateCreditNote() bool {
+	if x != nil && x.GenerateCreditNote != nil {
+		return *x.GenerateCreditNote
+	}
+	return false
+}
+
+func (x *VoidInvoiceRequest) GetRefundAmount() int64 {
+	if x != nil && x.RefundAmount != nil {
+		return *x.RefundAmount
+	}
+	return 0
+}
+
+type VoidInvoiceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VoidInvoiceResponse) Reset() {
+	*x = VoidInvoiceResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VoidInvoiceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VoidInvoiceResponse) ProtoMessage() {}
+
+func (x *VoidInvoiceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VoidInvoiceResponse.ProtoReflect.Descriptor instead.
+func (*VoidInvoiceResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *VoidInvoiceResponse) GetInvoice() *v2.BillingInvoice {
+	if x != nil {
+		return x.Invoice
+	}
+	return nil
+}
+
+type LoseInvoiceDisputeRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LoseInvoiceDisputeRequest) Reset() {
+	*x = LoseInvoiceDisputeRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LoseInvoiceDisputeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoseInvoiceDisputeRequest) ProtoMessage() {}
+
+func (x *LoseInvoiceDisputeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoseInvoiceDisputeRequest.ProtoReflect.Descriptor instead.
+func (*LoseInvoiceDisputeRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *LoseInvoiceDisputeRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type LoseInvoiceDisputeResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LoseInvoiceDisputeResponse) Reset() {
+	*x = LoseInvoiceDisputeResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LoseInvoiceDisputeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoseInvoiceDisputeResponse) ProtoMessage() {}
+
+func (x *LoseInvoiceDisputeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoseInvoiceDisputeResponse.ProtoReflect.Descriptor instead.
+func (*LoseInvoiceDisputeResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *LoseInvoiceDisputeResponse) GetInvoice() *v2.BillingInvoice {
+	if x != nil {
+		return x.Invoice
+	}
+	return nil
+}
+
+type RefreshInvoiceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RefreshInvoiceRequest) Reset() {
+	*x = RefreshInvoiceRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RefreshInvoiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RefreshInvoiceRequest) ProtoMessage() {}
+
+func (x *RefreshInvoiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RefreshInvoiceRequest.ProtoReflect.Descriptor instead.
+func (*RefreshInvoiceRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *RefreshInvoiceRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type RefreshInvoiceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RefreshInvoiceResponse) Reset() {
+	*x = RefreshInvoiceResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RefreshInvoiceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RefreshInvoiceResponse) ProtoMessage() {}
+
+func (x *RefreshInvoiceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RefreshInvoiceResponse.ProtoReflect.Descriptor instead.
+func (*RefreshInvoiceResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *RefreshInvoiceResponse) GetInvoice() *v2.BillingInvoice {
+	if x != nil {
+		return x.Invoice
+	}
+	return nil
+}
+
+// Fee input for regenerating an invoice from a voided invoice.
 type VoidedInvoiceFeeInput struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	AddOnId            *string                `protobuf:"bytes,1,opt,name=add_on_id,json=addOnId,proto3,oneof" json:"add_on_id,omitempty"`
@@ -4473,14 +2101,14 @@ type VoidedInvoiceFeeInput struct {
 	InvoiceDisplayName *string                `protobuf:"bytes,7,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
 	SubscriptionId     *string                `protobuf:"bytes,8,opt,name=subscription_id,json=subscriptionId,proto3,oneof" json:"subscription_id,omitempty"`
 	UnitAmountCents    *int64                 `protobuf:"varint,9,opt,name=unit_amount_cents,json=unitAmountCents,proto3,oneof" json:"unit_amount_cents,omitempty"`
-	Units              *float64               `protobuf:"fixed64,10,opt,name=units,proto3,oneof" json:"units,omitempty"`
+	Units              *kernel.DecimalValue   `protobuf:"bytes,10,opt,name=units,proto3,oneof" json:"units,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
 
 func (x *VoidedInvoiceFeeInput) Reset() {
 	*x = VoidedInvoiceFeeInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[85]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4492,7 +2120,7 @@ func (x *VoidedInvoiceFeeInput) String() string {
 func (*VoidedInvoiceFeeInput) ProtoMessage() {}
 
 func (x *VoidedInvoiceFeeInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[85]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4505,7 +2133,7 @@ func (x *VoidedInvoiceFeeInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VoidedInvoiceFeeInput.ProtoReflect.Descriptor instead.
 func (*VoidedInvoiceFeeInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{85}
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *VoidedInvoiceFeeInput) GetAddOnId() string {
@@ -4571,268 +2199,36 @@ func (x *VoidedInvoiceFeeInput) GetUnitAmountCents() int64 {
 	return 0
 }
 
-func (x *VoidedInvoiceFeeInput) GetUnits() float64 {
-	if x != nil && x.Units != nil {
-		return *x.Units
-	}
-	return 0
-}
-
-// Autogenerated input type of RefreshInvoice
-type RefreshInvoiceInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RefreshInvoiceInput) Reset() {
-	*x = RefreshInvoiceInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[86]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RefreshInvoiceInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RefreshInvoiceInput) ProtoMessage() {}
-
-func (x *RefreshInvoiceInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[86]
+func (x *VoidedInvoiceFeeInput) GetUnits() *kernel.DecimalValue {
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RefreshInvoiceInput.ProtoReflect.Descriptor instead.
-func (*RefreshInvoiceInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{86}
-}
-
-func (x *RefreshInvoiceInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-// Autogenerated input type of LoseInvoiceDispute
-type LoseInvoiceDisputeInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *LoseInvoiceDisputeInput) Reset() {
-	*x = LoseInvoiceDisputeInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[87]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *LoseInvoiceDisputeInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*LoseInvoiceDisputeInput) ProtoMessage() {}
-
-func (x *LoseInvoiceDisputeInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[87]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use LoseInvoiceDisputeInput.ProtoReflect.Descriptor instead.
-func (*LoseInvoiceDisputeInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{87}
-}
-
-func (x *LoseInvoiceDisputeInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-// Autogenerated input type of FinalizeInvoice
-type FinalizeInvoiceInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *FinalizeInvoiceInput) Reset() {
-	*x = FinalizeInvoiceInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[88]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *FinalizeInvoiceInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*FinalizeInvoiceInput) ProtoMessage() {}
-
-func (x *FinalizeInvoiceInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[88]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use FinalizeInvoiceInput.ProtoReflect.Descriptor instead.
-func (*FinalizeInvoiceInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{88}
-}
-
-func (x *FinalizeInvoiceInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-// Autogenerated input type of FinalizeAllInvoices
-type FinalizeAllInvoicesInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *FinalizeAllInvoicesInput) Reset() {
-	*x = FinalizeAllInvoicesInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[89]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *FinalizeAllInvoicesInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*FinalizeAllInvoicesInput) ProtoMessage() {}
-
-func (x *FinalizeAllInvoicesInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[89]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use FinalizeAllInvoicesInput.ProtoReflect.Descriptor instead.
-func (*FinalizeAllInvoicesInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{89}
-}
-
-// InvoiceCollection type
-type InvoiceCollection struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// A collection of paginated InvoiceCollection
-	Collection []*v2.BillingInvoice `protobuf:"bytes,1,rep,name=collection,proto3" json:"collection,omitempty"`
-	// Pagination Metadata for navigating the Pagination
-	Metadata      *v2.CollectionMetadata `protobuf:"bytes,2,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *InvoiceCollection) Reset() {
-	*x = InvoiceCollection{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[90]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *InvoiceCollection) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*InvoiceCollection) ProtoMessage() {}
-
-func (x *InvoiceCollection) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[90]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use InvoiceCollection.ProtoReflect.Descriptor instead.
-func (*InvoiceCollection) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{90}
-}
-
-func (x *InvoiceCollection) GetCollection() []*v2.BillingInvoice {
-	if x != nil {
-		return x.Collection
+		return x.Units
 	}
 	return nil
 }
 
-func (x *InvoiceCollection) GetMetadata() *v2.CollectionMetadata {
-	if x != nil {
-		return x.Metadata
-	}
-	return nil
+type RegenerateFromVoidedRequest struct {
+	state           protoimpl.MessageState   `protogen:"open.v1"`
+	Fees            []*VoidedInvoiceFeeInput `protobuf:"bytes,1,rep,name=fees,proto3" json:"fees,omitempty"`
+	VoidedInvoiceId string                   `protobuf:"bytes,2,opt,name=voided_invoice_id,json=voidedInvoiceId,proto3" json:"voided_invoice_id,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
-// Create Invoice input arguments
-type FetchDraftInvoiceTaxesInput struct {
-	state                protoimpl.MessageState                  `protogen:"open.v1"`
-	Currency             *v2.CurrencyEnum                        `protobuf:"varint,1,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"currency,omitempty"`
-	CustomerId           string                                  `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	Fees                 []*FeeInput                             `protobuf:"bytes,3,rep,name=fees,proto3" json:"fees,omitempty"`
-	InvoiceCustomSection *v2.InvoiceCustomSectionsReferenceInput `protobuf:"bytes,4,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3,oneof" json:"invoice_custom_section,omitempty"`
-	PaymentMethod        *v2.PaymentMethodReferenceInput         `protobuf:"bytes,5,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
-	VoidedInvoiceId      *string                                 `protobuf:"bytes,6,opt,name=voided_invoice_id,json=voidedInvoiceId,proto3,oneof" json:"voided_invoice_id,omitempty"`
-	unknownFields        protoimpl.UnknownFields
-	sizeCache            protoimpl.SizeCache
-}
-
-func (x *FetchDraftInvoiceTaxesInput) Reset() {
-	*x = FetchDraftInvoiceTaxesInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[91]
+func (x *RegenerateFromVoidedRequest) Reset() {
+	*x = RegenerateFromVoidedRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *FetchDraftInvoiceTaxesInput) String() string {
+func (x *RegenerateFromVoidedRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*FetchDraftInvoiceTaxesInput) ProtoMessage() {}
+func (*RegenerateFromVoidedRequest) ProtoMessage() {}
 
-func (x *FetchDraftInvoiceTaxesInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[91]
+func (x *RegenerateFromVoidedRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4843,188 +2239,347 @@ func (x *FetchDraftInvoiceTaxesInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use FetchDraftInvoiceTaxesInput.ProtoReflect.Descriptor instead.
-func (*FetchDraftInvoiceTaxesInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{91}
+// Deprecated: Use RegenerateFromVoidedRequest.ProtoReflect.Descriptor instead.
+func (*RegenerateFromVoidedRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{35}
 }
 
-func (x *FetchDraftInvoiceTaxesInput) GetCurrency() v2.CurrencyEnum {
-	if x != nil && x.Currency != nil {
-		return *x.Currency
-	}
-	return v2.CurrencyEnum(0)
-}
-
-func (x *FetchDraftInvoiceTaxesInput) GetCustomerId() string {
-	if x != nil {
-		return x.CustomerId
-	}
-	return ""
-}
-
-func (x *FetchDraftInvoiceTaxesInput) GetFees() []*FeeInput {
+func (x *RegenerateFromVoidedRequest) GetFees() []*VoidedInvoiceFeeInput {
 	if x != nil {
 		return x.Fees
 	}
 	return nil
 }
 
-func (x *FetchDraftInvoiceTaxesInput) GetInvoiceCustomSection() *v2.InvoiceCustomSectionsReferenceInput {
+func (x *RegenerateFromVoidedRequest) GetVoidedInvoiceId() string {
 	if x != nil {
-		return x.InvoiceCustomSection
+		return x.VoidedInvoiceId
+	}
+	return ""
+}
+
+type RegenerateFromVoidedResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RegenerateFromVoidedResponse) Reset() {
+	*x = RegenerateFromVoidedResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[36]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RegenerateFromVoidedResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegenerateFromVoidedResponse) ProtoMessage() {}
+
+func (x *RegenerateFromVoidedResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[36]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegenerateFromVoidedResponse.ProtoReflect.Descriptor instead.
+func (*RegenerateFromVoidedResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *RegenerateFromVoidedResponse) GetInvoice() *v2.BillingInvoice {
+	if x != nil {
+		return x.Invoice
 	}
 	return nil
 }
 
-func (x *FetchDraftInvoiceTaxesInput) GetPaymentMethod() *v2.PaymentMethodReferenceInput {
+type ResendInvoiceEmailRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// BCC recipients.
+	Bcc []string `protobuf:"bytes,1,rep,name=bcc,proto3" json:"bcc,omitempty"`
+	// CC recipients.
+	Cc []string `protobuf:"bytes,2,rep,name=cc,proto3" json:"cc,omitempty"`
+	// Invoice ID.
+	Id string `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	// Custom recipients (defaults to customer email).
+	To            []string `protobuf:"bytes,4,rep,name=to,proto3" json:"to,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ResendInvoiceEmailRequest) Reset() {
+	*x = ResendInvoiceEmailRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[37]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ResendInvoiceEmailRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResendInvoiceEmailRequest) ProtoMessage() {}
+
+func (x *ResendInvoiceEmailRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[37]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResendInvoiceEmailRequest.ProtoReflect.Descriptor instead.
+func (*ResendInvoiceEmailRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *ResendInvoiceEmailRequest) GetBcc() []string {
+	if x != nil {
+		return x.Bcc
+	}
+	return nil
+}
+
+func (x *ResendInvoiceEmailRequest) GetCc() []string {
+	if x != nil {
+		return x.Cc
+	}
+	return nil
+}
+
+func (x *ResendInvoiceEmailRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *ResendInvoiceEmailRequest) GetTo() []string {
+	if x != nil {
+		return x.To
+	}
+	return nil
+}
+
+type ResendInvoiceEmailResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ResendInvoiceEmailResponse) Reset() {
+	*x = ResendInvoiceEmailResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[38]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ResendInvoiceEmailResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResendInvoiceEmailResponse) ProtoMessage() {}
+
+func (x *ResendInvoiceEmailResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[38]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResendInvoiceEmailResponse.ProtoReflect.Descriptor instead.
+func (*ResendInvoiceEmailResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{38}
+}
+
+func (x *ResendInvoiceEmailResponse) GetInvoice() *v2.BillingInvoice {
+	if x != nil {
+		return x.Invoice
+	}
+	return nil
+}
+
+type RetryInvoiceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RetryInvoiceRequest) Reset() {
+	*x = RetryInvoiceRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[39]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RetryInvoiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RetryInvoiceRequest) ProtoMessage() {}
+
+func (x *RetryInvoiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[39]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RetryInvoiceRequest.ProtoReflect.Descriptor instead.
+func (*RetryInvoiceRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{39}
+}
+
+func (x *RetryInvoiceRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type RetryInvoiceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RetryInvoiceResponse) Reset() {
+	*x = RetryInvoiceResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[40]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RetryInvoiceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RetryInvoiceResponse) ProtoMessage() {}
+
+func (x *RetryInvoiceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[40]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RetryInvoiceResponse.ProtoReflect.Descriptor instead.
+func (*RetryInvoiceResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{40}
+}
+
+func (x *RetryInvoiceResponse) GetInvoice() *v2.BillingInvoice {
+	if x != nil {
+		return x.Invoice
+	}
+	return nil
+}
+
+type RetryInvoicePaymentRequest struct {
+	state         protoimpl.MessageState          `protogen:"open.v1"`
+	Id            string                          `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	PaymentMethod *v2.PaymentMethodReferenceInput `protobuf:"bytes,2,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RetryInvoicePaymentRequest) Reset() {
+	*x = RetryInvoicePaymentRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[41]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RetryInvoicePaymentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RetryInvoicePaymentRequest) ProtoMessage() {}
+
+func (x *RetryInvoicePaymentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[41]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RetryInvoicePaymentRequest.ProtoReflect.Descriptor instead.
+func (*RetryInvoicePaymentRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{41}
+}
+
+func (x *RetryInvoicePaymentRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *RetryInvoicePaymentRequest) GetPaymentMethod() *v2.PaymentMethodReferenceInput {
 	if x != nil {
 		return x.PaymentMethod
 	}
 	return nil
 }
 
-func (x *FetchDraftInvoiceTaxesInput) GetVoidedInvoiceId() string {
-	if x != nil && x.VoidedInvoiceId != nil {
-		return *x.VoidedInvoiceId
-	}
-	return ""
-}
-
-// Fee input for creating invoice
-type FeeInput struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	AddOnId            *string                `protobuf:"bytes,1,opt,name=add_on_id,json=addOnId,proto3,oneof" json:"add_on_id,omitempty"`
-	Description        *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
-	FromDatetime       *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=from_datetime,json=fromDatetime,proto3" json:"from_datetime,omitempty"`
-	InvoiceDisplayName *string                `protobuf:"bytes,4,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
-	Name               *string                `protobuf:"bytes,5,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	TaxCodes           []string               `protobuf:"bytes,6,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
-	ToDatetime         *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=to_datetime,json=toDatetime,proto3" json:"to_datetime,omitempty"`
-	UnitAmountCents    *int64                 `protobuf:"varint,8,opt,name=unit_amount_cents,json=unitAmountCents,proto3,oneof" json:"unit_amount_cents,omitempty"`
-	Units              *float64               `protobuf:"fixed64,9,opt,name=units,proto3,oneof" json:"units,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *FeeInput) Reset() {
-	*x = FeeInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[92]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *FeeInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*FeeInput) ProtoMessage() {}
-
-func (x *FeeInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[92]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use FeeInput.ProtoReflect.Descriptor instead.
-func (*FeeInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{92}
-}
-
-func (x *FeeInput) GetAddOnId() string {
-	if x != nil && x.AddOnId != nil {
-		return *x.AddOnId
-	}
-	return ""
-}
-
-func (x *FeeInput) GetDescription() string {
-	if x != nil && x.Description != nil {
-		return *x.Description
-	}
-	return ""
-}
-
-func (x *FeeInput) GetFromDatetime() *timestamppb.Timestamp {
-	if x != nil {
-		return x.FromDatetime
-	}
-	return nil
-}
-
-func (x *FeeInput) GetInvoiceDisplayName() string {
-	if x != nil && x.InvoiceDisplayName != nil {
-		return *x.InvoiceDisplayName
-	}
-	return ""
-}
-
-func (x *FeeInput) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
-	}
-	return ""
-}
-
-func (x *FeeInput) GetTaxCodes() []string {
-	if x != nil {
-		return x.TaxCodes
-	}
-	return nil
-}
-
-func (x *FeeInput) GetToDatetime() *timestamppb.Timestamp {
-	if x != nil {
-		return x.ToDatetime
-	}
-	return nil
-}
-
-func (x *FeeInput) GetUnitAmountCents() int64 {
-	if x != nil && x.UnitAmountCents != nil {
-		return *x.UnitAmountCents
-	}
-	return 0
-}
-
-func (x *FeeInput) GetUnits() float64 {
-	if x != nil && x.Units != nil {
-		return *x.Units
-	}
-	return 0
-}
-
-// TaxFeeObjectCollection type
-type TaxFeeObjectCollection struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// A collection of paginated TaxFeeObjectCollection
-	Collection []*TaxFeeObject `protobuf:"bytes,1,rep,name=collection,proto3" json:"collection,omitempty"`
-	// Pagination Metadata for navigating the Pagination
-	Metadata      *v2.CollectionMetadata `protobuf:"bytes,2,opt,name=metadata,proto3" json:"metadata,omitempty"`
+type RetryInvoicePaymentResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *TaxFeeObjectCollection) Reset() {
-	*x = TaxFeeObjectCollection{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[93]
+func (x *RetryInvoicePaymentResponse) Reset() {
+	*x = RetryInvoicePaymentResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *TaxFeeObjectCollection) String() string {
+func (x *RetryInvoicePaymentResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*TaxFeeObjectCollection) ProtoMessage() {}
+func (*RetryInvoicePaymentResponse) ProtoMessage() {}
 
-func (x *TaxFeeObjectCollection) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[93]
+func (x *RetryInvoicePaymentResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5035,127 +2590,41 @@ func (x *TaxFeeObjectCollection) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use TaxFeeObjectCollection.ProtoReflect.Descriptor instead.
-func (*TaxFeeObjectCollection) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{93}
+// Deprecated: Use RetryInvoicePaymentResponse.ProtoReflect.Descriptor instead.
+func (*RetryInvoicePaymentResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{42}
 }
 
-func (x *TaxFeeObjectCollection) GetCollection() []*TaxFeeObject {
+func (x *RetryInvoicePaymentResponse) GetInvoice() *v2.BillingInvoice {
 	if x != nil {
-		return x.Collection
+		return x.Invoice
 	}
 	return nil
 }
 
-func (x *TaxFeeObjectCollection) GetMetadata() *v2.CollectionMetadata {
-	if x != nil {
-		return x.Metadata
-	}
-	return nil
-}
-
-type TaxFeeObject struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	AmountCents    *int64                 `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3,oneof" json:"amount_cents,omitempty"`
-	ItemCode       *string                `protobuf:"bytes,2,opt,name=item_code,json=itemCode,proto3,oneof" json:"item_code,omitempty"`
-	ItemId         *string                `protobuf:"bytes,3,opt,name=item_id,json=itemId,proto3,oneof" json:"item_id,omitempty"`
-	TaxAmountCents *int64                 `protobuf:"varint,4,opt,name=tax_amount_cents,json=taxAmountCents,proto3,oneof" json:"tax_amount_cents,omitempty"`
-	TaxBreakdown   []*TaxBreakdownObject  `protobuf:"bytes,5,rep,name=tax_breakdown,json=taxBreakdown,proto3" json:"tax_breakdown,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *TaxFeeObject) Reset() {
-	*x = TaxFeeObject{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[94]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *TaxFeeObject) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TaxFeeObject) ProtoMessage() {}
-
-func (x *TaxFeeObject) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[94]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TaxFeeObject.ProtoReflect.Descriptor instead.
-func (*TaxFeeObject) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{94}
-}
-
-func (x *TaxFeeObject) GetAmountCents() int64 {
-	if x != nil && x.AmountCents != nil {
-		return *x.AmountCents
-	}
-	return 0
-}
-
-func (x *TaxFeeObject) GetItemCode() string {
-	if x != nil && x.ItemCode != nil {
-		return *x.ItemCode
-	}
-	return ""
-}
-
-func (x *TaxFeeObject) GetItemId() string {
-	if x != nil && x.ItemId != nil {
-		return *x.ItemId
-	}
-	return ""
-}
-
-func (x *TaxFeeObject) GetTaxAmountCents() int64 {
-	if x != nil && x.TaxAmountCents != nil {
-		return *x.TaxAmountCents
-	}
-	return 0
-}
-
-func (x *TaxFeeObject) GetTaxBreakdown() []*TaxBreakdownObject {
-	if x != nil {
-		return x.TaxBreakdown
-	}
-	return nil
-}
-
-type TaxBreakdownObject struct {
-	state         protoimpl.MessageState                      `protogen:"open.v1"`
-	EnumedTaxCode *v2.InvoiceAppliedTaxOnWholeInvoiceCodeEnum `protobuf:"varint,1,opt,name=enumed_tax_code,json=enumedTaxCode,proto3,enum=invora.billing.common.v2.InvoiceAppliedTaxOnWholeInvoiceCodeEnum,oneof" json:"enumed_tax_code,omitempty"`
-	Name          *string                                     `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	Rate          *float64                                    `protobuf:"fixed64,3,opt,name=rate,proto3,oneof" json:"rate,omitempty"`
-	TaxAmount     *int64                                      `protobuf:"varint,4,opt,name=tax_amount,json=taxAmount,proto3,oneof" json:"tax_amount,omitempty"`
-	Type          *string                                     `protobuf:"bytes,5,opt,name=type,proto3,oneof" json:"type,omitempty"`
+type RetryAllInvoicesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	InvoiceIds    []string               `protobuf:"bytes,1,rep,name=invoice_ids,json=invoiceIds,proto3" json:"invoice_ids,omitempty"`
+	DryRun        bool                   `protobuf:"varint,2,opt,name=dry_run,json=dryRun,proto3" json:"dry_run,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *TaxBreakdownObject) Reset() {
-	*x = TaxBreakdownObject{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[95]
+func (x *RetryAllInvoicesRequest) Reset() {
+	*x = RetryAllInvoicesRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *TaxBreakdownObject) String() string {
+func (x *RetryAllInvoicesRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*TaxBreakdownObject) ProtoMessage() {}
+func (*RetryAllInvoicesRequest) ProtoMessage() {}
 
-func (x *TaxBreakdownObject) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[95]
+func (x *RetryAllInvoicesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5166,69 +2635,187 @@ func (x *TaxBreakdownObject) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use TaxBreakdownObject.ProtoReflect.Descriptor instead.
-func (*TaxBreakdownObject) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{95}
+// Deprecated: Use RetryAllInvoicesRequest.ProtoReflect.Descriptor instead.
+func (*RetryAllInvoicesRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{43}
 }
 
-func (x *TaxBreakdownObject) GetEnumedTaxCode() v2.InvoiceAppliedTaxOnWholeInvoiceCodeEnum {
-	if x != nil && x.EnumedTaxCode != nil {
-		return *x.EnumedTaxCode
+func (x *RetryAllInvoicesRequest) GetInvoiceIds() []string {
+	if x != nil {
+		return x.InvoiceIds
 	}
-	return v2.InvoiceAppliedTaxOnWholeInvoiceCodeEnum(0)
+	return nil
 }
 
-func (x *TaxBreakdownObject) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
+func (x *RetryAllInvoicesRequest) GetDryRun() bool {
+	if x != nil {
+		return x.DryRun
 	}
-	return ""
+	return false
 }
 
-func (x *TaxBreakdownObject) GetRate() float64 {
-	if x != nil && x.Rate != nil {
-		return *x.Rate
+type RetryAllInvoicesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Items         []*v2.BillingInvoice   `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RetryAllInvoicesResponse) Reset() {
+	*x = RetryAllInvoicesResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[44]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RetryAllInvoicesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RetryAllInvoicesResponse) ProtoMessage() {}
+
+func (x *RetryAllInvoicesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[44]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
 	}
-	return 0
+	return mi.MessageOf(x)
 }
 
-func (x *TaxBreakdownObject) GetTaxAmount() int64 {
-	if x != nil && x.TaxAmount != nil {
-		return *x.TaxAmount
+// Deprecated: Use RetryAllInvoicesResponse.ProtoReflect.Descriptor instead.
+func (*RetryAllInvoicesResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{44}
+}
+
+func (x *RetryAllInvoicesResponse) GetItems() []*v2.BillingInvoice {
+	if x != nil {
+		return x.Items
 	}
-	return 0
+	return nil
 }
 
-func (x *TaxBreakdownObject) GetType() string {
-	if x != nil && x.Type != nil {
-		return *x.Type
+type RetryAllInvoicePaymentsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	InvoiceIds    []string               `protobuf:"bytes,1,rep,name=invoice_ids,json=invoiceIds,proto3" json:"invoice_ids,omitempty"`
+	DryRun        bool                   `protobuf:"varint,2,opt,name=dry_run,json=dryRun,proto3" json:"dry_run,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RetryAllInvoicePaymentsRequest) Reset() {
+	*x = RetryAllInvoicePaymentsRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[45]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RetryAllInvoicePaymentsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RetryAllInvoicePaymentsRequest) ProtoMessage() {}
+
+func (x *RetryAllInvoicePaymentsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[45]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
 	}
-	return ""
+	return mi.MessageOf(x)
 }
 
-// Autogenerated input type of DownloadXmlInvoice
-type DownloadXmlInvoiceInput struct {
+// Deprecated: Use RetryAllInvoicePaymentsRequest.ProtoReflect.Descriptor instead.
+func (*RetryAllInvoicePaymentsRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *RetryAllInvoicePaymentsRequest) GetInvoiceIds() []string {
+	if x != nil {
+		return x.InvoiceIds
+	}
+	return nil
+}
+
+func (x *RetryAllInvoicePaymentsRequest) GetDryRun() bool {
+	if x != nil {
+		return x.DryRun
+	}
+	return false
+}
+
+type RetryAllInvoicePaymentsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Items         []*v2.BillingInvoice   `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RetryAllInvoicePaymentsResponse) Reset() {
+	*x = RetryAllInvoicePaymentsResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[46]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RetryAllInvoicePaymentsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RetryAllInvoicePaymentsResponse) ProtoMessage() {}
+
+func (x *RetryAllInvoicePaymentsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[46]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RetryAllInvoicePaymentsResponse.ProtoReflect.Descriptor instead.
+func (*RetryAllInvoicePaymentsResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{46}
+}
+
+func (x *RetryAllInvoicePaymentsResponse) GetItems() []*v2.BillingInvoice {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+type RetryTaxProviderVoidingRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DownloadXmlInvoiceInput) Reset() {
-	*x = DownloadXmlInvoiceInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[96]
+func (x *RetryTaxProviderVoidingRequest) Reset() {
+	*x = RetryTaxProviderVoidingRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[47]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DownloadXmlInvoiceInput) String() string {
+func (x *RetryTaxProviderVoidingRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DownloadXmlInvoiceInput) ProtoMessage() {}
+func (*RetryTaxProviderVoidingRequest) ProtoMessage() {}
 
-func (x *DownloadXmlInvoiceInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[96]
+func (x *RetryTaxProviderVoidingRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[47]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5239,41 +2826,40 @@ func (x *DownloadXmlInvoiceInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DownloadXmlInvoiceInput.ProtoReflect.Descriptor instead.
-func (*DownloadXmlInvoiceInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{96}
+// Deprecated: Use RetryTaxProviderVoidingRequest.ProtoReflect.Descriptor instead.
+func (*RetryTaxProviderVoidingRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{47}
 }
 
-func (x *DownloadXmlInvoiceInput) GetId() string {
+func (x *RetryTaxProviderVoidingRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-// Autogenerated input type of DownloadInvoice
-type DownloadInvoiceInput struct {
+type RetryTaxProviderVoidingResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DownloadInvoiceInput) Reset() {
-	*x = DownloadInvoiceInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[97]
+func (x *RetryTaxProviderVoidingResponse) Reset() {
+	*x = RetryTaxProviderVoidingResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DownloadInvoiceInput) String() string {
+func (x *RetryTaxProviderVoidingResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DownloadInvoiceInput) ProtoMessage() {}
+func (*RetryTaxProviderVoidingResponse) ProtoMessage() {}
 
-func (x *DownloadInvoiceInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[97]
+func (x *RetryTaxProviderVoidingResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5284,238 +2870,306 @@ func (x *DownloadInvoiceInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DownloadInvoiceInput.ProtoReflect.Descriptor instead.
-func (*DownloadInvoiceInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{97}
+// Deprecated: Use RetryTaxProviderVoidingResponse.ProtoReflect.Descriptor instead.
+func (*RetryTaxProviderVoidingResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{48}
 }
 
-func (x *DownloadInvoiceInput) GetId() string {
+func (x *RetryTaxProviderVoidingResponse) GetInvoice() *v2.BillingInvoice {
 	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-// Autogenerated input type of DownloadCustomerPortalInvoice
-type DownloadCustomerPortalInvoiceInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DownloadCustomerPortalInvoiceInput) Reset() {
-	*x = DownloadCustomerPortalInvoiceInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[98]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DownloadCustomerPortalInvoiceInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DownloadCustomerPortalInvoiceInput) ProtoMessage() {}
-
-func (x *DownloadCustomerPortalInvoiceInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[98]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DownloadCustomerPortalInvoiceInput.ProtoReflect.Descriptor instead.
-func (*DownloadCustomerPortalInvoiceInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{98}
-}
-
-func (x *DownloadCustomerPortalInvoiceInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-// Autogenerated input type of DestroyInvoiceCustomSection
-type DestroyInvoiceCustomSectionInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DestroyInvoiceCustomSectionInput) Reset() {
-	*x = DestroyInvoiceCustomSectionInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[99]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DestroyInvoiceCustomSectionInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DestroyInvoiceCustomSectionInput) ProtoMessage() {}
-
-func (x *DestroyInvoiceCustomSectionInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[99]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DestroyInvoiceCustomSectionInput.ProtoReflect.Descriptor instead.
-func (*DestroyInvoiceCustomSectionInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{99}
-}
-
-func (x *DestroyInvoiceCustomSectionInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-// Autogenerated return type of DestroyInvoiceCustomSection.
-type DestroyInvoiceCustomSectionPayload struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            *string                `protobuf:"bytes,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DestroyInvoiceCustomSectionPayload) Reset() {
-	*x = DestroyInvoiceCustomSectionPayload{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[100]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DestroyInvoiceCustomSectionPayload) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DestroyInvoiceCustomSectionPayload) ProtoMessage() {}
-
-func (x *DestroyInvoiceCustomSectionPayload) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[100]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DestroyInvoiceCustomSectionPayload.ProtoReflect.Descriptor instead.
-func (*DestroyInvoiceCustomSectionPayload) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{100}
-}
-
-func (x *DestroyInvoiceCustomSectionPayload) GetId() string {
-	if x != nil && x.Id != nil {
-		return *x.Id
-	}
-	return ""
-}
-
-// Autogenerated input type of CreateInvoicesDataExport
-type CreateDataExportsInvoicesInput struct {
-	state         protoimpl.MessageState         `protogen:"open.v1"`
-	Filters       *DataExportInvoiceFiltersInput `protobuf:"bytes,1,opt,name=filters,proto3" json:"filters,omitempty"`
-	Format        v2.DataExportFormatTypeEnum    `protobuf:"varint,2,opt,name=format,proto3,enum=invora.billing.common.v2.DataExportFormatTypeEnum" json:"format,omitempty"`
-	ResourceType  InvoiceExportTypeEnum          `protobuf:"varint,3,opt,name=resource_type,json=resourceType,proto3,enum=invora.billing.invoices.v2.InvoiceExportTypeEnum" json:"resource_type,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateDataExportsInvoicesInput) Reset() {
-	*x = CreateDataExportsInvoicesInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[101]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateDataExportsInvoicesInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateDataExportsInvoicesInput) ProtoMessage() {}
-
-func (x *CreateDataExportsInvoicesInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[101]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateDataExportsInvoicesInput.ProtoReflect.Descriptor instead.
-func (*CreateDataExportsInvoicesInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{101}
-}
-
-func (x *CreateDataExportsInvoicesInput) GetFilters() *DataExportInvoiceFiltersInput {
-	if x != nil {
-		return x.Filters
+		return x.Invoice
 	}
 	return nil
 }
 
-func (x *CreateDataExportsInvoicesInput) GetFormat() v2.DataExportFormatTypeEnum {
-	if x != nil {
-		return x.Format
-	}
-	return v2.DataExportFormatTypeEnum(0)
+type DownloadInvoiceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateDataExportsInvoicesInput) GetResourceType() InvoiceExportTypeEnum {
-	if x != nil {
-		return x.ResourceType
-	}
-	return InvoiceExportTypeEnum_INVOICE_EXPORT_TYPE_ENUM_UNSPECIFIED
+func (x *DownloadInvoiceRequest) Reset() {
+	*x = DownloadInvoiceRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[49]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
 }
 
-// Export Invoices search query and filters input argument
+func (x *DownloadInvoiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DownloadInvoiceRequest) ProtoMessage() {}
+
+func (x *DownloadInvoiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[49]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DownloadInvoiceRequest.ProtoReflect.Descriptor instead.
+func (*DownloadInvoiceRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{49}
+}
+
+func (x *DownloadInvoiceRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type DownloadInvoiceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DownloadInvoiceResponse) Reset() {
+	*x = DownloadInvoiceResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[50]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DownloadInvoiceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DownloadInvoiceResponse) ProtoMessage() {}
+
+func (x *DownloadInvoiceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[50]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DownloadInvoiceResponse.ProtoReflect.Descriptor instead.
+func (*DownloadInvoiceResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{50}
+}
+
+func (x *DownloadInvoiceResponse) GetInvoice() *v2.BillingInvoice {
+	if x != nil {
+		return x.Invoice
+	}
+	return nil
+}
+
+type DownloadInvoiceXmlRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DownloadInvoiceXmlRequest) Reset() {
+	*x = DownloadInvoiceXmlRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[51]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DownloadInvoiceXmlRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DownloadInvoiceXmlRequest) ProtoMessage() {}
+
+func (x *DownloadInvoiceXmlRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[51]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DownloadInvoiceXmlRequest.ProtoReflect.Descriptor instead.
+func (*DownloadInvoiceXmlRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{51}
+}
+
+func (x *DownloadInvoiceXmlRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type DownloadInvoiceXmlResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DownloadInvoiceXmlResponse) Reset() {
+	*x = DownloadInvoiceXmlResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[52]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DownloadInvoiceXmlResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DownloadInvoiceXmlResponse) ProtoMessage() {}
+
+func (x *DownloadInvoiceXmlResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[52]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DownloadInvoiceXmlResponse.ProtoReflect.Descriptor instead.
+func (*DownloadInvoiceXmlResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{52}
+}
+
+func (x *DownloadInvoiceXmlResponse) GetInvoice() *v2.BillingInvoice {
+	if x != nil {
+		return x.Invoice
+	}
+	return nil
+}
+
+type DownloadCustomerPortalInvoiceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DownloadCustomerPortalInvoiceRequest) Reset() {
+	*x = DownloadCustomerPortalInvoiceRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[53]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DownloadCustomerPortalInvoiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DownloadCustomerPortalInvoiceRequest) ProtoMessage() {}
+
+func (x *DownloadCustomerPortalInvoiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[53]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DownloadCustomerPortalInvoiceRequest.ProtoReflect.Descriptor instead.
+func (*DownloadCustomerPortalInvoiceRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{53}
+}
+
+func (x *DownloadCustomerPortalInvoiceRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type DownloadCustomerPortalInvoiceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Invoice       *v2.BillingInvoice     `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DownloadCustomerPortalInvoiceResponse) Reset() {
+	*x = DownloadCustomerPortalInvoiceResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[54]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DownloadCustomerPortalInvoiceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DownloadCustomerPortalInvoiceResponse) ProtoMessage() {}
+
+func (x *DownloadCustomerPortalInvoiceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[54]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DownloadCustomerPortalInvoiceResponse.ProtoReflect.Descriptor instead.
+func (*DownloadCustomerPortalInvoiceResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{54}
+}
+
+func (x *DownloadCustomerPortalInvoiceResponse) GetInvoice() *v2.BillingInvoice {
+	if x != nil {
+		return x.Invoice
+	}
+	return nil
+}
+
+// Filters for invoice data export.
 type DataExportInvoiceFiltersInput struct {
-	state              protoimpl.MessageState            `protogen:"open.v1"`
-	AmountFrom         *int32                            `protobuf:"varint,1,opt,name=amount_from,json=amountFrom,proto3,oneof" json:"amount_from,omitempty"`
-	AmountTo           *int32                            `protobuf:"varint,2,opt,name=amount_to,json=amountTo,proto3,oneof" json:"amount_to,omitempty"`
-	BillingEntityIds   []string                          `protobuf:"bytes,3,rep,name=billing_entity_ids,json=billingEntityIds,proto3" json:"billing_entity_ids,omitempty"`
-	Currency           *v2.CurrencyEnum                  `protobuf:"varint,4,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"currency,omitempty"`
-	CustomerExternalId *string                           `protobuf:"bytes,5,opt,name=customer_external_id,json=customerExternalId,proto3,oneof" json:"customer_external_id,omitempty"`
-	InvoiceType        []v2.InvoiceTypeEnum              `protobuf:"varint,6,rep,packed,name=invoice_type,json=invoiceType,proto3,enum=invora.billing.common.v2.InvoiceTypeEnum" json:"invoice_type,omitempty"`
-	IssuingDateFrom    *date.Date                        `protobuf:"bytes,7,opt,name=issuing_date_from,json=issuingDateFrom,proto3,oneof" json:"issuing_date_from,omitempty"`
-	IssuingDateTo      *date.Date                        `protobuf:"bytes,8,opt,name=issuing_date_to,json=issuingDateTo,proto3,oneof" json:"issuing_date_to,omitempty"`
-	PaymentDisputeLost *bool                             `protobuf:"varint,9,opt,name=payment_dispute_lost,json=paymentDisputeLost,proto3,oneof" json:"payment_dispute_lost,omitempty"`
-	PaymentOverdue     *bool                             `protobuf:"varint,10,opt,name=payment_overdue,json=paymentOverdue,proto3,oneof" json:"payment_overdue,omitempty"`
-	PaymentStatus      []v2.InvoicePaymentStatusTypeEnum `protobuf:"varint,11,rep,packed,name=payment_status,json=paymentStatus,proto3,enum=invora.billing.common.v2.InvoicePaymentStatusTypeEnum" json:"payment_status,omitempty"`
-	SearchTerm         *string                           `protobuf:"bytes,12,opt,name=search_term,json=searchTerm,proto3,oneof" json:"search_term,omitempty"`
-	SelfBilled         *bool                             `protobuf:"varint,13,opt,name=self_billed,json=selfBilled,proto3,oneof" json:"self_billed,omitempty"`
-	Status             []v2.InvoiceStatusTypeEnum        `protobuf:"varint,14,rep,packed,name=status,proto3,enum=invora.billing.common.v2.InvoiceStatusTypeEnum" json:"status,omitempty"`
+	state              protoimpl.MessageState        `protogen:"open.v1"`
+	AmountFrom         *int32                        `protobuf:"varint,1,opt,name=amount_from,json=amountFrom,proto3,oneof" json:"amount_from,omitempty"`
+	AmountTo           *int32                        `protobuf:"varint,2,opt,name=amount_to,json=amountTo,proto3,oneof" json:"amount_to,omitempty"`
+	BillingEntityIds   []string                      `protobuf:"bytes,3,rep,name=billing_entity_ids,json=billingEntityIds,proto3" json:"billing_entity_ids,omitempty"`
+	Currency           *v2.CurrencyEnum              `protobuf:"varint,4,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"currency,omitempty"`
+	CustomerExternalId *string                       `protobuf:"bytes,5,opt,name=customer_external_id,json=customerExternalId,proto3,oneof" json:"customer_external_id,omitempty"`
+	InvoiceType        []v2.InvoiceType              `protobuf:"varint,6,rep,packed,name=invoice_type,json=invoiceType,proto3,enum=invora.billing.common.v2.InvoiceType" json:"invoice_type,omitempty"`
+	IssuingDateFrom    *date.Date                    `protobuf:"bytes,7,opt,name=issuing_date_from,json=issuingDateFrom,proto3,oneof" json:"issuing_date_from,omitempty"`
+	IssuingDateTo      *date.Date                    `protobuf:"bytes,8,opt,name=issuing_date_to,json=issuingDateTo,proto3,oneof" json:"issuing_date_to,omitempty"`
+	PaymentDisputeLost *bool                         `protobuf:"varint,9,opt,name=payment_dispute_lost,json=paymentDisputeLost,proto3,oneof" json:"payment_dispute_lost,omitempty"`
+	PaymentOverdue     *bool                         `protobuf:"varint,10,opt,name=payment_overdue,json=paymentOverdue,proto3,oneof" json:"payment_overdue,omitempty"`
+	PaymentStatus      []v2.InvoicePaymentStatusType `protobuf:"varint,11,rep,packed,name=payment_status,json=paymentStatus,proto3,enum=invora.billing.common.v2.InvoicePaymentStatusType" json:"payment_status,omitempty"`
+	SearchTerm         *string                       `protobuf:"bytes,12,opt,name=search_term,json=searchTerm,proto3,oneof" json:"search_term,omitempty"`
+	SelfBilled         *bool                         `protobuf:"varint,13,opt,name=self_billed,json=selfBilled,proto3,oneof" json:"self_billed,omitempty"`
+	Status             []v2.InvoiceStatusType        `protobuf:"varint,14,rep,packed,name=status,proto3,enum=invora.billing.common.v2.InvoiceStatusType" json:"status,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
 
 func (x *DataExportInvoiceFiltersInput) Reset() {
 	*x = DataExportInvoiceFiltersInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[102]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[55]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5527,7 +3181,7 @@ func (x *DataExportInvoiceFiltersInput) String() string {
 func (*DataExportInvoiceFiltersInput) ProtoMessage() {}
 
 func (x *DataExportInvoiceFiltersInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[102]
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[55]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5540,7 +3194,7 @@ func (x *DataExportInvoiceFiltersInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DataExportInvoiceFiltersInput.ProtoReflect.Descriptor instead.
 func (*DataExportInvoiceFiltersInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{102}
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{55}
 }
 
 func (x *DataExportInvoiceFiltersInput) GetAmountFrom() int32 {
@@ -5578,7 +3232,7 @@ func (x *DataExportInvoiceFiltersInput) GetCustomerExternalId() string {
 	return ""
 }
 
-func (x *DataExportInvoiceFiltersInput) GetInvoiceType() []v2.InvoiceTypeEnum {
+func (x *DataExportInvoiceFiltersInput) GetInvoiceType() []v2.InvoiceType {
 	if x != nil {
 		return x.InvoiceType
 	}
@@ -5613,7 +3267,7 @@ func (x *DataExportInvoiceFiltersInput) GetPaymentOverdue() bool {
 	return false
 }
 
-func (x *DataExportInvoiceFiltersInput) GetPaymentStatus() []v2.InvoicePaymentStatusTypeEnum {
+func (x *DataExportInvoiceFiltersInput) GetPaymentStatus() []v2.InvoicePaymentStatusType {
 	if x != nil {
 		return x.PaymentStatus
 	}
@@ -5634,15 +3288,585 @@ func (x *DataExportInvoiceFiltersInput) GetSelfBilled() bool {
 	return false
 }
 
-func (x *DataExportInvoiceFiltersInput) GetStatus() []v2.InvoiceStatusTypeEnum {
+func (x *DataExportInvoiceFiltersInput) GetStatus() []v2.InvoiceStatusType {
 	if x != nil {
 		return x.Status
 	}
 	return nil
 }
 
-// Autogenerated input type of CreateInvoiceCustomSection
-type CreateInvoiceCustomSectionInput struct {
+type CreateDataExportRequest struct {
+	state         protoimpl.MessageState         `protogen:"open.v1"`
+	Filters       *DataExportInvoiceFiltersInput `protobuf:"bytes,1,opt,name=filters,proto3" json:"filters,omitempty"`
+	Format        v2.DataExportFormatType        `protobuf:"varint,2,opt,name=format,proto3,enum=invora.billing.common.v2.DataExportFormatType" json:"format,omitempty"`
+	ResourceType  InvoiceExportType              `protobuf:"varint,3,opt,name=resource_type,json=resourceType,proto3,enum=invora.billing.invoices.v2.InvoiceExportType" json:"resource_type,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateDataExportRequest) Reset() {
+	*x = CreateDataExportRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[56]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateDataExportRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateDataExportRequest) ProtoMessage() {}
+
+func (x *CreateDataExportRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[56]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateDataExportRequest.ProtoReflect.Descriptor instead.
+func (*CreateDataExportRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{56}
+}
+
+func (x *CreateDataExportRequest) GetFilters() *DataExportInvoiceFiltersInput {
+	if x != nil {
+		return x.Filters
+	}
+	return nil
+}
+
+func (x *CreateDataExportRequest) GetFormat() v2.DataExportFormatType {
+	if x != nil {
+		return x.Format
+	}
+	return v2.DataExportFormatType(0)
+}
+
+func (x *CreateDataExportRequest) GetResourceType() InvoiceExportType {
+	if x != nil {
+		return x.ResourceType
+	}
+	return InvoiceExportType_INVOICE_EXPORT_TYPE_UNSPECIFIED
+}
+
+type CreateDataExportResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DataExport    *v2.DataExport         `protobuf:"bytes,1,opt,name=data_export,json=dataExport,proto3" json:"data_export,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateDataExportResponse) Reset() {
+	*x = CreateDataExportResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[57]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateDataExportResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateDataExportResponse) ProtoMessage() {}
+
+func (x *CreateDataExportResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[57]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateDataExportResponse.ProtoReflect.Descriptor instead.
+func (*CreateDataExportResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{57}
+}
+
+func (x *CreateDataExportResponse) GetDataExport() *v2.DataExport {
+	if x != nil {
+		return x.DataExport
+	}
+	return nil
+}
+
+type SyncIntegrationInvoiceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	InvoiceId     string                 `protobuf:"bytes,1,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncIntegrationInvoiceRequest) Reset() {
+	*x = SyncIntegrationInvoiceRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[58]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncIntegrationInvoiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncIntegrationInvoiceRequest) ProtoMessage() {}
+
+func (x *SyncIntegrationInvoiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[58]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncIntegrationInvoiceRequest.ProtoReflect.Descriptor instead.
+func (*SyncIntegrationInvoiceRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{58}
+}
+
+func (x *SyncIntegrationInvoiceRequest) GetInvoiceId() string {
+	if x != nil {
+		return x.InvoiceId
+	}
+	return ""
+}
+
+type SyncIntegrationInvoiceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	InvoiceId     *string                `protobuf:"bytes,1,opt,name=invoice_id,json=invoiceId,proto3,oneof" json:"invoice_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncIntegrationInvoiceResponse) Reset() {
+	*x = SyncIntegrationInvoiceResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[59]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncIntegrationInvoiceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncIntegrationInvoiceResponse) ProtoMessage() {}
+
+func (x *SyncIntegrationInvoiceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[59]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncIntegrationInvoiceResponse.ProtoReflect.Descriptor instead.
+func (*SyncIntegrationInvoiceResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{59}
+}
+
+func (x *SyncIntegrationInvoiceResponse) GetInvoiceId() string {
+	if x != nil && x.InvoiceId != nil {
+		return *x.InvoiceId
+	}
+	return ""
+}
+
+type SyncHubspotIntegrationInvoiceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	InvoiceId     string                 `protobuf:"bytes,1,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncHubspotIntegrationInvoiceRequest) Reset() {
+	*x = SyncHubspotIntegrationInvoiceRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[60]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncHubspotIntegrationInvoiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncHubspotIntegrationInvoiceRequest) ProtoMessage() {}
+
+func (x *SyncHubspotIntegrationInvoiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[60]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncHubspotIntegrationInvoiceRequest.ProtoReflect.Descriptor instead.
+func (*SyncHubspotIntegrationInvoiceRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{60}
+}
+
+func (x *SyncHubspotIntegrationInvoiceRequest) GetInvoiceId() string {
+	if x != nil {
+		return x.InvoiceId
+	}
+	return ""
+}
+
+type SyncHubspotIntegrationInvoiceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	InvoiceId     *string                `protobuf:"bytes,1,opt,name=invoice_id,json=invoiceId,proto3,oneof" json:"invoice_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncHubspotIntegrationInvoiceResponse) Reset() {
+	*x = SyncHubspotIntegrationInvoiceResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[61]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncHubspotIntegrationInvoiceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncHubspotIntegrationInvoiceResponse) ProtoMessage() {}
+
+func (x *SyncHubspotIntegrationInvoiceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[61]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncHubspotIntegrationInvoiceResponse.ProtoReflect.Descriptor instead.
+func (*SyncHubspotIntegrationInvoiceResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{61}
+}
+
+func (x *SyncHubspotIntegrationInvoiceResponse) GetInvoiceId() string {
+	if x != nil && x.InvoiceId != nil {
+		return *x.InvoiceId
+	}
+	return ""
+}
+
+type SyncSalesforceInvoiceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	InvoiceId     string                 `protobuf:"bytes,1,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncSalesforceInvoiceRequest) Reset() {
+	*x = SyncSalesforceInvoiceRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[62]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncSalesforceInvoiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncSalesforceInvoiceRequest) ProtoMessage() {}
+
+func (x *SyncSalesforceInvoiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[62]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncSalesforceInvoiceRequest.ProtoReflect.Descriptor instead.
+func (*SyncSalesforceInvoiceRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{62}
+}
+
+func (x *SyncSalesforceInvoiceRequest) GetInvoiceId() string {
+	if x != nil {
+		return x.InvoiceId
+	}
+	return ""
+}
+
+type SyncSalesforceInvoiceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	InvoiceId     *string                `protobuf:"bytes,1,opt,name=invoice_id,json=invoiceId,proto3,oneof" json:"invoice_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncSalesforceInvoiceResponse) Reset() {
+	*x = SyncSalesforceInvoiceResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[63]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncSalesforceInvoiceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncSalesforceInvoiceResponse) ProtoMessage() {}
+
+func (x *SyncSalesforceInvoiceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[63]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncSalesforceInvoiceResponse.ProtoReflect.Descriptor instead.
+func (*SyncSalesforceInvoiceResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{63}
+}
+
+func (x *SyncSalesforceInvoiceResponse) GetInvoiceId() string {
+	if x != nil && x.InvoiceId != nil {
+		return *x.InvoiceId
+	}
+	return ""
+}
+
+type ListCustomSectionsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListCustomSectionsRequest) Reset() {
+	*x = ListCustomSectionsRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[64]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListCustomSectionsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListCustomSectionsRequest) ProtoMessage() {}
+
+func (x *ListCustomSectionsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[64]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListCustomSectionsRequest.ProtoReflect.Descriptor instead.
+func (*ListCustomSectionsRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{64}
+}
+
+type ListCustomSectionsResponse struct {
+	state          protoimpl.MessageState     `protogen:"open.v1"`
+	Items          []*v2.InvoiceCustomSection `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                     `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                    `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ListCustomSectionsResponse) Reset() {
+	*x = ListCustomSectionsResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[65]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListCustomSectionsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListCustomSectionsResponse) ProtoMessage() {}
+
+func (x *ListCustomSectionsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[65]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListCustomSectionsResponse.ProtoReflect.Descriptor instead.
+func (*ListCustomSectionsResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{65}
+}
+
+func (x *ListCustomSectionsResponse) GetItems() []*v2.InvoiceCustomSection {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+func (x *ListCustomSectionsResponse) GetTotalCount() uint64 {
+	if x != nil {
+		return x.TotalCount
+	}
+	return 0
+}
+
+func (x *ListCustomSectionsResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
+	}
+	return ""
+}
+
+type GetCustomSectionRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique ID of the custom section.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Fields to return in the response.
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	// Response detail level.
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetCustomSectionRequest) Reset() {
+	*x = GetCustomSectionRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[66]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetCustomSectionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetCustomSectionRequest) ProtoMessage() {}
+
+func (x *GetCustomSectionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[66]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetCustomSectionRequest.ProtoReflect.Descriptor instead.
+func (*GetCustomSectionRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{66}
+}
+
+func (x *GetCustomSectionRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *GetCustomSectionRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
+	}
+	return nil
+}
+
+func (x *GetCustomSectionRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
+}
+
+type GetCustomSectionResponse struct {
+	state                protoimpl.MessageState   `protogen:"open.v1"`
+	InvoiceCustomSection *v2.InvoiceCustomSection `protobuf:"bytes,1,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3" json:"invoice_custom_section,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *GetCustomSectionResponse) Reset() {
+	*x = GetCustomSectionResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[67]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetCustomSectionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetCustomSectionResponse) ProtoMessage() {}
+
+func (x *GetCustomSectionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[67]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetCustomSectionResponse.ProtoReflect.Descriptor instead.
+func (*GetCustomSectionResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{67}
+}
+
+func (x *GetCustomSectionResponse) GetInvoiceCustomSection() *v2.InvoiceCustomSection {
+	if x != nil {
+		return x.InvoiceCustomSection
+	}
+	return nil
+}
+
+type CreateCustomSectionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
 	Description   *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
@@ -5653,21 +3877,21 @@ type CreateInvoiceCustomSectionInput struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateInvoiceCustomSectionInput) Reset() {
-	*x = CreateInvoiceCustomSectionInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[103]
+func (x *CreateCustomSectionRequest) Reset() {
+	*x = CreateCustomSectionRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[68]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateInvoiceCustomSectionInput) String() string {
+func (x *CreateCustomSectionRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateInvoiceCustomSectionInput) ProtoMessage() {}
+func (*CreateCustomSectionRequest) ProtoMessage() {}
 
-func (x *CreateInvoiceCustomSectionInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[103]
+func (x *CreateCustomSectionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[68]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5678,74 +3902,68 @@ func (x *CreateInvoiceCustomSectionInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateInvoiceCustomSectionInput.ProtoReflect.Descriptor instead.
-func (*CreateInvoiceCustomSectionInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{103}
+// Deprecated: Use CreateCustomSectionRequest.ProtoReflect.Descriptor instead.
+func (*CreateCustomSectionRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{68}
 }
 
-func (x *CreateInvoiceCustomSectionInput) GetCode() string {
+func (x *CreateCustomSectionRequest) GetCode() string {
 	if x != nil {
 		return x.Code
 	}
 	return ""
 }
 
-func (x *CreateInvoiceCustomSectionInput) GetDescription() string {
+func (x *CreateCustomSectionRequest) GetDescription() string {
 	if x != nil && x.Description != nil {
 		return *x.Description
 	}
 	return ""
 }
 
-func (x *CreateInvoiceCustomSectionInput) GetDetails() string {
+func (x *CreateCustomSectionRequest) GetDetails() string {
 	if x != nil && x.Details != nil {
 		return *x.Details
 	}
 	return ""
 }
 
-func (x *CreateInvoiceCustomSectionInput) GetDisplayName() string {
+func (x *CreateCustomSectionRequest) GetDisplayName() string {
 	if x != nil && x.DisplayName != nil {
 		return *x.DisplayName
 	}
 	return ""
 }
 
-func (x *CreateInvoiceCustomSectionInput) GetName() string {
+func (x *CreateCustomSectionRequest) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-// Create Invoice input arguments
-type CreateInvoiceInput struct {
-	state                protoimpl.MessageState                  `protogen:"open.v1"`
-	Currency             *v2.CurrencyEnum                        `protobuf:"varint,1,opt,name=currency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"currency,omitempty"`
-	CustomerId           string                                  `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	Fees                 []*FeeInput                             `protobuf:"bytes,3,rep,name=fees,proto3" json:"fees,omitempty"`
-	InvoiceCustomSection *v2.InvoiceCustomSectionsReferenceInput `protobuf:"bytes,4,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3,oneof" json:"invoice_custom_section,omitempty"`
-	PaymentMethod        *v2.PaymentMethodReferenceInput         `protobuf:"bytes,5,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
-	VoidedInvoiceId      *string                                 `protobuf:"bytes,6,opt,name=voided_invoice_id,json=voidedInvoiceId,proto3,oneof" json:"voided_invoice_id,omitempty"`
+type CreateCustomSectionResponse struct {
+	state                protoimpl.MessageState   `protogen:"open.v1"`
+	InvoiceCustomSection *v2.InvoiceCustomSection `protobuf:"bytes,1,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3" json:"invoice_custom_section,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
 
-func (x *CreateInvoiceInput) Reset() {
-	*x = CreateInvoiceInput{}
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[104]
+func (x *CreateCustomSectionResponse) Reset() {
+	*x = CreateCustomSectionResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[69]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateInvoiceInput) String() string {
+func (x *CreateCustomSectionResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateInvoiceInput) ProtoMessage() {}
+func (*CreateCustomSectionResponse) ProtoMessage() {}
 
-func (x *CreateInvoiceInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[104]
+func (x *CreateCustomSectionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[69]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5756,111 +3974,263 @@ func (x *CreateInvoiceInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateInvoiceInput.ProtoReflect.Descriptor instead.
-func (*CreateInvoiceInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{104}
+// Deprecated: Use CreateCustomSectionResponse.ProtoReflect.Descriptor instead.
+func (*CreateCustomSectionResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{69}
 }
 
-func (x *CreateInvoiceInput) GetCurrency() v2.CurrencyEnum {
-	if x != nil && x.Currency != nil {
-		return *x.Currency
-	}
-	return v2.CurrencyEnum(0)
-}
-
-func (x *CreateInvoiceInput) GetCustomerId() string {
-	if x != nil {
-		return x.CustomerId
-	}
-	return ""
-}
-
-func (x *CreateInvoiceInput) GetFees() []*FeeInput {
-	if x != nil {
-		return x.Fees
-	}
-	return nil
-}
-
-func (x *CreateInvoiceInput) GetInvoiceCustomSection() *v2.InvoiceCustomSectionsReferenceInput {
+func (x *CreateCustomSectionResponse) GetInvoiceCustomSection() *v2.InvoiceCustomSection {
 	if x != nil {
 		return x.InvoiceCustomSection
 	}
 	return nil
 }
 
-func (x *CreateInvoiceInput) GetPaymentMethod() *v2.PaymentMethodReferenceInput {
+type UpdateCustomSectionRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          *string                `protobuf:"bytes,1,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	Description   *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	Details       *string                `protobuf:"bytes,3,opt,name=details,proto3,oneof" json:"details,omitempty"`
+	DisplayName   *string                `protobuf:"bytes,4,opt,name=display_name,json=displayName,proto3,oneof" json:"display_name,omitempty"`
+	Id            string                 `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
+	Name          *string                `protobuf:"bytes,6,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateCustomSectionRequest) Reset() {
+	*x = UpdateCustomSectionRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[70]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateCustomSectionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateCustomSectionRequest) ProtoMessage() {}
+
+func (x *UpdateCustomSectionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[70]
 	if x != nil {
-		return x.PaymentMethod
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateCustomSectionRequest.ProtoReflect.Descriptor instead.
+func (*UpdateCustomSectionRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{70}
+}
+
+func (x *UpdateCustomSectionRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
+	}
+	return ""
+}
+
+func (x *UpdateCustomSectionRequest) GetDescription() string {
+	if x != nil && x.Description != nil {
+		return *x.Description
+	}
+	return ""
+}
+
+func (x *UpdateCustomSectionRequest) GetDetails() string {
+	if x != nil && x.Details != nil {
+		return *x.Details
+	}
+	return ""
+}
+
+func (x *UpdateCustomSectionRequest) GetDisplayName() string {
+	if x != nil && x.DisplayName != nil {
+		return *x.DisplayName
+	}
+	return ""
+}
+
+func (x *UpdateCustomSectionRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateCustomSectionRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *UpdateCustomSectionRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
 	}
 	return nil
 }
 
-func (x *CreateInvoiceInput) GetVoidedInvoiceId() string {
-	if x != nil && x.VoidedInvoiceId != nil {
-		return *x.VoidedInvoiceId
+type UpdateCustomSectionResponse struct {
+	state                protoimpl.MessageState   `protogen:"open.v1"`
+	InvoiceCustomSection *v2.InvoiceCustomSection `protobuf:"bytes,1,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3" json:"invoice_custom_section,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *UpdateCustomSectionResponse) Reset() {
+	*x = UpdateCustomSectionResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[71]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateCustomSectionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateCustomSectionResponse) ProtoMessage() {}
+
+func (x *UpdateCustomSectionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[71]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateCustomSectionResponse.ProtoReflect.Descriptor instead.
+func (*UpdateCustomSectionResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{71}
+}
+
+func (x *UpdateCustomSectionResponse) GetInvoiceCustomSection() *v2.InvoiceCustomSection {
+	if x != nil {
+		return x.InvoiceCustomSection
+	}
+	return nil
+}
+
+type DeleteCustomSectionRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteCustomSectionRequest) Reset() {
+	*x = DeleteCustomSectionRequest{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[72]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteCustomSectionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteCustomSectionRequest) ProtoMessage() {}
+
+func (x *DeleteCustomSectionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[72]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteCustomSectionRequest.ProtoReflect.Descriptor instead.
+func (*DeleteCustomSectionRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{72}
+}
+
+func (x *DeleteCustomSectionRequest) GetId() string {
+	if x != nil {
+		return x.Id
 	}
 	return ""
+}
+
+type DeleteCustomSectionResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteCustomSectionResponse) Reset() {
+	*x = DeleteCustomSectionResponse{}
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[73]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteCustomSectionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteCustomSectionResponse) ProtoMessage() {}
+
+func (x *DeleteCustomSectionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_invoices_v2_service_proto_msgTypes[73]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteCustomSectionResponse.ProtoReflect.Descriptor instead.
+func (*DeleteCustomSectionResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_invoices_v2_service_proto_rawDescGZIP(), []int{73}
 }
 
 var File_invora_billing_invoices_v2_service_proto protoreflect.FileDescriptor
 
 const file_invora_billing_invoices_v2_service_proto_rawDesc = "" +
 	"\n" +
-	"(invora/billing/invoices/v2/service.proto\x12\x1ainvora.billing.invoices.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x16google/type/date.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\xba\x02\n" +
-	"\x17CustomerInvoicesRequest\x12>\n" +
-	"\x06filter\x18\x01 \x01(\v2&.invora.billing.invoices.v2.ListFilterR\x06filter\x128\n" +
-	"\x04sort\x18\x02 \x01(\v2$.invora.billing.invoices.v2.ListSortR\x04sort\x126\n" +
-	"\n" +
-	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
-	"pagination\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x124\n" +
-	"\x04view\x18\v \x01(\x0e2 .invora.billing.invoices.v2.ViewR\x04view\"\xc3\x01\n" +
-	"\x18CustomerInvoicesResponse\x12>\n" +
-	"\x05items\x18\x01 \x03(\v2(.invora.billing.common.v2.BillingInvoiceR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"m\n" +
+	"(invora/billing/invoices/v2/service.proto\x12\x1ainvora.billing.invoices.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x16google/type/date.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/decimal.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"m\n" +
 	"\n" +
 	"ListFilter\x12>\n" +
 	"\x04part\x18\x01 \x01(\v2*.invora.billing.invoices.v2.ListFilterPartR\x04part\x12\x1f\n" +
 	"\vtext_search\x18\x02 \x01(\tR\n" +
-	"textSearch\"`\n" +
-	"\x10ListStatusFilter\x12L\n" +
-	"\tin_values\x18\x01 \x03(\x0e2/.invora.billing.common.v2.InvoiceStatusTypeEnumR\binValues\"\x83\x01\n" +
+	"textSearch\"\x83\x01\n" +
 	"\x0eListFilterPart\x12!\n" +
 	"\vcustomer_id\x18\x01 \x01(\tH\x00R\n" +
 	"customerId\x12F\n" +
 	"\x06status\x18\x02 \x01(\v2,.invora.billing.invoices.v2.ListStatusFilterH\x00R\x06statusB\x06\n" +
-	"\x04type\"J\n" +
+	"\x04type\"\\\n" +
+	"\x10ListStatusFilter\x12H\n" +
+	"\tin_values\x18\x01 \x03(\x0e2+.invora.billing.common.v2.InvoiceStatusTypeR\binValues\"[\n" +
+	"\x15ListInvoiceTypeFilter\x12B\n" +
+	"\tin_values\x18\x01 \x03(\x0e2%.invora.billing.common.v2.InvoiceTypeR\binValues\"j\n" +
+	"\x17ListPaymentStatusFilter\x12O\n" +
+	"\tin_values\x18\x01 \x03(\x0e22.invora.billing.common.v2.InvoicePaymentStatusTypeR\binValues\"g\n" +
+	"\x15ListSettlementsFilter\x12N\n" +
+	"\tin_values\x18\x01 \x03(\x0e21.invora.billing.invoices.v2.InvoiceSettlementTypeR\binValues\"J\n" +
 	"\bListSort\x12>\n" +
 	"\x05rules\x18\x01 \x03(\v2(.invora.billing.invoices.v2.ListSortRuleR\x05rules\"N\n" +
 	"\fListSortRule\x126\n" +
 	"\n" +
 	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAtB\x06\n" +
-	"\x04type\"\x8b\x01\n" +
-	"\n" +
-	"GetRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x124\n" +
-	"\x04view\x18\v \x01(\x0e2 .invora.billing.invoices.v2.ViewR\x04view\"Q\n" +
-	"\vGetResponse\x12B\n" +
-	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"\x98\x01\n" +
-	"\x17GetCustomSectionRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x124\n" +
-	"\x04view\x18\v \x01(\x0e2 .invora.billing.invoices.v2.ViewR\x04view\"\x80\x01\n" +
-	"\x18GetCustomSectionResponse\x12d\n" +
-	"\x16invoice_custom_section\x18\x01 \x01(\v2..invora.billing.common.v2.InvoiceCustomSectionR\x14invoiceCustomSection\"\x1b\n" +
-	"\x19ListCustomSectionsRequest\"\xcb\x01\n" +
-	"\x1aListCustomSectionsResponse\x12D\n" +
-	"\x05items\x18\x01 \x03(\v2..invora.billing.common.v2.InvoiceCustomSectionR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"\xae\x02\n" +
+	"\x04type\"\xac\x02\n" +
 	"\vListRequest\x12>\n" +
 	"\x06filter\x18\x01 \x01(\v2&.invora.billing.invoices.v2.ListFilterR\x06filter\x128\n" +
 	"\x04sort\x18\x02 \x01(\v2$.invora.billing.invoices.v2.ListSortR\x04sort\x126\n" +
@@ -5868,266 +4238,38 @@ const file_invora_billing_invoices_v2_service_proto_rawDesc = "" +
 	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
 	"pagination\x127\n" +
 	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x124\n" +
-	"\x04view\x18\v \x01(\x0e2 .invora.billing.invoices.v2.ViewR\x04view\"\xb7\x01\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xb3\x01\n" +
 	"\fListResponse\x12>\n" +
 	"\x05items\x18\x01 \x03(\v2(.invora.billing.common.v2.BillingInvoiceR\x05items\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"_\n" +
-	"\x15ListInvoiceTypeFilter\x12F\n" +
-	"\tin_values\x18\x01 \x03(\x0e2).invora.billing.common.v2.InvoiceTypeEnumR\binValues\"n\n" +
-	"\x17ListPaymentStatusFilter\x12S\n" +
-	"\tin_values\x18\x01 \x03(\x0e26.invora.billing.common.v2.InvoicePaymentStatusTypeEnumR\binValues\"k\n" +
-	"\x15ListSettlementsFilter\x12R\n" +
-	"\tin_values\x18\x01 \x03(\x0e25.invora.billing.invoices.v2.InvoiceSettlementTypeEnumR\binValues\"U\n" +
-	"\rCreateRequest\x12D\n" +
-	"\x05input\x18\x01 \x01(\v2..invora.billing.invoices.v2.CreateInvoiceInputR\x05input\"T\n" +
-	"\x0eCreateResponse\x12B\n" +
-	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"o\n" +
-	"\x1aCreateCustomSectionRequest\x12Q\n" +
-	"\x05input\x18\x01 \x01(\v2;.invora.billing.invoices.v2.CreateInvoiceCustomSectionInputR\x05input\"\x83\x01\n" +
-	"\x1bCreateCustomSectionResponse\x12d\n" +
-	"\x16invoice_custom_section\x18\x01 \x01(\v2..invora.billing.common.v2.InvoiceCustomSectionR\x14invoiceCustomSection\"l\n" +
-	"\x18CreatesDataExportRequest\x12P\n" +
-	"\x05input\x18\x01 \x01(\v2:.invora.billing.invoices.v2.CreateDataExportsInvoicesInputR\x05input\"b\n" +
-	"\x19CreatesDataExportResponse\x12E\n" +
-	"\vdata_export\x18\x01 \x01(\v2$.invora.billing.common.v2.DataExportR\n" +
-	"dataExport\"w\n" +
-	"!DeleteInvoiceCustomSectionRequest\x12R\n" +
-	"\x05input\x18\x01 \x01(\v2<.invora.billing.invoices.v2.DestroyInvoiceCustomSectionInputR\x05input\"$\n" +
-	"\"DeleteInvoiceCustomSectionResponse\"|\n" +
-	"$DownloadCustomerPortalInvoiceRequest\x12T\n" +
-	"\x05input\x18\x01 \x01(\v2>.invora.billing.invoices.v2.DownloadCustomerPortalInvoiceInputR\x05input\"k\n" +
-	"%DownloadCustomerPortalInvoiceResponse\x12B\n" +
-	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"`\n" +
-	"\x16DownloadInvoiceRequest\x12F\n" +
-	"\x05input\x18\x01 \x01(\v20.invora.billing.invoices.v2.DownloadInvoiceInputR\x05input\"]\n" +
-	"\x17DownloadInvoiceResponse\x12B\n" +
-	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"f\n" +
-	"\x19DownloadInvoiceXmlRequest\x12I\n" +
-	"\x05input\x18\x01 \x01(\v23.invora.billing.invoices.v2.DownloadXmlInvoiceInputR\x05input\"`\n" +
-	"\x1aDownloadInvoiceXmlResponse\x12B\n" +
-	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"\xc0\x02\n" +
-	"\x1dFetchDraftInvoiceTaxesRequest\x12>\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"\x89\x01\n" +
+	"\n" +
+	"GetRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
+	"\tread_mask\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"Q\n" +
+	"\vGetResponse\x12B\n" +
+	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"\xb8\x02\n" +
+	"\x17CustomerInvoicesRequest\x12>\n" +
 	"\x06filter\x18\x01 \x01(\v2&.invora.billing.invoices.v2.ListFilterR\x06filter\x128\n" +
 	"\x04sort\x18\x02 \x01(\v2$.invora.billing.invoices.v2.ListSortR\x04sort\x126\n" +
 	"\n" +
 	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
 	"pagination\x127\n" +
 	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x124\n" +
-	"\x04view\x18\v \x01(\x0e2 .invora.billing.invoices.v2.ViewR\x04view\"\xc9\x01\n" +
-	"\x1eFetchDraftInvoiceTaxesResponse\x12>\n" +
-	"\x05items\x18\x01 \x03(\v2(.invora.billing.invoices.v2.TaxFeeObjectR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"\xbd\x02\n" +
-	"\x1aFinalizeAllInvoicesRequest\x12>\n" +
-	"\x06filter\x18\x01 \x01(\v2&.invora.billing.invoices.v2.ListFilterR\x06filter\x128\n" +
-	"\x04sort\x18\x02 \x01(\v2$.invora.billing.invoices.v2.ListSortR\x04sort\x126\n" +
-	"\n" +
-	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
-	"pagination\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x124\n" +
-	"\x04view\x18\v \x01(\x0e2 .invora.billing.invoices.v2.ViewR\x04view\"\xc6\x01\n" +
-	"\x1bFinalizeAllInvoicesResponse\x12>\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xbf\x01\n" +
+	"\x18CustomerInvoicesResponse\x12>\n" +
 	"\x05items\x18\x01 \x03(\v2(.invora.billing.common.v2.BillingInvoiceR\x05items\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"Y\n" +
-	"\x0fFinalizeRequest\x12F\n" +
-	"\x05input\x18\x01 \x01(\v20.invora.billing.invoices.v2.FinalizeInvoiceInputR\x05input\"V\n" +
-	"\x10FinalizeResponse\x12B\n" +
-	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"f\n" +
-	"\x19LoseInvoiceDisputeRequest\x12I\n" +
-	"\x05input\x18\x01 \x01(\v23.invora.billing.invoices.v2.LoseInvoiceDisputeInputR\x05input\"`\n" +
-	"\x1aLoseInvoiceDisputeResponse\x12B\n" +
-	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"^\n" +
-	"\x15RefreshInvoiceRequest\x12E\n" +
-	"\x05input\x18\x01 \x01(\v2/.invora.billing.invoices.v2.RefreshInvoiceInputR\x05input\"\\\n" +
-	"\x16RefreshInvoiceResponse\x12B\n" +
-	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"g\n" +
-	"\x1bRegenerateFromVoidedRequest\x12H\n" +
-	"\x05input\x18\x01 \x01(\v22.invora.billing.invoices.v2.RegenerateInvoiceInputR\x05input\"b\n" +
-	"\x1cRegenerateFromVoidedResponse\x12B\n" +
-	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"f\n" +
-	"\x19ResendInvoiceEmailRequest\x12I\n" +
-	"\x05input\x18\x01 \x01(\v23.invora.billing.invoices.v2.ResendInvoiceEmailInputR\x05input\"`\n" +
-	"\x1aResendInvoiceEmailResponse\x12B\n" +
-	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"\xc1\x02\n" +
-	"\x1eRetryAllInvoicePaymentsRequest\x12>\n" +
-	"\x06filter\x18\x01 \x01(\v2&.invora.billing.invoices.v2.ListFilterR\x06filter\x128\n" +
-	"\x04sort\x18\x02 \x01(\v2$.invora.billing.invoices.v2.ListSortR\x04sort\x126\n" +
-	"\n" +
-	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
-	"pagination\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x124\n" +
-	"\x04view\x18\v \x01(\x0e2 .invora.billing.invoices.v2.ViewR\x04view\"\xca\x01\n" +
-	"\x1fRetryAllInvoicePaymentsResponse\x12>\n" +
-	"\x05items\x18\x01 \x03(\v2(.invora.billing.common.v2.BillingInvoiceR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"\xba\x02\n" +
-	"\x17RetryAllInvoicesRequest\x12>\n" +
-	"\x06filter\x18\x01 \x01(\v2&.invora.billing.invoices.v2.ListFilterR\x06filter\x128\n" +
-	"\x04sort\x18\x02 \x01(\v2$.invora.billing.invoices.v2.ListSortR\x04sort\x126\n" +
-	"\n" +
-	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
-	"pagination\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x124\n" +
-	"\x04view\x18\v \x01(\x0e2 .invora.billing.invoices.v2.ViewR\x04view\"\xc3\x01\n" +
-	"\x18RetryAllInvoicesResponse\x12>\n" +
-	"\x05items\x18\x01 \x03(\v2(.invora.billing.common.v2.BillingInvoiceR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"Z\n" +
-	"\x13RetryInvoiceRequest\x12C\n" +
-	"\x05input\x18\x01 \x01(\v2-.invora.billing.invoices.v2.RetryInvoiceInputR\x05input\"Z\n" +
-	"\x14RetryInvoiceResponse\x12B\n" +
-	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"h\n" +
-	"\x1aRetryInvoicePaymentRequest\x12J\n" +
-	"\x05input\x18\x01 \x01(\v24.invora.billing.invoices.v2.RetryInvoicePaymentInputR\x05input\"a\n" +
-	"\x1bRetryInvoicePaymentResponse\x12B\n" +
-	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"p\n" +
-	"\x1eRetryTaxProviderVoidingRequest\x12N\n" +
-	"\x05input\x18\x01 \x01(\v28.invora.billing.invoices.v2.RetryTaxProviderVoidingInputR\x05input\"e\n" +
-	"\x1fRetryTaxProviderVoidingResponse\x12B\n" +
-	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"|\n" +
-	"$SyncHubspotIntegrationInvoiceRequest\x12T\n" +
-	"\x05input\x18\x01 \x01(\v2>.invora.billing.invoices.v2.SyncHubspotIntegrationInvoiceInputR\x05input\"\x9f\x01\n" +
-	"%SyncHubspotIntegrationInvoiceResponse\x12v\n" +
-	"\x1csync_hubspot_invoice_payload\x18\x01 \x01(\v25.invora.billing.invoices.v2.SyncHubspotInvoicePayloadR\x19syncHubspotInvoicePayload\"n\n" +
-	"\x1dSyncIntegrationInvoiceRequest\x12M\n" +
-	"\x05input\x18\x01 \x01(\v27.invora.billing.invoices.v2.SyncIntegrationInvoiceInputR\x05input\"\xa5\x01\n" +
-	"\x1eSyncIntegrationInvoiceResponse\x12\x82\x01\n" +
-	" sync_integration_invoice_payload\x18\x01 \x01(\v29.invora.billing.invoices.v2.SyncIntegrationInvoicePayloadR\x1dsyncIntegrationInvoicePayload\"l\n" +
-	"\x1cSyncSalesforceInvoiceRequest\x12L\n" +
-	"\x05input\x18\x01 \x01(\v26.invora.billing.invoices.v2.SyncSalesforceInvoiceInputR\x05input\"\xa0\x01\n" +
-	"\x1dSyncSalesforceInvoiceResponse\x12\x7f\n" +
-	"\x1fsync_salesforce_invoice_payload\x18\x01 \x01(\v28.invora.billing.invoices.v2.SyncSalesforceInvoicePayloadR\x1csyncSalesforceInvoicePayload\"U\n" +
-	"\rUpdateRequest\x12D\n" +
-	"\x05input\x18\x01 \x01(\v2..invora.billing.invoices.v2.UpdateInvoiceInputR\x05input\"T\n" +
-	"\x0eUpdateResponse\x12B\n" +
-	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"v\n" +
-	"!UpdateInvoiceCustomSectionRequest\x12Q\n" +
-	"\x05input\x18\x01 \x01(\v2;.invora.billing.invoices.v2.UpdateInvoiceCustomSectionInputR\x05input\"\x8a\x01\n" +
-	"\"UpdateInvoiceCustomSectionResponse\x12d\n" +
-	"\x16invoice_custom_section\x18\x01 \x01(\v2..invora.billing.common.v2.InvoiceCustomSectionR\x14invoiceCustomSection\"X\n" +
-	"\x12VoidInvoiceRequest\x12B\n" +
-	"\x05input\x18\x01 \x01(\v2,.invora.billing.invoices.v2.VoidInvoiceInputR\x05input\"Y\n" +
-	"\x13VoidInvoiceResponse\x12B\n" +
-	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"\xea\x01\n" +
-	"\x10VoidInvoiceInput\x12(\n" +
-	"\rcredit_amount\x18\x01 \x01(\x03H\x00R\fcreditAmount\x88\x01\x01\x125\n" +
-	"\x14generate_credit_note\x18\x02 \x01(\bH\x01R\x12generateCreditNote\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\x12(\n" +
-	"\rrefund_amount\x18\x04 \x01(\x03H\x02R\frefundAmount\x88\x01\x01B\x10\n" +
-	"\x0e_credit_amountB\x17\n" +
-	"\x15_generate_credit_noteB\x10\n" +
-	"\x0e_refund_amount\"\x90\x02\n" +
-	"\x1fUpdateInvoiceCustomSectionInput\x12\x17\n" +
-	"\x04code\x18\x01 \x01(\tH\x00R\x04code\x88\x01\x01\x12%\n" +
-	"\vdescription\x18\x02 \x01(\tH\x01R\vdescription\x88\x01\x01\x12\x1d\n" +
-	"\adetails\x18\x03 \x01(\tH\x02R\adetails\x88\x01\x01\x12&\n" +
-	"\fdisplay_name\x18\x04 \x01(\tH\x03R\vdisplayName\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x05 \x01(\tR\x02id\x12\x17\n" +
-	"\x04name\x18\x06 \x01(\tH\x04R\x04name\x88\x01\x01B\a\n" +
-	"\x05_codeB\x0e\n" +
-	"\f_descriptionB\n" +
-	"\n" +
-	"\b_detailsB\x0f\n" +
-	"\r_display_nameB\a\n" +
-	"\x05_name\"\xe9\x01\n" +
-	"\x12UpdateInvoiceInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12L\n" +
-	"\bmetadata\x18\x02 \x03(\v20.invora.billing.invoices.v2.InvoiceMetadataInputR\bmetadata\x12b\n" +
-	"\x0epayment_status\x18\x03 \x01(\x0e26.invora.billing.common.v2.InvoicePaymentStatusTypeEnumH\x00R\rpaymentStatus\x88\x01\x01B\x11\n" +
-	"\x0f_payment_status\"Z\n" +
-	"\x14InvoiceMetadataInput\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x88\x01\x01\x12\x10\n" +
-	"\x03key\x18\x02 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x03 \x01(\tR\x05valueB\x05\n" +
-	"\x03_id\";\n" +
-	"\x1aSyncSalesforceInvoiceInput\x12\x1d\n" +
-	"\n" +
-	"invoice_id\x18\x01 \x01(\tR\tinvoiceId\"Q\n" +
-	"\x1cSyncSalesforceInvoicePayload\x12\"\n" +
-	"\n" +
-	"invoice_id\x18\x01 \x01(\tH\x00R\tinvoiceId\x88\x01\x01B\r\n" +
-	"\v_invoice_id\"<\n" +
-	"\x1bSyncIntegrationInvoiceInput\x12\x1d\n" +
-	"\n" +
-	"invoice_id\x18\x01 \x01(\tR\tinvoiceId\"R\n" +
-	"\x1dSyncIntegrationInvoicePayload\x12\"\n" +
-	"\n" +
-	"invoice_id\x18\x01 \x01(\tH\x00R\tinvoiceId\x88\x01\x01B\r\n" +
-	"\v_invoice_id\"C\n" +
-	"\"SyncHubspotIntegrationInvoiceInput\x12\x1d\n" +
-	"\n" +
-	"invoice_id\x18\x01 \x01(\tR\tinvoiceId\"N\n" +
-	"\x19SyncHubspotInvoicePayload\x12\"\n" +
-	"\n" +
-	"invoice_id\x18\x01 \x01(\tH\x00R\tinvoiceId\x88\x01\x01B\r\n" +
-	"\v_invoice_id\".\n" +
-	"\x1cRetryTaxProviderVoidingInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\xa0\x01\n" +
-	"\x18RetryInvoicePaymentInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12a\n" +
-	"\x0epayment_method\x18\x02 \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\x00R\rpaymentMethod\x88\x01\x01B\x11\n" +
-	"\x0f_payment_method\"#\n" +
-	"\x11RetryInvoiceInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\x17\n" +
-	"\x15RetryAllInvoicesInput\"\x1e\n" +
-	"\x1cRetryAllInvoicePaymentsInput\"[\n" +
-	"\x17ResendInvoiceEmailInput\x12\x10\n" +
-	"\x03bcc\x18\x01 \x03(\tR\x03bcc\x12\x0e\n" +
-	"\x02cc\x18\x02 \x03(\tR\x02cc\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\x12\x0e\n" +
-	"\x02to\x18\x04 \x03(\tR\x02to\"\x8b\x01\n" +
-	"\x16RegenerateInvoiceInput\x12E\n" +
-	"\x04fees\x18\x01 \x03(\v21.invora.billing.invoices.v2.VoidedInvoiceFeeInputR\x04fees\x12*\n" +
-	"\x11voided_invoice_id\x18\x02 \x01(\tR\x0fvoidedInvoiceId\"\xcc\x04\n" +
-	"\x15VoidedInvoiceFeeInput\x12\x1f\n" +
-	"\tadd_on_id\x18\x01 \x01(\tH\x00R\aaddOnId\x88\x01\x01\x12-\n" +
-	"\x10charge_filter_id\x18\x02 \x01(\tH\x01R\x0echargeFilterId\x88\x01\x01\x12 \n" +
-	"\tcharge_id\x18\x03 \x01(\tH\x02R\bchargeId\x88\x01\x01\x12%\n" +
-	"\vdescription\x18\x04 \x01(\tH\x03R\vdescription\x88\x01\x01\x12+\n" +
-	"\x0ffixed_charge_id\x18\x05 \x01(\tH\x04R\rfixedChargeId\x88\x01\x01\x12\x13\n" +
-	"\x02id\x18\x06 \x01(\tH\x05R\x02id\x88\x01\x01\x125\n" +
-	"\x14invoice_display_name\x18\a \x01(\tH\x06R\x12invoiceDisplayName\x88\x01\x01\x12,\n" +
-	"\x0fsubscription_id\x18\b \x01(\tH\aR\x0esubscriptionId\x88\x01\x01\x12/\n" +
-	"\x11unit_amount_cents\x18\t \x01(\x03H\bR\x0funitAmountCents\x88\x01\x01\x12\x19\n" +
-	"\x05units\x18\n" +
-	" \x01(\x01H\tR\x05units\x88\x01\x01B\f\n" +
-	"\n" +
-	"_add_on_idB\x13\n" +
-	"\x11_charge_filter_idB\f\n" +
-	"\n" +
-	"_charge_idB\x0e\n" +
-	"\f_descriptionB\x12\n" +
-	"\x10_fixed_charge_idB\x05\n" +
-	"\x03_idB\x17\n" +
-	"\x15_invoice_display_nameB\x12\n" +
-	"\x10_subscription_idB\x14\n" +
-	"\x12_unit_amount_centsB\b\n" +
-	"\x06_units\"%\n" +
-	"\x13RefreshInvoiceInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\")\n" +
-	"\x17LoseInvoiceDisputeInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"&\n" +
-	"\x14FinalizeInvoiceInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\x1a\n" +
-	"\x18FinalizeAllInvoicesInput\"\xa7\x01\n" +
-	"\x11InvoiceCollection\x12H\n" +
-	"\n" +
-	"collection\x18\x01 \x03(\v2(.invora.billing.common.v2.BillingInvoiceR\n" +
-	"collection\x12H\n" +
-	"\bmetadata\x18\x02 \x01(\v2,.invora.billing.common.v2.CollectionMetadataR\bmetadata\"\xa0\x04\n" +
-	"\x1bFetchDraftInvoiceTaxesInput\x12G\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"\x92\x04\n" +
+	"\rCreateRequest\x12G\n" +
 	"\bcurrency\x18\x01 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\x00R\bcurrency\x88\x01\x01\x12\x1f\n" +
 	"\vcustomer_id\x18\x02 \x01(\tR\n" +
 	"customerId\x128\n" +
@@ -6138,7 +4280,23 @@ const file_invora_billing_invoices_v2_service_proto_rawDesc = "" +
 	"\t_currencyB\x19\n" +
 	"\x17_invoice_custom_sectionB\x11\n" +
 	"\x0f_payment_methodB\x14\n" +
-	"\x12_voided_invoice_id\"\xe9\x03\n" +
+	"\x12_voided_invoice_id\"T\n" +
+	"\x0eCreateResponse\x12B\n" +
+	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"Z\n" +
+	"\x14InvoiceMetadataInput\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x88\x01\x01\x12\x10\n" +
+	"\x03key\x18\x02 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x03 \x01(\tR\x05valueB\x05\n" +
+	"\x03_id\"\x9d\x02\n" +
+	"\rUpdateRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12L\n" +
+	"\bmetadata\x18\x02 \x03(\v20.invora.billing.invoices.v2.InvoiceMetadataInputR\bmetadata\x12^\n" +
+	"\x0epayment_status\x18\x03 \x01(\x0e22.invora.billing.common.v2.InvoicePaymentStatusTypeH\x00R\rpaymentStatus\x88\x01\x01\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\x11\n" +
+	"\x0f_payment_status\"T\n" +
+	"\x0eUpdateResponse\x12B\n" +
+	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"\xff\x03\n" +
 	"\bFeeInput\x12\x1f\n" +
 	"\tadd_on_id\x18\x01 \x01(\tH\x00R\aaddOnId\x88\x01\x01\x12%\n" +
 	"\vdescription\x18\x02 \x01(\tH\x01R\vdescription\x88\x01\x01\x12?\n" +
@@ -6148,20 +4306,29 @@ const file_invora_billing_invoices_v2_service_proto_rawDesc = "" +
 	"\ttax_codes\x18\x06 \x03(\tR\btaxCodes\x12;\n" +
 	"\vto_datetime\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"toDatetime\x12/\n" +
-	"\x11unit_amount_cents\x18\b \x01(\x03H\x04R\x0funitAmountCents\x88\x01\x01\x12\x19\n" +
-	"\x05units\x18\t \x01(\x01H\x05R\x05units\x88\x01\x01B\f\n" +
+	"\x11unit_amount_cents\x18\b \x01(\x03H\x04R\x0funitAmountCents\x88\x01\x01\x12/\n" +
+	"\x05units\x18\t \x01(\v2\x14.kernel.DecimalValueH\x05R\x05units\x88\x01\x01B\f\n" +
 	"\n" +
 	"_add_on_idB\x0e\n" +
 	"\f_descriptionB\x17\n" +
 	"\x15_invoice_display_nameB\a\n" +
 	"\x05_nameB\x14\n" +
 	"\x12_unit_amount_centsB\b\n" +
-	"\x06_units\"\xac\x01\n" +
-	"\x16TaxFeeObjectCollection\x12H\n" +
-	"\n" +
-	"collection\x18\x01 \x03(\v2(.invora.billing.invoices.v2.TaxFeeObjectR\n" +
-	"collection\x12H\n" +
-	"\bmetadata\x18\x02 \x01(\v2,.invora.billing.common.v2.CollectionMetadataR\bmetadata\"\xba\x02\n" +
+	"\x06_units\"\xa2\x04\n" +
+	"\x1dFetchDraftInvoiceTaxesRequest\x12G\n" +
+	"\bcurrency\x18\x01 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\x00R\bcurrency\x88\x01\x01\x12\x1f\n" +
+	"\vcustomer_id\x18\x02 \x01(\tR\n" +
+	"customerId\x128\n" +
+	"\x04fees\x18\x03 \x03(\v2$.invora.billing.invoices.v2.FeeInputR\x04fees\x12x\n" +
+	"\x16invoice_custom_section\x18\x04 \x01(\v2=.invora.billing.common.v2.InvoiceCustomSectionsReferenceInputH\x01R\x14invoiceCustomSection\x88\x01\x01\x12a\n" +
+	"\x0epayment_method\x18\x05 \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\x02R\rpaymentMethod\x88\x01\x01\x12/\n" +
+	"\x11voided_invoice_id\x18\x06 \x01(\tH\x03R\x0fvoidedInvoiceId\x88\x01\x01B\v\n" +
+	"\t_currencyB\x19\n" +
+	"\x17_invoice_custom_sectionB\x11\n" +
+	"\x0f_payment_methodB\x14\n" +
+	"\x12_voided_invoice_id\"`\n" +
+	"\x1eFetchDraftInvoiceTaxesResponse\x12>\n" +
+	"\x05items\x18\x01 \x03(\v2(.invora.billing.invoices.v2.TaxFeeObjectR\x05items\"\xba\x02\n" +
 	"\fTaxFeeObject\x12&\n" +
 	"\famount_cents\x18\x01 \x01(\x03H\x00R\vamountCents\x88\x01\x01\x12 \n" +
 	"\titem_code\x18\x02 \x01(\tH\x01R\bitemCode\x88\x01\x01\x12\x1c\n" +
@@ -6173,11 +4340,11 @@ const file_invora_billing_invoices_v2_service_proto_rawDesc = "" +
 	"_item_codeB\n" +
 	"\n" +
 	"\b_item_idB\x13\n" +
-	"\x11_tax_amount_cents\"\xb1\x02\n" +
-	"\x12TaxBreakdownObject\x12n\n" +
-	"\x0fenumed_tax_code\x18\x01 \x01(\x0e2A.invora.billing.common.v2.InvoiceAppliedTaxOnWholeInvoiceCodeEnumH\x00R\renumedTaxCode\x88\x01\x01\x12\x17\n" +
-	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12\x17\n" +
-	"\x04rate\x18\x03 \x01(\x01H\x02R\x04rate\x88\x01\x01\x12\"\n" +
+	"\x11_tax_amount_cents\"\xc3\x02\n" +
+	"\x12TaxBreakdownObject\x12j\n" +
+	"\x0fenumed_tax_code\x18\x01 \x01(\x0e2=.invora.billing.common.v2.InvoiceAppliedTaxOnWholeInvoiceCodeH\x00R\renumedTaxCode\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x02 \x01(\tH\x01R\x04name\x88\x01\x01\x12-\n" +
+	"\x04rate\x18\x03 \x01(\v2\x14.kernel.DecimalValueH\x02R\x04rate\x88\x01\x01\x12\"\n" +
 	"\n" +
 	"tax_amount\x18\x04 \x01(\x03H\x03R\ttaxAmount\x88\x01\x01\x12\x17\n" +
 	"\x04type\x18\x05 \x01(\tH\x04R\x04type\x88\x01\x01B\x12\n" +
@@ -6185,41 +4352,128 @@ const file_invora_billing_invoices_v2_service_proto_rawDesc = "" +
 	"\x05_nameB\a\n" +
 	"\x05_rateB\r\n" +
 	"\v_tax_amountB\a\n" +
-	"\x05_type\")\n" +
-	"\x17DownloadXmlInvoiceInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"&\n" +
-	"\x14DownloadInvoiceInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"4\n" +
-	"\"DownloadCustomerPortalInvoiceInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"2\n" +
-	" DestroyInvoiceCustomSectionInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"@\n" +
-	"\"DestroyInvoiceCustomSectionPayload\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x88\x01\x01B\x05\n" +
-	"\x03_id\"\x99\x02\n" +
-	"\x1eCreateDataExportsInvoicesInput\x12S\n" +
-	"\afilters\x18\x01 \x01(\v29.invora.billing.invoices.v2.DataExportInvoiceFiltersInputR\afilters\x12J\n" +
-	"\x06format\x18\x02 \x01(\x0e22.invora.billing.common.v2.DataExportFormatTypeEnumR\x06format\x12V\n" +
-	"\rresource_type\x18\x03 \x01(\x0e21.invora.billing.invoices.v2.InvoiceExportTypeEnumR\fresourceType\"\xfb\a\n" +
+	"\x05_type\"!\n" +
+	"\x0fFinalizeRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"V\n" +
+	"\x10FinalizeResponse\x12B\n" +
+	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"V\n" +
+	"\x1aFinalizeAllInvoicesRequest\x12\x1f\n" +
+	"\vinvoice_ids\x18\x01 \x03(\tR\n" +
+	"invoiceIds\x12\x17\n" +
+	"\adry_run\x18\x02 \x01(\bR\x06dryRun\"]\n" +
+	"\x1bFinalizeAllInvoicesResponse\x12>\n" +
+	"\x05items\x18\x01 \x03(\v2(.invora.billing.common.v2.BillingInvoiceR\x05items\"\xec\x01\n" +
+	"\x12VoidInvoiceRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12(\n" +
+	"\rcredit_amount\x18\x02 \x01(\x03H\x00R\fcreditAmount\x88\x01\x01\x125\n" +
+	"\x14generate_credit_note\x18\x03 \x01(\bH\x01R\x12generateCreditNote\x88\x01\x01\x12(\n" +
+	"\rrefund_amount\x18\x04 \x01(\x03H\x02R\frefundAmount\x88\x01\x01B\x10\n" +
+	"\x0e_credit_amountB\x17\n" +
+	"\x15_generate_credit_noteB\x10\n" +
+	"\x0e_refund_amount\"Y\n" +
+	"\x13VoidInvoiceResponse\x12B\n" +
+	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"+\n" +
+	"\x19LoseInvoiceDisputeRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"`\n" +
+	"\x1aLoseInvoiceDisputeResponse\x12B\n" +
+	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"'\n" +
+	"\x15RefreshInvoiceRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"\\\n" +
+	"\x16RefreshInvoiceResponse\x12B\n" +
+	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"\xe2\x04\n" +
+	"\x15VoidedInvoiceFeeInput\x12\x1f\n" +
+	"\tadd_on_id\x18\x01 \x01(\tH\x00R\aaddOnId\x88\x01\x01\x12-\n" +
+	"\x10charge_filter_id\x18\x02 \x01(\tH\x01R\x0echargeFilterId\x88\x01\x01\x12 \n" +
+	"\tcharge_id\x18\x03 \x01(\tH\x02R\bchargeId\x88\x01\x01\x12%\n" +
+	"\vdescription\x18\x04 \x01(\tH\x03R\vdescription\x88\x01\x01\x12+\n" +
+	"\x0ffixed_charge_id\x18\x05 \x01(\tH\x04R\rfixedChargeId\x88\x01\x01\x12\x13\n" +
+	"\x02id\x18\x06 \x01(\tH\x05R\x02id\x88\x01\x01\x125\n" +
+	"\x14invoice_display_name\x18\a \x01(\tH\x06R\x12invoiceDisplayName\x88\x01\x01\x12,\n" +
+	"\x0fsubscription_id\x18\b \x01(\tH\aR\x0esubscriptionId\x88\x01\x01\x12/\n" +
+	"\x11unit_amount_cents\x18\t \x01(\x03H\bR\x0funitAmountCents\x88\x01\x01\x12/\n" +
+	"\x05units\x18\n" +
+	" \x01(\v2\x14.kernel.DecimalValueH\tR\x05units\x88\x01\x01B\f\n" +
+	"\n" +
+	"_add_on_idB\x13\n" +
+	"\x11_charge_filter_idB\f\n" +
+	"\n" +
+	"_charge_idB\x0e\n" +
+	"\f_descriptionB\x12\n" +
+	"\x10_fixed_charge_idB\x05\n" +
+	"\x03_idB\x17\n" +
+	"\x15_invoice_display_nameB\x12\n" +
+	"\x10_subscription_idB\x14\n" +
+	"\x12_unit_amount_centsB\b\n" +
+	"\x06_units\"\x90\x01\n" +
+	"\x1bRegenerateFromVoidedRequest\x12E\n" +
+	"\x04fees\x18\x01 \x03(\v21.invora.billing.invoices.v2.VoidedInvoiceFeeInputR\x04fees\x12*\n" +
+	"\x11voided_invoice_id\x18\x02 \x01(\tR\x0fvoidedInvoiceId\"b\n" +
+	"\x1cRegenerateFromVoidedResponse\x12B\n" +
+	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"]\n" +
+	"\x19ResendInvoiceEmailRequest\x12\x10\n" +
+	"\x03bcc\x18\x01 \x03(\tR\x03bcc\x12\x0e\n" +
+	"\x02cc\x18\x02 \x03(\tR\x02cc\x12\x0e\n" +
+	"\x02id\x18\x03 \x01(\tR\x02id\x12\x0e\n" +
+	"\x02to\x18\x04 \x03(\tR\x02to\"`\n" +
+	"\x1aResendInvoiceEmailResponse\x12B\n" +
+	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"%\n" +
+	"\x13RetryInvoiceRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"Z\n" +
+	"\x14RetryInvoiceResponse\x12B\n" +
+	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"\xa2\x01\n" +
+	"\x1aRetryInvoicePaymentRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12a\n" +
+	"\x0epayment_method\x18\x02 \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\x00R\rpaymentMethod\x88\x01\x01B\x11\n" +
+	"\x0f_payment_method\"a\n" +
+	"\x1bRetryInvoicePaymentResponse\x12B\n" +
+	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"S\n" +
+	"\x17RetryAllInvoicesRequest\x12\x1f\n" +
+	"\vinvoice_ids\x18\x01 \x03(\tR\n" +
+	"invoiceIds\x12\x17\n" +
+	"\adry_run\x18\x02 \x01(\bR\x06dryRun\"Z\n" +
+	"\x18RetryAllInvoicesResponse\x12>\n" +
+	"\x05items\x18\x01 \x03(\v2(.invora.billing.common.v2.BillingInvoiceR\x05items\"Z\n" +
+	"\x1eRetryAllInvoicePaymentsRequest\x12\x1f\n" +
+	"\vinvoice_ids\x18\x01 \x03(\tR\n" +
+	"invoiceIds\x12\x17\n" +
+	"\adry_run\x18\x02 \x01(\bR\x06dryRun\"a\n" +
+	"\x1fRetryAllInvoicePaymentsResponse\x12>\n" +
+	"\x05items\x18\x01 \x03(\v2(.invora.billing.common.v2.BillingInvoiceR\x05items\"0\n" +
+	"\x1eRetryTaxProviderVoidingRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"e\n" +
+	"\x1fRetryTaxProviderVoidingResponse\x12B\n" +
+	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"(\n" +
+	"\x16DownloadInvoiceRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"]\n" +
+	"\x17DownloadInvoiceResponse\x12B\n" +
+	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"+\n" +
+	"\x19DownloadInvoiceXmlRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"`\n" +
+	"\x1aDownloadInvoiceXmlResponse\x12B\n" +
+	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"6\n" +
+	"$DownloadCustomerPortalInvoiceRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"k\n" +
+	"%DownloadCustomerPortalInvoiceResponse\x12B\n" +
+	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"\xef\a\n" +
 	"\x1dDataExportInvoiceFiltersInput\x12$\n" +
 	"\vamount_from\x18\x01 \x01(\x05H\x00R\n" +
 	"amountFrom\x88\x01\x01\x12 \n" +
 	"\tamount_to\x18\x02 \x01(\x05H\x01R\bamountTo\x88\x01\x01\x12,\n" +
 	"\x12billing_entity_ids\x18\x03 \x03(\tR\x10billingEntityIds\x12G\n" +
 	"\bcurrency\x18\x04 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\x02R\bcurrency\x88\x01\x01\x125\n" +
-	"\x14customer_external_id\x18\x05 \x01(\tH\x03R\x12customerExternalId\x88\x01\x01\x12L\n" +
-	"\finvoice_type\x18\x06 \x03(\x0e2).invora.billing.common.v2.InvoiceTypeEnumR\vinvoiceType\x12B\n" +
+	"\x14customer_external_id\x18\x05 \x01(\tH\x03R\x12customerExternalId\x88\x01\x01\x12H\n" +
+	"\finvoice_type\x18\x06 \x03(\x0e2%.invora.billing.common.v2.InvoiceTypeR\vinvoiceType\x12B\n" +
 	"\x11issuing_date_from\x18\a \x01(\v2\x11.google.type.DateH\x04R\x0fissuingDateFrom\x88\x01\x01\x12>\n" +
 	"\x0fissuing_date_to\x18\b \x01(\v2\x11.google.type.DateH\x05R\rissuingDateTo\x88\x01\x01\x125\n" +
 	"\x14payment_dispute_lost\x18\t \x01(\bH\x06R\x12paymentDisputeLost\x88\x01\x01\x12,\n" +
 	"\x0fpayment_overdue\x18\n" +
-	" \x01(\bH\aR\x0epaymentOverdue\x88\x01\x01\x12]\n" +
-	"\x0epayment_status\x18\v \x03(\x0e26.invora.billing.common.v2.InvoicePaymentStatusTypeEnumR\rpaymentStatus\x12$\n" +
+	" \x01(\bH\aR\x0epaymentOverdue\x88\x01\x01\x12Y\n" +
+	"\x0epayment_status\x18\v \x03(\x0e22.invora.billing.common.v2.InvoicePaymentStatusTypeR\rpaymentStatus\x12$\n" +
 	"\vsearch_term\x18\f \x01(\tH\bR\n" +
 	"searchTerm\x88\x01\x01\x12$\n" +
 	"\vself_billed\x18\r \x01(\bH\tR\n" +
-	"selfBilled\x88\x01\x01\x12G\n" +
-	"\x06status\x18\x0e \x03(\x0e2/.invora.billing.common.v2.InvoiceStatusTypeEnumR\x06statusB\x0e\n" +
+	"selfBilled\x88\x01\x01\x12C\n" +
+	"\x06status\x18\x0e \x03(\x0e2+.invora.billing.common.v2.InvoiceStatusTypeR\x06statusB\x0e\n" +
 	"\f_amount_fromB\f\n" +
 	"\n" +
 	"_amount_toB\v\n" +
@@ -6230,8 +4484,50 @@ const file_invora_billing_invoices_v2_service_proto_rawDesc = "" +
 	"\x15_payment_dispute_lostB\x12\n" +
 	"\x10_payment_overdueB\x0e\n" +
 	"\f_search_termB\x0e\n" +
-	"\f_self_billed\"\xe4\x01\n" +
-	"\x1fCreateInvoiceCustomSectionInput\x12\x12\n" +
+	"\f_self_billed\"\x8a\x02\n" +
+	"\x17CreateDataExportRequest\x12S\n" +
+	"\afilters\x18\x01 \x01(\v29.invora.billing.invoices.v2.DataExportInvoiceFiltersInputR\afilters\x12F\n" +
+	"\x06format\x18\x02 \x01(\x0e2..invora.billing.common.v2.DataExportFormatTypeR\x06format\x12R\n" +
+	"\rresource_type\x18\x03 \x01(\x0e2-.invora.billing.invoices.v2.InvoiceExportTypeR\fresourceType\"a\n" +
+	"\x18CreateDataExportResponse\x12E\n" +
+	"\vdata_export\x18\x01 \x01(\v2$.invora.billing.common.v2.DataExportR\n" +
+	"dataExport\">\n" +
+	"\x1dSyncIntegrationInvoiceRequest\x12\x1d\n" +
+	"\n" +
+	"invoice_id\x18\x01 \x01(\tR\tinvoiceId\"S\n" +
+	"\x1eSyncIntegrationInvoiceResponse\x12\"\n" +
+	"\n" +
+	"invoice_id\x18\x01 \x01(\tH\x00R\tinvoiceId\x88\x01\x01B\r\n" +
+	"\v_invoice_id\"E\n" +
+	"$SyncHubspotIntegrationInvoiceRequest\x12\x1d\n" +
+	"\n" +
+	"invoice_id\x18\x01 \x01(\tR\tinvoiceId\"Z\n" +
+	"%SyncHubspotIntegrationInvoiceResponse\x12\"\n" +
+	"\n" +
+	"invoice_id\x18\x01 \x01(\tH\x00R\tinvoiceId\x88\x01\x01B\r\n" +
+	"\v_invoice_id\"=\n" +
+	"\x1cSyncSalesforceInvoiceRequest\x12\x1d\n" +
+	"\n" +
+	"invoice_id\x18\x01 \x01(\tR\tinvoiceId\"R\n" +
+	"\x1dSyncSalesforceInvoiceResponse\x12\"\n" +
+	"\n" +
+	"invoice_id\x18\x01 \x01(\tH\x00R\tinvoiceId\x88\x01\x01B\r\n" +
+	"\v_invoice_id\"\x1b\n" +
+	"\x19ListCustomSectionsRequest\"\xc7\x01\n" +
+	"\x1aListCustomSectionsResponse\x12D\n" +
+	"\x05items\x18\x01 \x03(\v2..invora.billing.common.v2.InvoiceCustomSectionR\x05items\x12\x1f\n" +
+	"\vtotal_count\x18\x02 \x01(\x04R\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"\x96\x01\n" +
+	"\x17GetCustomSectionRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
+	"\tread_mask\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\x80\x01\n" +
+	"\x18GetCustomSectionResponse\x12d\n" +
+	"\x16invoice_custom_section\x18\x01 \x01(\v2..invora.billing.common.v2.InvoiceCustomSectionR\x14invoiceCustomSection\"\xdf\x01\n" +
+	"\x1aCreateCustomSectionRequest\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x12%\n" +
 	"\vdescription\x18\x02 \x01(\tH\x00R\vdescription\x88\x01\x01\x12\x1d\n" +
 	"\adetails\x18\x03 \x01(\tH\x01R\adetails\x88\x01\x01\x12&\n" +
@@ -6240,92 +4536,97 @@ const file_invora_billing_invoices_v2_service_proto_rawDesc = "" +
 	"\f_descriptionB\n" +
 	"\n" +
 	"\b_detailsB\x0f\n" +
-	"\r_display_name\"\x97\x04\n" +
-	"\x12CreateInvoiceInput\x12G\n" +
-	"\bcurrency\x18\x01 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\x00R\bcurrency\x88\x01\x01\x12\x1f\n" +
-	"\vcustomer_id\x18\x02 \x01(\tR\n" +
-	"customerId\x128\n" +
-	"\x04fees\x18\x03 \x03(\v2$.invora.billing.invoices.v2.FeeInputR\x04fees\x12x\n" +
-	"\x16invoice_custom_section\x18\x04 \x01(\v2=.invora.billing.common.v2.InvoiceCustomSectionsReferenceInputH\x01R\x14invoiceCustomSection\x88\x01\x01\x12a\n" +
-	"\x0epayment_method\x18\x05 \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\x02R\rpaymentMethod\x88\x01\x01\x12/\n" +
-	"\x11voided_invoice_id\x18\x06 \x01(\tH\x03R\x0fvoidedInvoiceId\x88\x01\x01B\v\n" +
-	"\t_currencyB\x19\n" +
-	"\x17_invoice_custom_sectionB\x11\n" +
-	"\x0f_payment_methodB\x14\n" +
-	"\x12_voided_invoice_id*;\n" +
-	"\x04View\x12\x14\n" +
-	"\x10VIEW_UNSPECIFIED\x10\x00\x12\x0e\n" +
+	"\r_display_name\"\x83\x01\n" +
+	"\x1bCreateCustomSectionResponse\x12d\n" +
+	"\x16invoice_custom_section\x18\x01 \x01(\v2..invora.billing.common.v2.InvoiceCustomSectionR\x14invoiceCustomSection\"\xc8\x02\n" +
+	"\x1aUpdateCustomSectionRequest\x12\x17\n" +
+	"\x04code\x18\x01 \x01(\tH\x00R\x04code\x88\x01\x01\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x01R\vdescription\x88\x01\x01\x12\x1d\n" +
+	"\adetails\x18\x03 \x01(\tH\x02R\adetails\x88\x01\x01\x12&\n" +
+	"\fdisplay_name\x18\x04 \x01(\tH\x03R\vdisplayName\x88\x01\x01\x12\x0e\n" +
+	"\x02id\x18\x05 \x01(\tR\x02id\x12\x17\n" +
+	"\x04name\x18\x06 \x01(\tH\x04R\x04name\x88\x01\x01\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\a\n" +
+	"\x05_codeB\x0e\n" +
+	"\f_descriptionB\n" +
 	"\n" +
-	"VIEW_BASIC\x10\x01\x12\r\n" +
-	"\tVIEW_FULL\x10\x02*\x93\x01\n" +
-	"\x15InvoiceExportTypeEnum\x12(\n" +
-	"$INVOICE_EXPORT_TYPE_ENUM_UNSPECIFIED\x10\x00\x12)\n" +
-	"%INVOICE_EXPORT_TYPE_ENUM_INVOICE_FEES\x10\x01\x12%\n" +
-	"!INVOICE_EXPORT_TYPE_ENUM_INVOICES\x10\x02*w\n" +
-	"\x19InvoiceSettlementTypeEnum\x12,\n" +
-	"(INVOICE_SETTLEMENT_TYPE_ENUM_UNSPECIFIED\x10\x00\x12,\n" +
-	"(INVOICE_SETTLEMENT_TYPE_ENUM_CREDIT_NOTE\x10\x012\xab6\n" +
-	"\x0eInvoiceService\x12\xab\x01\n" +
-	"\x06Create\x12).invora.billing.invoices.v2.CreateRequest\x1a*.invora.billing.invoices.v2.CreateResponse\"J\xe2\xf2\x19#\n" +
-	"!Invora.Billing.Invoices.v2.Create\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/api/v2/billing/invoices\x12\xa1\x01\n" +
+	"\b_detailsB\x0f\n" +
+	"\r_display_nameB\a\n" +
+	"\x05_name\"\x83\x01\n" +
+	"\x1bUpdateCustomSectionResponse\x12d\n" +
+	"\x16invoice_custom_section\x18\x01 \x01(\v2..invora.billing.common.v2.InvoiceCustomSectionR\x14invoiceCustomSection\",\n" +
+	"\x1aDeleteCustomSectionRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"\x1d\n" +
+	"\x1bDeleteCustomSectionResponse*\x80\x01\n" +
+	"\x11InvoiceExportType\x12#\n" +
+	"\x1fINVOICE_EXPORT_TYPE_UNSPECIFIED\x10\x00\x12$\n" +
+	" INVOICE_EXPORT_TYPE_INVOICE_FEES\x10\x01\x12 \n" +
+	"\x1cINVOICE_EXPORT_TYPE_INVOICES\x10\x02*i\n" +
+	"\x15InvoiceSettlementType\x12'\n" +
+	"#INVOICE_SETTLEMENT_TYPE_UNSPECIFIED\x10\x00\x12'\n" +
+	"#INVOICE_SETTLEMENT_TYPE_CREDIT_NOTE\x10\x012\x828\n" +
+	"\x0fInvoicesService\x12\xa8\x01\n" +
+	"\x04List\x12'.invora.billing.invoices.v2.ListRequest\x1a(.invora.billing.invoices.v2.ListResponse\"M\xe2\xf2\x19!\n" +
+	"\x1fInvora.Billing.Invoices.v2.List\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/api/billing/v2/invoices/list\x12\xa1\x01\n" +
 	"\x03Get\x12&.invora.billing.invoices.v2.GetRequest\x1a'.invora.billing.invoices.v2.GetResponse\"I\xe2\xf2\x19 \n" +
-	"\x1eInvora.Billing.Invoices.v2.Get\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v2/billing/invoices/{id}\x12\xa0\x01\n" +
-	"\x04List\x12'.invora.billing.invoices.v2.ListRequest\x1a(.invora.billing.invoices.v2.ListResponse\"E\xe2\xf2\x19!\n" +
-	"\x1fInvora.Billing.Invoices.v2.List\x82\xd3\xe4\x93\x02\x1a\x12\x18/api/v2/billing/invoices\x12\xab\x01\n" +
-	"\x06Update\x12).invora.billing.invoices.v2.UpdateRequest\x1a*.invora.billing.invoices.v2.UpdateResponse\"J\xe2\xf2\x19#\n" +
-	"!Invora.Billing.Invoices.v2.Update\x82\xd3\xe4\x93\x02\x1d:\x01*2\x18/api/v2/billing/invoices\x12\xdf\x01\n" +
-	"\x13CreateCustomSection\x126.invora.billing.invoices.v2.CreateCustomSectionRequest\x1a7.invora.billing.invoices.v2.CreateCustomSectionResponse\"W\xe2\xf2\x190\n" +
-	".Invora.Billing.Invoices.v2.CreateCustomSection\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/api/v2/billing/invoices\x12\xd7\x01\n" +
-	"\x11CreatesDataExport\x124.invora.billing.invoices.v2.CreatesDataExportRequest\x1a5.invora.billing.invoices.v2.CreatesDataExportResponse\"U\xe2\xf2\x19.\n" +
-	",Invora.Billing.Invoices.v2.CreatesDataExport\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/api/v2/billing/invoices\x12\xd0\x01\n" +
-	"\x10CustomerInvoices\x123.invora.billing.invoices.v2.CustomerInvoicesRequest\x1a4.invora.billing.invoices.v2.CustomerInvoicesResponse\"Q\xe2\xf2\x19-\n" +
-	"+Invora.Billing.Invoices.v2.CustomerInvoices\x82\xd3\xe4\x93\x02\x1a\x12\x18/api/v2/billing/invoices\x12\xf8\x01\n" +
-	"\x1aDeleteInvoiceCustomSection\x12=.invora.billing.invoices.v2.DeleteInvoiceCustomSectionRequest\x1a>.invora.billing.invoices.v2.DeleteInvoiceCustomSectionResponse\"[\xe2\xf2\x197\n" +
-	"5Invora.Billing.Invoices.v2.DeleteInvoiceCustomSection\x82\xd3\xe4\x93\x02\x1a*\x18/api/v2/billing/invoices\x12\xa9\x02\n" +
-	"\x1dDownloadCustomerPortalInvoice\x12@.invora.billing.invoices.v2.DownloadCustomerPortalInvoiceRequest\x1aA.invora.billing.invoices.v2.DownloadCustomerPortalInvoiceResponse\"\x82\x01\xe2\xf2\x19:\n" +
-	"8Invora.Billing.Invoices.v2.DownloadCustomerPortalInvoice\x82\xd3\xe4\x93\x02>:\x01*\"9/api/v2/billing/invoices:download-customer-portal-invoice\x12\xe0\x01\n" +
-	"\x0fDownloadInvoice\x122.invora.billing.invoices.v2.DownloadInvoiceRequest\x1a3.invora.billing.invoices.v2.DownloadInvoiceResponse\"d\xe2\xf2\x19,\n" +
-	"*Invora.Billing.Invoices.v2.DownloadInvoice\x82\xd3\xe4\x93\x02.:\x01*\")/api/v2/billing/invoices:download-invoice\x12\xf0\x01\n" +
-	"\x12DownloadInvoiceXml\x125.invora.billing.invoices.v2.DownloadInvoiceXmlRequest\x1a6.invora.billing.invoices.v2.DownloadInvoiceXmlResponse\"k\xe2\xf2\x19/\n" +
-	"-Invora.Billing.Invoices.v2.DownloadInvoiceXml\x82\xd3\xe4\x93\x022:\x01*\"-/api/v2/billing/invoices:download-invoice-xml\x12\x85\x02\n" +
-	"\x16FetchDraftInvoiceTaxes\x129.invora.billing.invoices.v2.FetchDraftInvoiceTaxesRequest\x1a:.invora.billing.invoices.v2.FetchDraftInvoiceTaxesResponse\"t\xe2\xf2\x193\n" +
-	"1Invora.Billing.Invoices.v2.FetchDraftInvoiceTaxes\x82\xd3\xe4\x93\x027:\x01*\"2/api/v2/billing/invoices:fetch-draft-invoice-taxes\x12\xbc\x01\n" +
-	"\bFinalize\x12+.invora.billing.invoices.v2.FinalizeRequest\x1a,.invora.billing.invoices.v2.FinalizeResponse\"U\xe2\xf2\x19%\n" +
-	"#Invora.Billing.Invoices.v2.Finalize\x82\xd3\xe4\x93\x02&:\x01*\"!/api/v2/billing/invoices:finalize\x12\xf5\x01\n" +
-	"\x13FinalizeAllInvoices\x126.invora.billing.invoices.v2.FinalizeAllInvoicesRequest\x1a7.invora.billing.invoices.v2.FinalizeAllInvoicesResponse\"m\xe2\xf2\x190\n" +
-	".Invora.Billing.Invoices.v2.FinalizeAllInvoices\x82\xd3\xe4\x93\x023:\x01*\"./api/v2/billing/invoices:finalize-all-invoices\x12\xd5\x01\n" +
-	"\x10GetCustomSection\x123.invora.billing.invoices.v2.GetCustomSectionRequest\x1a4.invora.billing.invoices.v2.GetCustomSectionResponse\"V\xe2\xf2\x19-\n" +
-	"+Invora.Billing.Invoices.v2.GetCustomSection\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v2/billing/invoices/{id}\x12\xd8\x01\n" +
-	"\x12ListCustomSections\x125.invora.billing.invoices.v2.ListCustomSectionsRequest\x1a6.invora.billing.invoices.v2.ListCustomSectionsResponse\"S\xe2\xf2\x19/\n" +
-	"-Invora.Billing.Invoices.v2.ListCustomSections\x82\xd3\xe4\x93\x02\x1a\x12\x18/api/v2/billing/invoices\x12\xd8\x01\n" +
-	"\x12LoseInvoiceDispute\x125.invora.billing.invoices.v2.LoseInvoiceDisputeRequest\x1a6.invora.billing.invoices.v2.LoseInvoiceDisputeResponse\"S\xe2\xf2\x19/\n" +
-	"-Invora.Billing.Invoices.v2.LoseInvoiceDispute\x82\xd3\xe4\x93\x02\x1a\x12\x18/api/v2/billing/invoices\x12\xdb\x01\n" +
-	"\x0eRefreshInvoice\x121.invora.billing.invoices.v2.RefreshInvoiceRequest\x1a2.invora.billing.invoices.v2.RefreshInvoiceResponse\"b\xe2\xf2\x19+\n" +
-	")Invora.Billing.Invoices.v2.RefreshInvoice\x82\xd3\xe4\x93\x02-:\x01*\"(/api/v2/billing/invoices:refresh-invoice\x12\xfa\x01\n" +
-	"\x14RegenerateFromVoided\x127.invora.billing.invoices.v2.RegenerateFromVoidedRequest\x1a8.invora.billing.invoices.v2.RegenerateFromVoidedResponse\"o\xe2\xf2\x191\n" +
-	"/Invora.Billing.Invoices.v2.RegenerateFromVoided\x82\xd3\xe4\x93\x024:\x01*\"//api/v2/billing/invoices:regenerate-from-voided\x12\xf0\x01\n" +
-	"\x12ResendInvoiceEmail\x125.invora.billing.invoices.v2.ResendInvoiceEmailRequest\x1a6.invora.billing.invoices.v2.ResendInvoiceEmailResponse\"k\xe2\xf2\x19/\n" +
-	"-Invora.Billing.Invoices.v2.ResendInvoiceEmail\x82\xd3\xe4\x93\x022:\x01*\"-/api/v2/billing/invoices:resend-invoice-email\x12\x8a\x02\n" +
-	"\x17RetryAllInvoicePayments\x12:.invora.billing.invoices.v2.RetryAllInvoicePaymentsRequest\x1a;.invora.billing.invoices.v2.RetryAllInvoicePaymentsResponse\"v\xe2\xf2\x194\n" +
-	"2Invora.Billing.Invoices.v2.RetryAllInvoicePayments\x82\xd3\xe4\x93\x028:\x01*\"3/api/v2/billing/invoices:retry-all-invoice-payments\x12\xe6\x01\n" +
-	"\x10RetryAllInvoices\x123.invora.billing.invoices.v2.RetryAllInvoicesRequest\x1a4.invora.billing.invoices.v2.RetryAllInvoicesResponse\"g\xe2\xf2\x19-\n" +
-	"+Invora.Billing.Invoices.v2.RetryAllInvoices\x82\xd3\xe4\x93\x020:\x01*\"+/api/v2/billing/invoices:retry-all-invoices\x12\xd1\x01\n" +
-	"\fRetryInvoice\x12/.invora.billing.invoices.v2.RetryInvoiceRequest\x1a0.invora.billing.invoices.v2.RetryInvoiceResponse\"^\xe2\xf2\x19)\n" +
-	"'Invora.Billing.Invoices.v2.RetryInvoice\x82\xd3\xe4\x93\x02+:\x01*\"&/api/v2/billing/invoices:retry-invoice\x12\xf5\x01\n" +
-	"\x13RetryInvoicePayment\x126.invora.billing.invoices.v2.RetryInvoicePaymentRequest\x1a7.invora.billing.invoices.v2.RetryInvoicePaymentResponse\"m\xe2\xf2\x190\n" +
-	".Invora.Billing.Invoices.v2.RetryInvoicePayment\x82\xd3\xe4\x93\x023:\x01*\"./api/v2/billing/invoices:retry-invoice-payment\x12\x8a\x02\n" +
-	"\x17RetryTaxProviderVoiding\x12:.invora.billing.invoices.v2.RetryTaxProviderVoidingRequest\x1a;.invora.billing.invoices.v2.RetryTaxProviderVoidingResponse\"v\xe2\xf2\x194\n" +
-	"2Invora.Billing.Invoices.v2.RetryTaxProviderVoiding\x82\xd3\xe4\x93\x028:\x01*\"3/api/v2/billing/invoices:retry-tax-provider-voiding\x12\xa9\x02\n" +
-	"\x1dSyncHubspotIntegrationInvoice\x12@.invora.billing.invoices.v2.SyncHubspotIntegrationInvoiceRequest\x1aA.invora.billing.invoices.v2.SyncHubspotIntegrationInvoiceResponse\"\x82\x01\xe2\xf2\x19:\n" +
-	"8Invora.Billing.Invoices.v2.SyncHubspotIntegrationInvoice\x82\xd3\xe4\x93\x02>:\x01*\"9/api/v2/billing/invoices:sync-hubspot-integration-invoice\x12\x84\x02\n" +
-	"\x16SyncIntegrationInvoice\x129.invora.billing.invoices.v2.SyncIntegrationInvoiceRequest\x1a:.invora.billing.invoices.v2.SyncIntegrationInvoiceResponse\"s\xe2\xf2\x193\n" +
-	"1Invora.Billing.Invoices.v2.SyncIntegrationInvoice\x82\xd3\xe4\x93\x026:\x01*\"1/api/v2/billing/invoices:sync-integration-invoice\x12\xff\x01\n" +
-	"\x15SyncSalesforceInvoice\x128.invora.billing.invoices.v2.SyncSalesforceInvoiceRequest\x1a9.invora.billing.invoices.v2.SyncSalesforceInvoiceResponse\"q\xe2\xf2\x192\n" +
-	"0Invora.Billing.Invoices.v2.SyncSalesforceInvoice\x82\xd3\xe4\x93\x025:\x01*\"0/api/v2/billing/invoices:sync-salesforce-invoice\x12\xfb\x01\n" +
-	"\x1aUpdateInvoiceCustomSection\x12=.invora.billing.invoices.v2.UpdateInvoiceCustomSectionRequest\x1a>.invora.billing.invoices.v2.UpdateInvoiceCustomSectionResponse\"^\xe2\xf2\x197\n" +
-	"5Invora.Billing.Invoices.v2.UpdateInvoiceCustomSection\x82\xd3\xe4\x93\x02\x1d:\x01*2\x18/api/v2/billing/invoices\x12\xcc\x01\n" +
-	"\vVoidInvoice\x12..invora.billing.invoices.v2.VoidInvoiceRequest\x1a/.invora.billing.invoices.v2.VoidInvoiceResponse\"\\\xe2\xf2\x19(\n" +
-	"&Invora.Billing.Invoices.v2.VoidInvoice\x82\xd3\xe4\x93\x02*:\x01*\"%/api/v2/billing/invoices:void-invoiceB\x8b\x02\n" +
+	"\x1eInvora.Billing.Invoices.v2.Get\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/billing/v2/invoices/{id}\x12\xb2\x01\n" +
+	"\x06Create\x12).invora.billing.invoices.v2.CreateRequest\x1a*.invora.billing.invoices.v2.CreateResponse\"Q\xe2\xf2\x19*\n" +
+	"(Invora.Billing.Invoices.v2.Modify.Create\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/api/billing/v2/invoices\x12\xb7\x01\n" +
+	"\x06Update\x12).invora.billing.invoices.v2.UpdateRequest\x1a*.invora.billing.invoices.v2.UpdateResponse\"V\xe2\xf2\x19*\n" +
+	"(Invora.Billing.Invoices.v2.Modify.Update\x82\xd3\xe4\x93\x02\":\x01*\x1a\x1d/api/billing/v2/invoices/{id}\x12\xd9\x01\n" +
+	"\x10CustomerInvoices\x123.invora.billing.invoices.v2.CustomerInvoicesRequest\x1a4.invora.billing.invoices.v2.CustomerInvoicesResponse\"Z\xe2\xf2\x19!\n" +
+	"\x1fInvora.Billing.Invoices.v2.List\x82\xd3\xe4\x93\x02/:\x01*\"*/api/billing/v2/invoices/customer-invoices\x12\x84\x02\n" +
+	"\x16FetchDraftInvoiceTaxes\x129.invora.billing.invoices.v2.FetchDraftInvoiceTaxesRequest\x1a:.invora.billing.invoices.v2.FetchDraftInvoiceTaxesResponse\"s\xe2\xf2\x19:\n" +
+	"8Invora.Billing.Invoices.v2.Modify.FetchDraftInvoiceTaxes\x82\xd3\xe4\x93\x02/:\x01*\"*/api/billing/v2/invoices/fetch-draft-taxes\x12\xc8\x01\n" +
+	"\bFinalize\x12+.invora.billing.invoices.v2.FinalizeRequest\x1a,.invora.billing.invoices.v2.FinalizeResponse\"a\xe2\xf2\x19,\n" +
+	"*Invora.Billing.Invoices.v2.Modify.Finalize\x82\xd3\xe4\x93\x02+:\x01*\"&/api/billing/v2/invoices/{id}/finalize\x12\xf3\x01\n" +
+	"\x13FinalizeAllInvoices\x126.invora.billing.invoices.v2.FinalizeAllInvoicesRequest\x1a7.invora.billing.invoices.v2.FinalizeAllInvoicesResponse\"k\xe2\xf2\x197\n" +
+	"5Invora.Billing.Invoices.v2.Modify.FinalizeAllInvoices\x82\xd3\xe4\x93\x02*:\x01*\"%/api/billing/v2/invoices/finalize-all\x12\xd0\x01\n" +
+	"\vVoidInvoice\x12..invora.billing.invoices.v2.VoidInvoiceRequest\x1a/.invora.billing.invoices.v2.VoidInvoiceResponse\"`\xe2\xf2\x19/\n" +
+	"-Invora.Billing.Invoices.v2.Modify.VoidInvoice\x82\xd3\xe4\x93\x02':\x01*\"\"/api/billing/v2/invoices/{id}/void\x12\xf4\x01\n" +
+	"\x12LoseInvoiceDispute\x125.invora.billing.invoices.v2.LoseInvoiceDisputeRequest\x1a6.invora.billing.invoices.v2.LoseInvoiceDisputeResponse\"o\xe2\xf2\x196\n" +
+	"4Invora.Billing.Invoices.v2.Modify.LoseInvoiceDispute\x82\xd3\xe4\x93\x02/:\x01*\"*/api/billing/v2/invoices/{id}/lose-dispute\x12\xdf\x01\n" +
+	"\x0eRefreshInvoice\x121.invora.billing.invoices.v2.RefreshInvoiceRequest\x1a2.invora.billing.invoices.v2.RefreshInvoiceResponse\"f\xe2\xf2\x192\n" +
+	"0Invora.Billing.Invoices.v2.Modify.RefreshInvoice\x82\xd3\xe4\x93\x02*:\x01*\"%/api/billing/v2/invoices/{id}/refresh\x12\x81\x02\n" +
+	"\x14RegenerateFromVoided\x127.invora.billing.invoices.v2.RegenerateFromVoidedRequest\x1a8.invora.billing.invoices.v2.RegenerateFromVoidedResponse\"v\xe2\xf2\x198\n" +
+	"6Invora.Billing.Invoices.v2.Modify.RegenerateFromVoided\x82\xd3\xe4\x93\x024:\x01*\"//api/billing/v2/invoices/regenerate-from-voided\x12\xf4\x01\n" +
+	"\x12ResendInvoiceEmail\x125.invora.billing.invoices.v2.ResendInvoiceEmailRequest\x1a6.invora.billing.invoices.v2.ResendInvoiceEmailResponse\"o\xe2\xf2\x196\n" +
+	"4Invora.Billing.Invoices.v2.Modify.ResendInvoiceEmail\x82\xd3\xe4\x93\x02/:\x01*\"*/api/billing/v2/invoices/{id}/resend-email\x12\xd5\x01\n" +
+	"\fRetryInvoice\x12/.invora.billing.invoices.v2.RetryInvoiceRequest\x1a0.invora.billing.invoices.v2.RetryInvoiceResponse\"b\xe2\xf2\x190\n" +
+	".Invora.Billing.Invoices.v2.Modify.RetryInvoice\x82\xd3\xe4\x93\x02(:\x01*\"#/api/billing/v2/invoices/{id}/retry\x12\xf9\x01\n" +
+	"\x13RetryInvoicePayment\x126.invora.billing.invoices.v2.RetryInvoicePaymentRequest\x1a7.invora.billing.invoices.v2.RetryInvoicePaymentResponse\"q\xe2\xf2\x197\n" +
+	"5Invora.Billing.Invoices.v2.Modify.RetryInvoicePayment\x82\xd3\xe4\x93\x020:\x01*\"+/api/billing/v2/invoices/{id}/retry-payment\x12\xe4\x01\n" +
+	"\x10RetryAllInvoices\x123.invora.billing.invoices.v2.RetryAllInvoicesRequest\x1a4.invora.billing.invoices.v2.RetryAllInvoicesResponse\"e\xe2\xf2\x194\n" +
+	"2Invora.Billing.Invoices.v2.Modify.RetryAllInvoices\x82\xd3\xe4\x93\x02':\x01*\"\"/api/billing/v2/invoices/retry-all\x12\x89\x02\n" +
+	"\x17RetryAllInvoicePayments\x12:.invora.billing.invoices.v2.RetryAllInvoicePaymentsRequest\x1a;.invora.billing.invoices.v2.RetryAllInvoicePaymentsResponse\"u\xe2\xf2\x19;\n" +
+	"9Invora.Billing.Invoices.v2.Modify.RetryAllInvoicePayments\x82\xd3\xe4\x93\x020:\x01*\"+/api/billing/v2/invoices/retry-all-payments\x12\x97\x02\n" +
+	"\x17RetryTaxProviderVoiding\x12:.invora.billing.invoices.v2.RetryTaxProviderVoidingRequest\x1a;.invora.billing.invoices.v2.RetryTaxProviderVoidingResponse\"\x82\x01\xe2\xf2\x19;\n" +
+	"9Invora.Billing.Invoices.v2.Modify.RetryTaxProviderVoiding\x82\xd3\xe4\x93\x02=:\x01*\"8/api/billing/v2/invoices/{id}/retry-tax-provider-voiding\x12\xdc\x01\n" +
+	"\x0fDownloadInvoice\x122.invora.billing.invoices.v2.DownloadInvoiceRequest\x1a3.invora.billing.invoices.v2.DownloadInvoiceResponse\"`\xe2\xf2\x193\n" +
+	"1Invora.Billing.Invoices.v2.Modify.DownloadInvoice\x82\xd3\xe4\x93\x02#\x12!/api/billing/v2/invoices/{id}/pdf\x12\xe8\x01\n" +
+	"\x12DownloadInvoiceXml\x125.invora.billing.invoices.v2.DownloadInvoiceXmlRequest\x1a6.invora.billing.invoices.v2.DownloadInvoiceXmlResponse\"c\xe2\xf2\x196\n" +
+	"4Invora.Billing.Invoices.v2.Modify.DownloadInvoiceXml\x82\xd3\xe4\x93\x02#\x12!/api/billing/v2/invoices/{id}/xml\x12\xa4\x02\n" +
+	"\x1dDownloadCustomerPortalInvoice\x12@.invora.billing.invoices.v2.DownloadCustomerPortalInvoiceRequest\x1aA.invora.billing.invoices.v2.DownloadCustomerPortalInvoiceResponse\"~\xe2\xf2\x19A\n" +
+	"?Invora.Billing.Invoices.v2.Modify.DownloadCustomerPortalInvoice\x82\xd3\xe4\x93\x023\x121/api/billing/v2/invoices/{id}/customer-portal-pdf\x12\xed\x01\n" +
+	"\x10CreateDataExport\x123.invora.billing.invoices.v2.CreateDataExportRequest\x1a4.invora.billing.invoices.v2.CreateDataExportResponse\"n\xe2\xf2\x194\n" +
+	"2Invora.Billing.Invoices.v2.Modify.CreateDataExport\x82\xd3\xe4\x93\x020:\x01*\"+/api/billing/v2/invoices/create-data-export\x12\x99\x02\n" +
+	"\x16SyncIntegrationInvoice\x129.invora.billing.invoices.v2.SyncIntegrationInvoiceRequest\x1a:.invora.billing.invoices.v2.SyncIntegrationInvoiceResponse\"\x87\x01\xe2\xf2\x19:\n" +
+	"8Invora.Billing.Invoices.v2.Modify.SyncIntegrationInvoice\x82\xd3\xe4\x93\x02C:\x01*\">/api/billing/v2/integrations/generic/{invoice_id}/sync-invoice\x12\xb5\x02\n" +
+	"\x1dSyncHubspotIntegrationInvoice\x12@.invora.billing.invoices.v2.SyncHubspotIntegrationInvoiceRequest\x1aA.invora.billing.invoices.v2.SyncHubspotIntegrationInvoiceResponse\"\x8e\x01\xe2\xf2\x19A\n" +
+	"?Invora.Billing.Invoices.v2.Modify.SyncHubspotIntegrationInvoice\x82\xd3\xe4\x93\x02C:\x01*\">/api/billing/v2/integrations/hubspot/{invoice_id}/sync-invoice\x12\x98\x02\n" +
+	"\x15SyncSalesforceInvoice\x128.invora.billing.invoices.v2.SyncSalesforceInvoiceRequest\x1a9.invora.billing.invoices.v2.SyncSalesforceInvoiceResponse\"\x89\x01\xe2\xf2\x199\n" +
+	"7Invora.Billing.Invoices.v2.Modify.SyncSalesforceInvoice\x82\xd3\xe4\x93\x02F:\x01*\"A/api/billing/v2/integrations/salesforce/{invoice_id}/sync-invoice\x12\xe2\x01\n" +
+	"\x12ListCustomSections\x125.invora.billing.invoices.v2.ListCustomSectionsRequest\x1a6.invora.billing.invoices.v2.ListCustomSectionsResponse\"]\xe2\xf2\x19!\n" +
+	"\x1fInvora.Billing.Invoices.v2.List\x82\xd3\xe4\x93\x022:\x01*\"-/api/billing/v2/invoices/custom-sections/list\x12\xd8\x01\n" +
+	"\x10GetCustomSection\x123.invora.billing.invoices.v2.GetCustomSectionRequest\x1a4.invora.billing.invoices.v2.GetCustomSectionResponse\"Y\xe2\xf2\x19 \n" +
+	"\x1eInvora.Billing.Invoices.v2.Get\x82\xd3\xe4\x93\x02/\x12-/api/billing/v2/invoices/custom-sections/{id}\x12\xf6\x01\n" +
+	"\x13CreateCustomSection\x126.invora.billing.invoices.v2.CreateCustomSectionRequest\x1a7.invora.billing.invoices.v2.CreateCustomSectionResponse\"n\xe2\xf2\x197\n" +
+	"5Invora.Billing.Invoices.v2.Modify.CreateCustomSection\x82\xd3\xe4\x93\x02-:\x01*\"(/api/billing/v2/invoices/custom-sections\x12\xfb\x01\n" +
+	"\x13UpdateCustomSection\x126.invora.billing.invoices.v2.UpdateCustomSectionRequest\x1a7.invora.billing.invoices.v2.UpdateCustomSectionResponse\"s\xe2\xf2\x197\n" +
+	"5Invora.Billing.Invoices.v2.Modify.UpdateCustomSection\x82\xd3\xe4\x93\x022:\x01*\x1a-/api/billing/v2/invoices/custom-sections/{id}\x12\xfd\x01\n" +
+	"\x13DeleteCustomSection\x126.invora.billing.invoices.v2.DeleteCustomSectionRequest\x1a7.invora.billing.invoices.v2.DeleteCustomSectionResponse\"u\xe2\xf2\x197\n" +
+	"5Invora.Billing.Invoices.v2.Modify.DeleteCustomSection\x82\xd3\xe4\x93\x024:\x01*\"//api/billing/v2/invoices/custom-sections/deleteB\x8b\x02\n" +
 	"\x1ecom.invora.billing.invoices.v2B\fServiceProtoP\x01ZPgithub.com/invoraapp/invora-controller/gen/invora/billing/invoices/v2;invoicesv2\xa2\x02\x03IBI\xaa\x02\x1aInvora.Billing.Invoices.V2\xca\x02\x1aInvora\\Billing\\Invoices\\V2\xe2\x02&Invora\\Billing\\Invoices\\V2\\GPBMetadata\xea\x02\x1dInvora::Billing::Invoices::V2b\x06proto3"
 
 var (
@@ -6340,330 +4641,248 @@ func file_invora_billing_invoices_v2_service_proto_rawDescGZIP() []byte {
 	return file_invora_billing_invoices_v2_service_proto_rawDescData
 }
 
-var file_invora_billing_invoices_v2_service_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_invora_billing_invoices_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 105)
+var file_invora_billing_invoices_v2_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_invora_billing_invoices_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 74)
 var file_invora_billing_invoices_v2_service_proto_goTypes = []any{
-	(View)(0),                                       // 0: invora.billing.invoices.v2.View
-	(InvoiceExportTypeEnum)(0),                      // 1: invora.billing.invoices.v2.InvoiceExportTypeEnum
-	(InvoiceSettlementTypeEnum)(0),                  // 2: invora.billing.invoices.v2.InvoiceSettlementTypeEnum
-	(*CustomerInvoicesRequest)(nil),                 // 3: invora.billing.invoices.v2.CustomerInvoicesRequest
-	(*CustomerInvoicesResponse)(nil),                // 4: invora.billing.invoices.v2.CustomerInvoicesResponse
-	(*ListFilter)(nil),                              // 5: invora.billing.invoices.v2.ListFilter
-	(*ListStatusFilter)(nil),                        // 6: invora.billing.invoices.v2.ListStatusFilter
-	(*ListFilterPart)(nil),                          // 7: invora.billing.invoices.v2.ListFilterPart
-	(*ListSort)(nil),                                // 8: invora.billing.invoices.v2.ListSort
-	(*ListSortRule)(nil),                            // 9: invora.billing.invoices.v2.ListSortRule
-	(*GetRequest)(nil),                              // 10: invora.billing.invoices.v2.GetRequest
-	(*GetResponse)(nil),                             // 11: invora.billing.invoices.v2.GetResponse
-	(*GetCustomSectionRequest)(nil),                 // 12: invora.billing.invoices.v2.GetCustomSectionRequest
-	(*GetCustomSectionResponse)(nil),                // 13: invora.billing.invoices.v2.GetCustomSectionResponse
-	(*ListCustomSectionsRequest)(nil),               // 14: invora.billing.invoices.v2.ListCustomSectionsRequest
-	(*ListCustomSectionsResponse)(nil),              // 15: invora.billing.invoices.v2.ListCustomSectionsResponse
-	(*ListRequest)(nil),                             // 16: invora.billing.invoices.v2.ListRequest
-	(*ListResponse)(nil),                            // 17: invora.billing.invoices.v2.ListResponse
-	(*ListInvoiceTypeFilter)(nil),                   // 18: invora.billing.invoices.v2.ListInvoiceTypeFilter
-	(*ListPaymentStatusFilter)(nil),                 // 19: invora.billing.invoices.v2.ListPaymentStatusFilter
-	(*ListSettlementsFilter)(nil),                   // 20: invora.billing.invoices.v2.ListSettlementsFilter
-	(*CreateRequest)(nil),                           // 21: invora.billing.invoices.v2.CreateRequest
-	(*CreateResponse)(nil),                          // 22: invora.billing.invoices.v2.CreateResponse
-	(*CreateCustomSectionRequest)(nil),              // 23: invora.billing.invoices.v2.CreateCustomSectionRequest
-	(*CreateCustomSectionResponse)(nil),             // 24: invora.billing.invoices.v2.CreateCustomSectionResponse
-	(*CreatesDataExportRequest)(nil),                // 25: invora.billing.invoices.v2.CreatesDataExportRequest
-	(*CreatesDataExportResponse)(nil),               // 26: invora.billing.invoices.v2.CreatesDataExportResponse
-	(*DeleteInvoiceCustomSectionRequest)(nil),       // 27: invora.billing.invoices.v2.DeleteInvoiceCustomSectionRequest
-	(*DeleteInvoiceCustomSectionResponse)(nil),      // 28: invora.billing.invoices.v2.DeleteInvoiceCustomSectionResponse
-	(*DownloadCustomerPortalInvoiceRequest)(nil),    // 29: invora.billing.invoices.v2.DownloadCustomerPortalInvoiceRequest
-	(*DownloadCustomerPortalInvoiceResponse)(nil),   // 30: invora.billing.invoices.v2.DownloadCustomerPortalInvoiceResponse
-	(*DownloadInvoiceRequest)(nil),                  // 31: invora.billing.invoices.v2.DownloadInvoiceRequest
-	(*DownloadInvoiceResponse)(nil),                 // 32: invora.billing.invoices.v2.DownloadInvoiceResponse
-	(*DownloadInvoiceXmlRequest)(nil),               // 33: invora.billing.invoices.v2.DownloadInvoiceXmlRequest
-	(*DownloadInvoiceXmlResponse)(nil),              // 34: invora.billing.invoices.v2.DownloadInvoiceXmlResponse
-	(*FetchDraftInvoiceTaxesRequest)(nil),           // 35: invora.billing.invoices.v2.FetchDraftInvoiceTaxesRequest
-	(*FetchDraftInvoiceTaxesResponse)(nil),          // 36: invora.billing.invoices.v2.FetchDraftInvoiceTaxesResponse
-	(*FinalizeAllInvoicesRequest)(nil),              // 37: invora.billing.invoices.v2.FinalizeAllInvoicesRequest
-	(*FinalizeAllInvoicesResponse)(nil),             // 38: invora.billing.invoices.v2.FinalizeAllInvoicesResponse
-	(*FinalizeRequest)(nil),                         // 39: invora.billing.invoices.v2.FinalizeRequest
-	(*FinalizeResponse)(nil),                        // 40: invora.billing.invoices.v2.FinalizeResponse
-	(*LoseInvoiceDisputeRequest)(nil),               // 41: invora.billing.invoices.v2.LoseInvoiceDisputeRequest
-	(*LoseInvoiceDisputeResponse)(nil),              // 42: invora.billing.invoices.v2.LoseInvoiceDisputeResponse
-	(*RefreshInvoiceRequest)(nil),                   // 43: invora.billing.invoices.v2.RefreshInvoiceRequest
-	(*RefreshInvoiceResponse)(nil),                  // 44: invora.billing.invoices.v2.RefreshInvoiceResponse
-	(*RegenerateFromVoidedRequest)(nil),             // 45: invora.billing.invoices.v2.RegenerateFromVoidedRequest
-	(*RegenerateFromVoidedResponse)(nil),            // 46: invora.billing.invoices.v2.RegenerateFromVoidedResponse
-	(*ResendInvoiceEmailRequest)(nil),               // 47: invora.billing.invoices.v2.ResendInvoiceEmailRequest
-	(*ResendInvoiceEmailResponse)(nil),              // 48: invora.billing.invoices.v2.ResendInvoiceEmailResponse
-	(*RetryAllInvoicePaymentsRequest)(nil),          // 49: invora.billing.invoices.v2.RetryAllInvoicePaymentsRequest
-	(*RetryAllInvoicePaymentsResponse)(nil),         // 50: invora.billing.invoices.v2.RetryAllInvoicePaymentsResponse
-	(*RetryAllInvoicesRequest)(nil),                 // 51: invora.billing.invoices.v2.RetryAllInvoicesRequest
-	(*RetryAllInvoicesResponse)(nil),                // 52: invora.billing.invoices.v2.RetryAllInvoicesResponse
-	(*RetryInvoiceRequest)(nil),                     // 53: invora.billing.invoices.v2.RetryInvoiceRequest
-	(*RetryInvoiceResponse)(nil),                    // 54: invora.billing.invoices.v2.RetryInvoiceResponse
-	(*RetryInvoicePaymentRequest)(nil),              // 55: invora.billing.invoices.v2.RetryInvoicePaymentRequest
-	(*RetryInvoicePaymentResponse)(nil),             // 56: invora.billing.invoices.v2.RetryInvoicePaymentResponse
-	(*RetryTaxProviderVoidingRequest)(nil),          // 57: invora.billing.invoices.v2.RetryTaxProviderVoidingRequest
-	(*RetryTaxProviderVoidingResponse)(nil),         // 58: invora.billing.invoices.v2.RetryTaxProviderVoidingResponse
-	(*SyncHubspotIntegrationInvoiceRequest)(nil),    // 59: invora.billing.invoices.v2.SyncHubspotIntegrationInvoiceRequest
-	(*SyncHubspotIntegrationInvoiceResponse)(nil),   // 60: invora.billing.invoices.v2.SyncHubspotIntegrationInvoiceResponse
-	(*SyncIntegrationInvoiceRequest)(nil),           // 61: invora.billing.invoices.v2.SyncIntegrationInvoiceRequest
-	(*SyncIntegrationInvoiceResponse)(nil),          // 62: invora.billing.invoices.v2.SyncIntegrationInvoiceResponse
-	(*SyncSalesforceInvoiceRequest)(nil),            // 63: invora.billing.invoices.v2.SyncSalesforceInvoiceRequest
-	(*SyncSalesforceInvoiceResponse)(nil),           // 64: invora.billing.invoices.v2.SyncSalesforceInvoiceResponse
-	(*UpdateRequest)(nil),                           // 65: invora.billing.invoices.v2.UpdateRequest
-	(*UpdateResponse)(nil),                          // 66: invora.billing.invoices.v2.UpdateResponse
-	(*UpdateInvoiceCustomSectionRequest)(nil),       // 67: invora.billing.invoices.v2.UpdateInvoiceCustomSectionRequest
-	(*UpdateInvoiceCustomSectionResponse)(nil),      // 68: invora.billing.invoices.v2.UpdateInvoiceCustomSectionResponse
-	(*VoidInvoiceRequest)(nil),                      // 69: invora.billing.invoices.v2.VoidInvoiceRequest
-	(*VoidInvoiceResponse)(nil),                     // 70: invora.billing.invoices.v2.VoidInvoiceResponse
-	(*VoidInvoiceInput)(nil),                        // 71: invora.billing.invoices.v2.VoidInvoiceInput
-	(*UpdateInvoiceCustomSectionInput)(nil),         // 72: invora.billing.invoices.v2.UpdateInvoiceCustomSectionInput
-	(*UpdateInvoiceInput)(nil),                      // 73: invora.billing.invoices.v2.UpdateInvoiceInput
-	(*InvoiceMetadataInput)(nil),                    // 74: invora.billing.invoices.v2.InvoiceMetadataInput
-	(*SyncSalesforceInvoiceInput)(nil),              // 75: invora.billing.invoices.v2.SyncSalesforceInvoiceInput
-	(*SyncSalesforceInvoicePayload)(nil),            // 76: invora.billing.invoices.v2.SyncSalesforceInvoicePayload
-	(*SyncIntegrationInvoiceInput)(nil),             // 77: invora.billing.invoices.v2.SyncIntegrationInvoiceInput
-	(*SyncIntegrationInvoicePayload)(nil),           // 78: invora.billing.invoices.v2.SyncIntegrationInvoicePayload
-	(*SyncHubspotIntegrationInvoiceInput)(nil),      // 79: invora.billing.invoices.v2.SyncHubspotIntegrationInvoiceInput
-	(*SyncHubspotInvoicePayload)(nil),               // 80: invora.billing.invoices.v2.SyncHubspotInvoicePayload
-	(*RetryTaxProviderVoidingInput)(nil),            // 81: invora.billing.invoices.v2.RetryTaxProviderVoidingInput
-	(*RetryInvoicePaymentInput)(nil),                // 82: invora.billing.invoices.v2.RetryInvoicePaymentInput
-	(*RetryInvoiceInput)(nil),                       // 83: invora.billing.invoices.v2.RetryInvoiceInput
-	(*RetryAllInvoicesInput)(nil),                   // 84: invora.billing.invoices.v2.RetryAllInvoicesInput
-	(*RetryAllInvoicePaymentsInput)(nil),            // 85: invora.billing.invoices.v2.RetryAllInvoicePaymentsInput
-	(*ResendInvoiceEmailInput)(nil),                 // 86: invora.billing.invoices.v2.ResendInvoiceEmailInput
-	(*RegenerateInvoiceInput)(nil),                  // 87: invora.billing.invoices.v2.RegenerateInvoiceInput
-	(*VoidedInvoiceFeeInput)(nil),                   // 88: invora.billing.invoices.v2.VoidedInvoiceFeeInput
-	(*RefreshInvoiceInput)(nil),                     // 89: invora.billing.invoices.v2.RefreshInvoiceInput
-	(*LoseInvoiceDisputeInput)(nil),                 // 90: invora.billing.invoices.v2.LoseInvoiceDisputeInput
-	(*FinalizeInvoiceInput)(nil),                    // 91: invora.billing.invoices.v2.FinalizeInvoiceInput
-	(*FinalizeAllInvoicesInput)(nil),                // 92: invora.billing.invoices.v2.FinalizeAllInvoicesInput
-	(*InvoiceCollection)(nil),                       // 93: invora.billing.invoices.v2.InvoiceCollection
-	(*FetchDraftInvoiceTaxesInput)(nil),             // 94: invora.billing.invoices.v2.FetchDraftInvoiceTaxesInput
-	(*FeeInput)(nil),                                // 95: invora.billing.invoices.v2.FeeInput
-	(*TaxFeeObjectCollection)(nil),                  // 96: invora.billing.invoices.v2.TaxFeeObjectCollection
-	(*TaxFeeObject)(nil),                            // 97: invora.billing.invoices.v2.TaxFeeObject
-	(*TaxBreakdownObject)(nil),                      // 98: invora.billing.invoices.v2.TaxBreakdownObject
-	(*DownloadXmlInvoiceInput)(nil),                 // 99: invora.billing.invoices.v2.DownloadXmlInvoiceInput
-	(*DownloadInvoiceInput)(nil),                    // 100: invora.billing.invoices.v2.DownloadInvoiceInput
-	(*DownloadCustomerPortalInvoiceInput)(nil),      // 101: invora.billing.invoices.v2.DownloadCustomerPortalInvoiceInput
-	(*DestroyInvoiceCustomSectionInput)(nil),        // 102: invora.billing.invoices.v2.DestroyInvoiceCustomSectionInput
-	(*DestroyInvoiceCustomSectionPayload)(nil),      // 103: invora.billing.invoices.v2.DestroyInvoiceCustomSectionPayload
-	(*CreateDataExportsInvoicesInput)(nil),          // 104: invora.billing.invoices.v2.CreateDataExportsInvoicesInput
-	(*DataExportInvoiceFiltersInput)(nil),           // 105: invora.billing.invoices.v2.DataExportInvoiceFiltersInput
-	(*CreateInvoiceCustomSectionInput)(nil),         // 106: invora.billing.invoices.v2.CreateInvoiceCustomSectionInput
-	(*CreateInvoiceInput)(nil),                      // 107: invora.billing.invoices.v2.CreateInvoiceInput
-	(*kernel.PaginationInfo)(nil),                   // 108: kernel.PaginationInfo
-	(*fieldmaskpb.FieldMask)(nil),                   // 109: google.protobuf.FieldMask
-	(*v2.BillingInvoice)(nil),                       // 110: invora.billing.common.v2.BillingInvoice
-	(*wrapperspb.StringValue)(nil),                  // 111: google.protobuf.StringValue
-	(v2.InvoiceStatusTypeEnum)(0),                   // 112: invora.billing.common.v2.InvoiceStatusTypeEnum
-	(kernel.SortDirection)(0),                       // 113: kernel.SortDirection
-	(*v2.InvoiceCustomSection)(nil),                 // 114: invora.billing.common.v2.InvoiceCustomSection
-	(v2.InvoiceTypeEnum)(0),                         // 115: invora.billing.common.v2.InvoiceTypeEnum
-	(v2.InvoicePaymentStatusTypeEnum)(0),            // 116: invora.billing.common.v2.InvoicePaymentStatusTypeEnum
-	(*v2.DataExport)(nil),                           // 117: invora.billing.common.v2.DataExport
-	(*v2.PaymentMethodReferenceInput)(nil),          // 118: invora.billing.common.v2.PaymentMethodReferenceInput
-	(*v2.CollectionMetadata)(nil),                   // 119: invora.billing.common.v2.CollectionMetadata
-	(v2.CurrencyEnum)(0),                            // 120: invora.billing.common.v2.CurrencyEnum
-	(*v2.InvoiceCustomSectionsReferenceInput)(nil),  // 121: invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
-	(*timestamppb.Timestamp)(nil),                   // 122: google.protobuf.Timestamp
-	(v2.InvoiceAppliedTaxOnWholeInvoiceCodeEnum)(0), // 123: invora.billing.common.v2.InvoiceAppliedTaxOnWholeInvoiceCodeEnum
-	(v2.DataExportFormatTypeEnum)(0),                // 124: invora.billing.common.v2.DataExportFormatTypeEnum
-	(*date.Date)(nil),                               // 125: google.type.Date
+	(InvoiceExportType)(0),                         // 0: invora.billing.invoices.v2.InvoiceExportType
+	(InvoiceSettlementType)(0),                     // 1: invora.billing.invoices.v2.InvoiceSettlementType
+	(*ListFilter)(nil),                             // 2: invora.billing.invoices.v2.ListFilter
+	(*ListFilterPart)(nil),                         // 3: invora.billing.invoices.v2.ListFilterPart
+	(*ListStatusFilter)(nil),                       // 4: invora.billing.invoices.v2.ListStatusFilter
+	(*ListInvoiceTypeFilter)(nil),                  // 5: invora.billing.invoices.v2.ListInvoiceTypeFilter
+	(*ListPaymentStatusFilter)(nil),                // 6: invora.billing.invoices.v2.ListPaymentStatusFilter
+	(*ListSettlementsFilter)(nil),                  // 7: invora.billing.invoices.v2.ListSettlementsFilter
+	(*ListSort)(nil),                               // 8: invora.billing.invoices.v2.ListSort
+	(*ListSortRule)(nil),                           // 9: invora.billing.invoices.v2.ListSortRule
+	(*ListRequest)(nil),                            // 10: invora.billing.invoices.v2.ListRequest
+	(*ListResponse)(nil),                           // 11: invora.billing.invoices.v2.ListResponse
+	(*GetRequest)(nil),                             // 12: invora.billing.invoices.v2.GetRequest
+	(*GetResponse)(nil),                            // 13: invora.billing.invoices.v2.GetResponse
+	(*CustomerInvoicesRequest)(nil),                // 14: invora.billing.invoices.v2.CustomerInvoicesRequest
+	(*CustomerInvoicesResponse)(nil),               // 15: invora.billing.invoices.v2.CustomerInvoicesResponse
+	(*CreateRequest)(nil),                          // 16: invora.billing.invoices.v2.CreateRequest
+	(*CreateResponse)(nil),                         // 17: invora.billing.invoices.v2.CreateResponse
+	(*InvoiceMetadataInput)(nil),                   // 18: invora.billing.invoices.v2.InvoiceMetadataInput
+	(*UpdateRequest)(nil),                          // 19: invora.billing.invoices.v2.UpdateRequest
+	(*UpdateResponse)(nil),                         // 20: invora.billing.invoices.v2.UpdateResponse
+	(*FeeInput)(nil),                               // 21: invora.billing.invoices.v2.FeeInput
+	(*FetchDraftInvoiceTaxesRequest)(nil),          // 22: invora.billing.invoices.v2.FetchDraftInvoiceTaxesRequest
+	(*FetchDraftInvoiceTaxesResponse)(nil),         // 23: invora.billing.invoices.v2.FetchDraftInvoiceTaxesResponse
+	(*TaxFeeObject)(nil),                           // 24: invora.billing.invoices.v2.TaxFeeObject
+	(*TaxBreakdownObject)(nil),                     // 25: invora.billing.invoices.v2.TaxBreakdownObject
+	(*FinalizeRequest)(nil),                        // 26: invora.billing.invoices.v2.FinalizeRequest
+	(*FinalizeResponse)(nil),                       // 27: invora.billing.invoices.v2.FinalizeResponse
+	(*FinalizeAllInvoicesRequest)(nil),             // 28: invora.billing.invoices.v2.FinalizeAllInvoicesRequest
+	(*FinalizeAllInvoicesResponse)(nil),            // 29: invora.billing.invoices.v2.FinalizeAllInvoicesResponse
+	(*VoidInvoiceRequest)(nil),                     // 30: invora.billing.invoices.v2.VoidInvoiceRequest
+	(*VoidInvoiceResponse)(nil),                    // 31: invora.billing.invoices.v2.VoidInvoiceResponse
+	(*LoseInvoiceDisputeRequest)(nil),              // 32: invora.billing.invoices.v2.LoseInvoiceDisputeRequest
+	(*LoseInvoiceDisputeResponse)(nil),             // 33: invora.billing.invoices.v2.LoseInvoiceDisputeResponse
+	(*RefreshInvoiceRequest)(nil),                  // 34: invora.billing.invoices.v2.RefreshInvoiceRequest
+	(*RefreshInvoiceResponse)(nil),                 // 35: invora.billing.invoices.v2.RefreshInvoiceResponse
+	(*VoidedInvoiceFeeInput)(nil),                  // 36: invora.billing.invoices.v2.VoidedInvoiceFeeInput
+	(*RegenerateFromVoidedRequest)(nil),            // 37: invora.billing.invoices.v2.RegenerateFromVoidedRequest
+	(*RegenerateFromVoidedResponse)(nil),           // 38: invora.billing.invoices.v2.RegenerateFromVoidedResponse
+	(*ResendInvoiceEmailRequest)(nil),              // 39: invora.billing.invoices.v2.ResendInvoiceEmailRequest
+	(*ResendInvoiceEmailResponse)(nil),             // 40: invora.billing.invoices.v2.ResendInvoiceEmailResponse
+	(*RetryInvoiceRequest)(nil),                    // 41: invora.billing.invoices.v2.RetryInvoiceRequest
+	(*RetryInvoiceResponse)(nil),                   // 42: invora.billing.invoices.v2.RetryInvoiceResponse
+	(*RetryInvoicePaymentRequest)(nil),             // 43: invora.billing.invoices.v2.RetryInvoicePaymentRequest
+	(*RetryInvoicePaymentResponse)(nil),            // 44: invora.billing.invoices.v2.RetryInvoicePaymentResponse
+	(*RetryAllInvoicesRequest)(nil),                // 45: invora.billing.invoices.v2.RetryAllInvoicesRequest
+	(*RetryAllInvoicesResponse)(nil),               // 46: invora.billing.invoices.v2.RetryAllInvoicesResponse
+	(*RetryAllInvoicePaymentsRequest)(nil),         // 47: invora.billing.invoices.v2.RetryAllInvoicePaymentsRequest
+	(*RetryAllInvoicePaymentsResponse)(nil),        // 48: invora.billing.invoices.v2.RetryAllInvoicePaymentsResponse
+	(*RetryTaxProviderVoidingRequest)(nil),         // 49: invora.billing.invoices.v2.RetryTaxProviderVoidingRequest
+	(*RetryTaxProviderVoidingResponse)(nil),        // 50: invora.billing.invoices.v2.RetryTaxProviderVoidingResponse
+	(*DownloadInvoiceRequest)(nil),                 // 51: invora.billing.invoices.v2.DownloadInvoiceRequest
+	(*DownloadInvoiceResponse)(nil),                // 52: invora.billing.invoices.v2.DownloadInvoiceResponse
+	(*DownloadInvoiceXmlRequest)(nil),              // 53: invora.billing.invoices.v2.DownloadInvoiceXmlRequest
+	(*DownloadInvoiceXmlResponse)(nil),             // 54: invora.billing.invoices.v2.DownloadInvoiceXmlResponse
+	(*DownloadCustomerPortalInvoiceRequest)(nil),   // 55: invora.billing.invoices.v2.DownloadCustomerPortalInvoiceRequest
+	(*DownloadCustomerPortalInvoiceResponse)(nil),  // 56: invora.billing.invoices.v2.DownloadCustomerPortalInvoiceResponse
+	(*DataExportInvoiceFiltersInput)(nil),          // 57: invora.billing.invoices.v2.DataExportInvoiceFiltersInput
+	(*CreateDataExportRequest)(nil),                // 58: invora.billing.invoices.v2.CreateDataExportRequest
+	(*CreateDataExportResponse)(nil),               // 59: invora.billing.invoices.v2.CreateDataExportResponse
+	(*SyncIntegrationInvoiceRequest)(nil),          // 60: invora.billing.invoices.v2.SyncIntegrationInvoiceRequest
+	(*SyncIntegrationInvoiceResponse)(nil),         // 61: invora.billing.invoices.v2.SyncIntegrationInvoiceResponse
+	(*SyncHubspotIntegrationInvoiceRequest)(nil),   // 62: invora.billing.invoices.v2.SyncHubspotIntegrationInvoiceRequest
+	(*SyncHubspotIntegrationInvoiceResponse)(nil),  // 63: invora.billing.invoices.v2.SyncHubspotIntegrationInvoiceResponse
+	(*SyncSalesforceInvoiceRequest)(nil),           // 64: invora.billing.invoices.v2.SyncSalesforceInvoiceRequest
+	(*SyncSalesforceInvoiceResponse)(nil),          // 65: invora.billing.invoices.v2.SyncSalesforceInvoiceResponse
+	(*ListCustomSectionsRequest)(nil),              // 66: invora.billing.invoices.v2.ListCustomSectionsRequest
+	(*ListCustomSectionsResponse)(nil),             // 67: invora.billing.invoices.v2.ListCustomSectionsResponse
+	(*GetCustomSectionRequest)(nil),                // 68: invora.billing.invoices.v2.GetCustomSectionRequest
+	(*GetCustomSectionResponse)(nil),               // 69: invora.billing.invoices.v2.GetCustomSectionResponse
+	(*CreateCustomSectionRequest)(nil),             // 70: invora.billing.invoices.v2.CreateCustomSectionRequest
+	(*CreateCustomSectionResponse)(nil),            // 71: invora.billing.invoices.v2.CreateCustomSectionResponse
+	(*UpdateCustomSectionRequest)(nil),             // 72: invora.billing.invoices.v2.UpdateCustomSectionRequest
+	(*UpdateCustomSectionResponse)(nil),            // 73: invora.billing.invoices.v2.UpdateCustomSectionResponse
+	(*DeleteCustomSectionRequest)(nil),             // 74: invora.billing.invoices.v2.DeleteCustomSectionRequest
+	(*DeleteCustomSectionResponse)(nil),            // 75: invora.billing.invoices.v2.DeleteCustomSectionResponse
+	(v2.InvoiceStatusType)(0),                      // 76: invora.billing.common.v2.InvoiceStatusType
+	(v2.InvoiceType)(0),                            // 77: invora.billing.common.v2.InvoiceType
+	(v2.InvoicePaymentStatusType)(0),               // 78: invora.billing.common.v2.InvoicePaymentStatusType
+	(kernel.SortDirection)(0),                      // 79: kernel.SortDirection
+	(*kernel.PaginationInfo)(nil),                  // 80: kernel.PaginationInfo
+	(*fieldmaskpb.FieldMask)(nil),                  // 81: google.protobuf.FieldMask
+	(v2.View)(0),                                   // 82: invora.billing.common.v2.View
+	(*v2.BillingInvoice)(nil),                      // 83: invora.billing.common.v2.BillingInvoice
+	(v2.CurrencyEnum)(0),                           // 84: invora.billing.common.v2.CurrencyEnum
+	(*v2.InvoiceCustomSectionsReferenceInput)(nil), // 85: invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
+	(*v2.PaymentMethodReferenceInput)(nil),         // 86: invora.billing.common.v2.PaymentMethodReferenceInput
+	(*timestamppb.Timestamp)(nil),                  // 87: google.protobuf.Timestamp
+	(*kernel.DecimalValue)(nil),                    // 88: kernel.DecimalValue
+	(v2.InvoiceAppliedTaxOnWholeInvoiceCode)(0),    // 89: invora.billing.common.v2.InvoiceAppliedTaxOnWholeInvoiceCode
+	(*date.Date)(nil),                              // 90: google.type.Date
+	(v2.DataExportFormatType)(0),                   // 91: invora.billing.common.v2.DataExportFormatType
+	(*v2.DataExport)(nil),                          // 92: invora.billing.common.v2.DataExport
+	(*v2.InvoiceCustomSection)(nil),                // 93: invora.billing.common.v2.InvoiceCustomSection
 }
 var file_invora_billing_invoices_v2_service_proto_depIdxs = []int32{
-	5,   // 0: invora.billing.invoices.v2.CustomerInvoicesRequest.filter:type_name -> invora.billing.invoices.v2.ListFilter
-	8,   // 1: invora.billing.invoices.v2.CustomerInvoicesRequest.sort:type_name -> invora.billing.invoices.v2.ListSort
-	108, // 2: invora.billing.invoices.v2.CustomerInvoicesRequest.pagination:type_name -> kernel.PaginationInfo
-	109, // 3: invora.billing.invoices.v2.CustomerInvoicesRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,   // 4: invora.billing.invoices.v2.CustomerInvoicesRequest.view:type_name -> invora.billing.invoices.v2.View
-	110, // 5: invora.billing.invoices.v2.CustomerInvoicesResponse.items:type_name -> invora.billing.common.v2.BillingInvoice
-	111, // 6: invora.billing.invoices.v2.CustomerInvoicesResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	7,   // 7: invora.billing.invoices.v2.ListFilter.part:type_name -> invora.billing.invoices.v2.ListFilterPart
-	112, // 8: invora.billing.invoices.v2.ListStatusFilter.in_values:type_name -> invora.billing.common.v2.InvoiceStatusTypeEnum
-	6,   // 9: invora.billing.invoices.v2.ListFilterPart.status:type_name -> invora.billing.invoices.v2.ListStatusFilter
-	9,   // 10: invora.billing.invoices.v2.ListSort.rules:type_name -> invora.billing.invoices.v2.ListSortRule
-	113, // 11: invora.billing.invoices.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
-	109, // 12: invora.billing.invoices.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,   // 13: invora.billing.invoices.v2.GetRequest.view:type_name -> invora.billing.invoices.v2.View
-	110, // 14: invora.billing.invoices.v2.GetResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	109, // 15: invora.billing.invoices.v2.GetCustomSectionRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,   // 16: invora.billing.invoices.v2.GetCustomSectionRequest.view:type_name -> invora.billing.invoices.v2.View
-	114, // 17: invora.billing.invoices.v2.GetCustomSectionResponse.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSection
-	114, // 18: invora.billing.invoices.v2.ListCustomSectionsResponse.items:type_name -> invora.billing.common.v2.InvoiceCustomSection
-	111, // 19: invora.billing.invoices.v2.ListCustomSectionsResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	5,   // 20: invora.billing.invoices.v2.ListRequest.filter:type_name -> invora.billing.invoices.v2.ListFilter
-	8,   // 21: invora.billing.invoices.v2.ListRequest.sort:type_name -> invora.billing.invoices.v2.ListSort
-	108, // 22: invora.billing.invoices.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
-	109, // 23: invora.billing.invoices.v2.ListRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,   // 24: invora.billing.invoices.v2.ListRequest.view:type_name -> invora.billing.invoices.v2.View
-	110, // 25: invora.billing.invoices.v2.ListResponse.items:type_name -> invora.billing.common.v2.BillingInvoice
-	111, // 26: invora.billing.invoices.v2.ListResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	115, // 27: invora.billing.invoices.v2.ListInvoiceTypeFilter.in_values:type_name -> invora.billing.common.v2.InvoiceTypeEnum
-	116, // 28: invora.billing.invoices.v2.ListPaymentStatusFilter.in_values:type_name -> invora.billing.common.v2.InvoicePaymentStatusTypeEnum
-	2,   // 29: invora.billing.invoices.v2.ListSettlementsFilter.in_values:type_name -> invora.billing.invoices.v2.InvoiceSettlementTypeEnum
-	107, // 30: invora.billing.invoices.v2.CreateRequest.input:type_name -> invora.billing.invoices.v2.CreateInvoiceInput
-	110, // 31: invora.billing.invoices.v2.CreateResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	106, // 32: invora.billing.invoices.v2.CreateCustomSectionRequest.input:type_name -> invora.billing.invoices.v2.CreateInvoiceCustomSectionInput
-	114, // 33: invora.billing.invoices.v2.CreateCustomSectionResponse.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSection
-	104, // 34: invora.billing.invoices.v2.CreatesDataExportRequest.input:type_name -> invora.billing.invoices.v2.CreateDataExportsInvoicesInput
-	117, // 35: invora.billing.invoices.v2.CreatesDataExportResponse.data_export:type_name -> invora.billing.common.v2.DataExport
-	102, // 36: invora.billing.invoices.v2.DeleteInvoiceCustomSectionRequest.input:type_name -> invora.billing.invoices.v2.DestroyInvoiceCustomSectionInput
-	101, // 37: invora.billing.invoices.v2.DownloadCustomerPortalInvoiceRequest.input:type_name -> invora.billing.invoices.v2.DownloadCustomerPortalInvoiceInput
-	110, // 38: invora.billing.invoices.v2.DownloadCustomerPortalInvoiceResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	100, // 39: invora.billing.invoices.v2.DownloadInvoiceRequest.input:type_name -> invora.billing.invoices.v2.DownloadInvoiceInput
-	110, // 40: invora.billing.invoices.v2.DownloadInvoiceResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	99,  // 41: invora.billing.invoices.v2.DownloadInvoiceXmlRequest.input:type_name -> invora.billing.invoices.v2.DownloadXmlInvoiceInput
-	110, // 42: invora.billing.invoices.v2.DownloadInvoiceXmlResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	5,   // 43: invora.billing.invoices.v2.FetchDraftInvoiceTaxesRequest.filter:type_name -> invora.billing.invoices.v2.ListFilter
-	8,   // 44: invora.billing.invoices.v2.FetchDraftInvoiceTaxesRequest.sort:type_name -> invora.billing.invoices.v2.ListSort
-	108, // 45: invora.billing.invoices.v2.FetchDraftInvoiceTaxesRequest.pagination:type_name -> kernel.PaginationInfo
-	109, // 46: invora.billing.invoices.v2.FetchDraftInvoiceTaxesRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,   // 47: invora.billing.invoices.v2.FetchDraftInvoiceTaxesRequest.view:type_name -> invora.billing.invoices.v2.View
-	97,  // 48: invora.billing.invoices.v2.FetchDraftInvoiceTaxesResponse.items:type_name -> invora.billing.invoices.v2.TaxFeeObject
-	111, // 49: invora.billing.invoices.v2.FetchDraftInvoiceTaxesResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	5,   // 50: invora.billing.invoices.v2.FinalizeAllInvoicesRequest.filter:type_name -> invora.billing.invoices.v2.ListFilter
-	8,   // 51: invora.billing.invoices.v2.FinalizeAllInvoicesRequest.sort:type_name -> invora.billing.invoices.v2.ListSort
-	108, // 52: invora.billing.invoices.v2.FinalizeAllInvoicesRequest.pagination:type_name -> kernel.PaginationInfo
-	109, // 53: invora.billing.invoices.v2.FinalizeAllInvoicesRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,   // 54: invora.billing.invoices.v2.FinalizeAllInvoicesRequest.view:type_name -> invora.billing.invoices.v2.View
-	110, // 55: invora.billing.invoices.v2.FinalizeAllInvoicesResponse.items:type_name -> invora.billing.common.v2.BillingInvoice
-	111, // 56: invora.billing.invoices.v2.FinalizeAllInvoicesResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	91,  // 57: invora.billing.invoices.v2.FinalizeRequest.input:type_name -> invora.billing.invoices.v2.FinalizeInvoiceInput
-	110, // 58: invora.billing.invoices.v2.FinalizeResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	90,  // 59: invora.billing.invoices.v2.LoseInvoiceDisputeRequest.input:type_name -> invora.billing.invoices.v2.LoseInvoiceDisputeInput
-	110, // 60: invora.billing.invoices.v2.LoseInvoiceDisputeResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	89,  // 61: invora.billing.invoices.v2.RefreshInvoiceRequest.input:type_name -> invora.billing.invoices.v2.RefreshInvoiceInput
-	110, // 62: invora.billing.invoices.v2.RefreshInvoiceResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	87,  // 63: invora.billing.invoices.v2.RegenerateFromVoidedRequest.input:type_name -> invora.billing.invoices.v2.RegenerateInvoiceInput
-	110, // 64: invora.billing.invoices.v2.RegenerateFromVoidedResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	86,  // 65: invora.billing.invoices.v2.ResendInvoiceEmailRequest.input:type_name -> invora.billing.invoices.v2.ResendInvoiceEmailInput
-	110, // 66: invora.billing.invoices.v2.ResendInvoiceEmailResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	5,   // 67: invora.billing.invoices.v2.RetryAllInvoicePaymentsRequest.filter:type_name -> invora.billing.invoices.v2.ListFilter
-	8,   // 68: invora.billing.invoices.v2.RetryAllInvoicePaymentsRequest.sort:type_name -> invora.billing.invoices.v2.ListSort
-	108, // 69: invora.billing.invoices.v2.RetryAllInvoicePaymentsRequest.pagination:type_name -> kernel.PaginationInfo
-	109, // 70: invora.billing.invoices.v2.RetryAllInvoicePaymentsRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,   // 71: invora.billing.invoices.v2.RetryAllInvoicePaymentsRequest.view:type_name -> invora.billing.invoices.v2.View
-	110, // 72: invora.billing.invoices.v2.RetryAllInvoicePaymentsResponse.items:type_name -> invora.billing.common.v2.BillingInvoice
-	111, // 73: invora.billing.invoices.v2.RetryAllInvoicePaymentsResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	5,   // 74: invora.billing.invoices.v2.RetryAllInvoicesRequest.filter:type_name -> invora.billing.invoices.v2.ListFilter
-	8,   // 75: invora.billing.invoices.v2.RetryAllInvoicesRequest.sort:type_name -> invora.billing.invoices.v2.ListSort
-	108, // 76: invora.billing.invoices.v2.RetryAllInvoicesRequest.pagination:type_name -> kernel.PaginationInfo
-	109, // 77: invora.billing.invoices.v2.RetryAllInvoicesRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,   // 78: invora.billing.invoices.v2.RetryAllInvoicesRequest.view:type_name -> invora.billing.invoices.v2.View
-	110, // 79: invora.billing.invoices.v2.RetryAllInvoicesResponse.items:type_name -> invora.billing.common.v2.BillingInvoice
-	111, // 80: invora.billing.invoices.v2.RetryAllInvoicesResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	83,  // 81: invora.billing.invoices.v2.RetryInvoiceRequest.input:type_name -> invora.billing.invoices.v2.RetryInvoiceInput
-	110, // 82: invora.billing.invoices.v2.RetryInvoiceResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	82,  // 83: invora.billing.invoices.v2.RetryInvoicePaymentRequest.input:type_name -> invora.billing.invoices.v2.RetryInvoicePaymentInput
-	110, // 84: invora.billing.invoices.v2.RetryInvoicePaymentResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	81,  // 85: invora.billing.invoices.v2.RetryTaxProviderVoidingRequest.input:type_name -> invora.billing.invoices.v2.RetryTaxProviderVoidingInput
-	110, // 86: invora.billing.invoices.v2.RetryTaxProviderVoidingResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	79,  // 87: invora.billing.invoices.v2.SyncHubspotIntegrationInvoiceRequest.input:type_name -> invora.billing.invoices.v2.SyncHubspotIntegrationInvoiceInput
-	80,  // 88: invora.billing.invoices.v2.SyncHubspotIntegrationInvoiceResponse.sync_hubspot_invoice_payload:type_name -> invora.billing.invoices.v2.SyncHubspotInvoicePayload
-	77,  // 89: invora.billing.invoices.v2.SyncIntegrationInvoiceRequest.input:type_name -> invora.billing.invoices.v2.SyncIntegrationInvoiceInput
-	78,  // 90: invora.billing.invoices.v2.SyncIntegrationInvoiceResponse.sync_integration_invoice_payload:type_name -> invora.billing.invoices.v2.SyncIntegrationInvoicePayload
-	75,  // 91: invora.billing.invoices.v2.SyncSalesforceInvoiceRequest.input:type_name -> invora.billing.invoices.v2.SyncSalesforceInvoiceInput
-	76,  // 92: invora.billing.invoices.v2.SyncSalesforceInvoiceResponse.sync_salesforce_invoice_payload:type_name -> invora.billing.invoices.v2.SyncSalesforceInvoicePayload
-	73,  // 93: invora.billing.invoices.v2.UpdateRequest.input:type_name -> invora.billing.invoices.v2.UpdateInvoiceInput
-	110, // 94: invora.billing.invoices.v2.UpdateResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	72,  // 95: invora.billing.invoices.v2.UpdateInvoiceCustomSectionRequest.input:type_name -> invora.billing.invoices.v2.UpdateInvoiceCustomSectionInput
-	114, // 96: invora.billing.invoices.v2.UpdateInvoiceCustomSectionResponse.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSection
-	71,  // 97: invora.billing.invoices.v2.VoidInvoiceRequest.input:type_name -> invora.billing.invoices.v2.VoidInvoiceInput
-	110, // 98: invora.billing.invoices.v2.VoidInvoiceResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
-	74,  // 99: invora.billing.invoices.v2.UpdateInvoiceInput.metadata:type_name -> invora.billing.invoices.v2.InvoiceMetadataInput
-	116, // 100: invora.billing.invoices.v2.UpdateInvoiceInput.payment_status:type_name -> invora.billing.common.v2.InvoicePaymentStatusTypeEnum
-	118, // 101: invora.billing.invoices.v2.RetryInvoicePaymentInput.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
-	88,  // 102: invora.billing.invoices.v2.RegenerateInvoiceInput.fees:type_name -> invora.billing.invoices.v2.VoidedInvoiceFeeInput
-	110, // 103: invora.billing.invoices.v2.InvoiceCollection.collection:type_name -> invora.billing.common.v2.BillingInvoice
-	119, // 104: invora.billing.invoices.v2.InvoiceCollection.metadata:type_name -> invora.billing.common.v2.CollectionMetadata
-	120, // 105: invora.billing.invoices.v2.FetchDraftInvoiceTaxesInput.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	95,  // 106: invora.billing.invoices.v2.FetchDraftInvoiceTaxesInput.fees:type_name -> invora.billing.invoices.v2.FeeInput
-	121, // 107: invora.billing.invoices.v2.FetchDraftInvoiceTaxesInput.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
-	118, // 108: invora.billing.invoices.v2.FetchDraftInvoiceTaxesInput.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
-	122, // 109: invora.billing.invoices.v2.FeeInput.from_datetime:type_name -> google.protobuf.Timestamp
-	122, // 110: invora.billing.invoices.v2.FeeInput.to_datetime:type_name -> google.protobuf.Timestamp
-	97,  // 111: invora.billing.invoices.v2.TaxFeeObjectCollection.collection:type_name -> invora.billing.invoices.v2.TaxFeeObject
-	119, // 112: invora.billing.invoices.v2.TaxFeeObjectCollection.metadata:type_name -> invora.billing.common.v2.CollectionMetadata
-	98,  // 113: invora.billing.invoices.v2.TaxFeeObject.tax_breakdown:type_name -> invora.billing.invoices.v2.TaxBreakdownObject
-	123, // 114: invora.billing.invoices.v2.TaxBreakdownObject.enumed_tax_code:type_name -> invora.billing.common.v2.InvoiceAppliedTaxOnWholeInvoiceCodeEnum
-	105, // 115: invora.billing.invoices.v2.CreateDataExportsInvoicesInput.filters:type_name -> invora.billing.invoices.v2.DataExportInvoiceFiltersInput
-	124, // 116: invora.billing.invoices.v2.CreateDataExportsInvoicesInput.format:type_name -> invora.billing.common.v2.DataExportFormatTypeEnum
-	1,   // 117: invora.billing.invoices.v2.CreateDataExportsInvoicesInput.resource_type:type_name -> invora.billing.invoices.v2.InvoiceExportTypeEnum
-	120, // 118: invora.billing.invoices.v2.DataExportInvoiceFiltersInput.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	115, // 119: invora.billing.invoices.v2.DataExportInvoiceFiltersInput.invoice_type:type_name -> invora.billing.common.v2.InvoiceTypeEnum
-	125, // 120: invora.billing.invoices.v2.DataExportInvoiceFiltersInput.issuing_date_from:type_name -> google.type.Date
-	125, // 121: invora.billing.invoices.v2.DataExportInvoiceFiltersInput.issuing_date_to:type_name -> google.type.Date
-	116, // 122: invora.billing.invoices.v2.DataExportInvoiceFiltersInput.payment_status:type_name -> invora.billing.common.v2.InvoicePaymentStatusTypeEnum
-	112, // 123: invora.billing.invoices.v2.DataExportInvoiceFiltersInput.status:type_name -> invora.billing.common.v2.InvoiceStatusTypeEnum
-	120, // 124: invora.billing.invoices.v2.CreateInvoiceInput.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	95,  // 125: invora.billing.invoices.v2.CreateInvoiceInput.fees:type_name -> invora.billing.invoices.v2.FeeInput
-	121, // 126: invora.billing.invoices.v2.CreateInvoiceInput.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
-	118, // 127: invora.billing.invoices.v2.CreateInvoiceInput.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
-	21,  // 128: invora.billing.invoices.v2.InvoiceService.Create:input_type -> invora.billing.invoices.v2.CreateRequest
-	10,  // 129: invora.billing.invoices.v2.InvoiceService.Get:input_type -> invora.billing.invoices.v2.GetRequest
-	16,  // 130: invora.billing.invoices.v2.InvoiceService.List:input_type -> invora.billing.invoices.v2.ListRequest
-	65,  // 131: invora.billing.invoices.v2.InvoiceService.Update:input_type -> invora.billing.invoices.v2.UpdateRequest
-	23,  // 132: invora.billing.invoices.v2.InvoiceService.CreateCustomSection:input_type -> invora.billing.invoices.v2.CreateCustomSectionRequest
-	25,  // 133: invora.billing.invoices.v2.InvoiceService.CreatesDataExport:input_type -> invora.billing.invoices.v2.CreatesDataExportRequest
-	3,   // 134: invora.billing.invoices.v2.InvoiceService.CustomerInvoices:input_type -> invora.billing.invoices.v2.CustomerInvoicesRequest
-	27,  // 135: invora.billing.invoices.v2.InvoiceService.DeleteInvoiceCustomSection:input_type -> invora.billing.invoices.v2.DeleteInvoiceCustomSectionRequest
-	29,  // 136: invora.billing.invoices.v2.InvoiceService.DownloadCustomerPortalInvoice:input_type -> invora.billing.invoices.v2.DownloadCustomerPortalInvoiceRequest
-	31,  // 137: invora.billing.invoices.v2.InvoiceService.DownloadInvoice:input_type -> invora.billing.invoices.v2.DownloadInvoiceRequest
-	33,  // 138: invora.billing.invoices.v2.InvoiceService.DownloadInvoiceXml:input_type -> invora.billing.invoices.v2.DownloadInvoiceXmlRequest
-	35,  // 139: invora.billing.invoices.v2.InvoiceService.FetchDraftInvoiceTaxes:input_type -> invora.billing.invoices.v2.FetchDraftInvoiceTaxesRequest
-	39,  // 140: invora.billing.invoices.v2.InvoiceService.Finalize:input_type -> invora.billing.invoices.v2.FinalizeRequest
-	37,  // 141: invora.billing.invoices.v2.InvoiceService.FinalizeAllInvoices:input_type -> invora.billing.invoices.v2.FinalizeAllInvoicesRequest
-	12,  // 142: invora.billing.invoices.v2.InvoiceService.GetCustomSection:input_type -> invora.billing.invoices.v2.GetCustomSectionRequest
-	14,  // 143: invora.billing.invoices.v2.InvoiceService.ListCustomSections:input_type -> invora.billing.invoices.v2.ListCustomSectionsRequest
-	41,  // 144: invora.billing.invoices.v2.InvoiceService.LoseInvoiceDispute:input_type -> invora.billing.invoices.v2.LoseInvoiceDisputeRequest
-	43,  // 145: invora.billing.invoices.v2.InvoiceService.RefreshInvoice:input_type -> invora.billing.invoices.v2.RefreshInvoiceRequest
-	45,  // 146: invora.billing.invoices.v2.InvoiceService.RegenerateFromVoided:input_type -> invora.billing.invoices.v2.RegenerateFromVoidedRequest
-	47,  // 147: invora.billing.invoices.v2.InvoiceService.ResendInvoiceEmail:input_type -> invora.billing.invoices.v2.ResendInvoiceEmailRequest
-	49,  // 148: invora.billing.invoices.v2.InvoiceService.RetryAllInvoicePayments:input_type -> invora.billing.invoices.v2.RetryAllInvoicePaymentsRequest
-	51,  // 149: invora.billing.invoices.v2.InvoiceService.RetryAllInvoices:input_type -> invora.billing.invoices.v2.RetryAllInvoicesRequest
-	53,  // 150: invora.billing.invoices.v2.InvoiceService.RetryInvoice:input_type -> invora.billing.invoices.v2.RetryInvoiceRequest
-	55,  // 151: invora.billing.invoices.v2.InvoiceService.RetryInvoicePayment:input_type -> invora.billing.invoices.v2.RetryInvoicePaymentRequest
-	57,  // 152: invora.billing.invoices.v2.InvoiceService.RetryTaxProviderVoiding:input_type -> invora.billing.invoices.v2.RetryTaxProviderVoidingRequest
-	59,  // 153: invora.billing.invoices.v2.InvoiceService.SyncHubspotIntegrationInvoice:input_type -> invora.billing.invoices.v2.SyncHubspotIntegrationInvoiceRequest
-	61,  // 154: invora.billing.invoices.v2.InvoiceService.SyncIntegrationInvoice:input_type -> invora.billing.invoices.v2.SyncIntegrationInvoiceRequest
-	63,  // 155: invora.billing.invoices.v2.InvoiceService.SyncSalesforceInvoice:input_type -> invora.billing.invoices.v2.SyncSalesforceInvoiceRequest
-	67,  // 156: invora.billing.invoices.v2.InvoiceService.UpdateInvoiceCustomSection:input_type -> invora.billing.invoices.v2.UpdateInvoiceCustomSectionRequest
-	69,  // 157: invora.billing.invoices.v2.InvoiceService.VoidInvoice:input_type -> invora.billing.invoices.v2.VoidInvoiceRequest
-	22,  // 158: invora.billing.invoices.v2.InvoiceService.Create:output_type -> invora.billing.invoices.v2.CreateResponse
-	11,  // 159: invora.billing.invoices.v2.InvoiceService.Get:output_type -> invora.billing.invoices.v2.GetResponse
-	17,  // 160: invora.billing.invoices.v2.InvoiceService.List:output_type -> invora.billing.invoices.v2.ListResponse
-	66,  // 161: invora.billing.invoices.v2.InvoiceService.Update:output_type -> invora.billing.invoices.v2.UpdateResponse
-	24,  // 162: invora.billing.invoices.v2.InvoiceService.CreateCustomSection:output_type -> invora.billing.invoices.v2.CreateCustomSectionResponse
-	26,  // 163: invora.billing.invoices.v2.InvoiceService.CreatesDataExport:output_type -> invora.billing.invoices.v2.CreatesDataExportResponse
-	4,   // 164: invora.billing.invoices.v2.InvoiceService.CustomerInvoices:output_type -> invora.billing.invoices.v2.CustomerInvoicesResponse
-	28,  // 165: invora.billing.invoices.v2.InvoiceService.DeleteInvoiceCustomSection:output_type -> invora.billing.invoices.v2.DeleteInvoiceCustomSectionResponse
-	30,  // 166: invora.billing.invoices.v2.InvoiceService.DownloadCustomerPortalInvoice:output_type -> invora.billing.invoices.v2.DownloadCustomerPortalInvoiceResponse
-	32,  // 167: invora.billing.invoices.v2.InvoiceService.DownloadInvoice:output_type -> invora.billing.invoices.v2.DownloadInvoiceResponse
-	34,  // 168: invora.billing.invoices.v2.InvoiceService.DownloadInvoiceXml:output_type -> invora.billing.invoices.v2.DownloadInvoiceXmlResponse
-	36,  // 169: invora.billing.invoices.v2.InvoiceService.FetchDraftInvoiceTaxes:output_type -> invora.billing.invoices.v2.FetchDraftInvoiceTaxesResponse
-	40,  // 170: invora.billing.invoices.v2.InvoiceService.Finalize:output_type -> invora.billing.invoices.v2.FinalizeResponse
-	38,  // 171: invora.billing.invoices.v2.InvoiceService.FinalizeAllInvoices:output_type -> invora.billing.invoices.v2.FinalizeAllInvoicesResponse
-	13,  // 172: invora.billing.invoices.v2.InvoiceService.GetCustomSection:output_type -> invora.billing.invoices.v2.GetCustomSectionResponse
-	15,  // 173: invora.billing.invoices.v2.InvoiceService.ListCustomSections:output_type -> invora.billing.invoices.v2.ListCustomSectionsResponse
-	42,  // 174: invora.billing.invoices.v2.InvoiceService.LoseInvoiceDispute:output_type -> invora.billing.invoices.v2.LoseInvoiceDisputeResponse
-	44,  // 175: invora.billing.invoices.v2.InvoiceService.RefreshInvoice:output_type -> invora.billing.invoices.v2.RefreshInvoiceResponse
-	46,  // 176: invora.billing.invoices.v2.InvoiceService.RegenerateFromVoided:output_type -> invora.billing.invoices.v2.RegenerateFromVoidedResponse
-	48,  // 177: invora.billing.invoices.v2.InvoiceService.ResendInvoiceEmail:output_type -> invora.billing.invoices.v2.ResendInvoiceEmailResponse
-	50,  // 178: invora.billing.invoices.v2.InvoiceService.RetryAllInvoicePayments:output_type -> invora.billing.invoices.v2.RetryAllInvoicePaymentsResponse
-	52,  // 179: invora.billing.invoices.v2.InvoiceService.RetryAllInvoices:output_type -> invora.billing.invoices.v2.RetryAllInvoicesResponse
-	54,  // 180: invora.billing.invoices.v2.InvoiceService.RetryInvoice:output_type -> invora.billing.invoices.v2.RetryInvoiceResponse
-	56,  // 181: invora.billing.invoices.v2.InvoiceService.RetryInvoicePayment:output_type -> invora.billing.invoices.v2.RetryInvoicePaymentResponse
-	58,  // 182: invora.billing.invoices.v2.InvoiceService.RetryTaxProviderVoiding:output_type -> invora.billing.invoices.v2.RetryTaxProviderVoidingResponse
-	60,  // 183: invora.billing.invoices.v2.InvoiceService.SyncHubspotIntegrationInvoice:output_type -> invora.billing.invoices.v2.SyncHubspotIntegrationInvoiceResponse
-	62,  // 184: invora.billing.invoices.v2.InvoiceService.SyncIntegrationInvoice:output_type -> invora.billing.invoices.v2.SyncIntegrationInvoiceResponse
-	64,  // 185: invora.billing.invoices.v2.InvoiceService.SyncSalesforceInvoice:output_type -> invora.billing.invoices.v2.SyncSalesforceInvoiceResponse
-	68,  // 186: invora.billing.invoices.v2.InvoiceService.UpdateInvoiceCustomSection:output_type -> invora.billing.invoices.v2.UpdateInvoiceCustomSectionResponse
-	70,  // 187: invora.billing.invoices.v2.InvoiceService.VoidInvoice:output_type -> invora.billing.invoices.v2.VoidInvoiceResponse
-	158, // [158:188] is the sub-list for method output_type
-	128, // [128:158] is the sub-list for method input_type
-	128, // [128:128] is the sub-list for extension type_name
-	128, // [128:128] is the sub-list for extension extendee
-	0,   // [0:128] is the sub-list for field type_name
+	3,   // 0: invora.billing.invoices.v2.ListFilter.part:type_name -> invora.billing.invoices.v2.ListFilterPart
+	4,   // 1: invora.billing.invoices.v2.ListFilterPart.status:type_name -> invora.billing.invoices.v2.ListStatusFilter
+	76,  // 2: invora.billing.invoices.v2.ListStatusFilter.in_values:type_name -> invora.billing.common.v2.InvoiceStatusType
+	77,  // 3: invora.billing.invoices.v2.ListInvoiceTypeFilter.in_values:type_name -> invora.billing.common.v2.InvoiceType
+	78,  // 4: invora.billing.invoices.v2.ListPaymentStatusFilter.in_values:type_name -> invora.billing.common.v2.InvoicePaymentStatusType
+	1,   // 5: invora.billing.invoices.v2.ListSettlementsFilter.in_values:type_name -> invora.billing.invoices.v2.InvoiceSettlementType
+	9,   // 6: invora.billing.invoices.v2.ListSort.rules:type_name -> invora.billing.invoices.v2.ListSortRule
+	79,  // 7: invora.billing.invoices.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
+	2,   // 8: invora.billing.invoices.v2.ListRequest.filter:type_name -> invora.billing.invoices.v2.ListFilter
+	8,   // 9: invora.billing.invoices.v2.ListRequest.sort:type_name -> invora.billing.invoices.v2.ListSort
+	80,  // 10: invora.billing.invoices.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
+	81,  // 11: invora.billing.invoices.v2.ListRequest.read_mask:type_name -> google.protobuf.FieldMask
+	82,  // 12: invora.billing.invoices.v2.ListRequest.view:type_name -> invora.billing.common.v2.View
+	83,  // 13: invora.billing.invoices.v2.ListResponse.items:type_name -> invora.billing.common.v2.BillingInvoice
+	81,  // 14: invora.billing.invoices.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
+	82,  // 15: invora.billing.invoices.v2.GetRequest.view:type_name -> invora.billing.common.v2.View
+	83,  // 16: invora.billing.invoices.v2.GetResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	2,   // 17: invora.billing.invoices.v2.CustomerInvoicesRequest.filter:type_name -> invora.billing.invoices.v2.ListFilter
+	8,   // 18: invora.billing.invoices.v2.CustomerInvoicesRequest.sort:type_name -> invora.billing.invoices.v2.ListSort
+	80,  // 19: invora.billing.invoices.v2.CustomerInvoicesRequest.pagination:type_name -> kernel.PaginationInfo
+	81,  // 20: invora.billing.invoices.v2.CustomerInvoicesRequest.read_mask:type_name -> google.protobuf.FieldMask
+	82,  // 21: invora.billing.invoices.v2.CustomerInvoicesRequest.view:type_name -> invora.billing.common.v2.View
+	83,  // 22: invora.billing.invoices.v2.CustomerInvoicesResponse.items:type_name -> invora.billing.common.v2.BillingInvoice
+	84,  // 23: invora.billing.invoices.v2.CreateRequest.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	21,  // 24: invora.billing.invoices.v2.CreateRequest.fees:type_name -> invora.billing.invoices.v2.FeeInput
+	85,  // 25: invora.billing.invoices.v2.CreateRequest.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
+	86,  // 26: invora.billing.invoices.v2.CreateRequest.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
+	83,  // 27: invora.billing.invoices.v2.CreateResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	18,  // 28: invora.billing.invoices.v2.UpdateRequest.metadata:type_name -> invora.billing.invoices.v2.InvoiceMetadataInput
+	78,  // 29: invora.billing.invoices.v2.UpdateRequest.payment_status:type_name -> invora.billing.common.v2.InvoicePaymentStatusType
+	81,  // 30: invora.billing.invoices.v2.UpdateRequest.update_mask:type_name -> google.protobuf.FieldMask
+	83,  // 31: invora.billing.invoices.v2.UpdateResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	87,  // 32: invora.billing.invoices.v2.FeeInput.from_datetime:type_name -> google.protobuf.Timestamp
+	87,  // 33: invora.billing.invoices.v2.FeeInput.to_datetime:type_name -> google.protobuf.Timestamp
+	88,  // 34: invora.billing.invoices.v2.FeeInput.units:type_name -> kernel.DecimalValue
+	84,  // 35: invora.billing.invoices.v2.FetchDraftInvoiceTaxesRequest.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	21,  // 36: invora.billing.invoices.v2.FetchDraftInvoiceTaxesRequest.fees:type_name -> invora.billing.invoices.v2.FeeInput
+	85,  // 37: invora.billing.invoices.v2.FetchDraftInvoiceTaxesRequest.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
+	86,  // 38: invora.billing.invoices.v2.FetchDraftInvoiceTaxesRequest.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
+	24,  // 39: invora.billing.invoices.v2.FetchDraftInvoiceTaxesResponse.items:type_name -> invora.billing.invoices.v2.TaxFeeObject
+	25,  // 40: invora.billing.invoices.v2.TaxFeeObject.tax_breakdown:type_name -> invora.billing.invoices.v2.TaxBreakdownObject
+	89,  // 41: invora.billing.invoices.v2.TaxBreakdownObject.enumed_tax_code:type_name -> invora.billing.common.v2.InvoiceAppliedTaxOnWholeInvoiceCode
+	88,  // 42: invora.billing.invoices.v2.TaxBreakdownObject.rate:type_name -> kernel.DecimalValue
+	83,  // 43: invora.billing.invoices.v2.FinalizeResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	83,  // 44: invora.billing.invoices.v2.FinalizeAllInvoicesResponse.items:type_name -> invora.billing.common.v2.BillingInvoice
+	83,  // 45: invora.billing.invoices.v2.VoidInvoiceResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	83,  // 46: invora.billing.invoices.v2.LoseInvoiceDisputeResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	83,  // 47: invora.billing.invoices.v2.RefreshInvoiceResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	88,  // 48: invora.billing.invoices.v2.VoidedInvoiceFeeInput.units:type_name -> kernel.DecimalValue
+	36,  // 49: invora.billing.invoices.v2.RegenerateFromVoidedRequest.fees:type_name -> invora.billing.invoices.v2.VoidedInvoiceFeeInput
+	83,  // 50: invora.billing.invoices.v2.RegenerateFromVoidedResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	83,  // 51: invora.billing.invoices.v2.ResendInvoiceEmailResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	83,  // 52: invora.billing.invoices.v2.RetryInvoiceResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	86,  // 53: invora.billing.invoices.v2.RetryInvoicePaymentRequest.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
+	83,  // 54: invora.billing.invoices.v2.RetryInvoicePaymentResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	83,  // 55: invora.billing.invoices.v2.RetryAllInvoicesResponse.items:type_name -> invora.billing.common.v2.BillingInvoice
+	83,  // 56: invora.billing.invoices.v2.RetryAllInvoicePaymentsResponse.items:type_name -> invora.billing.common.v2.BillingInvoice
+	83,  // 57: invora.billing.invoices.v2.RetryTaxProviderVoidingResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	83,  // 58: invora.billing.invoices.v2.DownloadInvoiceResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	83,  // 59: invora.billing.invoices.v2.DownloadInvoiceXmlResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	83,  // 60: invora.billing.invoices.v2.DownloadCustomerPortalInvoiceResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
+	84,  // 61: invora.billing.invoices.v2.DataExportInvoiceFiltersInput.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	77,  // 62: invora.billing.invoices.v2.DataExportInvoiceFiltersInput.invoice_type:type_name -> invora.billing.common.v2.InvoiceType
+	90,  // 63: invora.billing.invoices.v2.DataExportInvoiceFiltersInput.issuing_date_from:type_name -> google.type.Date
+	90,  // 64: invora.billing.invoices.v2.DataExportInvoiceFiltersInput.issuing_date_to:type_name -> google.type.Date
+	78,  // 65: invora.billing.invoices.v2.DataExportInvoiceFiltersInput.payment_status:type_name -> invora.billing.common.v2.InvoicePaymentStatusType
+	76,  // 66: invora.billing.invoices.v2.DataExportInvoiceFiltersInput.status:type_name -> invora.billing.common.v2.InvoiceStatusType
+	57,  // 67: invora.billing.invoices.v2.CreateDataExportRequest.filters:type_name -> invora.billing.invoices.v2.DataExportInvoiceFiltersInput
+	91,  // 68: invora.billing.invoices.v2.CreateDataExportRequest.format:type_name -> invora.billing.common.v2.DataExportFormatType
+	0,   // 69: invora.billing.invoices.v2.CreateDataExportRequest.resource_type:type_name -> invora.billing.invoices.v2.InvoiceExportType
+	92,  // 70: invora.billing.invoices.v2.CreateDataExportResponse.data_export:type_name -> invora.billing.common.v2.DataExport
+	93,  // 71: invora.billing.invoices.v2.ListCustomSectionsResponse.items:type_name -> invora.billing.common.v2.InvoiceCustomSection
+	81,  // 72: invora.billing.invoices.v2.GetCustomSectionRequest.read_mask:type_name -> google.protobuf.FieldMask
+	82,  // 73: invora.billing.invoices.v2.GetCustomSectionRequest.view:type_name -> invora.billing.common.v2.View
+	93,  // 74: invora.billing.invoices.v2.GetCustomSectionResponse.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSection
+	93,  // 75: invora.billing.invoices.v2.CreateCustomSectionResponse.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSection
+	81,  // 76: invora.billing.invoices.v2.UpdateCustomSectionRequest.update_mask:type_name -> google.protobuf.FieldMask
+	93,  // 77: invora.billing.invoices.v2.UpdateCustomSectionResponse.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSection
+	10,  // 78: invora.billing.invoices.v2.InvoicesService.List:input_type -> invora.billing.invoices.v2.ListRequest
+	12,  // 79: invora.billing.invoices.v2.InvoicesService.Get:input_type -> invora.billing.invoices.v2.GetRequest
+	16,  // 80: invora.billing.invoices.v2.InvoicesService.Create:input_type -> invora.billing.invoices.v2.CreateRequest
+	19,  // 81: invora.billing.invoices.v2.InvoicesService.Update:input_type -> invora.billing.invoices.v2.UpdateRequest
+	14,  // 82: invora.billing.invoices.v2.InvoicesService.CustomerInvoices:input_type -> invora.billing.invoices.v2.CustomerInvoicesRequest
+	22,  // 83: invora.billing.invoices.v2.InvoicesService.FetchDraftInvoiceTaxes:input_type -> invora.billing.invoices.v2.FetchDraftInvoiceTaxesRequest
+	26,  // 84: invora.billing.invoices.v2.InvoicesService.Finalize:input_type -> invora.billing.invoices.v2.FinalizeRequest
+	28,  // 85: invora.billing.invoices.v2.InvoicesService.FinalizeAllInvoices:input_type -> invora.billing.invoices.v2.FinalizeAllInvoicesRequest
+	30,  // 86: invora.billing.invoices.v2.InvoicesService.VoidInvoice:input_type -> invora.billing.invoices.v2.VoidInvoiceRequest
+	32,  // 87: invora.billing.invoices.v2.InvoicesService.LoseInvoiceDispute:input_type -> invora.billing.invoices.v2.LoseInvoiceDisputeRequest
+	34,  // 88: invora.billing.invoices.v2.InvoicesService.RefreshInvoice:input_type -> invora.billing.invoices.v2.RefreshInvoiceRequest
+	37,  // 89: invora.billing.invoices.v2.InvoicesService.RegenerateFromVoided:input_type -> invora.billing.invoices.v2.RegenerateFromVoidedRequest
+	39,  // 90: invora.billing.invoices.v2.InvoicesService.ResendInvoiceEmail:input_type -> invora.billing.invoices.v2.ResendInvoiceEmailRequest
+	41,  // 91: invora.billing.invoices.v2.InvoicesService.RetryInvoice:input_type -> invora.billing.invoices.v2.RetryInvoiceRequest
+	43,  // 92: invora.billing.invoices.v2.InvoicesService.RetryInvoicePayment:input_type -> invora.billing.invoices.v2.RetryInvoicePaymentRequest
+	45,  // 93: invora.billing.invoices.v2.InvoicesService.RetryAllInvoices:input_type -> invora.billing.invoices.v2.RetryAllInvoicesRequest
+	47,  // 94: invora.billing.invoices.v2.InvoicesService.RetryAllInvoicePayments:input_type -> invora.billing.invoices.v2.RetryAllInvoicePaymentsRequest
+	49,  // 95: invora.billing.invoices.v2.InvoicesService.RetryTaxProviderVoiding:input_type -> invora.billing.invoices.v2.RetryTaxProviderVoidingRequest
+	51,  // 96: invora.billing.invoices.v2.InvoicesService.DownloadInvoice:input_type -> invora.billing.invoices.v2.DownloadInvoiceRequest
+	53,  // 97: invora.billing.invoices.v2.InvoicesService.DownloadInvoiceXml:input_type -> invora.billing.invoices.v2.DownloadInvoiceXmlRequest
+	55,  // 98: invora.billing.invoices.v2.InvoicesService.DownloadCustomerPortalInvoice:input_type -> invora.billing.invoices.v2.DownloadCustomerPortalInvoiceRequest
+	58,  // 99: invora.billing.invoices.v2.InvoicesService.CreateDataExport:input_type -> invora.billing.invoices.v2.CreateDataExportRequest
+	60,  // 100: invora.billing.invoices.v2.InvoicesService.SyncIntegrationInvoice:input_type -> invora.billing.invoices.v2.SyncIntegrationInvoiceRequest
+	62,  // 101: invora.billing.invoices.v2.InvoicesService.SyncHubspotIntegrationInvoice:input_type -> invora.billing.invoices.v2.SyncHubspotIntegrationInvoiceRequest
+	64,  // 102: invora.billing.invoices.v2.InvoicesService.SyncSalesforceInvoice:input_type -> invora.billing.invoices.v2.SyncSalesforceInvoiceRequest
+	66,  // 103: invora.billing.invoices.v2.InvoicesService.ListCustomSections:input_type -> invora.billing.invoices.v2.ListCustomSectionsRequest
+	68,  // 104: invora.billing.invoices.v2.InvoicesService.GetCustomSection:input_type -> invora.billing.invoices.v2.GetCustomSectionRequest
+	70,  // 105: invora.billing.invoices.v2.InvoicesService.CreateCustomSection:input_type -> invora.billing.invoices.v2.CreateCustomSectionRequest
+	72,  // 106: invora.billing.invoices.v2.InvoicesService.UpdateCustomSection:input_type -> invora.billing.invoices.v2.UpdateCustomSectionRequest
+	74,  // 107: invora.billing.invoices.v2.InvoicesService.DeleteCustomSection:input_type -> invora.billing.invoices.v2.DeleteCustomSectionRequest
+	11,  // 108: invora.billing.invoices.v2.InvoicesService.List:output_type -> invora.billing.invoices.v2.ListResponse
+	13,  // 109: invora.billing.invoices.v2.InvoicesService.Get:output_type -> invora.billing.invoices.v2.GetResponse
+	17,  // 110: invora.billing.invoices.v2.InvoicesService.Create:output_type -> invora.billing.invoices.v2.CreateResponse
+	20,  // 111: invora.billing.invoices.v2.InvoicesService.Update:output_type -> invora.billing.invoices.v2.UpdateResponse
+	15,  // 112: invora.billing.invoices.v2.InvoicesService.CustomerInvoices:output_type -> invora.billing.invoices.v2.CustomerInvoicesResponse
+	23,  // 113: invora.billing.invoices.v2.InvoicesService.FetchDraftInvoiceTaxes:output_type -> invora.billing.invoices.v2.FetchDraftInvoiceTaxesResponse
+	27,  // 114: invora.billing.invoices.v2.InvoicesService.Finalize:output_type -> invora.billing.invoices.v2.FinalizeResponse
+	29,  // 115: invora.billing.invoices.v2.InvoicesService.FinalizeAllInvoices:output_type -> invora.billing.invoices.v2.FinalizeAllInvoicesResponse
+	31,  // 116: invora.billing.invoices.v2.InvoicesService.VoidInvoice:output_type -> invora.billing.invoices.v2.VoidInvoiceResponse
+	33,  // 117: invora.billing.invoices.v2.InvoicesService.LoseInvoiceDispute:output_type -> invora.billing.invoices.v2.LoseInvoiceDisputeResponse
+	35,  // 118: invora.billing.invoices.v2.InvoicesService.RefreshInvoice:output_type -> invora.billing.invoices.v2.RefreshInvoiceResponse
+	38,  // 119: invora.billing.invoices.v2.InvoicesService.RegenerateFromVoided:output_type -> invora.billing.invoices.v2.RegenerateFromVoidedResponse
+	40,  // 120: invora.billing.invoices.v2.InvoicesService.ResendInvoiceEmail:output_type -> invora.billing.invoices.v2.ResendInvoiceEmailResponse
+	42,  // 121: invora.billing.invoices.v2.InvoicesService.RetryInvoice:output_type -> invora.billing.invoices.v2.RetryInvoiceResponse
+	44,  // 122: invora.billing.invoices.v2.InvoicesService.RetryInvoicePayment:output_type -> invora.billing.invoices.v2.RetryInvoicePaymentResponse
+	46,  // 123: invora.billing.invoices.v2.InvoicesService.RetryAllInvoices:output_type -> invora.billing.invoices.v2.RetryAllInvoicesResponse
+	48,  // 124: invora.billing.invoices.v2.InvoicesService.RetryAllInvoicePayments:output_type -> invora.billing.invoices.v2.RetryAllInvoicePaymentsResponse
+	50,  // 125: invora.billing.invoices.v2.InvoicesService.RetryTaxProviderVoiding:output_type -> invora.billing.invoices.v2.RetryTaxProviderVoidingResponse
+	52,  // 126: invora.billing.invoices.v2.InvoicesService.DownloadInvoice:output_type -> invora.billing.invoices.v2.DownloadInvoiceResponse
+	54,  // 127: invora.billing.invoices.v2.InvoicesService.DownloadInvoiceXml:output_type -> invora.billing.invoices.v2.DownloadInvoiceXmlResponse
+	56,  // 128: invora.billing.invoices.v2.InvoicesService.DownloadCustomerPortalInvoice:output_type -> invora.billing.invoices.v2.DownloadCustomerPortalInvoiceResponse
+	59,  // 129: invora.billing.invoices.v2.InvoicesService.CreateDataExport:output_type -> invora.billing.invoices.v2.CreateDataExportResponse
+	61,  // 130: invora.billing.invoices.v2.InvoicesService.SyncIntegrationInvoice:output_type -> invora.billing.invoices.v2.SyncIntegrationInvoiceResponse
+	63,  // 131: invora.billing.invoices.v2.InvoicesService.SyncHubspotIntegrationInvoice:output_type -> invora.billing.invoices.v2.SyncHubspotIntegrationInvoiceResponse
+	65,  // 132: invora.billing.invoices.v2.InvoicesService.SyncSalesforceInvoice:output_type -> invora.billing.invoices.v2.SyncSalesforceInvoiceResponse
+	67,  // 133: invora.billing.invoices.v2.InvoicesService.ListCustomSections:output_type -> invora.billing.invoices.v2.ListCustomSectionsResponse
+	69,  // 134: invora.billing.invoices.v2.InvoicesService.GetCustomSection:output_type -> invora.billing.invoices.v2.GetCustomSectionResponse
+	71,  // 135: invora.billing.invoices.v2.InvoicesService.CreateCustomSection:output_type -> invora.billing.invoices.v2.CreateCustomSectionResponse
+	73,  // 136: invora.billing.invoices.v2.InvoicesService.UpdateCustomSection:output_type -> invora.billing.invoices.v2.UpdateCustomSectionResponse
+	75,  // 137: invora.billing.invoices.v2.InvoicesService.DeleteCustomSection:output_type -> invora.billing.invoices.v2.DeleteCustomSectionResponse
+	108, // [108:138] is the sub-list for method output_type
+	78,  // [78:108] is the sub-list for method input_type
+	78,  // [78:78] is the sub-list for extension type_name
+	78,  // [78:78] is the sub-list for extension extendee
+	0,   // [0:78] is the sub-list for field type_name
 }
 
 func init() { file_invora_billing_invoices_v2_service_proto_init() }
@@ -6671,37 +4890,39 @@ func file_invora_billing_invoices_v2_service_proto_init() {
 	if File_invora_billing_invoices_v2_service_proto != nil {
 		return
 	}
-	file_invora_billing_invoices_v2_service_proto_msgTypes[4].OneofWrappers = []any{
+	file_invora_billing_invoices_v2_service_proto_msgTypes[1].OneofWrappers = []any{
 		(*ListFilterPart_CustomerId)(nil),
 		(*ListFilterPart_Status)(nil),
 	}
-	file_invora_billing_invoices_v2_service_proto_msgTypes[6].OneofWrappers = []any{
+	file_invora_billing_invoices_v2_service_proto_msgTypes[7].OneofWrappers = []any{
 		(*ListSortRule_CreatedAt)(nil),
 	}
+	file_invora_billing_invoices_v2_service_proto_msgTypes[9].OneofWrappers = []any{}
+	file_invora_billing_invoices_v2_service_proto_msgTypes[13].OneofWrappers = []any{}
+	file_invora_billing_invoices_v2_service_proto_msgTypes[14].OneofWrappers = []any{}
+	file_invora_billing_invoices_v2_service_proto_msgTypes[16].OneofWrappers = []any{}
+	file_invora_billing_invoices_v2_service_proto_msgTypes[17].OneofWrappers = []any{}
+	file_invora_billing_invoices_v2_service_proto_msgTypes[19].OneofWrappers = []any{}
+	file_invora_billing_invoices_v2_service_proto_msgTypes[20].OneofWrappers = []any{}
+	file_invora_billing_invoices_v2_service_proto_msgTypes[22].OneofWrappers = []any{}
+	file_invora_billing_invoices_v2_service_proto_msgTypes[23].OneofWrappers = []any{}
+	file_invora_billing_invoices_v2_service_proto_msgTypes[28].OneofWrappers = []any{}
+	file_invora_billing_invoices_v2_service_proto_msgTypes[34].OneofWrappers = []any{}
+	file_invora_billing_invoices_v2_service_proto_msgTypes[41].OneofWrappers = []any{}
+	file_invora_billing_invoices_v2_service_proto_msgTypes[55].OneofWrappers = []any{}
+	file_invora_billing_invoices_v2_service_proto_msgTypes[59].OneofWrappers = []any{}
+	file_invora_billing_invoices_v2_service_proto_msgTypes[61].OneofWrappers = []any{}
+	file_invora_billing_invoices_v2_service_proto_msgTypes[63].OneofWrappers = []any{}
+	file_invora_billing_invoices_v2_service_proto_msgTypes[65].OneofWrappers = []any{}
 	file_invora_billing_invoices_v2_service_proto_msgTypes[68].OneofWrappers = []any{}
-	file_invora_billing_invoices_v2_service_proto_msgTypes[69].OneofWrappers = []any{}
 	file_invora_billing_invoices_v2_service_proto_msgTypes[70].OneofWrappers = []any{}
-	file_invora_billing_invoices_v2_service_proto_msgTypes[71].OneofWrappers = []any{}
-	file_invora_billing_invoices_v2_service_proto_msgTypes[73].OneofWrappers = []any{}
-	file_invora_billing_invoices_v2_service_proto_msgTypes[75].OneofWrappers = []any{}
-	file_invora_billing_invoices_v2_service_proto_msgTypes[77].OneofWrappers = []any{}
-	file_invora_billing_invoices_v2_service_proto_msgTypes[79].OneofWrappers = []any{}
-	file_invora_billing_invoices_v2_service_proto_msgTypes[85].OneofWrappers = []any{}
-	file_invora_billing_invoices_v2_service_proto_msgTypes[91].OneofWrappers = []any{}
-	file_invora_billing_invoices_v2_service_proto_msgTypes[92].OneofWrappers = []any{}
-	file_invora_billing_invoices_v2_service_proto_msgTypes[94].OneofWrappers = []any{}
-	file_invora_billing_invoices_v2_service_proto_msgTypes[95].OneofWrappers = []any{}
-	file_invora_billing_invoices_v2_service_proto_msgTypes[100].OneofWrappers = []any{}
-	file_invora_billing_invoices_v2_service_proto_msgTypes[102].OneofWrappers = []any{}
-	file_invora_billing_invoices_v2_service_proto_msgTypes[103].OneofWrappers = []any{}
-	file_invora_billing_invoices_v2_service_proto_msgTypes[104].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_billing_invoices_v2_service_proto_rawDesc), len(file_invora_billing_invoices_v2_service_proto_rawDesc)),
-			NumEnums:      3,
-			NumMessages:   105,
+			NumEnums:      2,
+			NumMessages:   74,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

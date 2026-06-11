@@ -32,7 +32,6 @@ type orgResourceContext struct {
 // instanceAdminContext holds super-admin gateway access for billing instance operations.
 type instanceAdminContext struct {
 	instance *billingv1alpha1.InvoraBillingInstance
-	admin    *billingclient.AdminClient
 	conn     *grpc.ClientConn
 	token    string
 }

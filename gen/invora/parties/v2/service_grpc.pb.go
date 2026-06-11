@@ -19,15 +19,17 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	PartiesService_List_FullMethodName                  = "/invora.parties.v2.PartiesService/List"
-	PartiesService_Get_FullMethodName                   = "/invora.parties.v2.PartiesService/Get"
-	PartiesService_Create_FullMethodName                = "/invora.parties.v2.PartiesService/Create"
-	PartiesService_Update_FullMethodName                = "/invora.parties.v2.PartiesService/Update"
-	PartiesService_Delete_FullMethodName                = "/invora.parties.v2.PartiesService/Delete"
-	PartiesService_Import_FullMethodName                = "/invora.parties.v2.PartiesService/Import"
-	PartiesService_Export_FullMethodName                = "/invora.parties.v2.PartiesService/Export"
-	PartiesService_LinkBillingCustomer_FullMethodName   = "/invora.parties.v2.PartiesService/LinkBillingCustomer"
-	PartiesService_UnlinkBillingCustomer_FullMethodName = "/invora.parties.v2.PartiesService/UnlinkBillingCustomer"
+	PartiesService_List_FullMethodName                    = "/invora.parties.v2.PartiesService/List"
+	PartiesService_Get_FullMethodName                     = "/invora.parties.v2.PartiesService/Get"
+	PartiesService_Create_FullMethodName                  = "/invora.parties.v2.PartiesService/Create"
+	PartiesService_Update_FullMethodName                  = "/invora.parties.v2.PartiesService/Update"
+	PartiesService_Delete_FullMethodName                  = "/invora.parties.v2.PartiesService/Delete"
+	PartiesService_Import_FullMethodName                  = "/invora.parties.v2.PartiesService/Import"
+	PartiesService_Export_FullMethodName                  = "/invora.parties.v2.PartiesService/Export"
+	PartiesService_LinkBillingCustomer_FullMethodName     = "/invora.parties.v2.PartiesService/LinkBillingCustomer"
+	PartiesService_UnlinkBillingCustomer_FullMethodName   = "/invora.parties.v2.PartiesService/UnlinkBillingCustomer"
+	PartiesService_BulkUpdateBillingConfig_FullMethodName = "/invora.parties.v2.PartiesService/BulkUpdateBillingConfig"
+	PartiesService_ListDunningCandidates_FullMethodName   = "/invora.parties.v2.PartiesService/ListDunningCandidates"
 )
 
 // PartiesServiceClient is the client API for PartiesService service.
@@ -56,6 +58,15 @@ type PartiesServiceClient interface {
 	LinkBillingCustomer(ctx context.Context, in *LinkBillingCustomerRequest, opts ...grpc.CallOption) (*LinkBillingCustomerResponse, error)
 	// Unlink a party from its billing customer.
 	UnlinkBillingCustomer(ctx context.Context, in *UnlinkBillingCustomerRequest, opts ...grpc.CallOption) (*UnlinkBillingCustomerResponse, error)
+	// Update the billing configuration of many parties in a single call — for
+	// example, to reset dunning state or change billing settings in bulk. Each
+	// item specifies the party and a field mask of the fields to update.
+	BulkUpdateBillingConfig(ctx context.Context, in *BulkUpdateBillingConfigRequest, opts ...grpc.CallOption) (*BulkUpdateBillingConfigResponse, error)
+	// Return the keys of customer parties eligible for dunning: not excluded from
+	// dunning, assigned a dunning campaign, and with an attempt count below the
+	// configured threshold. Callers typically intersect the result with their own
+	// set of overdue invoices to decide which customers to process.
+	ListDunningCandidates(ctx context.Context, in *ListDunningCandidatesRequest, opts ...grpc.CallOption) (*ListDunningCandidatesResponse, error)
 }
 
 type partiesServiceClient struct {
@@ -156,6 +167,26 @@ func (c *partiesServiceClient) UnlinkBillingCustomer(ctx context.Context, in *Un
 	return out, nil
 }
 
+func (c *partiesServiceClient) BulkUpdateBillingConfig(ctx context.Context, in *BulkUpdateBillingConfigRequest, opts ...grpc.CallOption) (*BulkUpdateBillingConfigResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BulkUpdateBillingConfigResponse)
+	err := c.cc.Invoke(ctx, PartiesService_BulkUpdateBillingConfig_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *partiesServiceClient) ListDunningCandidates(ctx context.Context, in *ListDunningCandidatesRequest, opts ...grpc.CallOption) (*ListDunningCandidatesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListDunningCandidatesResponse)
+	err := c.cc.Invoke(ctx, PartiesService_ListDunningCandidates_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PartiesServiceServer is the server API for PartiesService service.
 // All implementations must embed UnimplementedPartiesServiceServer
 // for forward compatibility.
@@ -182,6 +213,15 @@ type PartiesServiceServer interface {
 	LinkBillingCustomer(context.Context, *LinkBillingCustomerRequest) (*LinkBillingCustomerResponse, error)
 	// Unlink a party from its billing customer.
 	UnlinkBillingCustomer(context.Context, *UnlinkBillingCustomerRequest) (*UnlinkBillingCustomerResponse, error)
+	// Update the billing configuration of many parties in a single call — for
+	// example, to reset dunning state or change billing settings in bulk. Each
+	// item specifies the party and a field mask of the fields to update.
+	BulkUpdateBillingConfig(context.Context, *BulkUpdateBillingConfigRequest) (*BulkUpdateBillingConfigResponse, error)
+	// Return the keys of customer parties eligible for dunning: not excluded from
+	// dunning, assigned a dunning campaign, and with an attempt count below the
+	// configured threshold. Callers typically intersect the result with their own
+	// set of overdue invoices to decide which customers to process.
+	ListDunningCandidates(context.Context, *ListDunningCandidatesRequest) (*ListDunningCandidatesResponse, error)
 	mustEmbedUnimplementedPartiesServiceServer()
 }
 
@@ -218,6 +258,12 @@ func (UnimplementedPartiesServiceServer) LinkBillingCustomer(context.Context, *L
 }
 func (UnimplementedPartiesServiceServer) UnlinkBillingCustomer(context.Context, *UnlinkBillingCustomerRequest) (*UnlinkBillingCustomerResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method UnlinkBillingCustomer not implemented")
+}
+func (UnimplementedPartiesServiceServer) BulkUpdateBillingConfig(context.Context, *BulkUpdateBillingConfigRequest) (*BulkUpdateBillingConfigResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method BulkUpdateBillingConfig not implemented")
+}
+func (UnimplementedPartiesServiceServer) ListDunningCandidates(context.Context, *ListDunningCandidatesRequest) (*ListDunningCandidatesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListDunningCandidates not implemented")
 }
 func (UnimplementedPartiesServiceServer) mustEmbedUnimplementedPartiesServiceServer() {}
 func (UnimplementedPartiesServiceServer) testEmbeddedByValue()                        {}
@@ -402,6 +448,42 @@ func _PartiesService_UnlinkBillingCustomer_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PartiesService_BulkUpdateBillingConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BulkUpdateBillingConfigRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PartiesServiceServer).BulkUpdateBillingConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PartiesService_BulkUpdateBillingConfig_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PartiesServiceServer).BulkUpdateBillingConfig(ctx, req.(*BulkUpdateBillingConfigRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PartiesService_ListDunningCandidates_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListDunningCandidatesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PartiesServiceServer).ListDunningCandidates(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PartiesService_ListDunningCandidates_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PartiesServiceServer).ListDunningCandidates(ctx, req.(*ListDunningCandidatesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PartiesService_ServiceDesc is the grpc.ServiceDesc for PartiesService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -444,6 +526,14 @@ var PartiesService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UnlinkBillingCustomer",
 			Handler:    _PartiesService_UnlinkBillingCustomer_Handler,
+		},
+		{
+			MethodName: "BulkUpdateBillingConfig",
+			Handler:    _PartiesService_BulkUpdateBillingConfig_Handler,
+		},
+		{
+			MethodName: "ListDunningCandidates",
+			Handler:    _PartiesService_ListDunningCandidates_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

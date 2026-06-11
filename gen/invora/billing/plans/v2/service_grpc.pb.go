@@ -19,263 +19,669 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	PlanService_Create_FullMethodName = "/invora.billing.plans.v2.PlanService/Create"
-	PlanService_Get_FullMethodName    = "/invora.billing.plans.v2.PlanService/Get"
-	PlanService_List_FullMethodName   = "/invora.billing.plans.v2.PlanService/List"
-	PlanService_Update_FullMethodName = "/invora.billing.plans.v2.PlanService/Update"
-	PlanService_Delete_FullMethodName = "/invora.billing.plans.v2.PlanService/Delete"
+	PlansService_List_FullMethodName          = "/invora.billing.plans.v2.PlansService/List"
+	PlansService_Get_FullMethodName           = "/invora.billing.plans.v2.PlansService/Get"
+	PlansService_Create_FullMethodName        = "/invora.billing.plans.v2.PlansService/Create"
+	PlansService_Update_FullMethodName        = "/invora.billing.plans.v2.PlansService/Update"
+	PlansService_Delete_FullMethodName        = "/invora.billing.plans.v2.PlansService/Delete"
+	PlansService_GetAddOn_FullMethodName      = "/invora.billing.plans.v2.PlansService/GetAddOn"
+	PlansService_ListAddOns_FullMethodName    = "/invora.billing.plans.v2.PlansService/ListAddOns"
+	PlansService_CreateAddOn_FullMethodName   = "/invora.billing.plans.v2.PlansService/CreateAddOn"
+	PlansService_UpdateAddOn_FullMethodName   = "/invora.billing.plans.v2.PlansService/UpdateAddOn"
+	PlansService_DeleteAddOn_FullMethodName   = "/invora.billing.plans.v2.PlansService/DeleteAddOn"
+	PlansService_GetFeature_FullMethodName    = "/invora.billing.plans.v2.PlansService/GetFeature"
+	PlansService_ListFeatures_FullMethodName  = "/invora.billing.plans.v2.PlansService/ListFeatures"
+	PlansService_CreateFeature_FullMethodName = "/invora.billing.plans.v2.PlansService/CreateFeature"
+	PlansService_UpdateFeature_FullMethodName = "/invora.billing.plans.v2.PlansService/UpdateFeature"
+	PlansService_DeleteFeature_FullMethodName = "/invora.billing.plans.v2.PlansService/DeleteFeature"
 )
 
-// PlanServiceClient is the client API for PlanService service.
+// PlansServiceClient is the client API for PlansService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type PlanServiceClient interface {
-	// Creates a new Plan
-	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
-	// Query a single plan of an organization
-	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
-	// Query plans of an organization
+//
+// Manage subscription plans that define pricing, billing intervals,
+// usage-based charges, and entitlements for your customers.
+type PlansServiceClient interface {
+	// List plans with filtering and pagination.
 	List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error)
-	// Updates an existing Plan
+	// Get a single plan by ID.
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
+	// Create a new plan.
+	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
+	// Update an existing plan.
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
-	// Deletes a Plan
+	// Delete a plan.
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
+	// Get a single add-on by ID.
+	GetAddOn(ctx context.Context, in *GetAddOnRequest, opts ...grpc.CallOption) (*GetAddOnResponse, error)
+	// List add-ons with filtering and pagination.
+	ListAddOns(ctx context.Context, in *ListAddOnsRequest, opts ...grpc.CallOption) (*ListAddOnsResponse, error)
+	// Create a new add-on.
+	CreateAddOn(ctx context.Context, in *CreateAddOnRequest, opts ...grpc.CallOption) (*CreateAddOnResponse, error)
+	// Update an existing add-on.
+	UpdateAddOn(ctx context.Context, in *UpdateAddOnRequest, opts ...grpc.CallOption) (*UpdateAddOnResponse, error)
+	// Delete an add-on.
+	DeleteAddOn(ctx context.Context, in *DeleteAddOnRequest, opts ...grpc.CallOption) (*DeleteAddOnResponse, error)
+	// Get a single feature by ID or code.
+	GetFeature(ctx context.Context, in *GetFeatureRequest, opts ...grpc.CallOption) (*GetFeatureResponse, error)
+	// List features with filtering and pagination.
+	ListFeatures(ctx context.Context, in *ListFeaturesRequest, opts ...grpc.CallOption) (*ListFeaturesResponse, error)
+	// Create a new feature.
+	CreateFeature(ctx context.Context, in *CreateFeatureRequest, opts ...grpc.CallOption) (*CreateFeatureResponse, error)
+	// Update an existing feature.
+	UpdateFeature(ctx context.Context, in *UpdateFeatureRequest, opts ...grpc.CallOption) (*UpdateFeatureResponse, error)
+	// Delete a feature.
+	DeleteFeature(ctx context.Context, in *DeleteFeatureRequest, opts ...grpc.CallOption) (*DeleteFeatureResponse, error)
 }
 
-type planServiceClient struct {
+type plansServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewPlanServiceClient(cc grpc.ClientConnInterface) PlanServiceClient {
-	return &planServiceClient{cc}
+func NewPlansServiceClient(cc grpc.ClientConnInterface) PlansServiceClient {
+	return &plansServiceClient{cc}
 }
 
-func (c *planServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateResponse)
-	err := c.cc.Invoke(ctx, PlanService_Create_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *planServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetResponse)
-	err := c.cc.Invoke(ctx, PlanService_Get_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *planServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
+func (c *plansServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListResponse)
-	err := c.cc.Invoke(ctx, PlanService_List_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, PlansService_List_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *planServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
+func (c *plansServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetResponse)
+	err := c.cc.Invoke(ctx, PlansService_Get_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *plansServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateResponse)
+	err := c.cc.Invoke(ctx, PlansService_Create_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *plansServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UpdateResponse)
-	err := c.cc.Invoke(ctx, PlanService_Update_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, PlansService_Update_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *planServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
+func (c *plansServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DeleteResponse)
-	err := c.cc.Invoke(ctx, PlanService_Delete_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, PlansService_Delete_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// PlanServiceServer is the server API for PlanService service.
-// All implementations must embed UnimplementedPlanServiceServer
-// for forward compatibility.
-type PlanServiceServer interface {
-	// Creates a new Plan
-	Create(context.Context, *CreateRequest) (*CreateResponse, error)
-	// Query a single plan of an organization
-	Get(context.Context, *GetRequest) (*GetResponse, error)
-	// Query plans of an organization
-	List(context.Context, *ListRequest) (*ListResponse, error)
-	// Updates an existing Plan
-	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
-	// Deletes a Plan
-	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
-	mustEmbedUnimplementedPlanServiceServer()
+func (c *plansServiceClient) GetAddOn(ctx context.Context, in *GetAddOnRequest, opts ...grpc.CallOption) (*GetAddOnResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetAddOnResponse)
+	err := c.cc.Invoke(ctx, PlansService_GetAddOn_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// UnimplementedPlanServiceServer must be embedded to have
+func (c *plansServiceClient) ListAddOns(ctx context.Context, in *ListAddOnsRequest, opts ...grpc.CallOption) (*ListAddOnsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListAddOnsResponse)
+	err := c.cc.Invoke(ctx, PlansService_ListAddOns_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *plansServiceClient) CreateAddOn(ctx context.Context, in *CreateAddOnRequest, opts ...grpc.CallOption) (*CreateAddOnResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateAddOnResponse)
+	err := c.cc.Invoke(ctx, PlansService_CreateAddOn_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *plansServiceClient) UpdateAddOn(ctx context.Context, in *UpdateAddOnRequest, opts ...grpc.CallOption) (*UpdateAddOnResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateAddOnResponse)
+	err := c.cc.Invoke(ctx, PlansService_UpdateAddOn_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *plansServiceClient) DeleteAddOn(ctx context.Context, in *DeleteAddOnRequest, opts ...grpc.CallOption) (*DeleteAddOnResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteAddOnResponse)
+	err := c.cc.Invoke(ctx, PlansService_DeleteAddOn_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *plansServiceClient) GetFeature(ctx context.Context, in *GetFeatureRequest, opts ...grpc.CallOption) (*GetFeatureResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetFeatureResponse)
+	err := c.cc.Invoke(ctx, PlansService_GetFeature_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *plansServiceClient) ListFeatures(ctx context.Context, in *ListFeaturesRequest, opts ...grpc.CallOption) (*ListFeaturesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListFeaturesResponse)
+	err := c.cc.Invoke(ctx, PlansService_ListFeatures_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *plansServiceClient) CreateFeature(ctx context.Context, in *CreateFeatureRequest, opts ...grpc.CallOption) (*CreateFeatureResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateFeatureResponse)
+	err := c.cc.Invoke(ctx, PlansService_CreateFeature_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *plansServiceClient) UpdateFeature(ctx context.Context, in *UpdateFeatureRequest, opts ...grpc.CallOption) (*UpdateFeatureResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateFeatureResponse)
+	err := c.cc.Invoke(ctx, PlansService_UpdateFeature_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *plansServiceClient) DeleteFeature(ctx context.Context, in *DeleteFeatureRequest, opts ...grpc.CallOption) (*DeleteFeatureResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteFeatureResponse)
+	err := c.cc.Invoke(ctx, PlansService_DeleteFeature_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// PlansServiceServer is the server API for PlansService service.
+// All implementations must embed UnimplementedPlansServiceServer
+// for forward compatibility.
+//
+// Manage subscription plans that define pricing, billing intervals,
+// usage-based charges, and entitlements for your customers.
+type PlansServiceServer interface {
+	// List plans with filtering and pagination.
+	List(context.Context, *ListRequest) (*ListResponse, error)
+	// Get a single plan by ID.
+	Get(context.Context, *GetRequest) (*GetResponse, error)
+	// Create a new plan.
+	Create(context.Context, *CreateRequest) (*CreateResponse, error)
+	// Update an existing plan.
+	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
+	// Delete a plan.
+	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
+	// Get a single add-on by ID.
+	GetAddOn(context.Context, *GetAddOnRequest) (*GetAddOnResponse, error)
+	// List add-ons with filtering and pagination.
+	ListAddOns(context.Context, *ListAddOnsRequest) (*ListAddOnsResponse, error)
+	// Create a new add-on.
+	CreateAddOn(context.Context, *CreateAddOnRequest) (*CreateAddOnResponse, error)
+	// Update an existing add-on.
+	UpdateAddOn(context.Context, *UpdateAddOnRequest) (*UpdateAddOnResponse, error)
+	// Delete an add-on.
+	DeleteAddOn(context.Context, *DeleteAddOnRequest) (*DeleteAddOnResponse, error)
+	// Get a single feature by ID or code.
+	GetFeature(context.Context, *GetFeatureRequest) (*GetFeatureResponse, error)
+	// List features with filtering and pagination.
+	ListFeatures(context.Context, *ListFeaturesRequest) (*ListFeaturesResponse, error)
+	// Create a new feature.
+	CreateFeature(context.Context, *CreateFeatureRequest) (*CreateFeatureResponse, error)
+	// Update an existing feature.
+	UpdateFeature(context.Context, *UpdateFeatureRequest) (*UpdateFeatureResponse, error)
+	// Delete a feature.
+	DeleteFeature(context.Context, *DeleteFeatureRequest) (*DeleteFeatureResponse, error)
+	mustEmbedUnimplementedPlansServiceServer()
+}
+
+// UnimplementedPlansServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedPlanServiceServer struct{}
+type UnimplementedPlansServiceServer struct{}
 
-func (UnimplementedPlanServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
-}
-func (UnimplementedPlanServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
-}
-func (UnimplementedPlanServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
+func (UnimplementedPlansServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method List not implemented")
 }
-func (UnimplementedPlanServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
+func (UnimplementedPlansServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
+}
+func (UnimplementedPlansServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedPlansServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedPlanServiceServer) Delete(context.Context, *DeleteRequest) (*DeleteResponse, error) {
+func (UnimplementedPlansServiceServer) Delete(context.Context, *DeleteRequest) (*DeleteResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedPlanServiceServer) mustEmbedUnimplementedPlanServiceServer() {}
-func (UnimplementedPlanServiceServer) testEmbeddedByValue()                     {}
+func (UnimplementedPlansServiceServer) GetAddOn(context.Context, *GetAddOnRequest) (*GetAddOnResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetAddOn not implemented")
+}
+func (UnimplementedPlansServiceServer) ListAddOns(context.Context, *ListAddOnsRequest) (*ListAddOnsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListAddOns not implemented")
+}
+func (UnimplementedPlansServiceServer) CreateAddOn(context.Context, *CreateAddOnRequest) (*CreateAddOnResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateAddOn not implemented")
+}
+func (UnimplementedPlansServiceServer) UpdateAddOn(context.Context, *UpdateAddOnRequest) (*UpdateAddOnResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateAddOn not implemented")
+}
+func (UnimplementedPlansServiceServer) DeleteAddOn(context.Context, *DeleteAddOnRequest) (*DeleteAddOnResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteAddOn not implemented")
+}
+func (UnimplementedPlansServiceServer) GetFeature(context.Context, *GetFeatureRequest) (*GetFeatureResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetFeature not implemented")
+}
+func (UnimplementedPlansServiceServer) ListFeatures(context.Context, *ListFeaturesRequest) (*ListFeaturesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListFeatures not implemented")
+}
+func (UnimplementedPlansServiceServer) CreateFeature(context.Context, *CreateFeatureRequest) (*CreateFeatureResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateFeature not implemented")
+}
+func (UnimplementedPlansServiceServer) UpdateFeature(context.Context, *UpdateFeatureRequest) (*UpdateFeatureResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateFeature not implemented")
+}
+func (UnimplementedPlansServiceServer) DeleteFeature(context.Context, *DeleteFeatureRequest) (*DeleteFeatureResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteFeature not implemented")
+}
+func (UnimplementedPlansServiceServer) mustEmbedUnimplementedPlansServiceServer() {}
+func (UnimplementedPlansServiceServer) testEmbeddedByValue()                      {}
 
-// UnsafePlanServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to PlanServiceServer will
+// UnsafePlansServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to PlansServiceServer will
 // result in compilation errors.
-type UnsafePlanServiceServer interface {
-	mustEmbedUnimplementedPlanServiceServer()
+type UnsafePlansServiceServer interface {
+	mustEmbedUnimplementedPlansServiceServer()
 }
 
-func RegisterPlanServiceServer(s grpc.ServiceRegistrar, srv PlanServiceServer) {
-	// If the following call panics, it indicates UnimplementedPlanServiceServer was
+func RegisterPlansServiceServer(s grpc.ServiceRegistrar, srv PlansServiceServer) {
+	// If the following call panics, it indicates UnimplementedPlansServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&PlanService_ServiceDesc, srv)
+	s.RegisterService(&PlansService_ServiceDesc, srv)
 }
 
-func _PlanService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PlanServiceServer).Create(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: PlanService_Create_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlanServiceServer).Create(ctx, req.(*CreateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PlanService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PlanServiceServer).Get(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: PlanService_Get_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlanServiceServer).Get(ctx, req.(*GetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PlanService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PlansService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PlanServiceServer).List(ctx, in)
+		return srv.(PlansServiceServer).List(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PlanService_List_FullMethodName,
+		FullMethod: PlansService_List_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlanServiceServer).List(ctx, req.(*ListRequest))
+		return srv.(PlansServiceServer).List(ctx, req.(*ListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PlanService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PlansService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlansServiceServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PlansService_Get_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlansServiceServer).Get(ctx, req.(*GetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PlansService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlansServiceServer).Create(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PlansService_Create_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlansServiceServer).Create(ctx, req.(*CreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PlansService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PlanServiceServer).Update(ctx, in)
+		return srv.(PlansServiceServer).Update(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PlanService_Update_FullMethodName,
+		FullMethod: PlansService_Update_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlanServiceServer).Update(ctx, req.(*UpdateRequest))
+		return srv.(PlansServiceServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PlanService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PlansService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PlanServiceServer).Delete(ctx, in)
+		return srv.(PlansServiceServer).Delete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PlanService_Delete_FullMethodName,
+		FullMethod: PlansService_Delete_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlanServiceServer).Delete(ctx, req.(*DeleteRequest))
+		return srv.(PlansServiceServer).Delete(ctx, req.(*DeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// PlanService_ServiceDesc is the grpc.ServiceDesc for PlanService service.
+func _PlansService_GetAddOn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAddOnRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlansServiceServer).GetAddOn(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PlansService_GetAddOn_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlansServiceServer).GetAddOn(ctx, req.(*GetAddOnRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PlansService_ListAddOns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAddOnsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlansServiceServer).ListAddOns(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PlansService_ListAddOns_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlansServiceServer).ListAddOns(ctx, req.(*ListAddOnsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PlansService_CreateAddOn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateAddOnRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlansServiceServer).CreateAddOn(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PlansService_CreateAddOn_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlansServiceServer).CreateAddOn(ctx, req.(*CreateAddOnRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PlansService_UpdateAddOn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateAddOnRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlansServiceServer).UpdateAddOn(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PlansService_UpdateAddOn_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlansServiceServer).UpdateAddOn(ctx, req.(*UpdateAddOnRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PlansService_DeleteAddOn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAddOnRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlansServiceServer).DeleteAddOn(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PlansService_DeleteAddOn_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlansServiceServer).DeleteAddOn(ctx, req.(*DeleteAddOnRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PlansService_GetFeature_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFeatureRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlansServiceServer).GetFeature(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PlansService_GetFeature_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlansServiceServer).GetFeature(ctx, req.(*GetFeatureRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PlansService_ListFeatures_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListFeaturesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlansServiceServer).ListFeatures(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PlansService_ListFeatures_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlansServiceServer).ListFeatures(ctx, req.(*ListFeaturesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PlansService_CreateFeature_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateFeatureRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlansServiceServer).CreateFeature(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PlansService_CreateFeature_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlansServiceServer).CreateFeature(ctx, req.(*CreateFeatureRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PlansService_UpdateFeature_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateFeatureRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlansServiceServer).UpdateFeature(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PlansService_UpdateFeature_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlansServiceServer).UpdateFeature(ctx, req.(*UpdateFeatureRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PlansService_DeleteFeature_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteFeatureRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlansServiceServer).DeleteFeature(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PlansService_DeleteFeature_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlansServiceServer).DeleteFeature(ctx, req.(*DeleteFeatureRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// PlansService_ServiceDesc is the grpc.ServiceDesc for PlansService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var PlanService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "invora.billing.plans.v2.PlanService",
-	HandlerType: (*PlanServiceServer)(nil),
+var PlansService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "invora.billing.plans.v2.PlansService",
+	HandlerType: (*PlansServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Create",
-			Handler:    _PlanService_Create_Handler,
+			MethodName: "List",
+			Handler:    _PlansService_List_Handler,
 		},
 		{
 			MethodName: "Get",
-			Handler:    _PlanService_Get_Handler,
+			Handler:    _PlansService_Get_Handler,
 		},
 		{
-			MethodName: "List",
-			Handler:    _PlanService_List_Handler,
+			MethodName: "Create",
+			Handler:    _PlansService_Create_Handler,
 		},
 		{
 			MethodName: "Update",
-			Handler:    _PlanService_Update_Handler,
+			Handler:    _PlansService_Update_Handler,
 		},
 		{
 			MethodName: "Delete",
-			Handler:    _PlanService_Delete_Handler,
+			Handler:    _PlansService_Delete_Handler,
+		},
+		{
+			MethodName: "GetAddOn",
+			Handler:    _PlansService_GetAddOn_Handler,
+		},
+		{
+			MethodName: "ListAddOns",
+			Handler:    _PlansService_ListAddOns_Handler,
+		},
+		{
+			MethodName: "CreateAddOn",
+			Handler:    _PlansService_CreateAddOn_Handler,
+		},
+		{
+			MethodName: "UpdateAddOn",
+			Handler:    _PlansService_UpdateAddOn_Handler,
+		},
+		{
+			MethodName: "DeleteAddOn",
+			Handler:    _PlansService_DeleteAddOn_Handler,
+		},
+		{
+			MethodName: "GetFeature",
+			Handler:    _PlansService_GetFeature_Handler,
+		},
+		{
+			MethodName: "ListFeatures",
+			Handler:    _PlansService_ListFeatures_Handler,
+		},
+		{
+			MethodName: "CreateFeature",
+			Handler:    _PlansService_CreateFeature_Handler,
+		},
+		{
+			MethodName: "UpdateFeature",
+			Handler:    _PlansService_UpdateFeature_Handler,
+		},
+		{
+			MethodName: "DeleteFeature",
+			Handler:    _PlansService_DeleteFeature_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

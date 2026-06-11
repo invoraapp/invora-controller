@@ -14,7 +14,6 @@ import (
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
-	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -27,505 +26,20 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Controls response detail level for List and Get operations.
-type View int32
-
-const (
-	View_VIEW_UNSPECIFIED View = 0
-	View_VIEW_BASIC       View = 1
-	View_VIEW_FULL        View = 2
-)
-
-// Enum value maps for View.
-var (
-	View_name = map[int32]string{
-		0: "VIEW_UNSPECIFIED",
-		1: "VIEW_BASIC",
-		2: "VIEW_FULL",
-	}
-	View_value = map[string]int32{
-		"VIEW_UNSPECIFIED": 0,
-		"VIEW_BASIC":       1,
-		"VIEW_FULL":        2,
-	}
-)
-
-func (x View) Enum() *View {
-	p := new(View)
-	*p = x
-	return p
-}
-
-func (x View) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (View) Descriptor() protoreflect.EnumDescriptor {
-	return file_invora_billing_coupons_v2_service_proto_enumTypes[0].Descriptor()
-}
-
-func (View) Type() protoreflect.EnumType {
-	return &file_invora_billing_coupons_v2_service_proto_enumTypes[0]
-}
-
-func (x View) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use View.Descriptor instead.
-func (View) EnumDescriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{0}
-}
-
-type AppliedCouponsRequest struct {
-	state      protoimpl.MessageState `protogen:"open.v1"`
-	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
-	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
-	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.coupons.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *AppliedCouponsRequest) Reset() {
-	*x = AppliedCouponsRequest{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AppliedCouponsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AppliedCouponsRequest) ProtoMessage() {}
-
-func (x *AppliedCouponsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AppliedCouponsRequest.ProtoReflect.Descriptor instead.
-func (*AppliedCouponsRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *AppliedCouponsRequest) GetFilter() *ListFilter {
-	if x != nil {
-		return x.Filter
-	}
-	return nil
-}
-
-func (x *AppliedCouponsRequest) GetSort() *ListSort {
-	if x != nil {
-		return x.Sort
-	}
-	return nil
-}
-
-func (x *AppliedCouponsRequest) GetPagination() *kernel.PaginationInfo {
-	if x != nil {
-		return x.Pagination
-	}
-	return nil
-}
-
-func (x *AppliedCouponsRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *AppliedCouponsRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type AppliedCouponsResponse struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Items          []*v2.AppliedCoupon     `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *AppliedCouponsResponse) Reset() {
-	*x = AppliedCouponsResponse{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AppliedCouponsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AppliedCouponsResponse) ProtoMessage() {}
-
-func (x *AppliedCouponsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AppliedCouponsResponse.ProtoReflect.Descriptor instead.
-func (*AppliedCouponsResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *AppliedCouponsResponse) GetItems() []*v2.AppliedCoupon {
-	if x != nil {
-		return x.Items
-	}
-	return nil
-}
-
-func (x *AppliedCouponsResponse) GetTotalCount() uint64 {
-	if x != nil {
-		return x.TotalCount
-	}
-	return 0
-}
-
-func (x *AppliedCouponsResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
-	}
-	return nil
-}
-
-type ListFilter struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Part          *ListFilterPart        `protobuf:"bytes,1,opt,name=part,proto3" json:"part,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListFilter) Reset() {
-	*x = ListFilter{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListFilter) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListFilter) ProtoMessage() {}
-
-func (x *ListFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListFilter.ProtoReflect.Descriptor instead.
-func (*ListFilter) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *ListFilter) GetPart() *ListFilterPart {
-	if x != nil {
-		return x.Part
-	}
-	return nil
-}
-
-type ListCouponCodeFilter struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	InValues      []string               `protobuf:"bytes,1,rep,name=in_values,json=inValues,proto3" json:"in_values,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListCouponCodeFilter) Reset() {
-	*x = ListCouponCodeFilter{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListCouponCodeFilter) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListCouponCodeFilter) ProtoMessage() {}
-
-func (x *ListCouponCodeFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListCouponCodeFilter.ProtoReflect.Descriptor instead.
-func (*ListCouponCodeFilter) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *ListCouponCodeFilter) GetInValues() []string {
-	if x != nil {
-		return x.InValues
-	}
-	return nil
-}
-
-type ListFilterPart struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Types that are valid to be assigned to Type:
-	//
-	//	*ListFilterPart_CouponCode
-	//	*ListFilterPart_ExternalCustomerId
-	//	*ListFilterPart_Status
-	Type          isListFilterPart_Type `protobuf_oneof:"type"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListFilterPart) Reset() {
-	*x = ListFilterPart{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListFilterPart) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListFilterPart) ProtoMessage() {}
-
-func (x *ListFilterPart) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[4]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListFilterPart.ProtoReflect.Descriptor instead.
-func (*ListFilterPart) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *ListFilterPart) GetType() isListFilterPart_Type {
-	if x != nil {
-		return x.Type
-	}
-	return nil
-}
-
-func (x *ListFilterPart) GetCouponCode() *ListCouponCodeFilter {
-	if x != nil {
-		if x, ok := x.Type.(*ListFilterPart_CouponCode); ok {
-			return x.CouponCode
-		}
-	}
-	return nil
-}
-
-func (x *ListFilterPart) GetExternalCustomerId() string {
-	if x != nil {
-		if x, ok := x.Type.(*ListFilterPart_ExternalCustomerId); ok {
-			return x.ExternalCustomerId
-		}
-	}
-	return ""
-}
-
-func (x *ListFilterPart) GetStatus() v2.AppliedCouponStatusEnum {
-	if x != nil {
-		if x, ok := x.Type.(*ListFilterPart_Status); ok {
-			return x.Status
-		}
-	}
-	return v2.AppliedCouponStatusEnum(0)
-}
-
-type isListFilterPart_Type interface {
-	isListFilterPart_Type()
-}
-
-type ListFilterPart_CouponCode struct {
-	CouponCode *ListCouponCodeFilter `protobuf:"bytes,1,opt,name=coupon_code,json=couponCode,proto3,oneof"`
-}
-
-type ListFilterPart_ExternalCustomerId struct {
-	ExternalCustomerId string `protobuf:"bytes,2,opt,name=external_customer_id,json=externalCustomerId,proto3,oneof"`
-}
-
-type ListFilterPart_Status struct {
-	Status v2.AppliedCouponStatusEnum `protobuf:"varint,3,opt,name=status,proto3,enum=invora.billing.common.v2.AppliedCouponStatusEnum,oneof"`
-}
-
-func (*ListFilterPart_CouponCode) isListFilterPart_Type() {}
-
-func (*ListFilterPart_ExternalCustomerId) isListFilterPart_Type() {}
-
-func (*ListFilterPart_Status) isListFilterPart_Type() {}
-
-type ListSort struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Rules         []*ListSortRule        `protobuf:"bytes,1,rep,name=rules,proto3" json:"rules,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListSort) Reset() {
-	*x = ListSort{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListSort) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListSort) ProtoMessage() {}
-
-func (x *ListSort) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[5]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListSort.ProtoReflect.Descriptor instead.
-func (*ListSort) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *ListSort) GetRules() []*ListSortRule {
-	if x != nil {
-		return x.Rules
-	}
-	return nil
-}
-
-type ListSortRule struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Types that are valid to be assigned to Type:
-	//
-	//	*ListSortRule_CreatedAt
-	Type          isListSortRule_Type `protobuf_oneof:"type"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListSortRule) Reset() {
-	*x = ListSortRule{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[6]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListSortRule) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListSortRule) ProtoMessage() {}
-
-func (x *ListSortRule) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[6]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListSortRule.ProtoReflect.Descriptor instead.
-func (*ListSortRule) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{6}
-}
-
-func (x *ListSortRule) GetType() isListSortRule_Type {
-	if x != nil {
-		return x.Type
-	}
-	return nil
-}
-
-func (x *ListSortRule) GetCreatedAt() kernel.SortDirection {
-	if x != nil {
-		if x, ok := x.Type.(*ListSortRule_CreatedAt); ok {
-			return x.CreatedAt
-		}
-	}
-	return kernel.SortDirection(0)
-}
-
-type isListSortRule_Type interface {
-	isListSortRule_Type()
-}
-
-type ListSortRule_CreatedAt struct {
-	CreatedAt kernel.SortDirection `protobuf:"varint,1,opt,name=created_at,json=createdAt,proto3,enum=kernel.SortDirection,oneof"`
-}
-
-func (*ListSortRule_CreatedAt) isListSortRule_Type() {}
-
 type GetRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Uniq ID of the coupon
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id    string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Fields to return in the response.
 	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.coupons.v2.View" json:"view,omitempty"`
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetRequest) Reset() {
 	*x = GetRequest{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[7]
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -537,7 +51,7 @@ func (x *GetRequest) String() string {
 func (*GetRequest) ProtoMessage() {}
 
 func (x *GetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[7]
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -550,7 +64,7 @@ func (x *GetRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
 func (*GetRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{7}
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *GetRequest) GetId() string {
@@ -567,11 +81,11 @@ func (x *GetRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	return nil
 }
 
-func (x *GetRequest) GetView() View {
+func (x *GetRequest) GetView() v2.View {
 	if x != nil {
 		return x.View
 	}
-	return View_VIEW_UNSPECIFIED
+	return v2.View(0)
 }
 
 type GetResponse struct {
@@ -583,7 +97,7 @@ type GetResponse struct {
 
 func (x *GetResponse) Reset() {
 	*x = GetResponse{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[8]
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -595,7 +109,7 @@ func (x *GetResponse) String() string {
 func (*GetResponse) ProtoMessage() {}
 
 func (x *GetResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[8]
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -608,7 +122,7 @@ func (x *GetResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
 func (*GetResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{8}
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *GetResponse) GetCoupon() *v2.BillingCoupon {
@@ -626,14 +140,14 @@ type ListRequest struct {
 	// Fields to return in the response.
 	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.coupons.v2.View" json:"view,omitempty"`
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListRequest) Reset() {
 	*x = ListRequest{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[9]
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -645,7 +159,7 @@ func (x *ListRequest) String() string {
 func (*ListRequest) ProtoMessage() {}
 
 func (x *ListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[9]
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -658,7 +172,7 @@ func (x *ListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRequest.ProtoReflect.Descriptor instead.
 func (*ListRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{9}
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *ListRequest) GetFilter() *ListFilter {
@@ -689,25 +203,25 @@ func (x *ListRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	return nil
 }
 
-func (x *ListRequest) GetView() View {
+func (x *ListRequest) GetView() v2.View {
 	if x != nil {
 		return x.View
 	}
-	return View_VIEW_UNSPECIFIED
+	return v2.View(0)
 }
 
 type ListResponse struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Items          []*v2.BillingCoupon     `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Items          []*v2.BillingCoupon    `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
 func (x *ListResponse) Reset() {
 	*x = ListResponse{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[10]
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -719,7 +233,7 @@ func (x *ListResponse) String() string {
 func (*ListResponse) ProtoMessage() {}
 
 func (x *ListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[10]
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -732,7 +246,7 @@ func (x *ListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListResponse.ProtoReflect.Descriptor instead.
 func (*ListResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{10}
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *ListResponse) GetItems() []*v2.BillingCoupon {
@@ -749,79 +263,35 @@ func (x *ListResponse) GetTotalCount() uint64 {
 	return 0
 }
 
-func (x *ListResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
+func (x *ListResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
 	}
-	return nil
+	return ""
 }
 
-type CreateAppliedCouponRequest struct {
-	state         protoimpl.MessageState    `protogen:"open.v1"`
-	Input         *CreateAppliedCouponInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateAppliedCouponRequest) Reset() {
-	*x = CreateAppliedCouponRequest{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[11]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateAppliedCouponRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateAppliedCouponRequest) ProtoMessage() {}
-
-func (x *CreateAppliedCouponRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[11]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateAppliedCouponRequest.ProtoReflect.Descriptor instead.
-func (*CreateAppliedCouponRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{11}
-}
-
-func (x *CreateAppliedCouponRequest) GetInput() *CreateAppliedCouponInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type CreateAppliedCouponResponse struct {
+type ListFilter struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AppliedCoupon *v2.AppliedCoupon      `protobuf:"bytes,1,opt,name=applied_coupon,json=appliedCoupon,proto3" json:"applied_coupon,omitempty"`
+	Part          *ListFilterPart        `protobuf:"bytes,1,opt,name=part,proto3" json:"part,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateAppliedCouponResponse) Reset() {
-	*x = CreateAppliedCouponResponse{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[12]
+func (x *ListFilter) Reset() {
+	*x = ListFilter{}
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateAppliedCouponResponse) String() string {
+func (x *ListFilter) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateAppliedCouponResponse) ProtoMessage() {}
+func (*ListFilter) ProtoMessage() {}
 
-func (x *CreateAppliedCouponResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[12]
+func (x *ListFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -832,28 +302,292 @@ func (x *CreateAppliedCouponResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateAppliedCouponResponse.ProtoReflect.Descriptor instead.
-func (*CreateAppliedCouponResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{12}
+// Deprecated: Use ListFilter.ProtoReflect.Descriptor instead.
+func (*ListFilter) Descriptor() ([]byte, []int) {
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *CreateAppliedCouponResponse) GetAppliedCoupon() *v2.AppliedCoupon {
+func (x *ListFilter) GetPart() *ListFilterPart {
 	if x != nil {
-		return x.AppliedCoupon
+		return x.Part
 	}
 	return nil
 }
+
+type ListCouponCodeFilter struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	InValues      []string               `protobuf:"bytes,1,rep,name=in_values,json=inValues,proto3" json:"in_values,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListCouponCodeFilter) Reset() {
+	*x = ListCouponCodeFilter{}
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListCouponCodeFilter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListCouponCodeFilter) ProtoMessage() {}
+
+func (x *ListCouponCodeFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListCouponCodeFilter.ProtoReflect.Descriptor instead.
+func (*ListCouponCodeFilter) Descriptor() ([]byte, []int) {
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ListCouponCodeFilter) GetInValues() []string {
+	if x != nil {
+		return x.InValues
+	}
+	return nil
+}
+
+type ListFilterPart struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Type:
+	//
+	//	*ListFilterPart_CouponCode
+	//	*ListFilterPart_ExternalCustomerId
+	//	*ListFilterPart_Status
+	Type          isListFilterPart_Type `protobuf_oneof:"type"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListFilterPart) Reset() {
+	*x = ListFilterPart{}
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListFilterPart) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListFilterPart) ProtoMessage() {}
+
+func (x *ListFilterPart) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListFilterPart.ProtoReflect.Descriptor instead.
+func (*ListFilterPart) Descriptor() ([]byte, []int) {
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ListFilterPart) GetType() isListFilterPart_Type {
+	if x != nil {
+		return x.Type
+	}
+	return nil
+}
+
+func (x *ListFilterPart) GetCouponCode() *ListCouponCodeFilter {
+	if x != nil {
+		if x, ok := x.Type.(*ListFilterPart_CouponCode); ok {
+			return x.CouponCode
+		}
+	}
+	return nil
+}
+
+func (x *ListFilterPart) GetExternalCustomerId() string {
+	if x != nil {
+		if x, ok := x.Type.(*ListFilterPart_ExternalCustomerId); ok {
+			return x.ExternalCustomerId
+		}
+	}
+	return ""
+}
+
+func (x *ListFilterPart) GetStatus() v2.AppliedCouponStatus {
+	if x != nil {
+		if x, ok := x.Type.(*ListFilterPart_Status); ok {
+			return x.Status
+		}
+	}
+	return v2.AppliedCouponStatus(0)
+}
+
+type isListFilterPart_Type interface {
+	isListFilterPart_Type()
+}
+
+type ListFilterPart_CouponCode struct {
+	CouponCode *ListCouponCodeFilter `protobuf:"bytes,1,opt,name=coupon_code,json=couponCode,proto3,oneof"`
+}
+
+type ListFilterPart_ExternalCustomerId struct {
+	ExternalCustomerId string `protobuf:"bytes,2,opt,name=external_customer_id,json=externalCustomerId,proto3,oneof"`
+}
+
+type ListFilterPart_Status struct {
+	Status v2.AppliedCouponStatus `protobuf:"varint,3,opt,name=status,proto3,enum=invora.billing.common.v2.AppliedCouponStatus,oneof"`
+}
+
+func (*ListFilterPart_CouponCode) isListFilterPart_Type() {}
+
+func (*ListFilterPart_ExternalCustomerId) isListFilterPart_Type() {}
+
+func (*ListFilterPart_Status) isListFilterPart_Type() {}
+
+type ListSort struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Rules         []*ListSortRule        `protobuf:"bytes,1,rep,name=rules,proto3" json:"rules,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSort) Reset() {
+	*x = ListSort{}
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSort) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSort) ProtoMessage() {}
+
+func (x *ListSort) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSort.ProtoReflect.Descriptor instead.
+func (*ListSort) Descriptor() ([]byte, []int) {
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ListSort) GetRules() []*ListSortRule {
+	if x != nil {
+		return x.Rules
+	}
+	return nil
+}
+
+type ListSortRule struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Type:
+	//
+	//	*ListSortRule_CreatedAt
+	Type          isListSortRule_Type `protobuf_oneof:"type"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSortRule) Reset() {
+	*x = ListSortRule{}
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSortRule) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSortRule) ProtoMessage() {}
+
+func (x *ListSortRule) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSortRule.ProtoReflect.Descriptor instead.
+func (*ListSortRule) Descriptor() ([]byte, []int) {
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *ListSortRule) GetType() isListSortRule_Type {
+	if x != nil {
+		return x.Type
+	}
+	return nil
+}
+
+func (x *ListSortRule) GetCreatedAt() kernel.SortDirection {
+	if x != nil {
+		if x, ok := x.Type.(*ListSortRule_CreatedAt); ok {
+			return x.CreatedAt
+		}
+	}
+	return kernel.SortDirection(0)
+}
+
+type isListSortRule_Type interface {
+	isListSortRule_Type()
+}
+
+type ListSortRule_CreatedAt struct {
+	CreatedAt kernel.SortDirection `protobuf:"varint,1,opt,name=created_at,json=createdAt,proto3,enum=kernel.SortDirection,oneof"`
+}
+
+func (*ListSortRule_CreatedAt) isListSortRule_Type() {}
 
 type CreateRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *CreateCouponInput     `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	AmountCents       *int64                 `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3,oneof" json:"amount_cents,omitempty"`
+	AmountCurrency    *v2.CurrencyEnum       `protobuf:"varint,2,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"amount_currency,omitempty"`
+	AppliesTo         *LimitationInput       `protobuf:"bytes,3,opt,name=applies_to,json=appliesTo,proto3,oneof" json:"applies_to,omitempty"`
+	Code              *string                `protobuf:"bytes,4,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	CouponType        v2.CouponType          `protobuf:"varint,5,opt,name=coupon_type,json=couponType,proto3,enum=invora.billing.common.v2.CouponType" json:"coupon_type,omitempty"`
+	Description       *string                `protobuf:"bytes,6,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	Expiration        v2.CouponExpiration    `protobuf:"varint,7,opt,name=expiration,proto3,enum=invora.billing.common.v2.CouponExpiration" json:"expiration,omitempty"`
+	ExpirationAt      *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=expiration_at,json=expirationAt,proto3,oneof" json:"expiration_at,omitempty"`
+	Frequency         v2.CouponFrequency     `protobuf:"varint,9,opt,name=frequency,proto3,enum=invora.billing.common.v2.CouponFrequency" json:"frequency,omitempty"`
+	FrequencyDuration *int32                 `protobuf:"varint,10,opt,name=frequency_duration,json=frequencyDuration,proto3,oneof" json:"frequency_duration,omitempty"`
+	Name              string                 `protobuf:"bytes,11,opt,name=name,proto3" json:"name,omitempty"`
+	PercentageRate    *kernel.DecimalValue   `protobuf:"bytes,12,opt,name=percentage_rate,json=percentageRate,proto3,oneof" json:"percentage_rate,omitempty"`
+	Reusable          *bool                  `protobuf:"varint,13,opt,name=reusable,proto3,oneof" json:"reusable,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *CreateRequest) Reset() {
 	*x = CreateRequest{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[13]
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -865,7 +599,7 @@ func (x *CreateRequest) String() string {
 func (*CreateRequest) ProtoMessage() {}
 
 func (x *CreateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[13]
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -878,14 +612,98 @@ func (x *CreateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateRequest.ProtoReflect.Descriptor instead.
 func (*CreateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{13}
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *CreateRequest) GetInput() *CreateCouponInput {
+func (x *CreateRequest) GetAmountCents() int64 {
+	if x != nil && x.AmountCents != nil {
+		return *x.AmountCents
+	}
+	return 0
+}
+
+func (x *CreateRequest) GetAmountCurrency() v2.CurrencyEnum {
+	if x != nil && x.AmountCurrency != nil {
+		return *x.AmountCurrency
+	}
+	return v2.CurrencyEnum(0)
+}
+
+func (x *CreateRequest) GetAppliesTo() *LimitationInput {
 	if x != nil {
-		return x.Input
+		return x.AppliesTo
 	}
 	return nil
+}
+
+func (x *CreateRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetCouponType() v2.CouponType {
+	if x != nil {
+		return x.CouponType
+	}
+	return v2.CouponType(0)
+}
+
+func (x *CreateRequest) GetDescription() string {
+	if x != nil && x.Description != nil {
+		return *x.Description
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetExpiration() v2.CouponExpiration {
+	if x != nil {
+		return x.Expiration
+	}
+	return v2.CouponExpiration(0)
+}
+
+func (x *CreateRequest) GetExpirationAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ExpirationAt
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetFrequency() v2.CouponFrequency {
+	if x != nil {
+		return x.Frequency
+	}
+	return v2.CouponFrequency(0)
+}
+
+func (x *CreateRequest) GetFrequencyDuration() int32 {
+	if x != nil && x.FrequencyDuration != nil {
+		return *x.FrequencyDuration
+	}
+	return 0
+}
+
+func (x *CreateRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetPercentageRate() *kernel.DecimalValue {
+	if x != nil {
+		return x.PercentageRate
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetReusable() bool {
+	if x != nil && x.Reusable != nil {
+		return *x.Reusable
+	}
+	return false
 }
 
 type CreateResponse struct {
@@ -897,7 +715,7 @@ type CreateResponse struct {
 
 func (x *CreateResponse) Reset() {
 	*x = CreateResponse{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[14]
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -909,7 +727,7 @@ func (x *CreateResponse) String() string {
 func (*CreateResponse) ProtoMessage() {}
 
 func (x *CreateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[14]
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -922,7 +740,7 @@ func (x *CreateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateResponse.ProtoReflect.Descriptor instead.
 func (*CreateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{14}
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *CreateResponse) GetCoupon() *v2.BillingCoupon {
@@ -932,272 +750,30 @@ func (x *CreateResponse) GetCoupon() *v2.BillingCoupon {
 	return nil
 }
 
-type DeleteRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *DestroyCouponInput    `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteRequest) Reset() {
-	*x = DeleteRequest{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[15]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteRequest) ProtoMessage() {}
-
-func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[15]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteRequest.ProtoReflect.Descriptor instead.
-func (*DeleteRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{15}
-}
-
-func (x *DeleteRequest) GetInput() *DestroyCouponInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type DeleteResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteResponse) Reset() {
-	*x = DeleteResponse{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[16]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteResponse) ProtoMessage() {}
-
-func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[16]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteResponse.ProtoReflect.Descriptor instead.
-func (*DeleteResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{16}
-}
-
-type TerminateAppliedCouponRequest struct {
-	state         protoimpl.MessageState       `protogen:"open.v1"`
-	Input         *TerminateAppliedCouponInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *TerminateAppliedCouponRequest) Reset() {
-	*x = TerminateAppliedCouponRequest{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[17]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *TerminateAppliedCouponRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TerminateAppliedCouponRequest) ProtoMessage() {}
-
-func (x *TerminateAppliedCouponRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[17]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TerminateAppliedCouponRequest.ProtoReflect.Descriptor instead.
-func (*TerminateAppliedCouponRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{17}
-}
-
-func (x *TerminateAppliedCouponRequest) GetInput() *TerminateAppliedCouponInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type TerminateAppliedCouponResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	AppliedCoupon *v2.AppliedCoupon      `protobuf:"bytes,1,opt,name=applied_coupon,json=appliedCoupon,proto3" json:"applied_coupon,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *TerminateAppliedCouponResponse) Reset() {
-	*x = TerminateAppliedCouponResponse{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[18]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *TerminateAppliedCouponResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TerminateAppliedCouponResponse) ProtoMessage() {}
-
-func (x *TerminateAppliedCouponResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[18]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TerminateAppliedCouponResponse.ProtoReflect.Descriptor instead.
-func (*TerminateAppliedCouponResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{18}
-}
-
-func (x *TerminateAppliedCouponResponse) GetAppliedCoupon() *v2.AppliedCoupon {
-	if x != nil {
-		return x.AppliedCoupon
-	}
-	return nil
-}
-
-type TerminateRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *TerminateCouponInput  `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *TerminateRequest) Reset() {
-	*x = TerminateRequest{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[19]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *TerminateRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TerminateRequest) ProtoMessage() {}
-
-func (x *TerminateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[19]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TerminateRequest.ProtoReflect.Descriptor instead.
-func (*TerminateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{19}
-}
-
-func (x *TerminateRequest) GetInput() *TerminateCouponInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type TerminateResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Coupon        *v2.BillingCoupon      `protobuf:"bytes,1,opt,name=coupon,proto3" json:"coupon,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *TerminateResponse) Reset() {
-	*x = TerminateResponse{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[20]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *TerminateResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TerminateResponse) ProtoMessage() {}
-
-func (x *TerminateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[20]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TerminateResponse.ProtoReflect.Descriptor instead.
-func (*TerminateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{20}
-}
-
-func (x *TerminateResponse) GetCoupon() *v2.BillingCoupon {
-	if x != nil {
-		return x.Coupon
-	}
-	return nil
-}
-
 type UpdateRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *UpdateCouponInput     `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	AmountCents       *int64                 `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3,oneof" json:"amount_cents,omitempty"`
+	AmountCurrency    *v2.CurrencyEnum       `protobuf:"varint,2,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"amount_currency,omitempty"`
+	AppliesTo         *LimitationInput       `protobuf:"bytes,3,opt,name=applies_to,json=appliesTo,proto3,oneof" json:"applies_to,omitempty"`
+	Code              *string                `protobuf:"bytes,4,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	CouponType        v2.CouponType          `protobuf:"varint,5,opt,name=coupon_type,json=couponType,proto3,enum=invora.billing.common.v2.CouponType" json:"coupon_type,omitempty"`
+	Description       *string                `protobuf:"bytes,6,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	Expiration        v2.CouponExpiration    `protobuf:"varint,7,opt,name=expiration,proto3,enum=invora.billing.common.v2.CouponExpiration" json:"expiration,omitempty"`
+	ExpirationAt      *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=expiration_at,json=expirationAt,proto3,oneof" json:"expiration_at,omitempty"`
+	Frequency         v2.CouponFrequency     `protobuf:"varint,9,opt,name=frequency,proto3,enum=invora.billing.common.v2.CouponFrequency" json:"frequency,omitempty"`
+	FrequencyDuration *int32                 `protobuf:"varint,10,opt,name=frequency_duration,json=frequencyDuration,proto3,oneof" json:"frequency_duration,omitempty"`
+	Id                string                 `protobuf:"bytes,11,opt,name=id,proto3" json:"id,omitempty"`
+	Name              string                 `protobuf:"bytes,12,opt,name=name,proto3" json:"name,omitempty"`
+	PercentageRate    *kernel.DecimalValue   `protobuf:"bytes,13,opt,name=percentage_rate,json=percentageRate,proto3,oneof" json:"percentage_rate,omitempty"`
+	Reusable          *bool                  `protobuf:"varint,14,opt,name=reusable,proto3,oneof" json:"reusable,omitempty"`
+	UpdateMask        *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *UpdateRequest) Reset() {
 	*x = UpdateRequest{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[21]
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1209,7 +785,7 @@ func (x *UpdateRequest) String() string {
 func (*UpdateRequest) ProtoMessage() {}
 
 func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[21]
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1222,12 +798,110 @@ func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateRequest.ProtoReflect.Descriptor instead.
 func (*UpdateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{21}
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *UpdateRequest) GetInput() *UpdateCouponInput {
+func (x *UpdateRequest) GetAmountCents() int64 {
+	if x != nil && x.AmountCents != nil {
+		return *x.AmountCents
+	}
+	return 0
+}
+
+func (x *UpdateRequest) GetAmountCurrency() v2.CurrencyEnum {
+	if x != nil && x.AmountCurrency != nil {
+		return *x.AmountCurrency
+	}
+	return v2.CurrencyEnum(0)
+}
+
+func (x *UpdateRequest) GetAppliesTo() *LimitationInput {
 	if x != nil {
-		return x.Input
+		return x.AppliesTo
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetCouponType() v2.CouponType {
+	if x != nil {
+		return x.CouponType
+	}
+	return v2.CouponType(0)
+}
+
+func (x *UpdateRequest) GetDescription() string {
+	if x != nil && x.Description != nil {
+		return *x.Description
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetExpiration() v2.CouponExpiration {
+	if x != nil {
+		return x.Expiration
+	}
+	return v2.CouponExpiration(0)
+}
+
+func (x *UpdateRequest) GetExpirationAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ExpirationAt
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetFrequency() v2.CouponFrequency {
+	if x != nil {
+		return x.Frequency
+	}
+	return v2.CouponFrequency(0)
+}
+
+func (x *UpdateRequest) GetFrequencyDuration() int32 {
+	if x != nil && x.FrequencyDuration != nil {
+		return *x.FrequencyDuration
+	}
+	return 0
+}
+
+func (x *UpdateRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetPercentageRate() *kernel.DecimalValue {
+	if x != nil {
+		return x.PercentageRate
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetReusable() bool {
+	if x != nil && x.Reusable != nil {
+		return *x.Reusable
+	}
+	return false
+}
+
+func (x *UpdateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
 	}
 	return nil
 }
@@ -1241,7 +915,7 @@ type UpdateResponse struct {
 
 func (x *UpdateResponse) Reset() {
 	*x = UpdateResponse{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[22]
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1253,7 +927,7 @@ func (x *UpdateResponse) String() string {
 func (*UpdateResponse) ProtoMessage() {}
 
 func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[22]
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1266,7 +940,7 @@ func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateResponse.ProtoReflect.Descriptor instead.
 func (*UpdateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{22}
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *UpdateResponse) GetCoupon() *v2.BillingCoupon {
@@ -1276,42 +950,28 @@ func (x *UpdateResponse) GetCoupon() *v2.BillingCoupon {
 	return nil
 }
 
-// Autogenerated input type of UpdateCoupon
-type UpdateCouponInput struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	AmountCents       *int64                 `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3,oneof" json:"amount_cents,omitempty"`
-	AmountCurrency    *v2.CurrencyEnum       `protobuf:"varint,2,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"amount_currency,omitempty"`
-	AppliesTo         *LimitationInput       `protobuf:"bytes,3,opt,name=applies_to,json=appliesTo,proto3,oneof" json:"applies_to,omitempty"`
-	Code              *string                `protobuf:"bytes,4,opt,name=code,proto3,oneof" json:"code,omitempty"`
-	CouponType        v2.CouponTypeEnum      `protobuf:"varint,5,opt,name=coupon_type,json=couponType,proto3,enum=invora.billing.common.v2.CouponTypeEnum" json:"coupon_type,omitempty"`
-	Description       *string                `protobuf:"bytes,6,opt,name=description,proto3,oneof" json:"description,omitempty"`
-	Expiration        v2.CouponExpiration    `protobuf:"varint,7,opt,name=expiration,proto3,enum=invora.billing.common.v2.CouponExpiration" json:"expiration,omitempty"`
-	ExpirationAt      *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=expiration_at,json=expirationAt,proto3,oneof" json:"expiration_at,omitempty"`
-	Frequency         v2.CouponFrequency     `protobuf:"varint,9,opt,name=frequency,proto3,enum=invora.billing.common.v2.CouponFrequency" json:"frequency,omitempty"`
-	FrequencyDuration *int32                 `protobuf:"varint,10,opt,name=frequency_duration,json=frequencyDuration,proto3,oneof" json:"frequency_duration,omitempty"`
-	Id                string                 `protobuf:"bytes,11,opt,name=id,proto3" json:"id,omitempty"`
-	Name              string                 `protobuf:"bytes,12,opt,name=name,proto3" json:"name,omitempty"`
-	PercentageRate    *float64               `protobuf:"fixed64,13,opt,name=percentage_rate,json=percentageRate,proto3,oneof" json:"percentage_rate,omitempty"`
-	Reusable          *bool                  `protobuf:"varint,14,opt,name=reusable,proto3,oneof" json:"reusable,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+type DeleteRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
-func (x *UpdateCouponInput) Reset() {
-	*x = UpdateCouponInput{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[23]
+func (x *DeleteRequest) Reset() {
+	*x = DeleteRequest{}
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *UpdateCouponInput) String() string {
+func (x *DeleteRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UpdateCouponInput) ProtoMessage() {}
+func (*DeleteRequest) ProtoMessage() {}
 
-func (x *UpdateCouponInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[23]
+func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1322,107 +982,140 @@ func (x *UpdateCouponInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UpdateCouponInput.ProtoReflect.Descriptor instead.
-func (*UpdateCouponInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{23}
+// Deprecated: Use DeleteRequest.ProtoReflect.Descriptor instead.
+func (*DeleteRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *UpdateCouponInput) GetAmountCents() int64 {
-	if x != nil && x.AmountCents != nil {
-		return *x.AmountCents
-	}
-	return 0
-}
-
-func (x *UpdateCouponInput) GetAmountCurrency() v2.CurrencyEnum {
-	if x != nil && x.AmountCurrency != nil {
-		return *x.AmountCurrency
-	}
-	return v2.CurrencyEnum(0)
-}
-
-func (x *UpdateCouponInput) GetAppliesTo() *LimitationInput {
-	if x != nil {
-		return x.AppliesTo
-	}
-	return nil
-}
-
-func (x *UpdateCouponInput) GetCode() string {
-	if x != nil && x.Code != nil {
-		return *x.Code
-	}
-	return ""
-}
-
-func (x *UpdateCouponInput) GetCouponType() v2.CouponTypeEnum {
-	if x != nil {
-		return x.CouponType
-	}
-	return v2.CouponTypeEnum(0)
-}
-
-func (x *UpdateCouponInput) GetDescription() string {
-	if x != nil && x.Description != nil {
-		return *x.Description
-	}
-	return ""
-}
-
-func (x *UpdateCouponInput) GetExpiration() v2.CouponExpiration {
-	if x != nil {
-		return x.Expiration
-	}
-	return v2.CouponExpiration(0)
-}
-
-func (x *UpdateCouponInput) GetExpirationAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.ExpirationAt
-	}
-	return nil
-}
-
-func (x *UpdateCouponInput) GetFrequency() v2.CouponFrequency {
-	if x != nil {
-		return x.Frequency
-	}
-	return v2.CouponFrequency(0)
-}
-
-func (x *UpdateCouponInput) GetFrequencyDuration() int32 {
-	if x != nil && x.FrequencyDuration != nil {
-		return *x.FrequencyDuration
-	}
-	return 0
-}
-
-func (x *UpdateCouponInput) GetId() string {
+func (x *DeleteRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-func (x *UpdateCouponInput) GetName() string {
+type DeleteResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteResponse) Reset() {
+	*x = DeleteResponse{}
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteResponse) ProtoMessage() {}
+
+func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[14]
 	if x != nil {
-		return x.Name
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteResponse.ProtoReflect.Descriptor instead.
+func (*DeleteResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{14}
+}
+
+type TerminateRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TerminateRequest) Reset() {
+	*x = TerminateRequest{}
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TerminateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TerminateRequest) ProtoMessage() {}
+
+func (x *TerminateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TerminateRequest.ProtoReflect.Descriptor instead.
+func (*TerminateRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *TerminateRequest) GetId() string {
+	if x != nil {
+		return x.Id
 	}
 	return ""
 }
 
-func (x *UpdateCouponInput) GetPercentageRate() float64 {
-	if x != nil && x.PercentageRate != nil {
-		return *x.PercentageRate
-	}
-	return 0
+type TerminateResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Coupon        *v2.BillingCoupon      `protobuf:"bytes,1,opt,name=coupon,proto3" json:"coupon,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
-func (x *UpdateCouponInput) GetReusable() bool {
-	if x != nil && x.Reusable != nil {
-		return *x.Reusable
+func (x *TerminateResponse) Reset() {
+	*x = TerminateResponse{}
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TerminateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TerminateResponse) ProtoMessage() {}
+
+func (x *TerminateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
 	}
-	return false
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TerminateResponse.ProtoReflect.Descriptor instead.
+func (*TerminateResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *TerminateResponse) GetCoupon() *v2.BillingCoupon {
+	if x != nil {
+		return x.Coupon
+	}
+	return nil
 }
 
 type LimitationInput struct {
@@ -1435,7 +1128,7 @@ type LimitationInput struct {
 
 func (x *LimitationInput) Reset() {
 	*x = LimitationInput{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[24]
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1447,7 +1140,7 @@ func (x *LimitationInput) String() string {
 func (*LimitationInput) ProtoMessage() {}
 
 func (x *LimitationInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[24]
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1460,7 +1153,7 @@ func (x *LimitationInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LimitationInput.ProtoReflect.Descriptor instead.
 func (*LimitationInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{24}
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *LimitationInput) GetBillableMetricIds() []string {
@@ -1477,29 +1170,34 @@ func (x *LimitationInput) GetPlanIds() []string {
 	return nil
 }
 
-// Autogenerated input type of TerminateCoupon
-type TerminateCouponInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+type ListAppliedCouponsRequest struct {
+	state      protoimpl.MessageState `protogen:"open.v1"`
+	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
+	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
+	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// Fields to return in the response.
+	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	// Response detail level.
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *TerminateCouponInput) Reset() {
-	*x = TerminateCouponInput{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[25]
+func (x *ListAppliedCouponsRequest) Reset() {
+	*x = ListAppliedCouponsRequest{}
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *TerminateCouponInput) String() string {
+func (x *ListAppliedCouponsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*TerminateCouponInput) ProtoMessage() {}
+func (*ListAppliedCouponsRequest) ProtoMessage() {}
 
-func (x *TerminateCouponInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[25]
+func (x *ListAppliedCouponsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1510,296 +1208,107 @@ func (x *TerminateCouponInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use TerminateCouponInput.ProtoReflect.Descriptor instead.
-func (*TerminateCouponInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{25}
+// Deprecated: Use ListAppliedCouponsRequest.ProtoReflect.Descriptor instead.
+func (*ListAppliedCouponsRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{18}
 }
 
-func (x *TerminateCouponInput) GetId() string {
+func (x *ListAppliedCouponsRequest) GetFilter() *ListFilter {
 	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-// Autogenerated input type of TerminateAppliedCoupon
-type TerminateAppliedCouponInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *TerminateAppliedCouponInput) Reset() {
-	*x = TerminateAppliedCouponInput{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[26]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *TerminateAppliedCouponInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TerminateAppliedCouponInput) ProtoMessage() {}
-
-func (x *TerminateAppliedCouponInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[26]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TerminateAppliedCouponInput.ProtoReflect.Descriptor instead.
-func (*TerminateAppliedCouponInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{26}
-}
-
-func (x *TerminateAppliedCouponInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-// Autogenerated input type of DestroyCoupon
-type DestroyCouponInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DestroyCouponInput) Reset() {
-	*x = DestroyCouponInput{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[27]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DestroyCouponInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DestroyCouponInput) ProtoMessage() {}
-
-func (x *DestroyCouponInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[27]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DestroyCouponInput.ProtoReflect.Descriptor instead.
-func (*DestroyCouponInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{27}
-}
-
-func (x *DestroyCouponInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-// Autogenerated return type of DestroyCoupon.
-type DestroyCouponPayload struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            *string                `protobuf:"bytes,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DestroyCouponPayload) Reset() {
-	*x = DestroyCouponPayload{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[28]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DestroyCouponPayload) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DestroyCouponPayload) ProtoMessage() {}
-
-func (x *DestroyCouponPayload) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[28]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DestroyCouponPayload.ProtoReflect.Descriptor instead.
-func (*DestroyCouponPayload) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{28}
-}
-
-func (x *DestroyCouponPayload) GetId() string {
-	if x != nil && x.Id != nil {
-		return *x.Id
-	}
-	return ""
-}
-
-// Autogenerated input type of CreateCoupon
-type CreateCouponInput struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	AmountCents       *int64                 `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3,oneof" json:"amount_cents,omitempty"`
-	AmountCurrency    *v2.CurrencyEnum       `protobuf:"varint,2,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"amount_currency,omitempty"`
-	AppliesTo         *LimitationInput       `protobuf:"bytes,3,opt,name=applies_to,json=appliesTo,proto3,oneof" json:"applies_to,omitempty"`
-	Code              *string                `protobuf:"bytes,4,opt,name=code,proto3,oneof" json:"code,omitempty"`
-	CouponType        v2.CouponTypeEnum      `protobuf:"varint,5,opt,name=coupon_type,json=couponType,proto3,enum=invora.billing.common.v2.CouponTypeEnum" json:"coupon_type,omitempty"`
-	Description       *string                `protobuf:"bytes,6,opt,name=description,proto3,oneof" json:"description,omitempty"`
-	Expiration        v2.CouponExpiration    `protobuf:"varint,7,opt,name=expiration,proto3,enum=invora.billing.common.v2.CouponExpiration" json:"expiration,omitempty"`
-	ExpirationAt      *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=expiration_at,json=expirationAt,proto3,oneof" json:"expiration_at,omitempty"`
-	Frequency         v2.CouponFrequency     `protobuf:"varint,9,opt,name=frequency,proto3,enum=invora.billing.common.v2.CouponFrequency" json:"frequency,omitempty"`
-	FrequencyDuration *int32                 `protobuf:"varint,10,opt,name=frequency_duration,json=frequencyDuration,proto3,oneof" json:"frequency_duration,omitempty"`
-	Name              string                 `protobuf:"bytes,11,opt,name=name,proto3" json:"name,omitempty"`
-	PercentageRate    *float64               `protobuf:"fixed64,12,opt,name=percentage_rate,json=percentageRate,proto3,oneof" json:"percentage_rate,omitempty"`
-	Reusable          *bool                  `protobuf:"varint,13,opt,name=reusable,proto3,oneof" json:"reusable,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
-}
-
-func (x *CreateCouponInput) Reset() {
-	*x = CreateCouponInput{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[29]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateCouponInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateCouponInput) ProtoMessage() {}
-
-func (x *CreateCouponInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[29]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateCouponInput.ProtoReflect.Descriptor instead.
-func (*CreateCouponInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{29}
-}
-
-func (x *CreateCouponInput) GetAmountCents() int64 {
-	if x != nil && x.AmountCents != nil {
-		return *x.AmountCents
-	}
-	return 0
-}
-
-func (x *CreateCouponInput) GetAmountCurrency() v2.CurrencyEnum {
-	if x != nil && x.AmountCurrency != nil {
-		return *x.AmountCurrency
-	}
-	return v2.CurrencyEnum(0)
-}
-
-func (x *CreateCouponInput) GetAppliesTo() *LimitationInput {
-	if x != nil {
-		return x.AppliesTo
+		return x.Filter
 	}
 	return nil
 }
 
-func (x *CreateCouponInput) GetCode() string {
-	if x != nil && x.Code != nil {
-		return *x.Code
-	}
-	return ""
-}
-
-func (x *CreateCouponInput) GetCouponType() v2.CouponTypeEnum {
+func (x *ListAppliedCouponsRequest) GetSort() *ListSort {
 	if x != nil {
-		return x.CouponType
-	}
-	return v2.CouponTypeEnum(0)
-}
-
-func (x *CreateCouponInput) GetDescription() string {
-	if x != nil && x.Description != nil {
-		return *x.Description
-	}
-	return ""
-}
-
-func (x *CreateCouponInput) GetExpiration() v2.CouponExpiration {
-	if x != nil {
-		return x.Expiration
-	}
-	return v2.CouponExpiration(0)
-}
-
-func (x *CreateCouponInput) GetExpirationAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.ExpirationAt
+		return x.Sort
 	}
 	return nil
 }
 
-func (x *CreateCouponInput) GetFrequency() v2.CouponFrequency {
+func (x *ListAppliedCouponsRequest) GetPagination() *kernel.PaginationInfo {
 	if x != nil {
-		return x.Frequency
+		return x.Pagination
 	}
-	return v2.CouponFrequency(0)
+	return nil
 }
 
-func (x *CreateCouponInput) GetFrequencyDuration() int32 {
-	if x != nil && x.FrequencyDuration != nil {
-		return *x.FrequencyDuration
+func (x *ListAppliedCouponsRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
+	}
+	return nil
+}
+
+func (x *ListAppliedCouponsRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
+}
+
+type ListAppliedCouponsResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Items          []*v2.AppliedCoupon    `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ListAppliedCouponsResponse) Reset() {
+	*x = ListAppliedCouponsResponse{}
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListAppliedCouponsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListAppliedCouponsResponse) ProtoMessage() {}
+
+func (x *ListAppliedCouponsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListAppliedCouponsResponse.ProtoReflect.Descriptor instead.
+func (*ListAppliedCouponsResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *ListAppliedCouponsResponse) GetItems() []*v2.AppliedCoupon {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+func (x *ListAppliedCouponsResponse) GetTotalCount() uint64 {
+	if x != nil {
+		return x.TotalCount
 	}
 	return 0
 }
 
-func (x *CreateCouponInput) GetName() string {
-	if x != nil {
-		return x.Name
+func (x *ListAppliedCouponsResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
 	}
 	return ""
 }
 
-func (x *CreateCouponInput) GetPercentageRate() float64 {
-	if x != nil && x.PercentageRate != nil {
-		return *x.PercentageRate
-	}
-	return 0
-}
-
-func (x *CreateCouponInput) GetReusable() bool {
-	if x != nil && x.Reusable != nil {
-		return *x.Reusable
-	}
-	return false
-}
-
-// Autogenerated input type of CreateAppliedCoupon
-type CreateAppliedCouponInput struct {
+type CreateAppliedCouponRequest struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	AmountCents       *int64                 `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3,oneof" json:"amount_cents,omitempty"`
 	AmountCurrency    *v2.CurrencyEnum       `protobuf:"varint,2,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum,oneof" json:"amount_currency,omitempty"`
@@ -1807,26 +1316,26 @@ type CreateAppliedCouponInput struct {
 	CustomerId        string                 `protobuf:"bytes,4,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	Frequency         *v2.CouponFrequency    `protobuf:"varint,5,opt,name=frequency,proto3,enum=invora.billing.common.v2.CouponFrequency,oneof" json:"frequency,omitempty"`
 	FrequencyDuration *int32                 `protobuf:"varint,6,opt,name=frequency_duration,json=frequencyDuration,proto3,oneof" json:"frequency_duration,omitempty"`
-	PercentageRate    *float64               `protobuf:"fixed64,7,opt,name=percentage_rate,json=percentageRate,proto3,oneof" json:"percentage_rate,omitempty"`
+	PercentageRate    *kernel.DecimalValue   `protobuf:"bytes,7,opt,name=percentage_rate,json=percentageRate,proto3,oneof" json:"percentage_rate,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
 
-func (x *CreateAppliedCouponInput) Reset() {
-	*x = CreateAppliedCouponInput{}
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[30]
+func (x *CreateAppliedCouponRequest) Reset() {
+	*x = CreateAppliedCouponRequest{}
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateAppliedCouponInput) String() string {
+func (x *CreateAppliedCouponRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateAppliedCouponInput) ProtoMessage() {}
+func (*CreateAppliedCouponRequest) ProtoMessage() {}
 
-func (x *CreateAppliedCouponInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[30]
+func (x *CreateAppliedCouponRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1837,104 +1346,205 @@ func (x *CreateAppliedCouponInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateAppliedCouponInput.ProtoReflect.Descriptor instead.
-func (*CreateAppliedCouponInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{30}
+// Deprecated: Use CreateAppliedCouponRequest.ProtoReflect.Descriptor instead.
+func (*CreateAppliedCouponRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{20}
 }
 
-func (x *CreateAppliedCouponInput) GetAmountCents() int64 {
+func (x *CreateAppliedCouponRequest) GetAmountCents() int64 {
 	if x != nil && x.AmountCents != nil {
 		return *x.AmountCents
 	}
 	return 0
 }
 
-func (x *CreateAppliedCouponInput) GetAmountCurrency() v2.CurrencyEnum {
+func (x *CreateAppliedCouponRequest) GetAmountCurrency() v2.CurrencyEnum {
 	if x != nil && x.AmountCurrency != nil {
 		return *x.AmountCurrency
 	}
 	return v2.CurrencyEnum(0)
 }
 
-func (x *CreateAppliedCouponInput) GetCouponId() string {
+func (x *CreateAppliedCouponRequest) GetCouponId() string {
 	if x != nil {
 		return x.CouponId
 	}
 	return ""
 }
 
-func (x *CreateAppliedCouponInput) GetCustomerId() string {
+func (x *CreateAppliedCouponRequest) GetCustomerId() string {
 	if x != nil {
 		return x.CustomerId
 	}
 	return ""
 }
 
-func (x *CreateAppliedCouponInput) GetFrequency() v2.CouponFrequency {
+func (x *CreateAppliedCouponRequest) GetFrequency() v2.CouponFrequency {
 	if x != nil && x.Frequency != nil {
 		return *x.Frequency
 	}
 	return v2.CouponFrequency(0)
 }
 
-func (x *CreateAppliedCouponInput) GetFrequencyDuration() int32 {
+func (x *CreateAppliedCouponRequest) GetFrequencyDuration() int32 {
 	if x != nil && x.FrequencyDuration != nil {
 		return *x.FrequencyDuration
 	}
 	return 0
 }
 
-func (x *CreateAppliedCouponInput) GetPercentageRate() float64 {
-	if x != nil && x.PercentageRate != nil {
-		return *x.PercentageRate
+func (x *CreateAppliedCouponRequest) GetPercentageRate() *kernel.DecimalValue {
+	if x != nil {
+		return x.PercentageRate
 	}
-	return 0
+	return nil
+}
+
+type CreateAppliedCouponResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AppliedCoupon *v2.AppliedCoupon      `protobuf:"bytes,1,opt,name=applied_coupon,json=appliedCoupon,proto3" json:"applied_coupon,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateAppliedCouponResponse) Reset() {
+	*x = CreateAppliedCouponResponse{}
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateAppliedCouponResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateAppliedCouponResponse) ProtoMessage() {}
+
+func (x *CreateAppliedCouponResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateAppliedCouponResponse.ProtoReflect.Descriptor instead.
+func (*CreateAppliedCouponResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *CreateAppliedCouponResponse) GetAppliedCoupon() *v2.AppliedCoupon {
+	if x != nil {
+		return x.AppliedCoupon
+	}
+	return nil
+}
+
+type TerminateAppliedCouponRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TerminateAppliedCouponRequest) Reset() {
+	*x = TerminateAppliedCouponRequest{}
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TerminateAppliedCouponRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TerminateAppliedCouponRequest) ProtoMessage() {}
+
+func (x *TerminateAppliedCouponRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TerminateAppliedCouponRequest.ProtoReflect.Descriptor instead.
+func (*TerminateAppliedCouponRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *TerminateAppliedCouponRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type TerminateAppliedCouponResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AppliedCoupon *v2.AppliedCoupon      `protobuf:"bytes,1,opt,name=applied_coupon,json=appliedCoupon,proto3" json:"applied_coupon,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TerminateAppliedCouponResponse) Reset() {
+	*x = TerminateAppliedCouponResponse{}
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TerminateAppliedCouponResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TerminateAppliedCouponResponse) ProtoMessage() {}
+
+func (x *TerminateAppliedCouponResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_coupons_v2_service_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TerminateAppliedCouponResponse.ProtoReflect.Descriptor instead.
+func (*TerminateAppliedCouponResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_coupons_v2_service_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *TerminateAppliedCouponResponse) GetAppliedCoupon() *v2.AppliedCoupon {
+	if x != nil {
+		return x.AppliedCoupon
+	}
+	return nil
 }
 
 var File_invora_billing_coupons_v2_service_proto protoreflect.FileDescriptor
 
 const file_invora_billing_coupons_v2_service_proto_rawDesc = "" +
 	"\n" +
-	"'invora/billing/coupons/v2/service.proto\x12\x19invora.billing.coupons.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\xb5\x02\n" +
-	"\x15AppliedCouponsRequest\x12=\n" +
-	"\x06filter\x18\x01 \x01(\v2%.invora.billing.coupons.v2.ListFilterR\x06filter\x127\n" +
-	"\x04sort\x18\x02 \x01(\v2#.invora.billing.coupons.v2.ListSortR\x04sort\x126\n" +
-	"\n" +
-	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
-	"pagination\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x123\n" +
-	"\x04view\x18\v \x01(\x0e2\x1f.invora.billing.coupons.v2.ViewR\x04view\"\xc0\x01\n" +
-	"\x16AppliedCouponsResponse\x12=\n" +
-	"\x05items\x18\x01 \x03(\v2'.invora.billing.common.v2.AppliedCouponR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"K\n" +
-	"\n" +
-	"ListFilter\x12=\n" +
-	"\x04part\x18\x01 \x01(\v2).invora.billing.coupons.v2.ListFilterPartR\x04part\"3\n" +
-	"\x14ListCouponCodeFilter\x12\x1b\n" +
-	"\tin_values\x18\x01 \x03(\tR\binValues\"\xed\x01\n" +
-	"\x0eListFilterPart\x12R\n" +
-	"\vcoupon_code\x18\x01 \x01(\v2/.invora.billing.coupons.v2.ListCouponCodeFilterH\x00R\n" +
-	"couponCode\x122\n" +
-	"\x14external_customer_id\x18\x02 \x01(\tH\x00R\x12externalCustomerId\x12K\n" +
-	"\x06status\x18\x03 \x01(\x0e21.invora.billing.common.v2.AppliedCouponStatusEnumH\x00R\x06statusB\x06\n" +
-	"\x04type\"I\n" +
-	"\bListSort\x12=\n" +
-	"\x05rules\x18\x01 \x03(\v2'.invora.billing.coupons.v2.ListSortRuleR\x05rules\"N\n" +
-	"\fListSortRule\x126\n" +
-	"\n" +
-	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAtB\x06\n" +
-	"\x04type\"\x8a\x01\n" +
+	"'invora/billing/coupons/v2/service.proto\x12\x19invora.billing.coupons.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/decimal.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\x89\x01\n" +
 	"\n" +
 	"GetRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
 	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x123\n" +
-	"\x04view\x18\v \x01(\x0e2\x1f.invora.billing.coupons.v2.ViewR\x04view\"N\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"N\n" +
 	"\vGetResponse\x12?\n" +
-	"\x06coupon\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingCouponR\x06coupon\"\xab\x02\n" +
+	"\x06coupon\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingCouponR\x06coupon\"\xaa\x02\n" +
 	"\vListRequest\x12=\n" +
 	"\x06filter\x18\x01 \x01(\v2%.invora.billing.coupons.v2.ListFilterR\x06filter\x127\n" +
 	"\x04sort\x18\x02 \x01(\v2#.invora.billing.coupons.v2.ListSortR\x04sort\x126\n" +
@@ -1942,43 +1552,68 @@ const file_invora_billing_coupons_v2_service_proto_rawDesc = "" +
 	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
 	"pagination\x127\n" +
 	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x123\n" +
-	"\x04view\x18\v \x01(\x0e2\x1f.invora.billing.coupons.v2.ViewR\x04view\"\xb6\x01\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xb2\x01\n" +
 	"\fListResponse\x12=\n" +
 	"\x05items\x18\x01 \x03(\v2'.invora.billing.common.v2.BillingCouponR\x05items\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"g\n" +
-	"\x1aCreateAppliedCouponRequest\x12I\n" +
-	"\x05input\x18\x01 \x01(\v23.invora.billing.coupons.v2.CreateAppliedCouponInputR\x05input\"m\n" +
-	"\x1bCreateAppliedCouponResponse\x12N\n" +
-	"\x0eapplied_coupon\x18\x01 \x01(\v2'.invora.billing.common.v2.AppliedCouponR\rappliedCoupon\"S\n" +
-	"\rCreateRequest\x12B\n" +
-	"\x05input\x18\x01 \x01(\v2,.invora.billing.coupons.v2.CreateCouponInputR\x05input\"Q\n" +
-	"\x0eCreateResponse\x12?\n" +
-	"\x06coupon\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingCouponR\x06coupon\"T\n" +
-	"\rDeleteRequest\x12C\n" +
-	"\x05input\x18\x01 \x01(\v2-.invora.billing.coupons.v2.DestroyCouponInputR\x05input\"\x10\n" +
-	"\x0eDeleteResponse\"m\n" +
-	"\x1dTerminateAppliedCouponRequest\x12L\n" +
-	"\x05input\x18\x01 \x01(\v26.invora.billing.coupons.v2.TerminateAppliedCouponInputR\x05input\"p\n" +
-	"\x1eTerminateAppliedCouponResponse\x12N\n" +
-	"\x0eapplied_coupon\x18\x01 \x01(\v2'.invora.billing.common.v2.AppliedCouponR\rappliedCoupon\"Y\n" +
-	"\x10TerminateRequest\x12E\n" +
-	"\x05input\x18\x01 \x01(\v2/.invora.billing.coupons.v2.TerminateCouponInputR\x05input\"T\n" +
-	"\x11TerminateResponse\x12?\n" +
-	"\x06coupon\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingCouponR\x06coupon\"S\n" +
-	"\rUpdateRequest\x12B\n" +
-	"\x05input\x18\x01 \x01(\v2,.invora.billing.coupons.v2.UpdateCouponInputR\x05input\"Q\n" +
-	"\x0eUpdateResponse\x12?\n" +
-	"\x06coupon\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingCouponR\x06coupon\"\x85\a\n" +
-	"\x11UpdateCouponInput\x12&\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"K\n" +
+	"\n" +
+	"ListFilter\x12=\n" +
+	"\x04part\x18\x01 \x01(\v2).invora.billing.coupons.v2.ListFilterPartR\x04part\"3\n" +
+	"\x14ListCouponCodeFilter\x12\x1b\n" +
+	"\tin_values\x18\x01 \x03(\tR\binValues\"\xe9\x01\n" +
+	"\x0eListFilterPart\x12R\n" +
+	"\vcoupon_code\x18\x01 \x01(\v2/.invora.billing.coupons.v2.ListCouponCodeFilterH\x00R\n" +
+	"couponCode\x122\n" +
+	"\x14external_customer_id\x18\x02 \x01(\tH\x00R\x12externalCustomerId\x12G\n" +
+	"\x06status\x18\x03 \x01(\x0e2-.invora.billing.common.v2.AppliedCouponStatusH\x00R\x06statusB\x06\n" +
+	"\x04type\"I\n" +
+	"\bListSort\x12=\n" +
+	"\x05rules\x18\x01 \x03(\v2'.invora.billing.coupons.v2.ListSortRuleR\x05rules\"N\n" +
+	"\fListSortRule\x126\n" +
+	"\n" +
+	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAtB\x06\n" +
+	"\x04type\"\x83\a\n" +
+	"\rCreateRequest\x12&\n" +
 	"\famount_cents\x18\x01 \x01(\x03H\x00R\vamountCents\x88\x01\x01\x12T\n" +
 	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\x01R\x0eamountCurrency\x88\x01\x01\x12N\n" +
 	"\n" +
 	"applies_to\x18\x03 \x01(\v2*.invora.billing.coupons.v2.LimitationInputH\x02R\tappliesTo\x88\x01\x01\x12\x17\n" +
-	"\x04code\x18\x04 \x01(\tH\x03R\x04code\x88\x01\x01\x12I\n" +
-	"\vcoupon_type\x18\x05 \x01(\x0e2(.invora.billing.common.v2.CouponTypeEnumR\n" +
+	"\x04code\x18\x04 \x01(\tH\x03R\x04code\x88\x01\x01\x12E\n" +
+	"\vcoupon_type\x18\x05 \x01(\x0e2$.invora.billing.common.v2.CouponTypeR\n" +
+	"couponType\x12%\n" +
+	"\vdescription\x18\x06 \x01(\tH\x04R\vdescription\x88\x01\x01\x12J\n" +
+	"\n" +
+	"expiration\x18\a \x01(\x0e2*.invora.billing.common.v2.CouponExpirationR\n" +
+	"expiration\x12D\n" +
+	"\rexpiration_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampH\x05R\fexpirationAt\x88\x01\x01\x12G\n" +
+	"\tfrequency\x18\t \x01(\x0e2).invora.billing.common.v2.CouponFrequencyR\tfrequency\x122\n" +
+	"\x12frequency_duration\x18\n" +
+	" \x01(\x05H\x06R\x11frequencyDuration\x88\x01\x01\x12\x12\n" +
+	"\x04name\x18\v \x01(\tR\x04name\x12B\n" +
+	"\x0fpercentage_rate\x18\f \x01(\v2\x14.kernel.DecimalValueH\aR\x0epercentageRate\x88\x01\x01\x12\x1f\n" +
+	"\breusable\x18\r \x01(\bH\bR\breusable\x88\x01\x01B\x0f\n" +
+	"\r_amount_centsB\x12\n" +
+	"\x10_amount_currencyB\r\n" +
+	"\v_applies_toB\a\n" +
+	"\x05_codeB\x0e\n" +
+	"\f_descriptionB\x10\n" +
+	"\x0e_expiration_atB\x15\n" +
+	"\x13_frequency_durationB\x12\n" +
+	"\x10_percentage_rateB\v\n" +
+	"\t_reusable\"Q\n" +
+	"\x0eCreateResponse\x12?\n" +
+	"\x06coupon\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingCouponR\x06coupon\"\xd0\a\n" +
+	"\rUpdateRequest\x12&\n" +
+	"\famount_cents\x18\x01 \x01(\x03H\x00R\vamountCents\x88\x01\x01\x12T\n" +
+	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\x01R\x0eamountCurrency\x88\x01\x01\x12N\n" +
+	"\n" +
+	"applies_to\x18\x03 \x01(\v2*.invora.billing.coupons.v2.LimitationInputH\x02R\tappliesTo\x88\x01\x01\x12\x17\n" +
+	"\x04code\x18\x04 \x01(\tH\x03R\x04code\x88\x01\x01\x12E\n" +
+	"\vcoupon_type\x18\x05 \x01(\x0e2$.invora.billing.common.v2.CouponTypeR\n" +
 	"couponType\x12%\n" +
 	"\vdescription\x18\x06 \x01(\tH\x04R\vdescription\x88\x01\x01\x12J\n" +
 	"\n" +
@@ -1989,9 +1624,11 @@ const file_invora_billing_coupons_v2_service_proto_rawDesc = "" +
 	"\x12frequency_duration\x18\n" +
 	" \x01(\x05H\x06R\x11frequencyDuration\x88\x01\x01\x12\x0e\n" +
 	"\x02id\x18\v \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\f \x01(\tR\x04name\x12,\n" +
-	"\x0fpercentage_rate\x18\r \x01(\x01H\aR\x0epercentageRate\x88\x01\x01\x12\x1f\n" +
-	"\breusable\x18\x0e \x01(\bH\bR\breusable\x88\x01\x01B\x0f\n" +
+	"\x04name\x18\f \x01(\tR\x04name\x12B\n" +
+	"\x0fpercentage_rate\x18\r \x01(\v2\x14.kernel.DecimalValueH\aR\x0epercentageRate\x88\x01\x01\x12\x1f\n" +
+	"\breusable\x18\x0e \x01(\bH\bR\breusable\x88\x01\x01\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\x0f\n" +
 	"\r_amount_centsB\x12\n" +
 	"\x10_amount_currencyB\r\n" +
 	"\v_applies_toB\a\n" +
@@ -2000,86 +1637,74 @@ const file_invora_billing_coupons_v2_service_proto_rawDesc = "" +
 	"\x0e_expiration_atB\x15\n" +
 	"\x13_frequency_durationB\x12\n" +
 	"\x10_percentage_rateB\v\n" +
-	"\t_reusable\"\\\n" +
+	"\t_reusable\"Q\n" +
+	"\x0eUpdateResponse\x12?\n" +
+	"\x06coupon\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingCouponR\x06coupon\"\x1f\n" +
+	"\rDeleteRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"\x10\n" +
+	"\x0eDeleteResponse\"\"\n" +
+	"\x10TerminateRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"T\n" +
+	"\x11TerminateResponse\x12?\n" +
+	"\x06coupon\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingCouponR\x06coupon\"\\\n" +
 	"\x0fLimitationInput\x12.\n" +
 	"\x13billable_metric_ids\x18\x01 \x03(\tR\x11billableMetricIds\x12\x19\n" +
-	"\bplan_ids\x18\x02 \x03(\tR\aplanIds\"&\n" +
-	"\x14TerminateCouponInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"-\n" +
-	"\x1bTerminateAppliedCouponInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"$\n" +
-	"\x12DestroyCouponInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"2\n" +
-	"\x14DestroyCouponPayload\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x88\x01\x01B\x05\n" +
-	"\x03_id\"\xf5\x06\n" +
-	"\x11CreateCouponInput\x12&\n" +
-	"\famount_cents\x18\x01 \x01(\x03H\x00R\vamountCents\x88\x01\x01\x12T\n" +
-	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\x01R\x0eamountCurrency\x88\x01\x01\x12N\n" +
+	"\bplan_ids\x18\x02 \x03(\tR\aplanIds\"\xb8\x02\n" +
+	"\x19ListAppliedCouponsRequest\x12=\n" +
+	"\x06filter\x18\x01 \x01(\v2%.invora.billing.coupons.v2.ListFilterR\x06filter\x127\n" +
+	"\x04sort\x18\x02 \x01(\v2#.invora.billing.coupons.v2.ListSortR\x04sort\x126\n" +
 	"\n" +
-	"applies_to\x18\x03 \x01(\v2*.invora.billing.coupons.v2.LimitationInputH\x02R\tappliesTo\x88\x01\x01\x12\x17\n" +
-	"\x04code\x18\x04 \x01(\tH\x03R\x04code\x88\x01\x01\x12I\n" +
-	"\vcoupon_type\x18\x05 \x01(\x0e2(.invora.billing.common.v2.CouponTypeEnumR\n" +
-	"couponType\x12%\n" +
-	"\vdescription\x18\x06 \x01(\tH\x04R\vdescription\x88\x01\x01\x12J\n" +
-	"\n" +
-	"expiration\x18\a \x01(\x0e2*.invora.billing.common.v2.CouponExpirationR\n" +
-	"expiration\x12D\n" +
-	"\rexpiration_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampH\x05R\fexpirationAt\x88\x01\x01\x12G\n" +
-	"\tfrequency\x18\t \x01(\x0e2).invora.billing.common.v2.CouponFrequencyR\tfrequency\x122\n" +
-	"\x12frequency_duration\x18\n" +
-	" \x01(\x05H\x06R\x11frequencyDuration\x88\x01\x01\x12\x12\n" +
-	"\x04name\x18\v \x01(\tR\x04name\x12,\n" +
-	"\x0fpercentage_rate\x18\f \x01(\x01H\aR\x0epercentageRate\x88\x01\x01\x12\x1f\n" +
-	"\breusable\x18\r \x01(\bH\bR\breusable\x88\x01\x01B\x0f\n" +
-	"\r_amount_centsB\x12\n" +
-	"\x10_amount_currencyB\r\n" +
-	"\v_applies_toB\a\n" +
-	"\x05_codeB\x0e\n" +
-	"\f_descriptionB\x10\n" +
-	"\x0e_expiration_atB\x15\n" +
-	"\x13_frequency_durationB\x12\n" +
-	"\x10_percentage_rateB\v\n" +
-	"\t_reusable\"\xe4\x03\n" +
-	"\x18CreateAppliedCouponInput\x12&\n" +
+	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
+	"pagination\x127\n" +
+	"\tread_mask\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xc0\x01\n" +
+	"\x1aListAppliedCouponsResponse\x12=\n" +
+	"\x05items\x18\x01 \x03(\v2'.invora.billing.common.v2.AppliedCouponR\x05items\x12\x1f\n" +
+	"\vtotal_count\x18\x02 \x01(\x04R\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"\xfc\x03\n" +
+	"\x1aCreateAppliedCouponRequest\x12&\n" +
 	"\famount_cents\x18\x01 \x01(\x03H\x00R\vamountCents\x88\x01\x01\x12T\n" +
 	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\x01R\x0eamountCurrency\x88\x01\x01\x12\x1b\n" +
 	"\tcoupon_id\x18\x03 \x01(\tR\bcouponId\x12\x1f\n" +
 	"\vcustomer_id\x18\x04 \x01(\tR\n" +
 	"customerId\x12L\n" +
 	"\tfrequency\x18\x05 \x01(\x0e2).invora.billing.common.v2.CouponFrequencyH\x02R\tfrequency\x88\x01\x01\x122\n" +
-	"\x12frequency_duration\x18\x06 \x01(\x05H\x03R\x11frequencyDuration\x88\x01\x01\x12,\n" +
-	"\x0fpercentage_rate\x18\a \x01(\x01H\x04R\x0epercentageRate\x88\x01\x01B\x0f\n" +
+	"\x12frequency_duration\x18\x06 \x01(\x05H\x03R\x11frequencyDuration\x88\x01\x01\x12B\n" +
+	"\x0fpercentage_rate\x18\a \x01(\v2\x14.kernel.DecimalValueH\x04R\x0epercentageRate\x88\x01\x01B\x0f\n" +
 	"\r_amount_centsB\x12\n" +
 	"\x10_amount_currencyB\f\n" +
 	"\n" +
 	"_frequencyB\x15\n" +
 	"\x13_frequency_durationB\x12\n" +
-	"\x10_percentage_rate*;\n" +
-	"\x04View\x12\x14\n" +
-	"\x10VIEW_UNSPECIFIED\x10\x00\x12\x0e\n" +
-	"\n" +
-	"VIEW_BASIC\x10\x01\x12\r\n" +
-	"\tVIEW_FULL\x10\x022\xb1\r\n" +
-	"\rCouponService\x12\xa7\x01\n" +
-	"\x06Create\x12(.invora.billing.coupons.v2.CreateRequest\x1a).invora.billing.coupons.v2.CreateResponse\"H\xe2\xf2\x19\"\n" +
-	" Invora.Billing.Coupons.v2.Create\x82\xd3\xe4\x93\x02\x1c:\x01*\"\x17/api/v2/billing/coupons\x12\x9d\x01\n" +
+	"\x10_percentage_rate\"m\n" +
+	"\x1bCreateAppliedCouponResponse\x12N\n" +
+	"\x0eapplied_coupon\x18\x01 \x01(\v2'.invora.billing.common.v2.AppliedCouponR\rappliedCoupon\"/\n" +
+	"\x1dTerminateAppliedCouponRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"p\n" +
+	"\x1eTerminateAppliedCouponResponse\x12N\n" +
+	"\x0eapplied_coupon\x18\x01 \x01(\v2'.invora.billing.common.v2.AppliedCouponR\rappliedCoupon2\xa8\x0e\n" +
+	"\x0eCouponsService\x12\xa4\x01\n" +
+	"\x04List\x12&.invora.billing.coupons.v2.ListRequest\x1a'.invora.billing.coupons.v2.ListResponse\"K\xe2\xf2\x19 \n" +
+	"\x1eInvora.Billing.Coupons.v2.List\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/api/billing/v2/coupons/list\x12\x9d\x01\n" +
 	"\x03Get\x12%.invora.billing.coupons.v2.GetRequest\x1a&.invora.billing.coupons.v2.GetResponse\"G\xe2\xf2\x19\x1f\n" +
-	"\x1dInvora.Billing.Coupons.v2.Get\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/v2/billing/coupons/{id}\x12\x9c\x01\n" +
-	"\x04List\x12&.invora.billing.coupons.v2.ListRequest\x1a'.invora.billing.coupons.v2.ListResponse\"C\xe2\xf2\x19 \n" +
-	"\x1eInvora.Billing.Coupons.v2.List\x82\xd3\xe4\x93\x02\x19\x12\x17/api/v2/billing/coupons\x12\xa7\x01\n" +
-	"\x06Update\x12(.invora.billing.coupons.v2.UpdateRequest\x1a).invora.billing.coupons.v2.UpdateResponse\"H\xe2\xf2\x19\"\n" +
-	" Invora.Billing.Coupons.v2.Update\x82\xd3\xe4\x93\x02\x1c:\x01*2\x17/api/v2/billing/coupons\x12\xa4\x01\n" +
-	"\x06Delete\x12(.invora.billing.coupons.v2.DeleteRequest\x1a).invora.billing.coupons.v2.DeleteResponse\"E\xe2\xf2\x19\"\n" +
-	" Invora.Billing.Coupons.v2.Delete\x82\xd3\xe4\x93\x02\x19*\x17/api/v2/billing/coupons\x12\xbd\x01\n" +
-	"\tTerminate\x12+.invora.billing.coupons.v2.TerminateRequest\x1a,.invora.billing.coupons.v2.TerminateResponse\"U\xe2\xf2\x19%\n" +
-	"#Invora.Billing.Coupons.v2.Terminate\x82\xd3\xe4\x93\x02&:\x01*\"!/api/v2/billing/coupons:terminate\x12\xc4\x01\n" +
-	"\x0eAppliedCoupons\x120.invora.billing.coupons.v2.AppliedCouponsRequest\x1a1.invora.billing.coupons.v2.AppliedCouponsResponse\"M\xe2\xf2\x19*\n" +
-	"(Invora.Billing.Coupons.v2.AppliedCoupons\x82\xd3\xe4\x93\x02\x19\x12\x17/api/v2/billing/coupons\x12\xdb\x01\n" +
-	"\x13CreateAppliedCoupon\x125.invora.billing.coupons.v2.CreateAppliedCouponRequest\x1a6.invora.billing.coupons.v2.CreateAppliedCouponResponse\"U\xe2\xf2\x19/\n" +
-	"-Invora.Billing.Coupons.v2.CreateAppliedCoupon\x82\xd3\xe4\x93\x02\x1c:\x01*\"\x17/api/v2/billing/coupons\x12\x80\x02\n" +
-	"\x16TerminateAppliedCoupon\x128.invora.billing.coupons.v2.TerminateAppliedCouponRequest\x1a9.invora.billing.coupons.v2.TerminateAppliedCouponResponse\"q\xe2\xf2\x192\n" +
-	"0Invora.Billing.Coupons.v2.TerminateAppliedCoupon\x82\xd3\xe4\x93\x025:\x01*\"0/api/v2/billing/coupons:terminate-applied-couponB\x84\x02\n" +
+	"\x1dInvora.Billing.Coupons.v2.Get\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/billing/v2/coupons/{id}\x12\xae\x01\n" +
+	"\x06Create\x12(.invora.billing.coupons.v2.CreateRequest\x1a).invora.billing.coupons.v2.CreateResponse\"O\xe2\xf2\x19)\n" +
+	"'Invora.Billing.Coupons.v2.Modify.Create\x82\xd3\xe4\x93\x02\x1c:\x01*\"\x17/api/billing/v2/coupons\x12\xb3\x01\n" +
+	"\x06Update\x12(.invora.billing.coupons.v2.UpdateRequest\x1a).invora.billing.coupons.v2.UpdateResponse\"T\xe2\xf2\x19)\n" +
+	"'Invora.Billing.Coupons.v2.Modify.Update\x82\xd3\xe4\x93\x02!:\x01*\x1a\x1c/api/billing/v2/coupons/{id}\x12\xb5\x01\n" +
+	"\x06Delete\x12(.invora.billing.coupons.v2.DeleteRequest\x1a).invora.billing.coupons.v2.DeleteResponse\"V\xe2\xf2\x19)\n" +
+	"'Invora.Billing.Coupons.v2.Modify.Delete\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/api/billing/v2/coupons/delete\x12\xc9\x01\n" +
+	"\tTerminate\x12+.invora.billing.coupons.v2.TerminateRequest\x1a,.invora.billing.coupons.v2.TerminateResponse\"a\xe2\xf2\x19,\n" +
+	"*Invora.Billing.Coupons.v2.Modify.Terminate\x82\xd3\xe4\x93\x02+:\x01*\"&/api/billing/v2/coupons/{id}/terminate\x12\xde\x01\n" +
+	"\x12ListAppliedCoupons\x124.invora.billing.coupons.v2.ListAppliedCouponsRequest\x1a5.invora.billing.coupons.v2.ListAppliedCouponsResponse\"[\xe2\xf2\x19 \n" +
+	"\x1eInvora.Billing.Coupons.v2.List\x82\xd3\xe4\x93\x021:\x01*\",/api/billing/v2/coupons/applied-coupons/list\x12\xf2\x01\n" +
+	"\x13CreateAppliedCoupon\x125.invora.billing.coupons.v2.CreateAppliedCouponRequest\x1a6.invora.billing.coupons.v2.CreateAppliedCouponResponse\"l\xe2\xf2\x196\n" +
+	"4Invora.Billing.Coupons.v2.Modify.CreateAppliedCoupon\x82\xd3\xe4\x93\x02,:\x01*\"'/api/billing/v2/coupons/applied-coupons\x12\x8d\x02\n" +
+	"\x16TerminateAppliedCoupon\x128.invora.billing.coupons.v2.TerminateAppliedCouponRequest\x1a9.invora.billing.coupons.v2.TerminateAppliedCouponResponse\"~\xe2\xf2\x199\n" +
+	"7Invora.Billing.Coupons.v2.Modify.TerminateAppliedCoupon\x82\xd3\xe4\x93\x02;:\x01*\"6/api/billing/v2/coupons/applied-coupons/{id}/terminateB\x84\x02\n" +
 	"\x1dcom.invora.billing.coupons.v2B\fServiceProtoP\x01ZNgithub.com/invoraapp/invora-controller/gen/invora/billing/coupons/v2;couponsv2\xa2\x02\x03IBC\xaa\x02\x19Invora.Billing.Coupons.V2\xca\x02\x19Invora\\Billing\\Coupons\\V2\xe2\x02%Invora\\Billing\\Coupons\\V2\\GPBMetadata\xea\x02\x1cInvora::Billing::Coupons::V2b\x06proto3"
 
 var (
@@ -2094,125 +1719,113 @@ func file_invora_billing_coupons_v2_service_proto_rawDescGZIP() []byte {
 	return file_invora_billing_coupons_v2_service_proto_rawDescData
 }
 
-var file_invora_billing_coupons_v2_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_invora_billing_coupons_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 31)
+var file_invora_billing_coupons_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 24)
 var file_invora_billing_coupons_v2_service_proto_goTypes = []any{
-	(View)(0),                              // 0: invora.billing.coupons.v2.View
-	(*AppliedCouponsRequest)(nil),          // 1: invora.billing.coupons.v2.AppliedCouponsRequest
-	(*AppliedCouponsResponse)(nil),         // 2: invora.billing.coupons.v2.AppliedCouponsResponse
-	(*ListFilter)(nil),                     // 3: invora.billing.coupons.v2.ListFilter
-	(*ListCouponCodeFilter)(nil),           // 4: invora.billing.coupons.v2.ListCouponCodeFilter
-	(*ListFilterPart)(nil),                 // 5: invora.billing.coupons.v2.ListFilterPart
-	(*ListSort)(nil),                       // 6: invora.billing.coupons.v2.ListSort
-	(*ListSortRule)(nil),                   // 7: invora.billing.coupons.v2.ListSortRule
-	(*GetRequest)(nil),                     // 8: invora.billing.coupons.v2.GetRequest
-	(*GetResponse)(nil),                    // 9: invora.billing.coupons.v2.GetResponse
-	(*ListRequest)(nil),                    // 10: invora.billing.coupons.v2.ListRequest
-	(*ListResponse)(nil),                   // 11: invora.billing.coupons.v2.ListResponse
-	(*CreateAppliedCouponRequest)(nil),     // 12: invora.billing.coupons.v2.CreateAppliedCouponRequest
-	(*CreateAppliedCouponResponse)(nil),    // 13: invora.billing.coupons.v2.CreateAppliedCouponResponse
-	(*CreateRequest)(nil),                  // 14: invora.billing.coupons.v2.CreateRequest
-	(*CreateResponse)(nil),                 // 15: invora.billing.coupons.v2.CreateResponse
-	(*DeleteRequest)(nil),                  // 16: invora.billing.coupons.v2.DeleteRequest
-	(*DeleteResponse)(nil),                 // 17: invora.billing.coupons.v2.DeleteResponse
-	(*TerminateAppliedCouponRequest)(nil),  // 18: invora.billing.coupons.v2.TerminateAppliedCouponRequest
-	(*TerminateAppliedCouponResponse)(nil), // 19: invora.billing.coupons.v2.TerminateAppliedCouponResponse
-	(*TerminateRequest)(nil),               // 20: invora.billing.coupons.v2.TerminateRequest
-	(*TerminateResponse)(nil),              // 21: invora.billing.coupons.v2.TerminateResponse
-	(*UpdateRequest)(nil),                  // 22: invora.billing.coupons.v2.UpdateRequest
-	(*UpdateResponse)(nil),                 // 23: invora.billing.coupons.v2.UpdateResponse
-	(*UpdateCouponInput)(nil),              // 24: invora.billing.coupons.v2.UpdateCouponInput
-	(*LimitationInput)(nil),                // 25: invora.billing.coupons.v2.LimitationInput
-	(*TerminateCouponInput)(nil),           // 26: invora.billing.coupons.v2.TerminateCouponInput
-	(*TerminateAppliedCouponInput)(nil),    // 27: invora.billing.coupons.v2.TerminateAppliedCouponInput
-	(*DestroyCouponInput)(nil),             // 28: invora.billing.coupons.v2.DestroyCouponInput
-	(*DestroyCouponPayload)(nil),           // 29: invora.billing.coupons.v2.DestroyCouponPayload
-	(*CreateCouponInput)(nil),              // 30: invora.billing.coupons.v2.CreateCouponInput
-	(*CreateAppliedCouponInput)(nil),       // 31: invora.billing.coupons.v2.CreateAppliedCouponInput
-	(*kernel.PaginationInfo)(nil),          // 32: kernel.PaginationInfo
-	(*fieldmaskpb.FieldMask)(nil),          // 33: google.protobuf.FieldMask
-	(*v2.AppliedCoupon)(nil),               // 34: invora.billing.common.v2.AppliedCoupon
-	(*wrapperspb.StringValue)(nil),         // 35: google.protobuf.StringValue
-	(v2.AppliedCouponStatusEnum)(0),        // 36: invora.billing.common.v2.AppliedCouponStatusEnum
-	(kernel.SortDirection)(0),              // 37: kernel.SortDirection
-	(*v2.BillingCoupon)(nil),               // 38: invora.billing.common.v2.BillingCoupon
-	(v2.CurrencyEnum)(0),                   // 39: invora.billing.common.v2.CurrencyEnum
-	(v2.CouponTypeEnum)(0),                 // 40: invora.billing.common.v2.CouponTypeEnum
-	(v2.CouponExpiration)(0),               // 41: invora.billing.common.v2.CouponExpiration
-	(*timestamppb.Timestamp)(nil),          // 42: google.protobuf.Timestamp
-	(v2.CouponFrequency)(0),                // 43: invora.billing.common.v2.CouponFrequency
+	(*GetRequest)(nil),                     // 0: invora.billing.coupons.v2.GetRequest
+	(*GetResponse)(nil),                    // 1: invora.billing.coupons.v2.GetResponse
+	(*ListRequest)(nil),                    // 2: invora.billing.coupons.v2.ListRequest
+	(*ListResponse)(nil),                   // 3: invora.billing.coupons.v2.ListResponse
+	(*ListFilter)(nil),                     // 4: invora.billing.coupons.v2.ListFilter
+	(*ListCouponCodeFilter)(nil),           // 5: invora.billing.coupons.v2.ListCouponCodeFilter
+	(*ListFilterPart)(nil),                 // 6: invora.billing.coupons.v2.ListFilterPart
+	(*ListSort)(nil),                       // 7: invora.billing.coupons.v2.ListSort
+	(*ListSortRule)(nil),                   // 8: invora.billing.coupons.v2.ListSortRule
+	(*CreateRequest)(nil),                  // 9: invora.billing.coupons.v2.CreateRequest
+	(*CreateResponse)(nil),                 // 10: invora.billing.coupons.v2.CreateResponse
+	(*UpdateRequest)(nil),                  // 11: invora.billing.coupons.v2.UpdateRequest
+	(*UpdateResponse)(nil),                 // 12: invora.billing.coupons.v2.UpdateResponse
+	(*DeleteRequest)(nil),                  // 13: invora.billing.coupons.v2.DeleteRequest
+	(*DeleteResponse)(nil),                 // 14: invora.billing.coupons.v2.DeleteResponse
+	(*TerminateRequest)(nil),               // 15: invora.billing.coupons.v2.TerminateRequest
+	(*TerminateResponse)(nil),              // 16: invora.billing.coupons.v2.TerminateResponse
+	(*LimitationInput)(nil),                // 17: invora.billing.coupons.v2.LimitationInput
+	(*ListAppliedCouponsRequest)(nil),      // 18: invora.billing.coupons.v2.ListAppliedCouponsRequest
+	(*ListAppliedCouponsResponse)(nil),     // 19: invora.billing.coupons.v2.ListAppliedCouponsResponse
+	(*CreateAppliedCouponRequest)(nil),     // 20: invora.billing.coupons.v2.CreateAppliedCouponRequest
+	(*CreateAppliedCouponResponse)(nil),    // 21: invora.billing.coupons.v2.CreateAppliedCouponResponse
+	(*TerminateAppliedCouponRequest)(nil),  // 22: invora.billing.coupons.v2.TerminateAppliedCouponRequest
+	(*TerminateAppliedCouponResponse)(nil), // 23: invora.billing.coupons.v2.TerminateAppliedCouponResponse
+	(*fieldmaskpb.FieldMask)(nil),          // 24: google.protobuf.FieldMask
+	(v2.View)(0),                           // 25: invora.billing.common.v2.View
+	(*v2.BillingCoupon)(nil),               // 26: invora.billing.common.v2.BillingCoupon
+	(*kernel.PaginationInfo)(nil),          // 27: kernel.PaginationInfo
+	(v2.AppliedCouponStatus)(0),            // 28: invora.billing.common.v2.AppliedCouponStatus
+	(kernel.SortDirection)(0),              // 29: kernel.SortDirection
+	(v2.CurrencyEnum)(0),                   // 30: invora.billing.common.v2.CurrencyEnum
+	(v2.CouponType)(0),                     // 31: invora.billing.common.v2.CouponType
+	(v2.CouponExpiration)(0),               // 32: invora.billing.common.v2.CouponExpiration
+	(*timestamppb.Timestamp)(nil),          // 33: google.protobuf.Timestamp
+	(v2.CouponFrequency)(0),                // 34: invora.billing.common.v2.CouponFrequency
+	(*kernel.DecimalValue)(nil),            // 35: kernel.DecimalValue
+	(*v2.AppliedCoupon)(nil),               // 36: invora.billing.common.v2.AppliedCoupon
 }
 var file_invora_billing_coupons_v2_service_proto_depIdxs = []int32{
-	3,  // 0: invora.billing.coupons.v2.AppliedCouponsRequest.filter:type_name -> invora.billing.coupons.v2.ListFilter
-	6,  // 1: invora.billing.coupons.v2.AppliedCouponsRequest.sort:type_name -> invora.billing.coupons.v2.ListSort
-	32, // 2: invora.billing.coupons.v2.AppliedCouponsRequest.pagination:type_name -> kernel.PaginationInfo
-	33, // 3: invora.billing.coupons.v2.AppliedCouponsRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 4: invora.billing.coupons.v2.AppliedCouponsRequest.view:type_name -> invora.billing.coupons.v2.View
-	34, // 5: invora.billing.coupons.v2.AppliedCouponsResponse.items:type_name -> invora.billing.common.v2.AppliedCoupon
-	35, // 6: invora.billing.coupons.v2.AppliedCouponsResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	5,  // 7: invora.billing.coupons.v2.ListFilter.part:type_name -> invora.billing.coupons.v2.ListFilterPart
-	4,  // 8: invora.billing.coupons.v2.ListFilterPart.coupon_code:type_name -> invora.billing.coupons.v2.ListCouponCodeFilter
-	36, // 9: invora.billing.coupons.v2.ListFilterPart.status:type_name -> invora.billing.common.v2.AppliedCouponStatusEnum
-	7,  // 10: invora.billing.coupons.v2.ListSort.rules:type_name -> invora.billing.coupons.v2.ListSortRule
-	37, // 11: invora.billing.coupons.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
-	33, // 12: invora.billing.coupons.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 13: invora.billing.coupons.v2.GetRequest.view:type_name -> invora.billing.coupons.v2.View
-	38, // 14: invora.billing.coupons.v2.GetResponse.coupon:type_name -> invora.billing.common.v2.BillingCoupon
-	3,  // 15: invora.billing.coupons.v2.ListRequest.filter:type_name -> invora.billing.coupons.v2.ListFilter
-	6,  // 16: invora.billing.coupons.v2.ListRequest.sort:type_name -> invora.billing.coupons.v2.ListSort
-	32, // 17: invora.billing.coupons.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
-	33, // 18: invora.billing.coupons.v2.ListRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 19: invora.billing.coupons.v2.ListRequest.view:type_name -> invora.billing.coupons.v2.View
-	38, // 20: invora.billing.coupons.v2.ListResponse.items:type_name -> invora.billing.common.v2.BillingCoupon
-	35, // 21: invora.billing.coupons.v2.ListResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	31, // 22: invora.billing.coupons.v2.CreateAppliedCouponRequest.input:type_name -> invora.billing.coupons.v2.CreateAppliedCouponInput
-	34, // 23: invora.billing.coupons.v2.CreateAppliedCouponResponse.applied_coupon:type_name -> invora.billing.common.v2.AppliedCoupon
-	30, // 24: invora.billing.coupons.v2.CreateRequest.input:type_name -> invora.billing.coupons.v2.CreateCouponInput
-	38, // 25: invora.billing.coupons.v2.CreateResponse.coupon:type_name -> invora.billing.common.v2.BillingCoupon
-	28, // 26: invora.billing.coupons.v2.DeleteRequest.input:type_name -> invora.billing.coupons.v2.DestroyCouponInput
-	27, // 27: invora.billing.coupons.v2.TerminateAppliedCouponRequest.input:type_name -> invora.billing.coupons.v2.TerminateAppliedCouponInput
-	34, // 28: invora.billing.coupons.v2.TerminateAppliedCouponResponse.applied_coupon:type_name -> invora.billing.common.v2.AppliedCoupon
-	26, // 29: invora.billing.coupons.v2.TerminateRequest.input:type_name -> invora.billing.coupons.v2.TerminateCouponInput
-	38, // 30: invora.billing.coupons.v2.TerminateResponse.coupon:type_name -> invora.billing.common.v2.BillingCoupon
-	24, // 31: invora.billing.coupons.v2.UpdateRequest.input:type_name -> invora.billing.coupons.v2.UpdateCouponInput
-	38, // 32: invora.billing.coupons.v2.UpdateResponse.coupon:type_name -> invora.billing.common.v2.BillingCoupon
-	39, // 33: invora.billing.coupons.v2.UpdateCouponInput.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	25, // 34: invora.billing.coupons.v2.UpdateCouponInput.applies_to:type_name -> invora.billing.coupons.v2.LimitationInput
-	40, // 35: invora.billing.coupons.v2.UpdateCouponInput.coupon_type:type_name -> invora.billing.common.v2.CouponTypeEnum
-	41, // 36: invora.billing.coupons.v2.UpdateCouponInput.expiration:type_name -> invora.billing.common.v2.CouponExpiration
-	42, // 37: invora.billing.coupons.v2.UpdateCouponInput.expiration_at:type_name -> google.protobuf.Timestamp
-	43, // 38: invora.billing.coupons.v2.UpdateCouponInput.frequency:type_name -> invora.billing.common.v2.CouponFrequency
-	39, // 39: invora.billing.coupons.v2.CreateCouponInput.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	25, // 40: invora.billing.coupons.v2.CreateCouponInput.applies_to:type_name -> invora.billing.coupons.v2.LimitationInput
-	40, // 41: invora.billing.coupons.v2.CreateCouponInput.coupon_type:type_name -> invora.billing.common.v2.CouponTypeEnum
-	41, // 42: invora.billing.coupons.v2.CreateCouponInput.expiration:type_name -> invora.billing.common.v2.CouponExpiration
-	42, // 43: invora.billing.coupons.v2.CreateCouponInput.expiration_at:type_name -> google.protobuf.Timestamp
-	43, // 44: invora.billing.coupons.v2.CreateCouponInput.frequency:type_name -> invora.billing.common.v2.CouponFrequency
-	39, // 45: invora.billing.coupons.v2.CreateAppliedCouponInput.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	43, // 46: invora.billing.coupons.v2.CreateAppliedCouponInput.frequency:type_name -> invora.billing.common.v2.CouponFrequency
-	14, // 47: invora.billing.coupons.v2.CouponService.Create:input_type -> invora.billing.coupons.v2.CreateRequest
-	8,  // 48: invora.billing.coupons.v2.CouponService.Get:input_type -> invora.billing.coupons.v2.GetRequest
-	10, // 49: invora.billing.coupons.v2.CouponService.List:input_type -> invora.billing.coupons.v2.ListRequest
-	22, // 50: invora.billing.coupons.v2.CouponService.Update:input_type -> invora.billing.coupons.v2.UpdateRequest
-	16, // 51: invora.billing.coupons.v2.CouponService.Delete:input_type -> invora.billing.coupons.v2.DeleteRequest
-	20, // 52: invora.billing.coupons.v2.CouponService.Terminate:input_type -> invora.billing.coupons.v2.TerminateRequest
-	1,  // 53: invora.billing.coupons.v2.CouponService.AppliedCoupons:input_type -> invora.billing.coupons.v2.AppliedCouponsRequest
-	12, // 54: invora.billing.coupons.v2.CouponService.CreateAppliedCoupon:input_type -> invora.billing.coupons.v2.CreateAppliedCouponRequest
-	18, // 55: invora.billing.coupons.v2.CouponService.TerminateAppliedCoupon:input_type -> invora.billing.coupons.v2.TerminateAppliedCouponRequest
-	15, // 56: invora.billing.coupons.v2.CouponService.Create:output_type -> invora.billing.coupons.v2.CreateResponse
-	9,  // 57: invora.billing.coupons.v2.CouponService.Get:output_type -> invora.billing.coupons.v2.GetResponse
-	11, // 58: invora.billing.coupons.v2.CouponService.List:output_type -> invora.billing.coupons.v2.ListResponse
-	23, // 59: invora.billing.coupons.v2.CouponService.Update:output_type -> invora.billing.coupons.v2.UpdateResponse
-	17, // 60: invora.billing.coupons.v2.CouponService.Delete:output_type -> invora.billing.coupons.v2.DeleteResponse
-	21, // 61: invora.billing.coupons.v2.CouponService.Terminate:output_type -> invora.billing.coupons.v2.TerminateResponse
-	2,  // 62: invora.billing.coupons.v2.CouponService.AppliedCoupons:output_type -> invora.billing.coupons.v2.AppliedCouponsResponse
-	13, // 63: invora.billing.coupons.v2.CouponService.CreateAppliedCoupon:output_type -> invora.billing.coupons.v2.CreateAppliedCouponResponse
-	19, // 64: invora.billing.coupons.v2.CouponService.TerminateAppliedCoupon:output_type -> invora.billing.coupons.v2.TerminateAppliedCouponResponse
-	56, // [56:65] is the sub-list for method output_type
-	47, // [47:56] is the sub-list for method input_type
-	47, // [47:47] is the sub-list for extension type_name
-	47, // [47:47] is the sub-list for extension extendee
-	0,  // [0:47] is the sub-list for field type_name
+	24, // 0: invora.billing.coupons.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
+	25, // 1: invora.billing.coupons.v2.GetRequest.view:type_name -> invora.billing.common.v2.View
+	26, // 2: invora.billing.coupons.v2.GetResponse.coupon:type_name -> invora.billing.common.v2.BillingCoupon
+	4,  // 3: invora.billing.coupons.v2.ListRequest.filter:type_name -> invora.billing.coupons.v2.ListFilter
+	7,  // 4: invora.billing.coupons.v2.ListRequest.sort:type_name -> invora.billing.coupons.v2.ListSort
+	27, // 5: invora.billing.coupons.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
+	24, // 6: invora.billing.coupons.v2.ListRequest.read_mask:type_name -> google.protobuf.FieldMask
+	25, // 7: invora.billing.coupons.v2.ListRequest.view:type_name -> invora.billing.common.v2.View
+	26, // 8: invora.billing.coupons.v2.ListResponse.items:type_name -> invora.billing.common.v2.BillingCoupon
+	6,  // 9: invora.billing.coupons.v2.ListFilter.part:type_name -> invora.billing.coupons.v2.ListFilterPart
+	5,  // 10: invora.billing.coupons.v2.ListFilterPart.coupon_code:type_name -> invora.billing.coupons.v2.ListCouponCodeFilter
+	28, // 11: invora.billing.coupons.v2.ListFilterPart.status:type_name -> invora.billing.common.v2.AppliedCouponStatus
+	8,  // 12: invora.billing.coupons.v2.ListSort.rules:type_name -> invora.billing.coupons.v2.ListSortRule
+	29, // 13: invora.billing.coupons.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
+	30, // 14: invora.billing.coupons.v2.CreateRequest.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	17, // 15: invora.billing.coupons.v2.CreateRequest.applies_to:type_name -> invora.billing.coupons.v2.LimitationInput
+	31, // 16: invora.billing.coupons.v2.CreateRequest.coupon_type:type_name -> invora.billing.common.v2.CouponType
+	32, // 17: invora.billing.coupons.v2.CreateRequest.expiration:type_name -> invora.billing.common.v2.CouponExpiration
+	33, // 18: invora.billing.coupons.v2.CreateRequest.expiration_at:type_name -> google.protobuf.Timestamp
+	34, // 19: invora.billing.coupons.v2.CreateRequest.frequency:type_name -> invora.billing.common.v2.CouponFrequency
+	35, // 20: invora.billing.coupons.v2.CreateRequest.percentage_rate:type_name -> kernel.DecimalValue
+	26, // 21: invora.billing.coupons.v2.CreateResponse.coupon:type_name -> invora.billing.common.v2.BillingCoupon
+	30, // 22: invora.billing.coupons.v2.UpdateRequest.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	17, // 23: invora.billing.coupons.v2.UpdateRequest.applies_to:type_name -> invora.billing.coupons.v2.LimitationInput
+	31, // 24: invora.billing.coupons.v2.UpdateRequest.coupon_type:type_name -> invora.billing.common.v2.CouponType
+	32, // 25: invora.billing.coupons.v2.UpdateRequest.expiration:type_name -> invora.billing.common.v2.CouponExpiration
+	33, // 26: invora.billing.coupons.v2.UpdateRequest.expiration_at:type_name -> google.protobuf.Timestamp
+	34, // 27: invora.billing.coupons.v2.UpdateRequest.frequency:type_name -> invora.billing.common.v2.CouponFrequency
+	35, // 28: invora.billing.coupons.v2.UpdateRequest.percentage_rate:type_name -> kernel.DecimalValue
+	24, // 29: invora.billing.coupons.v2.UpdateRequest.update_mask:type_name -> google.protobuf.FieldMask
+	26, // 30: invora.billing.coupons.v2.UpdateResponse.coupon:type_name -> invora.billing.common.v2.BillingCoupon
+	26, // 31: invora.billing.coupons.v2.TerminateResponse.coupon:type_name -> invora.billing.common.v2.BillingCoupon
+	4,  // 32: invora.billing.coupons.v2.ListAppliedCouponsRequest.filter:type_name -> invora.billing.coupons.v2.ListFilter
+	7,  // 33: invora.billing.coupons.v2.ListAppliedCouponsRequest.sort:type_name -> invora.billing.coupons.v2.ListSort
+	27, // 34: invora.billing.coupons.v2.ListAppliedCouponsRequest.pagination:type_name -> kernel.PaginationInfo
+	24, // 35: invora.billing.coupons.v2.ListAppliedCouponsRequest.read_mask:type_name -> google.protobuf.FieldMask
+	25, // 36: invora.billing.coupons.v2.ListAppliedCouponsRequest.view:type_name -> invora.billing.common.v2.View
+	36, // 37: invora.billing.coupons.v2.ListAppliedCouponsResponse.items:type_name -> invora.billing.common.v2.AppliedCoupon
+	30, // 38: invora.billing.coupons.v2.CreateAppliedCouponRequest.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	34, // 39: invora.billing.coupons.v2.CreateAppliedCouponRequest.frequency:type_name -> invora.billing.common.v2.CouponFrequency
+	35, // 40: invora.billing.coupons.v2.CreateAppliedCouponRequest.percentage_rate:type_name -> kernel.DecimalValue
+	36, // 41: invora.billing.coupons.v2.CreateAppliedCouponResponse.applied_coupon:type_name -> invora.billing.common.v2.AppliedCoupon
+	36, // 42: invora.billing.coupons.v2.TerminateAppliedCouponResponse.applied_coupon:type_name -> invora.billing.common.v2.AppliedCoupon
+	2,  // 43: invora.billing.coupons.v2.CouponsService.List:input_type -> invora.billing.coupons.v2.ListRequest
+	0,  // 44: invora.billing.coupons.v2.CouponsService.Get:input_type -> invora.billing.coupons.v2.GetRequest
+	9,  // 45: invora.billing.coupons.v2.CouponsService.Create:input_type -> invora.billing.coupons.v2.CreateRequest
+	11, // 46: invora.billing.coupons.v2.CouponsService.Update:input_type -> invora.billing.coupons.v2.UpdateRequest
+	13, // 47: invora.billing.coupons.v2.CouponsService.Delete:input_type -> invora.billing.coupons.v2.DeleteRequest
+	15, // 48: invora.billing.coupons.v2.CouponsService.Terminate:input_type -> invora.billing.coupons.v2.TerminateRequest
+	18, // 49: invora.billing.coupons.v2.CouponsService.ListAppliedCoupons:input_type -> invora.billing.coupons.v2.ListAppliedCouponsRequest
+	20, // 50: invora.billing.coupons.v2.CouponsService.CreateAppliedCoupon:input_type -> invora.billing.coupons.v2.CreateAppliedCouponRequest
+	22, // 51: invora.billing.coupons.v2.CouponsService.TerminateAppliedCoupon:input_type -> invora.billing.coupons.v2.TerminateAppliedCouponRequest
+	3,  // 52: invora.billing.coupons.v2.CouponsService.List:output_type -> invora.billing.coupons.v2.ListResponse
+	1,  // 53: invora.billing.coupons.v2.CouponsService.Get:output_type -> invora.billing.coupons.v2.GetResponse
+	10, // 54: invora.billing.coupons.v2.CouponsService.Create:output_type -> invora.billing.coupons.v2.CreateResponse
+	12, // 55: invora.billing.coupons.v2.CouponsService.Update:output_type -> invora.billing.coupons.v2.UpdateResponse
+	14, // 56: invora.billing.coupons.v2.CouponsService.Delete:output_type -> invora.billing.coupons.v2.DeleteResponse
+	16, // 57: invora.billing.coupons.v2.CouponsService.Terminate:output_type -> invora.billing.coupons.v2.TerminateResponse
+	19, // 58: invora.billing.coupons.v2.CouponsService.ListAppliedCoupons:output_type -> invora.billing.coupons.v2.ListAppliedCouponsResponse
+	21, // 59: invora.billing.coupons.v2.CouponsService.CreateAppliedCoupon:output_type -> invora.billing.coupons.v2.CreateAppliedCouponResponse
+	23, // 60: invora.billing.coupons.v2.CouponsService.TerminateAppliedCoupon:output_type -> invora.billing.coupons.v2.TerminateAppliedCouponResponse
+	52, // [52:61] is the sub-list for method output_type
+	43, // [43:52] is the sub-list for method input_type
+	43, // [43:43] is the sub-list for extension type_name
+	43, // [43:43] is the sub-list for extension extendee
+	0,  // [0:43] is the sub-list for field type_name
 }
 
 func init() { file_invora_billing_coupons_v2_service_proto_init() }
@@ -2220,31 +1833,31 @@ func file_invora_billing_coupons_v2_service_proto_init() {
 	if File_invora_billing_coupons_v2_service_proto != nil {
 		return
 	}
-	file_invora_billing_coupons_v2_service_proto_msgTypes[4].OneofWrappers = []any{
+	file_invora_billing_coupons_v2_service_proto_msgTypes[3].OneofWrappers = []any{}
+	file_invora_billing_coupons_v2_service_proto_msgTypes[6].OneofWrappers = []any{
 		(*ListFilterPart_CouponCode)(nil),
 		(*ListFilterPart_ExternalCustomerId)(nil),
 		(*ListFilterPart_Status)(nil),
 	}
-	file_invora_billing_coupons_v2_service_proto_msgTypes[6].OneofWrappers = []any{
+	file_invora_billing_coupons_v2_service_proto_msgTypes[8].OneofWrappers = []any{
 		(*ListSortRule_CreatedAt)(nil),
 	}
-	file_invora_billing_coupons_v2_service_proto_msgTypes[23].OneofWrappers = []any{}
-	file_invora_billing_coupons_v2_service_proto_msgTypes[28].OneofWrappers = []any{}
-	file_invora_billing_coupons_v2_service_proto_msgTypes[29].OneofWrappers = []any{}
-	file_invora_billing_coupons_v2_service_proto_msgTypes[30].OneofWrappers = []any{}
+	file_invora_billing_coupons_v2_service_proto_msgTypes[9].OneofWrappers = []any{}
+	file_invora_billing_coupons_v2_service_proto_msgTypes[11].OneofWrappers = []any{}
+	file_invora_billing_coupons_v2_service_proto_msgTypes[19].OneofWrappers = []any{}
+	file_invora_billing_coupons_v2_service_proto_msgTypes[20].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_billing_coupons_v2_service_proto_rawDesc), len(file_invora_billing_coupons_v2_service_proto_rawDesc)),
-			NumEnums:      1,
-			NumMessages:   31,
+			NumEnums:      0,
+			NumMessages:   24,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_invora_billing_coupons_v2_service_proto_goTypes,
 		DependencyIndexes: file_invora_billing_coupons_v2_service_proto_depIdxs,
-		EnumInfos:         file_invora_billing_coupons_v2_service_proto_enumTypes,
 		MessageInfos:      file_invora_billing_coupons_v2_service_proto_msgTypes,
 	}.Build()
 	File_invora_billing_coupons_v2_service_proto = out.File

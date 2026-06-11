@@ -65,14 +65,6 @@ func (r *BaseReconciler) ResolveInstanceAdmin(
 		return nil, fmt.Errorf("resolving super-admin token: %w", err)
 	}
 
-	admin, err := r.ClientCache.GetOrCreateInstanceAdmin(ns, instanceRef.Name, billingclient.AdminConfig{
-		GatewayURL: instance.Spec.GatewayURL,
-		Token:      token,
-	})
-	if err != nil {
-		return nil, fmt.Errorf("creating billing admin client: %w", err)
-	}
-
 	conn, err := dialGateway(instance.Spec.GatewayURL)
 	if err != nil {
 		return nil, fmt.Errorf("dialing gateway: %w", err)
@@ -80,7 +72,6 @@ func (r *BaseReconciler) ResolveInstanceAdmin(
 
 	return &instanceAdminContext{
 		instance: instance,
-		admin:    admin,
 		conn:     conn,
 		token:    token,
 	}, nil

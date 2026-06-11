@@ -13,6 +13,7 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
+	structpb "google.golang.org/protobuf/types/known/structpb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -78,6 +79,56 @@ func (PartyRole) EnumDescriptor() ([]byte, []int) {
 	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{0}
 }
 
+// Per-customer override for finalizing zero-amount invoices.
+type FinalizeZeroAmountInvoice int32
+
+const (
+	FinalizeZeroAmountInvoice_FINALIZE_ZERO_AMOUNT_INVOICE_UNSPECIFIED FinalizeZeroAmountInvoice = 0 // inherit from branch
+	FinalizeZeroAmountInvoice_FINALIZE_ZERO_AMOUNT_INVOICE_SKIP        FinalizeZeroAmountInvoice = 1
+	FinalizeZeroAmountInvoice_FINALIZE_ZERO_AMOUNT_INVOICE_FINALIZE    FinalizeZeroAmountInvoice = 2
+)
+
+// Enum value maps for FinalizeZeroAmountInvoice.
+var (
+	FinalizeZeroAmountInvoice_name = map[int32]string{
+		0: "FINALIZE_ZERO_AMOUNT_INVOICE_UNSPECIFIED",
+		1: "FINALIZE_ZERO_AMOUNT_INVOICE_SKIP",
+		2: "FINALIZE_ZERO_AMOUNT_INVOICE_FINALIZE",
+	}
+	FinalizeZeroAmountInvoice_value = map[string]int32{
+		"FINALIZE_ZERO_AMOUNT_INVOICE_UNSPECIFIED": 0,
+		"FINALIZE_ZERO_AMOUNT_INVOICE_SKIP":        1,
+		"FINALIZE_ZERO_AMOUNT_INVOICE_FINALIZE":    2,
+	}
+)
+
+func (x FinalizeZeroAmountInvoice) Enum() *FinalizeZeroAmountInvoice {
+	p := new(FinalizeZeroAmountInvoice)
+	*p = x
+	return p
+}
+
+func (x FinalizeZeroAmountInvoice) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (FinalizeZeroAmountInvoice) Descriptor() protoreflect.EnumDescriptor {
+	return file_invora_parties_v2_models_proto_enumTypes[1].Descriptor()
+}
+
+func (FinalizeZeroAmountInvoice) Type() protoreflect.EnumType {
+	return &file_invora_parties_v2_models_proto_enumTypes[1]
+}
+
+func (x FinalizeZeroAmountInvoice) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use FinalizeZeroAmountInvoice.Descriptor instead.
+func (FinalizeZeroAmountInvoice) EnumDescriptor() ([]byte, []int) {
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{1}
+}
+
 // Party entity — supplier or customer with UBL-compliant structure.
 type Party struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -97,8 +148,15 @@ type Party struct {
 	// Linked billing customer external ID. Only populated for parties with CUSTOMER role
 	// that have been explicitly linked via LinkBillingCustomer. Requires billing entitlement.
 	BillingCustomerExternalId *string `protobuf:"bytes,8,opt,name=billing_customer_external_id,json=billingCustomerExternalId,proto3,oneof" json:"billing_customer_external_id,omitempty"`
-	unknownFields             protoimpl.UnknownFields
-	sizeCache                 protoimpl.SizeCache
+	// Billing configuration for this customer. Per-customer overrides of branch defaults.
+	BillingConfig *BillingCustomerConfig `protobuf:"bytes,9,opt,name=billing_config,json=billingConfig,proto3" json:"billing_config,omitempty"`
+	// Free-form metadata for external integration.
+	Metadata *structpb.Struct `protobuf:"bytes,10,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	// Read-only. Per-branch sequence number assigned at party creation
+	// (e.g. the 5 in a document number like INV-005-003).
+	SequenceId    int64 `protobuf:"varint,11,opt,name=sequence_id,json=sequenceId,proto3" json:"sequence_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Party) Reset() {
@@ -180,19 +238,193 @@ func (x *Party) GetBillingCustomerExternalId() string {
 	return ""
 }
 
+func (x *Party) GetBillingConfig() *BillingCustomerConfig {
+	if x != nil {
+		return x.BillingConfig
+	}
+	return nil
+}
+
+func (x *Party) GetMetadata() *structpb.Struct {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *Party) GetSequenceId() int64 {
+	if x != nil {
+		return x.SequenceId
+	}
+	return 0
+}
+
+// Per-customer billing configuration. Fields are optional overrides of branch defaults.
+// Empty/unset = inherit from branch.
+type BillingCustomerConfig struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	Currency            *string                `protobuf:"bytes,1,opt,name=currency,proto3,oneof" json:"currency,omitempty"`
+	PaymentProvider     *string                `protobuf:"bytes,2,opt,name=payment_provider,json=paymentProvider,proto3,oneof" json:"payment_provider,omitempty"`
+	PaymentProviderCode *string                `protobuf:"bytes,3,opt,name=payment_provider_code,json=paymentProviderCode,proto3,oneof" json:"payment_provider_code,omitempty"`
+	InvoiceGracePeriod  *int32                 `protobuf:"varint,4,opt,name=invoice_grace_period,json=invoiceGracePeriod,proto3,oneof" json:"invoice_grace_period,omitempty"`
+	NetPaymentTerm      *int32                 `protobuf:"varint,5,opt,name=net_payment_term,json=netPaymentTerm,proto3,oneof" json:"net_payment_term,omitempty"`
+	Timezone            *string                `protobuf:"bytes,6,opt,name=timezone,proto3,oneof" json:"timezone,omitempty"`
+	// 3-value enum: UNSPECIFIED = inherit from branch, SKIP, FINALIZE.
+	FinalizeZeroAmountInvoice  FinalizeZeroAmountInvoice `protobuf:"varint,7,opt,name=finalize_zero_amount_invoice,json=finalizeZeroAmountInvoice,proto3,enum=invora.parties.v2.FinalizeZeroAmountInvoice" json:"finalize_zero_amount_invoice,omitempty"`
+	DunningCampaignId          *string                   `protobuf:"bytes,8,opt,name=dunning_campaign_id,json=dunningCampaignId,proto3,oneof" json:"dunning_campaign_id,omitempty"`
+	ExcludeFromDunningCampaign *bool                     `protobuf:"varint,9,opt,name=exclude_from_dunning_campaign,json=excludeFromDunningCampaign,proto3,oneof" json:"exclude_from_dunning_campaign,omitempty"`
+	// Number of dunning attempts made against this customer so far.
+	LastDunningCampaignAttempt int32 `protobuf:"varint,10,opt,name=last_dunning_campaign_attempt,json=lastDunningCampaignAttempt,proto3" json:"last_dunning_campaign_attempt,omitempty"`
+	// ISO 8601 timestamp of the most recent dunning attempt.
+	LastDunningCampaignAttemptAt *string `protobuf:"bytes,11,opt,name=last_dunning_campaign_attempt_at,json=lastDunningCampaignAttemptAt,proto3,oneof" json:"last_dunning_campaign_attempt_at,omitempty"`
+	// Tax codes assigned to this customer.
+	TaxCodes []string `protobuf:"bytes,12,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
+	// Per-customer default ship-to / delivery address, used as the default for tax
+	// calculation and document delivery. UBL's cac:Party has no ship-to slot
+	// (delivery is document-level), so it lives here rather than in `details`.
+	ShippingAddress *commonaggregatecomponents_2.AddressType `protobuf:"bytes,13,opt,name=shipping_address,json=shippingAddress,proto3" json:"shipping_address,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *BillingCustomerConfig) Reset() {
+	*x = BillingCustomerConfig{}
+	mi := &file_invora_parties_v2_models_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BillingCustomerConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BillingCustomerConfig) ProtoMessage() {}
+
+func (x *BillingCustomerConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_parties_v2_models_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BillingCustomerConfig.ProtoReflect.Descriptor instead.
+func (*BillingCustomerConfig) Descriptor() ([]byte, []int) {
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *BillingCustomerConfig) GetCurrency() string {
+	if x != nil && x.Currency != nil {
+		return *x.Currency
+	}
+	return ""
+}
+
+func (x *BillingCustomerConfig) GetPaymentProvider() string {
+	if x != nil && x.PaymentProvider != nil {
+		return *x.PaymentProvider
+	}
+	return ""
+}
+
+func (x *BillingCustomerConfig) GetPaymentProviderCode() string {
+	if x != nil && x.PaymentProviderCode != nil {
+		return *x.PaymentProviderCode
+	}
+	return ""
+}
+
+func (x *BillingCustomerConfig) GetInvoiceGracePeriod() int32 {
+	if x != nil && x.InvoiceGracePeriod != nil {
+		return *x.InvoiceGracePeriod
+	}
+	return 0
+}
+
+func (x *BillingCustomerConfig) GetNetPaymentTerm() int32 {
+	if x != nil && x.NetPaymentTerm != nil {
+		return *x.NetPaymentTerm
+	}
+	return 0
+}
+
+func (x *BillingCustomerConfig) GetTimezone() string {
+	if x != nil && x.Timezone != nil {
+		return *x.Timezone
+	}
+	return ""
+}
+
+func (x *BillingCustomerConfig) GetFinalizeZeroAmountInvoice() FinalizeZeroAmountInvoice {
+	if x != nil {
+		return x.FinalizeZeroAmountInvoice
+	}
+	return FinalizeZeroAmountInvoice_FINALIZE_ZERO_AMOUNT_INVOICE_UNSPECIFIED
+}
+
+func (x *BillingCustomerConfig) GetDunningCampaignId() string {
+	if x != nil && x.DunningCampaignId != nil {
+		return *x.DunningCampaignId
+	}
+	return ""
+}
+
+func (x *BillingCustomerConfig) GetExcludeFromDunningCampaign() bool {
+	if x != nil && x.ExcludeFromDunningCampaign != nil {
+		return *x.ExcludeFromDunningCampaign
+	}
+	return false
+}
+
+func (x *BillingCustomerConfig) GetLastDunningCampaignAttempt() int32 {
+	if x != nil {
+		return x.LastDunningCampaignAttempt
+	}
+	return 0
+}
+
+func (x *BillingCustomerConfig) GetLastDunningCampaignAttemptAt() string {
+	if x != nil && x.LastDunningCampaignAttemptAt != nil {
+		return *x.LastDunningCampaignAttemptAt
+	}
+	return ""
+}
+
+func (x *BillingCustomerConfig) GetTaxCodes() []string {
+	if x != nil {
+		return x.TaxCodes
+	}
+	return nil
+}
+
+func (x *BillingCustomerConfig) GetShippingAddress() *commonaggregatecomponents_2.AddressType {
+	if x != nil {
+		return x.ShippingAddress
+	}
+	return nil
+}
+
 // Input model for create and update operations.
 type ChangeBase struct {
-	state         protoimpl.MessageState                 `protogen:"open.v1"`
-	Name          *v1.SetLocalizedValue                  `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Details       *commonaggregatecomponents_2.PartyType `protobuf:"bytes,2,opt,name=details,proto3" json:"details,omitempty"`
-	Role          PartyRole                              `protobuf:"varint,3,opt,name=role,proto3,enum=invora.parties.v2.PartyRole" json:"role,omitempty"`
+	state   protoimpl.MessageState                 `protogen:"open.v1"`
+	Name    *v1.SetLocalizedValue                  `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Details *commonaggregatecomponents_2.PartyType `protobuf:"bytes,2,opt,name=details,proto3" json:"details,omitempty"`
+	Role    PartyRole                              `protobuf:"varint,3,opt,name=role,proto3,enum=invora.parties.v2.PartyRole" json:"role,omitempty"`
+	// Billing configuration for this customer.
+	BillingConfig *BillingCustomerConfig `protobuf:"bytes,4,opt,name=billing_config,json=billingConfig,proto3" json:"billing_config,omitempty"`
+	// Generic metadata for external integration (external IDs, etc.).
+	Metadata      *structpb.Struct `protobuf:"bytes,5,opt,name=metadata,proto3" json:"metadata,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ChangeBase) Reset() {
 	*x = ChangeBase{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[1]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -204,7 +436,7 @@ func (x *ChangeBase) String() string {
 func (*ChangeBase) ProtoMessage() {}
 
 func (x *ChangeBase) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[1]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -217,7 +449,7 @@ func (x *ChangeBase) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChangeBase.ProtoReflect.Descriptor instead.
 func (*ChangeBase) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{1}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *ChangeBase) GetName() *v1.SetLocalizedValue {
@@ -241,6 +473,20 @@ func (x *ChangeBase) GetRole() PartyRole {
 	return PartyRole_PARTY_ROLE_UNSPECIFIED
 }
 
+func (x *ChangeBase) GetBillingConfig() *BillingCustomerConfig {
+	if x != nil {
+		return x.BillingConfig
+	}
+	return nil
+}
+
+func (x *ChangeBase) GetMetadata() *structpb.Struct {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
 // Request to create a party.
 type CreateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -252,7 +498,7 @@ type CreateRequest struct {
 
 func (x *CreateRequest) Reset() {
 	*x = CreateRequest{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[2]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -264,7 +510,7 @@ func (x *CreateRequest) String() string {
 func (*CreateRequest) ProtoMessage() {}
 
 func (x *CreateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[2]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -277,7 +523,7 @@ func (x *CreateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateRequest.ProtoReflect.Descriptor instead.
 func (*CreateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{2}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *CreateRequest) GetKey() string {
@@ -304,7 +550,7 @@ type CreateResponse struct {
 
 func (x *CreateResponse) Reset() {
 	*x = CreateResponse{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[3]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -316,7 +562,7 @@ func (x *CreateResponse) String() string {
 func (*CreateResponse) ProtoMessage() {}
 
 func (x *CreateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[3]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -329,7 +575,7 @@ func (x *CreateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateResponse.ProtoReflect.Descriptor instead.
 func (*CreateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{3}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *CreateResponse) GetDetails() *Party {
@@ -352,7 +598,7 @@ type UpdateRequest struct {
 
 func (x *UpdateRequest) Reset() {
 	*x = UpdateRequest{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[4]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -364,7 +610,7 @@ func (x *UpdateRequest) String() string {
 func (*UpdateRequest) ProtoMessage() {}
 
 func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[4]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -377,7 +623,7 @@ func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateRequest.ProtoReflect.Descriptor instead.
 func (*UpdateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{4}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *UpdateRequest) GetKey() string {
@@ -418,7 +664,7 @@ type UpdateResponse struct {
 
 func (x *UpdateResponse) Reset() {
 	*x = UpdateResponse{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[5]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -430,7 +676,7 @@ func (x *UpdateResponse) String() string {
 func (*UpdateResponse) ProtoMessage() {}
 
 func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[5]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -443,7 +689,7 @@ func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateResponse.ProtoReflect.Descriptor instead.
 func (*UpdateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{5}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *UpdateResponse) GetDetails() *Party {
@@ -463,7 +709,7 @@ type DeleteRequest struct {
 
 func (x *DeleteRequest) Reset() {
 	*x = DeleteRequest{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[6]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -475,7 +721,7 @@ func (x *DeleteRequest) String() string {
 func (*DeleteRequest) ProtoMessage() {}
 
 func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[6]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -488,7 +734,7 @@ func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteRequest.ProtoReflect.Descriptor instead.
 func (*DeleteRequest) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{6}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *DeleteRequest) GetKeys() []string {
@@ -507,7 +753,7 @@ type DeleteResponse struct {
 
 func (x *DeleteResponse) Reset() {
 	*x = DeleteResponse{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[7]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -519,7 +765,7 @@ func (x *DeleteResponse) String() string {
 func (*DeleteResponse) ProtoMessage() {}
 
 func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[7]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -532,7 +778,7 @@ func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteResponse.ProtoReflect.Descriptor instead.
 func (*DeleteResponse) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{7}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{8}
 }
 
 // Request to get a specific party.
@@ -546,7 +792,7 @@ type GetRequest struct {
 
 func (x *GetRequest) Reset() {
 	*x = GetRequest{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[8]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -558,7 +804,7 @@ func (x *GetRequest) String() string {
 func (*GetRequest) ProtoMessage() {}
 
 func (x *GetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[8]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -571,7 +817,7 @@ func (x *GetRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
 func (*GetRequest) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{8}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *GetRequest) GetKey() string {
@@ -598,7 +844,7 @@ type GetResponse struct {
 
 func (x *GetResponse) Reset() {
 	*x = GetResponse{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[9]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -610,7 +856,7 @@ func (x *GetResponse) String() string {
 func (*GetResponse) ProtoMessage() {}
 
 func (x *GetResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[9]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -623,7 +869,7 @@ func (x *GetResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
 func (*GetResponse) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{9}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *GetResponse) GetDetails() *Party {
@@ -646,7 +892,7 @@ type ImportRequest struct {
 
 func (x *ImportRequest) Reset() {
 	*x = ImportRequest{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[10]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -658,7 +904,7 @@ func (x *ImportRequest) String() string {
 func (*ImportRequest) ProtoMessage() {}
 
 func (x *ImportRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[10]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -671,7 +917,7 @@ func (x *ImportRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportRequest.ProtoReflect.Descriptor instead.
 func (*ImportRequest) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{10}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ImportRequest) GetFormat() string {
@@ -703,7 +949,7 @@ type ImportResponse struct {
 
 func (x *ImportResponse) Reset() {
 	*x = ImportResponse{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[11]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -715,7 +961,7 @@ func (x *ImportResponse) String() string {
 func (*ImportResponse) ProtoMessage() {}
 
 func (x *ImportResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[11]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -728,7 +974,7 @@ func (x *ImportResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportResponse.ProtoReflect.Descriptor instead.
 func (*ImportResponse) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{11}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *ImportResponse) GetImportedCount() uint64 {
@@ -765,7 +1011,7 @@ type ImportError struct {
 
 func (x *ImportError) Reset() {
 	*x = ImportError{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[12]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -777,7 +1023,7 @@ func (x *ImportError) String() string {
 func (*ImportError) ProtoMessage() {}
 
 func (x *ImportError) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[12]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -790,7 +1036,7 @@ func (x *ImportError) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportError.ProtoReflect.Descriptor instead.
 func (*ImportError) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{12}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *ImportError) GetRowIndex() uint64 {
@@ -820,7 +1066,7 @@ type ExportRequest struct {
 
 func (x *ExportRequest) Reset() {
 	*x = ExportRequest{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[13]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -832,7 +1078,7 @@ func (x *ExportRequest) String() string {
 func (*ExportRequest) ProtoMessage() {}
 
 func (x *ExportRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[13]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -845,7 +1091,7 @@ func (x *ExportRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExportRequest.ProtoReflect.Descriptor instead.
 func (*ExportRequest) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{13}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ExportRequest) GetFormat() string {
@@ -875,7 +1121,7 @@ type ExportResponse struct {
 
 func (x *ExportResponse) Reset() {
 	*x = ExportResponse{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[14]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -887,7 +1133,7 @@ func (x *ExportResponse) String() string {
 func (*ExportResponse) ProtoMessage() {}
 
 func (x *ExportResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[14]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -900,7 +1146,7 @@ func (x *ExportResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExportResponse.ProtoReflect.Descriptor instead.
 func (*ExportResponse) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{14}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *ExportResponse) GetData() []byte {
@@ -932,7 +1178,7 @@ type ListFilter struct {
 
 func (x *ListFilter) Reset() {
 	*x = ListFilter{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[15]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -944,7 +1190,7 @@ func (x *ListFilter) String() string {
 func (*ListFilter) ProtoMessage() {}
 
 func (x *ListFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[15]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -957,7 +1203,7 @@ func (x *ListFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListFilter.ProtoReflect.Descriptor instead.
 func (*ListFilter) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{15}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ListFilter) GetPart() *ListFilterPart {
@@ -999,7 +1245,7 @@ type ListFilterPart struct {
 
 func (x *ListFilterPart) Reset() {
 	*x = ListFilterPart{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[16]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1011,7 +1257,7 @@ func (x *ListFilterPart) String() string {
 func (*ListFilterPart) ProtoMessage() {}
 
 func (x *ListFilterPart) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[16]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1024,7 +1270,7 @@ func (x *ListFilterPart) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListFilterPart.ProtoReflect.Descriptor instead.
 func (*ListFilterPart) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{16}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ListFilterPart) GetType() isListFilterPart_Type {
@@ -1144,7 +1390,7 @@ type ListPartyRoleFilter struct {
 
 func (x *ListPartyRoleFilter) Reset() {
 	*x = ListPartyRoleFilter{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[17]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1156,7 +1402,7 @@ func (x *ListPartyRoleFilter) String() string {
 func (*ListPartyRoleFilter) ProtoMessage() {}
 
 func (x *ListPartyRoleFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[17]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1169,7 +1415,7 @@ func (x *ListPartyRoleFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListPartyRoleFilter.ProtoReflect.Descriptor instead.
 func (*ListPartyRoleFilter) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{17}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *ListPartyRoleFilter) GetInValues() []PartyRole {
@@ -1190,7 +1436,7 @@ type ListCountryFilter struct {
 
 func (x *ListCountryFilter) Reset() {
 	*x = ListCountryFilter{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[18]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1202,7 +1448,7 @@ func (x *ListCountryFilter) String() string {
 func (*ListCountryFilter) ProtoMessage() {}
 
 func (x *ListCountryFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[18]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1215,7 +1461,7 @@ func (x *ListCountryFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCountryFilter.ProtoReflect.Descriptor instead.
 func (*ListCountryFilter) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{18}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *ListCountryFilter) GetInValues() []string {
@@ -1235,7 +1481,7 @@ type ListSort struct {
 
 func (x *ListSort) Reset() {
 	*x = ListSort{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[19]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1247,7 +1493,7 @@ func (x *ListSort) String() string {
 func (*ListSort) ProtoMessage() {}
 
 func (x *ListSort) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[19]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1260,7 +1506,7 @@ func (x *ListSort) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSort.ProtoReflect.Descriptor instead.
 func (*ListSort) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{19}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *ListSort) GetRules() []*ListSortRule {
@@ -1285,7 +1531,7 @@ type ListSortRule struct {
 
 func (x *ListSortRule) Reset() {
 	*x = ListSortRule{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[20]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1297,7 +1543,7 @@ func (x *ListSortRule) String() string {
 func (*ListSortRule) ProtoMessage() {}
 
 func (x *ListSortRule) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[20]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1310,7 +1556,7 @@ func (x *ListSortRule) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSortRule.ProtoReflect.Descriptor instead.
 func (*ListSortRule) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{20}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *ListSortRule) GetType() isListSortRule_Type {
@@ -1386,7 +1632,7 @@ type ListRequest struct {
 
 func (x *ListRequest) Reset() {
 	*x = ListRequest{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[21]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1398,7 +1644,7 @@ func (x *ListRequest) String() string {
 func (*ListRequest) ProtoMessage() {}
 
 func (x *ListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[21]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1411,7 +1657,7 @@ func (x *ListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRequest.ProtoReflect.Descriptor instead.
 func (*ListRequest) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{21}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *ListRequest) GetFilter() *ListFilter {
@@ -1454,7 +1700,7 @@ type ListResponse struct {
 
 func (x *ListResponse) Reset() {
 	*x = ListResponse{}
-	mi := &file_invora_parties_v2_models_proto_msgTypes[22]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1466,7 +1712,7 @@ func (x *ListResponse) String() string {
 func (*ListResponse) ProtoMessage() {}
 
 func (x *ListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_parties_v2_models_proto_msgTypes[22]
+	mi := &file_invora_parties_v2_models_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1479,7 +1725,7 @@ func (x *ListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListResponse.ProtoReflect.Descriptor instead.
 func (*ListResponse) Descriptor() ([]byte, []int) {
-	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{22}
+	return file_invora_parties_v2_models_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *ListResponse) GetItems() []*Party {
@@ -1507,7 +1753,7 @@ var File_invora_parties_v2_models_proto protoreflect.FileDescriptor
 
 const file_invora_parties_v2_models_proto_rawDesc = "" +
 	"\n" +
-	"\x1einvora/parties/v2/models.proto\x12\x11invora.parties.v2\x1a#entity_localization/v1/models.proto\x1a google/protobuf/field_mask.proto\x1a\x12kernel/audit.proto\x1a\x18kernel/key_version.proto\x1a\x12kernel/query.proto\x1aQoasis/names/specification/ubl/schema/xsd/commonaggregatecomponents_2/models.proto\"\xcd\x03\n" +
+	"\x1einvora/parties/v2/models.proto\x12\x11invora.parties.v2\x1a#entity_localization/v1/models.proto\x1a google/protobuf/field_mask.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x12kernel/audit.proto\x1a\x18kernel/key_version.proto\x1a\x12kernel/query.proto\x1aQoasis/names/specification/ubl/schema/xsd/commonaggregatecomponents_2/models.proto\"\xf4\x04\n" +
 	"\x05Party\x12\"\n" +
 	"\x02id\x18\x01 \x01(\v2\x12.kernel.KeyVersionR\x02id\x12+\n" +
 	"\x11concurrency_stamp\x18\x02 \x01(\tR\x10concurrencyStamp\x12:\n" +
@@ -1515,13 +1761,44 @@ const file_invora_parties_v2_models_proto_rawDesc = "" +
 	"\adetails\x18\x04 \x01(\v2O.oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.PartyTypeR\adetails\x120\n" +
 	"\x04role\x18\x05 \x01(\x0e2\x1c.invora.parties.v2.PartyRoleR\x04role\x123\n" +
 	"\x05audit\x18\x06 \x01(\v2\x1d.kernel.CreateUpdateAuditInfoR\x05audit\x12D\n" +
-	"\x1cbilling_customer_external_id\x18\b \x01(\tH\x00R\x19billingCustomerExternalId\x88\x01\x01B\x1f\n" +
-	"\x1d_billing_customer_external_id\"\xe8\x01\n" +
+	"\x1cbilling_customer_external_id\x18\b \x01(\tH\x00R\x19billingCustomerExternalId\x88\x01\x01\x12O\n" +
+	"\x0ebilling_config\x18\t \x01(\v2(.invora.parties.v2.BillingCustomerConfigR\rbillingConfig\x123\n" +
+	"\bmetadata\x18\n" +
+	" \x01(\v2\x17.google.protobuf.StructR\bmetadata\x12\x1f\n" +
+	"\vsequence_id\x18\v \x01(\x03R\n" +
+	"sequenceIdB\x1f\n" +
+	"\x1d_billing_customer_external_id\"\x95\b\n" +
+	"\x15BillingCustomerConfig\x12\x1f\n" +
+	"\bcurrency\x18\x01 \x01(\tH\x00R\bcurrency\x88\x01\x01\x12.\n" +
+	"\x10payment_provider\x18\x02 \x01(\tH\x01R\x0fpaymentProvider\x88\x01\x01\x127\n" +
+	"\x15payment_provider_code\x18\x03 \x01(\tH\x02R\x13paymentProviderCode\x88\x01\x01\x125\n" +
+	"\x14invoice_grace_period\x18\x04 \x01(\x05H\x03R\x12invoiceGracePeriod\x88\x01\x01\x12-\n" +
+	"\x10net_payment_term\x18\x05 \x01(\x05H\x04R\x0enetPaymentTerm\x88\x01\x01\x12\x1f\n" +
+	"\btimezone\x18\x06 \x01(\tH\x05R\btimezone\x88\x01\x01\x12m\n" +
+	"\x1cfinalize_zero_amount_invoice\x18\a \x01(\x0e2,.invora.parties.v2.FinalizeZeroAmountInvoiceR\x19finalizeZeroAmountInvoice\x123\n" +
+	"\x13dunning_campaign_id\x18\b \x01(\tH\x06R\x11dunningCampaignId\x88\x01\x01\x12F\n" +
+	"\x1dexclude_from_dunning_campaign\x18\t \x01(\bH\aR\x1aexcludeFromDunningCampaign\x88\x01\x01\x12A\n" +
+	"\x1dlast_dunning_campaign_attempt\x18\n" +
+	" \x01(\x05R\x1alastDunningCampaignAttempt\x12K\n" +
+	" last_dunning_campaign_attempt_at\x18\v \x01(\tH\bR\x1clastDunningCampaignAttemptAt\x88\x01\x01\x12\x1b\n" +
+	"\ttax_codes\x18\f \x03(\tR\btaxCodes\x12|\n" +
+	"\x10shipping_address\x18\r \x01(\v2Q.oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.AddressTypeR\x0fshippingAddressB\v\n" +
+	"\t_currencyB\x13\n" +
+	"\x11_payment_providerB\x18\n" +
+	"\x16_payment_provider_codeB\x17\n" +
+	"\x15_invoice_grace_periodB\x13\n" +
+	"\x11_net_payment_termB\v\n" +
+	"\t_timezoneB\x16\n" +
+	"\x14_dunning_campaign_idB \n" +
+	"\x1e_exclude_from_dunning_campaignB#\n" +
+	"!_last_dunning_campaign_attempt_at\"\xee\x02\n" +
 	"\n" +
 	"ChangeBase\x12=\n" +
 	"\x04name\x18\x01 \x01(\v2).entity_localization.v1.SetLocalizedValueR\x04name\x12i\n" +
 	"\adetails\x18\x02 \x01(\v2O.oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.PartyTypeR\adetails\x120\n" +
-	"\x04role\x18\x03 \x01(\x0e2\x1c.invora.parties.v2.PartyRoleR\x04role\"g\n" +
+	"\x04role\x18\x03 \x01(\x0e2\x1c.invora.parties.v2.PartyRoleR\x04role\x12O\n" +
+	"\x0ebilling_config\x18\x04 \x01(\v2(.invora.parties.v2.BillingCustomerConfigR\rbillingConfig\x123\n" +
+	"\bmetadata\x18\x05 \x01(\v2\x17.google.protobuf.StructR\bmetadata\"g\n" +
 	"\rCreateRequest\x12\x15\n" +
 	"\x03key\x18\x01 \x01(\tH\x00R\x03key\x88\x01\x01\x127\n" +
 	"\achanges\x18\x02 \x01(\v2\x1d.invora.parties.v2.ChangeBaseR\achangesB\x06\n" +
@@ -1608,7 +1885,11 @@ const file_invora_parties_v2_models_proto_rawDesc = "" +
 	"\x16PARTY_ROLE_UNSPECIFIED\x10\x00\x12\x17\n" +
 	"\x13PARTY_ROLE_SUPPLIER\x10\x01\x12\x17\n" +
 	"\x13PARTY_ROLE_CUSTOMER\x10\x02\x12\x13\n" +
-	"\x0fPARTY_ROLE_BOTH\x10\x03B\xd2\x01\n" +
+	"\x0fPARTY_ROLE_BOTH\x10\x03*\x9b\x01\n" +
+	"\x19FinalizeZeroAmountInvoice\x12,\n" +
+	"(FINALIZE_ZERO_AMOUNT_INVOICE_UNSPECIFIED\x10\x00\x12%\n" +
+	"!FINALIZE_ZERO_AMOUNT_INVOICE_SKIP\x10\x01\x12)\n" +
+	"%FINALIZE_ZERO_AMOUNT_INVOICE_FINALIZE\x10\x02B\xd2\x01\n" +
 	"\x15com.invora.parties.v2B\vModelsProtoP\x01ZFgithub.com/invoraapp/invora-controller/gen/invora/parties/v2;partiesv2\xa2\x02\x03IPX\xaa\x02\x11Invora.Parties.V2\xca\x02\x11Invora\\Parties\\V2\xe2\x02\x1dInvora\\Parties\\V2\\GPBMetadata\xea\x02\x13Invora::Parties::V2b\x06proto3"
 
 var (
@@ -1623,85 +1904,95 @@ func file_invora_parties_v2_models_proto_rawDescGZIP() []byte {
 	return file_invora_parties_v2_models_proto_rawDescData
 }
 
-var file_invora_parties_v2_models_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_invora_parties_v2_models_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
+var file_invora_parties_v2_models_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_invora_parties_v2_models_proto_msgTypes = make([]protoimpl.MessageInfo, 24)
 var file_invora_parties_v2_models_proto_goTypes = []any{
-	(PartyRole)(0),                                // 0: invora.parties.v2.PartyRole
-	(*Party)(nil),                                 // 1: invora.parties.v2.Party
-	(*ChangeBase)(nil),                            // 2: invora.parties.v2.ChangeBase
-	(*CreateRequest)(nil),                         // 3: invora.parties.v2.CreateRequest
-	(*CreateResponse)(nil),                        // 4: invora.parties.v2.CreateResponse
-	(*UpdateRequest)(nil),                         // 5: invora.parties.v2.UpdateRequest
-	(*UpdateResponse)(nil),                        // 6: invora.parties.v2.UpdateResponse
-	(*DeleteRequest)(nil),                         // 7: invora.parties.v2.DeleteRequest
-	(*DeleteResponse)(nil),                        // 8: invora.parties.v2.DeleteResponse
-	(*GetRequest)(nil),                            // 9: invora.parties.v2.GetRequest
-	(*GetResponse)(nil),                           // 10: invora.parties.v2.GetResponse
-	(*ImportRequest)(nil),                         // 11: invora.parties.v2.ImportRequest
-	(*ImportResponse)(nil),                        // 12: invora.parties.v2.ImportResponse
-	(*ImportError)(nil),                           // 13: invora.parties.v2.ImportError
-	(*ExportRequest)(nil),                         // 14: invora.parties.v2.ExportRequest
-	(*ExportResponse)(nil),                        // 15: invora.parties.v2.ExportResponse
-	(*ListFilter)(nil),                            // 16: invora.parties.v2.ListFilter
-	(*ListFilterPart)(nil),                        // 17: invora.parties.v2.ListFilterPart
-	(*ListPartyRoleFilter)(nil),                   // 18: invora.parties.v2.ListPartyRoleFilter
-	(*ListCountryFilter)(nil),                     // 19: invora.parties.v2.ListCountryFilter
-	(*ListSort)(nil),                              // 20: invora.parties.v2.ListSort
-	(*ListSortRule)(nil),                          // 21: invora.parties.v2.ListSortRule
-	(*ListRequest)(nil),                           // 22: invora.parties.v2.ListRequest
-	(*ListResponse)(nil),                          // 23: invora.parties.v2.ListResponse
-	(*kernel.KeyVersion)(nil),                     // 24: kernel.KeyVersion
-	(*v1.LocalizedValue)(nil),                     // 25: entity_localization.v1.LocalizedValue
-	(*commonaggregatecomponents_2.PartyType)(nil), // 26: oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.PartyType
-	(*kernel.CreateUpdateAuditInfo)(nil),          // 27: kernel.CreateUpdateAuditInfo
-	(*v1.SetLocalizedValue)(nil),                  // 28: entity_localization.v1.SetLocalizedValue
-	(*fieldmaskpb.FieldMask)(nil),                 // 29: google.protobuf.FieldMask
-	(*kernel.TimeReferenceInfo)(nil),              // 30: kernel.TimeReferenceInfo
-	(*kernel.ListRequestFilterPartId)(nil),        // 31: kernel.ListRequestFilterPartId
-	(*kernel.ListRequestFilterPartDateV2)(nil),    // 32: kernel.ListRequestFilterPartDateV2
-	(kernel.SortDirection)(0),                     // 33: kernel.SortDirection
-	(*kernel.PaginationInfo)(nil),                 // 34: kernel.PaginationInfo
+	(PartyRole)(0),                                  // 0: invora.parties.v2.PartyRole
+	(FinalizeZeroAmountInvoice)(0),                  // 1: invora.parties.v2.FinalizeZeroAmountInvoice
+	(*Party)(nil),                                   // 2: invora.parties.v2.Party
+	(*BillingCustomerConfig)(nil),                   // 3: invora.parties.v2.BillingCustomerConfig
+	(*ChangeBase)(nil),                              // 4: invora.parties.v2.ChangeBase
+	(*CreateRequest)(nil),                           // 5: invora.parties.v2.CreateRequest
+	(*CreateResponse)(nil),                          // 6: invora.parties.v2.CreateResponse
+	(*UpdateRequest)(nil),                           // 7: invora.parties.v2.UpdateRequest
+	(*UpdateResponse)(nil),                          // 8: invora.parties.v2.UpdateResponse
+	(*DeleteRequest)(nil),                           // 9: invora.parties.v2.DeleteRequest
+	(*DeleteResponse)(nil),                          // 10: invora.parties.v2.DeleteResponse
+	(*GetRequest)(nil),                              // 11: invora.parties.v2.GetRequest
+	(*GetResponse)(nil),                             // 12: invora.parties.v2.GetResponse
+	(*ImportRequest)(nil),                           // 13: invora.parties.v2.ImportRequest
+	(*ImportResponse)(nil),                          // 14: invora.parties.v2.ImportResponse
+	(*ImportError)(nil),                             // 15: invora.parties.v2.ImportError
+	(*ExportRequest)(nil),                           // 16: invora.parties.v2.ExportRequest
+	(*ExportResponse)(nil),                          // 17: invora.parties.v2.ExportResponse
+	(*ListFilter)(nil),                              // 18: invora.parties.v2.ListFilter
+	(*ListFilterPart)(nil),                          // 19: invora.parties.v2.ListFilterPart
+	(*ListPartyRoleFilter)(nil),                     // 20: invora.parties.v2.ListPartyRoleFilter
+	(*ListCountryFilter)(nil),                       // 21: invora.parties.v2.ListCountryFilter
+	(*ListSort)(nil),                                // 22: invora.parties.v2.ListSort
+	(*ListSortRule)(nil),                            // 23: invora.parties.v2.ListSortRule
+	(*ListRequest)(nil),                             // 24: invora.parties.v2.ListRequest
+	(*ListResponse)(nil),                            // 25: invora.parties.v2.ListResponse
+	(*kernel.KeyVersion)(nil),                       // 26: kernel.KeyVersion
+	(*v1.LocalizedValue)(nil),                       // 27: entity_localization.v1.LocalizedValue
+	(*commonaggregatecomponents_2.PartyType)(nil),   // 28: oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.PartyType
+	(*kernel.CreateUpdateAuditInfo)(nil),            // 29: kernel.CreateUpdateAuditInfo
+	(*structpb.Struct)(nil),                         // 30: google.protobuf.Struct
+	(*commonaggregatecomponents_2.AddressType)(nil), // 31: oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.AddressType
+	(*v1.SetLocalizedValue)(nil),                    // 32: entity_localization.v1.SetLocalizedValue
+	(*fieldmaskpb.FieldMask)(nil),                   // 33: google.protobuf.FieldMask
+	(*kernel.TimeReferenceInfo)(nil),                // 34: kernel.TimeReferenceInfo
+	(*kernel.ListRequestFilterPartId)(nil),          // 35: kernel.ListRequestFilterPartId
+	(*kernel.ListRequestFilterPartDateV2)(nil),      // 36: kernel.ListRequestFilterPartDateV2
+	(kernel.SortDirection)(0),                       // 37: kernel.SortDirection
+	(*kernel.PaginationInfo)(nil),                   // 38: kernel.PaginationInfo
 }
 var file_invora_parties_v2_models_proto_depIdxs = []int32{
-	24, // 0: invora.parties.v2.Party.id:type_name -> kernel.KeyVersion
-	25, // 1: invora.parties.v2.Party.name:type_name -> entity_localization.v1.LocalizedValue
-	26, // 2: invora.parties.v2.Party.details:type_name -> oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.PartyType
+	26, // 0: invora.parties.v2.Party.id:type_name -> kernel.KeyVersion
+	27, // 1: invora.parties.v2.Party.name:type_name -> entity_localization.v1.LocalizedValue
+	28, // 2: invora.parties.v2.Party.details:type_name -> oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.PartyType
 	0,  // 3: invora.parties.v2.Party.role:type_name -> invora.parties.v2.PartyRole
-	27, // 4: invora.parties.v2.Party.audit:type_name -> kernel.CreateUpdateAuditInfo
-	28, // 5: invora.parties.v2.ChangeBase.name:type_name -> entity_localization.v1.SetLocalizedValue
-	26, // 6: invora.parties.v2.ChangeBase.details:type_name -> oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.PartyType
-	0,  // 7: invora.parties.v2.ChangeBase.role:type_name -> invora.parties.v2.PartyRole
-	2,  // 8: invora.parties.v2.CreateRequest.changes:type_name -> invora.parties.v2.ChangeBase
-	1,  // 9: invora.parties.v2.CreateResponse.details:type_name -> invora.parties.v2.Party
-	29, // 10: invora.parties.v2.UpdateRequest.mask:type_name -> google.protobuf.FieldMask
-	2,  // 11: invora.parties.v2.UpdateRequest.changes:type_name -> invora.parties.v2.ChangeBase
-	1,  // 12: invora.parties.v2.UpdateResponse.details:type_name -> invora.parties.v2.Party
-	29, // 13: invora.parties.v2.GetRequest.mask:type_name -> google.protobuf.FieldMask
-	1,  // 14: invora.parties.v2.GetResponse.details:type_name -> invora.parties.v2.Party
-	13, // 15: invora.parties.v2.ImportResponse.errors:type_name -> invora.parties.v2.ImportError
-	16, // 16: invora.parties.v2.ExportRequest.filter:type_name -> invora.parties.v2.ListFilter
-	17, // 17: invora.parties.v2.ListFilter.part:type_name -> invora.parties.v2.ListFilterPart
-	30, // 18: invora.parties.v2.ListFilter.time_reference:type_name -> kernel.TimeReferenceInfo
-	31, // 19: invora.parties.v2.ListFilterPart.key:type_name -> kernel.ListRequestFilterPartId
-	32, // 20: invora.parties.v2.ListFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDateV2
-	32, // 21: invora.parties.v2.ListFilterPart.updated_at:type_name -> kernel.ListRequestFilterPartDateV2
-	18, // 22: invora.parties.v2.ListFilterPart.role:type_name -> invora.parties.v2.ListPartyRoleFilter
-	19, // 23: invora.parties.v2.ListFilterPart.country_code:type_name -> invora.parties.v2.ListCountryFilter
-	0,  // 24: invora.parties.v2.ListPartyRoleFilter.in_values:type_name -> invora.parties.v2.PartyRole
-	21, // 25: invora.parties.v2.ListSort.rules:type_name -> invora.parties.v2.ListSortRule
-	33, // 26: invora.parties.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
-	33, // 27: invora.parties.v2.ListSortRule.updated_at:type_name -> kernel.SortDirection
-	33, // 28: invora.parties.v2.ListSortRule.name:type_name -> kernel.SortDirection
-	16, // 29: invora.parties.v2.ListRequest.filter:type_name -> invora.parties.v2.ListFilter
-	20, // 30: invora.parties.v2.ListRequest.sort:type_name -> invora.parties.v2.ListSort
-	34, // 31: invora.parties.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
-	29, // 32: invora.parties.v2.ListRequest.mask:type_name -> google.protobuf.FieldMask
-	1,  // 33: invora.parties.v2.ListResponse.items:type_name -> invora.parties.v2.Party
-	34, // [34:34] is the sub-list for method output_type
-	34, // [34:34] is the sub-list for method input_type
-	34, // [34:34] is the sub-list for extension type_name
-	34, // [34:34] is the sub-list for extension extendee
-	0,  // [0:34] is the sub-list for field type_name
+	29, // 4: invora.parties.v2.Party.audit:type_name -> kernel.CreateUpdateAuditInfo
+	3,  // 5: invora.parties.v2.Party.billing_config:type_name -> invora.parties.v2.BillingCustomerConfig
+	30, // 6: invora.parties.v2.Party.metadata:type_name -> google.protobuf.Struct
+	1,  // 7: invora.parties.v2.BillingCustomerConfig.finalize_zero_amount_invoice:type_name -> invora.parties.v2.FinalizeZeroAmountInvoice
+	31, // 8: invora.parties.v2.BillingCustomerConfig.shipping_address:type_name -> oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.AddressType
+	32, // 9: invora.parties.v2.ChangeBase.name:type_name -> entity_localization.v1.SetLocalizedValue
+	28, // 10: invora.parties.v2.ChangeBase.details:type_name -> oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.PartyType
+	0,  // 11: invora.parties.v2.ChangeBase.role:type_name -> invora.parties.v2.PartyRole
+	3,  // 12: invora.parties.v2.ChangeBase.billing_config:type_name -> invora.parties.v2.BillingCustomerConfig
+	30, // 13: invora.parties.v2.ChangeBase.metadata:type_name -> google.protobuf.Struct
+	4,  // 14: invora.parties.v2.CreateRequest.changes:type_name -> invora.parties.v2.ChangeBase
+	2,  // 15: invora.parties.v2.CreateResponse.details:type_name -> invora.parties.v2.Party
+	33, // 16: invora.parties.v2.UpdateRequest.mask:type_name -> google.protobuf.FieldMask
+	4,  // 17: invora.parties.v2.UpdateRequest.changes:type_name -> invora.parties.v2.ChangeBase
+	2,  // 18: invora.parties.v2.UpdateResponse.details:type_name -> invora.parties.v2.Party
+	33, // 19: invora.parties.v2.GetRequest.mask:type_name -> google.protobuf.FieldMask
+	2,  // 20: invora.parties.v2.GetResponse.details:type_name -> invora.parties.v2.Party
+	15, // 21: invora.parties.v2.ImportResponse.errors:type_name -> invora.parties.v2.ImportError
+	18, // 22: invora.parties.v2.ExportRequest.filter:type_name -> invora.parties.v2.ListFilter
+	19, // 23: invora.parties.v2.ListFilter.part:type_name -> invora.parties.v2.ListFilterPart
+	34, // 24: invora.parties.v2.ListFilter.time_reference:type_name -> kernel.TimeReferenceInfo
+	35, // 25: invora.parties.v2.ListFilterPart.key:type_name -> kernel.ListRequestFilterPartId
+	36, // 26: invora.parties.v2.ListFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDateV2
+	36, // 27: invora.parties.v2.ListFilterPart.updated_at:type_name -> kernel.ListRequestFilterPartDateV2
+	20, // 28: invora.parties.v2.ListFilterPart.role:type_name -> invora.parties.v2.ListPartyRoleFilter
+	21, // 29: invora.parties.v2.ListFilterPart.country_code:type_name -> invora.parties.v2.ListCountryFilter
+	0,  // 30: invora.parties.v2.ListPartyRoleFilter.in_values:type_name -> invora.parties.v2.PartyRole
+	23, // 31: invora.parties.v2.ListSort.rules:type_name -> invora.parties.v2.ListSortRule
+	37, // 32: invora.parties.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
+	37, // 33: invora.parties.v2.ListSortRule.updated_at:type_name -> kernel.SortDirection
+	37, // 34: invora.parties.v2.ListSortRule.name:type_name -> kernel.SortDirection
+	18, // 35: invora.parties.v2.ListRequest.filter:type_name -> invora.parties.v2.ListFilter
+	22, // 36: invora.parties.v2.ListRequest.sort:type_name -> invora.parties.v2.ListSort
+	38, // 37: invora.parties.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
+	33, // 38: invora.parties.v2.ListRequest.mask:type_name -> google.protobuf.FieldMask
+	2,  // 39: invora.parties.v2.ListResponse.items:type_name -> invora.parties.v2.Party
+	40, // [40:40] is the sub-list for method output_type
+	40, // [40:40] is the sub-list for method input_type
+	40, // [40:40] is the sub-list for extension type_name
+	40, // [40:40] is the sub-list for extension extendee
+	0,  // [0:40] is the sub-list for field type_name
 }
 
 func init() { file_invora_parties_v2_models_proto_init() }
@@ -1710,8 +2001,9 @@ func file_invora_parties_v2_models_proto_init() {
 		return
 	}
 	file_invora_parties_v2_models_proto_msgTypes[0].OneofWrappers = []any{}
-	file_invora_parties_v2_models_proto_msgTypes[2].OneofWrappers = []any{}
-	file_invora_parties_v2_models_proto_msgTypes[16].OneofWrappers = []any{
+	file_invora_parties_v2_models_proto_msgTypes[1].OneofWrappers = []any{}
+	file_invora_parties_v2_models_proto_msgTypes[3].OneofWrappers = []any{}
+	file_invora_parties_v2_models_proto_msgTypes[17].OneofWrappers = []any{
 		(*ListFilterPart_Key)(nil),
 		(*ListFilterPart_CreatedAt)(nil),
 		(*ListFilterPart_UpdatedAt)(nil),
@@ -1719,19 +2011,19 @@ func file_invora_parties_v2_models_proto_init() {
 		(*ListFilterPart_TaxIdContains)(nil),
 		(*ListFilterPart_CountryCode)(nil),
 	}
-	file_invora_parties_v2_models_proto_msgTypes[20].OneofWrappers = []any{
+	file_invora_parties_v2_models_proto_msgTypes[21].OneofWrappers = []any{
 		(*ListSortRule_CreatedAt)(nil),
 		(*ListSortRule_UpdatedAt)(nil),
 		(*ListSortRule_Name)(nil),
 	}
-	file_invora_parties_v2_models_proto_msgTypes[22].OneofWrappers = []any{}
+	file_invora_parties_v2_models_proto_msgTypes[23].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_parties_v2_models_proto_rawDesc), len(file_invora_parties_v2_models_proto_rawDesc)),
-			NumEnums:      1,
-			NumMessages:   23,
+			NumEnums:      2,
+			NumMessages:   24,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
