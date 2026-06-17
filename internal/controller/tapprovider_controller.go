@@ -78,7 +78,7 @@ func (r *InvoraBillingTapProviderReconciler) Reconcile(ctx context.Context, req 
 		return SuccessResult(&tap), nil
 	}
 
-	svc := paymentproviderspb.NewPaymentProviderServiceClient(orc.Conn())
+	svc := paymentproviderspb.NewPaymentProvidersServiceClient(orc.Conn())
 	grpcCtx := orc.GrpcCtx(ctx)
 
 	if tap.Status.ProviderID == "" {
@@ -102,13 +102,11 @@ func (r *InvoraBillingTapProviderReconciler) Reconcile(ctx context.Context, req 
 		name := tap.Spec.Name
 		code := tap.Spec.Code
 		redirect := tap.Spec.SuccessRedirectUrl
-		updated, err := svc.UpdateTapPaymentProvider(grpcCtx, &paymentproviderspb.UpdateTapPaymentProviderRequest{
-			Input: &paymentproviderspb.UpdateTapPaymentProviderInput{
-				Id:                 tap.Status.ProviderID,
-				Code:               &code,
-				Name:               &name,
-				SuccessRedirectUrl: &redirect,
-			},
+		updated, err := svc.UpdateTap(grpcCtx, &paymentproviderspb.UpdateTapRequest{
+			Id:                 tap.Status.ProviderID,
+			Code:               &code,
+			Name:               &name,
+			SuccessRedirectUrl: &redirect,
 		})
 		if err != nil {
 			SetCondition(&tap.Status.Conditions, billingv1alpha1.ConditionSynced,
@@ -128,13 +126,11 @@ func (r *InvoraBillingTapProviderReconciler) Reconcile(ctx context.Context, req 
 	}
 
 	logger.Info("adding Tap payment provider", "code", tap.Spec.Code)
-	created, err := svc.CreateTapPaymentProvider(grpcCtx, &paymentproviderspb.CreateTapPaymentProviderRequest{
-		Input: &paymentproviderspb.AddTapPaymentProviderInput{
-			Code:               tap.Spec.Code,
-			Name:               tap.Spec.Name,
-			ApiKey:             &apiKey,
-			SuccessRedirectUrl: &tap.Spec.SuccessRedirectUrl,
-		},
+	created, err := svc.CreateTap(grpcCtx, &paymentproviderspb.CreateTapRequest{
+		Code:               tap.Spec.Code,
+		Name:               tap.Spec.Name,
+		ApiKey:             &apiKey,
+		SuccessRedirectUrl: &tap.Spec.SuccessRedirectUrl,
 	})
 	if err != nil {
 		SetCondition(&tap.Status.Conditions, billingv1alpha1.ConditionSynced,

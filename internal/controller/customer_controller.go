@@ -34,9 +34,9 @@ func (r *InvoraBillingCustomerReconciler) Reconcile(ctx context.Context, req ctr
 			customer.Spec.OrganizationRef, customer.Spec.DeletionPolicy,
 			customer.Status.ExternalID, &customer.Status.Conditions, customer.Generation,
 			func(ctx context.Context, orc *orgResourceContext) error {
-				svc := customerspb.NewCustomerServiceClient(orc.Conn())
+				svc := customerspb.NewCustomersServiceClient(orc.Conn())
 				_, err := svc.Delete(orc.GrpcCtx(ctx), &customerspb.DeleteRequest{
-					Input: &customerspb.DestroyCustomerInput{Id: customer.Status.ExternalID},
+					Id: customer.Status.ExternalID,
 				})
 				return err
 			})
@@ -66,7 +66,7 @@ func (r *InvoraBillingCustomerReconciler) Reconcile(ctx context.Context, req ctr
 		return SuccessResult(&customer), nil
 	}
 
-	svc := customerspb.NewCustomerServiceClient(orc.Conn())
+	svc := customerspb.NewCustomersServiceClient(orc.Conn())
 	grpcCtx := orc.GrpcCtx(ctx)
 
 	if customer.Status.ExternalID != "" {
@@ -82,9 +82,7 @@ func (r *InvoraBillingCustomerReconciler) Reconcile(ctx context.Context, req ctr
 			}
 		}
 		if customer.Status.ExternalID != "" {
-			_, err := svc.Create(grpcCtx, &customerspb.CreateRequest{
-				Input: buildCreateCustomerInput(&customer),
-			})
+			_, err := svc.Create(grpcCtx, buildCreateCustomerRequest(&customer))
 			if err != nil {
 				SetCondition(&customer.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "UpdateFailed", err.Error(), customer.Generation)
 				_ = r.Status().Update(ctx, &customer)
@@ -97,9 +95,7 @@ func (r *InvoraBillingCustomerReconciler) Reconcile(ctx context.Context, req ctr
 	}
 
 	logger.Info("creating customer", "externalId", customer.Spec.ExternalID)
-	created, err := svc.Create(grpcCtx, &customerspb.CreateRequest{
-		Input: buildCreateCustomerInput(&customer),
-	})
+	created, err := svc.Create(grpcCtx, buildCreateCustomerRequest(&customer))
 	if err != nil {
 		SetCondition(&customer.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "CreateFailed", err.Error(), customer.Generation)
 		_ = r.Status().Update(ctx, &customer)
@@ -114,8 +110,8 @@ func (r *InvoraBillingCustomerReconciler) Reconcile(ctx context.Context, req ctr
 	return SuccessResult(&customer), nil
 }
 
-func buildCreateCustomerInput(customer *billingv1alpha1.InvoraBillingCustomer) *customerspb.CreateCustomerInput {
-	in := &customerspb.CreateCustomerInput{
+func buildCreateCustomerRequest(customer *billingv1alpha1.InvoraBillingCustomer) *customerspb.CreateRequest {
+	in := &customerspb.CreateRequest{
 		ExternalId: customer.Spec.ExternalID,
 		TaxCodes:   customer.Spec.TaxCodes,
 	}

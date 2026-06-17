@@ -13,7 +13,6 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
-	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -26,64 +25,13 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Controls response detail level for List and Get operations.
-type View int32
-
-const (
-	View_VIEW_UNSPECIFIED View = 0
-	View_VIEW_BASIC       View = 1
-	View_VIEW_FULL        View = 2
-)
-
-// Enum value maps for View.
-var (
-	View_name = map[int32]string{
-		0: "VIEW_UNSPECIFIED",
-		1: "VIEW_BASIC",
-		2: "VIEW_FULL",
-	}
-	View_value = map[string]int32{
-		"VIEW_UNSPECIFIED": 0,
-		"VIEW_BASIC":       1,
-		"VIEW_FULL":        2,
-	}
-)
-
-func (x View) Enum() *View {
-	p := new(View)
-	*p = x
-	return p
-}
-
-func (x View) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (View) Descriptor() protoreflect.EnumDescriptor {
-	return file_invora_billing_plans_v2_service_proto_enumTypes[0].Descriptor()
-}
-
-func (View) Type() protoreflect.EnumType {
-	return &file_invora_billing_plans_v2_service_proto_enumTypes[0]
-}
-
-func (x View) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use View.Descriptor instead.
-func (View) EnumDescriptor() ([]byte, []int) {
-	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{0}
-}
-
 type GetRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Uniq ID of the plan
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id    string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Fields to return in the response.
 	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.plans.v2.View" json:"view,omitempty"`
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -132,11 +80,11 @@ func (x *GetRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	return nil
 }
 
-func (x *GetRequest) GetView() View {
+func (x *GetRequest) GetView() v2.View {
 	if x != nil {
 		return x.View
 	}
-	return View_VIEW_UNSPECIFIED
+	return v2.View(0)
 }
 
 type GetResponse struct {
@@ -191,7 +139,7 @@ type ListRequest struct {
 	// Fields to return in the response.
 	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.plans.v2.View" json:"view,omitempty"`
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -254,18 +202,18 @@ func (x *ListRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	return nil
 }
 
-func (x *ListRequest) GetView() View {
+func (x *ListRequest) GetView() v2.View {
 	if x != nil {
 		return x.View
 	}
-	return View_VIEW_UNSPECIFIED
+	return v2.View(0)
 }
 
 type ListResponse struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Items          []*v2.BillingPlan       `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Items          []*v2.BillingPlan      `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -314,11 +262,11 @@ func (x *ListResponse) GetTotalCount() uint64 {
 	return 0
 }
 
-func (x *ListResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
+func (x *ListResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
 	}
-	return nil
+	return ""
 }
 
 type ListFilter struct {
@@ -551,10 +499,27 @@ type ListSortRule_CreatedAt struct {
 func (*ListSortRule_CreatedAt) isListSortRule_Type() {}
 
 type CreateRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *CreatePlanInput       `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                   protoimpl.MessageState    `protogen:"open.v1"`
+	AmountCents             int64                     `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
+	AmountCurrency          v2.CurrencyEnum           `protobuf:"varint,2,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"amount_currency,omitempty"`
+	BillChargesMonthly      *bool                     `protobuf:"varint,3,opt,name=bill_charges_monthly,json=billChargesMonthly,proto3,oneof" json:"bill_charges_monthly,omitempty"`
+	BillFixedChargesMonthly *bool                     `protobuf:"varint,4,opt,name=bill_fixed_charges_monthly,json=billFixedChargesMonthly,proto3,oneof" json:"bill_fixed_charges_monthly,omitempty"`
+	Charges                 []*ChargeInput            `protobuf:"bytes,5,rep,name=charges,proto3" json:"charges,omitempty"`
+	Code                    string                    `protobuf:"bytes,6,opt,name=code,proto3" json:"code,omitempty"`
+	Description             *string                   `protobuf:"bytes,7,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	Entitlements            []*v2.EntitlementInput    `protobuf:"bytes,8,rep,name=entitlements,proto3" json:"entitlements,omitempty"`
+	FixedCharges            []*FixedChargeInput       `protobuf:"bytes,9,rep,name=fixed_charges,json=fixedCharges,proto3" json:"fixed_charges,omitempty"`
+	Interval                v2.PlanInterval           `protobuf:"varint,10,opt,name=interval,proto3,enum=invora.billing.common.v2.PlanInterval" json:"interval,omitempty"`
+	InvoiceDisplayName      *string                   `protobuf:"bytes,11,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
+	Metadata                []*v2.MetadataInput       `protobuf:"bytes,12,rep,name=metadata,proto3" json:"metadata,omitempty"`
+	MinimumCommitment       *v2.CommitmentInput       `protobuf:"bytes,13,opt,name=minimum_commitment,json=minimumCommitment,proto3,oneof" json:"minimum_commitment,omitempty"`
+	Name                    string                    `protobuf:"bytes,14,opt,name=name,proto3" json:"name,omitempty"`
+	PayInAdvance            bool                      `protobuf:"varint,15,opt,name=pay_in_advance,json=payInAdvance,proto3" json:"pay_in_advance,omitempty"`
+	TaxCodes                []string                  `protobuf:"bytes,16,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
+	TrialPeriod             *float64                  `protobuf:"fixed64,17,opt,name=trial_period,json=trialPeriod,proto3,oneof" json:"trial_period,omitempty"`
+	UsageThresholds         []*v2.UsageThresholdInput `protobuf:"bytes,18,rep,name=usage_thresholds,json=usageThresholds,proto3" json:"usage_thresholds,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *CreateRequest) Reset() {
@@ -587,9 +552,128 @@ func (*CreateRequest) Descriptor() ([]byte, []int) {
 	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *CreateRequest) GetInput() *CreatePlanInput {
+func (x *CreateRequest) GetAmountCents() int64 {
 	if x != nil {
-		return x.Input
+		return x.AmountCents
+	}
+	return 0
+}
+
+func (x *CreateRequest) GetAmountCurrency() v2.CurrencyEnum {
+	if x != nil {
+		return x.AmountCurrency
+	}
+	return v2.CurrencyEnum(0)
+}
+
+func (x *CreateRequest) GetBillChargesMonthly() bool {
+	if x != nil && x.BillChargesMonthly != nil {
+		return *x.BillChargesMonthly
+	}
+	return false
+}
+
+func (x *CreateRequest) GetBillFixedChargesMonthly() bool {
+	if x != nil && x.BillFixedChargesMonthly != nil {
+		return *x.BillFixedChargesMonthly
+	}
+	return false
+}
+
+func (x *CreateRequest) GetCharges() []*ChargeInput {
+	if x != nil {
+		return x.Charges
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetDescription() string {
+	if x != nil && x.Description != nil {
+		return *x.Description
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetEntitlements() []*v2.EntitlementInput {
+	if x != nil {
+		return x.Entitlements
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetFixedCharges() []*FixedChargeInput {
+	if x != nil {
+		return x.FixedCharges
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetInterval() v2.PlanInterval {
+	if x != nil {
+		return x.Interval
+	}
+	return v2.PlanInterval(0)
+}
+
+func (x *CreateRequest) GetInvoiceDisplayName() string {
+	if x != nil && x.InvoiceDisplayName != nil {
+		return *x.InvoiceDisplayName
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetMetadata() []*v2.MetadataInput {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetMinimumCommitment() *v2.CommitmentInput {
+	if x != nil {
+		return x.MinimumCommitment
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetPayInAdvance() bool {
+	if x != nil {
+		return x.PayInAdvance
+	}
+	return false
+}
+
+func (x *CreateRequest) GetTaxCodes() []string {
+	if x != nil {
+		return x.TaxCodes
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetTrialPeriod() float64 {
+	if x != nil && x.TrialPeriod != nil {
+		return *x.TrialPeriod
+	}
+	return 0
+}
+
+func (x *CreateRequest) GetUsageThresholds() []*v2.UsageThresholdInput {
+	if x != nil {
+		return x.UsageThresholds
 	}
 	return nil
 }
@@ -638,176 +722,7 @@ func (x *CreateResponse) GetPlan() *v2.BillingPlan {
 	return nil
 }
 
-type DeleteRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *DestroyPlanInput      `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteRequest) Reset() {
-	*x = DeleteRequest{}
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[10]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteRequest) ProtoMessage() {}
-
-func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[10]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteRequest.ProtoReflect.Descriptor instead.
-func (*DeleteRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{10}
-}
-
-func (x *DeleteRequest) GetInput() *DestroyPlanInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type DeleteResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteResponse) Reset() {
-	*x = DeleteResponse{}
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[11]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteResponse) ProtoMessage() {}
-
-func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[11]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteResponse.ProtoReflect.Descriptor instead.
-func (*DeleteResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{11}
-}
-
 type UpdateRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Input         *UpdatePlanInput       `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateRequest) Reset() {
-	*x = UpdateRequest{}
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[12]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateRequest) ProtoMessage() {}
-
-func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[12]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateRequest.ProtoReflect.Descriptor instead.
-func (*UpdateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{12}
-}
-
-func (x *UpdateRequest) GetInput() *UpdatePlanInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type UpdateResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Plan          *v2.BillingPlan        `protobuf:"bytes,1,opt,name=plan,proto3" json:"plan,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateResponse) Reset() {
-	*x = UpdateResponse{}
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[13]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateResponse) ProtoMessage() {}
-
-func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[13]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateResponse.ProtoReflect.Descriptor instead.
-func (*UpdateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{13}
-}
-
-func (x *UpdateResponse) GetPlan() *v2.BillingPlan {
-	if x != nil {
-		return x.Plan
-	}
-	return nil
-}
-
-// Autogenerated input type of UpdatePlan
-type UpdatePlanInput struct {
 	state                   protoimpl.MessageState    `protogen:"open.v1"`
 	AmountCents             int64                     `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
 	AmountCurrency          v2.CurrencyEnum           `protobuf:"varint,2,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"amount_currency,omitempty"`
@@ -829,25 +744,26 @@ type UpdatePlanInput struct {
 	TaxCodes                []string                  `protobuf:"bytes,18,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
 	TrialPeriod             *float64                  `protobuf:"fixed64,19,opt,name=trial_period,json=trialPeriod,proto3,oneof" json:"trial_period,omitempty"`
 	UsageThresholds         []*v2.UsageThresholdInput `protobuf:"bytes,20,rep,name=usage_thresholds,json=usageThresholds,proto3" json:"usage_thresholds,omitempty"`
+	UpdateMask              *fieldmaskpb.FieldMask    `protobuf:"bytes,21,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
 
-func (x *UpdatePlanInput) Reset() {
-	*x = UpdatePlanInput{}
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[14]
+func (x *UpdateRequest) Reset() {
+	*x = UpdateRequest{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *UpdatePlanInput) String() string {
+func (x *UpdateRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UpdatePlanInput) ProtoMessage() {}
+func (*UpdateRequest) ProtoMessage() {}
 
-func (x *UpdatePlanInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[14]
+func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -858,156 +774,287 @@ func (x *UpdatePlanInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UpdatePlanInput.ProtoReflect.Descriptor instead.
-func (*UpdatePlanInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{14}
+// Deprecated: Use UpdateRequest.ProtoReflect.Descriptor instead.
+func (*UpdateRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *UpdatePlanInput) GetAmountCents() int64 {
+func (x *UpdateRequest) GetAmountCents() int64 {
 	if x != nil {
 		return x.AmountCents
 	}
 	return 0
 }
 
-func (x *UpdatePlanInput) GetAmountCurrency() v2.CurrencyEnum {
+func (x *UpdateRequest) GetAmountCurrency() v2.CurrencyEnum {
 	if x != nil {
 		return x.AmountCurrency
 	}
 	return v2.CurrencyEnum(0)
 }
 
-func (x *UpdatePlanInput) GetBillChargesMonthly() bool {
+func (x *UpdateRequest) GetBillChargesMonthly() bool {
 	if x != nil && x.BillChargesMonthly != nil {
 		return *x.BillChargesMonthly
 	}
 	return false
 }
 
-func (x *UpdatePlanInput) GetBillFixedChargesMonthly() bool {
+func (x *UpdateRequest) GetBillFixedChargesMonthly() bool {
 	if x != nil && x.BillFixedChargesMonthly != nil {
 		return *x.BillFixedChargesMonthly
 	}
 	return false
 }
 
-func (x *UpdatePlanInput) GetCascadeUpdates() bool {
+func (x *UpdateRequest) GetCascadeUpdates() bool {
 	if x != nil && x.CascadeUpdates != nil {
 		return *x.CascadeUpdates
 	}
 	return false
 }
 
-func (x *UpdatePlanInput) GetCharges() []*ChargeInput {
+func (x *UpdateRequest) GetCharges() []*ChargeInput {
 	if x != nil {
 		return x.Charges
 	}
 	return nil
 }
 
-func (x *UpdatePlanInput) GetCode() string {
+func (x *UpdateRequest) GetCode() string {
 	if x != nil {
 		return x.Code
 	}
 	return ""
 }
 
-func (x *UpdatePlanInput) GetDescription() string {
+func (x *UpdateRequest) GetDescription() string {
 	if x != nil && x.Description != nil {
 		return *x.Description
 	}
 	return ""
 }
 
-func (x *UpdatePlanInput) GetEntitlements() []*v2.EntitlementInput {
+func (x *UpdateRequest) GetEntitlements() []*v2.EntitlementInput {
 	if x != nil {
 		return x.Entitlements
 	}
 	return nil
 }
 
-func (x *UpdatePlanInput) GetFixedCharges() []*FixedChargeInput {
+func (x *UpdateRequest) GetFixedCharges() []*FixedChargeInput {
 	if x != nil {
 		return x.FixedCharges
 	}
 	return nil
 }
 
-func (x *UpdatePlanInput) GetId() string {
+func (x *UpdateRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-func (x *UpdatePlanInput) GetInterval() v2.PlanInterval {
+func (x *UpdateRequest) GetInterval() v2.PlanInterval {
 	if x != nil {
 		return x.Interval
 	}
 	return v2.PlanInterval(0)
 }
 
-func (x *UpdatePlanInput) GetInvoiceDisplayName() string {
+func (x *UpdateRequest) GetInvoiceDisplayName() string {
 	if x != nil && x.InvoiceDisplayName != nil {
 		return *x.InvoiceDisplayName
 	}
 	return ""
 }
 
-func (x *UpdatePlanInput) GetMetadata() []*v2.MetadataInput {
+func (x *UpdateRequest) GetMetadata() []*v2.MetadataInput {
 	if x != nil {
 		return x.Metadata
 	}
 	return nil
 }
 
-func (x *UpdatePlanInput) GetMinimumCommitment() *v2.CommitmentInput {
+func (x *UpdateRequest) GetMinimumCommitment() *v2.CommitmentInput {
 	if x != nil {
 		return x.MinimumCommitment
 	}
 	return nil
 }
 
-func (x *UpdatePlanInput) GetName() string {
+func (x *UpdateRequest) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-func (x *UpdatePlanInput) GetPayInAdvance() bool {
+func (x *UpdateRequest) GetPayInAdvance() bool {
 	if x != nil {
 		return x.PayInAdvance
 	}
 	return false
 }
 
-func (x *UpdatePlanInput) GetTaxCodes() []string {
+func (x *UpdateRequest) GetTaxCodes() []string {
 	if x != nil {
 		return x.TaxCodes
 	}
 	return nil
 }
 
-func (x *UpdatePlanInput) GetTrialPeriod() float64 {
+func (x *UpdateRequest) GetTrialPeriod() float64 {
 	if x != nil && x.TrialPeriod != nil {
 		return *x.TrialPeriod
 	}
 	return 0
 }
 
-func (x *UpdatePlanInput) GetUsageThresholds() []*v2.UsageThresholdInput {
+func (x *UpdateRequest) GetUsageThresholds() []*v2.UsageThresholdInput {
 	if x != nil {
 		return x.UsageThresholds
 	}
 	return nil
 }
 
+func (x *UpdateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+type UpdateResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Plan          *v2.BillingPlan        `protobuf:"bytes,1,opt,name=plan,proto3" json:"plan,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateResponse) Reset() {
+	*x = UpdateResponse{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateResponse) ProtoMessage() {}
+
+func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateResponse.ProtoReflect.Descriptor instead.
+func (*UpdateResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *UpdateResponse) GetPlan() *v2.BillingPlan {
+	if x != nil {
+		return x.Plan
+	}
+	return nil
+}
+
+type DeleteRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteRequest) Reset() {
+	*x = DeleteRequest{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteRequest) ProtoMessage() {}
+
+func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteRequest.ProtoReflect.Descriptor instead.
+func (*DeleteRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *DeleteRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type DeleteResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteResponse) Reset() {
+	*x = DeleteResponse{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteResponse) ProtoMessage() {}
+
+func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteResponse.ProtoReflect.Descriptor instead.
+func (*DeleteResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{13}
+}
+
 type FixedChargeInput struct {
 	state                 protoimpl.MessageState         `protogen:"open.v1"`
 	AddOnId               string                         `protobuf:"bytes,1,opt,name=add_on_id,json=addOnId,proto3" json:"add_on_id,omitempty"`
 	ApplyUnitsImmediately *bool                          `protobuf:"varint,2,opt,name=apply_units_immediately,json=applyUnitsImmediately,proto3,oneof" json:"apply_units_immediately,omitempty"`
-	ChargeModel           v2.FixedChargeChargeModelEnum  `protobuf:"varint,3,opt,name=charge_model,json=chargeModel,proto3,enum=invora.billing.common.v2.FixedChargeChargeModelEnum" json:"charge_model,omitempty"`
+	ChargeModel           v2.FixedChargeChargeModel      `protobuf:"varint,3,opt,name=charge_model,json=chargeModel,proto3,enum=invora.billing.common.v2.FixedChargeChargeModel" json:"charge_model,omitempty"`
 	Id                    *string                        `protobuf:"bytes,4,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InvoiceDisplayName    *string                        `protobuf:"bytes,5,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
 	PayInAdvance          *bool                          `protobuf:"varint,6,opt,name=pay_in_advance,json=payInAdvance,proto3,oneof" json:"pay_in_advance,omitempty"`
@@ -1021,7 +1068,7 @@ type FixedChargeInput struct {
 
 func (x *FixedChargeInput) Reset() {
 	*x = FixedChargeInput{}
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[15]
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1033,7 +1080,7 @@ func (x *FixedChargeInput) String() string {
 func (*FixedChargeInput) ProtoMessage() {}
 
 func (x *FixedChargeInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[15]
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1046,7 +1093,7 @@ func (x *FixedChargeInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FixedChargeInput.ProtoReflect.Descriptor instead.
 func (*FixedChargeInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{15}
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *FixedChargeInput) GetAddOnId() string {
@@ -1063,11 +1110,11 @@ func (x *FixedChargeInput) GetApplyUnitsImmediately() bool {
 	return false
 }
 
-func (x *FixedChargeInput) GetChargeModel() v2.FixedChargeChargeModelEnum {
+func (x *FixedChargeInput) GetChargeModel() v2.FixedChargeChargeModel {
 	if x != nil {
 		return x.ChargeModel
 	}
-	return v2.FixedChargeChargeModelEnum(0)
+	return v2.FixedChargeChargeModel(0)
 }
 
 func (x *FixedChargeInput) GetId() string {
@@ -1123,7 +1170,7 @@ type ChargeInput struct {
 	state              protoimpl.MessageState   `protogen:"open.v1"`
 	AppliedPricingUnit *AppliedPricingUnitInput `protobuf:"bytes,1,opt,name=applied_pricing_unit,json=appliedPricingUnit,proto3,oneof" json:"applied_pricing_unit,omitempty"`
 	BillableMetricId   string                   `protobuf:"bytes,2,opt,name=billable_metric_id,json=billableMetricId,proto3" json:"billable_metric_id,omitempty"`
-	ChargeModel        v2.ChargeModelEnum       `protobuf:"varint,3,opt,name=charge_model,json=chargeModel,proto3,enum=invora.billing.common.v2.ChargeModelEnum" json:"charge_model,omitempty"`
+	ChargeModel        v2.ChargeModel           `protobuf:"varint,3,opt,name=charge_model,json=chargeModel,proto3,enum=invora.billing.common.v2.ChargeModel" json:"charge_model,omitempty"`
 	Filters            []*v2.ChargeFilterInput  `protobuf:"bytes,4,rep,name=filters,proto3" json:"filters,omitempty"`
 	Id                 *string                  `protobuf:"bytes,5,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	InvoiceDisplayName *string                  `protobuf:"bytes,6,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
@@ -1132,7 +1179,7 @@ type ChargeInput struct {
 	PayInAdvance       *bool                    `protobuf:"varint,9,opt,name=pay_in_advance,json=payInAdvance,proto3,oneof" json:"pay_in_advance,omitempty"`
 	Properties         *v2.PropertiesInput      `protobuf:"bytes,10,opt,name=properties,proto3,oneof" json:"properties,omitempty"`
 	Prorated           *bool                    `protobuf:"varint,11,opt,name=prorated,proto3,oneof" json:"prorated,omitempty"`
-	RegroupPaidFees    *v2.RegroupPaidFeesEnum  `protobuf:"varint,12,opt,name=regroup_paid_fees,json=regroupPaidFees,proto3,enum=invora.billing.common.v2.RegroupPaidFeesEnum,oneof" json:"regroup_paid_fees,omitempty"`
+	RegroupPaidFees    *v2.RegroupPaidFees      `protobuf:"varint,12,opt,name=regroup_paid_fees,json=regroupPaidFees,proto3,enum=invora.billing.common.v2.RegroupPaidFees,oneof" json:"regroup_paid_fees,omitempty"`
 	TaxCodes           []string                 `protobuf:"bytes,13,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
@@ -1140,7 +1187,7 @@ type ChargeInput struct {
 
 func (x *ChargeInput) Reset() {
 	*x = ChargeInput{}
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[16]
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1152,7 +1199,7 @@ func (x *ChargeInput) String() string {
 func (*ChargeInput) ProtoMessage() {}
 
 func (x *ChargeInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[16]
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1165,7 +1212,7 @@ func (x *ChargeInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChargeInput.ProtoReflect.Descriptor instead.
 func (*ChargeInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{16}
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *ChargeInput) GetAppliedPricingUnit() *AppliedPricingUnitInput {
@@ -1182,11 +1229,11 @@ func (x *ChargeInput) GetBillableMetricId() string {
 	return ""
 }
 
-func (x *ChargeInput) GetChargeModel() v2.ChargeModelEnum {
+func (x *ChargeInput) GetChargeModel() v2.ChargeModel {
 	if x != nil {
 		return x.ChargeModel
 	}
-	return v2.ChargeModelEnum(0)
+	return v2.ChargeModel(0)
 }
 
 func (x *ChargeInput) GetFilters() []*v2.ChargeFilterInput {
@@ -1245,11 +1292,11 @@ func (x *ChargeInput) GetProrated() bool {
 	return false
 }
 
-func (x *ChargeInput) GetRegroupPaidFees() v2.RegroupPaidFeesEnum {
+func (x *ChargeInput) GetRegroupPaidFees() v2.RegroupPaidFees {
 	if x != nil && x.RegroupPaidFees != nil {
 		return *x.RegroupPaidFees
 	}
-	return v2.RegroupPaidFeesEnum(0)
+	return v2.RegroupPaidFees(0)
 }
 
 func (x *ChargeInput) GetTaxCodes() []string {
@@ -1262,14 +1309,14 @@ func (x *ChargeInput) GetTaxCodes() []string {
 type AppliedPricingUnitInput struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Code           string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
-	ConversionRate float64                `protobuf:"fixed64,2,opt,name=conversion_rate,json=conversionRate,proto3" json:"conversion_rate,omitempty"`
+	ConversionRate *kernel.DecimalValue   `protobuf:"bytes,2,opt,name=conversion_rate,json=conversionRate,proto3" json:"conversion_rate,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
 func (x *AppliedPricingUnitInput) Reset() {
 	*x = AppliedPricingUnitInput{}
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[17]
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1281,7 +1328,7 @@ func (x *AppliedPricingUnitInput) String() string {
 func (*AppliedPricingUnitInput) ProtoMessage() {}
 
 func (x *AppliedPricingUnitInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[17]
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1294,7 +1341,7 @@ func (x *AppliedPricingUnitInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AppliedPricingUnitInput.ProtoReflect.Descriptor instead.
 func (*AppliedPricingUnitInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{17}
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *AppliedPricingUnitInput) GetCode() string {
@@ -1304,36 +1351,37 @@ func (x *AppliedPricingUnitInput) GetCode() string {
 	return ""
 }
 
-func (x *AppliedPricingUnitInput) GetConversionRate() float64 {
+func (x *AppliedPricingUnitInput) GetConversionRate() *kernel.DecimalValue {
 	if x != nil {
 		return x.ConversionRate
 	}
-	return 0
+	return nil
 }
 
-// Autogenerated input type of DestroyPlan
-type DestroyPlanInput struct {
+type GetAddOnRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	View          v2.View                `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DestroyPlanInput) Reset() {
-	*x = DestroyPlanInput{}
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[18]
+func (x *GetAddOnRequest) Reset() {
+	*x = GetAddOnRequest{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DestroyPlanInput) String() string {
+func (x *GetAddOnRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DestroyPlanInput) ProtoMessage() {}
+func (*GetAddOnRequest) ProtoMessage() {}
 
-func (x *DestroyPlanInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[18]
+func (x *GetAddOnRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1344,40 +1392,101 @@ func (x *DestroyPlanInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DestroyPlanInput.ProtoReflect.Descriptor instead.
-func (*DestroyPlanInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{18}
+// Deprecated: Use GetAddOnRequest.ProtoReflect.Descriptor instead.
+func (*GetAddOnRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{17}
 }
 
-func (x *DestroyPlanInput) GetId() string {
+func (x *GetAddOnRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-// Autogenerated return type of DestroyPlan.
-type DestroyPlanPayload struct {
+func (x *GetAddOnRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
+	}
+	return nil
+}
+
+func (x *GetAddOnRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
+}
+
+type GetAddOnResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            *string                `protobuf:"bytes,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
+	AddOn         *v2.BillingAddOn       `protobuf:"bytes,1,opt,name=add_on,json=addOn,proto3" json:"add_on,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DestroyPlanPayload) Reset() {
-	*x = DestroyPlanPayload{}
+func (x *GetAddOnResponse) Reset() {
+	*x = GetAddOnResponse{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetAddOnResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetAddOnResponse) ProtoMessage() {}
+
+func (x *GetAddOnResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetAddOnResponse.ProtoReflect.Descriptor instead.
+func (*GetAddOnResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *GetAddOnResponse) GetAddOn() *v2.BillingAddOn {
+	if x != nil {
+		return x.AddOn
+	}
+	return nil
+}
+
+type ListAddOnsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Filter        *AddOnFilter           `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
+	Sort          *AddOnSort             `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
+	Pagination    *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	View          v2.View                `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListAddOnsRequest) Reset() {
+	*x = ListAddOnsRequest{}
 	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DestroyPlanPayload) String() string {
+func (x *ListAddOnsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DestroyPlanPayload) ProtoMessage() {}
+func (*ListAddOnsRequest) ProtoMessage() {}
 
-func (x *DestroyPlanPayload) ProtoReflect() protoreflect.Message {
+func (x *ListAddOnsRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1389,58 +1498,128 @@ func (x *DestroyPlanPayload) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DestroyPlanPayload.ProtoReflect.Descriptor instead.
-func (*DestroyPlanPayload) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListAddOnsRequest.ProtoReflect.Descriptor instead.
+func (*ListAddOnsRequest) Descriptor() ([]byte, []int) {
 	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{19}
 }
 
-func (x *DestroyPlanPayload) GetId() string {
-	if x != nil && x.Id != nil {
-		return *x.Id
+func (x *ListAddOnsRequest) GetFilter() *AddOnFilter {
+	if x != nil {
+		return x.Filter
+	}
+	return nil
+}
+
+func (x *ListAddOnsRequest) GetSort() *AddOnSort {
+	if x != nil {
+		return x.Sort
+	}
+	return nil
+}
+
+func (x *ListAddOnsRequest) GetPagination() *kernel.PaginationInfo {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *ListAddOnsRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
+	}
+	return nil
+}
+
+func (x *ListAddOnsRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
+}
+
+type ListAddOnsResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Items          []*v2.BillingAddOn     `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ListAddOnsResponse) Reset() {
+	*x = ListAddOnsResponse{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListAddOnsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListAddOnsResponse) ProtoMessage() {}
+
+func (x *ListAddOnsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListAddOnsResponse.ProtoReflect.Descriptor instead.
+func (*ListAddOnsResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *ListAddOnsResponse) GetItems() []*v2.BillingAddOn {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+func (x *ListAddOnsResponse) GetTotalCount() uint64 {
+	if x != nil {
+		return x.TotalCount
+	}
+	return 0
+}
+
+func (x *ListAddOnsResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
 	}
 	return ""
 }
 
-// Autogenerated input type of CreatePlan
-type CreatePlanInput struct {
-	state                   protoimpl.MessageState    `protogen:"open.v1"`
-	AmountCents             int64                     `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
-	AmountCurrency          v2.CurrencyEnum           `protobuf:"varint,2,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"amount_currency,omitempty"`
-	BillChargesMonthly      *bool                     `protobuf:"varint,3,opt,name=bill_charges_monthly,json=billChargesMonthly,proto3,oneof" json:"bill_charges_monthly,omitempty"`
-	BillFixedChargesMonthly *bool                     `protobuf:"varint,4,opt,name=bill_fixed_charges_monthly,json=billFixedChargesMonthly,proto3,oneof" json:"bill_fixed_charges_monthly,omitempty"`
-	Charges                 []*ChargeInput            `protobuf:"bytes,5,rep,name=charges,proto3" json:"charges,omitempty"`
-	Code                    string                    `protobuf:"bytes,6,opt,name=code,proto3" json:"code,omitempty"`
-	Description             *string                   `protobuf:"bytes,7,opt,name=description,proto3,oneof" json:"description,omitempty"`
-	Entitlements            []*v2.EntitlementInput    `protobuf:"bytes,8,rep,name=entitlements,proto3" json:"entitlements,omitempty"`
-	FixedCharges            []*FixedChargeInput       `protobuf:"bytes,9,rep,name=fixed_charges,json=fixedCharges,proto3" json:"fixed_charges,omitempty"`
-	Interval                v2.PlanInterval           `protobuf:"varint,10,opt,name=interval,proto3,enum=invora.billing.common.v2.PlanInterval" json:"interval,omitempty"`
-	InvoiceDisplayName      *string                   `protobuf:"bytes,11,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
-	Metadata                []*v2.MetadataInput       `protobuf:"bytes,12,rep,name=metadata,proto3" json:"metadata,omitempty"`
-	MinimumCommitment       *v2.CommitmentInput       `protobuf:"bytes,13,opt,name=minimum_commitment,json=minimumCommitment,proto3,oneof" json:"minimum_commitment,omitempty"`
-	Name                    string                    `protobuf:"bytes,14,opt,name=name,proto3" json:"name,omitempty"`
-	PayInAdvance            bool                      `protobuf:"varint,15,opt,name=pay_in_advance,json=payInAdvance,proto3" json:"pay_in_advance,omitempty"`
-	TaxCodes                []string                  `protobuf:"bytes,16,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
-	TrialPeriod             *float64                  `protobuf:"fixed64,17,opt,name=trial_period,json=trialPeriod,proto3,oneof" json:"trial_period,omitempty"`
-	UsageThresholds         []*v2.UsageThresholdInput `protobuf:"bytes,18,rep,name=usage_thresholds,json=usageThresholds,proto3" json:"usage_thresholds,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
+type AddOnFilter struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TextSearch    string                 `protobuf:"bytes,1,opt,name=text_search,json=textSearch,proto3" json:"text_search,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreatePlanInput) Reset() {
-	*x = CreatePlanInput{}
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[20]
+func (x *AddOnFilter) Reset() {
+	*x = AddOnFilter{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreatePlanInput) String() string {
+func (x *AddOnFilter) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreatePlanInput) ProtoMessage() {}
+func (*AddOnFilter) ProtoMessage() {}
 
-func (x *CreatePlanInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[20]
+func (x *AddOnFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1451,133 +1630,1342 @@ func (x *CreatePlanInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreatePlanInput.ProtoReflect.Descriptor instead.
-func (*CreatePlanInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{20}
+// Deprecated: Use AddOnFilter.ProtoReflect.Descriptor instead.
+func (*AddOnFilter) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{21}
 }
 
-func (x *CreatePlanInput) GetAmountCents() int64 {
+func (x *AddOnFilter) GetTextSearch() string {
+	if x != nil {
+		return x.TextSearch
+	}
+	return ""
+}
+
+type AddOnSort struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Rules         []*AddOnSortRule       `protobuf:"bytes,1,rep,name=rules,proto3" json:"rules,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddOnSort) Reset() {
+	*x = AddOnSort{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddOnSort) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddOnSort) ProtoMessage() {}
+
+func (x *AddOnSort) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddOnSort.ProtoReflect.Descriptor instead.
+func (*AddOnSort) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *AddOnSort) GetRules() []*AddOnSortRule {
+	if x != nil {
+		return x.Rules
+	}
+	return nil
+}
+
+type AddOnSortRule struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Type:
+	//
+	//	*AddOnSortRule_CreatedAt
+	Type          isAddOnSortRule_Type `protobuf_oneof:"type"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddOnSortRule) Reset() {
+	*x = AddOnSortRule{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddOnSortRule) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddOnSortRule) ProtoMessage() {}
+
+func (x *AddOnSortRule) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddOnSortRule.ProtoReflect.Descriptor instead.
+func (*AddOnSortRule) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *AddOnSortRule) GetType() isAddOnSortRule_Type {
+	if x != nil {
+		return x.Type
+	}
+	return nil
+}
+
+func (x *AddOnSortRule) GetCreatedAt() kernel.SortDirection {
+	if x != nil {
+		if x, ok := x.Type.(*AddOnSortRule_CreatedAt); ok {
+			return x.CreatedAt
+		}
+	}
+	return kernel.SortDirection(0)
+}
+
+type isAddOnSortRule_Type interface {
+	isAddOnSortRule_Type()
+}
+
+type AddOnSortRule_CreatedAt struct {
+	CreatedAt kernel.SortDirection `protobuf:"varint,1,opt,name=created_at,json=createdAt,proto3,enum=kernel.SortDirection,oneof"`
+}
+
+func (*AddOnSortRule_CreatedAt) isAddOnSortRule_Type() {}
+
+type CreateAddOnRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	AmountCents        int64                  `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
+	AmountCurrency     v2.CurrencyEnum        `protobuf:"varint,2,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"amount_currency,omitempty"`
+	Code               string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
+	Description        *string                `protobuf:"bytes,4,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	InvoiceDisplayName *string                `protobuf:"bytes,5,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
+	Name               string                 `protobuf:"bytes,6,opt,name=name,proto3" json:"name,omitempty"`
+	TaxCodes           []string               `protobuf:"bytes,7,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *CreateAddOnRequest) Reset() {
+	*x = CreateAddOnRequest{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateAddOnRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateAddOnRequest) ProtoMessage() {}
+
+func (x *CreateAddOnRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateAddOnRequest.ProtoReflect.Descriptor instead.
+func (*CreateAddOnRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *CreateAddOnRequest) GetAmountCents() int64 {
 	if x != nil {
 		return x.AmountCents
 	}
 	return 0
 }
 
-func (x *CreatePlanInput) GetAmountCurrency() v2.CurrencyEnum {
+func (x *CreateAddOnRequest) GetAmountCurrency() v2.CurrencyEnum {
 	if x != nil {
 		return x.AmountCurrency
 	}
 	return v2.CurrencyEnum(0)
 }
 
-func (x *CreatePlanInput) GetBillChargesMonthly() bool {
-	if x != nil && x.BillChargesMonthly != nil {
-		return *x.BillChargesMonthly
-	}
-	return false
-}
-
-func (x *CreatePlanInput) GetBillFixedChargesMonthly() bool {
-	if x != nil && x.BillFixedChargesMonthly != nil {
-		return *x.BillFixedChargesMonthly
-	}
-	return false
-}
-
-func (x *CreatePlanInput) GetCharges() []*ChargeInput {
-	if x != nil {
-		return x.Charges
-	}
-	return nil
-}
-
-func (x *CreatePlanInput) GetCode() string {
+func (x *CreateAddOnRequest) GetCode() string {
 	if x != nil {
 		return x.Code
 	}
 	return ""
 }
 
-func (x *CreatePlanInput) GetDescription() string {
+func (x *CreateAddOnRequest) GetDescription() string {
 	if x != nil && x.Description != nil {
 		return *x.Description
 	}
 	return ""
 }
 
-func (x *CreatePlanInput) GetEntitlements() []*v2.EntitlementInput {
-	if x != nil {
-		return x.Entitlements
-	}
-	return nil
-}
-
-func (x *CreatePlanInput) GetFixedCharges() []*FixedChargeInput {
-	if x != nil {
-		return x.FixedCharges
-	}
-	return nil
-}
-
-func (x *CreatePlanInput) GetInterval() v2.PlanInterval {
-	if x != nil {
-		return x.Interval
-	}
-	return v2.PlanInterval(0)
-}
-
-func (x *CreatePlanInput) GetInvoiceDisplayName() string {
+func (x *CreateAddOnRequest) GetInvoiceDisplayName() string {
 	if x != nil && x.InvoiceDisplayName != nil {
 		return *x.InvoiceDisplayName
 	}
 	return ""
 }
 
-func (x *CreatePlanInput) GetMetadata() []*v2.MetadataInput {
-	if x != nil {
-		return x.Metadata
-	}
-	return nil
-}
-
-func (x *CreatePlanInput) GetMinimumCommitment() *v2.CommitmentInput {
-	if x != nil {
-		return x.MinimumCommitment
-	}
-	return nil
-}
-
-func (x *CreatePlanInput) GetName() string {
+func (x *CreateAddOnRequest) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-func (x *CreatePlanInput) GetPayInAdvance() bool {
-	if x != nil {
-		return x.PayInAdvance
-	}
-	return false
-}
-
-func (x *CreatePlanInput) GetTaxCodes() []string {
+func (x *CreateAddOnRequest) GetTaxCodes() []string {
 	if x != nil {
 		return x.TaxCodes
 	}
 	return nil
 }
 
-func (x *CreatePlanInput) GetTrialPeriod() float64 {
-	if x != nil && x.TrialPeriod != nil {
-		return *x.TrialPeriod
+type CreateAddOnResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AddOn         *v2.BillingAddOn       `protobuf:"bytes,1,opt,name=add_on,json=addOn,proto3" json:"add_on,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateAddOnResponse) Reset() {
+	*x = CreateAddOnResponse{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateAddOnResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateAddOnResponse) ProtoMessage() {}
+
+func (x *CreateAddOnResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateAddOnResponse.ProtoReflect.Descriptor instead.
+func (*CreateAddOnResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *CreateAddOnResponse) GetAddOn() *v2.BillingAddOn {
+	if x != nil {
+		return x.AddOn
+	}
+	return nil
+}
+
+type UpdateAddOnRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	AmountCents        int64                  `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
+	AmountCurrency     v2.CurrencyEnum        `protobuf:"varint,2,opt,name=amount_currency,json=amountCurrency,proto3,enum=invora.billing.common.v2.CurrencyEnum" json:"amount_currency,omitempty"`
+	Code               string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
+	Description        *string                `protobuf:"bytes,4,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	Id                 string                 `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
+	InvoiceDisplayName *string                `protobuf:"bytes,6,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
+	Name               string                 `protobuf:"bytes,7,opt,name=name,proto3" json:"name,omitempty"`
+	TaxCodes           []string               `protobuf:"bytes,8,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
+	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *UpdateAddOnRequest) Reset() {
+	*x = UpdateAddOnRequest{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateAddOnRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateAddOnRequest) ProtoMessage() {}
+
+func (x *UpdateAddOnRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateAddOnRequest.ProtoReflect.Descriptor instead.
+func (*UpdateAddOnRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *UpdateAddOnRequest) GetAmountCents() int64 {
+	if x != nil {
+		return x.AmountCents
 	}
 	return 0
 }
 
-func (x *CreatePlanInput) GetUsageThresholds() []*v2.UsageThresholdInput {
+func (x *UpdateAddOnRequest) GetAmountCurrency() v2.CurrencyEnum {
 	if x != nil {
-		return x.UsageThresholds
+		return x.AmountCurrency
+	}
+	return v2.CurrencyEnum(0)
+}
+
+func (x *UpdateAddOnRequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *UpdateAddOnRequest) GetDescription() string {
+	if x != nil && x.Description != nil {
+		return *x.Description
+	}
+	return ""
+}
+
+func (x *UpdateAddOnRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateAddOnRequest) GetInvoiceDisplayName() string {
+	if x != nil && x.InvoiceDisplayName != nil {
+		return *x.InvoiceDisplayName
+	}
+	return ""
+}
+
+func (x *UpdateAddOnRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *UpdateAddOnRequest) GetTaxCodes() []string {
+	if x != nil {
+		return x.TaxCodes
+	}
+	return nil
+}
+
+func (x *UpdateAddOnRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+type UpdateAddOnResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AddOn         *v2.BillingAddOn       `protobuf:"bytes,1,opt,name=add_on,json=addOn,proto3" json:"add_on,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateAddOnResponse) Reset() {
+	*x = UpdateAddOnResponse{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateAddOnResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateAddOnResponse) ProtoMessage() {}
+
+func (x *UpdateAddOnResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateAddOnResponse.ProtoReflect.Descriptor instead.
+func (*UpdateAddOnResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *UpdateAddOnResponse) GetAddOn() *v2.BillingAddOn {
+	if x != nil {
+		return x.AddOn
+	}
+	return nil
+}
+
+type DeleteAddOnRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteAddOnRequest) Reset() {
+	*x = DeleteAddOnRequest{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteAddOnRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteAddOnRequest) ProtoMessage() {}
+
+func (x *DeleteAddOnRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteAddOnRequest.ProtoReflect.Descriptor instead.
+func (*DeleteAddOnRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *DeleteAddOnRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type DeleteAddOnResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteAddOnResponse) Reset() {
+	*x = DeleteAddOnResponse{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteAddOnResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteAddOnResponse) ProtoMessage() {}
+
+func (x *DeleteAddOnResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteAddOnResponse.ProtoReflect.Descriptor instead.
+func (*DeleteAddOnResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{29}
+}
+
+type GetFeatureRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Code          *string                `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	View          v2.View                `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetFeatureRequest) Reset() {
+	*x = GetFeatureRequest{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetFeatureRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetFeatureRequest) ProtoMessage() {}
+
+func (x *GetFeatureRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetFeatureRequest.ProtoReflect.Descriptor instead.
+func (*GetFeatureRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *GetFeatureRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *GetFeatureRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
+	}
+	return ""
+}
+
+func (x *GetFeatureRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
+	}
+	return nil
+}
+
+func (x *GetFeatureRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
+}
+
+type GetFeatureResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Feature       *v2.FeatureObject      `protobuf:"bytes,1,opt,name=feature,proto3" json:"feature,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetFeatureResponse) Reset() {
+	*x = GetFeatureResponse{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetFeatureResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetFeatureResponse) ProtoMessage() {}
+
+func (x *GetFeatureResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetFeatureResponse.ProtoReflect.Descriptor instead.
+func (*GetFeatureResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *GetFeatureResponse) GetFeature() *v2.FeatureObject {
+	if x != nil {
+		return x.Feature
+	}
+	return nil
+}
+
+type ListFeaturesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Filter        *FeatureFilter         `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
+	Sort          *FeatureSort           `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
+	Pagination    *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	ReadMask      *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	View          v2.View                `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListFeaturesRequest) Reset() {
+	*x = ListFeaturesRequest{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListFeaturesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListFeaturesRequest) ProtoMessage() {}
+
+func (x *ListFeaturesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListFeaturesRequest.ProtoReflect.Descriptor instead.
+func (*ListFeaturesRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *ListFeaturesRequest) GetFilter() *FeatureFilter {
+	if x != nil {
+		return x.Filter
+	}
+	return nil
+}
+
+func (x *ListFeaturesRequest) GetSort() *FeatureSort {
+	if x != nil {
+		return x.Sort
+	}
+	return nil
+}
+
+func (x *ListFeaturesRequest) GetPagination() *kernel.PaginationInfo {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *ListFeaturesRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
+	}
+	return nil
+}
+
+func (x *ListFeaturesRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
+}
+
+type ListFeaturesResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Items          []*v2.FeatureObject    `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ListFeaturesResponse) Reset() {
+	*x = ListFeaturesResponse{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListFeaturesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListFeaturesResponse) ProtoMessage() {}
+
+func (x *ListFeaturesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListFeaturesResponse.ProtoReflect.Descriptor instead.
+func (*ListFeaturesResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *ListFeaturesResponse) GetItems() []*v2.FeatureObject {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+func (x *ListFeaturesResponse) GetTotalCount() uint64 {
+	if x != nil {
+		return x.TotalCount
+	}
+	return 0
+}
+
+func (x *ListFeaturesResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
+	}
+	return ""
+}
+
+type FeatureFilter struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TextSearch    string                 `protobuf:"bytes,1,opt,name=text_search,json=textSearch,proto3" json:"text_search,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FeatureFilter) Reset() {
+	*x = FeatureFilter{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[34]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FeatureFilter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FeatureFilter) ProtoMessage() {}
+
+func (x *FeatureFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[34]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FeatureFilter.ProtoReflect.Descriptor instead.
+func (*FeatureFilter) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *FeatureFilter) GetTextSearch() string {
+	if x != nil {
+		return x.TextSearch
+	}
+	return ""
+}
+
+type FeatureSort struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Rules         []*FeatureSortRule     `protobuf:"bytes,1,rep,name=rules,proto3" json:"rules,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FeatureSort) Reset() {
+	*x = FeatureSort{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FeatureSort) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FeatureSort) ProtoMessage() {}
+
+func (x *FeatureSort) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FeatureSort.ProtoReflect.Descriptor instead.
+func (*FeatureSort) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *FeatureSort) GetRules() []*FeatureSortRule {
+	if x != nil {
+		return x.Rules
+	}
+	return nil
+}
+
+type FeatureSortRule struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Type:
+	//
+	//	*FeatureSortRule_CreatedAt
+	Type          isFeatureSortRule_Type `protobuf_oneof:"type"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FeatureSortRule) Reset() {
+	*x = FeatureSortRule{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[36]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FeatureSortRule) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FeatureSortRule) ProtoMessage() {}
+
+func (x *FeatureSortRule) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[36]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FeatureSortRule.ProtoReflect.Descriptor instead.
+func (*FeatureSortRule) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *FeatureSortRule) GetType() isFeatureSortRule_Type {
+	if x != nil {
+		return x.Type
+	}
+	return nil
+}
+
+func (x *FeatureSortRule) GetCreatedAt() kernel.SortDirection {
+	if x != nil {
+		if x, ok := x.Type.(*FeatureSortRule_CreatedAt); ok {
+			return x.CreatedAt
+		}
+	}
+	return kernel.SortDirection(0)
+}
+
+type isFeatureSortRule_Type interface {
+	isFeatureSortRule_Type()
+}
+
+type FeatureSortRule_CreatedAt struct {
+	CreatedAt kernel.SortDirection `protobuf:"varint,1,opt,name=created_at,json=createdAt,proto3,enum=kernel.SortDirection,oneof"`
+}
+
+func (*FeatureSortRule_CreatedAt) isFeatureSortRule_Type() {}
+
+type CreateFeatureRequest struct {
+	state         protoimpl.MessageState   `protogen:"open.v1"`
+	Code          string                   `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Description   *string                  `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	Metadata      []*v2.MetadataInput      `protobuf:"bytes,3,rep,name=metadata,proto3" json:"metadata,omitempty"`
+	Name          *string                  `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Privileges    []*FeaturePrivilegeInput `protobuf:"bytes,5,rep,name=privileges,proto3" json:"privileges,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateFeatureRequest) Reset() {
+	*x = CreateFeatureRequest{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[37]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateFeatureRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateFeatureRequest) ProtoMessage() {}
+
+func (x *CreateFeatureRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[37]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateFeatureRequest.ProtoReflect.Descriptor instead.
+func (*CreateFeatureRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *CreateFeatureRequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *CreateFeatureRequest) GetDescription() string {
+	if x != nil && x.Description != nil {
+		return *x.Description
+	}
+	return ""
+}
+
+func (x *CreateFeatureRequest) GetMetadata() []*v2.MetadataInput {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *CreateFeatureRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *CreateFeatureRequest) GetPrivileges() []*FeaturePrivilegeInput {
+	if x != nil {
+		return x.Privileges
+	}
+	return nil
+}
+
+type CreateFeatureResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Feature       *v2.FeatureObject      `protobuf:"bytes,1,opt,name=feature,proto3" json:"feature,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateFeatureResponse) Reset() {
+	*x = CreateFeatureResponse{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[38]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateFeatureResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateFeatureResponse) ProtoMessage() {}
+
+func (x *CreateFeatureResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[38]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateFeatureResponse.ProtoReflect.Descriptor instead.
+func (*CreateFeatureResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{38}
+}
+
+func (x *CreateFeatureResponse) GetFeature() *v2.FeatureObject {
+	if x != nil {
+		return x.Feature
+	}
+	return nil
+}
+
+type UpdateFeatureRequest struct {
+	state         protoimpl.MessageState   `protogen:"open.v1"`
+	Id            string                   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Description   *string                  `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	Metadata      []*v2.MetadataInput      `protobuf:"bytes,3,rep,name=metadata,proto3" json:"metadata,omitempty"`
+	Name          *string                  `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Privileges    []*FeaturePrivilegeInput `protobuf:"bytes,5,rep,name=privileges,proto3" json:"privileges,omitempty"`
+	UpdateMask    *fieldmaskpb.FieldMask   `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateFeatureRequest) Reset() {
+	*x = UpdateFeatureRequest{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[39]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateFeatureRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateFeatureRequest) ProtoMessage() {}
+
+func (x *UpdateFeatureRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[39]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateFeatureRequest.ProtoReflect.Descriptor instead.
+func (*UpdateFeatureRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{39}
+}
+
+func (x *UpdateFeatureRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateFeatureRequest) GetDescription() string {
+	if x != nil && x.Description != nil {
+		return *x.Description
+	}
+	return ""
+}
+
+func (x *UpdateFeatureRequest) GetMetadata() []*v2.MetadataInput {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *UpdateFeatureRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *UpdateFeatureRequest) GetPrivileges() []*FeaturePrivilegeInput {
+	if x != nil {
+		return x.Privileges
+	}
+	return nil
+}
+
+func (x *UpdateFeatureRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+type UpdateFeatureResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Feature       *v2.FeatureObject      `protobuf:"bytes,1,opt,name=feature,proto3" json:"feature,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateFeatureResponse) Reset() {
+	*x = UpdateFeatureResponse{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[40]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateFeatureResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateFeatureResponse) ProtoMessage() {}
+
+func (x *UpdateFeatureResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[40]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateFeatureResponse.ProtoReflect.Descriptor instead.
+func (*UpdateFeatureResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{40}
+}
+
+func (x *UpdateFeatureResponse) GetFeature() *v2.FeatureObject {
+	if x != nil {
+		return x.Feature
+	}
+	return nil
+}
+
+type DeleteFeatureRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteFeatureRequest) Reset() {
+	*x = DeleteFeatureRequest{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[41]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteFeatureRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteFeatureRequest) ProtoMessage() {}
+
+func (x *DeleteFeatureRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[41]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteFeatureRequest.ProtoReflect.Descriptor instead.
+func (*DeleteFeatureRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{41}
+}
+
+func (x *DeleteFeatureRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type DeleteFeatureResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Feature       *v2.FeatureObject      `protobuf:"bytes,1,opt,name=feature,proto3" json:"feature,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteFeatureResponse) Reset() {
+	*x = DeleteFeatureResponse{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[42]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteFeatureResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteFeatureResponse) ProtoMessage() {}
+
+func (x *DeleteFeatureResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[42]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteFeatureResponse.ProtoReflect.Descriptor instead.
+func (*DeleteFeatureResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{42}
+}
+
+func (x *DeleteFeatureResponse) GetFeature() *v2.FeatureObject {
+	if x != nil {
+		return x.Feature
+	}
+	return nil
+}
+
+type FeaturePrivilegeInput struct {
+	state         protoimpl.MessageState       `protogen:"open.v1"`
+	Code          string                       `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Config        *FeaturePrivilegeConfigInput `protobuf:"bytes,2,opt,name=config,proto3,oneof" json:"config,omitempty"`
+	Name          *string                      `protobuf:"bytes,3,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	ValueType     *v2.PrivilegeValueTypeEnum   `protobuf:"varint,4,opt,name=value_type,json=valueType,proto3,enum=invora.billing.common.v2.PrivilegeValueTypeEnum,oneof" json:"value_type,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FeaturePrivilegeInput) Reset() {
+	*x = FeaturePrivilegeInput{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[43]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FeaturePrivilegeInput) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FeaturePrivilegeInput) ProtoMessage() {}
+
+func (x *FeaturePrivilegeInput) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[43]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FeaturePrivilegeInput.ProtoReflect.Descriptor instead.
+func (*FeaturePrivilegeInput) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{43}
+}
+
+func (x *FeaturePrivilegeInput) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *FeaturePrivilegeInput) GetConfig() *FeaturePrivilegeConfigInput {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
+func (x *FeaturePrivilegeInput) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *FeaturePrivilegeInput) GetValueType() v2.PrivilegeValueTypeEnum {
+	if x != nil && x.ValueType != nil {
+		return *x.ValueType
+	}
+	return v2.PrivilegeValueTypeEnum(0)
+}
+
+type FeaturePrivilegeConfigInput struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SelectOptions []string               `protobuf:"bytes,1,rep,name=select_options,json=selectOptions,proto3" json:"select_options,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FeaturePrivilegeConfigInput) Reset() {
+	*x = FeaturePrivilegeConfigInput{}
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[44]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FeaturePrivilegeConfigInput) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FeaturePrivilegeConfigInput) ProtoMessage() {}
+
+func (x *FeaturePrivilegeConfigInput) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_plans_v2_service_proto_msgTypes[44]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FeaturePrivilegeConfigInput.ProtoReflect.Descriptor instead.
+func (*FeaturePrivilegeConfigInput) Descriptor() ([]byte, []int) {
+	return file_invora_billing_plans_v2_service_proto_rawDescGZIP(), []int{44}
+}
+
+func (x *FeaturePrivilegeConfigInput) GetSelectOptions() []string {
+	if x != nil {
+		return x.SelectOptions
 	}
 	return nil
 }
@@ -1586,15 +2974,15 @@ var File_invora_billing_plans_v2_service_proto protoreflect.FileDescriptor
 
 const file_invora_billing_plans_v2_service_proto_rawDesc = "" +
 	"\n" +
-	"%invora/billing/plans/v2/service.proto\x12\x17invora.billing.plans.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\x88\x01\n" +
+	"%invora/billing/plans/v2/service.proto\x12\x17invora.billing.plans.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/decimal.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\x89\x01\n" +
 	"\n" +
 	"GetRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
 	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x121\n" +
-	"\x04view\x18\v \x01(\x0e2\x1d.invora.billing.plans.v2.ViewR\x04view\"H\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"H\n" +
 	"\vGetResponse\x129\n" +
-	"\x04plan\x18\x01 \x01(\v2%.invora.billing.common.v2.BillingPlanR\x04plan\"\xa5\x02\n" +
+	"\x04plan\x18\x01 \x01(\v2%.invora.billing.common.v2.BillingPlanR\x04plan\"\xa6\x02\n" +
 	"\vListRequest\x12;\n" +
 	"\x06filter\x18\x01 \x01(\v2#.invora.billing.plans.v2.ListFilterR\x06filter\x125\n" +
 	"\x04sort\x18\x02 \x01(\v2!.invora.billing.plans.v2.ListSortR\x04sort\x126\n" +
@@ -1602,13 +2990,14 @@ const file_invora_billing_plans_v2_service_proto_rawDesc = "" +
 	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
 	"pagination\x127\n" +
 	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x121\n" +
-	"\x04view\x18\v \x01(\x0e2\x1d.invora.billing.plans.v2.ViewR\x04view\"\xb4\x01\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xb0\x01\n" +
 	"\fListResponse\x12;\n" +
 	"\x05items\x18\x01 \x03(\v2%.invora.billing.common.v2.BillingPlanR\x05items\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"j\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"j\n" +
 	"\n" +
 	"ListFilter\x12;\n" +
 	"\x04part\x18\x01 \x01(\v2'.invora.billing.plans.v2.ListFilterPartR\x04part\x12\x1f\n" +
@@ -1622,103 +3011,8 @@ const file_invora_billing_plans_v2_service_proto_rawDesc = "" +
 	"\fListSortRule\x126\n" +
 	"\n" +
 	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAtB\x06\n" +
-	"\x04type\"O\n" +
-	"\rCreateRequest\x12>\n" +
-	"\x05input\x18\x01 \x01(\v2(.invora.billing.plans.v2.CreatePlanInputR\x05input\"K\n" +
-	"\x0eCreateResponse\x129\n" +
-	"\x04plan\x18\x01 \x01(\v2%.invora.billing.common.v2.BillingPlanR\x04plan\"P\n" +
-	"\rDeleteRequest\x12?\n" +
-	"\x05input\x18\x01 \x01(\v2).invora.billing.plans.v2.DestroyPlanInputR\x05input\"\x10\n" +
-	"\x0eDeleteResponse\"O\n" +
-	"\rUpdateRequest\x12>\n" +
-	"\x05input\x18\x01 \x01(\v2(.invora.billing.plans.v2.UpdatePlanInputR\x05input\"K\n" +
-	"\x0eUpdateResponse\x129\n" +
-	"\x04plan\x18\x01 \x01(\v2%.invora.billing.common.v2.BillingPlanR\x04plan\"\xec\t\n" +
-	"\x0fUpdatePlanInput\x12!\n" +
-	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12O\n" +
-	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0eamountCurrency\x125\n" +
-	"\x14bill_charges_monthly\x18\x03 \x01(\bH\x00R\x12billChargesMonthly\x88\x01\x01\x12@\n" +
-	"\x1abill_fixed_charges_monthly\x18\x04 \x01(\bH\x01R\x17billFixedChargesMonthly\x88\x01\x01\x12,\n" +
-	"\x0fcascade_updates\x18\x05 \x01(\bH\x02R\x0ecascadeUpdates\x88\x01\x01\x12>\n" +
-	"\acharges\x18\x06 \x03(\v2$.invora.billing.plans.v2.ChargeInputR\acharges\x12\x12\n" +
-	"\x04code\x18\a \x01(\tR\x04code\x12%\n" +
-	"\vdescription\x18\b \x01(\tH\x03R\vdescription\x88\x01\x01\x12N\n" +
-	"\fentitlements\x18\t \x03(\v2*.invora.billing.common.v2.EntitlementInputR\fentitlements\x12N\n" +
-	"\rfixed_charges\x18\n" +
-	" \x03(\v2).invora.billing.plans.v2.FixedChargeInputR\ffixedCharges\x12\x0e\n" +
-	"\x02id\x18\v \x01(\tR\x02id\x12B\n" +
-	"\binterval\x18\f \x01(\x0e2&.invora.billing.common.v2.PlanIntervalR\binterval\x125\n" +
-	"\x14invoice_display_name\x18\r \x01(\tH\x04R\x12invoiceDisplayName\x88\x01\x01\x12C\n" +
-	"\bmetadata\x18\x0e \x03(\v2'.invora.billing.common.v2.MetadataInputR\bmetadata\x12]\n" +
-	"\x12minimum_commitment\x18\x0f \x01(\v2).invora.billing.common.v2.CommitmentInputH\x05R\x11minimumCommitment\x88\x01\x01\x12\x12\n" +
-	"\x04name\x18\x10 \x01(\tR\x04name\x12$\n" +
-	"\x0epay_in_advance\x18\x11 \x01(\bR\fpayInAdvance\x12\x1b\n" +
-	"\ttax_codes\x18\x12 \x03(\tR\btaxCodes\x12&\n" +
-	"\ftrial_period\x18\x13 \x01(\x01H\x06R\vtrialPeriod\x88\x01\x01\x12X\n" +
-	"\x10usage_thresholds\x18\x14 \x03(\v2-.invora.billing.common.v2.UsageThresholdInputR\x0fusageThresholdsB\x17\n" +
-	"\x15_bill_charges_monthlyB\x1d\n" +
-	"\x1b_bill_fixed_charges_monthlyB\x12\n" +
-	"\x10_cascade_updatesB\x0e\n" +
-	"\f_descriptionB\x17\n" +
-	"\x15_invoice_display_nameB\x15\n" +
-	"\x13_minimum_commitmentB\x0f\n" +
-	"\r_trial_period\"\xe4\x04\n" +
-	"\x10FixedChargeInput\x12\x1a\n" +
-	"\tadd_on_id\x18\x01 \x01(\tR\aaddOnId\x12;\n" +
-	"\x17apply_units_immediately\x18\x02 \x01(\bH\x00R\x15applyUnitsImmediately\x88\x01\x01\x12W\n" +
-	"\fcharge_model\x18\x03 \x01(\x0e24.invora.billing.common.v2.FixedChargeChargeModelEnumR\vchargeModel\x12\x13\n" +
-	"\x02id\x18\x04 \x01(\tH\x01R\x02id\x88\x01\x01\x125\n" +
-	"\x14invoice_display_name\x18\x05 \x01(\tH\x02R\x12invoiceDisplayName\x88\x01\x01\x12)\n" +
-	"\x0epay_in_advance\x18\x06 \x01(\bH\x03R\fpayInAdvance\x88\x01\x01\x12Y\n" +
-	"\n" +
-	"properties\x18\a \x01(\v24.invora.billing.common.v2.FixedChargePropertiesInputH\x04R\n" +
-	"properties\x88\x01\x01\x12\x1f\n" +
-	"\bprorated\x18\b \x01(\bH\x05R\bprorated\x88\x01\x01\x12\x1b\n" +
-	"\ttax_codes\x18\t \x03(\tR\btaxCodes\x12\x19\n" +
-	"\x05units\x18\n" +
-	" \x01(\tH\x06R\x05units\x88\x01\x01B\x1a\n" +
-	"\x18_apply_units_immediatelyB\x05\n" +
-	"\x03_idB\x17\n" +
-	"\x15_invoice_display_nameB\x11\n" +
-	"\x0f_pay_in_advanceB\r\n" +
-	"\v_propertiesB\v\n" +
-	"\t_proratedB\b\n" +
-	"\x06_units\"\x97\a\n" +
-	"\vChargeInput\x12g\n" +
-	"\x14applied_pricing_unit\x18\x01 \x01(\v20.invora.billing.plans.v2.AppliedPricingUnitInputH\x00R\x12appliedPricingUnit\x88\x01\x01\x12,\n" +
-	"\x12billable_metric_id\x18\x02 \x01(\tR\x10billableMetricId\x12L\n" +
-	"\fcharge_model\x18\x03 \x01(\x0e2).invora.billing.common.v2.ChargeModelEnumR\vchargeModel\x12E\n" +
-	"\afilters\x18\x04 \x03(\v2+.invora.billing.common.v2.ChargeFilterInputR\afilters\x12\x13\n" +
-	"\x02id\x18\x05 \x01(\tH\x01R\x02id\x88\x01\x01\x125\n" +
-	"\x14invoice_display_name\x18\x06 \x01(\tH\x02R\x12invoiceDisplayName\x88\x01\x01\x12%\n" +
-	"\vinvoiceable\x18\a \x01(\bH\x03R\vinvoiceable\x88\x01\x01\x12-\n" +
-	"\x10min_amount_cents\x18\b \x01(\x03H\x04R\x0eminAmountCents\x88\x01\x01\x12)\n" +
-	"\x0epay_in_advance\x18\t \x01(\bH\x05R\fpayInAdvance\x88\x01\x01\x12N\n" +
-	"\n" +
-	"properties\x18\n" +
-	" \x01(\v2).invora.billing.common.v2.PropertiesInputH\x06R\n" +
-	"properties\x88\x01\x01\x12\x1f\n" +
-	"\bprorated\x18\v \x01(\bH\aR\bprorated\x88\x01\x01\x12^\n" +
-	"\x11regroup_paid_fees\x18\f \x01(\x0e2-.invora.billing.common.v2.RegroupPaidFeesEnumH\bR\x0fregroupPaidFees\x88\x01\x01\x12\x1b\n" +
-	"\ttax_codes\x18\r \x03(\tR\btaxCodesB\x17\n" +
-	"\x15_applied_pricing_unitB\x05\n" +
-	"\x03_idB\x17\n" +
-	"\x15_invoice_display_nameB\x0e\n" +
-	"\f_invoiceableB\x13\n" +
-	"\x11_min_amount_centsB\x11\n" +
-	"\x0f_pay_in_advanceB\r\n" +
-	"\v_propertiesB\v\n" +
-	"\t_proratedB\x14\n" +
-	"\x12_regroup_paid_fees\"V\n" +
-	"\x17AppliedPricingUnitInput\x12\x12\n" +
-	"\x04code\x18\x01 \x01(\tR\x04code\x12'\n" +
-	"\x0fconversion_rate\x18\x02 \x01(\x01R\x0econversionRate\"\"\n" +
-	"\x10DestroyPlanInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"0\n" +
-	"\x12DestroyPlanPayload\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x88\x01\x01B\x05\n" +
-	"\x03_id\"\x9a\t\n" +
-	"\x0fCreatePlanInput\x12!\n" +
+	"\x04type\"\x98\t\n" +
+	"\rCreateRequest\x12!\n" +
 	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12O\n" +
 	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0eamountCurrency\x125\n" +
 	"\x14bill_charges_monthly\x18\x03 \x01(\bH\x00R\x12billChargesMonthly\x88\x01\x01\x12@\n" +
@@ -1743,23 +3037,264 @@ const file_invora_billing_plans_v2_service_proto_rawDesc = "" +
 	"\f_descriptionB\x17\n" +
 	"\x15_invoice_display_nameB\x15\n" +
 	"\x13_minimum_commitmentB\x0f\n" +
-	"\r_trial_period*;\n" +
-	"\x04View\x12\x14\n" +
-	"\x10VIEW_UNSPECIFIED\x10\x00\x12\x0e\n" +
+	"\r_trial_period\"K\n" +
+	"\x0eCreateResponse\x129\n" +
+	"\x04plan\x18\x01 \x01(\v2%.invora.billing.common.v2.BillingPlanR\x04plan\"\xa7\n" +
 	"\n" +
-	"VIEW_BASIC\x10\x01\x12\r\n" +
-	"\tVIEW_FULL\x10\x022\x9f\x06\n" +
-	"\vPlanService\x12\x9f\x01\n" +
-	"\x06Create\x12&.invora.billing.plans.v2.CreateRequest\x1a'.invora.billing.plans.v2.CreateResponse\"D\xe2\xf2\x19 \n" +
-	"\x1eInvora.Billing.Plans.v2.Create\x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/api/v2/billing/plans\x12\x95\x01\n" +
+	"\rUpdateRequest\x12!\n" +
+	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12O\n" +
+	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0eamountCurrency\x125\n" +
+	"\x14bill_charges_monthly\x18\x03 \x01(\bH\x00R\x12billChargesMonthly\x88\x01\x01\x12@\n" +
+	"\x1abill_fixed_charges_monthly\x18\x04 \x01(\bH\x01R\x17billFixedChargesMonthly\x88\x01\x01\x12,\n" +
+	"\x0fcascade_updates\x18\x05 \x01(\bH\x02R\x0ecascadeUpdates\x88\x01\x01\x12>\n" +
+	"\acharges\x18\x06 \x03(\v2$.invora.billing.plans.v2.ChargeInputR\acharges\x12\x12\n" +
+	"\x04code\x18\a \x01(\tR\x04code\x12%\n" +
+	"\vdescription\x18\b \x01(\tH\x03R\vdescription\x88\x01\x01\x12N\n" +
+	"\fentitlements\x18\t \x03(\v2*.invora.billing.common.v2.EntitlementInputR\fentitlements\x12N\n" +
+	"\rfixed_charges\x18\n" +
+	" \x03(\v2).invora.billing.plans.v2.FixedChargeInputR\ffixedCharges\x12\x0e\n" +
+	"\x02id\x18\v \x01(\tR\x02id\x12B\n" +
+	"\binterval\x18\f \x01(\x0e2&.invora.billing.common.v2.PlanIntervalR\binterval\x125\n" +
+	"\x14invoice_display_name\x18\r \x01(\tH\x04R\x12invoiceDisplayName\x88\x01\x01\x12C\n" +
+	"\bmetadata\x18\x0e \x03(\v2'.invora.billing.common.v2.MetadataInputR\bmetadata\x12]\n" +
+	"\x12minimum_commitment\x18\x0f \x01(\v2).invora.billing.common.v2.CommitmentInputH\x05R\x11minimumCommitment\x88\x01\x01\x12\x12\n" +
+	"\x04name\x18\x10 \x01(\tR\x04name\x12$\n" +
+	"\x0epay_in_advance\x18\x11 \x01(\bR\fpayInAdvance\x12\x1b\n" +
+	"\ttax_codes\x18\x12 \x03(\tR\btaxCodes\x12&\n" +
+	"\ftrial_period\x18\x13 \x01(\x01H\x06R\vtrialPeriod\x88\x01\x01\x12X\n" +
+	"\x10usage_thresholds\x18\x14 \x03(\v2-.invora.billing.common.v2.UsageThresholdInputR\x0fusageThresholds\x12;\n" +
+	"\vupdate_mask\x18\x15 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\x17\n" +
+	"\x15_bill_charges_monthlyB\x1d\n" +
+	"\x1b_bill_fixed_charges_monthlyB\x12\n" +
+	"\x10_cascade_updatesB\x0e\n" +
+	"\f_descriptionB\x17\n" +
+	"\x15_invoice_display_nameB\x15\n" +
+	"\x13_minimum_commitmentB\x0f\n" +
+	"\r_trial_period\"K\n" +
+	"\x0eUpdateResponse\x129\n" +
+	"\x04plan\x18\x01 \x01(\v2%.invora.billing.common.v2.BillingPlanR\x04plan\"\x1f\n" +
+	"\rDeleteRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"\x10\n" +
+	"\x0eDeleteResponse\"\xe0\x04\n" +
+	"\x10FixedChargeInput\x12\x1a\n" +
+	"\tadd_on_id\x18\x01 \x01(\tR\aaddOnId\x12;\n" +
+	"\x17apply_units_immediately\x18\x02 \x01(\bH\x00R\x15applyUnitsImmediately\x88\x01\x01\x12S\n" +
+	"\fcharge_model\x18\x03 \x01(\x0e20.invora.billing.common.v2.FixedChargeChargeModelR\vchargeModel\x12\x13\n" +
+	"\x02id\x18\x04 \x01(\tH\x01R\x02id\x88\x01\x01\x125\n" +
+	"\x14invoice_display_name\x18\x05 \x01(\tH\x02R\x12invoiceDisplayName\x88\x01\x01\x12)\n" +
+	"\x0epay_in_advance\x18\x06 \x01(\bH\x03R\fpayInAdvance\x88\x01\x01\x12Y\n" +
+	"\n" +
+	"properties\x18\a \x01(\v24.invora.billing.common.v2.FixedChargePropertiesInputH\x04R\n" +
+	"properties\x88\x01\x01\x12\x1f\n" +
+	"\bprorated\x18\b \x01(\bH\x05R\bprorated\x88\x01\x01\x12\x1b\n" +
+	"\ttax_codes\x18\t \x03(\tR\btaxCodes\x12\x19\n" +
+	"\x05units\x18\n" +
+	" \x01(\tH\x06R\x05units\x88\x01\x01B\x1a\n" +
+	"\x18_apply_units_immediatelyB\x05\n" +
+	"\x03_idB\x17\n" +
+	"\x15_invoice_display_nameB\x11\n" +
+	"\x0f_pay_in_advanceB\r\n" +
+	"\v_propertiesB\v\n" +
+	"\t_proratedB\b\n" +
+	"\x06_units\"\x8f\a\n" +
+	"\vChargeInput\x12g\n" +
+	"\x14applied_pricing_unit\x18\x01 \x01(\v20.invora.billing.plans.v2.AppliedPricingUnitInputH\x00R\x12appliedPricingUnit\x88\x01\x01\x12,\n" +
+	"\x12billable_metric_id\x18\x02 \x01(\tR\x10billableMetricId\x12H\n" +
+	"\fcharge_model\x18\x03 \x01(\x0e2%.invora.billing.common.v2.ChargeModelR\vchargeModel\x12E\n" +
+	"\afilters\x18\x04 \x03(\v2+.invora.billing.common.v2.ChargeFilterInputR\afilters\x12\x13\n" +
+	"\x02id\x18\x05 \x01(\tH\x01R\x02id\x88\x01\x01\x125\n" +
+	"\x14invoice_display_name\x18\x06 \x01(\tH\x02R\x12invoiceDisplayName\x88\x01\x01\x12%\n" +
+	"\vinvoiceable\x18\a \x01(\bH\x03R\vinvoiceable\x88\x01\x01\x12-\n" +
+	"\x10min_amount_cents\x18\b \x01(\x03H\x04R\x0eminAmountCents\x88\x01\x01\x12)\n" +
+	"\x0epay_in_advance\x18\t \x01(\bH\x05R\fpayInAdvance\x88\x01\x01\x12N\n" +
+	"\n" +
+	"properties\x18\n" +
+	" \x01(\v2).invora.billing.common.v2.PropertiesInputH\x06R\n" +
+	"properties\x88\x01\x01\x12\x1f\n" +
+	"\bprorated\x18\v \x01(\bH\aR\bprorated\x88\x01\x01\x12Z\n" +
+	"\x11regroup_paid_fees\x18\f \x01(\x0e2).invora.billing.common.v2.RegroupPaidFeesH\bR\x0fregroupPaidFees\x88\x01\x01\x12\x1b\n" +
+	"\ttax_codes\x18\r \x03(\tR\btaxCodesB\x17\n" +
+	"\x15_applied_pricing_unitB\x05\n" +
+	"\x03_idB\x17\n" +
+	"\x15_invoice_display_nameB\x0e\n" +
+	"\f_invoiceableB\x13\n" +
+	"\x11_min_amount_centsB\x11\n" +
+	"\x0f_pay_in_advanceB\r\n" +
+	"\v_propertiesB\v\n" +
+	"\t_proratedB\x14\n" +
+	"\x12_regroup_paid_fees\"l\n" +
+	"\x17AppliedPricingUnitInput\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\tR\x04code\x12=\n" +
+	"\x0fconversion_rate\x18\x02 \x01(\v2\x14.kernel.DecimalValueR\x0econversionRate\"\x8e\x01\n" +
+	"\x0fGetAddOnRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
+	"\tread_mask\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"Q\n" +
+	"\x10GetAddOnResponse\x12=\n" +
+	"\x06add_on\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAddOnR\x05addOn\"\xae\x02\n" +
+	"\x11ListAddOnsRequest\x12<\n" +
+	"\x06filter\x18\x01 \x01(\v2$.invora.billing.plans.v2.AddOnFilterR\x06filter\x126\n" +
+	"\x04sort\x18\x02 \x01(\v2\".invora.billing.plans.v2.AddOnSortR\x04sort\x126\n" +
+	"\n" +
+	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
+	"pagination\x127\n" +
+	"\tread_mask\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xb7\x01\n" +
+	"\x12ListAddOnsResponse\x12<\n" +
+	"\x05items\x18\x01 \x03(\v2&.invora.billing.common.v2.BillingAddOnR\x05items\x12\x1f\n" +
+	"\vtotal_count\x18\x02 \x01(\x04R\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\".\n" +
+	"\vAddOnFilter\x12\x1f\n" +
+	"\vtext_search\x18\x01 \x01(\tR\n" +
+	"textSearch\"I\n" +
+	"\tAddOnSort\x12<\n" +
+	"\x05rules\x18\x01 \x03(\v2&.invora.billing.plans.v2.AddOnSortRuleR\x05rules\"O\n" +
+	"\rAddOnSortRule\x126\n" +
+	"\n" +
+	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAtB\x06\n" +
+	"\x04type\"\xd4\x02\n" +
+	"\x12CreateAddOnRequest\x12!\n" +
+	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12O\n" +
+	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0eamountCurrency\x12\x12\n" +
+	"\x04code\x18\x03 \x01(\tR\x04code\x12%\n" +
+	"\vdescription\x18\x04 \x01(\tH\x00R\vdescription\x88\x01\x01\x125\n" +
+	"\x14invoice_display_name\x18\x05 \x01(\tH\x01R\x12invoiceDisplayName\x88\x01\x01\x12\x12\n" +
+	"\x04name\x18\x06 \x01(\tR\x04name\x12\x1b\n" +
+	"\ttax_codes\x18\a \x03(\tR\btaxCodesB\x0e\n" +
+	"\f_descriptionB\x17\n" +
+	"\x15_invoice_display_name\"T\n" +
+	"\x13CreateAddOnResponse\x12=\n" +
+	"\x06add_on\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAddOnR\x05addOn\"\xa1\x03\n" +
+	"\x12UpdateAddOnRequest\x12!\n" +
+	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12O\n" +
+	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0eamountCurrency\x12\x12\n" +
+	"\x04code\x18\x03 \x01(\tR\x04code\x12%\n" +
+	"\vdescription\x18\x04 \x01(\tH\x00R\vdescription\x88\x01\x01\x12\x0e\n" +
+	"\x02id\x18\x05 \x01(\tR\x02id\x125\n" +
+	"\x14invoice_display_name\x18\x06 \x01(\tH\x01R\x12invoiceDisplayName\x88\x01\x01\x12\x12\n" +
+	"\x04name\x18\a \x01(\tR\x04name\x12\x1b\n" +
+	"\ttax_codes\x18\b \x03(\tR\btaxCodes\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\x0e\n" +
+	"\f_descriptionB\x17\n" +
+	"\x15_invoice_display_name\"T\n" +
+	"\x13UpdateAddOnResponse\x12=\n" +
+	"\x06add_on\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAddOnR\x05addOn\"$\n" +
+	"\x12DeleteAddOnRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"\x15\n" +
+	"\x13DeleteAddOnResponse\"\xb2\x01\n" +
+	"\x11GetFeatureRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x127\n" +
+	"\tread_mask\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04viewB\a\n" +
+	"\x05_code\"W\n" +
+	"\x12GetFeatureResponse\x12A\n" +
+	"\afeature\x18\x01 \x01(\v2'.invora.billing.common.v2.FeatureObjectR\afeature\"\xb4\x02\n" +
+	"\x13ListFeaturesRequest\x12>\n" +
+	"\x06filter\x18\x01 \x01(\v2&.invora.billing.plans.v2.FeatureFilterR\x06filter\x128\n" +
+	"\x04sort\x18\x02 \x01(\v2$.invora.billing.plans.v2.FeatureSortR\x04sort\x126\n" +
+	"\n" +
+	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
+	"pagination\x127\n" +
+	"\tread_mask\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xba\x01\n" +
+	"\x14ListFeaturesResponse\x12=\n" +
+	"\x05items\x18\x01 \x03(\v2'.invora.billing.common.v2.FeatureObjectR\x05items\x12\x1f\n" +
+	"\vtotal_count\x18\x02 \x01(\x04R\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"0\n" +
+	"\rFeatureFilter\x12\x1f\n" +
+	"\vtext_search\x18\x01 \x01(\tR\n" +
+	"textSearch\"M\n" +
+	"\vFeatureSort\x12>\n" +
+	"\x05rules\x18\x01 \x03(\v2(.invora.billing.plans.v2.FeatureSortRuleR\x05rules\"Q\n" +
+	"\x0fFeatureSortRule\x126\n" +
+	"\n" +
+	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAtB\x06\n" +
+	"\x04type\"\x98\x02\n" +
+	"\x14CreateFeatureRequest\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\tR\x04code\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x00R\vdescription\x88\x01\x01\x12C\n" +
+	"\bmetadata\x18\x03 \x03(\v2'.invora.billing.common.v2.MetadataInputR\bmetadata\x12\x17\n" +
+	"\x04name\x18\x04 \x01(\tH\x01R\x04name\x88\x01\x01\x12N\n" +
+	"\n" +
+	"privileges\x18\x05 \x03(\v2..invora.billing.plans.v2.FeaturePrivilegeInputR\n" +
+	"privilegesB\x0e\n" +
+	"\f_descriptionB\a\n" +
+	"\x05_name\"Z\n" +
+	"\x15CreateFeatureResponse\x12A\n" +
+	"\afeature\x18\x01 \x01(\v2'.invora.billing.common.v2.FeatureObjectR\afeature\"\xd1\x02\n" +
+	"\x14UpdateFeatureRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x00R\vdescription\x88\x01\x01\x12C\n" +
+	"\bmetadata\x18\x03 \x03(\v2'.invora.billing.common.v2.MetadataInputR\bmetadata\x12\x17\n" +
+	"\x04name\x18\x04 \x01(\tH\x01R\x04name\x88\x01\x01\x12N\n" +
+	"\n" +
+	"privileges\x18\x05 \x03(\v2..invora.billing.plans.v2.FeaturePrivilegeInputR\n" +
+	"privileges\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\x0e\n" +
+	"\f_descriptionB\a\n" +
+	"\x05_name\"Z\n" +
+	"\x15UpdateFeatureResponse\x12A\n" +
+	"\afeature\x18\x01 \x01(\v2'.invora.billing.common.v2.FeatureObjectR\afeature\"&\n" +
+	"\x14DeleteFeatureRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"Z\n" +
+	"\x15DeleteFeatureResponse\x12A\n" +
+	"\afeature\x18\x01 \x01(\v2'.invora.billing.common.v2.FeatureObjectR\afeature\"\x90\x02\n" +
+	"\x15FeaturePrivilegeInput\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\tR\x04code\x12Q\n" +
+	"\x06config\x18\x02 \x01(\v24.invora.billing.plans.v2.FeaturePrivilegeConfigInputH\x00R\x06config\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x03 \x01(\tH\x01R\x04name\x88\x01\x01\x12T\n" +
+	"\n" +
+	"value_type\x18\x04 \x01(\x0e20.invora.billing.common.v2.PrivilegeValueTypeEnumH\x02R\tvalueType\x88\x01\x01B\t\n" +
+	"\a_configB\a\n" +
+	"\x05_nameB\r\n" +
+	"\v_value_type\"D\n" +
+	"\x1bFeaturePrivilegeConfigInput\x12%\n" +
+	"\x0eselect_options\x18\x01 \x03(\tR\rselectOptions2\xa7\x16\n" +
+	"\fPlansService\x12\x9c\x01\n" +
+	"\x04List\x12$.invora.billing.plans.v2.ListRequest\x1a%.invora.billing.plans.v2.ListResponse\"G\xe2\xf2\x19\x1e\n" +
+	"\x1cInvora.Billing.Plans.v2.List\x82\xd3\xe4\x93\x02\x1f:\x01*\"\x1a/api/billing/v2/plans/list\x12\x95\x01\n" +
 	"\x03Get\x12#.invora.billing.plans.v2.GetRequest\x1a$.invora.billing.plans.v2.GetResponse\"C\xe2\xf2\x19\x1d\n" +
-	"\x1bInvora.Billing.Plans.v2.Get\x82\xd3\xe4\x93\x02\x1c\x12\x1a/api/v2/billing/plans/{id}\x12\x94\x01\n" +
-	"\x04List\x12$.invora.billing.plans.v2.ListRequest\x1a%.invora.billing.plans.v2.ListResponse\"?\xe2\xf2\x19\x1e\n" +
-	"\x1cInvora.Billing.Plans.v2.List\x82\xd3\xe4\x93\x02\x17\x12\x15/api/v2/billing/plans\x12\x9f\x01\n" +
-	"\x06Update\x12&.invora.billing.plans.v2.UpdateRequest\x1a'.invora.billing.plans.v2.UpdateResponse\"D\xe2\xf2\x19 \n" +
-	"\x1eInvora.Billing.Plans.v2.Update\x82\xd3\xe4\x93\x02\x1a:\x01*2\x15/api/v2/billing/plans\x12\x9c\x01\n" +
-	"\x06Delete\x12&.invora.billing.plans.v2.DeleteRequest\x1a'.invora.billing.plans.v2.DeleteResponse\"A\xe2\xf2\x19 \n" +
-	"\x1eInvora.Billing.Plans.v2.Delete\x82\xd3\xe4\x93\x02\x17*\x15/api/v2/billing/plansB\xf6\x01\n" +
+	"\x1bInvora.Billing.Plans.v2.Get\x82\xd3\xe4\x93\x02\x1c\x12\x1a/api/billing/v2/plans/{id}\x12\xa6\x01\n" +
+	"\x06Create\x12&.invora.billing.plans.v2.CreateRequest\x1a'.invora.billing.plans.v2.CreateResponse\"K\xe2\xf2\x19'\n" +
+	"%Invora.Billing.Plans.v2.Modify.Create\x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/api/billing/v2/plans\x12\xab\x01\n" +
+	"\x06Update\x12&.invora.billing.plans.v2.UpdateRequest\x1a'.invora.billing.plans.v2.UpdateResponse\"P\xe2\xf2\x19'\n" +
+	"%Invora.Billing.Plans.v2.Modify.Update\x82\xd3\xe4\x93\x02\x1f:\x01*\x1a\x1a/api/billing/v2/plans/{id}\x12\xad\x01\n" +
+	"\x06Delete\x12&.invora.billing.plans.v2.DeleteRequest\x1a'.invora.billing.plans.v2.DeleteResponse\"R\xe2\xf2\x19'\n" +
+	"%Invora.Billing.Plans.v2.Modify.Delete\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/api/billing/v2/plans/delete\x12\xb3\x01\n" +
+	"\bGetAddOn\x12(.invora.billing.plans.v2.GetAddOnRequest\x1a).invora.billing.plans.v2.GetAddOnResponse\"R\xe2\xf2\x19$\n" +
+	"\"Invora.Billing.Plans.v2.AddOns.Get\x82\xd3\xe4\x93\x02$\x12\"/api/billing/v2/plans/add-ons/{id}\x12\xbd\x01\n" +
+	"\n" +
+	"ListAddOns\x12*.invora.billing.plans.v2.ListAddOnsRequest\x1a+.invora.billing.plans.v2.ListAddOnsResponse\"V\xe2\xf2\x19%\n" +
+	"#Invora.Billing.Plans.v2.AddOns.List\x82\xd3\xe4\x93\x02':\x01*\"\"/api/billing/v2/plans/add-ons/list\x12\xc4\x01\n" +
+	"\vCreateAddOn\x12+.invora.billing.plans.v2.CreateAddOnRequest\x1a,.invora.billing.plans.v2.CreateAddOnResponse\"Z\xe2\xf2\x19.\n" +
+	",Invora.Billing.Plans.v2.AddOns.Modify.Create\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/api/billing/v2/plans/add-ons\x12\xc9\x01\n" +
+	"\vUpdateAddOn\x12+.invora.billing.plans.v2.UpdateAddOnRequest\x1a,.invora.billing.plans.v2.UpdateAddOnResponse\"_\xe2\xf2\x19.\n" +
+	",Invora.Billing.Plans.v2.AddOns.Modify.Update\x82\xd3\xe4\x93\x02':\x01*\x1a\"/api/billing/v2/plans/add-ons/{id}\x12\xcb\x01\n" +
+	"\vDeleteAddOn\x12+.invora.billing.plans.v2.DeleteAddOnRequest\x1a,.invora.billing.plans.v2.DeleteAddOnResponse\"a\xe2\xf2\x19.\n" +
+	",Invora.Billing.Plans.v2.AddOns.Modify.Delete\x82\xd3\xe4\x93\x02):\x01*\"$/api/billing/v2/plans/add-ons/delete\x12\xbc\x01\n" +
+	"\n" +
+	"GetFeature\x12*.invora.billing.plans.v2.GetFeatureRequest\x1a+.invora.billing.plans.v2.GetFeatureResponse\"U\xe2\xf2\x19&\n" +
+	"$Invora.Billing.Plans.v2.Features.Get\x82\xd3\xe4\x93\x02%\x12#/api/billing/v2/plans/features/{id}\x12\xc6\x01\n" +
+	"\fListFeatures\x12,.invora.billing.plans.v2.ListFeaturesRequest\x1a-.invora.billing.plans.v2.ListFeaturesResponse\"Y\xe2\xf2\x19'\n" +
+	"%Invora.Billing.Plans.v2.Features.List\x82\xd3\xe4\x93\x02(:\x01*\"#/api/billing/v2/plans/features/list\x12\xcd\x01\n" +
+	"\rCreateFeature\x12-.invora.billing.plans.v2.CreateFeatureRequest\x1a..invora.billing.plans.v2.CreateFeatureResponse\"]\xe2\xf2\x190\n" +
+	".Invora.Billing.Plans.v2.Features.Modify.Create\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/api/billing/v2/plans/features\x12\xd2\x01\n" +
+	"\rUpdateFeature\x12-.invora.billing.plans.v2.UpdateFeatureRequest\x1a..invora.billing.plans.v2.UpdateFeatureResponse\"b\xe2\xf2\x190\n" +
+	".Invora.Billing.Plans.v2.Features.Modify.Update\x82\xd3\xe4\x93\x02(:\x01*\x1a#/api/billing/v2/plans/features/{id}\x12\xd4\x01\n" +
+	"\rDeleteFeature\x12-.invora.billing.plans.v2.DeleteFeatureRequest\x1a..invora.billing.plans.v2.DeleteFeatureResponse\"d\xe2\xf2\x190\n" +
+	".Invora.Billing.Plans.v2.Features.Modify.Delete\x82\xd3\xe4\x93\x02*:\x01*\"%/api/billing/v2/plans/features/deleteB\xf6\x01\n" +
 	"\x1bcom.invora.billing.plans.v2B\fServiceProtoP\x01ZJgithub.com/invoraapp/invora-controller/gen/invora/billing/plans/v2;plansv2\xa2\x02\x03IBP\xaa\x02\x17Invora.Billing.Plans.V2\xca\x02\x17Invora\\Billing\\Plans\\V2\xe2\x02#Invora\\Billing\\Plans\\V2\\GPBMetadata\xea\x02\x1aInvora::Billing::Plans::V2b\x06proto3"
 
 var (
@@ -1774,106 +3309,187 @@ func file_invora_billing_plans_v2_service_proto_rawDescGZIP() []byte {
 	return file_invora_billing_plans_v2_service_proto_rawDescData
 }
 
-var file_invora_billing_plans_v2_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_invora_billing_plans_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
+var file_invora_billing_plans_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 45)
 var file_invora_billing_plans_v2_service_proto_goTypes = []any{
-	(View)(0),                             // 0: invora.billing.plans.v2.View
-	(*GetRequest)(nil),                    // 1: invora.billing.plans.v2.GetRequest
-	(*GetResponse)(nil),                   // 2: invora.billing.plans.v2.GetResponse
-	(*ListRequest)(nil),                   // 3: invora.billing.plans.v2.ListRequest
-	(*ListResponse)(nil),                  // 4: invora.billing.plans.v2.ListResponse
-	(*ListFilter)(nil),                    // 5: invora.billing.plans.v2.ListFilter
-	(*ListFilterPart)(nil),                // 6: invora.billing.plans.v2.ListFilterPart
-	(*ListSort)(nil),                      // 7: invora.billing.plans.v2.ListSort
-	(*ListSortRule)(nil),                  // 8: invora.billing.plans.v2.ListSortRule
-	(*CreateRequest)(nil),                 // 9: invora.billing.plans.v2.CreateRequest
-	(*CreateResponse)(nil),                // 10: invora.billing.plans.v2.CreateResponse
-	(*DeleteRequest)(nil),                 // 11: invora.billing.plans.v2.DeleteRequest
-	(*DeleteResponse)(nil),                // 12: invora.billing.plans.v2.DeleteResponse
-	(*UpdateRequest)(nil),                 // 13: invora.billing.plans.v2.UpdateRequest
-	(*UpdateResponse)(nil),                // 14: invora.billing.plans.v2.UpdateResponse
-	(*UpdatePlanInput)(nil),               // 15: invora.billing.plans.v2.UpdatePlanInput
-	(*FixedChargeInput)(nil),              // 16: invora.billing.plans.v2.FixedChargeInput
-	(*ChargeInput)(nil),                   // 17: invora.billing.plans.v2.ChargeInput
-	(*AppliedPricingUnitInput)(nil),       // 18: invora.billing.plans.v2.AppliedPricingUnitInput
-	(*DestroyPlanInput)(nil),              // 19: invora.billing.plans.v2.DestroyPlanInput
-	(*DestroyPlanPayload)(nil),            // 20: invora.billing.plans.v2.DestroyPlanPayload
-	(*CreatePlanInput)(nil),               // 21: invora.billing.plans.v2.CreatePlanInput
-	(*fieldmaskpb.FieldMask)(nil),         // 22: google.protobuf.FieldMask
-	(*v2.BillingPlan)(nil),                // 23: invora.billing.common.v2.BillingPlan
-	(*kernel.PaginationInfo)(nil),         // 24: kernel.PaginationInfo
-	(*wrapperspb.StringValue)(nil),        // 25: google.protobuf.StringValue
-	(kernel.SortDirection)(0),             // 26: kernel.SortDirection
-	(v2.CurrencyEnum)(0),                  // 27: invora.billing.common.v2.CurrencyEnum
-	(*v2.EntitlementInput)(nil),           // 28: invora.billing.common.v2.EntitlementInput
-	(v2.PlanInterval)(0),                  // 29: invora.billing.common.v2.PlanInterval
-	(*v2.MetadataInput)(nil),              // 30: invora.billing.common.v2.MetadataInput
-	(*v2.CommitmentInput)(nil),            // 31: invora.billing.common.v2.CommitmentInput
-	(*v2.UsageThresholdInput)(nil),        // 32: invora.billing.common.v2.UsageThresholdInput
-	(v2.FixedChargeChargeModelEnum)(0),    // 33: invora.billing.common.v2.FixedChargeChargeModelEnum
-	(*v2.FixedChargePropertiesInput)(nil), // 34: invora.billing.common.v2.FixedChargePropertiesInput
-	(v2.ChargeModelEnum)(0),               // 35: invora.billing.common.v2.ChargeModelEnum
-	(*v2.ChargeFilterInput)(nil),          // 36: invora.billing.common.v2.ChargeFilterInput
-	(*v2.PropertiesInput)(nil),            // 37: invora.billing.common.v2.PropertiesInput
-	(v2.RegroupPaidFeesEnum)(0),           // 38: invora.billing.common.v2.RegroupPaidFeesEnum
+	(*GetRequest)(nil),                    // 0: invora.billing.plans.v2.GetRequest
+	(*GetResponse)(nil),                   // 1: invora.billing.plans.v2.GetResponse
+	(*ListRequest)(nil),                   // 2: invora.billing.plans.v2.ListRequest
+	(*ListResponse)(nil),                  // 3: invora.billing.plans.v2.ListResponse
+	(*ListFilter)(nil),                    // 4: invora.billing.plans.v2.ListFilter
+	(*ListFilterPart)(nil),                // 5: invora.billing.plans.v2.ListFilterPart
+	(*ListSort)(nil),                      // 6: invora.billing.plans.v2.ListSort
+	(*ListSortRule)(nil),                  // 7: invora.billing.plans.v2.ListSortRule
+	(*CreateRequest)(nil),                 // 8: invora.billing.plans.v2.CreateRequest
+	(*CreateResponse)(nil),                // 9: invora.billing.plans.v2.CreateResponse
+	(*UpdateRequest)(nil),                 // 10: invora.billing.plans.v2.UpdateRequest
+	(*UpdateResponse)(nil),                // 11: invora.billing.plans.v2.UpdateResponse
+	(*DeleteRequest)(nil),                 // 12: invora.billing.plans.v2.DeleteRequest
+	(*DeleteResponse)(nil),                // 13: invora.billing.plans.v2.DeleteResponse
+	(*FixedChargeInput)(nil),              // 14: invora.billing.plans.v2.FixedChargeInput
+	(*ChargeInput)(nil),                   // 15: invora.billing.plans.v2.ChargeInput
+	(*AppliedPricingUnitInput)(nil),       // 16: invora.billing.plans.v2.AppliedPricingUnitInput
+	(*GetAddOnRequest)(nil),               // 17: invora.billing.plans.v2.GetAddOnRequest
+	(*GetAddOnResponse)(nil),              // 18: invora.billing.plans.v2.GetAddOnResponse
+	(*ListAddOnsRequest)(nil),             // 19: invora.billing.plans.v2.ListAddOnsRequest
+	(*ListAddOnsResponse)(nil),            // 20: invora.billing.plans.v2.ListAddOnsResponse
+	(*AddOnFilter)(nil),                   // 21: invora.billing.plans.v2.AddOnFilter
+	(*AddOnSort)(nil),                     // 22: invora.billing.plans.v2.AddOnSort
+	(*AddOnSortRule)(nil),                 // 23: invora.billing.plans.v2.AddOnSortRule
+	(*CreateAddOnRequest)(nil),            // 24: invora.billing.plans.v2.CreateAddOnRequest
+	(*CreateAddOnResponse)(nil),           // 25: invora.billing.plans.v2.CreateAddOnResponse
+	(*UpdateAddOnRequest)(nil),            // 26: invora.billing.plans.v2.UpdateAddOnRequest
+	(*UpdateAddOnResponse)(nil),           // 27: invora.billing.plans.v2.UpdateAddOnResponse
+	(*DeleteAddOnRequest)(nil),            // 28: invora.billing.plans.v2.DeleteAddOnRequest
+	(*DeleteAddOnResponse)(nil),           // 29: invora.billing.plans.v2.DeleteAddOnResponse
+	(*GetFeatureRequest)(nil),             // 30: invora.billing.plans.v2.GetFeatureRequest
+	(*GetFeatureResponse)(nil),            // 31: invora.billing.plans.v2.GetFeatureResponse
+	(*ListFeaturesRequest)(nil),           // 32: invora.billing.plans.v2.ListFeaturesRequest
+	(*ListFeaturesResponse)(nil),          // 33: invora.billing.plans.v2.ListFeaturesResponse
+	(*FeatureFilter)(nil),                 // 34: invora.billing.plans.v2.FeatureFilter
+	(*FeatureSort)(nil),                   // 35: invora.billing.plans.v2.FeatureSort
+	(*FeatureSortRule)(nil),               // 36: invora.billing.plans.v2.FeatureSortRule
+	(*CreateFeatureRequest)(nil),          // 37: invora.billing.plans.v2.CreateFeatureRequest
+	(*CreateFeatureResponse)(nil),         // 38: invora.billing.plans.v2.CreateFeatureResponse
+	(*UpdateFeatureRequest)(nil),          // 39: invora.billing.plans.v2.UpdateFeatureRequest
+	(*UpdateFeatureResponse)(nil),         // 40: invora.billing.plans.v2.UpdateFeatureResponse
+	(*DeleteFeatureRequest)(nil),          // 41: invora.billing.plans.v2.DeleteFeatureRequest
+	(*DeleteFeatureResponse)(nil),         // 42: invora.billing.plans.v2.DeleteFeatureResponse
+	(*FeaturePrivilegeInput)(nil),         // 43: invora.billing.plans.v2.FeaturePrivilegeInput
+	(*FeaturePrivilegeConfigInput)(nil),   // 44: invora.billing.plans.v2.FeaturePrivilegeConfigInput
+	(*fieldmaskpb.FieldMask)(nil),         // 45: google.protobuf.FieldMask
+	(v2.View)(0),                          // 46: invora.billing.common.v2.View
+	(*v2.BillingPlan)(nil),                // 47: invora.billing.common.v2.BillingPlan
+	(*kernel.PaginationInfo)(nil),         // 48: kernel.PaginationInfo
+	(kernel.SortDirection)(0),             // 49: kernel.SortDirection
+	(v2.CurrencyEnum)(0),                  // 50: invora.billing.common.v2.CurrencyEnum
+	(*v2.EntitlementInput)(nil),           // 51: invora.billing.common.v2.EntitlementInput
+	(v2.PlanInterval)(0),                  // 52: invora.billing.common.v2.PlanInterval
+	(*v2.MetadataInput)(nil),              // 53: invora.billing.common.v2.MetadataInput
+	(*v2.CommitmentInput)(nil),            // 54: invora.billing.common.v2.CommitmentInput
+	(*v2.UsageThresholdInput)(nil),        // 55: invora.billing.common.v2.UsageThresholdInput
+	(v2.FixedChargeChargeModel)(0),        // 56: invora.billing.common.v2.FixedChargeChargeModel
+	(*v2.FixedChargePropertiesInput)(nil), // 57: invora.billing.common.v2.FixedChargePropertiesInput
+	(v2.ChargeModel)(0),                   // 58: invora.billing.common.v2.ChargeModel
+	(*v2.ChargeFilterInput)(nil),          // 59: invora.billing.common.v2.ChargeFilterInput
+	(*v2.PropertiesInput)(nil),            // 60: invora.billing.common.v2.PropertiesInput
+	(v2.RegroupPaidFees)(0),               // 61: invora.billing.common.v2.RegroupPaidFees
+	(*kernel.DecimalValue)(nil),           // 62: kernel.DecimalValue
+	(*v2.BillingAddOn)(nil),               // 63: invora.billing.common.v2.BillingAddOn
+	(*v2.FeatureObject)(nil),              // 64: invora.billing.common.v2.FeatureObject
+	(v2.PrivilegeValueTypeEnum)(0),        // 65: invora.billing.common.v2.PrivilegeValueTypeEnum
 }
 var file_invora_billing_plans_v2_service_proto_depIdxs = []int32{
-	22, // 0: invora.billing.plans.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 1: invora.billing.plans.v2.GetRequest.view:type_name -> invora.billing.plans.v2.View
-	23, // 2: invora.billing.plans.v2.GetResponse.plan:type_name -> invora.billing.common.v2.BillingPlan
-	5,  // 3: invora.billing.plans.v2.ListRequest.filter:type_name -> invora.billing.plans.v2.ListFilter
-	7,  // 4: invora.billing.plans.v2.ListRequest.sort:type_name -> invora.billing.plans.v2.ListSort
-	24, // 5: invora.billing.plans.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
-	22, // 6: invora.billing.plans.v2.ListRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 7: invora.billing.plans.v2.ListRequest.view:type_name -> invora.billing.plans.v2.View
-	23, // 8: invora.billing.plans.v2.ListResponse.items:type_name -> invora.billing.common.v2.BillingPlan
-	25, // 9: invora.billing.plans.v2.ListResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	6,  // 10: invora.billing.plans.v2.ListFilter.part:type_name -> invora.billing.plans.v2.ListFilterPart
-	8,  // 11: invora.billing.plans.v2.ListSort.rules:type_name -> invora.billing.plans.v2.ListSortRule
-	26, // 12: invora.billing.plans.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
-	21, // 13: invora.billing.plans.v2.CreateRequest.input:type_name -> invora.billing.plans.v2.CreatePlanInput
-	23, // 14: invora.billing.plans.v2.CreateResponse.plan:type_name -> invora.billing.common.v2.BillingPlan
-	19, // 15: invora.billing.plans.v2.DeleteRequest.input:type_name -> invora.billing.plans.v2.DestroyPlanInput
-	15, // 16: invora.billing.plans.v2.UpdateRequest.input:type_name -> invora.billing.plans.v2.UpdatePlanInput
-	23, // 17: invora.billing.plans.v2.UpdateResponse.plan:type_name -> invora.billing.common.v2.BillingPlan
-	27, // 18: invora.billing.plans.v2.UpdatePlanInput.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	17, // 19: invora.billing.plans.v2.UpdatePlanInput.charges:type_name -> invora.billing.plans.v2.ChargeInput
-	28, // 20: invora.billing.plans.v2.UpdatePlanInput.entitlements:type_name -> invora.billing.common.v2.EntitlementInput
-	16, // 21: invora.billing.plans.v2.UpdatePlanInput.fixed_charges:type_name -> invora.billing.plans.v2.FixedChargeInput
-	29, // 22: invora.billing.plans.v2.UpdatePlanInput.interval:type_name -> invora.billing.common.v2.PlanInterval
-	30, // 23: invora.billing.plans.v2.UpdatePlanInput.metadata:type_name -> invora.billing.common.v2.MetadataInput
-	31, // 24: invora.billing.plans.v2.UpdatePlanInput.minimum_commitment:type_name -> invora.billing.common.v2.CommitmentInput
-	32, // 25: invora.billing.plans.v2.UpdatePlanInput.usage_thresholds:type_name -> invora.billing.common.v2.UsageThresholdInput
-	33, // 26: invora.billing.plans.v2.FixedChargeInput.charge_model:type_name -> invora.billing.common.v2.FixedChargeChargeModelEnum
-	34, // 27: invora.billing.plans.v2.FixedChargeInput.properties:type_name -> invora.billing.common.v2.FixedChargePropertiesInput
-	18, // 28: invora.billing.plans.v2.ChargeInput.applied_pricing_unit:type_name -> invora.billing.plans.v2.AppliedPricingUnitInput
-	35, // 29: invora.billing.plans.v2.ChargeInput.charge_model:type_name -> invora.billing.common.v2.ChargeModelEnum
-	36, // 30: invora.billing.plans.v2.ChargeInput.filters:type_name -> invora.billing.common.v2.ChargeFilterInput
-	37, // 31: invora.billing.plans.v2.ChargeInput.properties:type_name -> invora.billing.common.v2.PropertiesInput
-	38, // 32: invora.billing.plans.v2.ChargeInput.regroup_paid_fees:type_name -> invora.billing.common.v2.RegroupPaidFeesEnum
-	27, // 33: invora.billing.plans.v2.CreatePlanInput.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	17, // 34: invora.billing.plans.v2.CreatePlanInput.charges:type_name -> invora.billing.plans.v2.ChargeInput
-	28, // 35: invora.billing.plans.v2.CreatePlanInput.entitlements:type_name -> invora.billing.common.v2.EntitlementInput
-	16, // 36: invora.billing.plans.v2.CreatePlanInput.fixed_charges:type_name -> invora.billing.plans.v2.FixedChargeInput
-	29, // 37: invora.billing.plans.v2.CreatePlanInput.interval:type_name -> invora.billing.common.v2.PlanInterval
-	30, // 38: invora.billing.plans.v2.CreatePlanInput.metadata:type_name -> invora.billing.common.v2.MetadataInput
-	31, // 39: invora.billing.plans.v2.CreatePlanInput.minimum_commitment:type_name -> invora.billing.common.v2.CommitmentInput
-	32, // 40: invora.billing.plans.v2.CreatePlanInput.usage_thresholds:type_name -> invora.billing.common.v2.UsageThresholdInput
-	9,  // 41: invora.billing.plans.v2.PlanService.Create:input_type -> invora.billing.plans.v2.CreateRequest
-	1,  // 42: invora.billing.plans.v2.PlanService.Get:input_type -> invora.billing.plans.v2.GetRequest
-	3,  // 43: invora.billing.plans.v2.PlanService.List:input_type -> invora.billing.plans.v2.ListRequest
-	13, // 44: invora.billing.plans.v2.PlanService.Update:input_type -> invora.billing.plans.v2.UpdateRequest
-	11, // 45: invora.billing.plans.v2.PlanService.Delete:input_type -> invora.billing.plans.v2.DeleteRequest
-	10, // 46: invora.billing.plans.v2.PlanService.Create:output_type -> invora.billing.plans.v2.CreateResponse
-	2,  // 47: invora.billing.plans.v2.PlanService.Get:output_type -> invora.billing.plans.v2.GetResponse
-	4,  // 48: invora.billing.plans.v2.PlanService.List:output_type -> invora.billing.plans.v2.ListResponse
-	14, // 49: invora.billing.plans.v2.PlanService.Update:output_type -> invora.billing.plans.v2.UpdateResponse
-	12, // 50: invora.billing.plans.v2.PlanService.Delete:output_type -> invora.billing.plans.v2.DeleteResponse
-	46, // [46:51] is the sub-list for method output_type
-	41, // [41:46] is the sub-list for method input_type
-	41, // [41:41] is the sub-list for extension type_name
-	41, // [41:41] is the sub-list for extension extendee
-	0,  // [0:41] is the sub-list for field type_name
+	45, // 0: invora.billing.plans.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
+	46, // 1: invora.billing.plans.v2.GetRequest.view:type_name -> invora.billing.common.v2.View
+	47, // 2: invora.billing.plans.v2.GetResponse.plan:type_name -> invora.billing.common.v2.BillingPlan
+	4,  // 3: invora.billing.plans.v2.ListRequest.filter:type_name -> invora.billing.plans.v2.ListFilter
+	6,  // 4: invora.billing.plans.v2.ListRequest.sort:type_name -> invora.billing.plans.v2.ListSort
+	48, // 5: invora.billing.plans.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
+	45, // 6: invora.billing.plans.v2.ListRequest.read_mask:type_name -> google.protobuf.FieldMask
+	46, // 7: invora.billing.plans.v2.ListRequest.view:type_name -> invora.billing.common.v2.View
+	47, // 8: invora.billing.plans.v2.ListResponse.items:type_name -> invora.billing.common.v2.BillingPlan
+	5,  // 9: invora.billing.plans.v2.ListFilter.part:type_name -> invora.billing.plans.v2.ListFilterPart
+	7,  // 10: invora.billing.plans.v2.ListSort.rules:type_name -> invora.billing.plans.v2.ListSortRule
+	49, // 11: invora.billing.plans.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
+	50, // 12: invora.billing.plans.v2.CreateRequest.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	15, // 13: invora.billing.plans.v2.CreateRequest.charges:type_name -> invora.billing.plans.v2.ChargeInput
+	51, // 14: invora.billing.plans.v2.CreateRequest.entitlements:type_name -> invora.billing.common.v2.EntitlementInput
+	14, // 15: invora.billing.plans.v2.CreateRequest.fixed_charges:type_name -> invora.billing.plans.v2.FixedChargeInput
+	52, // 16: invora.billing.plans.v2.CreateRequest.interval:type_name -> invora.billing.common.v2.PlanInterval
+	53, // 17: invora.billing.plans.v2.CreateRequest.metadata:type_name -> invora.billing.common.v2.MetadataInput
+	54, // 18: invora.billing.plans.v2.CreateRequest.minimum_commitment:type_name -> invora.billing.common.v2.CommitmentInput
+	55, // 19: invora.billing.plans.v2.CreateRequest.usage_thresholds:type_name -> invora.billing.common.v2.UsageThresholdInput
+	47, // 20: invora.billing.plans.v2.CreateResponse.plan:type_name -> invora.billing.common.v2.BillingPlan
+	50, // 21: invora.billing.plans.v2.UpdateRequest.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	15, // 22: invora.billing.plans.v2.UpdateRequest.charges:type_name -> invora.billing.plans.v2.ChargeInput
+	51, // 23: invora.billing.plans.v2.UpdateRequest.entitlements:type_name -> invora.billing.common.v2.EntitlementInput
+	14, // 24: invora.billing.plans.v2.UpdateRequest.fixed_charges:type_name -> invora.billing.plans.v2.FixedChargeInput
+	52, // 25: invora.billing.plans.v2.UpdateRequest.interval:type_name -> invora.billing.common.v2.PlanInterval
+	53, // 26: invora.billing.plans.v2.UpdateRequest.metadata:type_name -> invora.billing.common.v2.MetadataInput
+	54, // 27: invora.billing.plans.v2.UpdateRequest.minimum_commitment:type_name -> invora.billing.common.v2.CommitmentInput
+	55, // 28: invora.billing.plans.v2.UpdateRequest.usage_thresholds:type_name -> invora.billing.common.v2.UsageThresholdInput
+	45, // 29: invora.billing.plans.v2.UpdateRequest.update_mask:type_name -> google.protobuf.FieldMask
+	47, // 30: invora.billing.plans.v2.UpdateResponse.plan:type_name -> invora.billing.common.v2.BillingPlan
+	56, // 31: invora.billing.plans.v2.FixedChargeInput.charge_model:type_name -> invora.billing.common.v2.FixedChargeChargeModel
+	57, // 32: invora.billing.plans.v2.FixedChargeInput.properties:type_name -> invora.billing.common.v2.FixedChargePropertiesInput
+	16, // 33: invora.billing.plans.v2.ChargeInput.applied_pricing_unit:type_name -> invora.billing.plans.v2.AppliedPricingUnitInput
+	58, // 34: invora.billing.plans.v2.ChargeInput.charge_model:type_name -> invora.billing.common.v2.ChargeModel
+	59, // 35: invora.billing.plans.v2.ChargeInput.filters:type_name -> invora.billing.common.v2.ChargeFilterInput
+	60, // 36: invora.billing.plans.v2.ChargeInput.properties:type_name -> invora.billing.common.v2.PropertiesInput
+	61, // 37: invora.billing.plans.v2.ChargeInput.regroup_paid_fees:type_name -> invora.billing.common.v2.RegroupPaidFees
+	62, // 38: invora.billing.plans.v2.AppliedPricingUnitInput.conversion_rate:type_name -> kernel.DecimalValue
+	45, // 39: invora.billing.plans.v2.GetAddOnRequest.read_mask:type_name -> google.protobuf.FieldMask
+	46, // 40: invora.billing.plans.v2.GetAddOnRequest.view:type_name -> invora.billing.common.v2.View
+	63, // 41: invora.billing.plans.v2.GetAddOnResponse.add_on:type_name -> invora.billing.common.v2.BillingAddOn
+	21, // 42: invora.billing.plans.v2.ListAddOnsRequest.filter:type_name -> invora.billing.plans.v2.AddOnFilter
+	22, // 43: invora.billing.plans.v2.ListAddOnsRequest.sort:type_name -> invora.billing.plans.v2.AddOnSort
+	48, // 44: invora.billing.plans.v2.ListAddOnsRequest.pagination:type_name -> kernel.PaginationInfo
+	45, // 45: invora.billing.plans.v2.ListAddOnsRequest.read_mask:type_name -> google.protobuf.FieldMask
+	46, // 46: invora.billing.plans.v2.ListAddOnsRequest.view:type_name -> invora.billing.common.v2.View
+	63, // 47: invora.billing.plans.v2.ListAddOnsResponse.items:type_name -> invora.billing.common.v2.BillingAddOn
+	23, // 48: invora.billing.plans.v2.AddOnSort.rules:type_name -> invora.billing.plans.v2.AddOnSortRule
+	49, // 49: invora.billing.plans.v2.AddOnSortRule.created_at:type_name -> kernel.SortDirection
+	50, // 50: invora.billing.plans.v2.CreateAddOnRequest.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	63, // 51: invora.billing.plans.v2.CreateAddOnResponse.add_on:type_name -> invora.billing.common.v2.BillingAddOn
+	50, // 52: invora.billing.plans.v2.UpdateAddOnRequest.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	45, // 53: invora.billing.plans.v2.UpdateAddOnRequest.update_mask:type_name -> google.protobuf.FieldMask
+	63, // 54: invora.billing.plans.v2.UpdateAddOnResponse.add_on:type_name -> invora.billing.common.v2.BillingAddOn
+	45, // 55: invora.billing.plans.v2.GetFeatureRequest.read_mask:type_name -> google.protobuf.FieldMask
+	46, // 56: invora.billing.plans.v2.GetFeatureRequest.view:type_name -> invora.billing.common.v2.View
+	64, // 57: invora.billing.plans.v2.GetFeatureResponse.feature:type_name -> invora.billing.common.v2.FeatureObject
+	34, // 58: invora.billing.plans.v2.ListFeaturesRequest.filter:type_name -> invora.billing.plans.v2.FeatureFilter
+	35, // 59: invora.billing.plans.v2.ListFeaturesRequest.sort:type_name -> invora.billing.plans.v2.FeatureSort
+	48, // 60: invora.billing.plans.v2.ListFeaturesRequest.pagination:type_name -> kernel.PaginationInfo
+	45, // 61: invora.billing.plans.v2.ListFeaturesRequest.read_mask:type_name -> google.protobuf.FieldMask
+	46, // 62: invora.billing.plans.v2.ListFeaturesRequest.view:type_name -> invora.billing.common.v2.View
+	64, // 63: invora.billing.plans.v2.ListFeaturesResponse.items:type_name -> invora.billing.common.v2.FeatureObject
+	36, // 64: invora.billing.plans.v2.FeatureSort.rules:type_name -> invora.billing.plans.v2.FeatureSortRule
+	49, // 65: invora.billing.plans.v2.FeatureSortRule.created_at:type_name -> kernel.SortDirection
+	53, // 66: invora.billing.plans.v2.CreateFeatureRequest.metadata:type_name -> invora.billing.common.v2.MetadataInput
+	43, // 67: invora.billing.plans.v2.CreateFeatureRequest.privileges:type_name -> invora.billing.plans.v2.FeaturePrivilegeInput
+	64, // 68: invora.billing.plans.v2.CreateFeatureResponse.feature:type_name -> invora.billing.common.v2.FeatureObject
+	53, // 69: invora.billing.plans.v2.UpdateFeatureRequest.metadata:type_name -> invora.billing.common.v2.MetadataInput
+	43, // 70: invora.billing.plans.v2.UpdateFeatureRequest.privileges:type_name -> invora.billing.plans.v2.FeaturePrivilegeInput
+	45, // 71: invora.billing.plans.v2.UpdateFeatureRequest.update_mask:type_name -> google.protobuf.FieldMask
+	64, // 72: invora.billing.plans.v2.UpdateFeatureResponse.feature:type_name -> invora.billing.common.v2.FeatureObject
+	64, // 73: invora.billing.plans.v2.DeleteFeatureResponse.feature:type_name -> invora.billing.common.v2.FeatureObject
+	44, // 74: invora.billing.plans.v2.FeaturePrivilegeInput.config:type_name -> invora.billing.plans.v2.FeaturePrivilegeConfigInput
+	65, // 75: invora.billing.plans.v2.FeaturePrivilegeInput.value_type:type_name -> invora.billing.common.v2.PrivilegeValueTypeEnum
+	2,  // 76: invora.billing.plans.v2.PlansService.List:input_type -> invora.billing.plans.v2.ListRequest
+	0,  // 77: invora.billing.plans.v2.PlansService.Get:input_type -> invora.billing.plans.v2.GetRequest
+	8,  // 78: invora.billing.plans.v2.PlansService.Create:input_type -> invora.billing.plans.v2.CreateRequest
+	10, // 79: invora.billing.plans.v2.PlansService.Update:input_type -> invora.billing.plans.v2.UpdateRequest
+	12, // 80: invora.billing.plans.v2.PlansService.Delete:input_type -> invora.billing.plans.v2.DeleteRequest
+	17, // 81: invora.billing.plans.v2.PlansService.GetAddOn:input_type -> invora.billing.plans.v2.GetAddOnRequest
+	19, // 82: invora.billing.plans.v2.PlansService.ListAddOns:input_type -> invora.billing.plans.v2.ListAddOnsRequest
+	24, // 83: invora.billing.plans.v2.PlansService.CreateAddOn:input_type -> invora.billing.plans.v2.CreateAddOnRequest
+	26, // 84: invora.billing.plans.v2.PlansService.UpdateAddOn:input_type -> invora.billing.plans.v2.UpdateAddOnRequest
+	28, // 85: invora.billing.plans.v2.PlansService.DeleteAddOn:input_type -> invora.billing.plans.v2.DeleteAddOnRequest
+	30, // 86: invora.billing.plans.v2.PlansService.GetFeature:input_type -> invora.billing.plans.v2.GetFeatureRequest
+	32, // 87: invora.billing.plans.v2.PlansService.ListFeatures:input_type -> invora.billing.plans.v2.ListFeaturesRequest
+	37, // 88: invora.billing.plans.v2.PlansService.CreateFeature:input_type -> invora.billing.plans.v2.CreateFeatureRequest
+	39, // 89: invora.billing.plans.v2.PlansService.UpdateFeature:input_type -> invora.billing.plans.v2.UpdateFeatureRequest
+	41, // 90: invora.billing.plans.v2.PlansService.DeleteFeature:input_type -> invora.billing.plans.v2.DeleteFeatureRequest
+	3,  // 91: invora.billing.plans.v2.PlansService.List:output_type -> invora.billing.plans.v2.ListResponse
+	1,  // 92: invora.billing.plans.v2.PlansService.Get:output_type -> invora.billing.plans.v2.GetResponse
+	9,  // 93: invora.billing.plans.v2.PlansService.Create:output_type -> invora.billing.plans.v2.CreateResponse
+	11, // 94: invora.billing.plans.v2.PlansService.Update:output_type -> invora.billing.plans.v2.UpdateResponse
+	13, // 95: invora.billing.plans.v2.PlansService.Delete:output_type -> invora.billing.plans.v2.DeleteResponse
+	18, // 96: invora.billing.plans.v2.PlansService.GetAddOn:output_type -> invora.billing.plans.v2.GetAddOnResponse
+	20, // 97: invora.billing.plans.v2.PlansService.ListAddOns:output_type -> invora.billing.plans.v2.ListAddOnsResponse
+	25, // 98: invora.billing.plans.v2.PlansService.CreateAddOn:output_type -> invora.billing.plans.v2.CreateAddOnResponse
+	27, // 99: invora.billing.plans.v2.PlansService.UpdateAddOn:output_type -> invora.billing.plans.v2.UpdateAddOnResponse
+	29, // 100: invora.billing.plans.v2.PlansService.DeleteAddOn:output_type -> invora.billing.plans.v2.DeleteAddOnResponse
+	31, // 101: invora.billing.plans.v2.PlansService.GetFeature:output_type -> invora.billing.plans.v2.GetFeatureResponse
+	33, // 102: invora.billing.plans.v2.PlansService.ListFeatures:output_type -> invora.billing.plans.v2.ListFeaturesResponse
+	38, // 103: invora.billing.plans.v2.PlansService.CreateFeature:output_type -> invora.billing.plans.v2.CreateFeatureResponse
+	40, // 104: invora.billing.plans.v2.PlansService.UpdateFeature:output_type -> invora.billing.plans.v2.UpdateFeatureResponse
+	42, // 105: invora.billing.plans.v2.PlansService.DeleteFeature:output_type -> invora.billing.plans.v2.DeleteFeatureResponse
+	91, // [91:106] is the sub-list for method output_type
+	76, // [76:91] is the sub-list for method input_type
+	76, // [76:76] is the sub-list for extension type_name
+	76, // [76:76] is the sub-list for extension extendee
+	0,  // [0:76] is the sub-list for field type_name
 }
 
 func init() { file_invora_billing_plans_v2_service_proto_init() }
@@ -1881,30 +3497,43 @@ func file_invora_billing_plans_v2_service_proto_init() {
 	if File_invora_billing_plans_v2_service_proto != nil {
 		return
 	}
+	file_invora_billing_plans_v2_service_proto_msgTypes[3].OneofWrappers = []any{}
 	file_invora_billing_plans_v2_service_proto_msgTypes[5].OneofWrappers = []any{
 		(*ListFilterPart_WithDeleted)(nil),
 	}
 	file_invora_billing_plans_v2_service_proto_msgTypes[7].OneofWrappers = []any{
 		(*ListSortRule_CreatedAt)(nil),
 	}
+	file_invora_billing_plans_v2_service_proto_msgTypes[8].OneofWrappers = []any{}
+	file_invora_billing_plans_v2_service_proto_msgTypes[10].OneofWrappers = []any{}
 	file_invora_billing_plans_v2_service_proto_msgTypes[14].OneofWrappers = []any{}
 	file_invora_billing_plans_v2_service_proto_msgTypes[15].OneofWrappers = []any{}
-	file_invora_billing_plans_v2_service_proto_msgTypes[16].OneofWrappers = []any{}
-	file_invora_billing_plans_v2_service_proto_msgTypes[19].OneofWrappers = []any{}
 	file_invora_billing_plans_v2_service_proto_msgTypes[20].OneofWrappers = []any{}
+	file_invora_billing_plans_v2_service_proto_msgTypes[23].OneofWrappers = []any{
+		(*AddOnSortRule_CreatedAt)(nil),
+	}
+	file_invora_billing_plans_v2_service_proto_msgTypes[24].OneofWrappers = []any{}
+	file_invora_billing_plans_v2_service_proto_msgTypes[26].OneofWrappers = []any{}
+	file_invora_billing_plans_v2_service_proto_msgTypes[30].OneofWrappers = []any{}
+	file_invora_billing_plans_v2_service_proto_msgTypes[33].OneofWrappers = []any{}
+	file_invora_billing_plans_v2_service_proto_msgTypes[36].OneofWrappers = []any{
+		(*FeatureSortRule_CreatedAt)(nil),
+	}
+	file_invora_billing_plans_v2_service_proto_msgTypes[37].OneofWrappers = []any{}
+	file_invora_billing_plans_v2_service_proto_msgTypes[39].OneofWrappers = []any{}
+	file_invora_billing_plans_v2_service_proto_msgTypes[43].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_billing_plans_v2_service_proto_rawDesc), len(file_invora_billing_plans_v2_service_proto_rawDesc)),
-			NumEnums:      1,
-			NumMessages:   21,
+			NumEnums:      0,
+			NumMessages:   45,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_invora_billing_plans_v2_service_proto_goTypes,
 		DependencyIndexes: file_invora_billing_plans_v2_service_proto_depIdxs,
-		EnumInfos:         file_invora_billing_plans_v2_service_proto_enumTypes,
 		MessageInfos:      file_invora_billing_plans_v2_service_proto_msgTypes,
 	}.Build()
 	File_invora_billing_plans_v2_service_proto = out.File

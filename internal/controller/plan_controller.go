@@ -39,9 +39,9 @@ func (r *InvoraBillingPlanReconciler) Reconcile(ctx context.Context, req ctrl.Re
 			plan.Spec.OrganizationRef, plan.Spec.DeletionPolicy,
 			plan.Status.ExternalID, &plan.Status.Conditions, plan.Generation,
 			func(ctx context.Context, orc *orgResourceContext) error {
-				svc := planspb.NewPlanServiceClient(orc.Conn())
+				svc := planspb.NewPlansServiceClient(orc.Conn())
 				_, err := svc.Delete(orc.GrpcCtx(ctx), &planspb.DeleteRequest{
-					Input: &planspb.DestroyPlanInput{Id: plan.Status.ExternalID},
+					Id: plan.Status.ExternalID,
 				})
 				return err
 			})
@@ -71,7 +71,7 @@ func (r *InvoraBillingPlanReconciler) Reconcile(ctx context.Context, req ctrl.Re
 		return SuccessResult(&plan), nil
 	}
 
-	svc := planspb.NewPlanServiceClient(orc.Conn())
+	svc := planspb.NewPlansServiceClient(orc.Conn())
 	grpcCtx := orc.GrpcCtx(ctx)
 
 	if plan.Status.ExternalID != "" {
@@ -88,19 +88,17 @@ func (r *InvoraBillingPlanReconciler) Reconcile(ctx context.Context, req ctrl.Re
 		if plan.Status.ExternalID != "" {
 			trialPeriod := parseTrialPeriod(plan.Spec.TrialPeriod)
 			_, err := svc.Update(grpcCtx, &planspb.UpdateRequest{
-				Input: &planspb.UpdatePlanInput{
-					Id:             plan.Status.ExternalID,
-					Code:           plan.Spec.Code,
-					Name:           plan.Spec.Name,
-					Description:    strPtr(plan.Spec.Description),
-					AmountCents:    plan.Spec.AmountCents,
-					AmountCurrency: convert.Currency(plan.Spec.AmountCurrency),
-					Interval:       convert.PlanInterval(plan.Spec.Interval),
-					PayInAdvance:   plan.Spec.PayInAdvance,
-					TrialPeriod:    &trialPeriod,
-					TaxCodes:       plan.Spec.TaxCodes,
-					Charges:        r.buildChargeInputs(&plan),
-				},
+				Id:             plan.Status.ExternalID,
+				Code:           plan.Spec.Code,
+				Name:           plan.Spec.Name,
+				Description:    strPtr(plan.Spec.Description),
+				AmountCents:    plan.Spec.AmountCents,
+				AmountCurrency: convert.Currency(plan.Spec.AmountCurrency),
+				Interval:       convert.PlanInterval(plan.Spec.Interval),
+				PayInAdvance:   plan.Spec.PayInAdvance,
+				TrialPeriod:    &trialPeriod,
+				TaxCodes:       plan.Spec.TaxCodes,
+				Charges:        r.buildChargeInputs(&plan),
 			})
 			if err != nil {
 				SetCondition(&plan.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "UpdateFailed", err.Error(), plan.Generation)
@@ -116,18 +114,16 @@ func (r *InvoraBillingPlanReconciler) Reconcile(ctx context.Context, req ctrl.Re
 	logger.Info("creating plan", "code", plan.Spec.Code)
 	trialPeriod := parseTrialPeriod(plan.Spec.TrialPeriod)
 	created, err := svc.Create(grpcCtx, &planspb.CreateRequest{
-		Input: &planspb.CreatePlanInput{
-			Code:           plan.Spec.Code,
-			Name:           plan.Spec.Name,
-			Description:    strPtr(plan.Spec.Description),
-			AmountCents:    plan.Spec.AmountCents,
-			AmountCurrency: convert.Currency(plan.Spec.AmountCurrency),
-			Interval:       convert.PlanInterval(plan.Spec.Interval),
-			PayInAdvance:   plan.Spec.PayInAdvance,
-			TrialPeriod:    &trialPeriod,
-			TaxCodes:       plan.Spec.TaxCodes,
-			Charges:        r.buildChargeInputs(&plan),
-		},
+		Code:           plan.Spec.Code,
+		Name:           plan.Spec.Name,
+		Description:    strPtr(plan.Spec.Description),
+		AmountCents:    plan.Spec.AmountCents,
+		AmountCurrency: convert.Currency(plan.Spec.AmountCurrency),
+		Interval:       convert.PlanInterval(plan.Spec.Interval),
+		PayInAdvance:   plan.Spec.PayInAdvance,
+		TrialPeriod:    &trialPeriod,
+		TaxCodes:       plan.Spec.TaxCodes,
+		Charges:        r.buildChargeInputs(&plan),
 	})
 	if err != nil {
 		SetCondition(&plan.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "CreateFailed", err.Error(), plan.Generation)
@@ -169,12 +165,12 @@ func (r *InvoraBillingPlanReconciler) buildChargeInputs(plan *billingv1alpha1.In
 	return charges
 }
 
-func chargeModelEnum(s string) commonpb.ChargeModelEnum {
-	key := "CHARGE_MODEL_ENUM_" + s
-	if v, ok := commonpb.ChargeModelEnum_value[key]; ok {
-		return commonpb.ChargeModelEnum(v)
+func chargeModelEnum(s string) commonpb.ChargeModel {
+	key := "CHARGE_MODEL_" + s
+	if v, ok := commonpb.ChargeModel_value[key]; ok {
+		return commonpb.ChargeModel(v)
 	}
-	return commonpb.ChargeModelEnum_CHARGE_MODEL_ENUM_UNSPECIFIED
+	return commonpb.ChargeModel_CHARGE_MODEL_UNSPECIFIED
 }
 
 func parseTrialPeriod(s string) float64 {

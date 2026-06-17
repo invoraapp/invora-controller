@@ -57,6 +57,7 @@ inputs:
   - module: buf.build/invora/identity
   - module: buf.build/invora/common
   - module: buf.build/invora/billing
+  - module: buf.build/invora/admin
   - module: buf.build/invora/ubl-2-1
   - module: buf.build/bdaya-dev/common
   - module: buf.build/bdaya-dev/entity-localization

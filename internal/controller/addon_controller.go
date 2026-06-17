@@ -11,7 +11,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
-	addonspb "github.com/invoraapp/invora-controller/gen/invora/billing/add_ons/v2"
+	planspb "github.com/invoraapp/invora-controller/gen/invora/billing/plans/v2"
 	"github.com/invoraapp/invora-controller/internal/convert"
 )
 
@@ -34,9 +34,9 @@ func (r *InvoraBillingAddonReconciler) Reconcile(ctx context.Context, req ctrl.R
 			addon.Spec.OrganizationRef, addon.Spec.DeletionPolicy,
 			addon.Status.ExternalID, &addon.Status.Conditions, addon.Generation,
 			func(ctx context.Context, orc *orgResourceContext) error {
-				svc := addonspb.NewAddOnServiceClient(orc.Conn())
-				_, err := svc.Delete(orc.GrpcCtx(ctx), &addonspb.DeleteRequest{
-					Input: &addonspb.DestroyAddOnInput{Id: addon.Status.ExternalID},
+				svc := planspb.NewPlansServiceClient(orc.Conn())
+				_, err := svc.DeleteAddOn(orc.GrpcCtx(ctx), &planspb.DeleteAddOnRequest{
+					Id: addon.Status.ExternalID,
 				})
 				return err
 			})
@@ -66,11 +66,11 @@ func (r *InvoraBillingAddonReconciler) Reconcile(ctx context.Context, req ctrl.R
 		return SuccessResult(&addon), nil
 	}
 
-	svc := addonspb.NewAddOnServiceClient(orc.Conn())
+	svc := planspb.NewPlansServiceClient(orc.Conn())
 	grpcCtx := orc.GrpcCtx(ctx)
 
 	if addon.Status.ExternalID != "" {
-		_, err := svc.Get(grpcCtx, &addonspb.GetRequest{Id: addon.Status.ExternalID})
+		_, err := svc.GetAddOn(grpcCtx, &planspb.GetAddOnRequest{Id: addon.Status.ExternalID})
 		if err != nil {
 			if isGrpcNotFound(err) {
 				addon.Status.ExternalID = ""
@@ -81,9 +81,7 @@ func (r *InvoraBillingAddonReconciler) Reconcile(ctx context.Context, req ctrl.R
 			}
 		}
 		if addon.Status.ExternalID != "" {
-			_, err := svc.Update(grpcCtx, &addonspb.UpdateRequest{
-				Input: buildUpdateAddOnInput(&addon),
-			})
+			_, err := svc.UpdateAddOn(grpcCtx, buildUpdateAddOnRequest(&addon))
 			if err != nil {
 				SetCondition(&addon.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "UpdateFailed", err.Error(), addon.Generation)
 				_ = r.Status().Update(ctx, &addon)
@@ -96,9 +94,7 @@ func (r *InvoraBillingAddonReconciler) Reconcile(ctx context.Context, req ctrl.R
 	}
 
 	logger.Info("creating add-on", "code", addon.Spec.Code)
-	created, err := svc.Create(grpcCtx, &addonspb.CreateRequest{
-		Input: buildCreateAddOnInput(&addon),
-	})
+	created, err := svc.CreateAddOn(grpcCtx, buildCreateAddOnRequest(&addon))
 	if err != nil {
 		SetCondition(&addon.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "CreateFailed", err.Error(), addon.Generation)
 		_ = r.Status().Update(ctx, &addon)
@@ -113,8 +109,8 @@ func (r *InvoraBillingAddonReconciler) Reconcile(ctx context.Context, req ctrl.R
 	return SuccessResult(&addon), nil
 }
 
-func buildCreateAddOnInput(addon *billingv1alpha1.InvoraBillingAddon) *addonspb.CreateAddOnInput {
-	in := &addonspb.CreateAddOnInput{
+func buildCreateAddOnRequest(addon *billingv1alpha1.InvoraBillingAddon) *planspb.CreateAddOnRequest {
+	in := &planspb.CreateAddOnRequest{
 		Code:           addon.Spec.Code,
 		Name:           addon.Spec.Name,
 		AmountCents:    addon.Spec.AmountCents,
@@ -127,8 +123,8 @@ func buildCreateAddOnInput(addon *billingv1alpha1.InvoraBillingAddon) *addonspb.
 	return in
 }
 
-func buildUpdateAddOnInput(addon *billingv1alpha1.InvoraBillingAddon) *addonspb.UpdateAddOnInput {
-	in := &addonspb.UpdateAddOnInput{
+func buildUpdateAddOnRequest(addon *billingv1alpha1.InvoraBillingAddon) *planspb.UpdateAddOnRequest {
+	in := &planspb.UpdateAddOnRequest{
 		Id:             addon.Status.ExternalID,
 		Code:           addon.Spec.Code,
 		Name:           addon.Spec.Name,

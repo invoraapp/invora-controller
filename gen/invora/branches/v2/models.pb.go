@@ -26,6 +26,212 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// How documents are numbered for a branch.
+type DocumentNumbering int32
+
+const (
+	DocumentNumbering_DOCUMENT_NUMBERING_UNSPECIFIED DocumentNumbering = 0
+	// Each customer gets their own sequential counter.
+	// Format: {PREFIX}-{CUSTOMER_SEQ}-{DOC_SEQ}
+	DocumentNumbering_DOCUMENT_NUMBERING_PER_CUSTOMER DocumentNumbering = 1
+	// Branch-wide sequential counter, reset monthly.
+	// Format: {PREFIX}-{YYYYMM}-{BRANCH_SEQ}
+	DocumentNumbering_DOCUMENT_NUMBERING_PER_BRANCH DocumentNumbering = 2
+)
+
+// Enum value maps for DocumentNumbering.
+var (
+	DocumentNumbering_name = map[int32]string{
+		0: "DOCUMENT_NUMBERING_UNSPECIFIED",
+		1: "DOCUMENT_NUMBERING_PER_CUSTOMER",
+		2: "DOCUMENT_NUMBERING_PER_BRANCH",
+	}
+	DocumentNumbering_value = map[string]int32{
+		"DOCUMENT_NUMBERING_UNSPECIFIED":  0,
+		"DOCUMENT_NUMBERING_PER_CUSTOMER": 1,
+		"DOCUMENT_NUMBERING_PER_BRANCH":   2,
+	}
+)
+
+func (x DocumentNumbering) Enum() *DocumentNumbering {
+	p := new(DocumentNumbering)
+	*p = x
+	return p
+}
+
+func (x DocumentNumbering) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (DocumentNumbering) Descriptor() protoreflect.EnumDescriptor {
+	return file_invora_branches_v2_models_proto_enumTypes[0].Descriptor()
+}
+
+func (DocumentNumbering) Type() protoreflect.EnumType {
+	return &file_invora_branches_v2_models_proto_enumTypes[0]
+}
+
+func (x DocumentNumbering) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use DocumentNumbering.Descriptor instead.
+func (DocumentNumbering) EnumDescriptor() ([]byte, []int) {
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{0}
+}
+
+// Business lifecycle state of a branch, independent of deletion.
+type BranchLifecycleState int32
+
+const (
+	// A branch is active by default.
+	// buf:lint:ignore ENUM_ZERO_VALUE_SUFFIX
+	BranchLifecycleState_BRANCH_LIFECYCLE_STATE_ACTIVE      BranchLifecycleState = 0
+	BranchLifecycleState_BRANCH_LIFECYCLE_STATE_PENDING     BranchLifecycleState = 1
+	BranchLifecycleState_BRANCH_LIFECYCLE_STATE_DEACTIVATED BranchLifecycleState = 2
+)
+
+// Enum value maps for BranchLifecycleState.
+var (
+	BranchLifecycleState_name = map[int32]string{
+		0: "BRANCH_LIFECYCLE_STATE_ACTIVE",
+		1: "BRANCH_LIFECYCLE_STATE_PENDING",
+		2: "BRANCH_LIFECYCLE_STATE_DEACTIVATED",
+	}
+	BranchLifecycleState_value = map[string]int32{
+		"BRANCH_LIFECYCLE_STATE_ACTIVE":      0,
+		"BRANCH_LIFECYCLE_STATE_PENDING":     1,
+		"BRANCH_LIFECYCLE_STATE_DEACTIVATED": 2,
+	}
+)
+
+func (x BranchLifecycleState) Enum() *BranchLifecycleState {
+	p := new(BranchLifecycleState)
+	*p = x
+	return p
+}
+
+func (x BranchLifecycleState) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (BranchLifecycleState) Descriptor() protoreflect.EnumDescriptor {
+	return file_invora_branches_v2_models_proto_enumTypes[1].Descriptor()
+}
+
+func (BranchLifecycleState) Type() protoreflect.EnumType {
+	return &file_invora_branches_v2_models_proto_enumTypes[1]
+}
+
+func (x BranchLifecycleState) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use BranchLifecycleState.Descriptor instead.
+func (BranchLifecycleState) EnumDescriptor() ([]byte, []int) {
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{1}
+}
+
+// When the subscription invoice issuing date is anchored relative to the billing period.
+type SubscriptionInvoiceIssuingDateAnchor int32
+
+const (
+	SubscriptionInvoiceIssuingDateAnchor_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_UNSPECIFIED        SubscriptionInvoiceIssuingDateAnchor = 0
+	SubscriptionInvoiceIssuingDateAnchor_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_CURRENT_PERIOD_END SubscriptionInvoiceIssuingDateAnchor = 1
+	SubscriptionInvoiceIssuingDateAnchor_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_NEXT_PERIOD_START  SubscriptionInvoiceIssuingDateAnchor = 2
+)
+
+// Enum value maps for SubscriptionInvoiceIssuingDateAnchor.
+var (
+	SubscriptionInvoiceIssuingDateAnchor_name = map[int32]string{
+		0: "SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_UNSPECIFIED",
+		1: "SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_CURRENT_PERIOD_END",
+		2: "SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_NEXT_PERIOD_START",
+	}
+	SubscriptionInvoiceIssuingDateAnchor_value = map[string]int32{
+		"SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_UNSPECIFIED":        0,
+		"SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_CURRENT_PERIOD_END": 1,
+		"SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_NEXT_PERIOD_START":  2,
+	}
+)
+
+func (x SubscriptionInvoiceIssuingDateAnchor) Enum() *SubscriptionInvoiceIssuingDateAnchor {
+	p := new(SubscriptionInvoiceIssuingDateAnchor)
+	*p = x
+	return p
+}
+
+func (x SubscriptionInvoiceIssuingDateAnchor) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SubscriptionInvoiceIssuingDateAnchor) Descriptor() protoreflect.EnumDescriptor {
+	return file_invora_branches_v2_models_proto_enumTypes[2].Descriptor()
+}
+
+func (SubscriptionInvoiceIssuingDateAnchor) Type() protoreflect.EnumType {
+	return &file_invora_branches_v2_models_proto_enumTypes[2]
+}
+
+func (x SubscriptionInvoiceIssuingDateAnchor) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SubscriptionInvoiceIssuingDateAnchor.Descriptor instead.
+func (SubscriptionInvoiceIssuingDateAnchor) EnumDescriptor() ([]byte, []int) {
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{2}
+}
+
+// How to adjust the subscription invoice issuing date relative to its anchor.
+type SubscriptionInvoiceIssuingDateAdjustment int32
+
+const (
+	SubscriptionInvoiceIssuingDateAdjustment_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_UNSPECIFIED                  SubscriptionInvoiceIssuingDateAdjustment = 0
+	SubscriptionInvoiceIssuingDateAdjustment_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_KEEP_ANCHOR                  SubscriptionInvoiceIssuingDateAdjustment = 1
+	SubscriptionInvoiceIssuingDateAdjustment_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ALIGN_WITH_FINALIZATION_DATE SubscriptionInvoiceIssuingDateAdjustment = 2
+)
+
+// Enum value maps for SubscriptionInvoiceIssuingDateAdjustment.
+var (
+	SubscriptionInvoiceIssuingDateAdjustment_name = map[int32]string{
+		0: "SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_UNSPECIFIED",
+		1: "SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_KEEP_ANCHOR",
+		2: "SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ALIGN_WITH_FINALIZATION_DATE",
+	}
+	SubscriptionInvoiceIssuingDateAdjustment_value = map[string]int32{
+		"SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_UNSPECIFIED":                  0,
+		"SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_KEEP_ANCHOR":                  1,
+		"SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ALIGN_WITH_FINALIZATION_DATE": 2,
+	}
+)
+
+func (x SubscriptionInvoiceIssuingDateAdjustment) Enum() *SubscriptionInvoiceIssuingDateAdjustment {
+	p := new(SubscriptionInvoiceIssuingDateAdjustment)
+	*p = x
+	return p
+}
+
+func (x SubscriptionInvoiceIssuingDateAdjustment) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SubscriptionInvoiceIssuingDateAdjustment) Descriptor() protoreflect.EnumDescriptor {
+	return file_invora_branches_v2_models_proto_enumTypes[3].Descriptor()
+}
+
+func (SubscriptionInvoiceIssuingDateAdjustment) Type() protoreflect.EnumType {
+	return &file_invora_branches_v2_models_proto_enumTypes[3]
+}
+
+func (x SubscriptionInvoiceIssuingDateAdjustment) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SubscriptionInvoiceIssuingDateAdjustment.Descriptor instead.
+func (SubscriptionInvoiceIssuingDateAdjustment) EnumDescriptor() ([]byte, []int) {
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{3}
+}
+
 // A branch represents a physical location or "doing business as" identity
 // within a single tenant. Each branch carries its own party identity,
 // regulation credentials, and document numbering prefix.
@@ -62,7 +268,23 @@ type Branch struct {
 	// Logo image URL for this branch, used in PDF rendering.
 	LogoImageUrl *string `protobuf:"bytes,14,opt,name=logo_image_url,json=logoImageUrl,proto3,oneof" json:"logo_image_url,omitempty"`
 	// Generic metadata for external system integration (e.g. marketplace branch IDs).
-	Metadata      *structpb.Struct              `protobuf:"bytes,13,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	Metadata *structpb.Struct `protobuf:"bytes,13,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	// ISO 4217 currency code. Default currency for all documents issued by this branch.
+	DefaultCurrency string `protobuf:"bytes,15,opt,name=default_currency,json=defaultCurrency,proto3" json:"default_currency,omitempty"`
+	// IANA timezone. Determines period boundaries, document dates, and billing cycle anchors.
+	Timezone string `protobuf:"bytes,16,opt,name=timezone,proto3" json:"timezone,omitempty"`
+	// BCP 47 locale for document rendering (e.g., "en", "ar", "fr").
+	DocumentLocale string `protobuf:"bytes,17,opt,name=document_locale,json=documentLocale,proto3" json:"document_locale,omitempty"`
+	// How documents are numbered for this branch.
+	DocumentNumbering DocumentNumbering `protobuf:"varint,18,opt,name=document_numbering,json=documentNumbering,proto3,enum=invora.branches.v2.DocumentNumbering" json:"document_numbering,omitempty"`
+	// Billing configuration for this branch (grace period, dunning, email triggers, etc.).
+	BillingConfig *BillingConfig `protobuf:"bytes,19,opt,name=billing_config,json=billingConfig,proto3" json:"billing_config,omitempty"`
+	// Business lifecycle state of the branch (active, pending, or deactivated).
+	// Independent of deletion: a branch can be deactivated without being deleted.
+	LifecycleState BranchLifecycleState `protobuf:"varint,21,opt,name=lifecycle_state,json=lifecycleState,proto3,enum=invora.branches.v2.BranchLifecycleState" json:"lifecycle_state,omitempty"`
+	// Read-only. True if this branch has been deleted. Server-managed and ignored
+	// on create/update. Deleted branches are excluded from List/Get by default.
+	IsDeleted     bool                          `protobuf:"varint,22,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
 	Audit         *kernel.CreateUpdateAuditInfo `protobuf:"bytes,20,opt,name=audit,proto3" json:"audit,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -189,11 +411,163 @@ func (x *Branch) GetMetadata() *structpb.Struct {
 	return nil
 }
 
+func (x *Branch) GetDefaultCurrency() string {
+	if x != nil {
+		return x.DefaultCurrency
+	}
+	return ""
+}
+
+func (x *Branch) GetTimezone() string {
+	if x != nil {
+		return x.Timezone
+	}
+	return ""
+}
+
+func (x *Branch) GetDocumentLocale() string {
+	if x != nil {
+		return x.DocumentLocale
+	}
+	return ""
+}
+
+func (x *Branch) GetDocumentNumbering() DocumentNumbering {
+	if x != nil {
+		return x.DocumentNumbering
+	}
+	return DocumentNumbering_DOCUMENT_NUMBERING_UNSPECIFIED
+}
+
+func (x *Branch) GetBillingConfig() *BillingConfig {
+	if x != nil {
+		return x.BillingConfig
+	}
+	return nil
+}
+
+func (x *Branch) GetLifecycleState() BranchLifecycleState {
+	if x != nil {
+		return x.LifecycleState
+	}
+	return BranchLifecycleState_BRANCH_LIFECYCLE_STATE_ACTIVE
+}
+
+func (x *Branch) GetIsDeleted() bool {
+	if x != nil {
+		return x.IsDeleted
+	}
+	return false
+}
+
 func (x *Branch) GetAudit() *kernel.CreateUpdateAuditInfo {
 	if x != nil {
 		return x.Audit
 	}
 	return nil
+}
+
+// Billing configuration defaults for a branch: invoice grace period, payment
+// terms, subscription issuing-date rules, dunning, and email notifications.
+type BillingConfig struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Skip finalization for zero-amount invoices (branch default).
+	FinalizeZeroAmountInvoice bool `protobuf:"varint,1,opt,name=finalize_zero_amount_invoice,json=finalizeZeroAmountInvoice,proto3" json:"finalize_zero_amount_invoice,omitempty"`
+	// Days before a draft invoice is auto-finalized.
+	InvoiceGracePeriod int32 `protobuf:"varint,2,opt,name=invoice_grace_period,json=invoiceGracePeriod,proto3" json:"invoice_grace_period,omitempty"`
+	// Payment terms: invoice due X days after issue date.
+	NetPaymentTerm int32 `protobuf:"varint,3,opt,name=net_payment_term,json=netPaymentTerm,proto3" json:"net_payment_term,omitempty"`
+	// Billing events that trigger email notifications.
+	// Values: "invoice.finalized", "credit_note.created", "payment_receipt.created"
+	EmailSettings []string `protobuf:"bytes,4,rep,name=email_settings,json=emailSettings,proto3" json:"email_settings,omitempty"`
+	// When the subscription invoice issuing date is anchored.
+	SubscriptionInvoiceIssuingDateAnchor SubscriptionInvoiceIssuingDateAnchor `protobuf:"varint,5,opt,name=subscription_invoice_issuing_date_anchor,json=subscriptionInvoiceIssuingDateAnchor,proto3,enum=invora.branches.v2.SubscriptionInvoiceIssuingDateAnchor" json:"subscription_invoice_issuing_date_anchor,omitempty"`
+	// How to adjust the issuing date relative to the anchor.
+	SubscriptionInvoiceIssuingDateAdjustment SubscriptionInvoiceIssuingDateAdjustment `protobuf:"varint,6,opt,name=subscription_invoice_issuing_date_adjustment,json=subscriptionInvoiceIssuingDateAdjustment,proto3,enum=invora.branches.v2.SubscriptionInvoiceIssuingDateAdjustment" json:"subscription_invoice_issuing_date_adjustment,omitempty"`
+	// ID of the dunning campaign used to collect overdue invoices for this branch.
+	// Applied as the branch-level default for customers without their own campaign.
+	DunningCampaignId *string `protobuf:"bytes,7,opt,name=dunning_campaign_id,json=dunningCampaignId,proto3,oneof" json:"dunning_campaign_id,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *BillingConfig) Reset() {
+	*x = BillingConfig{}
+	mi := &file_invora_branches_v2_models_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BillingConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BillingConfig) ProtoMessage() {}
+
+func (x *BillingConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_branches_v2_models_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BillingConfig.ProtoReflect.Descriptor instead.
+func (*BillingConfig) Descriptor() ([]byte, []int) {
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *BillingConfig) GetFinalizeZeroAmountInvoice() bool {
+	if x != nil {
+		return x.FinalizeZeroAmountInvoice
+	}
+	return false
+}
+
+func (x *BillingConfig) GetInvoiceGracePeriod() int32 {
+	if x != nil {
+		return x.InvoiceGracePeriod
+	}
+	return 0
+}
+
+func (x *BillingConfig) GetNetPaymentTerm() int32 {
+	if x != nil {
+		return x.NetPaymentTerm
+	}
+	return 0
+}
+
+func (x *BillingConfig) GetEmailSettings() []string {
+	if x != nil {
+		return x.EmailSettings
+	}
+	return nil
+}
+
+func (x *BillingConfig) GetSubscriptionInvoiceIssuingDateAnchor() SubscriptionInvoiceIssuingDateAnchor {
+	if x != nil {
+		return x.SubscriptionInvoiceIssuingDateAnchor
+	}
+	return SubscriptionInvoiceIssuingDateAnchor_SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_UNSPECIFIED
+}
+
+func (x *BillingConfig) GetSubscriptionInvoiceIssuingDateAdjustment() SubscriptionInvoiceIssuingDateAdjustment {
+	if x != nil {
+		return x.SubscriptionInvoiceIssuingDateAdjustment
+	}
+	return SubscriptionInvoiceIssuingDateAdjustment_SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_UNSPECIFIED
+}
+
+func (x *BillingConfig) GetDunningCampaignId() string {
+	if x != nil && x.DunningCampaignId != nil {
+		return *x.DunningCampaignId
+	}
+	return ""
 }
 
 // Input for creating or updating a branch.
@@ -210,13 +584,25 @@ type ChangeBase struct {
 	StampImage        *string                                `protobuf:"bytes,10,opt,name=stamp_image,json=stampImage,proto3,oneof" json:"stamp_image,omitempty"`
 	LogoImageUrl      *string                                `protobuf:"bytes,12,opt,name=logo_image_url,json=logoImageUrl,proto3,oneof" json:"logo_image_url,omitempty"`
 	Metadata          *structpb.Struct                       `protobuf:"bytes,11,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// ISO 4217 currency code. Default currency for all documents issued by this branch.
+	DefaultCurrency string `protobuf:"bytes,13,opt,name=default_currency,json=defaultCurrency,proto3" json:"default_currency,omitempty"`
+	// IANA timezone. Determines period boundaries, document dates, and billing cycle anchors.
+	Timezone string `protobuf:"bytes,14,opt,name=timezone,proto3" json:"timezone,omitempty"`
+	// BCP 47 locale for document rendering (e.g., "en", "ar", "fr").
+	DocumentLocale string `protobuf:"bytes,15,opt,name=document_locale,json=documentLocale,proto3" json:"document_locale,omitempty"`
+	// How documents are numbered for this branch.
+	DocumentNumbering DocumentNumbering `protobuf:"varint,16,opt,name=document_numbering,json=documentNumbering,proto3,enum=invora.branches.v2.DocumentNumbering" json:"document_numbering,omitempty"`
+	// Billing configuration for this branch (grace period, dunning, email triggers, etc.).
+	BillingConfig *BillingConfig `protobuf:"bytes,17,opt,name=billing_config,json=billingConfig,proto3" json:"billing_config,omitempty"`
+	// Business lifecycle state of the branch (independent of deletion).
+	LifecycleState BranchLifecycleState `protobuf:"varint,18,opt,name=lifecycle_state,json=lifecycleState,proto3,enum=invora.branches.v2.BranchLifecycleState" json:"lifecycle_state,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *ChangeBase) Reset() {
 	*x = ChangeBase{}
-	mi := &file_invora_branches_v2_models_proto_msgTypes[1]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -228,7 +614,7 @@ func (x *ChangeBase) String() string {
 func (*ChangeBase) ProtoMessage() {}
 
 func (x *ChangeBase) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_branches_v2_models_proto_msgTypes[1]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -241,7 +627,7 @@ func (x *ChangeBase) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChangeBase.ProtoReflect.Descriptor instead.
 func (*ChangeBase) Descriptor() ([]byte, []int) {
-	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{1}
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *ChangeBase) GetName() string {
@@ -321,6 +707,48 @@ func (x *ChangeBase) GetMetadata() *structpb.Struct {
 	return nil
 }
 
+func (x *ChangeBase) GetDefaultCurrency() string {
+	if x != nil {
+		return x.DefaultCurrency
+	}
+	return ""
+}
+
+func (x *ChangeBase) GetTimezone() string {
+	if x != nil {
+		return x.Timezone
+	}
+	return ""
+}
+
+func (x *ChangeBase) GetDocumentLocale() string {
+	if x != nil {
+		return x.DocumentLocale
+	}
+	return ""
+}
+
+func (x *ChangeBase) GetDocumentNumbering() DocumentNumbering {
+	if x != nil {
+		return x.DocumentNumbering
+	}
+	return DocumentNumbering_DOCUMENT_NUMBERING_UNSPECIFIED
+}
+
+func (x *ChangeBase) GetBillingConfig() *BillingConfig {
+	if x != nil {
+		return x.BillingConfig
+	}
+	return nil
+}
+
+func (x *ChangeBase) GetLifecycleState() BranchLifecycleState {
+	if x != nil {
+		return x.LifecycleState
+	}
+	return BranchLifecycleState_BRANCH_LIFECYCLE_STATE_ACTIVE
+}
+
 type CreateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Key           *string                `protobuf:"bytes,1,opt,name=key,proto3,oneof" json:"key,omitempty"`
@@ -331,7 +759,7 @@ type CreateRequest struct {
 
 func (x *CreateRequest) Reset() {
 	*x = CreateRequest{}
-	mi := &file_invora_branches_v2_models_proto_msgTypes[2]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -343,7 +771,7 @@ func (x *CreateRequest) String() string {
 func (*CreateRequest) ProtoMessage() {}
 
 func (x *CreateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_branches_v2_models_proto_msgTypes[2]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -356,7 +784,7 @@ func (x *CreateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateRequest.ProtoReflect.Descriptor instead.
 func (*CreateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{2}
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *CreateRequest) GetKey() string {
@@ -382,7 +810,7 @@ type CreateResponse struct {
 
 func (x *CreateResponse) Reset() {
 	*x = CreateResponse{}
-	mi := &file_invora_branches_v2_models_proto_msgTypes[3]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -394,7 +822,7 @@ func (x *CreateResponse) String() string {
 func (*CreateResponse) ProtoMessage() {}
 
 func (x *CreateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_branches_v2_models_proto_msgTypes[3]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -407,7 +835,7 @@ func (x *CreateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateResponse.ProtoReflect.Descriptor instead.
 func (*CreateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{3}
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *CreateResponse) GetDetails() *Branch {
@@ -429,7 +857,7 @@ type UpdateRequest struct {
 
 func (x *UpdateRequest) Reset() {
 	*x = UpdateRequest{}
-	mi := &file_invora_branches_v2_models_proto_msgTypes[4]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -441,7 +869,7 @@ func (x *UpdateRequest) String() string {
 func (*UpdateRequest) ProtoMessage() {}
 
 func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_branches_v2_models_proto_msgTypes[4]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -454,7 +882,7 @@ func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateRequest.ProtoReflect.Descriptor instead.
 func (*UpdateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{4}
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *UpdateRequest) GetKey() string {
@@ -494,7 +922,7 @@ type UpdateResponse struct {
 
 func (x *UpdateResponse) Reset() {
 	*x = UpdateResponse{}
-	mi := &file_invora_branches_v2_models_proto_msgTypes[5]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -506,7 +934,7 @@ func (x *UpdateResponse) String() string {
 func (*UpdateResponse) ProtoMessage() {}
 
 func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_branches_v2_models_proto_msgTypes[5]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -519,7 +947,7 @@ func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateResponse.ProtoReflect.Descriptor instead.
 func (*UpdateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{5}
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *UpdateResponse) GetDetails() *Branch {
@@ -538,7 +966,7 @@ type DeleteRequest struct {
 
 func (x *DeleteRequest) Reset() {
 	*x = DeleteRequest{}
-	mi := &file_invora_branches_v2_models_proto_msgTypes[6]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -550,7 +978,7 @@ func (x *DeleteRequest) String() string {
 func (*DeleteRequest) ProtoMessage() {}
 
 func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_branches_v2_models_proto_msgTypes[6]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -563,7 +991,7 @@ func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteRequest.ProtoReflect.Descriptor instead.
 func (*DeleteRequest) Descriptor() ([]byte, []int) {
-	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{6}
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *DeleteRequest) GetKeys() []string {
@@ -581,7 +1009,7 @@ type DeleteResponse struct {
 
 func (x *DeleteResponse) Reset() {
 	*x = DeleteResponse{}
-	mi := &file_invora_branches_v2_models_proto_msgTypes[7]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -593,7 +1021,7 @@ func (x *DeleteResponse) String() string {
 func (*DeleteResponse) ProtoMessage() {}
 
 func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_branches_v2_models_proto_msgTypes[7]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -606,7 +1034,7 @@ func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteResponse.ProtoReflect.Descriptor instead.
 func (*DeleteResponse) Descriptor() ([]byte, []int) {
-	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{7}
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{8}
 }
 
 type GetRequest struct {
@@ -619,7 +1047,7 @@ type GetRequest struct {
 
 func (x *GetRequest) Reset() {
 	*x = GetRequest{}
-	mi := &file_invora_branches_v2_models_proto_msgTypes[8]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -631,7 +1059,7 @@ func (x *GetRequest) String() string {
 func (*GetRequest) ProtoMessage() {}
 
 func (x *GetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_branches_v2_models_proto_msgTypes[8]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -644,7 +1072,7 @@ func (x *GetRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
 func (*GetRequest) Descriptor() ([]byte, []int) {
-	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{8}
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *GetRequest) GetKey() string {
@@ -670,7 +1098,7 @@ type GetResponse struct {
 
 func (x *GetResponse) Reset() {
 	*x = GetResponse{}
-	mi := &file_invora_branches_v2_models_proto_msgTypes[9]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -682,7 +1110,7 @@ func (x *GetResponse) String() string {
 func (*GetResponse) ProtoMessage() {}
 
 func (x *GetResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_branches_v2_models_proto_msgTypes[9]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -695,7 +1123,7 @@ func (x *GetResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
 func (*GetResponse) Descriptor() ([]byte, []int) {
-	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{9}
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *GetResponse) GetDetails() *Branch {
@@ -715,7 +1143,7 @@ type ListFilter struct {
 
 func (x *ListFilter) Reset() {
 	*x = ListFilter{}
-	mi := &file_invora_branches_v2_models_proto_msgTypes[10]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -727,7 +1155,7 @@ func (x *ListFilter) String() string {
 func (*ListFilter) ProtoMessage() {}
 
 func (x *ListFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_branches_v2_models_proto_msgTypes[10]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -740,7 +1168,7 @@ func (x *ListFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListFilter.ProtoReflect.Descriptor instead.
 func (*ListFilter) Descriptor() ([]byte, []int) {
-	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{10}
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ListFilter) GetPart() *ListFilterPart {
@@ -765,6 +1193,7 @@ type ListFilterPart struct {
 	//	*ListFilterPart_CreatedAt
 	//	*ListFilterPart_UpdatedAt
 	//	*ListFilterPart_IsPrimary
+	//	*ListFilterPart_LifecycleState
 	Type          isListFilterPart_Type `protobuf_oneof:"type"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -772,7 +1201,7 @@ type ListFilterPart struct {
 
 func (x *ListFilterPart) Reset() {
 	*x = ListFilterPart{}
-	mi := &file_invora_branches_v2_models_proto_msgTypes[11]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -784,7 +1213,7 @@ func (x *ListFilterPart) String() string {
 func (*ListFilterPart) ProtoMessage() {}
 
 func (x *ListFilterPart) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_branches_v2_models_proto_msgTypes[11]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -797,7 +1226,7 @@ func (x *ListFilterPart) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListFilterPart.ProtoReflect.Descriptor instead.
 func (*ListFilterPart) Descriptor() ([]byte, []int) {
-	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{11}
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *ListFilterPart) GetType() isListFilterPart_Type {
@@ -843,6 +1272,15 @@ func (x *ListFilterPart) GetIsPrimary() bool {
 	return false
 }
 
+func (x *ListFilterPart) GetLifecycleState() BranchLifecycleState {
+	if x != nil {
+		if x, ok := x.Type.(*ListFilterPart_LifecycleState); ok {
+			return x.LifecycleState
+		}
+	}
+	return BranchLifecycleState_BRANCH_LIFECYCLE_STATE_ACTIVE
+}
+
 type isListFilterPart_Type interface {
 	isListFilterPart_Type()
 }
@@ -863,6 +1301,12 @@ type ListFilterPart_IsPrimary struct {
 	IsPrimary bool `protobuf:"varint,4,opt,name=is_primary,json=isPrimary,proto3,oneof"`
 }
 
+type ListFilterPart_LifecycleState struct {
+	// Filter by business-level lifecycle state. NOTE: is_deleted is NOT a filter —
+	// use the x-include-deleted gRPC header (IncludeDeletedInterceptor) instead.
+	LifecycleState BranchLifecycleState `protobuf:"varint,5,opt,name=lifecycle_state,json=lifecycleState,proto3,enum=invora.branches.v2.BranchLifecycleState,oneof"`
+}
+
 func (*ListFilterPart_Key) isListFilterPart_Type() {}
 
 func (*ListFilterPart_CreatedAt) isListFilterPart_Type() {}
@@ -870,6 +1314,8 @@ func (*ListFilterPart_CreatedAt) isListFilterPart_Type() {}
 func (*ListFilterPart_UpdatedAt) isListFilterPart_Type() {}
 
 func (*ListFilterPart_IsPrimary) isListFilterPart_Type() {}
+
+func (*ListFilterPart_LifecycleState) isListFilterPart_Type() {}
 
 type ListSort struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -880,7 +1326,7 @@ type ListSort struct {
 
 func (x *ListSort) Reset() {
 	*x = ListSort{}
-	mi := &file_invora_branches_v2_models_proto_msgTypes[12]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -892,7 +1338,7 @@ func (x *ListSort) String() string {
 func (*ListSort) ProtoMessage() {}
 
 func (x *ListSort) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_branches_v2_models_proto_msgTypes[12]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -905,7 +1351,7 @@ func (x *ListSort) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSort.ProtoReflect.Descriptor instead.
 func (*ListSort) Descriptor() ([]byte, []int) {
-	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{12}
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *ListSort) GetRules() []*ListSortRule {
@@ -929,7 +1375,7 @@ type ListSortRule struct {
 
 func (x *ListSortRule) Reset() {
 	*x = ListSortRule{}
-	mi := &file_invora_branches_v2_models_proto_msgTypes[13]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -941,7 +1387,7 @@ func (x *ListSortRule) String() string {
 func (*ListSortRule) ProtoMessage() {}
 
 func (x *ListSortRule) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_branches_v2_models_proto_msgTypes[13]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -954,7 +1400,7 @@ func (x *ListSortRule) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSortRule.ProtoReflect.Descriptor instead.
 func (*ListSortRule) Descriptor() ([]byte, []int) {
-	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{13}
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ListSortRule) GetType() isListSortRule_Type {
@@ -1025,7 +1471,7 @@ type ListRequest struct {
 
 func (x *ListRequest) Reset() {
 	*x = ListRequest{}
-	mi := &file_invora_branches_v2_models_proto_msgTypes[14]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1037,7 +1483,7 @@ func (x *ListRequest) String() string {
 func (*ListRequest) ProtoMessage() {}
 
 func (x *ListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_branches_v2_models_proto_msgTypes[14]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1050,7 +1496,7 @@ func (x *ListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRequest.ProtoReflect.Descriptor instead.
 func (*ListRequest) Descriptor() ([]byte, []int) {
-	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{14}
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *ListRequest) GetFilter() *ListFilter {
@@ -1092,7 +1538,7 @@ type ListResponse struct {
 
 func (x *ListResponse) Reset() {
 	*x = ListResponse{}
-	mi := &file_invora_branches_v2_models_proto_msgTypes[15]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1104,7 +1550,7 @@ func (x *ListResponse) String() string {
 func (*ListResponse) ProtoMessage() {}
 
 func (x *ListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_branches_v2_models_proto_msgTypes[15]
+	mi := &file_invora_branches_v2_models_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1117,7 +1563,7 @@ func (x *ListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListResponse.ProtoReflect.Descriptor instead.
 func (*ListResponse) Descriptor() ([]byte, []int) {
-	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{15}
+	return file_invora_branches_v2_models_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ListResponse) GetItems() []*Branch {
@@ -1145,7 +1591,8 @@ var File_invora_branches_v2_models_proto protoreflect.FileDescriptor
 
 const file_invora_branches_v2_models_proto_rawDesc = "" +
 	"\n" +
-	"\x1finvora/branches/v2/models.proto\x12\x12invora.branches.v2\x1a google/protobuf/field_mask.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a+invora/documents/v2/regulation_config.proto\x1a\x12kernel/audit.proto\x1a\x18kernel/key_version.proto\x1a\x12kernel/query.proto\x1aQoasis/names/specification/ubl/schema/xsd/commonaggregatecomponents_2/models.proto\"\xb2\a\n" +
+	"\x1finvora/branches/v2/models.proto\x12\x12invora.branches.v2\x1a google/protobuf/field_mask.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a+invora/documents/v2/regulation_config.proto\x1a\x12kernel/audit.proto\x1a\x18kernel/key_version.proto\x1a\x12kernel/query.proto\x1aQoasis/names/specification/ubl/schema/xsd/commonaggregatecomponents_2/models.proto\"\xb4\n" +
+	"\n" +
 	"\x06Branch\x12\"\n" +
 	"\x02id\x18\x01 \x01(\v2\x12.kernel.KeyVersionR\x02id\x12+\n" +
 	"\x11concurrency_stamp\x18\x02 \x01(\tR\x10concurrencyStamp\x12\x12\n" +
@@ -1162,7 +1609,15 @@ const file_invora_branches_v2_models_proto_rawDesc = "" +
 	"\vstamp_image\x18\f \x01(\tH\x04R\n" +
 	"stampImage\x88\x01\x01\x12)\n" +
 	"\x0elogo_image_url\x18\x0e \x01(\tH\x05R\flogoImageUrl\x88\x01\x01\x123\n" +
-	"\bmetadata\x18\r \x01(\v2\x17.google.protobuf.StructR\bmetadata\x123\n" +
+	"\bmetadata\x18\r \x01(\v2\x17.google.protobuf.StructR\bmetadata\x12)\n" +
+	"\x10default_currency\x18\x0f \x01(\tR\x0fdefaultCurrency\x12\x1a\n" +
+	"\btimezone\x18\x10 \x01(\tR\btimezone\x12'\n" +
+	"\x0fdocument_locale\x18\x11 \x01(\tR\x0edocumentLocale\x12T\n" +
+	"\x12document_numbering\x18\x12 \x01(\x0e2%.invora.branches.v2.DocumentNumberingR\x11documentNumbering\x12H\n" +
+	"\x0ebilling_config\x18\x13 \x01(\v2!.invora.branches.v2.BillingConfigR\rbillingConfig\x12Q\n" +
+	"\x0flifecycle_state\x18\x15 \x01(\x0e2(.invora.branches.v2.BranchLifecycleStateR\x0elifecycleState\x12\x1d\n" +
+	"\n" +
+	"is_deleted\x18\x16 \x01(\bR\tisDeleted\x123\n" +
 	"\x05audit\x18\x14 \x01(\v2\x1d.kernel.CreateUpdateAuditInfoR\x05audit\x1ak\n" +
 	"\x16RegulationConfigsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12;\n" +
@@ -1172,7 +1627,16 @@ const file_invora_branches_v2_models_proto_rawDesc = "" +
 	"\x12_debit_note_prefixB\x12\n" +
 	"\x10_signature_imageB\x0e\n" +
 	"\f_stamp_imageB\x11\n" +
-	"\x0f_logo_image_url\"\xb4\x06\n" +
+	"\x0f_logo_image_url\"\xd2\x04\n" +
+	"\rBillingConfig\x12?\n" +
+	"\x1cfinalize_zero_amount_invoice\x18\x01 \x01(\bR\x19finalizeZeroAmountInvoice\x120\n" +
+	"\x14invoice_grace_period\x18\x02 \x01(\x05R\x12invoiceGracePeriod\x12(\n" +
+	"\x10net_payment_term\x18\x03 \x01(\x05R\x0enetPaymentTerm\x12%\n" +
+	"\x0eemail_settings\x18\x04 \x03(\tR\remailSettings\x12\x90\x01\n" +
+	"(subscription_invoice_issuing_date_anchor\x18\x05 \x01(\x0e28.invora.branches.v2.SubscriptionInvoiceIssuingDateAnchorR$subscriptionInvoiceIssuingDateAnchor\x12\x9c\x01\n" +
+	",subscription_invoice_issuing_date_adjustment\x18\x06 \x01(\x0e2<.invora.branches.v2.SubscriptionInvoiceIssuingDateAdjustmentR(subscriptionInvoiceIssuingDateAdjustment\x123\n" +
+	"\x13dunning_campaign_id\x18\a \x01(\tH\x00R\x11dunningCampaignId\x88\x01\x01B\x16\n" +
+	"\x14_dunning_campaign_id\"\x97\t\n" +
 	"\n" +
 	"ChangeBase\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12e\n" +
@@ -1188,7 +1652,13 @@ const file_invora_branches_v2_models_proto_rawDesc = "" +
 	" \x01(\tH\x04R\n" +
 	"stampImage\x88\x01\x01\x12)\n" +
 	"\x0elogo_image_url\x18\f \x01(\tH\x05R\flogoImageUrl\x88\x01\x01\x123\n" +
-	"\bmetadata\x18\v \x01(\v2\x17.google.protobuf.StructR\bmetadata\x1ak\n" +
+	"\bmetadata\x18\v \x01(\v2\x17.google.protobuf.StructR\bmetadata\x12)\n" +
+	"\x10default_currency\x18\r \x01(\tR\x0fdefaultCurrency\x12\x1a\n" +
+	"\btimezone\x18\x0e \x01(\tR\btimezone\x12'\n" +
+	"\x0fdocument_locale\x18\x0f \x01(\tR\x0edocumentLocale\x12T\n" +
+	"\x12document_numbering\x18\x10 \x01(\x0e2%.invora.branches.v2.DocumentNumberingR\x11documentNumbering\x12H\n" +
+	"\x0ebilling_config\x18\x11 \x01(\v2!.invora.branches.v2.BillingConfigR\rbillingConfig\x12Q\n" +
+	"\x0flifecycle_state\x18\x12 \x01(\x0e2(.invora.branches.v2.BranchLifecycleStateR\x0elifecycleState\x1ak\n" +
 	"\x16RegulationConfigsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12;\n" +
 	"\x05value\x18\x02 \x01(\v2%.invora.documents.v2.RegulationConfigR\x05value:\x028\x01B\x11\n" +
@@ -1225,7 +1695,7 @@ const file_invora_branches_v2_models_proto_rawDesc = "" +
 	"ListFilter\x126\n" +
 	"\x04part\x18\x01 \x01(\v2\".invora.branches.v2.ListFilterPartR\x04part\x12\x1f\n" +
 	"\vtext_search\x18\x02 \x01(\tR\n" +
-	"textSearch\"\xfa\x01\n" +
+	"textSearch\"\xcf\x02\n" +
 	"\x0eListFilterPart\x123\n" +
 	"\x03key\x18\x01 \x01(\v2\x1f.kernel.ListRequestFilterPartIdH\x00R\x03key\x12D\n" +
 	"\n" +
@@ -1233,7 +1703,8 @@ const file_invora_branches_v2_models_proto_rawDesc = "" +
 	"\n" +
 	"updated_at\x18\x03 \x01(\v2#.kernel.ListRequestFilterPartDateV2H\x00R\tupdatedAt\x12\x1f\n" +
 	"\n" +
-	"is_primary\x18\x04 \x01(\bH\x00R\tisPrimaryB\x06\n" +
+	"is_primary\x18\x04 \x01(\bH\x00R\tisPrimary\x12S\n" +
+	"\x0flifecycle_state\x18\x05 \x01(\x0e2(.invora.branches.v2.BranchLifecycleStateH\x00R\x0elifecycleStateB\x06\n" +
 	"\x04type\"B\n" +
 	"\bListSort\x126\n" +
 	"\x05rules\x18\x01 \x03(\v2 .invora.branches.v2.ListSortRuleR\x05rules\"\xb3\x01\n" +
@@ -1257,7 +1728,23 @@ const file_invora_branches_v2_models_proto_rawDesc = "" +
 	"\vtotal_count\x18\x02 \x01(\x04R\n" +
 	"totalCount\x12-\n" +
 	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
-	"\x11_next_page_cursorB\xd9\x01\n" +
+	"\x11_next_page_cursor*\x7f\n" +
+	"\x11DocumentNumbering\x12\"\n" +
+	"\x1eDOCUMENT_NUMBERING_UNSPECIFIED\x10\x00\x12#\n" +
+	"\x1fDOCUMENT_NUMBERING_PER_CUSTOMER\x10\x01\x12!\n" +
+	"\x1dDOCUMENT_NUMBERING_PER_BRANCH\x10\x02*\x85\x01\n" +
+	"\x14BranchLifecycleState\x12!\n" +
+	"\x1dBRANCH_LIFECYCLE_STATE_ACTIVE\x10\x00\x12\"\n" +
+	"\x1eBRANCH_LIFECYCLE_STATE_PENDING\x10\x01\x12&\n" +
+	"\"BRANCH_LIFECYCLE_STATE_DEACTIVATED\x10\x02*\xe1\x01\n" +
+	"$SubscriptionInvoiceIssuingDateAnchor\x128\n" +
+	"4SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_UNSPECIFIED\x10\x00\x12?\n" +
+	";SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_CURRENT_PERIOD_END\x10\x01\x12>\n" +
+	":SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_NEXT_PERIOD_START\x10\x02*\xf5\x01\n" +
+	"(SubscriptionInvoiceIssuingDateAdjustment\x12<\n" +
+	"8SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_UNSPECIFIED\x10\x00\x12<\n" +
+	"8SUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_KEEP_ANCHOR\x10\x01\x12M\n" +
+	"ISUBSCRIPTION_INVOICE_ISSUING_DATE_ADJUSTMENT_ALIGN_WITH_FINALIZATION_DATE\x10\x02B\xd9\x01\n" +
 	"\x16com.invora.branches.v2B\vModelsProtoP\x01ZHgithub.com/invoraapp/invora-controller/gen/invora/branches/v2;branchesv2\xa2\x02\x03IBX\xaa\x02\x12Invora.Branches.V2\xca\x02\x12Invora\\Branches\\V2\xe2\x02\x1eInvora\\Branches\\V2\\GPBMetadata\xea\x02\x14Invora::Branches::V2b\x06proto3"
 
 var (
@@ -1272,73 +1759,88 @@ func file_invora_branches_v2_models_proto_rawDescGZIP() []byte {
 	return file_invora_branches_v2_models_proto_rawDescData
 }
 
-var file_invora_branches_v2_models_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_invora_branches_v2_models_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_invora_branches_v2_models_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
 var file_invora_branches_v2_models_proto_goTypes = []any{
-	(*Branch)(nil),            // 0: invora.branches.v2.Branch
-	(*ChangeBase)(nil),        // 1: invora.branches.v2.ChangeBase
-	(*CreateRequest)(nil),     // 2: invora.branches.v2.CreateRequest
-	(*CreateResponse)(nil),    // 3: invora.branches.v2.CreateResponse
-	(*UpdateRequest)(nil),     // 4: invora.branches.v2.UpdateRequest
-	(*UpdateResponse)(nil),    // 5: invora.branches.v2.UpdateResponse
-	(*DeleteRequest)(nil),     // 6: invora.branches.v2.DeleteRequest
-	(*DeleteResponse)(nil),    // 7: invora.branches.v2.DeleteResponse
-	(*GetRequest)(nil),        // 8: invora.branches.v2.GetRequest
-	(*GetResponse)(nil),       // 9: invora.branches.v2.GetResponse
-	(*ListFilter)(nil),        // 10: invora.branches.v2.ListFilter
-	(*ListFilterPart)(nil),    // 11: invora.branches.v2.ListFilterPart
-	(*ListSort)(nil),          // 12: invora.branches.v2.ListSort
-	(*ListSortRule)(nil),      // 13: invora.branches.v2.ListSortRule
-	(*ListRequest)(nil),       // 14: invora.branches.v2.ListRequest
-	(*ListResponse)(nil),      // 15: invora.branches.v2.ListResponse
-	nil,                       // 16: invora.branches.v2.Branch.RegulationConfigsEntry
-	nil,                       // 17: invora.branches.v2.ChangeBase.RegulationConfigsEntry
-	(*kernel.KeyVersion)(nil), // 18: kernel.KeyVersion
-	(*commonaggregatecomponents_2.PartyType)(nil), // 19: oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.PartyType
-	(*structpb.Struct)(nil),                       // 20: google.protobuf.Struct
-	(*kernel.CreateUpdateAuditInfo)(nil),          // 21: kernel.CreateUpdateAuditInfo
-	(*fieldmaskpb.FieldMask)(nil),                 // 22: google.protobuf.FieldMask
-	(*kernel.ListRequestFilterPartId)(nil),        // 23: kernel.ListRequestFilterPartId
-	(*kernel.ListRequestFilterPartDateV2)(nil),    // 24: kernel.ListRequestFilterPartDateV2
-	(kernel.SortDirection)(0),                     // 25: kernel.SortDirection
-	(*kernel.PaginationInfo)(nil),                 // 26: kernel.PaginationInfo
-	(*v2.RegulationConfig)(nil),                   // 27: invora.documents.v2.RegulationConfig
+	(DocumentNumbering)(0),                        // 0: invora.branches.v2.DocumentNumbering
+	(BranchLifecycleState)(0),                     // 1: invora.branches.v2.BranchLifecycleState
+	(SubscriptionInvoiceIssuingDateAnchor)(0),     // 2: invora.branches.v2.SubscriptionInvoiceIssuingDateAnchor
+	(SubscriptionInvoiceIssuingDateAdjustment)(0), // 3: invora.branches.v2.SubscriptionInvoiceIssuingDateAdjustment
+	(*Branch)(nil),                                // 4: invora.branches.v2.Branch
+	(*BillingConfig)(nil),                         // 5: invora.branches.v2.BillingConfig
+	(*ChangeBase)(nil),                            // 6: invora.branches.v2.ChangeBase
+	(*CreateRequest)(nil),                         // 7: invora.branches.v2.CreateRequest
+	(*CreateResponse)(nil),                        // 8: invora.branches.v2.CreateResponse
+	(*UpdateRequest)(nil),                         // 9: invora.branches.v2.UpdateRequest
+	(*UpdateResponse)(nil),                        // 10: invora.branches.v2.UpdateResponse
+	(*DeleteRequest)(nil),                         // 11: invora.branches.v2.DeleteRequest
+	(*DeleteResponse)(nil),                        // 12: invora.branches.v2.DeleteResponse
+	(*GetRequest)(nil),                            // 13: invora.branches.v2.GetRequest
+	(*GetResponse)(nil),                           // 14: invora.branches.v2.GetResponse
+	(*ListFilter)(nil),                            // 15: invora.branches.v2.ListFilter
+	(*ListFilterPart)(nil),                        // 16: invora.branches.v2.ListFilterPart
+	(*ListSort)(nil),                              // 17: invora.branches.v2.ListSort
+	(*ListSortRule)(nil),                          // 18: invora.branches.v2.ListSortRule
+	(*ListRequest)(nil),                           // 19: invora.branches.v2.ListRequest
+	(*ListResponse)(nil),                          // 20: invora.branches.v2.ListResponse
+	nil,                                           // 21: invora.branches.v2.Branch.RegulationConfigsEntry
+	nil,                                           // 22: invora.branches.v2.ChangeBase.RegulationConfigsEntry
+	(*kernel.KeyVersion)(nil),                     // 23: kernel.KeyVersion
+	(*commonaggregatecomponents_2.PartyType)(nil), // 24: oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.PartyType
+	(*structpb.Struct)(nil),                       // 25: google.protobuf.Struct
+	(*kernel.CreateUpdateAuditInfo)(nil),          // 26: kernel.CreateUpdateAuditInfo
+	(*fieldmaskpb.FieldMask)(nil),                 // 27: google.protobuf.FieldMask
+	(*kernel.ListRequestFilterPartId)(nil),        // 28: kernel.ListRequestFilterPartId
+	(*kernel.ListRequestFilterPartDateV2)(nil),    // 29: kernel.ListRequestFilterPartDateV2
+	(kernel.SortDirection)(0),                     // 30: kernel.SortDirection
+	(*kernel.PaginationInfo)(nil),                 // 31: kernel.PaginationInfo
+	(*v2.RegulationConfig)(nil),                   // 32: invora.documents.v2.RegulationConfig
 }
 var file_invora_branches_v2_models_proto_depIdxs = []int32{
-	18, // 0: invora.branches.v2.Branch.id:type_name -> kernel.KeyVersion
-	19, // 1: invora.branches.v2.Branch.party:type_name -> oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.PartyType
-	16, // 2: invora.branches.v2.Branch.regulation_configs:type_name -> invora.branches.v2.Branch.RegulationConfigsEntry
-	20, // 3: invora.branches.v2.Branch.metadata:type_name -> google.protobuf.Struct
-	21, // 4: invora.branches.v2.Branch.audit:type_name -> kernel.CreateUpdateAuditInfo
-	19, // 5: invora.branches.v2.ChangeBase.party:type_name -> oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.PartyType
-	17, // 6: invora.branches.v2.ChangeBase.regulation_configs:type_name -> invora.branches.v2.ChangeBase.RegulationConfigsEntry
-	20, // 7: invora.branches.v2.ChangeBase.metadata:type_name -> google.protobuf.Struct
-	1,  // 8: invora.branches.v2.CreateRequest.changes:type_name -> invora.branches.v2.ChangeBase
-	0,  // 9: invora.branches.v2.CreateResponse.details:type_name -> invora.branches.v2.Branch
-	22, // 10: invora.branches.v2.UpdateRequest.mask:type_name -> google.protobuf.FieldMask
-	1,  // 11: invora.branches.v2.UpdateRequest.changes:type_name -> invora.branches.v2.ChangeBase
-	0,  // 12: invora.branches.v2.UpdateResponse.details:type_name -> invora.branches.v2.Branch
-	22, // 13: invora.branches.v2.GetRequest.mask:type_name -> google.protobuf.FieldMask
-	0,  // 14: invora.branches.v2.GetResponse.details:type_name -> invora.branches.v2.Branch
-	11, // 15: invora.branches.v2.ListFilter.part:type_name -> invora.branches.v2.ListFilterPart
-	23, // 16: invora.branches.v2.ListFilterPart.key:type_name -> kernel.ListRequestFilterPartId
-	24, // 17: invora.branches.v2.ListFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDateV2
-	24, // 18: invora.branches.v2.ListFilterPart.updated_at:type_name -> kernel.ListRequestFilterPartDateV2
-	13, // 19: invora.branches.v2.ListSort.rules:type_name -> invora.branches.v2.ListSortRule
-	25, // 20: invora.branches.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
-	25, // 21: invora.branches.v2.ListSortRule.updated_at:type_name -> kernel.SortDirection
-	25, // 22: invora.branches.v2.ListSortRule.name:type_name -> kernel.SortDirection
-	10, // 23: invora.branches.v2.ListRequest.filter:type_name -> invora.branches.v2.ListFilter
-	12, // 24: invora.branches.v2.ListRequest.sort:type_name -> invora.branches.v2.ListSort
-	26, // 25: invora.branches.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
-	22, // 26: invora.branches.v2.ListRequest.mask:type_name -> google.protobuf.FieldMask
-	0,  // 27: invora.branches.v2.ListResponse.items:type_name -> invora.branches.v2.Branch
-	27, // 28: invora.branches.v2.Branch.RegulationConfigsEntry.value:type_name -> invora.documents.v2.RegulationConfig
-	27, // 29: invora.branches.v2.ChangeBase.RegulationConfigsEntry.value:type_name -> invora.documents.v2.RegulationConfig
-	30, // [30:30] is the sub-list for method output_type
-	30, // [30:30] is the sub-list for method input_type
-	30, // [30:30] is the sub-list for extension type_name
-	30, // [30:30] is the sub-list for extension extendee
-	0,  // [0:30] is the sub-list for field type_name
+	23, // 0: invora.branches.v2.Branch.id:type_name -> kernel.KeyVersion
+	24, // 1: invora.branches.v2.Branch.party:type_name -> oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.PartyType
+	21, // 2: invora.branches.v2.Branch.regulation_configs:type_name -> invora.branches.v2.Branch.RegulationConfigsEntry
+	25, // 3: invora.branches.v2.Branch.metadata:type_name -> google.protobuf.Struct
+	0,  // 4: invora.branches.v2.Branch.document_numbering:type_name -> invora.branches.v2.DocumentNumbering
+	5,  // 5: invora.branches.v2.Branch.billing_config:type_name -> invora.branches.v2.BillingConfig
+	1,  // 6: invora.branches.v2.Branch.lifecycle_state:type_name -> invora.branches.v2.BranchLifecycleState
+	26, // 7: invora.branches.v2.Branch.audit:type_name -> kernel.CreateUpdateAuditInfo
+	2,  // 8: invora.branches.v2.BillingConfig.subscription_invoice_issuing_date_anchor:type_name -> invora.branches.v2.SubscriptionInvoiceIssuingDateAnchor
+	3,  // 9: invora.branches.v2.BillingConfig.subscription_invoice_issuing_date_adjustment:type_name -> invora.branches.v2.SubscriptionInvoiceIssuingDateAdjustment
+	24, // 10: invora.branches.v2.ChangeBase.party:type_name -> oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.PartyType
+	22, // 11: invora.branches.v2.ChangeBase.regulation_configs:type_name -> invora.branches.v2.ChangeBase.RegulationConfigsEntry
+	25, // 12: invora.branches.v2.ChangeBase.metadata:type_name -> google.protobuf.Struct
+	0,  // 13: invora.branches.v2.ChangeBase.document_numbering:type_name -> invora.branches.v2.DocumentNumbering
+	5,  // 14: invora.branches.v2.ChangeBase.billing_config:type_name -> invora.branches.v2.BillingConfig
+	1,  // 15: invora.branches.v2.ChangeBase.lifecycle_state:type_name -> invora.branches.v2.BranchLifecycleState
+	6,  // 16: invora.branches.v2.CreateRequest.changes:type_name -> invora.branches.v2.ChangeBase
+	4,  // 17: invora.branches.v2.CreateResponse.details:type_name -> invora.branches.v2.Branch
+	27, // 18: invora.branches.v2.UpdateRequest.mask:type_name -> google.protobuf.FieldMask
+	6,  // 19: invora.branches.v2.UpdateRequest.changes:type_name -> invora.branches.v2.ChangeBase
+	4,  // 20: invora.branches.v2.UpdateResponse.details:type_name -> invora.branches.v2.Branch
+	27, // 21: invora.branches.v2.GetRequest.mask:type_name -> google.protobuf.FieldMask
+	4,  // 22: invora.branches.v2.GetResponse.details:type_name -> invora.branches.v2.Branch
+	16, // 23: invora.branches.v2.ListFilter.part:type_name -> invora.branches.v2.ListFilterPart
+	28, // 24: invora.branches.v2.ListFilterPart.key:type_name -> kernel.ListRequestFilterPartId
+	29, // 25: invora.branches.v2.ListFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDateV2
+	29, // 26: invora.branches.v2.ListFilterPart.updated_at:type_name -> kernel.ListRequestFilterPartDateV2
+	1,  // 27: invora.branches.v2.ListFilterPart.lifecycle_state:type_name -> invora.branches.v2.BranchLifecycleState
+	18, // 28: invora.branches.v2.ListSort.rules:type_name -> invora.branches.v2.ListSortRule
+	30, // 29: invora.branches.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
+	30, // 30: invora.branches.v2.ListSortRule.updated_at:type_name -> kernel.SortDirection
+	30, // 31: invora.branches.v2.ListSortRule.name:type_name -> kernel.SortDirection
+	15, // 32: invora.branches.v2.ListRequest.filter:type_name -> invora.branches.v2.ListFilter
+	17, // 33: invora.branches.v2.ListRequest.sort:type_name -> invora.branches.v2.ListSort
+	31, // 34: invora.branches.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
+	27, // 35: invora.branches.v2.ListRequest.mask:type_name -> google.protobuf.FieldMask
+	4,  // 36: invora.branches.v2.ListResponse.items:type_name -> invora.branches.v2.Branch
+	32, // 37: invora.branches.v2.Branch.RegulationConfigsEntry.value:type_name -> invora.documents.v2.RegulationConfig
+	32, // 38: invora.branches.v2.ChangeBase.RegulationConfigsEntry.value:type_name -> invora.documents.v2.RegulationConfig
+	39, // [39:39] is the sub-list for method output_type
+	39, // [39:39] is the sub-list for method input_type
+	39, // [39:39] is the sub-list for extension type_name
+	39, // [39:39] is the sub-list for extension extendee
+	0,  // [0:39] is the sub-list for field type_name
 }
 
 func init() { file_invora_branches_v2_models_proto_init() }
@@ -1349,30 +1851,33 @@ func file_invora_branches_v2_models_proto_init() {
 	file_invora_branches_v2_models_proto_msgTypes[0].OneofWrappers = []any{}
 	file_invora_branches_v2_models_proto_msgTypes[1].OneofWrappers = []any{}
 	file_invora_branches_v2_models_proto_msgTypes[2].OneofWrappers = []any{}
-	file_invora_branches_v2_models_proto_msgTypes[11].OneofWrappers = []any{
+	file_invora_branches_v2_models_proto_msgTypes[3].OneofWrappers = []any{}
+	file_invora_branches_v2_models_proto_msgTypes[12].OneofWrappers = []any{
 		(*ListFilterPart_Key)(nil),
 		(*ListFilterPart_CreatedAt)(nil),
 		(*ListFilterPart_UpdatedAt)(nil),
 		(*ListFilterPart_IsPrimary)(nil),
+		(*ListFilterPart_LifecycleState)(nil),
 	}
-	file_invora_branches_v2_models_proto_msgTypes[13].OneofWrappers = []any{
+	file_invora_branches_v2_models_proto_msgTypes[14].OneofWrappers = []any{
 		(*ListSortRule_CreatedAt)(nil),
 		(*ListSortRule_UpdatedAt)(nil),
 		(*ListSortRule_Name)(nil),
 	}
-	file_invora_branches_v2_models_proto_msgTypes[15].OneofWrappers = []any{}
+	file_invora_branches_v2_models_proto_msgTypes[16].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_branches_v2_models_proto_rawDesc), len(file_invora_branches_v2_models_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   18,
+			NumEnums:      4,
+			NumMessages:   19,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_invora_branches_v2_models_proto_goTypes,
 		DependencyIndexes: file_invora_branches_v2_models_proto_depIdxs,
+		EnumInfos:         file_invora_branches_v2_models_proto_enumTypes,
 		MessageInfos:      file_invora_branches_v2_models_proto_msgTypes,
 	}.Build()
 	File_invora_branches_v2_models_proto = out.File

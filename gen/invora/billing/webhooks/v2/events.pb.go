@@ -25,7 +25,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Billing webhook event envelope — deserialized from JSON via proto3 JsonParser.
+// Billing webhook event envelope -- deserialized from JSON via proto3 JsonParser.
 // Every billing callback is parsed into this typed structure before processing.
 type BillingWebhookEvent struct {
 	state       protoimpl.MessageState `protogen:"open.v1"`
@@ -265,27 +265,27 @@ func (*BillingWebhookEvent_PaymentRequest) isBillingWebhookEvent_Payload() {}
 // invoice.payment_status_updated, invoice.voided, invoice.payment_overdue,
 // invoice.payment_dispute_lost, invoice.drafted
 type InvoiceEventPayload struct {
-	state                    protoimpl.MessageState          `protogen:"open.v1"`
-	Id                       string                          `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	SequentialId             string                          `protobuf:"bytes,2,opt,name=sequential_id,json=sequentialId,proto3" json:"sequential_id,omitempty"`
-	Number                   string                          `protobuf:"bytes,3,opt,name=number,proto3" json:"number,omitempty"`
-	IssuingDate              string                          `protobuf:"bytes,4,opt,name=issuing_date,json=issuingDate,proto3" json:"issuing_date,omitempty"`
-	PaymentDueDate           string                          `protobuf:"bytes,5,opt,name=payment_due_date,json=paymentDueDate,proto3" json:"payment_due_date,omitempty"`
-	NetPaymentTerm           string                          `protobuf:"bytes,6,opt,name=net_payment_term,json=netPaymentTerm,proto3" json:"net_payment_term,omitempty"`
-	InvoiceType              v2.InvoiceTypeEnum              `protobuf:"varint,7,opt,name=invoice_type,json=invoiceType,proto3,enum=invora.billing.common.v2.InvoiceTypeEnum" json:"invoice_type,omitempty"`
-	Status                   v2.InvoiceStatusTypeEnum        `protobuf:"varint,8,opt,name=status,proto3,enum=invora.billing.common.v2.InvoiceStatusTypeEnum" json:"status,omitempty"`
-	PaymentStatus            v2.InvoicePaymentStatusTypeEnum `protobuf:"varint,9,opt,name=payment_status,json=paymentStatus,proto3,enum=invora.billing.common.v2.InvoicePaymentStatusTypeEnum" json:"payment_status,omitempty"`
-	Currency                 string                          `protobuf:"bytes,10,opt,name=currency,proto3" json:"currency,omitempty"`
-	FeesAmountCents          *kernel.DecimalValue            `protobuf:"bytes,11,opt,name=fees_amount_cents,json=feesAmountCents,proto3" json:"fees_amount_cents,omitempty"`
-	TaxesAmountCents         *kernel.DecimalValue            `protobuf:"bytes,12,opt,name=taxes_amount_cents,json=taxesAmountCents,proto3" json:"taxes_amount_cents,omitempty"`
-	TotalAmountCents         *kernel.DecimalValue            `protobuf:"bytes,13,opt,name=total_amount_cents,json=totalAmountCents,proto3" json:"total_amount_cents,omitempty"`
-	PrepaidCreditAmountCents *kernel.DecimalValue            `protobuf:"bytes,14,opt,name=prepaid_credit_amount_cents,json=prepaidCreditAmountCents,proto3" json:"prepaid_credit_amount_cents,omitempty"`
-	FileUrl                  string                          `protobuf:"bytes,15,opt,name=file_url,json=fileUrl,proto3" json:"file_url,omitempty"`
-	Customer                 *v2.BillingCustomer             `protobuf:"bytes,20,opt,name=customer,proto3" json:"customer,omitempty"`
-	Subscriptions            []*InvoiceSubscription          `protobuf:"bytes,21,rep,name=subscriptions,proto3" json:"subscriptions,omitempty"`
-	Fees                     []*InvoiceFee                   `protobuf:"bytes,22,rep,name=fees,proto3" json:"fees,omitempty"`
-	AppliedTaxes             []*InvoiceAppliedTax            `protobuf:"bytes,23,rep,name=applied_taxes,json=appliedTaxes,proto3" json:"applied_taxes,omitempty"`
-	Metadata                 map[string]string               `protobuf:"bytes,30,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	state                    protoimpl.MessageState      `protogen:"open.v1"`
+	Id                       string                      `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	SequentialId             string                      `protobuf:"bytes,2,opt,name=sequential_id,json=sequentialId,proto3" json:"sequential_id,omitempty"`
+	Number                   string                      `protobuf:"bytes,3,opt,name=number,proto3" json:"number,omitempty"`
+	IssuingDate              string                      `protobuf:"bytes,4,opt,name=issuing_date,json=issuingDate,proto3" json:"issuing_date,omitempty"`
+	PaymentDueDate           string                      `protobuf:"bytes,5,opt,name=payment_due_date,json=paymentDueDate,proto3" json:"payment_due_date,omitempty"`
+	NetPaymentTerm           string                      `protobuf:"bytes,6,opt,name=net_payment_term,json=netPaymentTerm,proto3" json:"net_payment_term,omitempty"`
+	InvoiceType              v2.InvoiceType              `protobuf:"varint,7,opt,name=invoice_type,json=invoiceType,proto3,enum=invora.billing.common.v2.InvoiceType" json:"invoice_type,omitempty"`
+	Status                   v2.InvoiceStatusType        `protobuf:"varint,8,opt,name=status,proto3,enum=invora.billing.common.v2.InvoiceStatusType" json:"status,omitempty"`
+	PaymentStatus            v2.InvoicePaymentStatusType `protobuf:"varint,9,opt,name=payment_status,json=paymentStatus,proto3,enum=invora.billing.common.v2.InvoicePaymentStatusType" json:"payment_status,omitempty"`
+	Currency                 string                      `protobuf:"bytes,10,opt,name=currency,proto3" json:"currency,omitempty"`
+	FeesAmountCents          *kernel.DecimalValue        `protobuf:"bytes,11,opt,name=fees_amount_cents,json=feesAmountCents,proto3" json:"fees_amount_cents,omitempty"`
+	TaxesAmountCents         *kernel.DecimalValue        `protobuf:"bytes,12,opt,name=taxes_amount_cents,json=taxesAmountCents,proto3" json:"taxes_amount_cents,omitempty"`
+	TotalAmountCents         *kernel.DecimalValue        `protobuf:"bytes,13,opt,name=total_amount_cents,json=totalAmountCents,proto3" json:"total_amount_cents,omitempty"`
+	PrepaidCreditAmountCents *kernel.DecimalValue        `protobuf:"bytes,14,opt,name=prepaid_credit_amount_cents,json=prepaidCreditAmountCents,proto3" json:"prepaid_credit_amount_cents,omitempty"`
+	FileUrl                  string                      `protobuf:"bytes,15,opt,name=file_url,json=fileUrl,proto3" json:"file_url,omitempty"`
+	Customer                 *v2.BillingCustomer         `protobuf:"bytes,20,opt,name=customer,proto3" json:"customer,omitempty"`
+	Subscriptions            []*InvoiceSubscription      `protobuf:"bytes,21,rep,name=subscriptions,proto3" json:"subscriptions,omitempty"`
+	Fees                     []*InvoiceFee               `protobuf:"bytes,22,rep,name=fees,proto3" json:"fees,omitempty"`
+	AppliedTaxes             []*InvoiceAppliedTax        `protobuf:"bytes,23,rep,name=applied_taxes,json=appliedTaxes,proto3" json:"applied_taxes,omitempty"`
+	Metadata                 map[string]string           `protobuf:"bytes,30,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields            protoimpl.UnknownFields
 	sizeCache                protoimpl.SizeCache
 }
@@ -362,25 +362,25 @@ func (x *InvoiceEventPayload) GetNetPaymentTerm() string {
 	return ""
 }
 
-func (x *InvoiceEventPayload) GetInvoiceType() v2.InvoiceTypeEnum {
+func (x *InvoiceEventPayload) GetInvoiceType() v2.InvoiceType {
 	if x != nil {
 		return x.InvoiceType
 	}
-	return v2.InvoiceTypeEnum(0)
+	return v2.InvoiceType(0)
 }
 
-func (x *InvoiceEventPayload) GetStatus() v2.InvoiceStatusTypeEnum {
+func (x *InvoiceEventPayload) GetStatus() v2.InvoiceStatusType {
 	if x != nil {
 		return x.Status
 	}
-	return v2.InvoiceStatusTypeEnum(0)
+	return v2.InvoiceStatusType(0)
 }
 
-func (x *InvoiceEventPayload) GetPaymentStatus() v2.InvoicePaymentStatusTypeEnum {
+func (x *InvoiceEventPayload) GetPaymentStatus() v2.InvoicePaymentStatusType {
 	if x != nil {
 		return x.PaymentStatus
 	}
-	return v2.InvoicePaymentStatusTypeEnum(0)
+	return v2.InvoicePaymentStatusType(0)
 }
 
 func (x *InvoiceEventPayload) GetCurrency() string {
@@ -465,7 +465,7 @@ type InvoiceSubscription struct {
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	ExternalId    string                 `protobuf:"bytes,2,opt,name=external_id,json=externalId,proto3" json:"external_id,omitempty"`
 	PlanCode      string                 `protobuf:"bytes,3,opt,name=plan_code,json=planCode,proto3" json:"plan_code,omitempty"`
-	Status        v2.StatusTypeEnum      `protobuf:"varint,4,opt,name=status,proto3,enum=invora.billing.common.v2.StatusTypeEnum" json:"status,omitempty"`
+	Status        v2.StatusType          `protobuf:"varint,4,opt,name=status,proto3,enum=invora.billing.common.v2.StatusType" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -521,17 +521,17 @@ func (x *InvoiceSubscription) GetPlanCode() string {
 	return ""
 }
 
-func (x *InvoiceSubscription) GetStatus() v2.StatusTypeEnum {
+func (x *InvoiceSubscription) GetStatus() v2.StatusType {
 	if x != nil {
 		return x.Status
 	}
-	return v2.StatusTypeEnum(0)
+	return v2.StatusType(0)
 }
 
 type InvoiceFee struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	ItemType      v2.FeeTypesEnum        `protobuf:"varint,2,opt,name=item_type,json=itemType,proto3,enum=invora.billing.common.v2.FeeTypesEnum" json:"item_type,omitempty"`
+	ItemType      v2.FeeTypes            `protobuf:"varint,2,opt,name=item_type,json=itemType,proto3,enum=invora.billing.common.v2.FeeTypes" json:"item_type,omitempty"`
 	ItemCode      string                 `protobuf:"bytes,3,opt,name=item_code,json=itemCode,proto3" json:"item_code,omitempty"`
 	AmountCents   *kernel.DecimalValue   `protobuf:"bytes,4,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
 	Units         *kernel.DecimalValue   `protobuf:"bytes,5,opt,name=units,proto3" json:"units,omitempty"`
@@ -577,11 +577,11 @@ func (x *InvoiceFee) GetId() string {
 	return ""
 }
 
-func (x *InvoiceFee) GetItemType() v2.FeeTypesEnum {
+func (x *InvoiceFee) GetItemType() v2.FeeTypes {
 	if x != nil {
 		return x.ItemType
 	}
-	return v2.FeeTypesEnum(0)
+	return v2.FeeTypes(0)
 }
 
 func (x *InvoiceFee) GetItemCode() string {
@@ -691,21 +691,21 @@ func (x *InvoiceAppliedTax) GetAmountCents() *kernel.DecimalValue {
 // Credit note events: credit_note.created, credit_note.voided,
 // credit_note.refund_status_updated
 type CreditNoteEventPayload struct {
-	state              protoimpl.MessageState        `protogen:"open.v1"`
-	Id                 string                        `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	SequentialId       string                        `protobuf:"bytes,2,opt,name=sequential_id,json=sequentialId,proto3" json:"sequential_id,omitempty"`
-	Number             string                        `protobuf:"bytes,3,opt,name=number,proto3" json:"number,omitempty"`
-	IssuingDate        string                        `protobuf:"bytes,4,opt,name=issuing_date,json=issuingDate,proto3" json:"issuing_date,omitempty"`
-	CreditStatus       v2.CreditNoteCreditStatusEnum `protobuf:"varint,5,opt,name=credit_status,json=creditStatus,proto3,enum=invora.billing.common.v2.CreditNoteCreditStatusEnum" json:"credit_status,omitempty"`
-	RefundStatus       v2.CreditNoteRefundStatusEnum `protobuf:"varint,6,opt,name=refund_status,json=refundStatus,proto3,enum=invora.billing.common.v2.CreditNoteRefundStatusEnum" json:"refund_status,omitempty"`
-	Reason             v2.CreditNoteReasonEnum       `protobuf:"varint,7,opt,name=reason,proto3,enum=invora.billing.common.v2.CreditNoteReasonEnum" json:"reason,omitempty"`
-	Currency           string                        `protobuf:"bytes,8,opt,name=currency,proto3" json:"currency,omitempty"`
-	TotalAmountCents   *kernel.DecimalValue          `protobuf:"bytes,9,opt,name=total_amount_cents,json=totalAmountCents,proto3" json:"total_amount_cents,omitempty"`
-	CreditAmountCents  *kernel.DecimalValue          `protobuf:"bytes,10,opt,name=credit_amount_cents,json=creditAmountCents,proto3" json:"credit_amount_cents,omitempty"`
-	RefundAmountCents  *kernel.DecimalValue          `protobuf:"bytes,11,opt,name=refund_amount_cents,json=refundAmountCents,proto3" json:"refund_amount_cents,omitempty"`
-	BalanceAmountCents *kernel.DecimalValue          `protobuf:"bytes,12,opt,name=balance_amount_cents,json=balanceAmountCents,proto3" json:"balance_amount_cents,omitempty"`
-	InvoiceNumber      string                        `protobuf:"bytes,13,opt,name=invoice_number,json=invoiceNumber,proto3" json:"invoice_number,omitempty"`
-	Customer           *v2.BillingCustomer           `protobuf:"bytes,20,opt,name=customer,proto3" json:"customer,omitempty"`
+	state              protoimpl.MessageState    `protogen:"open.v1"`
+	Id                 string                    `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	SequentialId       string                    `protobuf:"bytes,2,opt,name=sequential_id,json=sequentialId,proto3" json:"sequential_id,omitempty"`
+	Number             string                    `protobuf:"bytes,3,opt,name=number,proto3" json:"number,omitempty"`
+	IssuingDate        string                    `protobuf:"bytes,4,opt,name=issuing_date,json=issuingDate,proto3" json:"issuing_date,omitempty"`
+	CreditStatus       v2.CreditNoteCreditStatus `protobuf:"varint,5,opt,name=credit_status,json=creditStatus,proto3,enum=invora.billing.common.v2.CreditNoteCreditStatus" json:"credit_status,omitempty"`
+	RefundStatus       v2.CreditNoteRefundStatus `protobuf:"varint,6,opt,name=refund_status,json=refundStatus,proto3,enum=invora.billing.common.v2.CreditNoteRefundStatus" json:"refund_status,omitempty"`
+	Reason             v2.CreditNoteReason       `protobuf:"varint,7,opt,name=reason,proto3,enum=invora.billing.common.v2.CreditNoteReason" json:"reason,omitempty"`
+	Currency           string                    `protobuf:"bytes,8,opt,name=currency,proto3" json:"currency,omitempty"`
+	TotalAmountCents   *kernel.DecimalValue      `protobuf:"bytes,9,opt,name=total_amount_cents,json=totalAmountCents,proto3" json:"total_amount_cents,omitempty"`
+	CreditAmountCents  *kernel.DecimalValue      `protobuf:"bytes,10,opt,name=credit_amount_cents,json=creditAmountCents,proto3" json:"credit_amount_cents,omitempty"`
+	RefundAmountCents  *kernel.DecimalValue      `protobuf:"bytes,11,opt,name=refund_amount_cents,json=refundAmountCents,proto3" json:"refund_amount_cents,omitempty"`
+	BalanceAmountCents *kernel.DecimalValue      `protobuf:"bytes,12,opt,name=balance_amount_cents,json=balanceAmountCents,proto3" json:"balance_amount_cents,omitempty"`
+	InvoiceNumber      string                    `protobuf:"bytes,13,opt,name=invoice_number,json=invoiceNumber,proto3" json:"invoice_number,omitempty"`
+	Customer           *v2.BillingCustomer       `protobuf:"bytes,20,opt,name=customer,proto3" json:"customer,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -768,25 +768,25 @@ func (x *CreditNoteEventPayload) GetIssuingDate() string {
 	return ""
 }
 
-func (x *CreditNoteEventPayload) GetCreditStatus() v2.CreditNoteCreditStatusEnum {
+func (x *CreditNoteEventPayload) GetCreditStatus() v2.CreditNoteCreditStatus {
 	if x != nil {
 		return x.CreditStatus
 	}
-	return v2.CreditNoteCreditStatusEnum(0)
+	return v2.CreditNoteCreditStatus(0)
 }
 
-func (x *CreditNoteEventPayload) GetRefundStatus() v2.CreditNoteRefundStatusEnum {
+func (x *CreditNoteEventPayload) GetRefundStatus() v2.CreditNoteRefundStatus {
 	if x != nil {
 		return x.RefundStatus
 	}
-	return v2.CreditNoteRefundStatusEnum(0)
+	return v2.CreditNoteRefundStatus(0)
 }
 
-func (x *CreditNoteEventPayload) GetReason() v2.CreditNoteReasonEnum {
+func (x *CreditNoteEventPayload) GetReason() v2.CreditNoteReason {
 	if x != nil {
 		return x.Reason
 	}
-	return v2.CreditNoteReasonEnum(0)
+	return v2.CreditNoteReason(0)
 }
 
 func (x *CreditNoteEventPayload) GetCurrency() string {
@@ -845,9 +845,9 @@ type SubscriptionEventPayload struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	Id               string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	ExternalId       string                 `protobuf:"bytes,2,opt,name=external_id,json=externalId,proto3" json:"external_id,omitempty"`
-	Status           v2.StatusTypeEnum      `protobuf:"varint,3,opt,name=status,proto3,enum=invora.billing.common.v2.StatusTypeEnum" json:"status,omitempty"`
+	Status           v2.StatusType          `protobuf:"varint,3,opt,name=status,proto3,enum=invora.billing.common.v2.StatusType" json:"status,omitempty"`
 	PlanCode         string                 `protobuf:"bytes,4,opt,name=plan_code,json=planCode,proto3" json:"plan_code,omitempty"`
-	BillingTime      v2.BillingTimeEnum     `protobuf:"varint,5,opt,name=billing_time,json=billingTime,proto3,enum=invora.billing.common.v2.BillingTimeEnum" json:"billing_time,omitempty"`
+	BillingTime      v2.BillingTime         `protobuf:"varint,5,opt,name=billing_time,json=billingTime,proto3,enum=invora.billing.common.v2.BillingTime" json:"billing_time,omitempty"`
 	StartedAt        *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=started_at,json=startedAt,proto3" json:"started_at,omitempty"`
 	EndingAt         *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=ending_at,json=endingAt,proto3" json:"ending_at,omitempty"`
 	TerminatedAt     *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=terminated_at,json=terminatedAt,proto3" json:"terminated_at,omitempty"`
@@ -903,11 +903,11 @@ func (x *SubscriptionEventPayload) GetExternalId() string {
 	return ""
 }
 
-func (x *SubscriptionEventPayload) GetStatus() v2.StatusTypeEnum {
+func (x *SubscriptionEventPayload) GetStatus() v2.StatusType {
 	if x != nil {
 		return x.Status
 	}
-	return v2.StatusTypeEnum(0)
+	return v2.StatusType(0)
 }
 
 func (x *SubscriptionEventPayload) GetPlanCode() string {
@@ -917,11 +917,11 @@ func (x *SubscriptionEventPayload) GetPlanCode() string {
 	return ""
 }
 
-func (x *SubscriptionEventPayload) GetBillingTime() v2.BillingTimeEnum {
+func (x *SubscriptionEventPayload) GetBillingTime() v2.BillingTime {
 	if x != nil {
 		return x.BillingTime
 	}
-	return v2.BillingTimeEnum(0)
+	return v2.BillingTime(0)
 }
 
 func (x *SubscriptionEventPayload) GetStartedAt() *timestamppb.Timestamp {
@@ -976,17 +976,17 @@ func (x *SubscriptionEventPayload) GetCustomer() *v2.BillingCustomer {
 // Payment events: payment.created, payment.succeeded, payment.failed,
 // payment.refunded, payment.requires_action
 type PaymentEventPayload struct {
-	state               protoimpl.MessageState      `protogen:"open.v1"`
-	Id                  string                      `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	InvoiceId           string                      `protobuf:"bytes,2,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
-	PaymentProvider     v2.ProviderTypeEnum         `protobuf:"varint,3,opt,name=payment_provider,json=paymentProvider,proto3,enum=invora.billing.common.v2.ProviderTypeEnum" json:"payment_provider,omitempty"`
-	PaymentProviderCode string                      `protobuf:"bytes,4,opt,name=payment_provider_code,json=paymentProviderCode,proto3" json:"payment_provider_code,omitempty"`
-	ProviderPaymentId   string                      `protobuf:"bytes,5,opt,name=provider_payment_id,json=providerPaymentId,proto3" json:"provider_payment_id,omitempty"`
-	Status              v2.PayablePaymentStatusEnum `protobuf:"varint,6,opt,name=status,proto3,enum=invora.billing.common.v2.PayablePaymentStatusEnum" json:"status,omitempty"`
-	AmountCents         *kernel.DecimalValue        `protobuf:"bytes,7,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
-	Currency            string                      `protobuf:"bytes,8,opt,name=currency,proto3" json:"currency,omitempty"`
-	CreatedAt           *timestamppb.Timestamp      `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	ProviderError       string                      `protobuf:"bytes,10,opt,name=provider_error,json=providerError,proto3" json:"provider_error,omitempty"`
+	state               protoimpl.MessageState  `protogen:"open.v1"`
+	Id                  string                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	InvoiceId           string                  `protobuf:"bytes,2,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
+	PaymentProvider     v2.ProviderType         `protobuf:"varint,3,opt,name=payment_provider,json=paymentProvider,proto3,enum=invora.billing.common.v2.ProviderType" json:"payment_provider,omitempty"`
+	PaymentProviderCode string                  `protobuf:"bytes,4,opt,name=payment_provider_code,json=paymentProviderCode,proto3" json:"payment_provider_code,omitempty"`
+	ProviderPaymentId   string                  `protobuf:"bytes,5,opt,name=provider_payment_id,json=providerPaymentId,proto3" json:"provider_payment_id,omitempty"`
+	Status              v2.PayablePaymentStatus `protobuf:"varint,6,opt,name=status,proto3,enum=invora.billing.common.v2.PayablePaymentStatus" json:"status,omitempty"`
+	AmountCents         *kernel.DecimalValue    `protobuf:"bytes,7,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
+	Currency            string                  `protobuf:"bytes,8,opt,name=currency,proto3" json:"currency,omitempty"`
+	CreatedAt           *timestamppb.Timestamp  `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	ProviderError       string                  `protobuf:"bytes,10,opt,name=provider_error,json=providerError,proto3" json:"provider_error,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -1035,11 +1035,11 @@ func (x *PaymentEventPayload) GetInvoiceId() string {
 	return ""
 }
 
-func (x *PaymentEventPayload) GetPaymentProvider() v2.ProviderTypeEnum {
+func (x *PaymentEventPayload) GetPaymentProvider() v2.ProviderType {
 	if x != nil {
 		return x.PaymentProvider
 	}
-	return v2.ProviderTypeEnum(0)
+	return v2.ProviderType(0)
 }
 
 func (x *PaymentEventPayload) GetPaymentProviderCode() string {
@@ -1056,11 +1056,11 @@ func (x *PaymentEventPayload) GetProviderPaymentId() string {
 	return ""
 }
 
-func (x *PaymentEventPayload) GetStatus() v2.PayablePaymentStatusEnum {
+func (x *PaymentEventPayload) GetStatus() v2.PayablePaymentStatus {
 	if x != nil {
 		return x.Status
 	}
-	return v2.PayablePaymentStatusEnum(0)
+	return v2.PayablePaymentStatus(0)
 }
 
 func (x *PaymentEventPayload) GetAmountCents() *kernel.DecimalValue {
@@ -1101,7 +1101,7 @@ type CustomerEventPayload struct {
 	Name                string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	Email               string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`
 	Currency            string                 `protobuf:"bytes,5,opt,name=currency,proto3" json:"currency,omitempty"`
-	PaymentProvider     v2.ProviderTypeEnum    `protobuf:"varint,6,opt,name=payment_provider,json=paymentProvider,proto3,enum=invora.billing.common.v2.ProviderTypeEnum" json:"payment_provider,omitempty"`
+	PaymentProvider     v2.ProviderType        `protobuf:"varint,6,opt,name=payment_provider,json=paymentProvider,proto3,enum=invora.billing.common.v2.ProviderType" json:"payment_provider,omitempty"`
 	PaymentProviderCode string                 `protobuf:"bytes,7,opt,name=payment_provider_code,json=paymentProviderCode,proto3" json:"payment_provider_code,omitempty"`
 	Metadata            map[string]string      `protobuf:"bytes,10,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields       protoimpl.UnknownFields
@@ -1173,11 +1173,11 @@ func (x *CustomerEventPayload) GetCurrency() string {
 	return ""
 }
 
-func (x *CustomerEventPayload) GetPaymentProvider() v2.ProviderTypeEnum {
+func (x *CustomerEventPayload) GetPaymentProvider() v2.ProviderType {
 	if x != nil {
 		return x.PaymentProvider
 	}
-	return v2.ProviderTypeEnum(0)
+	return v2.ProviderType(0)
 }
 
 func (x *CustomerEventPayload) GetPaymentProviderCode() string {
@@ -1200,7 +1200,7 @@ type WalletEventPayload struct {
 	state                    protoimpl.MessageState `protogen:"open.v1"`
 	Id                       string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name                     string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Status                   v2.WalletStatusEnum    `protobuf:"varint,3,opt,name=status,proto3,enum=invora.billing.common.v2.WalletStatusEnum" json:"status,omitempty"`
+	Status                   v2.WalletStatus        `protobuf:"varint,3,opt,name=status,proto3,enum=invora.billing.common.v2.WalletStatus" json:"status,omitempty"`
 	BalanceCents             *kernel.DecimalValue   `protobuf:"bytes,4,opt,name=balance_cents,json=balanceCents,proto3" json:"balance_cents,omitempty"`
 	ConsumedCredits          *kernel.DecimalValue   `protobuf:"bytes,5,opt,name=consumed_credits,json=consumedCredits,proto3" json:"consumed_credits,omitempty"`
 	OngoingBalanceCents      *kernel.DecimalValue   `protobuf:"bytes,6,opt,name=ongoing_balance_cents,json=ongoingBalanceCents,proto3" json:"ongoing_balance_cents,omitempty"`
@@ -1257,11 +1257,11 @@ func (x *WalletEventPayload) GetName() string {
 	return ""
 }
 
-func (x *WalletEventPayload) GetStatus() v2.WalletStatusEnum {
+func (x *WalletEventPayload) GetStatus() v2.WalletStatus {
 	if x != nil {
 		return x.Status
 	}
-	return v2.WalletStatusEnum(0)
+	return v2.WalletStatus(0)
 }
 
 func (x *WalletEventPayload) GetBalanceCents() *kernel.DecimalValue {
@@ -1323,15 +1323,15 @@ func (x *WalletEventPayload) GetExternalCustomerId() string {
 // Wallet transaction events: wallet_transaction.created,
 // wallet_transaction.updated
 type WalletTransactionEventPayload struct {
-	state           protoimpl.MessageState                  `protogen:"open.v1"`
-	Id              string                                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	WalletId        string                                  `protobuf:"bytes,2,opt,name=wallet_id,json=walletId,proto3" json:"wallet_id,omitempty"`
-	Status          v2.WalletTransactionStatusEnum          `protobuf:"varint,3,opt,name=status,proto3,enum=invora.billing.common.v2.WalletTransactionStatusEnum" json:"status,omitempty"`
-	TransactionType v2.WalletTransactionTransactionTypeEnum `protobuf:"varint,4,opt,name=transaction_type,json=transactionType,proto3,enum=invora.billing.common.v2.WalletTransactionTransactionTypeEnum" json:"transaction_type,omitempty"`
-	Amount          *kernel.DecimalValue                    `protobuf:"bytes,5,opt,name=amount,proto3" json:"amount,omitempty"`
-	CreditAmount    *kernel.DecimalValue                    `protobuf:"bytes,6,opt,name=credit_amount,json=creditAmount,proto3" json:"credit_amount,omitempty"`
-	SettledAt       *timestamppb.Timestamp                  `protobuf:"bytes,7,opt,name=settled_at,json=settledAt,proto3" json:"settled_at,omitempty"`
-	CreatedAt       *timestamppb.Timestamp                  `protobuf:"bytes,8,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	state           protoimpl.MessageState              `protogen:"open.v1"`
+	Id              string                              `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	WalletId        string                              `protobuf:"bytes,2,opt,name=wallet_id,json=walletId,proto3" json:"wallet_id,omitempty"`
+	Status          v2.WalletTransactionStatus          `protobuf:"varint,3,opt,name=status,proto3,enum=invora.billing.common.v2.WalletTransactionStatus" json:"status,omitempty"`
+	TransactionType v2.WalletTransactionTransactionType `protobuf:"varint,4,opt,name=transaction_type,json=transactionType,proto3,enum=invora.billing.common.v2.WalletTransactionTransactionType" json:"transaction_type,omitempty"`
+	Amount          *kernel.DecimalValue                `protobuf:"bytes,5,opt,name=amount,proto3" json:"amount,omitempty"`
+	CreditAmount    *kernel.DecimalValue                `protobuf:"bytes,6,opt,name=credit_amount,json=creditAmount,proto3" json:"credit_amount,omitempty"`
+	SettledAt       *timestamppb.Timestamp              `protobuf:"bytes,7,opt,name=settled_at,json=settledAt,proto3" json:"settled_at,omitempty"`
+	CreatedAt       *timestamppb.Timestamp              `protobuf:"bytes,8,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1380,18 +1380,18 @@ func (x *WalletTransactionEventPayload) GetWalletId() string {
 	return ""
 }
 
-func (x *WalletTransactionEventPayload) GetStatus() v2.WalletTransactionStatusEnum {
+func (x *WalletTransactionEventPayload) GetStatus() v2.WalletTransactionStatus {
 	if x != nil {
 		return x.Status
 	}
-	return v2.WalletTransactionStatusEnum(0)
+	return v2.WalletTransactionStatus(0)
 }
 
-func (x *WalletTransactionEventPayload) GetTransactionType() v2.WalletTransactionTransactionTypeEnum {
+func (x *WalletTransactionEventPayload) GetTransactionType() v2.WalletTransactionTransactionType {
 	if x != nil {
 		return x.TransactionType
 	}
-	return v2.WalletTransactionTransactionTypeEnum(0)
+	return v2.WalletTransactionTransactionType(0)
 }
 
 func (x *WalletTransactionEventPayload) GetAmount() *kernel.DecimalValue {
@@ -1497,7 +1497,7 @@ type FeeEventPayload struct {
 	Id             string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	SubscriptionId string                 `protobuf:"bytes,2,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
 	InvoiceId      string                 `protobuf:"bytes,3,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
-	ItemType       v2.FeeTypesEnum        `protobuf:"varint,4,opt,name=item_type,json=itemType,proto3,enum=invora.billing.common.v2.FeeTypesEnum" json:"item_type,omitempty"`
+	ItemType       v2.FeeTypes            `protobuf:"varint,4,opt,name=item_type,json=itemType,proto3,enum=invora.billing.common.v2.FeeTypes" json:"item_type,omitempty"`
 	ItemCode       string                 `protobuf:"bytes,5,opt,name=item_code,json=itemCode,proto3" json:"item_code,omitempty"`
 	AmountCents    *kernel.DecimalValue   `protobuf:"bytes,6,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
 	Units          *kernel.DecimalValue   `protobuf:"bytes,7,opt,name=units,proto3" json:"units,omitempty"`
@@ -1558,11 +1558,11 @@ func (x *FeeEventPayload) GetInvoiceId() string {
 	return ""
 }
 
-func (x *FeeEventPayload) GetItemType() v2.FeeTypesEnum {
+func (x *FeeEventPayload) GetItemType() v2.FeeTypes {
 	if x != nil {
 		return x.ItemType
 	}
-	return v2.FeeTypesEnum(0)
+	return v2.FeeTypes(0)
 }
 
 func (x *FeeEventPayload) GetItemCode() string {
@@ -1685,11 +1685,11 @@ func (x *PaymentRequestEventPayload) GetInvoiceIds() []string {
 	return nil
 }
 
-// Payment gateway webhook envelope — for proxying Stripe/Adyen/etc. callbacks.
+// Payment gateway webhook envelope for proxying Stripe/Adyen/etc. callbacks.
 // The raw provider JSON is preserved as Struct for forwarding internally.
 type PaymentGatewayWebhookEvent struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Provider      v2.ProviderTypeEnum    `protobuf:"varint,1,opt,name=provider,proto3,enum=invora.billing.common.v2.ProviderTypeEnum" json:"provider,omitempty"`
+	Provider      v2.ProviderType        `protobuf:"varint,1,opt,name=provider,proto3,enum=invora.billing.common.v2.ProviderType" json:"provider,omitempty"`
 	EventType     string                 `protobuf:"bytes,2,opt,name=event_type,json=eventType,proto3" json:"event_type,omitempty"`
 	RawPayload    *structpb.Struct       `protobuf:"bytes,3,opt,name=raw_payload,json=rawPayload,proto3" json:"raw_payload,omitempty"`
 	Signature     string                 `protobuf:"bytes,4,opt,name=signature,proto3" json:"signature,omitempty"`
@@ -1728,11 +1728,11 @@ func (*PaymentGatewayWebhookEvent) Descriptor() ([]byte, []int) {
 	return file_invora_billing_webhooks_v2_events_proto_rawDescGZIP(), []int{14}
 }
 
-func (x *PaymentGatewayWebhookEvent) GetProvider() v2.ProviderTypeEnum {
+func (x *PaymentGatewayWebhookEvent) GetProvider() v2.ProviderType {
 	if x != nil {
 		return x.Provider
 	}
-	return v2.ProviderTypeEnum(0)
+	return v2.ProviderType(0)
 }
 
 func (x *PaymentGatewayWebhookEvent) GetEventType() string {
@@ -1787,17 +1787,17 @@ const file_invora_billing_webhooks_v2_events_proto_rawDesc = "" +
 	"eventError\x12?\n" +
 	"\x03fee\x18\x12 \x01(\v2+.invora.billing.webhooks.v2.FeeEventPayloadH\x00R\x03fee\x12a\n" +
 	"\x0fpayment_request\x18\x13 \x01(\v26.invora.billing.webhooks.v2.PaymentRequestEventPayloadH\x00R\x0epaymentRequestB\t\n" +
-	"\apayload\"\xeb\t\n" +
+	"\apayload\"\xdf\t\n" +
 	"\x13InvoiceEventPayload\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12#\n" +
 	"\rsequential_id\x18\x02 \x01(\tR\fsequentialId\x12\x16\n" +
 	"\x06number\x18\x03 \x01(\tR\x06number\x12!\n" +
 	"\fissuing_date\x18\x04 \x01(\tR\vissuingDate\x12(\n" +
 	"\x10payment_due_date\x18\x05 \x01(\tR\x0epaymentDueDate\x12(\n" +
-	"\x10net_payment_term\x18\x06 \x01(\tR\x0enetPaymentTerm\x12L\n" +
-	"\finvoice_type\x18\a \x01(\x0e2).invora.billing.common.v2.InvoiceTypeEnumR\vinvoiceType\x12G\n" +
-	"\x06status\x18\b \x01(\x0e2/.invora.billing.common.v2.InvoiceStatusTypeEnumR\x06status\x12]\n" +
-	"\x0epayment_status\x18\t \x01(\x0e26.invora.billing.common.v2.InvoicePaymentStatusTypeEnumR\rpaymentStatus\x12\x1a\n" +
+	"\x10net_payment_term\x18\x06 \x01(\tR\x0enetPaymentTerm\x12H\n" +
+	"\finvoice_type\x18\a \x01(\x0e2%.invora.billing.common.v2.InvoiceTypeR\vinvoiceType\x12C\n" +
+	"\x06status\x18\b \x01(\x0e2+.invora.billing.common.v2.InvoiceStatusTypeR\x06status\x12Y\n" +
+	"\x0epayment_status\x18\t \x01(\x0e22.invora.billing.common.v2.InvoicePaymentStatusTypeR\rpaymentStatus\x12\x1a\n" +
 	"\bcurrency\x18\n" +
 	" \x01(\tR\bcurrency\x12@\n" +
 	"\x11fees_amount_cents\x18\v \x01(\v2\x14.kernel.DecimalValueR\x0ffeesAmountCents\x12B\n" +
@@ -1812,17 +1812,17 @@ const file_invora_billing_webhooks_v2_events_proto_rawDesc = "" +
 	"\bmetadata\x18\x1e \x03(\v2=.invora.billing.webhooks.v2.InvoiceEventPayload.MetadataEntryR\bmetadata\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xa5\x01\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xa1\x01\n" +
 	"\x13InvoiceSubscription\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vexternal_id\x18\x02 \x01(\tR\n" +
 	"externalId\x12\x1b\n" +
-	"\tplan_code\x18\x03 \x01(\tR\bplanCode\x12@\n" +
-	"\x06status\x18\x04 \x01(\x0e2(.invora.billing.common.v2.StatusTypeEnumR\x06status\"\x86\x02\n" +
+	"\tplan_code\x18\x03 \x01(\tR\bplanCode\x12<\n" +
+	"\x06status\x18\x04 \x01(\x0e2$.invora.billing.common.v2.StatusTypeR\x06status\"\x82\x02\n" +
 	"\n" +
 	"InvoiceFee\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12C\n" +
-	"\titem_type\x18\x02 \x01(\x0e2&.invora.billing.common.v2.FeeTypesEnumR\bitemType\x12\x1b\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12?\n" +
+	"\titem_type\x18\x02 \x01(\x0e2\".invora.billing.common.v2.FeeTypesR\bitemType\x12\x1b\n" +
 	"\titem_code\x18\x03 \x01(\tR\bitemCode\x127\n" +
 	"\famount_cents\x18\x04 \x01(\v2\x14.kernel.DecimalValueR\vamountCents\x12*\n" +
 	"\x05units\x18\x05 \x01(\v2\x14.kernel.DecimalValueR\x05units\x12!\n" +
@@ -1832,15 +1832,15 @@ const file_invora_billing_webhooks_v2_events_proto_rawDesc = "" +
 	"\btax_code\x18\x02 \x01(\tR\ataxCode\x12\x19\n" +
 	"\btax_name\x18\x03 \x01(\tR\ataxName\x12/\n" +
 	"\btax_rate\x18\x04 \x01(\v2\x14.kernel.DecimalValueR\ataxRate\x127\n" +
-	"\famount_cents\x18\x05 \x01(\v2\x14.kernel.DecimalValueR\vamountCents\"\xa8\x06\n" +
+	"\famount_cents\x18\x05 \x01(\v2\x14.kernel.DecimalValueR\vamountCents\"\x9c\x06\n" +
 	"\x16CreditNoteEventPayload\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12#\n" +
 	"\rsequential_id\x18\x02 \x01(\tR\fsequentialId\x12\x16\n" +
 	"\x06number\x18\x03 \x01(\tR\x06number\x12!\n" +
-	"\fissuing_date\x18\x04 \x01(\tR\vissuingDate\x12Y\n" +
-	"\rcredit_status\x18\x05 \x01(\x0e24.invora.billing.common.v2.CreditNoteCreditStatusEnumR\fcreditStatus\x12Y\n" +
-	"\rrefund_status\x18\x06 \x01(\x0e24.invora.billing.common.v2.CreditNoteRefundStatusEnumR\frefundStatus\x12F\n" +
-	"\x06reason\x18\a \x01(\x0e2..invora.billing.common.v2.CreditNoteReasonEnumR\x06reason\x12\x1a\n" +
+	"\fissuing_date\x18\x04 \x01(\tR\vissuingDate\x12U\n" +
+	"\rcredit_status\x18\x05 \x01(\x0e20.invora.billing.common.v2.CreditNoteCreditStatusR\fcreditStatus\x12U\n" +
+	"\rrefund_status\x18\x06 \x01(\x0e20.invora.billing.common.v2.CreditNoteRefundStatusR\frefundStatus\x12B\n" +
+	"\x06reason\x18\a \x01(\x0e2*.invora.billing.common.v2.CreditNoteReasonR\x06reason\x12\x1a\n" +
 	"\bcurrency\x18\b \x01(\tR\bcurrency\x12B\n" +
 	"\x12total_amount_cents\x18\t \x01(\v2\x14.kernel.DecimalValueR\x10totalAmountCents\x12D\n" +
 	"\x13credit_amount_cents\x18\n" +
@@ -1848,14 +1848,14 @@ const file_invora_billing_webhooks_v2_events_proto_rawDesc = "" +
 	"\x13refund_amount_cents\x18\v \x01(\v2\x14.kernel.DecimalValueR\x11refundAmountCents\x12F\n" +
 	"\x14balance_amount_cents\x18\f \x01(\v2\x14.kernel.DecimalValueR\x12balanceAmountCents\x12%\n" +
 	"\x0einvoice_number\x18\r \x01(\tR\rinvoiceNumber\x12E\n" +
-	"\bcustomer\x18\x14 \x01(\v2).invora.billing.common.v2.BillingCustomerR\bcustomer\"\xa1\x05\n" +
+	"\bcustomer\x18\x14 \x01(\v2).invora.billing.common.v2.BillingCustomerR\bcustomer\"\x99\x05\n" +
 	"\x18SubscriptionEventPayload\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vexternal_id\x18\x02 \x01(\tR\n" +
-	"externalId\x12@\n" +
-	"\x06status\x18\x03 \x01(\x0e2(.invora.billing.common.v2.StatusTypeEnumR\x06status\x12\x1b\n" +
-	"\tplan_code\x18\x04 \x01(\tR\bplanCode\x12L\n" +
-	"\fbilling_time\x18\x05 \x01(\x0e2).invora.billing.common.v2.BillingTimeEnumR\vbillingTime\x129\n" +
+	"externalId\x12<\n" +
+	"\x06status\x18\x03 \x01(\x0e2$.invora.billing.common.v2.StatusTypeR\x06status\x12\x1b\n" +
+	"\tplan_code\x18\x04 \x01(\tR\bplanCode\x12H\n" +
+	"\fbilling_time\x18\x05 \x01(\x0e2%.invora.billing.common.v2.BillingTimeR\vbillingTime\x129\n" +
 	"\n" +
 	"started_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tstartedAt\x127\n" +
 	"\tending_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\bendingAt\x12?\n" +
@@ -1865,39 +1865,39 @@ const file_invora_billing_webhooks_v2_events_proto_rawDesc = "" +
 	"\x0etrial_ended_at\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.TimestampR\ftrialEndedAt\x12,\n" +
 	"\x12previous_plan_code\x18\v \x01(\tR\x10previousPlanCode\x12E\n" +
-	"\bcustomer\x18\x14 \x01(\v2).invora.billing.common.v2.BillingCustomerR\bcustomer\"\x82\x04\n" +
+	"\bcustomer\x18\x14 \x01(\v2).invora.billing.common.v2.BillingCustomerR\bcustomer\"\xfa\x03\n" +
 	"\x13PaymentEventPayload\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
-	"invoice_id\x18\x02 \x01(\tR\tinvoiceId\x12U\n" +
-	"\x10payment_provider\x18\x03 \x01(\x0e2*.invora.billing.common.v2.ProviderTypeEnumR\x0fpaymentProvider\x122\n" +
+	"invoice_id\x18\x02 \x01(\tR\tinvoiceId\x12Q\n" +
+	"\x10payment_provider\x18\x03 \x01(\x0e2&.invora.billing.common.v2.ProviderTypeR\x0fpaymentProvider\x122\n" +
 	"\x15payment_provider_code\x18\x04 \x01(\tR\x13paymentProviderCode\x12.\n" +
-	"\x13provider_payment_id\x18\x05 \x01(\tR\x11providerPaymentId\x12J\n" +
-	"\x06status\x18\x06 \x01(\x0e22.invora.billing.common.v2.PayablePaymentStatusEnumR\x06status\x127\n" +
+	"\x13provider_payment_id\x18\x05 \x01(\tR\x11providerPaymentId\x12F\n" +
+	"\x06status\x18\x06 \x01(\x0e2..invora.billing.common.v2.PayablePaymentStatusR\x06status\x127\n" +
 	"\famount_cents\x18\a \x01(\v2\x14.kernel.DecimalValueR\vamountCents\x12\x1a\n" +
 	"\bcurrency\x18\b \x01(\tR\bcurrency\x129\n" +
 	"\n" +
 	"created_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12%\n" +
 	"\x0eprovider_error\x18\n" +
-	" \x01(\tR\rproviderError\"\xb1\x03\n" +
+	" \x01(\tR\rproviderError\"\xad\x03\n" +
 	"\x14CustomerEventPayload\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vexternal_id\x18\x02 \x01(\tR\n" +
 	"externalId\x12\x12\n" +
 	"\x04name\x18\x03 \x01(\tR\x04name\x12\x14\n" +
 	"\x05email\x18\x04 \x01(\tR\x05email\x12\x1a\n" +
-	"\bcurrency\x18\x05 \x01(\tR\bcurrency\x12U\n" +
-	"\x10payment_provider\x18\x06 \x01(\x0e2*.invora.billing.common.v2.ProviderTypeEnumR\x0fpaymentProvider\x122\n" +
+	"\bcurrency\x18\x05 \x01(\tR\bcurrency\x12Q\n" +
+	"\x10payment_provider\x18\x06 \x01(\x0e2&.invora.billing.common.v2.ProviderTypeR\x0fpaymentProvider\x122\n" +
 	"\x15payment_provider_code\x18\a \x01(\tR\x13paymentProviderCode\x12Z\n" +
 	"\bmetadata\x18\n" +
 	" \x03(\v2>.invora.billing.webhooks.v2.CustomerEventPayload.MetadataEntryR\bmetadata\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xe1\x04\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xdd\x04\n" +
 	"\x12WalletEventPayload\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12B\n" +
-	"\x06status\x18\x03 \x01(\x0e2*.invora.billing.common.v2.WalletStatusEnumR\x06status\x129\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12>\n" +
+	"\x06status\x18\x03 \x01(\x0e2&.invora.billing.common.v2.WalletStatusR\x06status\x129\n" +
 	"\rbalance_cents\x18\x04 \x01(\v2\x14.kernel.DecimalValueR\fbalanceCents\x12?\n" +
 	"\x10consumed_credits\x18\x05 \x01(\v2\x14.kernel.DecimalValueR\x0fconsumedCredits\x12H\n" +
 	"\x15ongoing_balance_cents\x18\x06 \x01(\v2\x14.kernel.DecimalValueR\x13ongoingBalanceCents\x12S\n" +
@@ -1907,12 +1907,12 @@ const file_invora_billing_webhooks_v2_events_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x120\n" +
-	"\x14external_customer_id\x18\v \x01(\tR\x12externalCustomerId\"\xe5\x03\n" +
+	"\x14external_customer_id\x18\v \x01(\tR\x12externalCustomerId\"\xdd\x03\n" +
 	"\x1dWalletTransactionEventPayload\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
-	"\twallet_id\x18\x02 \x01(\tR\bwalletId\x12M\n" +
-	"\x06status\x18\x03 \x01(\x0e25.invora.billing.common.v2.WalletTransactionStatusEnumR\x06status\x12i\n" +
-	"\x10transaction_type\x18\x04 \x01(\x0e2>.invora.billing.common.v2.WalletTransactionTransactionTypeEnumR\x0ftransactionType\x12,\n" +
+	"\twallet_id\x18\x02 \x01(\tR\bwalletId\x12I\n" +
+	"\x06status\x18\x03 \x01(\x0e21.invora.billing.common.v2.WalletTransactionStatusR\x06status\x12e\n" +
+	"\x10transaction_type\x18\x04 \x01(\x0e2:.invora.billing.common.v2.WalletTransactionTransactionTypeR\x0ftransactionType\x12,\n" +
 	"\x06amount\x18\x05 \x01(\v2\x14.kernel.DecimalValueR\x06amount\x129\n" +
 	"\rcredit_amount\x18\x06 \x01(\v2\x14.kernel.DecimalValueR\fcreditAmount\x129\n" +
 	"\n" +
@@ -1923,13 +1923,13 @@ const file_invora_billing_webhooks_v2_events_proto_rawDesc = "" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x128\n" +
 	"\x18external_subscription_id\x18\x02 \x01(\tR\x16externalSubscriptionId\x12\x12\n" +
 	"\x04code\x18\x03 \x01(\tR\x04code\x12-\n" +
-	"\x05error\x18\x04 \x01(\v2\x17.google.protobuf.StructR\x05error\"\x8e\x03\n" +
+	"\x05error\x18\x04 \x01(\v2\x17.google.protobuf.StructR\x05error\"\x8a\x03\n" +
 	"\x0fFeeEventPayload\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12'\n" +
 	"\x0fsubscription_id\x18\x02 \x01(\tR\x0esubscriptionId\x12\x1d\n" +
 	"\n" +
-	"invoice_id\x18\x03 \x01(\tR\tinvoiceId\x12C\n" +
-	"\titem_type\x18\x04 \x01(\x0e2&.invora.billing.common.v2.FeeTypesEnumR\bitemType\x12\x1b\n" +
+	"invoice_id\x18\x03 \x01(\tR\tinvoiceId\x12?\n" +
+	"\titem_type\x18\x04 \x01(\x0e2\".invora.billing.common.v2.FeeTypesR\bitemType\x12\x1b\n" +
 	"\titem_code\x18\x05 \x01(\tR\bitemCode\x127\n" +
 	"\famount_cents\x18\x06 \x01(\v2\x14.kernel.DecimalValueR\vamountCents\x12*\n" +
 	"\x05units\x18\a \x01(\v2\x14.kernel.DecimalValueR\x05units\x12!\n" +
@@ -1944,9 +1944,9 @@ const file_invora_billing_webhooks_v2_events_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x1f\n" +
 	"\vinvoice_ids\x18\x06 \x03(\tR\n" +
-	"invoiceIds\"\xf8\x01\n" +
-	"\x1aPaymentGatewayWebhookEvent\x12F\n" +
-	"\bprovider\x18\x01 \x01(\x0e2*.invora.billing.common.v2.ProviderTypeEnumR\bprovider\x12\x1d\n" +
+	"invoiceIds\"\xf4\x01\n" +
+	"\x1aPaymentGatewayWebhookEvent\x12B\n" +
+	"\bprovider\x18\x01 \x01(\x0e2&.invora.billing.common.v2.ProviderTypeR\bprovider\x12\x1d\n" +
 	"\n" +
 	"event_type\x18\x02 \x01(\tR\teventType\x128\n" +
 	"\vraw_payload\x18\x03 \x01(\v2\x17.google.protobuf.StructR\n" +
@@ -1969,41 +1969,41 @@ func file_invora_billing_webhooks_v2_events_proto_rawDescGZIP() []byte {
 
 var file_invora_billing_webhooks_v2_events_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_invora_billing_webhooks_v2_events_proto_goTypes = []any{
-	(*BillingWebhookEvent)(nil),                  // 0: invora.billing.webhooks.v2.BillingWebhookEvent
-	(*InvoiceEventPayload)(nil),                  // 1: invora.billing.webhooks.v2.InvoiceEventPayload
-	(*InvoiceSubscription)(nil),                  // 2: invora.billing.webhooks.v2.InvoiceSubscription
-	(*InvoiceFee)(nil),                           // 3: invora.billing.webhooks.v2.InvoiceFee
-	(*InvoiceAppliedTax)(nil),                    // 4: invora.billing.webhooks.v2.InvoiceAppliedTax
-	(*CreditNoteEventPayload)(nil),               // 5: invora.billing.webhooks.v2.CreditNoteEventPayload
-	(*SubscriptionEventPayload)(nil),             // 6: invora.billing.webhooks.v2.SubscriptionEventPayload
-	(*PaymentEventPayload)(nil),                  // 7: invora.billing.webhooks.v2.PaymentEventPayload
-	(*CustomerEventPayload)(nil),                 // 8: invora.billing.webhooks.v2.CustomerEventPayload
-	(*WalletEventPayload)(nil),                   // 9: invora.billing.webhooks.v2.WalletEventPayload
-	(*WalletTransactionEventPayload)(nil),        // 10: invora.billing.webhooks.v2.WalletTransactionEventPayload
-	(*EventErrorPayload)(nil),                    // 11: invora.billing.webhooks.v2.EventErrorPayload
-	(*FeeEventPayload)(nil),                      // 12: invora.billing.webhooks.v2.FeeEventPayload
-	(*PaymentRequestEventPayload)(nil),           // 13: invora.billing.webhooks.v2.PaymentRequestEventPayload
-	(*PaymentGatewayWebhookEvent)(nil),           // 14: invora.billing.webhooks.v2.PaymentGatewayWebhookEvent
-	nil,                                          // 15: invora.billing.webhooks.v2.InvoiceEventPayload.MetadataEntry
-	nil,                                          // 16: invora.billing.webhooks.v2.CustomerEventPayload.MetadataEntry
-	(*timestamppb.Timestamp)(nil),                // 17: google.protobuf.Timestamp
-	(v2.InvoiceTypeEnum)(0),                      // 18: invora.billing.common.v2.InvoiceTypeEnum
-	(v2.InvoiceStatusTypeEnum)(0),                // 19: invora.billing.common.v2.InvoiceStatusTypeEnum
-	(v2.InvoicePaymentStatusTypeEnum)(0),         // 20: invora.billing.common.v2.InvoicePaymentStatusTypeEnum
-	(*kernel.DecimalValue)(nil),                  // 21: kernel.DecimalValue
-	(*v2.BillingCustomer)(nil),                   // 22: invora.billing.common.v2.BillingCustomer
-	(v2.StatusTypeEnum)(0),                       // 23: invora.billing.common.v2.StatusTypeEnum
-	(v2.FeeTypesEnum)(0),                         // 24: invora.billing.common.v2.FeeTypesEnum
-	(v2.CreditNoteCreditStatusEnum)(0),           // 25: invora.billing.common.v2.CreditNoteCreditStatusEnum
-	(v2.CreditNoteRefundStatusEnum)(0),           // 26: invora.billing.common.v2.CreditNoteRefundStatusEnum
-	(v2.CreditNoteReasonEnum)(0),                 // 27: invora.billing.common.v2.CreditNoteReasonEnum
-	(v2.BillingTimeEnum)(0),                      // 28: invora.billing.common.v2.BillingTimeEnum
-	(v2.ProviderTypeEnum)(0),                     // 29: invora.billing.common.v2.ProviderTypeEnum
-	(v2.PayablePaymentStatusEnum)(0),             // 30: invora.billing.common.v2.PayablePaymentStatusEnum
-	(v2.WalletStatusEnum)(0),                     // 31: invora.billing.common.v2.WalletStatusEnum
-	(v2.WalletTransactionStatusEnum)(0),          // 32: invora.billing.common.v2.WalletTransactionStatusEnum
-	(v2.WalletTransactionTransactionTypeEnum)(0), // 33: invora.billing.common.v2.WalletTransactionTransactionTypeEnum
-	(*structpb.Struct)(nil),                      // 34: google.protobuf.Struct
+	(*BillingWebhookEvent)(nil),              // 0: invora.billing.webhooks.v2.BillingWebhookEvent
+	(*InvoiceEventPayload)(nil),              // 1: invora.billing.webhooks.v2.InvoiceEventPayload
+	(*InvoiceSubscription)(nil),              // 2: invora.billing.webhooks.v2.InvoiceSubscription
+	(*InvoiceFee)(nil),                       // 3: invora.billing.webhooks.v2.InvoiceFee
+	(*InvoiceAppliedTax)(nil),                // 4: invora.billing.webhooks.v2.InvoiceAppliedTax
+	(*CreditNoteEventPayload)(nil),           // 5: invora.billing.webhooks.v2.CreditNoteEventPayload
+	(*SubscriptionEventPayload)(nil),         // 6: invora.billing.webhooks.v2.SubscriptionEventPayload
+	(*PaymentEventPayload)(nil),              // 7: invora.billing.webhooks.v2.PaymentEventPayload
+	(*CustomerEventPayload)(nil),             // 8: invora.billing.webhooks.v2.CustomerEventPayload
+	(*WalletEventPayload)(nil),               // 9: invora.billing.webhooks.v2.WalletEventPayload
+	(*WalletTransactionEventPayload)(nil),    // 10: invora.billing.webhooks.v2.WalletTransactionEventPayload
+	(*EventErrorPayload)(nil),                // 11: invora.billing.webhooks.v2.EventErrorPayload
+	(*FeeEventPayload)(nil),                  // 12: invora.billing.webhooks.v2.FeeEventPayload
+	(*PaymentRequestEventPayload)(nil),       // 13: invora.billing.webhooks.v2.PaymentRequestEventPayload
+	(*PaymentGatewayWebhookEvent)(nil),       // 14: invora.billing.webhooks.v2.PaymentGatewayWebhookEvent
+	nil,                                      // 15: invora.billing.webhooks.v2.InvoiceEventPayload.MetadataEntry
+	nil,                                      // 16: invora.billing.webhooks.v2.CustomerEventPayload.MetadataEntry
+	(*timestamppb.Timestamp)(nil),            // 17: google.protobuf.Timestamp
+	(v2.InvoiceType)(0),                      // 18: invora.billing.common.v2.InvoiceType
+	(v2.InvoiceStatusType)(0),                // 19: invora.billing.common.v2.InvoiceStatusType
+	(v2.InvoicePaymentStatusType)(0),         // 20: invora.billing.common.v2.InvoicePaymentStatusType
+	(*kernel.DecimalValue)(nil),              // 21: kernel.DecimalValue
+	(*v2.BillingCustomer)(nil),               // 22: invora.billing.common.v2.BillingCustomer
+	(v2.StatusType)(0),                       // 23: invora.billing.common.v2.StatusType
+	(v2.FeeTypes)(0),                         // 24: invora.billing.common.v2.FeeTypes
+	(v2.CreditNoteCreditStatus)(0),           // 25: invora.billing.common.v2.CreditNoteCreditStatus
+	(v2.CreditNoteRefundStatus)(0),           // 26: invora.billing.common.v2.CreditNoteRefundStatus
+	(v2.CreditNoteReason)(0),                 // 27: invora.billing.common.v2.CreditNoteReason
+	(v2.BillingTime)(0),                      // 28: invora.billing.common.v2.BillingTime
+	(v2.ProviderType)(0),                     // 29: invora.billing.common.v2.ProviderType
+	(v2.PayablePaymentStatus)(0),             // 30: invora.billing.common.v2.PayablePaymentStatus
+	(v2.WalletStatus)(0),                     // 31: invora.billing.common.v2.WalletStatus
+	(v2.WalletTransactionStatus)(0),          // 32: invora.billing.common.v2.WalletTransactionStatus
+	(v2.WalletTransactionTransactionType)(0), // 33: invora.billing.common.v2.WalletTransactionTransactionType
+	(*structpb.Struct)(nil),                  // 34: google.protobuf.Struct
 }
 var file_invora_billing_webhooks_v2_events_proto_depIdxs = []int32{
 	17, // 0: invora.billing.webhooks.v2.BillingWebhookEvent.created_at:type_name -> google.protobuf.Timestamp
@@ -2017,9 +2017,9 @@ var file_invora_billing_webhooks_v2_events_proto_depIdxs = []int32{
 	11, // 8: invora.billing.webhooks.v2.BillingWebhookEvent.event_error:type_name -> invora.billing.webhooks.v2.EventErrorPayload
 	12, // 9: invora.billing.webhooks.v2.BillingWebhookEvent.fee:type_name -> invora.billing.webhooks.v2.FeeEventPayload
 	13, // 10: invora.billing.webhooks.v2.BillingWebhookEvent.payment_request:type_name -> invora.billing.webhooks.v2.PaymentRequestEventPayload
-	18, // 11: invora.billing.webhooks.v2.InvoiceEventPayload.invoice_type:type_name -> invora.billing.common.v2.InvoiceTypeEnum
-	19, // 12: invora.billing.webhooks.v2.InvoiceEventPayload.status:type_name -> invora.billing.common.v2.InvoiceStatusTypeEnum
-	20, // 13: invora.billing.webhooks.v2.InvoiceEventPayload.payment_status:type_name -> invora.billing.common.v2.InvoicePaymentStatusTypeEnum
+	18, // 11: invora.billing.webhooks.v2.InvoiceEventPayload.invoice_type:type_name -> invora.billing.common.v2.InvoiceType
+	19, // 12: invora.billing.webhooks.v2.InvoiceEventPayload.status:type_name -> invora.billing.common.v2.InvoiceStatusType
+	20, // 13: invora.billing.webhooks.v2.InvoiceEventPayload.payment_status:type_name -> invora.billing.common.v2.InvoicePaymentStatusType
 	21, // 14: invora.billing.webhooks.v2.InvoiceEventPayload.fees_amount_cents:type_name -> kernel.DecimalValue
 	21, // 15: invora.billing.webhooks.v2.InvoiceEventPayload.taxes_amount_cents:type_name -> kernel.DecimalValue
 	21, // 16: invora.billing.webhooks.v2.InvoiceEventPayload.total_amount_cents:type_name -> kernel.DecimalValue
@@ -2029,55 +2029,55 @@ var file_invora_billing_webhooks_v2_events_proto_depIdxs = []int32{
 	3,  // 20: invora.billing.webhooks.v2.InvoiceEventPayload.fees:type_name -> invora.billing.webhooks.v2.InvoiceFee
 	4,  // 21: invora.billing.webhooks.v2.InvoiceEventPayload.applied_taxes:type_name -> invora.billing.webhooks.v2.InvoiceAppliedTax
 	15, // 22: invora.billing.webhooks.v2.InvoiceEventPayload.metadata:type_name -> invora.billing.webhooks.v2.InvoiceEventPayload.MetadataEntry
-	23, // 23: invora.billing.webhooks.v2.InvoiceSubscription.status:type_name -> invora.billing.common.v2.StatusTypeEnum
-	24, // 24: invora.billing.webhooks.v2.InvoiceFee.item_type:type_name -> invora.billing.common.v2.FeeTypesEnum
+	23, // 23: invora.billing.webhooks.v2.InvoiceSubscription.status:type_name -> invora.billing.common.v2.StatusType
+	24, // 24: invora.billing.webhooks.v2.InvoiceFee.item_type:type_name -> invora.billing.common.v2.FeeTypes
 	21, // 25: invora.billing.webhooks.v2.InvoiceFee.amount_cents:type_name -> kernel.DecimalValue
 	21, // 26: invora.billing.webhooks.v2.InvoiceFee.units:type_name -> kernel.DecimalValue
 	21, // 27: invora.billing.webhooks.v2.InvoiceAppliedTax.tax_rate:type_name -> kernel.DecimalValue
 	21, // 28: invora.billing.webhooks.v2.InvoiceAppliedTax.amount_cents:type_name -> kernel.DecimalValue
-	25, // 29: invora.billing.webhooks.v2.CreditNoteEventPayload.credit_status:type_name -> invora.billing.common.v2.CreditNoteCreditStatusEnum
-	26, // 30: invora.billing.webhooks.v2.CreditNoteEventPayload.refund_status:type_name -> invora.billing.common.v2.CreditNoteRefundStatusEnum
-	27, // 31: invora.billing.webhooks.v2.CreditNoteEventPayload.reason:type_name -> invora.billing.common.v2.CreditNoteReasonEnum
+	25, // 29: invora.billing.webhooks.v2.CreditNoteEventPayload.credit_status:type_name -> invora.billing.common.v2.CreditNoteCreditStatus
+	26, // 30: invora.billing.webhooks.v2.CreditNoteEventPayload.refund_status:type_name -> invora.billing.common.v2.CreditNoteRefundStatus
+	27, // 31: invora.billing.webhooks.v2.CreditNoteEventPayload.reason:type_name -> invora.billing.common.v2.CreditNoteReason
 	21, // 32: invora.billing.webhooks.v2.CreditNoteEventPayload.total_amount_cents:type_name -> kernel.DecimalValue
 	21, // 33: invora.billing.webhooks.v2.CreditNoteEventPayload.credit_amount_cents:type_name -> kernel.DecimalValue
 	21, // 34: invora.billing.webhooks.v2.CreditNoteEventPayload.refund_amount_cents:type_name -> kernel.DecimalValue
 	21, // 35: invora.billing.webhooks.v2.CreditNoteEventPayload.balance_amount_cents:type_name -> kernel.DecimalValue
 	22, // 36: invora.billing.webhooks.v2.CreditNoteEventPayload.customer:type_name -> invora.billing.common.v2.BillingCustomer
-	23, // 37: invora.billing.webhooks.v2.SubscriptionEventPayload.status:type_name -> invora.billing.common.v2.StatusTypeEnum
-	28, // 38: invora.billing.webhooks.v2.SubscriptionEventPayload.billing_time:type_name -> invora.billing.common.v2.BillingTimeEnum
+	23, // 37: invora.billing.webhooks.v2.SubscriptionEventPayload.status:type_name -> invora.billing.common.v2.StatusType
+	28, // 38: invora.billing.webhooks.v2.SubscriptionEventPayload.billing_time:type_name -> invora.billing.common.v2.BillingTime
 	17, // 39: invora.billing.webhooks.v2.SubscriptionEventPayload.started_at:type_name -> google.protobuf.Timestamp
 	17, // 40: invora.billing.webhooks.v2.SubscriptionEventPayload.ending_at:type_name -> google.protobuf.Timestamp
 	17, // 41: invora.billing.webhooks.v2.SubscriptionEventPayload.terminated_at:type_name -> google.protobuf.Timestamp
 	17, // 42: invora.billing.webhooks.v2.SubscriptionEventPayload.canceled_at:type_name -> google.protobuf.Timestamp
 	17, // 43: invora.billing.webhooks.v2.SubscriptionEventPayload.trial_ended_at:type_name -> google.protobuf.Timestamp
 	22, // 44: invora.billing.webhooks.v2.SubscriptionEventPayload.customer:type_name -> invora.billing.common.v2.BillingCustomer
-	29, // 45: invora.billing.webhooks.v2.PaymentEventPayload.payment_provider:type_name -> invora.billing.common.v2.ProviderTypeEnum
-	30, // 46: invora.billing.webhooks.v2.PaymentEventPayload.status:type_name -> invora.billing.common.v2.PayablePaymentStatusEnum
+	29, // 45: invora.billing.webhooks.v2.PaymentEventPayload.payment_provider:type_name -> invora.billing.common.v2.ProviderType
+	30, // 46: invora.billing.webhooks.v2.PaymentEventPayload.status:type_name -> invora.billing.common.v2.PayablePaymentStatus
 	21, // 47: invora.billing.webhooks.v2.PaymentEventPayload.amount_cents:type_name -> kernel.DecimalValue
 	17, // 48: invora.billing.webhooks.v2.PaymentEventPayload.created_at:type_name -> google.protobuf.Timestamp
-	29, // 49: invora.billing.webhooks.v2.CustomerEventPayload.payment_provider:type_name -> invora.billing.common.v2.ProviderTypeEnum
+	29, // 49: invora.billing.webhooks.v2.CustomerEventPayload.payment_provider:type_name -> invora.billing.common.v2.ProviderType
 	16, // 50: invora.billing.webhooks.v2.CustomerEventPayload.metadata:type_name -> invora.billing.webhooks.v2.CustomerEventPayload.MetadataEntry
-	31, // 51: invora.billing.webhooks.v2.WalletEventPayload.status:type_name -> invora.billing.common.v2.WalletStatusEnum
+	31, // 51: invora.billing.webhooks.v2.WalletEventPayload.status:type_name -> invora.billing.common.v2.WalletStatus
 	21, // 52: invora.billing.webhooks.v2.WalletEventPayload.balance_cents:type_name -> kernel.DecimalValue
 	21, // 53: invora.billing.webhooks.v2.WalletEventPayload.consumed_credits:type_name -> kernel.DecimalValue
 	21, // 54: invora.billing.webhooks.v2.WalletEventPayload.ongoing_balance_cents:type_name -> kernel.DecimalValue
 	21, // 55: invora.billing.webhooks.v2.WalletEventPayload.ongoing_usage_balance_cents:type_name -> kernel.DecimalValue
 	17, // 56: invora.billing.webhooks.v2.WalletEventPayload.expiration_at:type_name -> google.protobuf.Timestamp
 	17, // 57: invora.billing.webhooks.v2.WalletEventPayload.created_at:type_name -> google.protobuf.Timestamp
-	32, // 58: invora.billing.webhooks.v2.WalletTransactionEventPayload.status:type_name -> invora.billing.common.v2.WalletTransactionStatusEnum
-	33, // 59: invora.billing.webhooks.v2.WalletTransactionEventPayload.transaction_type:type_name -> invora.billing.common.v2.WalletTransactionTransactionTypeEnum
+	32, // 58: invora.billing.webhooks.v2.WalletTransactionEventPayload.status:type_name -> invora.billing.common.v2.WalletTransactionStatus
+	33, // 59: invora.billing.webhooks.v2.WalletTransactionEventPayload.transaction_type:type_name -> invora.billing.common.v2.WalletTransactionTransactionType
 	21, // 60: invora.billing.webhooks.v2.WalletTransactionEventPayload.amount:type_name -> kernel.DecimalValue
 	21, // 61: invora.billing.webhooks.v2.WalletTransactionEventPayload.credit_amount:type_name -> kernel.DecimalValue
 	17, // 62: invora.billing.webhooks.v2.WalletTransactionEventPayload.settled_at:type_name -> google.protobuf.Timestamp
 	17, // 63: invora.billing.webhooks.v2.WalletTransactionEventPayload.created_at:type_name -> google.protobuf.Timestamp
 	34, // 64: invora.billing.webhooks.v2.EventErrorPayload.error:type_name -> google.protobuf.Struct
-	24, // 65: invora.billing.webhooks.v2.FeeEventPayload.item_type:type_name -> invora.billing.common.v2.FeeTypesEnum
+	24, // 65: invora.billing.webhooks.v2.FeeEventPayload.item_type:type_name -> invora.billing.common.v2.FeeTypes
 	21, // 66: invora.billing.webhooks.v2.FeeEventPayload.amount_cents:type_name -> kernel.DecimalValue
 	21, // 67: invora.billing.webhooks.v2.FeeEventPayload.units:type_name -> kernel.DecimalValue
 	17, // 68: invora.billing.webhooks.v2.FeeEventPayload.created_at:type_name -> google.protobuf.Timestamp
 	21, // 69: invora.billing.webhooks.v2.PaymentRequestEventPayload.amount_cents:type_name -> kernel.DecimalValue
 	17, // 70: invora.billing.webhooks.v2.PaymentRequestEventPayload.created_at:type_name -> google.protobuf.Timestamp
-	29, // 71: invora.billing.webhooks.v2.PaymentGatewayWebhookEvent.provider:type_name -> invora.billing.common.v2.ProviderTypeEnum
+	29, // 71: invora.billing.webhooks.v2.PaymentGatewayWebhookEvent.provider:type_name -> invora.billing.common.v2.ProviderType
 	34, // 72: invora.billing.webhooks.v2.PaymentGatewayWebhookEvent.raw_payload:type_name -> google.protobuf.Struct
 	73, // [73:73] is the sub-list for method output_type
 	73, // [73:73] is the sub-list for method input_type

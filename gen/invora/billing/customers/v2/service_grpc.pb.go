@@ -19,543 +19,553 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	CustomerService_Create_FullMethodName                           = "/invora.billing.customers.v2.CustomerService/Create"
-	CustomerService_Get_FullMethodName                              = "/invora.billing.customers.v2.CustomerService/Get"
-	CustomerService_List_FullMethodName                             = "/invora.billing.customers.v2.CustomerService/List"
-	CustomerService_Update_FullMethodName                           = "/invora.billing.customers.v2.CustomerService/Update"
-	CustomerService_Delete_FullMethodName                           = "/invora.billing.customers.v2.CustomerService/Delete"
-	CustomerService_CreatePortalWalletTransaction_FullMethodName    = "/invora.billing.customers.v2.CustomerService/CreatePortalWalletTransaction"
-	CustomerService_GetCheckoutUrl_FullMethodName                   = "/invora.billing.customers.v2.CustomerService/GetCheckoutUrl"
-	CustomerService_GetCustomerPortalUrl_FullMethodName             = "/invora.billing.customers.v2.CustomerService/GetCustomerPortalUrl"
-	CustomerService_GetProjectedUsage_FullMethodName                = "/invora.billing.customers.v2.CustomerService/GetProjectedUsage"
-	CustomerService_GetUsage_FullMethodName                         = "/invora.billing.customers.v2.CustomerService/GetUsage"
-	CustomerService_UpdateCustomerInvoiceGracePeriod_FullMethodName = "/invora.billing.customers.v2.CustomerService/UpdateCustomerInvoiceGracePeriod"
-	CustomerService_UpdateCustomerPortalCustomer_FullMethodName     = "/invora.billing.customers.v2.CustomerService/UpdateCustomerPortalCustomer"
+	CustomersService_List_FullMethodName                          = "/invora.billing.customers.v2.CustomersService/List"
+	CustomersService_Get_FullMethodName                           = "/invora.billing.customers.v2.CustomersService/Get"
+	CustomersService_Create_FullMethodName                        = "/invora.billing.customers.v2.CustomersService/Create"
+	CustomersService_Update_FullMethodName                        = "/invora.billing.customers.v2.CustomersService/Update"
+	CustomersService_Delete_FullMethodName                        = "/invora.billing.customers.v2.CustomersService/Delete"
+	CustomersService_CreatePortalWalletTransaction_FullMethodName = "/invora.billing.customers.v2.CustomersService/CreatePortalWalletTransaction"
+	CustomersService_GetCheckoutUrl_FullMethodName                = "/invora.billing.customers.v2.CustomersService/GetCheckoutUrl"
+	CustomersService_GetCustomerPortalUrl_FullMethodName          = "/invora.billing.customers.v2.CustomersService/GetCustomerPortalUrl"
+	CustomersService_GetProjectedUsage_FullMethodName             = "/invora.billing.customers.v2.CustomersService/GetProjectedUsage"
+	CustomersService_GetUsage_FullMethodName                      = "/invora.billing.customers.v2.CustomersService/GetUsage"
+	CustomersService_UpdateInvoiceGracePeriod_FullMethodName      = "/invora.billing.customers.v2.CustomersService/UpdateInvoiceGracePeriod"
+	CustomersService_UpdatePortalCustomer_FullMethodName          = "/invora.billing.customers.v2.CustomersService/UpdatePortalCustomer"
 )
 
-// CustomerServiceClient is the client API for CustomerService service.
+// CustomersServiceClient is the client API for CustomersService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type CustomerServiceClient interface {
-	// Creates a new customer
-	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
-	// Query a single customer of an organization
-	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
-	// Query customers of an organization
+//
+// Manage billing customers within your organization.
+// Customers represent billable entities with subscriptions, wallets,
+// and payment provider integrations. Supports portal access, usage
+// tracking, and invoice grace period configuration.
+type CustomersServiceClient interface {
+	// List customers with filtering and pagination.
 	List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error)
-	// Updates an existing Customer
+	// Get a single customer by ID.
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
+	// Create a new customer.
+	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
+	// Update an existing customer.
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
-	// Delete a Customer
+	// Delete a customer.
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
-	// Creates a new Customer Wallet Transaction from Customer Portal
+	// Create a wallet transaction from the customer portal.
 	CreatePortalWalletTransaction(ctx context.Context, in *CreatePortalWalletTransactionRequest, opts ...grpc.CallOption) (*CreatePortalWalletTransactionResponse, error)
-	// Generates checkout url for payment method
+	// Generate a checkout URL for a customer's payment method.
 	GetCheckoutUrl(ctx context.Context, in *GetCheckoutUrlRequest, opts ...grpc.CallOption) (*GetCheckoutUrlResponse, error)
-	// Generate customer portal URL
+	// Generate a customer portal URL.
 	GetCustomerPortalUrl(ctx context.Context, in *GetCustomerPortalUrlRequest, opts ...grpc.CallOption) (*GetCustomerPortalUrlResponse, error)
-	// Query the projected usage of the customer on the current billing period
+	// Get projected usage for a customer's subscription in the current billing period.
 	GetProjectedUsage(ctx context.Context, in *GetProjectedUsageRequest, opts ...grpc.CallOption) (*GetProjectedUsageResponse, error)
-	// Query the usage of the customer on the current billing period
+	// Get actual usage for a customer's subscription in the current billing period.
 	GetUsage(ctx context.Context, in *GetUsageRequest, opts ...grpc.CallOption) (*GetUsageResponse, error)
-	// Assign the invoice grace period to Customers
-	UpdateCustomerInvoiceGracePeriod(ctx context.Context, in *UpdateCustomerInvoiceGracePeriodRequest, opts ...grpc.CallOption) (*UpdateCustomerInvoiceGracePeriodResponse, error)
-	// Update customer data from Customer Portal
-	UpdateCustomerPortalCustomer(ctx context.Context, in *UpdateCustomerPortalCustomerRequest, opts ...grpc.CallOption) (*UpdateCustomerPortalCustomerResponse, error)
+	// Update the invoice grace period for a customer.
+	UpdateInvoiceGracePeriod(ctx context.Context, in *UpdateInvoiceGracePeriodRequest, opts ...grpc.CallOption) (*UpdateInvoiceGracePeriodResponse, error)
+	// Update customer data from the customer portal.
+	UpdatePortalCustomer(ctx context.Context, in *UpdatePortalCustomerRequest, opts ...grpc.CallOption) (*UpdatePortalCustomerResponse, error)
 }
 
-type customerServiceClient struct {
+type customersServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewCustomerServiceClient(cc grpc.ClientConnInterface) CustomerServiceClient {
-	return &customerServiceClient{cc}
+func NewCustomersServiceClient(cc grpc.ClientConnInterface) CustomersServiceClient {
+	return &customersServiceClient{cc}
 }
 
-func (c *customerServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateResponse)
-	err := c.cc.Invoke(ctx, CustomerService_Create_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *customerServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetResponse)
-	err := c.cc.Invoke(ctx, CustomerService_Get_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *customerServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
+func (c *customersServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListResponse)
-	err := c.cc.Invoke(ctx, CustomerService_List_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, CustomersService_List_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *customerServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
+func (c *customersServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetResponse)
+	err := c.cc.Invoke(ctx, CustomersService_Get_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customersServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateResponse)
+	err := c.cc.Invoke(ctx, CustomersService_Create_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customersServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UpdateResponse)
-	err := c.cc.Invoke(ctx, CustomerService_Update_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, CustomersService_Update_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *customerServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
+func (c *customersServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DeleteResponse)
-	err := c.cc.Invoke(ctx, CustomerService_Delete_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, CustomersService_Delete_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *customerServiceClient) CreatePortalWalletTransaction(ctx context.Context, in *CreatePortalWalletTransactionRequest, opts ...grpc.CallOption) (*CreatePortalWalletTransactionResponse, error) {
+func (c *customersServiceClient) CreatePortalWalletTransaction(ctx context.Context, in *CreatePortalWalletTransactionRequest, opts ...grpc.CallOption) (*CreatePortalWalletTransactionResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreatePortalWalletTransactionResponse)
-	err := c.cc.Invoke(ctx, CustomerService_CreatePortalWalletTransaction_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, CustomersService_CreatePortalWalletTransaction_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *customerServiceClient) GetCheckoutUrl(ctx context.Context, in *GetCheckoutUrlRequest, opts ...grpc.CallOption) (*GetCheckoutUrlResponse, error) {
+func (c *customersServiceClient) GetCheckoutUrl(ctx context.Context, in *GetCheckoutUrlRequest, opts ...grpc.CallOption) (*GetCheckoutUrlResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetCheckoutUrlResponse)
-	err := c.cc.Invoke(ctx, CustomerService_GetCheckoutUrl_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, CustomersService_GetCheckoutUrl_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *customerServiceClient) GetCustomerPortalUrl(ctx context.Context, in *GetCustomerPortalUrlRequest, opts ...grpc.CallOption) (*GetCustomerPortalUrlResponse, error) {
+func (c *customersServiceClient) GetCustomerPortalUrl(ctx context.Context, in *GetCustomerPortalUrlRequest, opts ...grpc.CallOption) (*GetCustomerPortalUrlResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetCustomerPortalUrlResponse)
-	err := c.cc.Invoke(ctx, CustomerService_GetCustomerPortalUrl_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, CustomersService_GetCustomerPortalUrl_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *customerServiceClient) GetProjectedUsage(ctx context.Context, in *GetProjectedUsageRequest, opts ...grpc.CallOption) (*GetProjectedUsageResponse, error) {
+func (c *customersServiceClient) GetProjectedUsage(ctx context.Context, in *GetProjectedUsageRequest, opts ...grpc.CallOption) (*GetProjectedUsageResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetProjectedUsageResponse)
-	err := c.cc.Invoke(ctx, CustomerService_GetProjectedUsage_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, CustomersService_GetProjectedUsage_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *customerServiceClient) GetUsage(ctx context.Context, in *GetUsageRequest, opts ...grpc.CallOption) (*GetUsageResponse, error) {
+func (c *customersServiceClient) GetUsage(ctx context.Context, in *GetUsageRequest, opts ...grpc.CallOption) (*GetUsageResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetUsageResponse)
-	err := c.cc.Invoke(ctx, CustomerService_GetUsage_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, CustomersService_GetUsage_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *customerServiceClient) UpdateCustomerInvoiceGracePeriod(ctx context.Context, in *UpdateCustomerInvoiceGracePeriodRequest, opts ...grpc.CallOption) (*UpdateCustomerInvoiceGracePeriodResponse, error) {
+func (c *customersServiceClient) UpdateInvoiceGracePeriod(ctx context.Context, in *UpdateInvoiceGracePeriodRequest, opts ...grpc.CallOption) (*UpdateInvoiceGracePeriodResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateCustomerInvoiceGracePeriodResponse)
-	err := c.cc.Invoke(ctx, CustomerService_UpdateCustomerInvoiceGracePeriod_FullMethodName, in, out, cOpts...)
+	out := new(UpdateInvoiceGracePeriodResponse)
+	err := c.cc.Invoke(ctx, CustomersService_UpdateInvoiceGracePeriod_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *customerServiceClient) UpdateCustomerPortalCustomer(ctx context.Context, in *UpdateCustomerPortalCustomerRequest, opts ...grpc.CallOption) (*UpdateCustomerPortalCustomerResponse, error) {
+func (c *customersServiceClient) UpdatePortalCustomer(ctx context.Context, in *UpdatePortalCustomerRequest, opts ...grpc.CallOption) (*UpdatePortalCustomerResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateCustomerPortalCustomerResponse)
-	err := c.cc.Invoke(ctx, CustomerService_UpdateCustomerPortalCustomer_FullMethodName, in, out, cOpts...)
+	out := new(UpdatePortalCustomerResponse)
+	err := c.cc.Invoke(ctx, CustomersService_UpdatePortalCustomer_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// CustomerServiceServer is the server API for CustomerService service.
-// All implementations must embed UnimplementedCustomerServiceServer
+// CustomersServiceServer is the server API for CustomersService service.
+// All implementations must embed UnimplementedCustomersServiceServer
 // for forward compatibility.
-type CustomerServiceServer interface {
-	// Creates a new customer
-	Create(context.Context, *CreateRequest) (*CreateResponse, error)
-	// Query a single customer of an organization
-	Get(context.Context, *GetRequest) (*GetResponse, error)
-	// Query customers of an organization
+//
+// Manage billing customers within your organization.
+// Customers represent billable entities with subscriptions, wallets,
+// and payment provider integrations. Supports portal access, usage
+// tracking, and invoice grace period configuration.
+type CustomersServiceServer interface {
+	// List customers with filtering and pagination.
 	List(context.Context, *ListRequest) (*ListResponse, error)
-	// Updates an existing Customer
+	// Get a single customer by ID.
+	Get(context.Context, *GetRequest) (*GetResponse, error)
+	// Create a new customer.
+	Create(context.Context, *CreateRequest) (*CreateResponse, error)
+	// Update an existing customer.
 	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
-	// Delete a Customer
+	// Delete a customer.
 	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
-	// Creates a new Customer Wallet Transaction from Customer Portal
+	// Create a wallet transaction from the customer portal.
 	CreatePortalWalletTransaction(context.Context, *CreatePortalWalletTransactionRequest) (*CreatePortalWalletTransactionResponse, error)
-	// Generates checkout url for payment method
+	// Generate a checkout URL for a customer's payment method.
 	GetCheckoutUrl(context.Context, *GetCheckoutUrlRequest) (*GetCheckoutUrlResponse, error)
-	// Generate customer portal URL
+	// Generate a customer portal URL.
 	GetCustomerPortalUrl(context.Context, *GetCustomerPortalUrlRequest) (*GetCustomerPortalUrlResponse, error)
-	// Query the projected usage of the customer on the current billing period
+	// Get projected usage for a customer's subscription in the current billing period.
 	GetProjectedUsage(context.Context, *GetProjectedUsageRequest) (*GetProjectedUsageResponse, error)
-	// Query the usage of the customer on the current billing period
+	// Get actual usage for a customer's subscription in the current billing period.
 	GetUsage(context.Context, *GetUsageRequest) (*GetUsageResponse, error)
-	// Assign the invoice grace period to Customers
-	UpdateCustomerInvoiceGracePeriod(context.Context, *UpdateCustomerInvoiceGracePeriodRequest) (*UpdateCustomerInvoiceGracePeriodResponse, error)
-	// Update customer data from Customer Portal
-	UpdateCustomerPortalCustomer(context.Context, *UpdateCustomerPortalCustomerRequest) (*UpdateCustomerPortalCustomerResponse, error)
-	mustEmbedUnimplementedCustomerServiceServer()
+	// Update the invoice grace period for a customer.
+	UpdateInvoiceGracePeriod(context.Context, *UpdateInvoiceGracePeriodRequest) (*UpdateInvoiceGracePeriodResponse, error)
+	// Update customer data from the customer portal.
+	UpdatePortalCustomer(context.Context, *UpdatePortalCustomerRequest) (*UpdatePortalCustomerResponse, error)
+	mustEmbedUnimplementedCustomersServiceServer()
 }
 
-// UnimplementedCustomerServiceServer must be embedded to have
+// UnimplementedCustomersServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedCustomerServiceServer struct{}
+type UnimplementedCustomersServiceServer struct{}
 
-func (UnimplementedCustomerServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
-}
-func (UnimplementedCustomerServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
-}
-func (UnimplementedCustomerServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
+func (UnimplementedCustomersServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method List not implemented")
 }
-func (UnimplementedCustomerServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
+func (UnimplementedCustomersServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
+}
+func (UnimplementedCustomersServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedCustomersServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedCustomerServiceServer) Delete(context.Context, *DeleteRequest) (*DeleteResponse, error) {
+func (UnimplementedCustomersServiceServer) Delete(context.Context, *DeleteRequest) (*DeleteResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedCustomerServiceServer) CreatePortalWalletTransaction(context.Context, *CreatePortalWalletTransactionRequest) (*CreatePortalWalletTransactionResponse, error) {
+func (UnimplementedCustomersServiceServer) CreatePortalWalletTransaction(context.Context, *CreatePortalWalletTransactionRequest) (*CreatePortalWalletTransactionResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CreatePortalWalletTransaction not implemented")
 }
-func (UnimplementedCustomerServiceServer) GetCheckoutUrl(context.Context, *GetCheckoutUrlRequest) (*GetCheckoutUrlResponse, error) {
+func (UnimplementedCustomersServiceServer) GetCheckoutUrl(context.Context, *GetCheckoutUrlRequest) (*GetCheckoutUrlResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetCheckoutUrl not implemented")
 }
-func (UnimplementedCustomerServiceServer) GetCustomerPortalUrl(context.Context, *GetCustomerPortalUrlRequest) (*GetCustomerPortalUrlResponse, error) {
+func (UnimplementedCustomersServiceServer) GetCustomerPortalUrl(context.Context, *GetCustomerPortalUrlRequest) (*GetCustomerPortalUrlResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetCustomerPortalUrl not implemented")
 }
-func (UnimplementedCustomerServiceServer) GetProjectedUsage(context.Context, *GetProjectedUsageRequest) (*GetProjectedUsageResponse, error) {
+func (UnimplementedCustomersServiceServer) GetProjectedUsage(context.Context, *GetProjectedUsageRequest) (*GetProjectedUsageResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetProjectedUsage not implemented")
 }
-func (UnimplementedCustomerServiceServer) GetUsage(context.Context, *GetUsageRequest) (*GetUsageResponse, error) {
+func (UnimplementedCustomersServiceServer) GetUsage(context.Context, *GetUsageRequest) (*GetUsageResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetUsage not implemented")
 }
-func (UnimplementedCustomerServiceServer) UpdateCustomerInvoiceGracePeriod(context.Context, *UpdateCustomerInvoiceGracePeriodRequest) (*UpdateCustomerInvoiceGracePeriodResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method UpdateCustomerInvoiceGracePeriod not implemented")
+func (UnimplementedCustomersServiceServer) UpdateInvoiceGracePeriod(context.Context, *UpdateInvoiceGracePeriodRequest) (*UpdateInvoiceGracePeriodResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateInvoiceGracePeriod not implemented")
 }
-func (UnimplementedCustomerServiceServer) UpdateCustomerPortalCustomer(context.Context, *UpdateCustomerPortalCustomerRequest) (*UpdateCustomerPortalCustomerResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method UpdateCustomerPortalCustomer not implemented")
+func (UnimplementedCustomersServiceServer) UpdatePortalCustomer(context.Context, *UpdatePortalCustomerRequest) (*UpdatePortalCustomerResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdatePortalCustomer not implemented")
 }
-func (UnimplementedCustomerServiceServer) mustEmbedUnimplementedCustomerServiceServer() {}
-func (UnimplementedCustomerServiceServer) testEmbeddedByValue()                         {}
+func (UnimplementedCustomersServiceServer) mustEmbedUnimplementedCustomersServiceServer() {}
+func (UnimplementedCustomersServiceServer) testEmbeddedByValue()                          {}
 
-// UnsafeCustomerServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to CustomerServiceServer will
+// UnsafeCustomersServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to CustomersServiceServer will
 // result in compilation errors.
-type UnsafeCustomerServiceServer interface {
-	mustEmbedUnimplementedCustomerServiceServer()
+type UnsafeCustomersServiceServer interface {
+	mustEmbedUnimplementedCustomersServiceServer()
 }
 
-func RegisterCustomerServiceServer(s grpc.ServiceRegistrar, srv CustomerServiceServer) {
-	// If the following call panics, it indicates UnimplementedCustomerServiceServer was
+func RegisterCustomersServiceServer(s grpc.ServiceRegistrar, srv CustomersServiceServer) {
+	// If the following call panics, it indicates UnimplementedCustomersServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&CustomerService_ServiceDesc, srv)
+	s.RegisterService(&CustomersService_ServiceDesc, srv)
 }
 
-func _CustomerService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CustomerServiceServer).Create(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CustomerService_Create_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerServiceServer).Create(ctx, req.(*CreateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CustomerService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CustomerServiceServer).Get(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CustomerService_Get_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerServiceServer).Get(ctx, req.(*GetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CustomerService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CustomersService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomerServiceServer).List(ctx, in)
+		return srv.(CustomersServiceServer).List(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CustomerService_List_FullMethodName,
+		FullMethod: CustomersService_List_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerServiceServer).List(ctx, req.(*ListRequest))
+		return srv.(CustomersServiceServer).List(ctx, req.(*ListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CustomerService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CustomersService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomersServiceServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomersService_Get_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomersServiceServer).Get(ctx, req.(*GetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomersService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomersServiceServer).Create(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomersService_Create_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomersServiceServer).Create(ctx, req.(*CreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomersService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomerServiceServer).Update(ctx, in)
+		return srv.(CustomersServiceServer).Update(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CustomerService_Update_FullMethodName,
+		FullMethod: CustomersService_Update_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerServiceServer).Update(ctx, req.(*UpdateRequest))
+		return srv.(CustomersServiceServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CustomerService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CustomersService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomerServiceServer).Delete(ctx, in)
+		return srv.(CustomersServiceServer).Delete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CustomerService_Delete_FullMethodName,
+		FullMethod: CustomersService_Delete_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerServiceServer).Delete(ctx, req.(*DeleteRequest))
+		return srv.(CustomersServiceServer).Delete(ctx, req.(*DeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CustomerService_CreatePortalWalletTransaction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CustomersService_CreatePortalWalletTransaction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreatePortalWalletTransactionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomerServiceServer).CreatePortalWalletTransaction(ctx, in)
+		return srv.(CustomersServiceServer).CreatePortalWalletTransaction(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CustomerService_CreatePortalWalletTransaction_FullMethodName,
+		FullMethod: CustomersService_CreatePortalWalletTransaction_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerServiceServer).CreatePortalWalletTransaction(ctx, req.(*CreatePortalWalletTransactionRequest))
+		return srv.(CustomersServiceServer).CreatePortalWalletTransaction(ctx, req.(*CreatePortalWalletTransactionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CustomerService_GetCheckoutUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CustomersService_GetCheckoutUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetCheckoutUrlRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomerServiceServer).GetCheckoutUrl(ctx, in)
+		return srv.(CustomersServiceServer).GetCheckoutUrl(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CustomerService_GetCheckoutUrl_FullMethodName,
+		FullMethod: CustomersService_GetCheckoutUrl_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerServiceServer).GetCheckoutUrl(ctx, req.(*GetCheckoutUrlRequest))
+		return srv.(CustomersServiceServer).GetCheckoutUrl(ctx, req.(*GetCheckoutUrlRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CustomerService_GetCustomerPortalUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CustomersService_GetCustomerPortalUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetCustomerPortalUrlRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomerServiceServer).GetCustomerPortalUrl(ctx, in)
+		return srv.(CustomersServiceServer).GetCustomerPortalUrl(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CustomerService_GetCustomerPortalUrl_FullMethodName,
+		FullMethod: CustomersService_GetCustomerPortalUrl_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerServiceServer).GetCustomerPortalUrl(ctx, req.(*GetCustomerPortalUrlRequest))
+		return srv.(CustomersServiceServer).GetCustomerPortalUrl(ctx, req.(*GetCustomerPortalUrlRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CustomerService_GetProjectedUsage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CustomersService_GetProjectedUsage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetProjectedUsageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomerServiceServer).GetProjectedUsage(ctx, in)
+		return srv.(CustomersServiceServer).GetProjectedUsage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CustomerService_GetProjectedUsage_FullMethodName,
+		FullMethod: CustomersService_GetProjectedUsage_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerServiceServer).GetProjectedUsage(ctx, req.(*GetProjectedUsageRequest))
+		return srv.(CustomersServiceServer).GetProjectedUsage(ctx, req.(*GetProjectedUsageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CustomerService_GetUsage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CustomersService_GetUsage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetUsageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomerServiceServer).GetUsage(ctx, in)
+		return srv.(CustomersServiceServer).GetUsage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CustomerService_GetUsage_FullMethodName,
+		FullMethod: CustomersService_GetUsage_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerServiceServer).GetUsage(ctx, req.(*GetUsageRequest))
+		return srv.(CustomersServiceServer).GetUsage(ctx, req.(*GetUsageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CustomerService_UpdateCustomerInvoiceGracePeriod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateCustomerInvoiceGracePeriodRequest)
+func _CustomersService_UpdateInvoiceGracePeriod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateInvoiceGracePeriodRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomerServiceServer).UpdateCustomerInvoiceGracePeriod(ctx, in)
+		return srv.(CustomersServiceServer).UpdateInvoiceGracePeriod(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CustomerService_UpdateCustomerInvoiceGracePeriod_FullMethodName,
+		FullMethod: CustomersService_UpdateInvoiceGracePeriod_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerServiceServer).UpdateCustomerInvoiceGracePeriod(ctx, req.(*UpdateCustomerInvoiceGracePeriodRequest))
+		return srv.(CustomersServiceServer).UpdateInvoiceGracePeriod(ctx, req.(*UpdateInvoiceGracePeriodRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CustomerService_UpdateCustomerPortalCustomer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateCustomerPortalCustomerRequest)
+func _CustomersService_UpdatePortalCustomer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdatePortalCustomerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomerServiceServer).UpdateCustomerPortalCustomer(ctx, in)
+		return srv.(CustomersServiceServer).UpdatePortalCustomer(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CustomerService_UpdateCustomerPortalCustomer_FullMethodName,
+		FullMethod: CustomersService_UpdatePortalCustomer_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerServiceServer).UpdateCustomerPortalCustomer(ctx, req.(*UpdateCustomerPortalCustomerRequest))
+		return srv.(CustomersServiceServer).UpdatePortalCustomer(ctx, req.(*UpdatePortalCustomerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// CustomerService_ServiceDesc is the grpc.ServiceDesc for CustomerService service.
+// CustomersService_ServiceDesc is the grpc.ServiceDesc for CustomersService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var CustomerService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "invora.billing.customers.v2.CustomerService",
-	HandlerType: (*CustomerServiceServer)(nil),
+var CustomersService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "invora.billing.customers.v2.CustomersService",
+	HandlerType: (*CustomersServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Create",
-			Handler:    _CustomerService_Create_Handler,
+			MethodName: "List",
+			Handler:    _CustomersService_List_Handler,
 		},
 		{
 			MethodName: "Get",
-			Handler:    _CustomerService_Get_Handler,
+			Handler:    _CustomersService_Get_Handler,
 		},
 		{
-			MethodName: "List",
-			Handler:    _CustomerService_List_Handler,
+			MethodName: "Create",
+			Handler:    _CustomersService_Create_Handler,
 		},
 		{
 			MethodName: "Update",
-			Handler:    _CustomerService_Update_Handler,
+			Handler:    _CustomersService_Update_Handler,
 		},
 		{
 			MethodName: "Delete",
-			Handler:    _CustomerService_Delete_Handler,
+			Handler:    _CustomersService_Delete_Handler,
 		},
 		{
 			MethodName: "CreatePortalWalletTransaction",
-			Handler:    _CustomerService_CreatePortalWalletTransaction_Handler,
+			Handler:    _CustomersService_CreatePortalWalletTransaction_Handler,
 		},
 		{
 			MethodName: "GetCheckoutUrl",
-			Handler:    _CustomerService_GetCheckoutUrl_Handler,
+			Handler:    _CustomersService_GetCheckoutUrl_Handler,
 		},
 		{
 			MethodName: "GetCustomerPortalUrl",
-			Handler:    _CustomerService_GetCustomerPortalUrl_Handler,
+			Handler:    _CustomersService_GetCustomerPortalUrl_Handler,
 		},
 		{
 			MethodName: "GetProjectedUsage",
-			Handler:    _CustomerService_GetProjectedUsage_Handler,
+			Handler:    _CustomersService_GetProjectedUsage_Handler,
 		},
 		{
 			MethodName: "GetUsage",
-			Handler:    _CustomerService_GetUsage_Handler,
+			Handler:    _CustomersService_GetUsage_Handler,
 		},
 		{
-			MethodName: "UpdateCustomerInvoiceGracePeriod",
-			Handler:    _CustomerService_UpdateCustomerInvoiceGracePeriod_Handler,
+			MethodName: "UpdateInvoiceGracePeriod",
+			Handler:    _CustomersService_UpdateInvoiceGracePeriod_Handler,
 		},
 		{
-			MethodName: "UpdateCustomerPortalCustomer",
-			Handler:    _CustomerService_UpdateCustomerPortalCustomer_Handler,
+			MethodName: "UpdatePortalCustomer",
+			Handler:    _CustomersService_UpdatePortalCustomer_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

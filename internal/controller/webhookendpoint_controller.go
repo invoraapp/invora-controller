@@ -37,9 +37,9 @@ func (r *InvoraBillingWebhookEndpointReconciler) Reconcile(ctx context.Context, 
 				if wh.Status.ExternalID == "" {
 					return nil
 				}
-				svc := webhookspb.NewWebhookEndpointServiceClient(orc.Conn())
+				svc := webhookspb.NewWebhookEndpointsServiceClient(orc.Conn())
 				_, err := svc.Delete(orc.GrpcCtx(ctx), &webhookspb.DeleteRequest{
-					Input: &webhookspb.DestroyWebhookEndpointInput{Id: wh.Status.ExternalID},
+					Id: wh.Status.ExternalID,
 				})
 				return err
 			})
@@ -69,7 +69,7 @@ func (r *InvoraBillingWebhookEndpointReconciler) Reconcile(ctx context.Context, 
 		return SuccessResult(&wh), nil
 	}
 
-	svc := webhookspb.NewWebhookEndpointServiceClient(orc.Conn())
+	svc := webhookspb.NewWebhookEndpointsServiceClient(orc.Conn())
 	grpcCtx := orc.GrpcCtx(ctx)
 
 	if wh.Status.ExternalID != "" {
@@ -84,9 +84,7 @@ func (r *InvoraBillingWebhookEndpointReconciler) Reconcile(ctx context.Context, 
 			}
 		}
 		if wh.Status.ExternalID != "" {
-			_, err := svc.Update(grpcCtx, &webhookspb.UpdateRequest{
-				Input: buildWebhookUpdateInput(&wh),
-			})
+			_, err := svc.Update(grpcCtx, buildWebhookUpdateRequest(&wh))
 			if err != nil {
 				SetCondition(&wh.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "UpdateFailed", err.Error(), wh.Generation)
 				_ = r.Status().Update(ctx, &wh)
@@ -113,9 +111,7 @@ func (r *InvoraBillingWebhookEndpointReconciler) Reconcile(ctx context.Context, 
 	}
 
 	logger.Info("creating webhook endpoint", "url", wh.Spec.WebhookURL)
-	created, err := svc.Create(grpcCtx, &webhookspb.CreateRequest{
-		Input: buildWebhookCreateInput(&wh),
-	})
+	created, err := svc.Create(grpcCtx, buildWebhookCreateRequest(&wh))
 	if err != nil {
 		SetCondition(&wh.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "CreateFailed", err.Error(), wh.Generation)
 		_ = r.Status().Update(ctx, &wh)
@@ -130,8 +126,8 @@ func (r *InvoraBillingWebhookEndpointReconciler) Reconcile(ctx context.Context, 
 	return SuccessResult(&wh), nil
 }
 
-func buildWebhookCreateInput(wh *billingv1alpha1.InvoraBillingWebhookEndpoint) *webhookspb.WebhookEndpointCreateInput {
-	in := &webhookspb.WebhookEndpointCreateInput{
+func buildWebhookCreateRequest(wh *billingv1alpha1.InvoraBillingWebhookEndpoint) *webhookspb.CreateRequest {
+	in := &webhookspb.CreateRequest{
 		WebhookUrl: wh.Spec.WebhookURL,
 	}
 	if wh.Spec.SignatureAlgo != "" {
@@ -141,8 +137,8 @@ func buildWebhookCreateInput(wh *billingv1alpha1.InvoraBillingWebhookEndpoint) *
 	return in
 }
 
-func buildWebhookUpdateInput(wh *billingv1alpha1.InvoraBillingWebhookEndpoint) *webhookspb.WebhookEndpointUpdateInput {
-	in := &webhookspb.WebhookEndpointUpdateInput{
+func buildWebhookUpdateRequest(wh *billingv1alpha1.InvoraBillingWebhookEndpoint) *webhookspb.UpdateRequest {
+	in := &webhookspb.UpdateRequest{
 		Id:         wh.Status.ExternalID,
 		WebhookUrl: wh.Spec.WebhookURL,
 	}

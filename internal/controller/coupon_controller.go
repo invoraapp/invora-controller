@@ -34,9 +34,9 @@ func (r *InvoraBillingCouponReconciler) Reconcile(ctx context.Context, req ctrl.
 			coupon.Spec.OrganizationRef, coupon.Spec.DeletionPolicy,
 			coupon.Status.ExternalID, &coupon.Status.Conditions, coupon.Generation,
 			func(ctx context.Context, orc *orgResourceContext) error {
-				svc := couponspb.NewCouponServiceClient(orc.Conn())
+				svc := couponspb.NewCouponsServiceClient(orc.Conn())
 				_, err := svc.Delete(orc.GrpcCtx(ctx), &couponspb.DeleteRequest{
-					Input: &couponspb.DestroyCouponInput{Id: coupon.Status.ExternalID},
+					Id: coupon.Status.ExternalID,
 				})
 				return err
 			})
@@ -66,7 +66,7 @@ func (r *InvoraBillingCouponReconciler) Reconcile(ctx context.Context, req ctrl.
 		return SuccessResult(&coupon), nil
 	}
 
-	svc := couponspb.NewCouponServiceClient(orc.Conn())
+	svc := couponspb.NewCouponsServiceClient(orc.Conn())
 	grpcCtx := orc.GrpcCtx(ctx)
 
 	if coupon.Status.ExternalID != "" {
@@ -81,9 +81,7 @@ func (r *InvoraBillingCouponReconciler) Reconcile(ctx context.Context, req ctrl.
 			}
 		}
 		if coupon.Status.ExternalID != "" {
-			_, err := svc.Update(grpcCtx, &couponspb.UpdateRequest{
-				Input: buildUpdateCouponInput(&coupon),
-			})
+			_, err := svc.Update(grpcCtx, buildUpdateCouponRequest(&coupon))
 			if err != nil {
 				SetCondition(&coupon.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "UpdateFailed", err.Error(), coupon.Generation)
 				_ = r.Status().Update(ctx, &coupon)
@@ -96,9 +94,7 @@ func (r *InvoraBillingCouponReconciler) Reconcile(ctx context.Context, req ctrl.
 	}
 
 	logger.Info("creating coupon", "code", coupon.Spec.Code)
-	created, err := svc.Create(grpcCtx, &couponspb.CreateRequest{
-		Input: buildCreateCouponInput(&coupon),
-	})
+	created, err := svc.Create(grpcCtx, buildCreateCouponRequest(&coupon))
 	if err != nil {
 		SetCondition(&coupon.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "CreateFailed", err.Error(), coupon.Generation)
 		_ = r.Status().Update(ctx, &coupon)
@@ -113,8 +109,8 @@ func (r *InvoraBillingCouponReconciler) Reconcile(ctx context.Context, req ctrl.
 	return SuccessResult(&coupon), nil
 }
 
-func buildCreateCouponInput(coupon *billingv1alpha1.InvoraBillingCoupon) *couponspb.CreateCouponInput {
-	in := &couponspb.CreateCouponInput{
+func buildCreateCouponRequest(coupon *billingv1alpha1.InvoraBillingCoupon) *couponspb.CreateRequest {
+	in := &couponspb.CreateRequest{
 		Name:       coupon.Spec.Name,
 		CouponType: convert.CouponType(coupon.Spec.CouponType),
 		Frequency:  convert.CouponFrequency(coupon.Spec.Frequency),
@@ -131,7 +127,7 @@ func buildCreateCouponInput(coupon *billingv1alpha1.InvoraBillingCoupon) *coupon
 		in.AmountCurrency = &cur
 	}
 	if rate, ok := convert.PercentageRate(ptrStr(coupon.Spec.PercentageRate)); ok {
-		in.PercentageRate = &rate
+		in.PercentageRate = rate
 	}
 	if ts := convert.Timestamp(ptrStr(coupon.Spec.ExpirationAt)); ts != nil {
 		in.ExpirationAt = ts
@@ -143,8 +139,8 @@ func buildCreateCouponInput(coupon *billingv1alpha1.InvoraBillingCoupon) *coupon
 	return in
 }
 
-func buildUpdateCouponInput(coupon *billingv1alpha1.InvoraBillingCoupon) *couponspb.UpdateCouponInput {
-	in := &couponspb.UpdateCouponInput{
+func buildUpdateCouponRequest(coupon *billingv1alpha1.InvoraBillingCoupon) *couponspb.UpdateRequest {
+	in := &couponspb.UpdateRequest{
 		Id:         coupon.Status.ExternalID,
 		Name:       coupon.Spec.Name,
 		CouponType: convert.CouponType(coupon.Spec.CouponType),
@@ -162,7 +158,7 @@ func buildUpdateCouponInput(coupon *billingv1alpha1.InvoraBillingCoupon) *coupon
 		in.AmountCurrency = &cur
 	}
 	if rate, ok := convert.PercentageRate(ptrStr(coupon.Spec.PercentageRate)); ok {
-		in.PercentageRate = &rate
+		in.PercentageRate = rate
 	}
 	if ts := convert.Timestamp(ptrStr(coupon.Spec.ExpirationAt)); ts != nil {
 		in.ExpirationAt = ts

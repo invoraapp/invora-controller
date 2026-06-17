@@ -19,379 +19,389 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	TaxService_Create_FullMethodName                   = "/invora.billing.taxes.v2.TaxService/Create"
-	TaxService_Get_FullMethodName                      = "/invora.billing.taxes.v2.TaxService/Get"
-	TaxService_List_FullMethodName                     = "/invora.billing.taxes.v2.TaxService/List"
-	TaxService_Update_FullMethodName                   = "/invora.billing.taxes.v2.TaxService/Update"
-	TaxService_Delete_FullMethodName                   = "/invora.billing.taxes.v2.TaxService/Delete"
-	TaxService_BillingEntityApplyTaxes_FullMethodName  = "/invora.billing.taxes.v2.TaxService/BillingEntityApplyTaxes"
-	TaxService_BillingEntityRemoveTaxes_FullMethodName = "/invora.billing.taxes.v2.TaxService/BillingEntityRemoveTaxes"
-	TaxService_BillingEntityTaxes_FullMethodName       = "/invora.billing.taxes.v2.TaxService/BillingEntityTaxes"
+	TaxesService_List_FullMethodName                   = "/invora.billing.taxes.v2.TaxesService/List"
+	TaxesService_Get_FullMethodName                    = "/invora.billing.taxes.v2.TaxesService/Get"
+	TaxesService_Create_FullMethodName                 = "/invora.billing.taxes.v2.TaxesService/Create"
+	TaxesService_Update_FullMethodName                 = "/invora.billing.taxes.v2.TaxesService/Update"
+	TaxesService_Delete_FullMethodName                 = "/invora.billing.taxes.v2.TaxesService/Delete"
+	TaxesService_ApplyTaxes_FullMethodName             = "/invora.billing.taxes.v2.TaxesService/ApplyTaxes"
+	TaxesService_RemoveTaxes_FullMethodName            = "/invora.billing.taxes.v2.TaxesService/RemoveTaxes"
+	TaxesService_ListBillingEntityTaxes_FullMethodName = "/invora.billing.taxes.v2.TaxesService/ListBillingEntityTaxes"
 )
 
-// TaxServiceClient is the client API for TaxService service.
+// TaxesServiceClient is the client API for TaxesService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type TaxServiceClient interface {
-	// Creates a tax
-	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
-	// Query a single tax of an organization
-	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
-	// Query taxes of an organization
+//
+// Manage tax rates for billing. Taxes can be applied to billing entities
+// to automatically include them on generated invoices.
+type TaxesServiceClient interface {
+	// List taxes with filtering and sorting.
 	List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error)
-	// Update an existing tax
+	// Retrieve a single tax by ID.
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
+	// Create a new tax rate.
+	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
+	// Update an existing tax rate.
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
-	// Deletes a tax
+	// Delete a tax rate.
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
-	BillingEntityApplyTaxes(ctx context.Context, in *BillingEntityApplyTaxesRequest, opts ...grpc.CallOption) (*BillingEntityApplyTaxesResponse, error)
-	BillingEntityRemoveTaxes(ctx context.Context, in *BillingEntityRemoveTaxesRequest, opts ...grpc.CallOption) (*BillingEntityRemoveTaxesResponse, error)
-	// Query taxes of a billing entity
-	BillingEntityTaxes(ctx context.Context, in *BillingEntityTaxesRequest, opts ...grpc.CallOption) (*BillingEntityTaxesResponse, error)
+	// Apply taxes to a billing entity.
+	ApplyTaxes(ctx context.Context, in *ApplyTaxesRequest, opts ...grpc.CallOption) (*ApplyTaxesResponse, error)
+	// Remove taxes from a billing entity.
+	RemoveTaxes(ctx context.Context, in *RemoveTaxesRequest, opts ...grpc.CallOption) (*RemoveTaxesResponse, error)
+	// List taxes applied to a specific billing entity.
+	ListBillingEntityTaxes(ctx context.Context, in *ListBillingEntityTaxesRequest, opts ...grpc.CallOption) (*ListBillingEntityTaxesResponse, error)
 }
 
-type taxServiceClient struct {
+type taxesServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewTaxServiceClient(cc grpc.ClientConnInterface) TaxServiceClient {
-	return &taxServiceClient{cc}
+func NewTaxesServiceClient(cc grpc.ClientConnInterface) TaxesServiceClient {
+	return &taxesServiceClient{cc}
 }
 
-func (c *taxServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateResponse)
-	err := c.cc.Invoke(ctx, TaxService_Create_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *taxServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetResponse)
-	err := c.cc.Invoke(ctx, TaxService_Get_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *taxServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
+func (c *taxesServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListResponse)
-	err := c.cc.Invoke(ctx, TaxService_List_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, TaxesService_List_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *taxServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
+func (c *taxesServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetResponse)
+	err := c.cc.Invoke(ctx, TaxesService_Get_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *taxesServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateResponse)
+	err := c.cc.Invoke(ctx, TaxesService_Create_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *taxesServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UpdateResponse)
-	err := c.cc.Invoke(ctx, TaxService_Update_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, TaxesService_Update_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *taxServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
+func (c *taxesServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DeleteResponse)
-	err := c.cc.Invoke(ctx, TaxService_Delete_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, TaxesService_Delete_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *taxServiceClient) BillingEntityApplyTaxes(ctx context.Context, in *BillingEntityApplyTaxesRequest, opts ...grpc.CallOption) (*BillingEntityApplyTaxesResponse, error) {
+func (c *taxesServiceClient) ApplyTaxes(ctx context.Context, in *ApplyTaxesRequest, opts ...grpc.CallOption) (*ApplyTaxesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(BillingEntityApplyTaxesResponse)
-	err := c.cc.Invoke(ctx, TaxService_BillingEntityApplyTaxes_FullMethodName, in, out, cOpts...)
+	out := new(ApplyTaxesResponse)
+	err := c.cc.Invoke(ctx, TaxesService_ApplyTaxes_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *taxServiceClient) BillingEntityRemoveTaxes(ctx context.Context, in *BillingEntityRemoveTaxesRequest, opts ...grpc.CallOption) (*BillingEntityRemoveTaxesResponse, error) {
+func (c *taxesServiceClient) RemoveTaxes(ctx context.Context, in *RemoveTaxesRequest, opts ...grpc.CallOption) (*RemoveTaxesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(BillingEntityRemoveTaxesResponse)
-	err := c.cc.Invoke(ctx, TaxService_BillingEntityRemoveTaxes_FullMethodName, in, out, cOpts...)
+	out := new(RemoveTaxesResponse)
+	err := c.cc.Invoke(ctx, TaxesService_RemoveTaxes_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *taxServiceClient) BillingEntityTaxes(ctx context.Context, in *BillingEntityTaxesRequest, opts ...grpc.CallOption) (*BillingEntityTaxesResponse, error) {
+func (c *taxesServiceClient) ListBillingEntityTaxes(ctx context.Context, in *ListBillingEntityTaxesRequest, opts ...grpc.CallOption) (*ListBillingEntityTaxesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(BillingEntityTaxesResponse)
-	err := c.cc.Invoke(ctx, TaxService_BillingEntityTaxes_FullMethodName, in, out, cOpts...)
+	out := new(ListBillingEntityTaxesResponse)
+	err := c.cc.Invoke(ctx, TaxesService_ListBillingEntityTaxes_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// TaxServiceServer is the server API for TaxService service.
-// All implementations must embed UnimplementedTaxServiceServer
+// TaxesServiceServer is the server API for TaxesService service.
+// All implementations must embed UnimplementedTaxesServiceServer
 // for forward compatibility.
-type TaxServiceServer interface {
-	// Creates a tax
-	Create(context.Context, *CreateRequest) (*CreateResponse, error)
-	// Query a single tax of an organization
-	Get(context.Context, *GetRequest) (*GetResponse, error)
-	// Query taxes of an organization
+//
+// Manage tax rates for billing. Taxes can be applied to billing entities
+// to automatically include them on generated invoices.
+type TaxesServiceServer interface {
+	// List taxes with filtering and sorting.
 	List(context.Context, *ListRequest) (*ListResponse, error)
-	// Update an existing tax
+	// Retrieve a single tax by ID.
+	Get(context.Context, *GetRequest) (*GetResponse, error)
+	// Create a new tax rate.
+	Create(context.Context, *CreateRequest) (*CreateResponse, error)
+	// Update an existing tax rate.
 	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
-	// Deletes a tax
+	// Delete a tax rate.
 	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
-	BillingEntityApplyTaxes(context.Context, *BillingEntityApplyTaxesRequest) (*BillingEntityApplyTaxesResponse, error)
-	BillingEntityRemoveTaxes(context.Context, *BillingEntityRemoveTaxesRequest) (*BillingEntityRemoveTaxesResponse, error)
-	// Query taxes of a billing entity
-	BillingEntityTaxes(context.Context, *BillingEntityTaxesRequest) (*BillingEntityTaxesResponse, error)
-	mustEmbedUnimplementedTaxServiceServer()
+	// Apply taxes to a billing entity.
+	ApplyTaxes(context.Context, *ApplyTaxesRequest) (*ApplyTaxesResponse, error)
+	// Remove taxes from a billing entity.
+	RemoveTaxes(context.Context, *RemoveTaxesRequest) (*RemoveTaxesResponse, error)
+	// List taxes applied to a specific billing entity.
+	ListBillingEntityTaxes(context.Context, *ListBillingEntityTaxesRequest) (*ListBillingEntityTaxesResponse, error)
+	mustEmbedUnimplementedTaxesServiceServer()
 }
 
-// UnimplementedTaxServiceServer must be embedded to have
+// UnimplementedTaxesServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedTaxServiceServer struct{}
+type UnimplementedTaxesServiceServer struct{}
 
-func (UnimplementedTaxServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
-}
-func (UnimplementedTaxServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
-}
-func (UnimplementedTaxServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
+func (UnimplementedTaxesServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method List not implemented")
 }
-func (UnimplementedTaxServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
+func (UnimplementedTaxesServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
+}
+func (UnimplementedTaxesServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedTaxesServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedTaxServiceServer) Delete(context.Context, *DeleteRequest) (*DeleteResponse, error) {
+func (UnimplementedTaxesServiceServer) Delete(context.Context, *DeleteRequest) (*DeleteResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedTaxServiceServer) BillingEntityApplyTaxes(context.Context, *BillingEntityApplyTaxesRequest) (*BillingEntityApplyTaxesResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method BillingEntityApplyTaxes not implemented")
+func (UnimplementedTaxesServiceServer) ApplyTaxes(context.Context, *ApplyTaxesRequest) (*ApplyTaxesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ApplyTaxes not implemented")
 }
-func (UnimplementedTaxServiceServer) BillingEntityRemoveTaxes(context.Context, *BillingEntityRemoveTaxesRequest) (*BillingEntityRemoveTaxesResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method BillingEntityRemoveTaxes not implemented")
+func (UnimplementedTaxesServiceServer) RemoveTaxes(context.Context, *RemoveTaxesRequest) (*RemoveTaxesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RemoveTaxes not implemented")
 }
-func (UnimplementedTaxServiceServer) BillingEntityTaxes(context.Context, *BillingEntityTaxesRequest) (*BillingEntityTaxesResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method BillingEntityTaxes not implemented")
+func (UnimplementedTaxesServiceServer) ListBillingEntityTaxes(context.Context, *ListBillingEntityTaxesRequest) (*ListBillingEntityTaxesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListBillingEntityTaxes not implemented")
 }
-func (UnimplementedTaxServiceServer) mustEmbedUnimplementedTaxServiceServer() {}
-func (UnimplementedTaxServiceServer) testEmbeddedByValue()                    {}
+func (UnimplementedTaxesServiceServer) mustEmbedUnimplementedTaxesServiceServer() {}
+func (UnimplementedTaxesServiceServer) testEmbeddedByValue()                      {}
 
-// UnsafeTaxServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to TaxServiceServer will
+// UnsafeTaxesServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TaxesServiceServer will
 // result in compilation errors.
-type UnsafeTaxServiceServer interface {
-	mustEmbedUnimplementedTaxServiceServer()
+type UnsafeTaxesServiceServer interface {
+	mustEmbedUnimplementedTaxesServiceServer()
 }
 
-func RegisterTaxServiceServer(s grpc.ServiceRegistrar, srv TaxServiceServer) {
-	// If the following call panics, it indicates UnimplementedTaxServiceServer was
+func RegisterTaxesServiceServer(s grpc.ServiceRegistrar, srv TaxesServiceServer) {
+	// If the following call panics, it indicates UnimplementedTaxesServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&TaxService_ServiceDesc, srv)
+	s.RegisterService(&TaxesService_ServiceDesc, srv)
 }
 
-func _TaxService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TaxServiceServer).Create(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TaxService_Create_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaxServiceServer).Create(ctx, req.(*CreateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TaxService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TaxServiceServer).Get(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TaxService_Get_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaxServiceServer).Get(ctx, req.(*GetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TaxService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _TaxesService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TaxServiceServer).List(ctx, in)
+		return srv.(TaxesServiceServer).List(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TaxService_List_FullMethodName,
+		FullMethod: TaxesService_List_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaxServiceServer).List(ctx, req.(*ListRequest))
+		return srv.(TaxesServiceServer).List(ctx, req.(*ListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TaxService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _TaxesService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TaxesServiceServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TaxesService_Get_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TaxesServiceServer).Get(ctx, req.(*GetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TaxesService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TaxesServiceServer).Create(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TaxesService_Create_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TaxesServiceServer).Create(ctx, req.(*CreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TaxesService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TaxServiceServer).Update(ctx, in)
+		return srv.(TaxesServiceServer).Update(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TaxService_Update_FullMethodName,
+		FullMethod: TaxesService_Update_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaxServiceServer).Update(ctx, req.(*UpdateRequest))
+		return srv.(TaxesServiceServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TaxService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _TaxesService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TaxServiceServer).Delete(ctx, in)
+		return srv.(TaxesServiceServer).Delete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TaxService_Delete_FullMethodName,
+		FullMethod: TaxesService_Delete_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaxServiceServer).Delete(ctx, req.(*DeleteRequest))
+		return srv.(TaxesServiceServer).Delete(ctx, req.(*DeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TaxService_BillingEntityApplyTaxes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BillingEntityApplyTaxesRequest)
+func _TaxesService_ApplyTaxes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApplyTaxesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TaxServiceServer).BillingEntityApplyTaxes(ctx, in)
+		return srv.(TaxesServiceServer).ApplyTaxes(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TaxService_BillingEntityApplyTaxes_FullMethodName,
+		FullMethod: TaxesService_ApplyTaxes_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaxServiceServer).BillingEntityApplyTaxes(ctx, req.(*BillingEntityApplyTaxesRequest))
+		return srv.(TaxesServiceServer).ApplyTaxes(ctx, req.(*ApplyTaxesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TaxService_BillingEntityRemoveTaxes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BillingEntityRemoveTaxesRequest)
+func _TaxesService_RemoveTaxes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveTaxesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TaxServiceServer).BillingEntityRemoveTaxes(ctx, in)
+		return srv.(TaxesServiceServer).RemoveTaxes(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TaxService_BillingEntityRemoveTaxes_FullMethodName,
+		FullMethod: TaxesService_RemoveTaxes_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaxServiceServer).BillingEntityRemoveTaxes(ctx, req.(*BillingEntityRemoveTaxesRequest))
+		return srv.(TaxesServiceServer).RemoveTaxes(ctx, req.(*RemoveTaxesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TaxService_BillingEntityTaxes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BillingEntityTaxesRequest)
+func _TaxesService_ListBillingEntityTaxes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListBillingEntityTaxesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TaxServiceServer).BillingEntityTaxes(ctx, in)
+		return srv.(TaxesServiceServer).ListBillingEntityTaxes(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TaxService_BillingEntityTaxes_FullMethodName,
+		FullMethod: TaxesService_ListBillingEntityTaxes_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TaxServiceServer).BillingEntityTaxes(ctx, req.(*BillingEntityTaxesRequest))
+		return srv.(TaxesServiceServer).ListBillingEntityTaxes(ctx, req.(*ListBillingEntityTaxesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// TaxService_ServiceDesc is the grpc.ServiceDesc for TaxService service.
+// TaxesService_ServiceDesc is the grpc.ServiceDesc for TaxesService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var TaxService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "invora.billing.taxes.v2.TaxService",
-	HandlerType: (*TaxServiceServer)(nil),
+var TaxesService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "invora.billing.taxes.v2.TaxesService",
+	HandlerType: (*TaxesServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Create",
-			Handler:    _TaxService_Create_Handler,
+			MethodName: "List",
+			Handler:    _TaxesService_List_Handler,
 		},
 		{
 			MethodName: "Get",
-			Handler:    _TaxService_Get_Handler,
+			Handler:    _TaxesService_Get_Handler,
 		},
 		{
-			MethodName: "List",
-			Handler:    _TaxService_List_Handler,
+			MethodName: "Create",
+			Handler:    _TaxesService_Create_Handler,
 		},
 		{
 			MethodName: "Update",
-			Handler:    _TaxService_Update_Handler,
+			Handler:    _TaxesService_Update_Handler,
 		},
 		{
 			MethodName: "Delete",
-			Handler:    _TaxService_Delete_Handler,
+			Handler:    _TaxesService_Delete_Handler,
 		},
 		{
-			MethodName: "BillingEntityApplyTaxes",
-			Handler:    _TaxService_BillingEntityApplyTaxes_Handler,
+			MethodName: "ApplyTaxes",
+			Handler:    _TaxesService_ApplyTaxes_Handler,
 		},
 		{
-			MethodName: "BillingEntityRemoveTaxes",
-			Handler:    _TaxService_BillingEntityRemoveTaxes_Handler,
+			MethodName: "RemoveTaxes",
+			Handler:    _TaxesService_RemoveTaxes_Handler,
 		},
 		{
-			MethodName: "BillingEntityTaxes",
-			Handler:    _TaxService_BillingEntityTaxes_Handler,
+			MethodName: "ListBillingEntityTaxes",
+			Handler:    _TaxesService_ListBillingEntityTaxes_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

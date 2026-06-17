@@ -19,704 +19,752 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	PaymentProviderService_Get_FullMethodName                              = "/invora.billing.payment_providers.v2.PaymentProviderService/Get"
-	PaymentProviderService_List_FullMethodName                             = "/invora.billing.payment_providers.v2.PaymentProviderService/List"
-	PaymentProviderService_CreateAdyenPaymentProvider_FullMethodName       = "/invora.billing.payment_providers.v2.PaymentProviderService/CreateAdyenPaymentProvider"
-	PaymentProviderService_CreateCashfreePaymentProvider_FullMethodName    = "/invora.billing.payment_providers.v2.PaymentProviderService/CreateCashfreePaymentProvider"
-	PaymentProviderService_CreateFlutterwavePaymentProvider_FullMethodName = "/invora.billing.payment_providers.v2.PaymentProviderService/CreateFlutterwavePaymentProvider"
-	PaymentProviderService_CreateGocardlessPaymentProvider_FullMethodName  = "/invora.billing.payment_providers.v2.PaymentProviderService/CreateGocardlessPaymentProvider"
-	PaymentProviderService_CreateMoneyhashPaymentProvider_FullMethodName   = "/invora.billing.payment_providers.v2.PaymentProviderService/CreateMoneyhashPaymentProvider"
-	PaymentProviderService_CreateStripePaymentProvider_FullMethodName      = "/invora.billing.payment_providers.v2.PaymentProviderService/CreateStripePaymentProvider"
-	PaymentProviderService_CreateTapPaymentProvider_FullMethodName         = "/invora.billing.payment_providers.v2.PaymentProviderService/CreateTapPaymentProvider"
-	PaymentProviderService_UpdateAdyenPaymentProvider_FullMethodName       = "/invora.billing.payment_providers.v2.PaymentProviderService/UpdateAdyenPaymentProvider"
-	PaymentProviderService_UpdateCashfreePaymentProvider_FullMethodName    = "/invora.billing.payment_providers.v2.PaymentProviderService/UpdateCashfreePaymentProvider"
-	PaymentProviderService_UpdateFlutterwavePaymentProvider_FullMethodName = "/invora.billing.payment_providers.v2.PaymentProviderService/UpdateFlutterwavePaymentProvider"
-	PaymentProviderService_UpdateGocardlessPaymentProvider_FullMethodName  = "/invora.billing.payment_providers.v2.PaymentProviderService/UpdateGocardlessPaymentProvider"
-	PaymentProviderService_UpdateMoneyhashPaymentProvider_FullMethodName   = "/invora.billing.payment_providers.v2.PaymentProviderService/UpdateMoneyhashPaymentProvider"
-	PaymentProviderService_UpdateStripePaymentProvider_FullMethodName      = "/invora.billing.payment_providers.v2.PaymentProviderService/UpdateStripePaymentProvider"
-	PaymentProviderService_UpdateTapPaymentProvider_FullMethodName         = "/invora.billing.payment_providers.v2.PaymentProviderService/UpdateTapPaymentProvider"
+	PaymentProvidersService_List_FullMethodName              = "/invora.billing.payment_providers.v2.PaymentProvidersService/List"
+	PaymentProvidersService_Get_FullMethodName               = "/invora.billing.payment_providers.v2.PaymentProvidersService/Get"
+	PaymentProvidersService_Delete_FullMethodName            = "/invora.billing.payment_providers.v2.PaymentProvidersService/Delete"
+	PaymentProvidersService_CreateAdyen_FullMethodName       = "/invora.billing.payment_providers.v2.PaymentProvidersService/CreateAdyen"
+	PaymentProvidersService_UpdateAdyen_FullMethodName       = "/invora.billing.payment_providers.v2.PaymentProvidersService/UpdateAdyen"
+	PaymentProvidersService_CreateCashfree_FullMethodName    = "/invora.billing.payment_providers.v2.PaymentProvidersService/CreateCashfree"
+	PaymentProvidersService_UpdateCashfree_FullMethodName    = "/invora.billing.payment_providers.v2.PaymentProvidersService/UpdateCashfree"
+	PaymentProvidersService_CreateFlutterwave_FullMethodName = "/invora.billing.payment_providers.v2.PaymentProvidersService/CreateFlutterwave"
+	PaymentProvidersService_UpdateFlutterwave_FullMethodName = "/invora.billing.payment_providers.v2.PaymentProvidersService/UpdateFlutterwave"
+	PaymentProvidersService_CreateGocardless_FullMethodName  = "/invora.billing.payment_providers.v2.PaymentProvidersService/CreateGocardless"
+	PaymentProvidersService_UpdateGocardless_FullMethodName  = "/invora.billing.payment_providers.v2.PaymentProvidersService/UpdateGocardless"
+	PaymentProvidersService_CreateMoneyhash_FullMethodName   = "/invora.billing.payment_providers.v2.PaymentProvidersService/CreateMoneyhash"
+	PaymentProvidersService_UpdateMoneyhash_FullMethodName   = "/invora.billing.payment_providers.v2.PaymentProvidersService/UpdateMoneyhash"
+	PaymentProvidersService_CreateStripe_FullMethodName      = "/invora.billing.payment_providers.v2.PaymentProvidersService/CreateStripe"
+	PaymentProvidersService_UpdateStripe_FullMethodName      = "/invora.billing.payment_providers.v2.PaymentProvidersService/UpdateStripe"
+	PaymentProvidersService_CreateTap_FullMethodName         = "/invora.billing.payment_providers.v2.PaymentProvidersService/CreateTap"
+	PaymentProvidersService_UpdateTap_FullMethodName         = "/invora.billing.payment_providers.v2.PaymentProvidersService/UpdateTap"
 )
 
-// PaymentProviderServiceClient is the client API for PaymentProviderService service.
+// PaymentProvidersServiceClient is the client API for PaymentProvidersService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type PaymentProviderServiceClient interface {
-	// Query a single payment provider
-	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
-	// Query organization's payment providers
+//
+// Manage payment provider integrations for an organization.
+// Each provider (Stripe, Adyen, Tap, etc.) is configured with API keys and
+// settings that enable automated payment collection on invoices.
+type PaymentProvidersServiceClient interface {
+	// List all configured payment providers.
 	List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error)
-	// Add Adyen payment provider
-	CreateAdyenPaymentProvider(ctx context.Context, in *CreateAdyenPaymentProviderRequest, opts ...grpc.CallOption) (*CreateAdyenPaymentProviderResponse, error)
-	// Add or update Cashfree payment provider
-	CreateCashfreePaymentProvider(ctx context.Context, in *CreateCashfreePaymentProviderRequest, opts ...grpc.CallOption) (*CreateCashfreePaymentProviderResponse, error)
-	// Add Flutterwave payment provider
-	CreateFlutterwavePaymentProvider(ctx context.Context, in *CreateFlutterwavePaymentProviderRequest, opts ...grpc.CallOption) (*CreateFlutterwavePaymentProviderResponse, error)
-	// Add or update Gocardless payment provider
-	CreateGocardlessPaymentProvider(ctx context.Context, in *CreateGocardlessPaymentProviderRequest, opts ...grpc.CallOption) (*CreateGocardlessPaymentProviderResponse, error)
-	// Add Moneyhash payment provider
-	CreateMoneyhashPaymentProvider(ctx context.Context, in *CreateMoneyhashPaymentProviderRequest, opts ...grpc.CallOption) (*CreateMoneyhashPaymentProviderResponse, error)
-	// Add Stripe API keys to the organization
-	CreateStripePaymentProvider(ctx context.Context, in *CreateStripePaymentProviderRequest, opts ...grpc.CallOption) (*CreateStripePaymentProviderResponse, error)
-	// Add Tap API keys to the organization
-	CreateTapPaymentProvider(ctx context.Context, in *CreateTapPaymentProviderRequest, opts ...grpc.CallOption) (*CreateTapPaymentProviderResponse, error)
-	// Update Adyen payment provider
-	UpdateAdyenPaymentProvider(ctx context.Context, in *UpdateAdyenPaymentProviderRequest, opts ...grpc.CallOption) (*UpdateAdyenPaymentProviderResponse, error)
-	// Update Cashfree payment provider
-	UpdateCashfreePaymentProvider(ctx context.Context, in *UpdateCashfreePaymentProviderRequest, opts ...grpc.CallOption) (*UpdateCashfreePaymentProviderResponse, error)
-	// Update Flutterwave payment provider
-	UpdateFlutterwavePaymentProvider(ctx context.Context, in *UpdateFlutterwavePaymentProviderRequest, opts ...grpc.CallOption) (*UpdateFlutterwavePaymentProviderResponse, error)
-	// Update Gocardless payment provider
-	UpdateGocardlessPaymentProvider(ctx context.Context, in *UpdateGocardlessPaymentProviderRequest, opts ...grpc.CallOption) (*UpdateGocardlessPaymentProviderResponse, error)
-	// Update Moneyhash payment provider
-	UpdateMoneyhashPaymentProvider(ctx context.Context, in *UpdateMoneyhashPaymentProviderRequest, opts ...grpc.CallOption) (*UpdateMoneyhashPaymentProviderResponse, error)
-	// Update Stripe payment provider
-	UpdateStripePaymentProvider(ctx context.Context, in *UpdateStripePaymentProviderRequest, opts ...grpc.CallOption) (*UpdateStripePaymentProviderResponse, error)
-	// Update Tap payment provider
-	UpdateTapPaymentProvider(ctx context.Context, in *UpdateTapPaymentProviderRequest, opts ...grpc.CallOption) (*UpdateTapPaymentProviderResponse, error)
+	// Retrieve a single payment provider by ID.
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
+	// Delete a payment provider.
+	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
+	// Add an Adyen payment provider.
+	CreateAdyen(ctx context.Context, in *CreateAdyenRequest, opts ...grpc.CallOption) (*CreateAdyenResponse, error)
+	// Update an Adyen payment provider.
+	UpdateAdyen(ctx context.Context, in *UpdateAdyenRequest, opts ...grpc.CallOption) (*UpdateAdyenResponse, error)
+	// Add a Cashfree payment provider.
+	CreateCashfree(ctx context.Context, in *CreateCashfreeRequest, opts ...grpc.CallOption) (*CreateCashfreeResponse, error)
+	// Update a Cashfree payment provider.
+	UpdateCashfree(ctx context.Context, in *UpdateCashfreeRequest, opts ...grpc.CallOption) (*UpdateCashfreeResponse, error)
+	// Add a Flutterwave payment provider.
+	CreateFlutterwave(ctx context.Context, in *CreateFlutterwaveRequest, opts ...grpc.CallOption) (*CreateFlutterwaveResponse, error)
+	// Update a Flutterwave payment provider.
+	UpdateFlutterwave(ctx context.Context, in *UpdateFlutterwaveRequest, opts ...grpc.CallOption) (*UpdateFlutterwaveResponse, error)
+	// Add a GoCardless payment provider.
+	CreateGocardless(ctx context.Context, in *CreateGocardlessRequest, opts ...grpc.CallOption) (*CreateGocardlessResponse, error)
+	// Update a GoCardless payment provider.
+	UpdateGocardless(ctx context.Context, in *UpdateGocardlessRequest, opts ...grpc.CallOption) (*UpdateGocardlessResponse, error)
+	// Add a Moneyhash payment provider.
+	CreateMoneyhash(ctx context.Context, in *CreateMoneyhashRequest, opts ...grpc.CallOption) (*CreateMoneyhashResponse, error)
+	// Update a Moneyhash payment provider.
+	UpdateMoneyhash(ctx context.Context, in *UpdateMoneyhashRequest, opts ...grpc.CallOption) (*UpdateMoneyhashResponse, error)
+	// Add a Stripe payment provider.
+	CreateStripe(ctx context.Context, in *CreateStripeRequest, opts ...grpc.CallOption) (*CreateStripeResponse, error)
+	// Update a Stripe payment provider.
+	UpdateStripe(ctx context.Context, in *UpdateStripeRequest, opts ...grpc.CallOption) (*UpdateStripeResponse, error)
+	// Add a Tap payment provider.
+	CreateTap(ctx context.Context, in *CreateTapRequest, opts ...grpc.CallOption) (*CreateTapResponse, error)
+	// Update a Tap payment provider.
+	UpdateTap(ctx context.Context, in *UpdateTapRequest, opts ...grpc.CallOption) (*UpdateTapResponse, error)
 }
 
-type paymentProviderServiceClient struct {
+type paymentProvidersServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewPaymentProviderServiceClient(cc grpc.ClientConnInterface) PaymentProviderServiceClient {
-	return &paymentProviderServiceClient{cc}
+func NewPaymentProvidersServiceClient(cc grpc.ClientConnInterface) PaymentProvidersServiceClient {
+	return &paymentProvidersServiceClient{cc}
 }
 
-func (c *paymentProviderServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetResponse)
-	err := c.cc.Invoke(ctx, PaymentProviderService_Get_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *paymentProviderServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
+func (c *paymentProvidersServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListResponse)
-	err := c.cc.Invoke(ctx, PaymentProviderService_List_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, PaymentProvidersService_List_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *paymentProviderServiceClient) CreateAdyenPaymentProvider(ctx context.Context, in *CreateAdyenPaymentProviderRequest, opts ...grpc.CallOption) (*CreateAdyenPaymentProviderResponse, error) {
+func (c *paymentProvidersServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateAdyenPaymentProviderResponse)
-	err := c.cc.Invoke(ctx, PaymentProviderService_CreateAdyenPaymentProvider_FullMethodName, in, out, cOpts...)
+	out := new(GetResponse)
+	err := c.cc.Invoke(ctx, PaymentProvidersService_Get_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *paymentProviderServiceClient) CreateCashfreePaymentProvider(ctx context.Context, in *CreateCashfreePaymentProviderRequest, opts ...grpc.CallOption) (*CreateCashfreePaymentProviderResponse, error) {
+func (c *paymentProvidersServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateCashfreePaymentProviderResponse)
-	err := c.cc.Invoke(ctx, PaymentProviderService_CreateCashfreePaymentProvider_FullMethodName, in, out, cOpts...)
+	out := new(DeleteResponse)
+	err := c.cc.Invoke(ctx, PaymentProvidersService_Delete_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *paymentProviderServiceClient) CreateFlutterwavePaymentProvider(ctx context.Context, in *CreateFlutterwavePaymentProviderRequest, opts ...grpc.CallOption) (*CreateFlutterwavePaymentProviderResponse, error) {
+func (c *paymentProvidersServiceClient) CreateAdyen(ctx context.Context, in *CreateAdyenRequest, opts ...grpc.CallOption) (*CreateAdyenResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateFlutterwavePaymentProviderResponse)
-	err := c.cc.Invoke(ctx, PaymentProviderService_CreateFlutterwavePaymentProvider_FullMethodName, in, out, cOpts...)
+	out := new(CreateAdyenResponse)
+	err := c.cc.Invoke(ctx, PaymentProvidersService_CreateAdyen_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *paymentProviderServiceClient) CreateGocardlessPaymentProvider(ctx context.Context, in *CreateGocardlessPaymentProviderRequest, opts ...grpc.CallOption) (*CreateGocardlessPaymentProviderResponse, error) {
+func (c *paymentProvidersServiceClient) UpdateAdyen(ctx context.Context, in *UpdateAdyenRequest, opts ...grpc.CallOption) (*UpdateAdyenResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateGocardlessPaymentProviderResponse)
-	err := c.cc.Invoke(ctx, PaymentProviderService_CreateGocardlessPaymentProvider_FullMethodName, in, out, cOpts...)
+	out := new(UpdateAdyenResponse)
+	err := c.cc.Invoke(ctx, PaymentProvidersService_UpdateAdyen_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *paymentProviderServiceClient) CreateMoneyhashPaymentProvider(ctx context.Context, in *CreateMoneyhashPaymentProviderRequest, opts ...grpc.CallOption) (*CreateMoneyhashPaymentProviderResponse, error) {
+func (c *paymentProvidersServiceClient) CreateCashfree(ctx context.Context, in *CreateCashfreeRequest, opts ...grpc.CallOption) (*CreateCashfreeResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateMoneyhashPaymentProviderResponse)
-	err := c.cc.Invoke(ctx, PaymentProviderService_CreateMoneyhashPaymentProvider_FullMethodName, in, out, cOpts...)
+	out := new(CreateCashfreeResponse)
+	err := c.cc.Invoke(ctx, PaymentProvidersService_CreateCashfree_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *paymentProviderServiceClient) CreateStripePaymentProvider(ctx context.Context, in *CreateStripePaymentProviderRequest, opts ...grpc.CallOption) (*CreateStripePaymentProviderResponse, error) {
+func (c *paymentProvidersServiceClient) UpdateCashfree(ctx context.Context, in *UpdateCashfreeRequest, opts ...grpc.CallOption) (*UpdateCashfreeResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateStripePaymentProviderResponse)
-	err := c.cc.Invoke(ctx, PaymentProviderService_CreateStripePaymentProvider_FullMethodName, in, out, cOpts...)
+	out := new(UpdateCashfreeResponse)
+	err := c.cc.Invoke(ctx, PaymentProvidersService_UpdateCashfree_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *paymentProviderServiceClient) CreateTapPaymentProvider(ctx context.Context, in *CreateTapPaymentProviderRequest, opts ...grpc.CallOption) (*CreateTapPaymentProviderResponse, error) {
+func (c *paymentProvidersServiceClient) CreateFlutterwave(ctx context.Context, in *CreateFlutterwaveRequest, opts ...grpc.CallOption) (*CreateFlutterwaveResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateTapPaymentProviderResponse)
-	err := c.cc.Invoke(ctx, PaymentProviderService_CreateTapPaymentProvider_FullMethodName, in, out, cOpts...)
+	out := new(CreateFlutterwaveResponse)
+	err := c.cc.Invoke(ctx, PaymentProvidersService_CreateFlutterwave_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *paymentProviderServiceClient) UpdateAdyenPaymentProvider(ctx context.Context, in *UpdateAdyenPaymentProviderRequest, opts ...grpc.CallOption) (*UpdateAdyenPaymentProviderResponse, error) {
+func (c *paymentProvidersServiceClient) UpdateFlutterwave(ctx context.Context, in *UpdateFlutterwaveRequest, opts ...grpc.CallOption) (*UpdateFlutterwaveResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateAdyenPaymentProviderResponse)
-	err := c.cc.Invoke(ctx, PaymentProviderService_UpdateAdyenPaymentProvider_FullMethodName, in, out, cOpts...)
+	out := new(UpdateFlutterwaveResponse)
+	err := c.cc.Invoke(ctx, PaymentProvidersService_UpdateFlutterwave_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *paymentProviderServiceClient) UpdateCashfreePaymentProvider(ctx context.Context, in *UpdateCashfreePaymentProviderRequest, opts ...grpc.CallOption) (*UpdateCashfreePaymentProviderResponse, error) {
+func (c *paymentProvidersServiceClient) CreateGocardless(ctx context.Context, in *CreateGocardlessRequest, opts ...grpc.CallOption) (*CreateGocardlessResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateCashfreePaymentProviderResponse)
-	err := c.cc.Invoke(ctx, PaymentProviderService_UpdateCashfreePaymentProvider_FullMethodName, in, out, cOpts...)
+	out := new(CreateGocardlessResponse)
+	err := c.cc.Invoke(ctx, PaymentProvidersService_CreateGocardless_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *paymentProviderServiceClient) UpdateFlutterwavePaymentProvider(ctx context.Context, in *UpdateFlutterwavePaymentProviderRequest, opts ...grpc.CallOption) (*UpdateFlutterwavePaymentProviderResponse, error) {
+func (c *paymentProvidersServiceClient) UpdateGocardless(ctx context.Context, in *UpdateGocardlessRequest, opts ...grpc.CallOption) (*UpdateGocardlessResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateFlutterwavePaymentProviderResponse)
-	err := c.cc.Invoke(ctx, PaymentProviderService_UpdateFlutterwavePaymentProvider_FullMethodName, in, out, cOpts...)
+	out := new(UpdateGocardlessResponse)
+	err := c.cc.Invoke(ctx, PaymentProvidersService_UpdateGocardless_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *paymentProviderServiceClient) UpdateGocardlessPaymentProvider(ctx context.Context, in *UpdateGocardlessPaymentProviderRequest, opts ...grpc.CallOption) (*UpdateGocardlessPaymentProviderResponse, error) {
+func (c *paymentProvidersServiceClient) CreateMoneyhash(ctx context.Context, in *CreateMoneyhashRequest, opts ...grpc.CallOption) (*CreateMoneyhashResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateGocardlessPaymentProviderResponse)
-	err := c.cc.Invoke(ctx, PaymentProviderService_UpdateGocardlessPaymentProvider_FullMethodName, in, out, cOpts...)
+	out := new(CreateMoneyhashResponse)
+	err := c.cc.Invoke(ctx, PaymentProvidersService_CreateMoneyhash_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *paymentProviderServiceClient) UpdateMoneyhashPaymentProvider(ctx context.Context, in *UpdateMoneyhashPaymentProviderRequest, opts ...grpc.CallOption) (*UpdateMoneyhashPaymentProviderResponse, error) {
+func (c *paymentProvidersServiceClient) UpdateMoneyhash(ctx context.Context, in *UpdateMoneyhashRequest, opts ...grpc.CallOption) (*UpdateMoneyhashResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateMoneyhashPaymentProviderResponse)
-	err := c.cc.Invoke(ctx, PaymentProviderService_UpdateMoneyhashPaymentProvider_FullMethodName, in, out, cOpts...)
+	out := new(UpdateMoneyhashResponse)
+	err := c.cc.Invoke(ctx, PaymentProvidersService_UpdateMoneyhash_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *paymentProviderServiceClient) UpdateStripePaymentProvider(ctx context.Context, in *UpdateStripePaymentProviderRequest, opts ...grpc.CallOption) (*UpdateStripePaymentProviderResponse, error) {
+func (c *paymentProvidersServiceClient) CreateStripe(ctx context.Context, in *CreateStripeRequest, opts ...grpc.CallOption) (*CreateStripeResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateStripePaymentProviderResponse)
-	err := c.cc.Invoke(ctx, PaymentProviderService_UpdateStripePaymentProvider_FullMethodName, in, out, cOpts...)
+	out := new(CreateStripeResponse)
+	err := c.cc.Invoke(ctx, PaymentProvidersService_CreateStripe_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *paymentProviderServiceClient) UpdateTapPaymentProvider(ctx context.Context, in *UpdateTapPaymentProviderRequest, opts ...grpc.CallOption) (*UpdateTapPaymentProviderResponse, error) {
+func (c *paymentProvidersServiceClient) UpdateStripe(ctx context.Context, in *UpdateStripeRequest, opts ...grpc.CallOption) (*UpdateStripeResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateTapPaymentProviderResponse)
-	err := c.cc.Invoke(ctx, PaymentProviderService_UpdateTapPaymentProvider_FullMethodName, in, out, cOpts...)
+	out := new(UpdateStripeResponse)
+	err := c.cc.Invoke(ctx, PaymentProvidersService_UpdateStripe_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// PaymentProviderServiceServer is the server API for PaymentProviderService service.
-// All implementations must embed UnimplementedPaymentProviderServiceServer
+func (c *paymentProvidersServiceClient) CreateTap(ctx context.Context, in *CreateTapRequest, opts ...grpc.CallOption) (*CreateTapResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateTapResponse)
+	err := c.cc.Invoke(ctx, PaymentProvidersService_CreateTap_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentProvidersServiceClient) UpdateTap(ctx context.Context, in *UpdateTapRequest, opts ...grpc.CallOption) (*UpdateTapResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateTapResponse)
+	err := c.cc.Invoke(ctx, PaymentProvidersService_UpdateTap_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// PaymentProvidersServiceServer is the server API for PaymentProvidersService service.
+// All implementations must embed UnimplementedPaymentProvidersServiceServer
 // for forward compatibility.
-type PaymentProviderServiceServer interface {
-	// Query a single payment provider
-	Get(context.Context, *GetRequest) (*GetResponse, error)
-	// Query organization's payment providers
+//
+// Manage payment provider integrations for an organization.
+// Each provider (Stripe, Adyen, Tap, etc.) is configured with API keys and
+// settings that enable automated payment collection on invoices.
+type PaymentProvidersServiceServer interface {
+	// List all configured payment providers.
 	List(context.Context, *ListRequest) (*ListResponse, error)
-	// Add Adyen payment provider
-	CreateAdyenPaymentProvider(context.Context, *CreateAdyenPaymentProviderRequest) (*CreateAdyenPaymentProviderResponse, error)
-	// Add or update Cashfree payment provider
-	CreateCashfreePaymentProvider(context.Context, *CreateCashfreePaymentProviderRequest) (*CreateCashfreePaymentProviderResponse, error)
-	// Add Flutterwave payment provider
-	CreateFlutterwavePaymentProvider(context.Context, *CreateFlutterwavePaymentProviderRequest) (*CreateFlutterwavePaymentProviderResponse, error)
-	// Add or update Gocardless payment provider
-	CreateGocardlessPaymentProvider(context.Context, *CreateGocardlessPaymentProviderRequest) (*CreateGocardlessPaymentProviderResponse, error)
-	// Add Moneyhash payment provider
-	CreateMoneyhashPaymentProvider(context.Context, *CreateMoneyhashPaymentProviderRequest) (*CreateMoneyhashPaymentProviderResponse, error)
-	// Add Stripe API keys to the organization
-	CreateStripePaymentProvider(context.Context, *CreateStripePaymentProviderRequest) (*CreateStripePaymentProviderResponse, error)
-	// Add Tap API keys to the organization
-	CreateTapPaymentProvider(context.Context, *CreateTapPaymentProviderRequest) (*CreateTapPaymentProviderResponse, error)
-	// Update Adyen payment provider
-	UpdateAdyenPaymentProvider(context.Context, *UpdateAdyenPaymentProviderRequest) (*UpdateAdyenPaymentProviderResponse, error)
-	// Update Cashfree payment provider
-	UpdateCashfreePaymentProvider(context.Context, *UpdateCashfreePaymentProviderRequest) (*UpdateCashfreePaymentProviderResponse, error)
-	// Update Flutterwave payment provider
-	UpdateFlutterwavePaymentProvider(context.Context, *UpdateFlutterwavePaymentProviderRequest) (*UpdateFlutterwavePaymentProviderResponse, error)
-	// Update Gocardless payment provider
-	UpdateGocardlessPaymentProvider(context.Context, *UpdateGocardlessPaymentProviderRequest) (*UpdateGocardlessPaymentProviderResponse, error)
-	// Update Moneyhash payment provider
-	UpdateMoneyhashPaymentProvider(context.Context, *UpdateMoneyhashPaymentProviderRequest) (*UpdateMoneyhashPaymentProviderResponse, error)
-	// Update Stripe payment provider
-	UpdateStripePaymentProvider(context.Context, *UpdateStripePaymentProviderRequest) (*UpdateStripePaymentProviderResponse, error)
-	// Update Tap payment provider
-	UpdateTapPaymentProvider(context.Context, *UpdateTapPaymentProviderRequest) (*UpdateTapPaymentProviderResponse, error)
-	mustEmbedUnimplementedPaymentProviderServiceServer()
+	// Retrieve a single payment provider by ID.
+	Get(context.Context, *GetRequest) (*GetResponse, error)
+	// Delete a payment provider.
+	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
+	// Add an Adyen payment provider.
+	CreateAdyen(context.Context, *CreateAdyenRequest) (*CreateAdyenResponse, error)
+	// Update an Adyen payment provider.
+	UpdateAdyen(context.Context, *UpdateAdyenRequest) (*UpdateAdyenResponse, error)
+	// Add a Cashfree payment provider.
+	CreateCashfree(context.Context, *CreateCashfreeRequest) (*CreateCashfreeResponse, error)
+	// Update a Cashfree payment provider.
+	UpdateCashfree(context.Context, *UpdateCashfreeRequest) (*UpdateCashfreeResponse, error)
+	// Add a Flutterwave payment provider.
+	CreateFlutterwave(context.Context, *CreateFlutterwaveRequest) (*CreateFlutterwaveResponse, error)
+	// Update a Flutterwave payment provider.
+	UpdateFlutterwave(context.Context, *UpdateFlutterwaveRequest) (*UpdateFlutterwaveResponse, error)
+	// Add a GoCardless payment provider.
+	CreateGocardless(context.Context, *CreateGocardlessRequest) (*CreateGocardlessResponse, error)
+	// Update a GoCardless payment provider.
+	UpdateGocardless(context.Context, *UpdateGocardlessRequest) (*UpdateGocardlessResponse, error)
+	// Add a Moneyhash payment provider.
+	CreateMoneyhash(context.Context, *CreateMoneyhashRequest) (*CreateMoneyhashResponse, error)
+	// Update a Moneyhash payment provider.
+	UpdateMoneyhash(context.Context, *UpdateMoneyhashRequest) (*UpdateMoneyhashResponse, error)
+	// Add a Stripe payment provider.
+	CreateStripe(context.Context, *CreateStripeRequest) (*CreateStripeResponse, error)
+	// Update a Stripe payment provider.
+	UpdateStripe(context.Context, *UpdateStripeRequest) (*UpdateStripeResponse, error)
+	// Add a Tap payment provider.
+	CreateTap(context.Context, *CreateTapRequest) (*CreateTapResponse, error)
+	// Update a Tap payment provider.
+	UpdateTap(context.Context, *UpdateTapRequest) (*UpdateTapResponse, error)
+	mustEmbedUnimplementedPaymentProvidersServiceServer()
 }
 
-// UnimplementedPaymentProviderServiceServer must be embedded to have
+// UnimplementedPaymentProvidersServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedPaymentProviderServiceServer struct{}
+type UnimplementedPaymentProvidersServiceServer struct{}
 
-func (UnimplementedPaymentProviderServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
-}
-func (UnimplementedPaymentProviderServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
+func (UnimplementedPaymentProvidersServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method List not implemented")
 }
-func (UnimplementedPaymentProviderServiceServer) CreateAdyenPaymentProvider(context.Context, *CreateAdyenPaymentProviderRequest) (*CreateAdyenPaymentProviderResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method CreateAdyenPaymentProvider not implemented")
+func (UnimplementedPaymentProvidersServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
 }
-func (UnimplementedPaymentProviderServiceServer) CreateCashfreePaymentProvider(context.Context, *CreateCashfreePaymentProviderRequest) (*CreateCashfreePaymentProviderResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method CreateCashfreePaymentProvider not implemented")
+func (UnimplementedPaymentProvidersServiceServer) Delete(context.Context, *DeleteRequest) (*DeleteResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedPaymentProviderServiceServer) CreateFlutterwavePaymentProvider(context.Context, *CreateFlutterwavePaymentProviderRequest) (*CreateFlutterwavePaymentProviderResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method CreateFlutterwavePaymentProvider not implemented")
+func (UnimplementedPaymentProvidersServiceServer) CreateAdyen(context.Context, *CreateAdyenRequest) (*CreateAdyenResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateAdyen not implemented")
 }
-func (UnimplementedPaymentProviderServiceServer) CreateGocardlessPaymentProvider(context.Context, *CreateGocardlessPaymentProviderRequest) (*CreateGocardlessPaymentProviderResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method CreateGocardlessPaymentProvider not implemented")
+func (UnimplementedPaymentProvidersServiceServer) UpdateAdyen(context.Context, *UpdateAdyenRequest) (*UpdateAdyenResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateAdyen not implemented")
 }
-func (UnimplementedPaymentProviderServiceServer) CreateMoneyhashPaymentProvider(context.Context, *CreateMoneyhashPaymentProviderRequest) (*CreateMoneyhashPaymentProviderResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method CreateMoneyhashPaymentProvider not implemented")
+func (UnimplementedPaymentProvidersServiceServer) CreateCashfree(context.Context, *CreateCashfreeRequest) (*CreateCashfreeResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateCashfree not implemented")
 }
-func (UnimplementedPaymentProviderServiceServer) CreateStripePaymentProvider(context.Context, *CreateStripePaymentProviderRequest) (*CreateStripePaymentProviderResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method CreateStripePaymentProvider not implemented")
+func (UnimplementedPaymentProvidersServiceServer) UpdateCashfree(context.Context, *UpdateCashfreeRequest) (*UpdateCashfreeResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateCashfree not implemented")
 }
-func (UnimplementedPaymentProviderServiceServer) CreateTapPaymentProvider(context.Context, *CreateTapPaymentProviderRequest) (*CreateTapPaymentProviderResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method CreateTapPaymentProvider not implemented")
+func (UnimplementedPaymentProvidersServiceServer) CreateFlutterwave(context.Context, *CreateFlutterwaveRequest) (*CreateFlutterwaveResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateFlutterwave not implemented")
 }
-func (UnimplementedPaymentProviderServiceServer) UpdateAdyenPaymentProvider(context.Context, *UpdateAdyenPaymentProviderRequest) (*UpdateAdyenPaymentProviderResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method UpdateAdyenPaymentProvider not implemented")
+func (UnimplementedPaymentProvidersServiceServer) UpdateFlutterwave(context.Context, *UpdateFlutterwaveRequest) (*UpdateFlutterwaveResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateFlutterwave not implemented")
 }
-func (UnimplementedPaymentProviderServiceServer) UpdateCashfreePaymentProvider(context.Context, *UpdateCashfreePaymentProviderRequest) (*UpdateCashfreePaymentProviderResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method UpdateCashfreePaymentProvider not implemented")
+func (UnimplementedPaymentProvidersServiceServer) CreateGocardless(context.Context, *CreateGocardlessRequest) (*CreateGocardlessResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateGocardless not implemented")
 }
-func (UnimplementedPaymentProviderServiceServer) UpdateFlutterwavePaymentProvider(context.Context, *UpdateFlutterwavePaymentProviderRequest) (*UpdateFlutterwavePaymentProviderResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method UpdateFlutterwavePaymentProvider not implemented")
+func (UnimplementedPaymentProvidersServiceServer) UpdateGocardless(context.Context, *UpdateGocardlessRequest) (*UpdateGocardlessResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateGocardless not implemented")
 }
-func (UnimplementedPaymentProviderServiceServer) UpdateGocardlessPaymentProvider(context.Context, *UpdateGocardlessPaymentProviderRequest) (*UpdateGocardlessPaymentProviderResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method UpdateGocardlessPaymentProvider not implemented")
+func (UnimplementedPaymentProvidersServiceServer) CreateMoneyhash(context.Context, *CreateMoneyhashRequest) (*CreateMoneyhashResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateMoneyhash not implemented")
 }
-func (UnimplementedPaymentProviderServiceServer) UpdateMoneyhashPaymentProvider(context.Context, *UpdateMoneyhashPaymentProviderRequest) (*UpdateMoneyhashPaymentProviderResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method UpdateMoneyhashPaymentProvider not implemented")
+func (UnimplementedPaymentProvidersServiceServer) UpdateMoneyhash(context.Context, *UpdateMoneyhashRequest) (*UpdateMoneyhashResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateMoneyhash not implemented")
 }
-func (UnimplementedPaymentProviderServiceServer) UpdateStripePaymentProvider(context.Context, *UpdateStripePaymentProviderRequest) (*UpdateStripePaymentProviderResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method UpdateStripePaymentProvider not implemented")
+func (UnimplementedPaymentProvidersServiceServer) CreateStripe(context.Context, *CreateStripeRequest) (*CreateStripeResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateStripe not implemented")
 }
-func (UnimplementedPaymentProviderServiceServer) UpdateTapPaymentProvider(context.Context, *UpdateTapPaymentProviderRequest) (*UpdateTapPaymentProviderResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method UpdateTapPaymentProvider not implemented")
+func (UnimplementedPaymentProvidersServiceServer) UpdateStripe(context.Context, *UpdateStripeRequest) (*UpdateStripeResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateStripe not implemented")
 }
-func (UnimplementedPaymentProviderServiceServer) mustEmbedUnimplementedPaymentProviderServiceServer() {
+func (UnimplementedPaymentProvidersServiceServer) CreateTap(context.Context, *CreateTapRequest) (*CreateTapResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateTap not implemented")
 }
-func (UnimplementedPaymentProviderServiceServer) testEmbeddedByValue() {}
+func (UnimplementedPaymentProvidersServiceServer) UpdateTap(context.Context, *UpdateTapRequest) (*UpdateTapResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateTap not implemented")
+}
+func (UnimplementedPaymentProvidersServiceServer) mustEmbedUnimplementedPaymentProvidersServiceServer() {
+}
+func (UnimplementedPaymentProvidersServiceServer) testEmbeddedByValue() {}
 
-// UnsafePaymentProviderServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to PaymentProviderServiceServer will
+// UnsafePaymentProvidersServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to PaymentProvidersServiceServer will
 // result in compilation errors.
-type UnsafePaymentProviderServiceServer interface {
-	mustEmbedUnimplementedPaymentProviderServiceServer()
+type UnsafePaymentProvidersServiceServer interface {
+	mustEmbedUnimplementedPaymentProvidersServiceServer()
 }
 
-func RegisterPaymentProviderServiceServer(s grpc.ServiceRegistrar, srv PaymentProviderServiceServer) {
-	// If the following call panics, it indicates UnimplementedPaymentProviderServiceServer was
+func RegisterPaymentProvidersServiceServer(s grpc.ServiceRegistrar, srv PaymentProvidersServiceServer) {
+	// If the following call panics, it indicates UnimplementedPaymentProvidersServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&PaymentProviderService_ServiceDesc, srv)
+	s.RegisterService(&PaymentProvidersService_ServiceDesc, srv)
 }
 
-func _PaymentProviderService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PaymentProviderServiceServer).Get(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: PaymentProviderService_Get_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentProviderServiceServer).Get(ctx, req.(*GetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PaymentProviderService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PaymentProvidersService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentProviderServiceServer).List(ctx, in)
+		return srv.(PaymentProvidersServiceServer).List(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PaymentProviderService_List_FullMethodName,
+		FullMethod: PaymentProvidersService_List_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentProviderServiceServer).List(ctx, req.(*ListRequest))
+		return srv.(PaymentProvidersServiceServer).List(ctx, req.(*ListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentProviderService_CreateAdyenPaymentProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateAdyenPaymentProviderRequest)
+func _PaymentProvidersService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentProviderServiceServer).CreateAdyenPaymentProvider(ctx, in)
+		return srv.(PaymentProvidersServiceServer).Get(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PaymentProviderService_CreateAdyenPaymentProvider_FullMethodName,
+		FullMethod: PaymentProvidersService_Get_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentProviderServiceServer).CreateAdyenPaymentProvider(ctx, req.(*CreateAdyenPaymentProviderRequest))
+		return srv.(PaymentProvidersServiceServer).Get(ctx, req.(*GetRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentProviderService_CreateCashfreePaymentProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateCashfreePaymentProviderRequest)
+func _PaymentProvidersService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentProviderServiceServer).CreateCashfreePaymentProvider(ctx, in)
+		return srv.(PaymentProvidersServiceServer).Delete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PaymentProviderService_CreateCashfreePaymentProvider_FullMethodName,
+		FullMethod: PaymentProvidersService_Delete_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentProviderServiceServer).CreateCashfreePaymentProvider(ctx, req.(*CreateCashfreePaymentProviderRequest))
+		return srv.(PaymentProvidersServiceServer).Delete(ctx, req.(*DeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentProviderService_CreateFlutterwavePaymentProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateFlutterwavePaymentProviderRequest)
+func _PaymentProvidersService_CreateAdyen_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateAdyenRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentProviderServiceServer).CreateFlutterwavePaymentProvider(ctx, in)
+		return srv.(PaymentProvidersServiceServer).CreateAdyen(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PaymentProviderService_CreateFlutterwavePaymentProvider_FullMethodName,
+		FullMethod: PaymentProvidersService_CreateAdyen_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentProviderServiceServer).CreateFlutterwavePaymentProvider(ctx, req.(*CreateFlutterwavePaymentProviderRequest))
+		return srv.(PaymentProvidersServiceServer).CreateAdyen(ctx, req.(*CreateAdyenRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentProviderService_CreateGocardlessPaymentProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateGocardlessPaymentProviderRequest)
+func _PaymentProvidersService_UpdateAdyen_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateAdyenRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentProviderServiceServer).CreateGocardlessPaymentProvider(ctx, in)
+		return srv.(PaymentProvidersServiceServer).UpdateAdyen(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PaymentProviderService_CreateGocardlessPaymentProvider_FullMethodName,
+		FullMethod: PaymentProvidersService_UpdateAdyen_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentProviderServiceServer).CreateGocardlessPaymentProvider(ctx, req.(*CreateGocardlessPaymentProviderRequest))
+		return srv.(PaymentProvidersServiceServer).UpdateAdyen(ctx, req.(*UpdateAdyenRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentProviderService_CreateMoneyhashPaymentProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateMoneyhashPaymentProviderRequest)
+func _PaymentProvidersService_CreateCashfree_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCashfreeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentProviderServiceServer).CreateMoneyhashPaymentProvider(ctx, in)
+		return srv.(PaymentProvidersServiceServer).CreateCashfree(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PaymentProviderService_CreateMoneyhashPaymentProvider_FullMethodName,
+		FullMethod: PaymentProvidersService_CreateCashfree_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentProviderServiceServer).CreateMoneyhashPaymentProvider(ctx, req.(*CreateMoneyhashPaymentProviderRequest))
+		return srv.(PaymentProvidersServiceServer).CreateCashfree(ctx, req.(*CreateCashfreeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentProviderService_CreateStripePaymentProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateStripePaymentProviderRequest)
+func _PaymentProvidersService_UpdateCashfree_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCashfreeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentProviderServiceServer).CreateStripePaymentProvider(ctx, in)
+		return srv.(PaymentProvidersServiceServer).UpdateCashfree(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PaymentProviderService_CreateStripePaymentProvider_FullMethodName,
+		FullMethod: PaymentProvidersService_UpdateCashfree_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentProviderServiceServer).CreateStripePaymentProvider(ctx, req.(*CreateStripePaymentProviderRequest))
+		return srv.(PaymentProvidersServiceServer).UpdateCashfree(ctx, req.(*UpdateCashfreeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentProviderService_CreateTapPaymentProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateTapPaymentProviderRequest)
+func _PaymentProvidersService_CreateFlutterwave_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateFlutterwaveRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentProviderServiceServer).CreateTapPaymentProvider(ctx, in)
+		return srv.(PaymentProvidersServiceServer).CreateFlutterwave(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PaymentProviderService_CreateTapPaymentProvider_FullMethodName,
+		FullMethod: PaymentProvidersService_CreateFlutterwave_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentProviderServiceServer).CreateTapPaymentProvider(ctx, req.(*CreateTapPaymentProviderRequest))
+		return srv.(PaymentProvidersServiceServer).CreateFlutterwave(ctx, req.(*CreateFlutterwaveRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentProviderService_UpdateAdyenPaymentProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateAdyenPaymentProviderRequest)
+func _PaymentProvidersService_UpdateFlutterwave_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateFlutterwaveRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentProviderServiceServer).UpdateAdyenPaymentProvider(ctx, in)
+		return srv.(PaymentProvidersServiceServer).UpdateFlutterwave(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PaymentProviderService_UpdateAdyenPaymentProvider_FullMethodName,
+		FullMethod: PaymentProvidersService_UpdateFlutterwave_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentProviderServiceServer).UpdateAdyenPaymentProvider(ctx, req.(*UpdateAdyenPaymentProviderRequest))
+		return srv.(PaymentProvidersServiceServer).UpdateFlutterwave(ctx, req.(*UpdateFlutterwaveRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentProviderService_UpdateCashfreePaymentProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateCashfreePaymentProviderRequest)
+func _PaymentProvidersService_CreateGocardless_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateGocardlessRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentProviderServiceServer).UpdateCashfreePaymentProvider(ctx, in)
+		return srv.(PaymentProvidersServiceServer).CreateGocardless(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PaymentProviderService_UpdateCashfreePaymentProvider_FullMethodName,
+		FullMethod: PaymentProvidersService_CreateGocardless_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentProviderServiceServer).UpdateCashfreePaymentProvider(ctx, req.(*UpdateCashfreePaymentProviderRequest))
+		return srv.(PaymentProvidersServiceServer).CreateGocardless(ctx, req.(*CreateGocardlessRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentProviderService_UpdateFlutterwavePaymentProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateFlutterwavePaymentProviderRequest)
+func _PaymentProvidersService_UpdateGocardless_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateGocardlessRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentProviderServiceServer).UpdateFlutterwavePaymentProvider(ctx, in)
+		return srv.(PaymentProvidersServiceServer).UpdateGocardless(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PaymentProviderService_UpdateFlutterwavePaymentProvider_FullMethodName,
+		FullMethod: PaymentProvidersService_UpdateGocardless_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentProviderServiceServer).UpdateFlutterwavePaymentProvider(ctx, req.(*UpdateFlutterwavePaymentProviderRequest))
+		return srv.(PaymentProvidersServiceServer).UpdateGocardless(ctx, req.(*UpdateGocardlessRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentProviderService_UpdateGocardlessPaymentProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateGocardlessPaymentProviderRequest)
+func _PaymentProvidersService_CreateMoneyhash_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateMoneyhashRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentProviderServiceServer).UpdateGocardlessPaymentProvider(ctx, in)
+		return srv.(PaymentProvidersServiceServer).CreateMoneyhash(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PaymentProviderService_UpdateGocardlessPaymentProvider_FullMethodName,
+		FullMethod: PaymentProvidersService_CreateMoneyhash_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentProviderServiceServer).UpdateGocardlessPaymentProvider(ctx, req.(*UpdateGocardlessPaymentProviderRequest))
+		return srv.(PaymentProvidersServiceServer).CreateMoneyhash(ctx, req.(*CreateMoneyhashRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentProviderService_UpdateMoneyhashPaymentProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateMoneyhashPaymentProviderRequest)
+func _PaymentProvidersService_UpdateMoneyhash_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateMoneyhashRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentProviderServiceServer).UpdateMoneyhashPaymentProvider(ctx, in)
+		return srv.(PaymentProvidersServiceServer).UpdateMoneyhash(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PaymentProviderService_UpdateMoneyhashPaymentProvider_FullMethodName,
+		FullMethod: PaymentProvidersService_UpdateMoneyhash_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentProviderServiceServer).UpdateMoneyhashPaymentProvider(ctx, req.(*UpdateMoneyhashPaymentProviderRequest))
+		return srv.(PaymentProvidersServiceServer).UpdateMoneyhash(ctx, req.(*UpdateMoneyhashRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentProviderService_UpdateStripePaymentProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateStripePaymentProviderRequest)
+func _PaymentProvidersService_CreateStripe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateStripeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentProviderServiceServer).UpdateStripePaymentProvider(ctx, in)
+		return srv.(PaymentProvidersServiceServer).CreateStripe(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PaymentProviderService_UpdateStripePaymentProvider_FullMethodName,
+		FullMethod: PaymentProvidersService_CreateStripe_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentProviderServiceServer).UpdateStripePaymentProvider(ctx, req.(*UpdateStripePaymentProviderRequest))
+		return srv.(PaymentProvidersServiceServer).CreateStripe(ctx, req.(*CreateStripeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentProviderService_UpdateTapPaymentProvider_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateTapPaymentProviderRequest)
+func _PaymentProvidersService_UpdateStripe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateStripeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentProviderServiceServer).UpdateTapPaymentProvider(ctx, in)
+		return srv.(PaymentProvidersServiceServer).UpdateStripe(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PaymentProviderService_UpdateTapPaymentProvider_FullMethodName,
+		FullMethod: PaymentProvidersService_UpdateStripe_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentProviderServiceServer).UpdateTapPaymentProvider(ctx, req.(*UpdateTapPaymentProviderRequest))
+		return srv.(PaymentProvidersServiceServer).UpdateStripe(ctx, req.(*UpdateStripeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// PaymentProviderService_ServiceDesc is the grpc.ServiceDesc for PaymentProviderService service.
+func _PaymentProvidersService_CreateTap_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTapRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentProvidersServiceServer).CreateTap(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentProvidersService_CreateTap_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentProvidersServiceServer).CreateTap(ctx, req.(*CreateTapRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PaymentProvidersService_UpdateTap_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateTapRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentProvidersServiceServer).UpdateTap(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentProvidersService_UpdateTap_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentProvidersServiceServer).UpdateTap(ctx, req.(*UpdateTapRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// PaymentProvidersService_ServiceDesc is the grpc.ServiceDesc for PaymentProvidersService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var PaymentProviderService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "invora.billing.payment_providers.v2.PaymentProviderService",
-	HandlerType: (*PaymentProviderServiceServer)(nil),
+var PaymentProvidersService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "invora.billing.payment_providers.v2.PaymentProvidersService",
+	HandlerType: (*PaymentProvidersServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Get",
-			Handler:    _PaymentProviderService_Get_Handler,
-		},
-		{
 			MethodName: "List",
-			Handler:    _PaymentProviderService_List_Handler,
+			Handler:    _PaymentProvidersService_List_Handler,
 		},
 		{
-			MethodName: "CreateAdyenPaymentProvider",
-			Handler:    _PaymentProviderService_CreateAdyenPaymentProvider_Handler,
+			MethodName: "Get",
+			Handler:    _PaymentProvidersService_Get_Handler,
 		},
 		{
-			MethodName: "CreateCashfreePaymentProvider",
-			Handler:    _PaymentProviderService_CreateCashfreePaymentProvider_Handler,
+			MethodName: "Delete",
+			Handler:    _PaymentProvidersService_Delete_Handler,
 		},
 		{
-			MethodName: "CreateFlutterwavePaymentProvider",
-			Handler:    _PaymentProviderService_CreateFlutterwavePaymentProvider_Handler,
+			MethodName: "CreateAdyen",
+			Handler:    _PaymentProvidersService_CreateAdyen_Handler,
 		},
 		{
-			MethodName: "CreateGocardlessPaymentProvider",
-			Handler:    _PaymentProviderService_CreateGocardlessPaymentProvider_Handler,
+			MethodName: "UpdateAdyen",
+			Handler:    _PaymentProvidersService_UpdateAdyen_Handler,
 		},
 		{
-			MethodName: "CreateMoneyhashPaymentProvider",
-			Handler:    _PaymentProviderService_CreateMoneyhashPaymentProvider_Handler,
+			MethodName: "CreateCashfree",
+			Handler:    _PaymentProvidersService_CreateCashfree_Handler,
 		},
 		{
-			MethodName: "CreateStripePaymentProvider",
-			Handler:    _PaymentProviderService_CreateStripePaymentProvider_Handler,
+			MethodName: "UpdateCashfree",
+			Handler:    _PaymentProvidersService_UpdateCashfree_Handler,
 		},
 		{
-			MethodName: "CreateTapPaymentProvider",
-			Handler:    _PaymentProviderService_CreateTapPaymentProvider_Handler,
+			MethodName: "CreateFlutterwave",
+			Handler:    _PaymentProvidersService_CreateFlutterwave_Handler,
 		},
 		{
-			MethodName: "UpdateAdyenPaymentProvider",
-			Handler:    _PaymentProviderService_UpdateAdyenPaymentProvider_Handler,
+			MethodName: "UpdateFlutterwave",
+			Handler:    _PaymentProvidersService_UpdateFlutterwave_Handler,
 		},
 		{
-			MethodName: "UpdateCashfreePaymentProvider",
-			Handler:    _PaymentProviderService_UpdateCashfreePaymentProvider_Handler,
+			MethodName: "CreateGocardless",
+			Handler:    _PaymentProvidersService_CreateGocardless_Handler,
 		},
 		{
-			MethodName: "UpdateFlutterwavePaymentProvider",
-			Handler:    _PaymentProviderService_UpdateFlutterwavePaymentProvider_Handler,
+			MethodName: "UpdateGocardless",
+			Handler:    _PaymentProvidersService_UpdateGocardless_Handler,
 		},
 		{
-			MethodName: "UpdateGocardlessPaymentProvider",
-			Handler:    _PaymentProviderService_UpdateGocardlessPaymentProvider_Handler,
+			MethodName: "CreateMoneyhash",
+			Handler:    _PaymentProvidersService_CreateMoneyhash_Handler,
 		},
 		{
-			MethodName: "UpdateMoneyhashPaymentProvider",
-			Handler:    _PaymentProviderService_UpdateMoneyhashPaymentProvider_Handler,
+			MethodName: "UpdateMoneyhash",
+			Handler:    _PaymentProvidersService_UpdateMoneyhash_Handler,
 		},
 		{
-			MethodName: "UpdateStripePaymentProvider",
-			Handler:    _PaymentProviderService_UpdateStripePaymentProvider_Handler,
+			MethodName: "CreateStripe",
+			Handler:    _PaymentProvidersService_CreateStripe_Handler,
 		},
 		{
-			MethodName: "UpdateTapPaymentProvider",
-			Handler:    _PaymentProviderService_UpdateTapPaymentProvider_Handler,
+			MethodName: "UpdateStripe",
+			Handler:    _PaymentProvidersService_UpdateStripe_Handler,
+		},
+		{
+			MethodName: "CreateTap",
+			Handler:    _PaymentProvidersService_CreateTap_Handler,
+		},
+		{
+			MethodName: "UpdateTap",
+			Handler:    _PaymentProvidersService_UpdateTap_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

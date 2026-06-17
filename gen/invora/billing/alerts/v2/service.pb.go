@@ -13,7 +13,6 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
-	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -26,183 +25,133 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Controls response detail level for List and Get operations.
-type View int32
+type AlertType int32
 
 const (
-	View_VIEW_UNSPECIFIED View = 0
-	View_VIEW_BASIC       View = 1
-	View_VIEW_FULL        View = 2
+	AlertType_ALERT_TYPE_UNSPECIFIED                          AlertType = 0
+	AlertType_ALERT_TYPE_BILLABLE_METRIC_CURRENT_USAGE_AMOUNT AlertType = 1
+	AlertType_ALERT_TYPE_BILLABLE_METRIC_CURRENT_USAGE_UNITS  AlertType = 2
+	AlertType_ALERT_TYPE_BILLABLE_METRIC_LIFETIME_USAGE_UNITS AlertType = 3
+	AlertType_ALERT_TYPE_CURRENT_USAGE_AMOUNT                 AlertType = 4
+	AlertType_ALERT_TYPE_LIFETIME_USAGE_AMOUNT                AlertType = 5
+	AlertType_ALERT_TYPE_WALLET_BALANCE_AMOUNT                AlertType = 6
+	AlertType_ALERT_TYPE_WALLET_CREDITS_BALANCE               AlertType = 7
+	AlertType_ALERT_TYPE_WALLET_CREDITS_ONGOING_BALANCE       AlertType = 8
+	AlertType_ALERT_TYPE_WALLET_ONGOING_BALANCE_AMOUNT        AlertType = 9
 )
 
-// Enum value maps for View.
+// Enum value maps for AlertType.
 var (
-	View_name = map[int32]string{
-		0: "VIEW_UNSPECIFIED",
-		1: "VIEW_BASIC",
-		2: "VIEW_FULL",
+	AlertType_name = map[int32]string{
+		0: "ALERT_TYPE_UNSPECIFIED",
+		1: "ALERT_TYPE_BILLABLE_METRIC_CURRENT_USAGE_AMOUNT",
+		2: "ALERT_TYPE_BILLABLE_METRIC_CURRENT_USAGE_UNITS",
+		3: "ALERT_TYPE_BILLABLE_METRIC_LIFETIME_USAGE_UNITS",
+		4: "ALERT_TYPE_CURRENT_USAGE_AMOUNT",
+		5: "ALERT_TYPE_LIFETIME_USAGE_AMOUNT",
+		6: "ALERT_TYPE_WALLET_BALANCE_AMOUNT",
+		7: "ALERT_TYPE_WALLET_CREDITS_BALANCE",
+		8: "ALERT_TYPE_WALLET_CREDITS_ONGOING_BALANCE",
+		9: "ALERT_TYPE_WALLET_ONGOING_BALANCE_AMOUNT",
 	}
-	View_value = map[string]int32{
-		"VIEW_UNSPECIFIED": 0,
-		"VIEW_BASIC":       1,
-		"VIEW_FULL":        2,
+	AlertType_value = map[string]int32{
+		"ALERT_TYPE_UNSPECIFIED":                          0,
+		"ALERT_TYPE_BILLABLE_METRIC_CURRENT_USAGE_AMOUNT": 1,
+		"ALERT_TYPE_BILLABLE_METRIC_CURRENT_USAGE_UNITS":  2,
+		"ALERT_TYPE_BILLABLE_METRIC_LIFETIME_USAGE_UNITS": 3,
+		"ALERT_TYPE_CURRENT_USAGE_AMOUNT":                 4,
+		"ALERT_TYPE_LIFETIME_USAGE_AMOUNT":                5,
+		"ALERT_TYPE_WALLET_BALANCE_AMOUNT":                6,
+		"ALERT_TYPE_WALLET_CREDITS_BALANCE":               7,
+		"ALERT_TYPE_WALLET_CREDITS_ONGOING_BALANCE":       8,
+		"ALERT_TYPE_WALLET_ONGOING_BALANCE_AMOUNT":        9,
 	}
 )
 
-func (x View) Enum() *View {
-	p := new(View)
+func (x AlertType) Enum() *AlertType {
+	p := new(AlertType)
 	*p = x
 	return p
 }
 
-func (x View) String() string {
+func (x AlertType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (View) Descriptor() protoreflect.EnumDescriptor {
+func (AlertType) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_alerts_v2_service_proto_enumTypes[0].Descriptor()
 }
 
-func (View) Type() protoreflect.EnumType {
+func (AlertType) Type() protoreflect.EnumType {
 	return &file_invora_billing_alerts_v2_service_proto_enumTypes[0]
 }
 
-func (x View) Number() protoreflect.EnumNumber {
+func (x AlertType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use View.Descriptor instead.
-func (View) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use AlertType.Descriptor instead.
+func (AlertType) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{0}
 }
 
-type AlertTypeEnum int32
+type Direction int32
 
 const (
-	AlertTypeEnum_ALERT_TYPE_ENUM_UNSPECIFIED                          AlertTypeEnum = 0
-	AlertTypeEnum_ALERT_TYPE_ENUM_BILLABLE_METRIC_CURRENT_USAGE_AMOUNT AlertTypeEnum = 1
-	AlertTypeEnum_ALERT_TYPE_ENUM_BILLABLE_METRIC_CURRENT_USAGE_UNITS  AlertTypeEnum = 2
-	AlertTypeEnum_ALERT_TYPE_ENUM_BILLABLE_METRIC_LIFETIME_USAGE_UNITS AlertTypeEnum = 3
-	AlertTypeEnum_ALERT_TYPE_ENUM_CURRENT_USAGE_AMOUNT                 AlertTypeEnum = 4
-	AlertTypeEnum_ALERT_TYPE_ENUM_LIFETIME_USAGE_AMOUNT                AlertTypeEnum = 5
-	AlertTypeEnum_ALERT_TYPE_ENUM_WALLET_BALANCE_AMOUNT                AlertTypeEnum = 6
-	AlertTypeEnum_ALERT_TYPE_ENUM_WALLET_CREDITS_BALANCE               AlertTypeEnum = 7
-	AlertTypeEnum_ALERT_TYPE_ENUM_WALLET_CREDITS_ONGOING_BALANCE       AlertTypeEnum = 8
-	AlertTypeEnum_ALERT_TYPE_ENUM_WALLET_ONGOING_BALANCE_AMOUNT        AlertTypeEnum = 9
+	Direction_DIRECTION_UNSPECIFIED Direction = 0
+	Direction_DIRECTION_DECREASING  Direction = 1
+	Direction_DIRECTION_INCREASING  Direction = 2
 )
 
-// Enum value maps for AlertTypeEnum.
+// Enum value maps for Direction.
 var (
-	AlertTypeEnum_name = map[int32]string{
-		0: "ALERT_TYPE_ENUM_UNSPECIFIED",
-		1: "ALERT_TYPE_ENUM_BILLABLE_METRIC_CURRENT_USAGE_AMOUNT",
-		2: "ALERT_TYPE_ENUM_BILLABLE_METRIC_CURRENT_USAGE_UNITS",
-		3: "ALERT_TYPE_ENUM_BILLABLE_METRIC_LIFETIME_USAGE_UNITS",
-		4: "ALERT_TYPE_ENUM_CURRENT_USAGE_AMOUNT",
-		5: "ALERT_TYPE_ENUM_LIFETIME_USAGE_AMOUNT",
-		6: "ALERT_TYPE_ENUM_WALLET_BALANCE_AMOUNT",
-		7: "ALERT_TYPE_ENUM_WALLET_CREDITS_BALANCE",
-		8: "ALERT_TYPE_ENUM_WALLET_CREDITS_ONGOING_BALANCE",
-		9: "ALERT_TYPE_ENUM_WALLET_ONGOING_BALANCE_AMOUNT",
+	Direction_name = map[int32]string{
+		0: "DIRECTION_UNSPECIFIED",
+		1: "DIRECTION_DECREASING",
+		2: "DIRECTION_INCREASING",
 	}
-	AlertTypeEnum_value = map[string]int32{
-		"ALERT_TYPE_ENUM_UNSPECIFIED":                          0,
-		"ALERT_TYPE_ENUM_BILLABLE_METRIC_CURRENT_USAGE_AMOUNT": 1,
-		"ALERT_TYPE_ENUM_BILLABLE_METRIC_CURRENT_USAGE_UNITS":  2,
-		"ALERT_TYPE_ENUM_BILLABLE_METRIC_LIFETIME_USAGE_UNITS": 3,
-		"ALERT_TYPE_ENUM_CURRENT_USAGE_AMOUNT":                 4,
-		"ALERT_TYPE_ENUM_LIFETIME_USAGE_AMOUNT":                5,
-		"ALERT_TYPE_ENUM_WALLET_BALANCE_AMOUNT":                6,
-		"ALERT_TYPE_ENUM_WALLET_CREDITS_BALANCE":               7,
-		"ALERT_TYPE_ENUM_WALLET_CREDITS_ONGOING_BALANCE":       8,
-		"ALERT_TYPE_ENUM_WALLET_ONGOING_BALANCE_AMOUNT":        9,
+	Direction_value = map[string]int32{
+		"DIRECTION_UNSPECIFIED": 0,
+		"DIRECTION_DECREASING":  1,
+		"DIRECTION_INCREASING":  2,
 	}
 )
 
-func (x AlertTypeEnum) Enum() *AlertTypeEnum {
-	p := new(AlertTypeEnum)
+func (x Direction) Enum() *Direction {
+	p := new(Direction)
 	*p = x
 	return p
 }
 
-func (x AlertTypeEnum) String() string {
+func (x Direction) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (AlertTypeEnum) Descriptor() protoreflect.EnumDescriptor {
+func (Direction) Descriptor() protoreflect.EnumDescriptor {
 	return file_invora_billing_alerts_v2_service_proto_enumTypes[1].Descriptor()
 }
 
-func (AlertTypeEnum) Type() protoreflect.EnumType {
+func (Direction) Type() protoreflect.EnumType {
 	return &file_invora_billing_alerts_v2_service_proto_enumTypes[1]
 }
 
-func (x AlertTypeEnum) Number() protoreflect.EnumNumber {
+func (x Direction) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use AlertTypeEnum.Descriptor instead.
-func (AlertTypeEnum) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use Direction.Descriptor instead.
+func (Direction) EnumDescriptor() ([]byte, []int) {
 	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{1}
-}
-
-type DirectionEnum int32
-
-const (
-	DirectionEnum_DIRECTION_ENUM_UNSPECIFIED DirectionEnum = 0
-	DirectionEnum_DIRECTION_ENUM_DECREASING  DirectionEnum = 1
-	DirectionEnum_DIRECTION_ENUM_INCREASING  DirectionEnum = 2
-)
-
-// Enum value maps for DirectionEnum.
-var (
-	DirectionEnum_name = map[int32]string{
-		0: "DIRECTION_ENUM_UNSPECIFIED",
-		1: "DIRECTION_ENUM_DECREASING",
-		2: "DIRECTION_ENUM_INCREASING",
-	}
-	DirectionEnum_value = map[string]int32{
-		"DIRECTION_ENUM_UNSPECIFIED": 0,
-		"DIRECTION_ENUM_DECREASING":  1,
-		"DIRECTION_ENUM_INCREASING":  2,
-	}
-)
-
-func (x DirectionEnum) Enum() *DirectionEnum {
-	p := new(DirectionEnum)
-	*p = x
-	return p
-}
-
-func (x DirectionEnum) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (DirectionEnum) Descriptor() protoreflect.EnumDescriptor {
-	return file_invora_billing_alerts_v2_service_proto_enumTypes[2].Descriptor()
-}
-
-func (DirectionEnum) Type() protoreflect.EnumType {
-	return &file_invora_billing_alerts_v2_service_proto_enumTypes[2]
-}
-
-func (x DirectionEnum) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use DirectionEnum.Descriptor instead.
-func (DirectionEnum) EnumDescriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{2}
 }
 
 type GetRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Unique ID of the alert
+	// Unique ID of the alert.
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Fields to return in the response.
 	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.alerts.v2.View" json:"view,omitempty"`
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -251,11 +200,11 @@ func (x *GetRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	return nil
 }
 
-func (x *GetRequest) GetView() View {
+func (x *GetRequest) GetView() v2.View {
 	if x != nil {
 		return x.View
 	}
-	return View_VIEW_UNSPECIFIED
+	return v2.View(0)
 }
 
 type GetResponse struct {
@@ -310,7 +259,7 @@ type ListRequest struct {
 	// Fields to return in the response.
 	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.alerts.v2.View" json:"view,omitempty"`
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -373,18 +322,18 @@ func (x *ListRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	return nil
 }
 
-func (x *ListRequest) GetView() View {
+func (x *ListRequest) GetView() v2.View {
 	if x != nil {
 		return x.View
 	}
-	return View_VIEW_UNSPECIFIED
+	return v2.View(0)
 }
 
 type ListResponse struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Items          []*v2.BillingAlert      `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Items          []*v2.BillingAlert     `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -433,11 +382,11 @@ func (x *ListResponse) GetTotalCount() uint64 {
 	return 0
 }
 
-func (x *ListResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
+func (x *ListResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
 	}
-	return nil
+	return ""
 }
 
 type ListFilter struct {
@@ -489,6 +438,8 @@ type ListFilterPart struct {
 	// Types that are valid to be assigned to Type:
 	//
 	//	*ListFilterPart_SubscriptionExternalId
+	//	*ListFilterPart_WalletId
+	//	*ListFilterPart_AlertType
 	Type          isListFilterPart_Type `protobuf_oneof:"type"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -540,6 +491,24 @@ func (x *ListFilterPart) GetSubscriptionExternalId() string {
 	return ""
 }
 
+func (x *ListFilterPart) GetWalletId() string {
+	if x != nil {
+		if x, ok := x.Type.(*ListFilterPart_WalletId); ok {
+			return x.WalletId
+		}
+	}
+	return ""
+}
+
+func (x *ListFilterPart) GetAlertType() AlertType {
+	if x != nil {
+		if x, ok := x.Type.(*ListFilterPart_AlertType); ok {
+			return x.AlertType
+		}
+	}
+	return AlertType_ALERT_TYPE_UNSPECIFIED
+}
+
 type isListFilterPart_Type interface {
 	isListFilterPart_Type()
 }
@@ -548,7 +517,19 @@ type ListFilterPart_SubscriptionExternalId struct {
 	SubscriptionExternalId string `protobuf:"bytes,1,opt,name=subscription_external_id,json=subscriptionExternalId,proto3,oneof"`
 }
 
+type ListFilterPart_WalletId struct {
+	WalletId string `protobuf:"bytes,2,opt,name=wallet_id,json=walletId,proto3,oneof"`
+}
+
+type ListFilterPart_AlertType struct {
+	AlertType AlertType `protobuf:"varint,3,opt,name=alert_type,json=alertType,proto3,enum=invora.billing.alerts.v2.AlertType,oneof"`
+}
+
 func (*ListFilterPart_SubscriptionExternalId) isListFilterPart_Type() {}
+
+func (*ListFilterPart_WalletId) isListFilterPart_Type() {}
+
+func (*ListFilterPart_AlertType) isListFilterPart_Type() {}
 
 type ListSort struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -660,1101 +641,6 @@ type ListSortRule_CreatedAt struct {
 
 func (*ListSortRule_CreatedAt) isListSortRule_Type() {}
 
-type SubscriptionAlertRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Unique ID of the alert
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.alerts.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SubscriptionAlertRequest) Reset() {
-	*x = SubscriptionAlertRequest{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[8]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SubscriptionAlertRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SubscriptionAlertRequest) ProtoMessage() {}
-
-func (x *SubscriptionAlertRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[8]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SubscriptionAlertRequest.ProtoReflect.Descriptor instead.
-func (*SubscriptionAlertRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{8}
-}
-
-func (x *SubscriptionAlertRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *SubscriptionAlertRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *SubscriptionAlertRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type SubscriptionAlertResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Alert         *v2.BillingAlert       `protobuf:"bytes,1,opt,name=alert,proto3" json:"alert,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SubscriptionAlertResponse) Reset() {
-	*x = SubscriptionAlertResponse{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[9]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SubscriptionAlertResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SubscriptionAlertResponse) ProtoMessage() {}
-
-func (x *SubscriptionAlertResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[9]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SubscriptionAlertResponse.ProtoReflect.Descriptor instead.
-func (*SubscriptionAlertResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{9}
-}
-
-func (x *SubscriptionAlertResponse) GetAlert() *v2.BillingAlert {
-	if x != nil {
-		return x.Alert
-	}
-	return nil
-}
-
-type SubscriptionAlertsRequest struct {
-	state      protoimpl.MessageState `protogen:"open.v1"`
-	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
-	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
-	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.alerts.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SubscriptionAlertsRequest) Reset() {
-	*x = SubscriptionAlertsRequest{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[10]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SubscriptionAlertsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SubscriptionAlertsRequest) ProtoMessage() {}
-
-func (x *SubscriptionAlertsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[10]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SubscriptionAlertsRequest.ProtoReflect.Descriptor instead.
-func (*SubscriptionAlertsRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{10}
-}
-
-func (x *SubscriptionAlertsRequest) GetFilter() *ListFilter {
-	if x != nil {
-		return x.Filter
-	}
-	return nil
-}
-
-func (x *SubscriptionAlertsRequest) GetSort() *ListSort {
-	if x != nil {
-		return x.Sort
-	}
-	return nil
-}
-
-func (x *SubscriptionAlertsRequest) GetPagination() *kernel.PaginationInfo {
-	if x != nil {
-		return x.Pagination
-	}
-	return nil
-}
-
-func (x *SubscriptionAlertsRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *SubscriptionAlertsRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type SubscriptionAlertsResponse struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Items          []*v2.BillingAlert      `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *SubscriptionAlertsResponse) Reset() {
-	*x = SubscriptionAlertsResponse{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[11]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SubscriptionAlertsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SubscriptionAlertsResponse) ProtoMessage() {}
-
-func (x *SubscriptionAlertsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[11]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SubscriptionAlertsResponse.ProtoReflect.Descriptor instead.
-func (*SubscriptionAlertsResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{11}
-}
-
-func (x *SubscriptionAlertsResponse) GetItems() []*v2.BillingAlert {
-	if x != nil {
-		return x.Items
-	}
-	return nil
-}
-
-func (x *SubscriptionAlertsResponse) GetTotalCount() uint64 {
-	if x != nil {
-		return x.TotalCount
-	}
-	return 0
-}
-
-func (x *SubscriptionAlertsResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
-	}
-	return nil
-}
-
-type WalletAlertRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Unique ID of the alert
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.alerts.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *WalletAlertRequest) Reset() {
-	*x = WalletAlertRequest{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[12]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *WalletAlertRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*WalletAlertRequest) ProtoMessage() {}
-
-func (x *WalletAlertRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[12]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use WalletAlertRequest.ProtoReflect.Descriptor instead.
-func (*WalletAlertRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{12}
-}
-
-func (x *WalletAlertRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *WalletAlertRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *WalletAlertRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type WalletAlertResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Alert         *v2.BillingAlert       `protobuf:"bytes,1,opt,name=alert,proto3" json:"alert,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *WalletAlertResponse) Reset() {
-	*x = WalletAlertResponse{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[13]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *WalletAlertResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*WalletAlertResponse) ProtoMessage() {}
-
-func (x *WalletAlertResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[13]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use WalletAlertResponse.ProtoReflect.Descriptor instead.
-func (*WalletAlertResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{13}
-}
-
-func (x *WalletAlertResponse) GetAlert() *v2.BillingAlert {
-	if x != nil {
-		return x.Alert
-	}
-	return nil
-}
-
-type WalletAlertsRequest struct {
-	state      protoimpl.MessageState `protogen:"open.v1"`
-	Filter     *ListFilter            `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
-	Sort       *ListSort              `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
-	Pagination *kernel.PaginationInfo `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// Fields to return in the response.
-	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.alerts.v2.View" json:"view,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *WalletAlertsRequest) Reset() {
-	*x = WalletAlertsRequest{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[14]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *WalletAlertsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*WalletAlertsRequest) ProtoMessage() {}
-
-func (x *WalletAlertsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[14]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use WalletAlertsRequest.ProtoReflect.Descriptor instead.
-func (*WalletAlertsRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{14}
-}
-
-func (x *WalletAlertsRequest) GetFilter() *ListFilter {
-	if x != nil {
-		return x.Filter
-	}
-	return nil
-}
-
-func (x *WalletAlertsRequest) GetSort() *ListSort {
-	if x != nil {
-		return x.Sort
-	}
-	return nil
-}
-
-func (x *WalletAlertsRequest) GetPagination() *kernel.PaginationInfo {
-	if x != nil {
-		return x.Pagination
-	}
-	return nil
-}
-
-func (x *WalletAlertsRequest) GetReadMask() *fieldmaskpb.FieldMask {
-	if x != nil {
-		return x.ReadMask
-	}
-	return nil
-}
-
-func (x *WalletAlertsRequest) GetView() View {
-	if x != nil {
-		return x.View
-	}
-	return View_VIEW_UNSPECIFIED
-}
-
-type WalletAlertsResponse struct {
-	state          protoimpl.MessageState  `protogen:"open.v1"`
-	Items          []*v2.BillingAlert      `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	TotalCount     uint64                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *WalletAlertsResponse) Reset() {
-	*x = WalletAlertsResponse{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[15]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *WalletAlertsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*WalletAlertsResponse) ProtoMessage() {}
-
-func (x *WalletAlertsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[15]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use WalletAlertsResponse.ProtoReflect.Descriptor instead.
-func (*WalletAlertsResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{15}
-}
-
-func (x *WalletAlertsResponse) GetItems() []*v2.BillingAlert {
-	if x != nil {
-		return x.Items
-	}
-	return nil
-}
-
-func (x *WalletAlertsResponse) GetTotalCount() uint64 {
-	if x != nil {
-		return x.TotalCount
-	}
-	return 0
-}
-
-func (x *WalletAlertsResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
-	}
-	return nil
-}
-
-type CreateCustomerWalletAlertRequest struct {
-	state         protoimpl.MessageState          `protogen:"open.v1"`
-	Input         *CreateCustomerWalletAlertInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateCustomerWalletAlertRequest) Reset() {
-	*x = CreateCustomerWalletAlertRequest{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[16]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateCustomerWalletAlertRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateCustomerWalletAlertRequest) ProtoMessage() {}
-
-func (x *CreateCustomerWalletAlertRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[16]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateCustomerWalletAlertRequest.ProtoReflect.Descriptor instead.
-func (*CreateCustomerWalletAlertRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{16}
-}
-
-func (x *CreateCustomerWalletAlertRequest) GetInput() *CreateCustomerWalletAlertInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type CreateCustomerWalletAlertResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Alert         *v2.BillingAlert       `protobuf:"bytes,1,opt,name=alert,proto3" json:"alert,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateCustomerWalletAlertResponse) Reset() {
-	*x = CreateCustomerWalletAlertResponse{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[17]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateCustomerWalletAlertResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateCustomerWalletAlertResponse) ProtoMessage() {}
-
-func (x *CreateCustomerWalletAlertResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[17]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateCustomerWalletAlertResponse.ProtoReflect.Descriptor instead.
-func (*CreateCustomerWalletAlertResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{17}
-}
-
-func (x *CreateCustomerWalletAlertResponse) GetAlert() *v2.BillingAlert {
-	if x != nil {
-		return x.Alert
-	}
-	return nil
-}
-
-type CreateSubscriptionAlertRequest struct {
-	state         protoimpl.MessageState        `protogen:"open.v1"`
-	Input         *CreateSubscriptionAlertInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateSubscriptionAlertRequest) Reset() {
-	*x = CreateSubscriptionAlertRequest{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[18]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateSubscriptionAlertRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateSubscriptionAlertRequest) ProtoMessage() {}
-
-func (x *CreateSubscriptionAlertRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[18]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateSubscriptionAlertRequest.ProtoReflect.Descriptor instead.
-func (*CreateSubscriptionAlertRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{18}
-}
-
-func (x *CreateSubscriptionAlertRequest) GetInput() *CreateSubscriptionAlertInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type CreateSubscriptionAlertResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Alert         *v2.BillingAlert       `protobuf:"bytes,1,opt,name=alert,proto3" json:"alert,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateSubscriptionAlertResponse) Reset() {
-	*x = CreateSubscriptionAlertResponse{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[19]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateSubscriptionAlertResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateSubscriptionAlertResponse) ProtoMessage() {}
-
-func (x *CreateSubscriptionAlertResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[19]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateSubscriptionAlertResponse.ProtoReflect.Descriptor instead.
-func (*CreateSubscriptionAlertResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{19}
-}
-
-func (x *CreateSubscriptionAlertResponse) GetAlert() *v2.BillingAlert {
-	if x != nil {
-		return x.Alert
-	}
-	return nil
-}
-
-type DeleteCustomerWalletAlertRequest struct {
-	state         protoimpl.MessageState           `protogen:"open.v1"`
-	Input         *DestroyCustomerWalletAlertInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteCustomerWalletAlertRequest) Reset() {
-	*x = DeleteCustomerWalletAlertRequest{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[20]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteCustomerWalletAlertRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteCustomerWalletAlertRequest) ProtoMessage() {}
-
-func (x *DeleteCustomerWalletAlertRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[20]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteCustomerWalletAlertRequest.ProtoReflect.Descriptor instead.
-func (*DeleteCustomerWalletAlertRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{20}
-}
-
-func (x *DeleteCustomerWalletAlertRequest) GetInput() *DestroyCustomerWalletAlertInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type DeleteCustomerWalletAlertResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Alert         *v2.BillingAlert       `protobuf:"bytes,1,opt,name=alert,proto3" json:"alert,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteCustomerWalletAlertResponse) Reset() {
-	*x = DeleteCustomerWalletAlertResponse{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[21]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteCustomerWalletAlertResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteCustomerWalletAlertResponse) ProtoMessage() {}
-
-func (x *DeleteCustomerWalletAlertResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[21]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteCustomerWalletAlertResponse.ProtoReflect.Descriptor instead.
-func (*DeleteCustomerWalletAlertResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{21}
-}
-
-func (x *DeleteCustomerWalletAlertResponse) GetAlert() *v2.BillingAlert {
-	if x != nil {
-		return x.Alert
-	}
-	return nil
-}
-
-type DeleteSubscriptionAlertRequest struct {
-	state         protoimpl.MessageState         `protogen:"open.v1"`
-	Input         *DestroySubscriptionAlertInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteSubscriptionAlertRequest) Reset() {
-	*x = DeleteSubscriptionAlertRequest{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[22]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteSubscriptionAlertRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteSubscriptionAlertRequest) ProtoMessage() {}
-
-func (x *DeleteSubscriptionAlertRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[22]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteSubscriptionAlertRequest.ProtoReflect.Descriptor instead.
-func (*DeleteSubscriptionAlertRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{22}
-}
-
-func (x *DeleteSubscriptionAlertRequest) GetInput() *DestroySubscriptionAlertInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type DeleteSubscriptionAlertResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Alert         *v2.BillingAlert       `protobuf:"bytes,1,opt,name=alert,proto3" json:"alert,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteSubscriptionAlertResponse) Reset() {
-	*x = DeleteSubscriptionAlertResponse{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[23]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteSubscriptionAlertResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteSubscriptionAlertResponse) ProtoMessage() {}
-
-func (x *DeleteSubscriptionAlertResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[23]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteSubscriptionAlertResponse.ProtoReflect.Descriptor instead.
-func (*DeleteSubscriptionAlertResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{23}
-}
-
-func (x *DeleteSubscriptionAlertResponse) GetAlert() *v2.BillingAlert {
-	if x != nil {
-		return x.Alert
-	}
-	return nil
-}
-
-type UpdateCustomerWalletAlertRequest struct {
-	state         protoimpl.MessageState          `protogen:"open.v1"`
-	Input         *UpdateCustomerWalletAlertInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateCustomerWalletAlertRequest) Reset() {
-	*x = UpdateCustomerWalletAlertRequest{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[24]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateCustomerWalletAlertRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateCustomerWalletAlertRequest) ProtoMessage() {}
-
-func (x *UpdateCustomerWalletAlertRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[24]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateCustomerWalletAlertRequest.ProtoReflect.Descriptor instead.
-func (*UpdateCustomerWalletAlertRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{24}
-}
-
-func (x *UpdateCustomerWalletAlertRequest) GetInput() *UpdateCustomerWalletAlertInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type UpdateCustomerWalletAlertResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Alert         *v2.BillingAlert       `protobuf:"bytes,1,opt,name=alert,proto3" json:"alert,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateCustomerWalletAlertResponse) Reset() {
-	*x = UpdateCustomerWalletAlertResponse{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[25]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateCustomerWalletAlertResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateCustomerWalletAlertResponse) ProtoMessage() {}
-
-func (x *UpdateCustomerWalletAlertResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[25]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateCustomerWalletAlertResponse.ProtoReflect.Descriptor instead.
-func (*UpdateCustomerWalletAlertResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{25}
-}
-
-func (x *UpdateCustomerWalletAlertResponse) GetAlert() *v2.BillingAlert {
-	if x != nil {
-		return x.Alert
-	}
-	return nil
-}
-
-type UpdateSubscriptionAlertRequest struct {
-	state         protoimpl.MessageState        `protogen:"open.v1"`
-	Input         *UpdateSubscriptionAlertInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateSubscriptionAlertRequest) Reset() {
-	*x = UpdateSubscriptionAlertRequest{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[26]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateSubscriptionAlertRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateSubscriptionAlertRequest) ProtoMessage() {}
-
-func (x *UpdateSubscriptionAlertRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[26]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateSubscriptionAlertRequest.ProtoReflect.Descriptor instead.
-func (*UpdateSubscriptionAlertRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{26}
-}
-
-func (x *UpdateSubscriptionAlertRequest) GetInput() *UpdateSubscriptionAlertInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type UpdateSubscriptionAlertResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Alert         *v2.BillingAlert       `protobuf:"bytes,1,opt,name=alert,proto3" json:"alert,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateSubscriptionAlertResponse) Reset() {
-	*x = UpdateSubscriptionAlertResponse{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[27]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateSubscriptionAlertResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateSubscriptionAlertResponse) ProtoMessage() {}
-
-func (x *UpdateSubscriptionAlertResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[27]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateSubscriptionAlertResponse.ProtoReflect.Descriptor instead.
-func (*UpdateSubscriptionAlertResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{27}
-}
-
-func (x *UpdateSubscriptionAlertResponse) GetAlert() *v2.BillingAlert {
-	if x != nil {
-		return x.Alert
-	}
-	return nil
-}
-
-// Autogenerated input type of UpdateSubscriptionAlert
-type UpdateSubscriptionAlertInput struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	BillableMetricId *string                `protobuf:"bytes,1,opt,name=billable_metric_id,json=billableMetricId,proto3,oneof" json:"billable_metric_id,omitempty"`
-	Code             *string                `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
-	Id               string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Name             *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	Thresholds       []*ThresholdInput      `protobuf:"bytes,5,rep,name=thresholds,proto3" json:"thresholds,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
-}
-
-func (x *UpdateSubscriptionAlertInput) Reset() {
-	*x = UpdateSubscriptionAlertInput{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[28]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateSubscriptionAlertInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateSubscriptionAlertInput) ProtoMessage() {}
-
-func (x *UpdateSubscriptionAlertInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[28]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateSubscriptionAlertInput.ProtoReflect.Descriptor instead.
-func (*UpdateSubscriptionAlertInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{28}
-}
-
-func (x *UpdateSubscriptionAlertInput) GetBillableMetricId() string {
-	if x != nil && x.BillableMetricId != nil {
-		return *x.BillableMetricId
-	}
-	return ""
-}
-
-func (x *UpdateSubscriptionAlertInput) GetCode() string {
-	if x != nil && x.Code != nil {
-		return *x.Code
-	}
-	return ""
-}
-
-func (x *UpdateSubscriptionAlertInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *UpdateSubscriptionAlertInput) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
-	}
-	return ""
-}
-
-func (x *UpdateSubscriptionAlertInput) GetThresholds() []*ThresholdInput {
-	if x != nil {
-		return x.Thresholds
-	}
-	return nil
-}
-
 type ThresholdInput struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Code          *string                `protobuf:"bytes,1,opt,name=code,proto3,oneof" json:"code,omitempty"`
@@ -1766,7 +652,7 @@ type ThresholdInput struct {
 
 func (x *ThresholdInput) Reset() {
 	*x = ThresholdInput{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[29]
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1778,7 +664,7 @@ func (x *ThresholdInput) String() string {
 func (*ThresholdInput) ProtoMessage() {}
 
 func (x *ThresholdInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[29]
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1791,7 +677,7 @@ func (x *ThresholdInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ThresholdInput.ProtoReflect.Descriptor instead.
 func (*ThresholdInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{29}
+	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ThresholdInput) GetCode() string {
@@ -1815,177 +701,9 @@ func (x *ThresholdInput) GetValue() string {
 	return ""
 }
 
-// Autogenerated input type of UpdateCustomerWalletAlert
-type UpdateCustomerWalletAlertInput struct {
+type CreateSubscriptionAlertRequest struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
-	BillableMetricId *string                `protobuf:"bytes,1,opt,name=billable_metric_id,json=billableMetricId,proto3,oneof" json:"billable_metric_id,omitempty"`
-	Code             *string                `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
-	Id               string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Name             *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	Thresholds       []*ThresholdInput      `protobuf:"bytes,5,rep,name=thresholds,proto3" json:"thresholds,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
-}
-
-func (x *UpdateCustomerWalletAlertInput) Reset() {
-	*x = UpdateCustomerWalletAlertInput{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[30]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateCustomerWalletAlertInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateCustomerWalletAlertInput) ProtoMessage() {}
-
-func (x *UpdateCustomerWalletAlertInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[30]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateCustomerWalletAlertInput.ProtoReflect.Descriptor instead.
-func (*UpdateCustomerWalletAlertInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{30}
-}
-
-func (x *UpdateCustomerWalletAlertInput) GetBillableMetricId() string {
-	if x != nil && x.BillableMetricId != nil {
-		return *x.BillableMetricId
-	}
-	return ""
-}
-
-func (x *UpdateCustomerWalletAlertInput) GetCode() string {
-	if x != nil && x.Code != nil {
-		return *x.Code
-	}
-	return ""
-}
-
-func (x *UpdateCustomerWalletAlertInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *UpdateCustomerWalletAlertInput) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
-	}
-	return ""
-}
-
-func (x *UpdateCustomerWalletAlertInput) GetThresholds() []*ThresholdInput {
-	if x != nil {
-		return x.Thresholds
-	}
-	return nil
-}
-
-// Autogenerated input type of DestroySubscriptionAlert
-type DestroySubscriptionAlertInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DestroySubscriptionAlertInput) Reset() {
-	*x = DestroySubscriptionAlertInput{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[31]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DestroySubscriptionAlertInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DestroySubscriptionAlertInput) ProtoMessage() {}
-
-func (x *DestroySubscriptionAlertInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[31]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DestroySubscriptionAlertInput.ProtoReflect.Descriptor instead.
-func (*DestroySubscriptionAlertInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{31}
-}
-
-func (x *DestroySubscriptionAlertInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-// Autogenerated input type of DestroyCustomerWalletAlert
-type DestroyCustomerWalletAlertInput struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DestroyCustomerWalletAlertInput) Reset() {
-	*x = DestroyCustomerWalletAlertInput{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[32]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DestroyCustomerWalletAlertInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DestroyCustomerWalletAlertInput) ProtoMessage() {}
-
-func (x *DestroyCustomerWalletAlertInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[32]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DestroyCustomerWalletAlertInput.ProtoReflect.Descriptor instead.
-func (*DestroyCustomerWalletAlertInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{32}
-}
-
-func (x *DestroyCustomerWalletAlertInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-// Autogenerated input type of CreateSubscriptionAlert
-type CreateSubscriptionAlertInput struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	AlertType        AlertTypeEnum          `protobuf:"varint,1,opt,name=alert_type,json=alertType,proto3,enum=invora.billing.alerts.v2.AlertTypeEnum" json:"alert_type,omitempty"`
+	AlertType        AlertType              `protobuf:"varint,1,opt,name=alert_type,json=alertType,proto3,enum=invora.billing.alerts.v2.AlertType" json:"alert_type,omitempty"`
 	BillableMetricId *string                `protobuf:"bytes,2,opt,name=billable_metric_id,json=billableMetricId,proto3,oneof" json:"billable_metric_id,omitempty"`
 	Code             string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
 	Name             *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
@@ -1996,21 +714,21 @@ type CreateSubscriptionAlertInput struct {
 	sizeCache        protoimpl.SizeCache
 }
 
-func (x *CreateSubscriptionAlertInput) Reset() {
-	*x = CreateSubscriptionAlertInput{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[33]
+func (x *CreateSubscriptionAlertRequest) Reset() {
+	*x = CreateSubscriptionAlertRequest{}
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateSubscriptionAlertInput) String() string {
+func (x *CreateSubscriptionAlertRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateSubscriptionAlertInput) ProtoMessage() {}
+func (*CreateSubscriptionAlertRequest) ProtoMessage() {}
 
-func (x *CreateSubscriptionAlertInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[33]
+func (x *CreateSubscriptionAlertRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2021,64 +739,107 @@ func (x *CreateSubscriptionAlertInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateSubscriptionAlertInput.ProtoReflect.Descriptor instead.
-func (*CreateSubscriptionAlertInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{33}
+// Deprecated: Use CreateSubscriptionAlertRequest.ProtoReflect.Descriptor instead.
+func (*CreateSubscriptionAlertRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *CreateSubscriptionAlertInput) GetAlertType() AlertTypeEnum {
+func (x *CreateSubscriptionAlertRequest) GetAlertType() AlertType {
 	if x != nil {
 		return x.AlertType
 	}
-	return AlertTypeEnum_ALERT_TYPE_ENUM_UNSPECIFIED
+	return AlertType_ALERT_TYPE_UNSPECIFIED
 }
 
-func (x *CreateSubscriptionAlertInput) GetBillableMetricId() string {
+func (x *CreateSubscriptionAlertRequest) GetBillableMetricId() string {
 	if x != nil && x.BillableMetricId != nil {
 		return *x.BillableMetricId
 	}
 	return ""
 }
 
-func (x *CreateSubscriptionAlertInput) GetCode() string {
+func (x *CreateSubscriptionAlertRequest) GetCode() string {
 	if x != nil {
 		return x.Code
 	}
 	return ""
 }
 
-func (x *CreateSubscriptionAlertInput) GetName() string {
+func (x *CreateSubscriptionAlertRequest) GetName() string {
 	if x != nil && x.Name != nil {
 		return *x.Name
 	}
 	return ""
 }
 
-func (x *CreateSubscriptionAlertInput) GetSubscriptionId() string {
+func (x *CreateSubscriptionAlertRequest) GetSubscriptionId() string {
 	if x != nil {
 		return x.SubscriptionId
 	}
 	return ""
 }
 
-func (x *CreateSubscriptionAlertInput) GetThresholds() []*ThresholdInput {
+func (x *CreateSubscriptionAlertRequest) GetThresholds() []*ThresholdInput {
 	if x != nil {
 		return x.Thresholds
 	}
 	return nil
 }
 
-func (x *CreateSubscriptionAlertInput) GetWalletId() string {
+func (x *CreateSubscriptionAlertRequest) GetWalletId() string {
 	if x != nil && x.WalletId != nil {
 		return *x.WalletId
 	}
 	return ""
 }
 
-// Autogenerated input type of CreateCustomerWalletAlert
-type CreateCustomerWalletAlertInput struct {
+type CreateSubscriptionAlertResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Alert         *v2.BillingAlert       `protobuf:"bytes,1,opt,name=alert,proto3" json:"alert,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateSubscriptionAlertResponse) Reset() {
+	*x = CreateSubscriptionAlertResponse{}
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateSubscriptionAlertResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateSubscriptionAlertResponse) ProtoMessage() {}
+
+func (x *CreateSubscriptionAlertResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateSubscriptionAlertResponse.ProtoReflect.Descriptor instead.
+func (*CreateSubscriptionAlertResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *CreateSubscriptionAlertResponse) GetAlert() *v2.BillingAlert {
+	if x != nil {
+		return x.Alert
+	}
+	return nil
+}
+
+type CreateCustomerWalletAlertRequest struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
-	AlertType        AlertTypeEnum          `protobuf:"varint,1,opt,name=alert_type,json=alertType,proto3,enum=invora.billing.alerts.v2.AlertTypeEnum" json:"alert_type,omitempty"`
+	AlertType        AlertType              `protobuf:"varint,1,opt,name=alert_type,json=alertType,proto3,enum=invora.billing.alerts.v2.AlertType" json:"alert_type,omitempty"`
 	BillableMetricId *string                `protobuf:"bytes,2,opt,name=billable_metric_id,json=billableMetricId,proto3,oneof" json:"billable_metric_id,omitempty"`
 	Code             string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
 	Name             *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
@@ -2089,21 +850,21 @@ type CreateCustomerWalletAlertInput struct {
 	sizeCache        protoimpl.SizeCache
 }
 
-func (x *CreateCustomerWalletAlertInput) Reset() {
-	*x = CreateCustomerWalletAlertInput{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[34]
+func (x *CreateCustomerWalletAlertRequest) Reset() {
+	*x = CreateCustomerWalletAlertRequest{}
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateCustomerWalletAlertInput) String() string {
+func (x *CreateCustomerWalletAlertRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateCustomerWalletAlertInput) ProtoMessage() {}
+func (*CreateCustomerWalletAlertRequest) ProtoMessage() {}
 
-func (x *CreateCustomerWalletAlertInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[34]
+func (x *CreateCustomerWalletAlertRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2114,58 +875,439 @@ func (x *CreateCustomerWalletAlertInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateCustomerWalletAlertInput.ProtoReflect.Descriptor instead.
-func (*CreateCustomerWalletAlertInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{34}
+// Deprecated: Use CreateCustomerWalletAlertRequest.ProtoReflect.Descriptor instead.
+func (*CreateCustomerWalletAlertRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *CreateCustomerWalletAlertInput) GetAlertType() AlertTypeEnum {
+func (x *CreateCustomerWalletAlertRequest) GetAlertType() AlertType {
 	if x != nil {
 		return x.AlertType
 	}
-	return AlertTypeEnum_ALERT_TYPE_ENUM_UNSPECIFIED
+	return AlertType_ALERT_TYPE_UNSPECIFIED
 }
 
-func (x *CreateCustomerWalletAlertInput) GetBillableMetricId() string {
+func (x *CreateCustomerWalletAlertRequest) GetBillableMetricId() string {
 	if x != nil && x.BillableMetricId != nil {
 		return *x.BillableMetricId
 	}
 	return ""
 }
 
-func (x *CreateCustomerWalletAlertInput) GetCode() string {
+func (x *CreateCustomerWalletAlertRequest) GetCode() string {
 	if x != nil {
 		return x.Code
 	}
 	return ""
 }
 
-func (x *CreateCustomerWalletAlertInput) GetName() string {
+func (x *CreateCustomerWalletAlertRequest) GetName() string {
 	if x != nil && x.Name != nil {
 		return *x.Name
 	}
 	return ""
 }
 
-func (x *CreateCustomerWalletAlertInput) GetSubscriptionId() string {
+func (x *CreateCustomerWalletAlertRequest) GetSubscriptionId() string {
 	if x != nil && x.SubscriptionId != nil {
 		return *x.SubscriptionId
 	}
 	return ""
 }
 
-func (x *CreateCustomerWalletAlertInput) GetThresholds() []*ThresholdInput {
+func (x *CreateCustomerWalletAlertRequest) GetThresholds() []*ThresholdInput {
 	if x != nil {
 		return x.Thresholds
 	}
 	return nil
 }
 
-func (x *CreateCustomerWalletAlertInput) GetWalletId() string {
+func (x *CreateCustomerWalletAlertRequest) GetWalletId() string {
 	if x != nil {
 		return x.WalletId
 	}
 	return ""
+}
+
+type CreateCustomerWalletAlertResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Alert         *v2.BillingAlert       `protobuf:"bytes,1,opt,name=alert,proto3" json:"alert,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateCustomerWalletAlertResponse) Reset() {
+	*x = CreateCustomerWalletAlertResponse{}
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateCustomerWalletAlertResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateCustomerWalletAlertResponse) ProtoMessage() {}
+
+func (x *CreateCustomerWalletAlertResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateCustomerWalletAlertResponse.ProtoReflect.Descriptor instead.
+func (*CreateCustomerWalletAlertResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *CreateCustomerWalletAlertResponse) GetAlert() *v2.BillingAlert {
+	if x != nil {
+		return x.Alert
+	}
+	return nil
+}
+
+type UpdateSubscriptionAlertRequest struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	BillableMetricId *string                `protobuf:"bytes,1,opt,name=billable_metric_id,json=billableMetricId,proto3,oneof" json:"billable_metric_id,omitempty"`
+	Code             *string                `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	Id               string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	Name             *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Thresholds       []*ThresholdInput      `protobuf:"bytes,5,rep,name=thresholds,proto3" json:"thresholds,omitempty"`
+	UpdateMask       *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *UpdateSubscriptionAlertRequest) Reset() {
+	*x = UpdateSubscriptionAlertRequest{}
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateSubscriptionAlertRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateSubscriptionAlertRequest) ProtoMessage() {}
+
+func (x *UpdateSubscriptionAlertRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateSubscriptionAlertRequest.ProtoReflect.Descriptor instead.
+func (*UpdateSubscriptionAlertRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *UpdateSubscriptionAlertRequest) GetBillableMetricId() string {
+	if x != nil && x.BillableMetricId != nil {
+		return *x.BillableMetricId
+	}
+	return ""
+}
+
+func (x *UpdateSubscriptionAlertRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
+	}
+	return ""
+}
+
+func (x *UpdateSubscriptionAlertRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateSubscriptionAlertRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *UpdateSubscriptionAlertRequest) GetThresholds() []*ThresholdInput {
+	if x != nil {
+		return x.Thresholds
+	}
+	return nil
+}
+
+func (x *UpdateSubscriptionAlertRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+type UpdateSubscriptionAlertResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Alert         *v2.BillingAlert       `protobuf:"bytes,1,opt,name=alert,proto3" json:"alert,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateSubscriptionAlertResponse) Reset() {
+	*x = UpdateSubscriptionAlertResponse{}
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateSubscriptionAlertResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateSubscriptionAlertResponse) ProtoMessage() {}
+
+func (x *UpdateSubscriptionAlertResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateSubscriptionAlertResponse.ProtoReflect.Descriptor instead.
+func (*UpdateSubscriptionAlertResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *UpdateSubscriptionAlertResponse) GetAlert() *v2.BillingAlert {
+	if x != nil {
+		return x.Alert
+	}
+	return nil
+}
+
+type UpdateCustomerWalletAlertRequest struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	BillableMetricId *string                `protobuf:"bytes,1,opt,name=billable_metric_id,json=billableMetricId,proto3,oneof" json:"billable_metric_id,omitempty"`
+	Code             *string                `protobuf:"bytes,2,opt,name=code,proto3,oneof" json:"code,omitempty"`
+	Id               string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	Name             *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Thresholds       []*ThresholdInput      `protobuf:"bytes,5,rep,name=thresholds,proto3" json:"thresholds,omitempty"`
+	UpdateMask       *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *UpdateCustomerWalletAlertRequest) Reset() {
+	*x = UpdateCustomerWalletAlertRequest{}
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateCustomerWalletAlertRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateCustomerWalletAlertRequest) ProtoMessage() {}
+
+func (x *UpdateCustomerWalletAlertRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateCustomerWalletAlertRequest.ProtoReflect.Descriptor instead.
+func (*UpdateCustomerWalletAlertRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *UpdateCustomerWalletAlertRequest) GetBillableMetricId() string {
+	if x != nil && x.BillableMetricId != nil {
+		return *x.BillableMetricId
+	}
+	return ""
+}
+
+func (x *UpdateCustomerWalletAlertRequest) GetCode() string {
+	if x != nil && x.Code != nil {
+		return *x.Code
+	}
+	return ""
+}
+
+func (x *UpdateCustomerWalletAlertRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateCustomerWalletAlertRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *UpdateCustomerWalletAlertRequest) GetThresholds() []*ThresholdInput {
+	if x != nil {
+		return x.Thresholds
+	}
+	return nil
+}
+
+func (x *UpdateCustomerWalletAlertRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+type UpdateCustomerWalletAlertResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Alert         *v2.BillingAlert       `protobuf:"bytes,1,opt,name=alert,proto3" json:"alert,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateCustomerWalletAlertResponse) Reset() {
+	*x = UpdateCustomerWalletAlertResponse{}
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateCustomerWalletAlertResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateCustomerWalletAlertResponse) ProtoMessage() {}
+
+func (x *UpdateCustomerWalletAlertResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateCustomerWalletAlertResponse.ProtoReflect.Descriptor instead.
+func (*UpdateCustomerWalletAlertResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *UpdateCustomerWalletAlertResponse) GetAlert() *v2.BillingAlert {
+	if x != nil {
+		return x.Alert
+	}
+	return nil
+}
+
+type DeleteRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the alert to delete.
+	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteRequest) Reset() {
+	*x = DeleteRequest{}
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteRequest) ProtoMessage() {}
+
+func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteRequest.ProtoReflect.Descriptor instead.
+func (*DeleteRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *DeleteRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type DeleteResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteResponse) Reset() {
+	*x = DeleteResponse{}
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteResponse) ProtoMessage() {}
+
+func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteResponse.ProtoReflect.Descriptor instead.
+func (*DeleteResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{18}
 }
 
 type AlertThreshold struct {
@@ -2179,7 +1321,7 @@ type AlertThreshold struct {
 
 func (x *AlertThreshold) Reset() {
 	*x = AlertThreshold{}
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[35]
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2191,7 +1333,7 @@ func (x *AlertThreshold) String() string {
 func (*AlertThreshold) ProtoMessage() {}
 
 func (x *AlertThreshold) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[35]
+	mi := &file_invora_billing_alerts_v2_service_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2204,7 +1346,7 @@ func (x *AlertThreshold) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AlertThreshold.ProtoReflect.Descriptor instead.
 func (*AlertThreshold) Descriptor() ([]byte, []int) {
-	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{35}
+	return file_invora_billing_alerts_v2_service_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *AlertThreshold) GetCode() string {
@@ -2232,13 +1374,13 @@ var File_invora_billing_alerts_v2_service_proto protoreflect.FileDescriptor
 
 const file_invora_billing_alerts_v2_service_proto_rawDesc = "" +
 	"\n" +
-	"&invora/billing/alerts/v2/service.proto\x12\x18invora.billing.alerts.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\x89\x01\n" +
+	"&invora/billing/alerts/v2/service.proto\x12\x18invora.billing.alerts.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\x89\x01\n" +
 	"\n" +
 	"GetRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
 	"\tread_mask\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
-	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.alerts.v2.ViewR\x04view\"K\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"K\n" +
 	"\vGetResponse\x12<\n" +
 	"\x05alert\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAlertR\x05alert\"\xa8\x02\n" +
 	"\vListRequest\x12<\n" +
@@ -2249,126 +1391,38 @@ const file_invora_billing_alerts_v2_service_proto_rawDesc = "" +
 	"pagination\x127\n" +
 	"\tread_mask\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
-	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.alerts.v2.ViewR\x04view\"\xb5\x01\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xb1\x01\n" +
 	"\fListResponse\x12<\n" +
 	"\x05items\x18\x01 \x03(\v2&.invora.billing.common.v2.BillingAlertR\x05items\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"J\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"J\n" +
 	"\n" +
 	"ListFilter\x12<\n" +
-	"\x04part\x18\x01 \x01(\v2(.invora.billing.alerts.v2.ListFilterPartR\x04part\"T\n" +
+	"\x04part\x18\x01 \x01(\v2(.invora.billing.alerts.v2.ListFilterPartR\x04part\"\xb9\x01\n" +
 	"\x0eListFilterPart\x12:\n" +
-	"\x18subscription_external_id\x18\x01 \x01(\tH\x00R\x16subscriptionExternalIdB\x06\n" +
+	"\x18subscription_external_id\x18\x01 \x01(\tH\x00R\x16subscriptionExternalId\x12\x1d\n" +
+	"\twallet_id\x18\x02 \x01(\tH\x00R\bwalletId\x12D\n" +
+	"\n" +
+	"alert_type\x18\x03 \x01(\x0e2#.invora.billing.alerts.v2.AlertTypeH\x00R\talertTypeB\x06\n" +
 	"\x04type\"H\n" +
 	"\bListSort\x12<\n" +
 	"\x05rules\x18\x01 \x03(\v2&.invora.billing.alerts.v2.ListSortRuleR\x05rules\"N\n" +
 	"\fListSortRule\x126\n" +
 	"\n" +
 	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAtB\x06\n" +
-	"\x04type\"\x97\x01\n" +
-	"\x18SubscriptionAlertRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
-	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.alerts.v2.ViewR\x04view\"Y\n" +
-	"\x19SubscriptionAlertResponse\x12<\n" +
-	"\x05alert\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAlertR\x05alert\"\xb6\x02\n" +
-	"\x19SubscriptionAlertsRequest\x12<\n" +
-	"\x06filter\x18\x01 \x01(\v2$.invora.billing.alerts.v2.ListFilterR\x06filter\x126\n" +
-	"\x04sort\x18\x02 \x01(\v2\".invora.billing.alerts.v2.ListSortR\x04sort\x126\n" +
-	"\n" +
-	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
-	"pagination\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
-	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.alerts.v2.ViewR\x04view\"\xc3\x01\n" +
-	"\x1aSubscriptionAlertsResponse\x12<\n" +
-	"\x05items\x18\x01 \x03(\v2&.invora.billing.common.v2.BillingAlertR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"\x91\x01\n" +
-	"\x12WalletAlertRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
-	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.alerts.v2.ViewR\x04view\"S\n" +
-	"\x13WalletAlertResponse\x12<\n" +
-	"\x05alert\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAlertR\x05alert\"\xb0\x02\n" +
-	"\x13WalletAlertsRequest\x12<\n" +
-	"\x06filter\x18\x01 \x01(\v2$.invora.billing.alerts.v2.ListFilterR\x06filter\x126\n" +
-	"\x04sort\x18\x02 \x01(\v2\".invora.billing.alerts.v2.ListSortR\x04sort\x126\n" +
-	"\n" +
-	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
-	"pagination\x127\n" +
-	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
-	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.alerts.v2.ViewR\x04view\"\xbd\x01\n" +
-	"\x14WalletAlertsResponse\x12<\n" +
-	"\x05items\x18\x01 \x03(\v2&.invora.billing.common.v2.BillingAlertR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"r\n" +
-	" CreateCustomerWalletAlertRequest\x12N\n" +
-	"\x05input\x18\x01 \x01(\v28.invora.billing.alerts.v2.CreateCustomerWalletAlertInputR\x05input\"a\n" +
-	"!CreateCustomerWalletAlertResponse\x12<\n" +
-	"\x05alert\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAlertR\x05alert\"n\n" +
-	"\x1eCreateSubscriptionAlertRequest\x12L\n" +
-	"\x05input\x18\x01 \x01(\v26.invora.billing.alerts.v2.CreateSubscriptionAlertInputR\x05input\"_\n" +
-	"\x1fCreateSubscriptionAlertResponse\x12<\n" +
-	"\x05alert\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAlertR\x05alert\"s\n" +
-	" DeleteCustomerWalletAlertRequest\x12O\n" +
-	"\x05input\x18\x01 \x01(\v29.invora.billing.alerts.v2.DestroyCustomerWalletAlertInputR\x05input\"a\n" +
-	"!DeleteCustomerWalletAlertResponse\x12<\n" +
-	"\x05alert\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAlertR\x05alert\"o\n" +
-	"\x1eDeleteSubscriptionAlertRequest\x12M\n" +
-	"\x05input\x18\x01 \x01(\v27.invora.billing.alerts.v2.DestroySubscriptionAlertInputR\x05input\"_\n" +
-	"\x1fDeleteSubscriptionAlertResponse\x12<\n" +
-	"\x05alert\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAlertR\x05alert\"r\n" +
-	" UpdateCustomerWalletAlertRequest\x12N\n" +
-	"\x05input\x18\x01 \x01(\v28.invora.billing.alerts.v2.UpdateCustomerWalletAlertInputR\x05input\"a\n" +
-	"!UpdateCustomerWalletAlertResponse\x12<\n" +
-	"\x05alert\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAlertR\x05alert\"n\n" +
-	"\x1eUpdateSubscriptionAlertRequest\x12L\n" +
-	"\x05input\x18\x01 \x01(\v26.invora.billing.alerts.v2.UpdateSubscriptionAlertInputR\x05input\"_\n" +
-	"\x1fUpdateSubscriptionAlertResponse\x12<\n" +
-	"\x05alert\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAlertR\x05alert\"\x86\x02\n" +
-	"\x1cUpdateSubscriptionAlertInput\x121\n" +
-	"\x12billable_metric_id\x18\x01 \x01(\tH\x00R\x10billableMetricId\x88\x01\x01\x12\x17\n" +
-	"\x04code\x18\x02 \x01(\tH\x01R\x04code\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\x12\x17\n" +
-	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x12H\n" +
-	"\n" +
-	"thresholds\x18\x05 \x03(\v2(.invora.billing.alerts.v2.ThresholdInputR\n" +
-	"thresholdsB\x15\n" +
-	"\x13_billable_metric_idB\a\n" +
-	"\x05_codeB\a\n" +
-	"\x05_name\"y\n" +
+	"\x04type\"y\n" +
 	"\x0eThresholdInput\x12\x17\n" +
 	"\x04code\x18\x01 \x01(\tH\x00R\x04code\x88\x01\x01\x12!\n" +
 	"\trecurring\x18\x02 \x01(\bH\x01R\trecurring\x88\x01\x01\x12\x14\n" +
 	"\x05value\x18\x03 \x01(\tR\x05valueB\a\n" +
 	"\x05_codeB\f\n" +
 	"\n" +
-	"_recurring\"\x88\x02\n" +
-	"\x1eUpdateCustomerWalletAlertInput\x121\n" +
-	"\x12billable_metric_id\x18\x01 \x01(\tH\x00R\x10billableMetricId\x88\x01\x01\x12\x17\n" +
-	"\x04code\x18\x02 \x01(\tH\x01R\x04code\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\x12\x17\n" +
-	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x12H\n" +
+	"_recurring\"\x87\x03\n" +
+	"\x1eCreateSubscriptionAlertRequest\x12B\n" +
 	"\n" +
-	"thresholds\x18\x05 \x03(\v2(.invora.billing.alerts.v2.ThresholdInputR\n" +
-	"thresholdsB\x15\n" +
-	"\x13_billable_metric_idB\a\n" +
-	"\x05_codeB\a\n" +
-	"\x05_name\"/\n" +
-	"\x1dDestroySubscriptionAlertInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"1\n" +
-	"\x1fDestroyCustomerWalletAlertInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\x89\x03\n" +
-	"\x1cCreateSubscriptionAlertInput\x12F\n" +
-	"\n" +
-	"alert_type\x18\x01 \x01(\x0e2'.invora.billing.alerts.v2.AlertTypeEnumR\talertType\x121\n" +
+	"alert_type\x18\x01 \x01(\x0e2#.invora.billing.alerts.v2.AlertTypeR\talertType\x121\n" +
 	"\x12billable_metric_id\x18\x02 \x01(\tH\x00R\x10billableMetricId\x88\x01\x01\x12\x12\n" +
 	"\x04code\x18\x03 \x01(\tR\x04code\x12\x17\n" +
 	"\x04name\x18\x04 \x01(\tH\x01R\x04name\x88\x01\x01\x12'\n" +
@@ -2380,10 +1434,12 @@ const file_invora_billing_alerts_v2_service_proto_rawDesc = "" +
 	"\x13_billable_metric_idB\a\n" +
 	"\x05_nameB\f\n" +
 	"\n" +
-	"_wallet_id\"\x91\x03\n" +
-	"\x1eCreateCustomerWalletAlertInput\x12F\n" +
+	"_wallet_id\"_\n" +
+	"\x1fCreateSubscriptionAlertResponse\x12<\n" +
+	"\x05alert\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAlertR\x05alert\"\x8f\x03\n" +
+	" CreateCustomerWalletAlertRequest\x12B\n" +
 	"\n" +
-	"alert_type\x18\x01 \x01(\x0e2'.invora.billing.alerts.v2.AlertTypeEnumR\talertType\x121\n" +
+	"alert_type\x18\x01 \x01(\x0e2#.invora.billing.alerts.v2.AlertTypeR\talertType\x121\n" +
 	"\x12billable_metric_id\x18\x02 \x01(\tH\x00R\x10billableMetricId\x88\x01\x01\x12\x12\n" +
 	"\x04code\x18\x03 \x01(\tR\x04code\x12\x17\n" +
 	"\x04name\x18\x04 \x01(\tH\x01R\x04name\x88\x01\x01\x12,\n" +
@@ -2394,57 +1450,77 @@ const file_invora_billing_alerts_v2_service_proto_rawDesc = "" +
 	"\twallet_id\x18\a \x01(\tR\bwalletIdB\x15\n" +
 	"\x13_billable_metric_idB\a\n" +
 	"\x05_nameB\x12\n" +
-	"\x10_subscription_id\"f\n" +
+	"\x10_subscription_id\"a\n" +
+	"!CreateCustomerWalletAlertResponse\x12<\n" +
+	"\x05alert\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAlertR\x05alert\"\xc5\x02\n" +
+	"\x1eUpdateSubscriptionAlertRequest\x121\n" +
+	"\x12billable_metric_id\x18\x01 \x01(\tH\x00R\x10billableMetricId\x88\x01\x01\x12\x17\n" +
+	"\x04code\x18\x02 \x01(\tH\x01R\x04code\x88\x01\x01\x12\x0e\n" +
+	"\x02id\x18\x03 \x01(\tR\x02id\x12\x17\n" +
+	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x12H\n" +
+	"\n" +
+	"thresholds\x18\x05 \x03(\v2(.invora.billing.alerts.v2.ThresholdInputR\n" +
+	"thresholds\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\x15\n" +
+	"\x13_billable_metric_idB\a\n" +
+	"\x05_codeB\a\n" +
+	"\x05_name\"_\n" +
+	"\x1fUpdateSubscriptionAlertResponse\x12<\n" +
+	"\x05alert\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAlertR\x05alert\"\xc7\x02\n" +
+	" UpdateCustomerWalletAlertRequest\x121\n" +
+	"\x12billable_metric_id\x18\x01 \x01(\tH\x00R\x10billableMetricId\x88\x01\x01\x12\x17\n" +
+	"\x04code\x18\x02 \x01(\tH\x01R\x04code\x88\x01\x01\x12\x0e\n" +
+	"\x02id\x18\x03 \x01(\tR\x02id\x12\x17\n" +
+	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x12H\n" +
+	"\n" +
+	"thresholds\x18\x05 \x03(\v2(.invora.billing.alerts.v2.ThresholdInputR\n" +
+	"thresholds\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\x15\n" +
+	"\x13_billable_metric_idB\a\n" +
+	"\x05_codeB\a\n" +
+	"\x05_name\"a\n" +
+	"!UpdateCustomerWalletAlertResponse\x12<\n" +
+	"\x05alert\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAlertR\x05alert\"\x1f\n" +
+	"\rDeleteRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"\x10\n" +
+	"\x0eDeleteResponse\"f\n" +
 	"\x0eAlertThreshold\x12\x17\n" +
 	"\x04code\x18\x01 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
 	"\trecurring\x18\x02 \x01(\bR\trecurring\x12\x14\n" +
 	"\x05value\x18\x03 \x01(\tR\x05valueB\a\n" +
-	"\x05_code*;\n" +
-	"\x04View\x12\x14\n" +
-	"\x10VIEW_UNSPECIFIED\x10\x00\x12\x0e\n" +
-	"\n" +
-	"VIEW_BASIC\x10\x01\x12\r\n" +
-	"\tVIEW_FULL\x10\x02*\xf0\x03\n" +
-	"\rAlertTypeEnum\x12\x1f\n" +
-	"\x1bALERT_TYPE_ENUM_UNSPECIFIED\x10\x00\x128\n" +
-	"4ALERT_TYPE_ENUM_BILLABLE_METRIC_CURRENT_USAGE_AMOUNT\x10\x01\x127\n" +
-	"3ALERT_TYPE_ENUM_BILLABLE_METRIC_CURRENT_USAGE_UNITS\x10\x02\x128\n" +
-	"4ALERT_TYPE_ENUM_BILLABLE_METRIC_LIFETIME_USAGE_UNITS\x10\x03\x12(\n" +
-	"$ALERT_TYPE_ENUM_CURRENT_USAGE_AMOUNT\x10\x04\x12)\n" +
-	"%ALERT_TYPE_ENUM_LIFETIME_USAGE_AMOUNT\x10\x05\x12)\n" +
-	"%ALERT_TYPE_ENUM_WALLET_BALANCE_AMOUNT\x10\x06\x12*\n" +
-	"&ALERT_TYPE_ENUM_WALLET_CREDITS_BALANCE\x10\a\x122\n" +
-	".ALERT_TYPE_ENUM_WALLET_CREDITS_ONGOING_BALANCE\x10\b\x121\n" +
-	"-ALERT_TYPE_ENUM_WALLET_ONGOING_BALANCE_AMOUNT\x10\t*m\n" +
-	"\rDirectionEnum\x12\x1e\n" +
-	"\x1aDIRECTION_ENUM_UNSPECIFIED\x10\x00\x12\x1d\n" +
-	"\x19DIRECTION_ENUM_DECREASING\x10\x01\x12\x1d\n" +
-	"\x19DIRECTION_ENUM_INCREASING\x10\x022\xe7\x13\n" +
-	"\fAlertService\x12\x99\x01\n" +
+	"\x05_code*\xba\x03\n" +
+	"\tAlertType\x12\x1a\n" +
+	"\x16ALERT_TYPE_UNSPECIFIED\x10\x00\x123\n" +
+	"/ALERT_TYPE_BILLABLE_METRIC_CURRENT_USAGE_AMOUNT\x10\x01\x122\n" +
+	".ALERT_TYPE_BILLABLE_METRIC_CURRENT_USAGE_UNITS\x10\x02\x123\n" +
+	"/ALERT_TYPE_BILLABLE_METRIC_LIFETIME_USAGE_UNITS\x10\x03\x12#\n" +
+	"\x1fALERT_TYPE_CURRENT_USAGE_AMOUNT\x10\x04\x12$\n" +
+	" ALERT_TYPE_LIFETIME_USAGE_AMOUNT\x10\x05\x12$\n" +
+	" ALERT_TYPE_WALLET_BALANCE_AMOUNT\x10\x06\x12%\n" +
+	"!ALERT_TYPE_WALLET_CREDITS_BALANCE\x10\a\x12-\n" +
+	")ALERT_TYPE_WALLET_CREDITS_ONGOING_BALANCE\x10\b\x12,\n" +
+	"(ALERT_TYPE_WALLET_ONGOING_BALANCE_AMOUNT\x10\t*Z\n" +
+	"\tDirection\x12\x19\n" +
+	"\x15DIRECTION_UNSPECIFIED\x10\x00\x12\x18\n" +
+	"\x14DIRECTION_DECREASING\x10\x01\x12\x18\n" +
+	"\x14DIRECTION_INCREASING\x10\x022\xc0\v\n" +
+	"\rAlertsService\x12\xa0\x01\n" +
+	"\x04List\x12%.invora.billing.alerts.v2.ListRequest\x1a&.invora.billing.alerts.v2.ListResponse\"I\xe2\xf2\x19\x1f\n" +
+	"\x1dInvora.Billing.Alerts.v2.List\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/api/billing/v2/alerts/list\x12\x99\x01\n" +
 	"\x03Get\x12$.invora.billing.alerts.v2.GetRequest\x1a%.invora.billing.alerts.v2.GetResponse\"E\xe2\xf2\x19\x1e\n" +
-	"\x1cInvora.Billing.Alerts.v2.Get\x82\xd3\xe4\x93\x02\x1d\x12\x1b/api/v2/billing/alerts/{id}\x12\x98\x01\n" +
-	"\x04List\x12%.invora.billing.alerts.v2.ListRequest\x1a&.invora.billing.alerts.v2.ListResponse\"A\xe2\xf2\x19\x1f\n" +
-	"\x1dInvora.Billing.Alerts.v2.List\x82\xd3\xe4\x93\x02\x18\x12\x16/api/v2/billing/alerts\x12\xef\x01\n" +
-	"\x19CreateCustomerWalletAlert\x12:.invora.billing.alerts.v2.CreateCustomerWalletAlertRequest\x1a;.invora.billing.alerts.v2.CreateCustomerWalletAlertResponse\"Y\xe2\xf2\x194\n" +
-	"2Invora.Billing.Alerts.v2.CreateCustomerWalletAlert\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/api/v2/billing/alerts\x12\xe7\x01\n" +
-	"\x17CreateSubscriptionAlert\x128.invora.billing.alerts.v2.CreateSubscriptionAlertRequest\x1a9.invora.billing.alerts.v2.CreateSubscriptionAlertResponse\"W\xe2\xf2\x192\n" +
-	"0Invora.Billing.Alerts.v2.CreateSubscriptionAlert\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/api/v2/billing/alerts\x12\xec\x01\n" +
-	"\x19DeleteCustomerWalletAlert\x12:.invora.billing.alerts.v2.DeleteCustomerWalletAlertRequest\x1a;.invora.billing.alerts.v2.DeleteCustomerWalletAlertResponse\"V\xe2\xf2\x194\n" +
-	"2Invora.Billing.Alerts.v2.DeleteCustomerWalletAlert\x82\xd3\xe4\x93\x02\x18*\x16/api/v2/billing/alerts\x12\xe4\x01\n" +
-	"\x17DeleteSubscriptionAlert\x128.invora.billing.alerts.v2.DeleteSubscriptionAlertRequest\x1a9.invora.billing.alerts.v2.DeleteSubscriptionAlertResponse\"T\xe2\xf2\x192\n" +
-	"0Invora.Billing.Alerts.v2.DeleteSubscriptionAlert\x82\xd3\xe4\x93\x02\x18*\x16/api/v2/billing/alerts\x12\xcc\x01\n" +
-	"\x11SubscriptionAlert\x122.invora.billing.alerts.v2.SubscriptionAlertRequest\x1a3.invora.billing.alerts.v2.SubscriptionAlertResponse\"N\xe2\xf2\x19,\n" +
-	"*Invora.Billing.Alerts.v2.SubscriptionAlert\x82\xd3\xe4\x93\x02\x18\x12\x16/api/v2/billing/alerts\x12\xd0\x01\n" +
-	"\x12SubscriptionAlerts\x123.invora.billing.alerts.v2.SubscriptionAlertsRequest\x1a4.invora.billing.alerts.v2.SubscriptionAlertsResponse\"O\xe2\xf2\x19-\n" +
-	"+Invora.Billing.Alerts.v2.SubscriptionAlerts\x82\xd3\xe4\x93\x02\x18\x12\x16/api/v2/billing/alerts\x12\xef\x01\n" +
-	"\x19UpdateCustomerWalletAlert\x12:.invora.billing.alerts.v2.UpdateCustomerWalletAlertRequest\x1a;.invora.billing.alerts.v2.UpdateCustomerWalletAlertResponse\"Y\xe2\xf2\x194\n" +
-	"2Invora.Billing.Alerts.v2.UpdateCustomerWalletAlert\x82\xd3\xe4\x93\x02\x1b:\x01*2\x16/api/v2/billing/alerts\x12\xe7\x01\n" +
-	"\x17UpdateSubscriptionAlert\x128.invora.billing.alerts.v2.UpdateSubscriptionAlertRequest\x1a9.invora.billing.alerts.v2.UpdateSubscriptionAlertResponse\"W\xe2\xf2\x192\n" +
-	"0Invora.Billing.Alerts.v2.UpdateSubscriptionAlert\x82\xd3\xe4\x93\x02\x1b:\x01*2\x16/api/v2/billing/alerts\x12\xb4\x01\n" +
-	"\vWalletAlert\x12,.invora.billing.alerts.v2.WalletAlertRequest\x1a-.invora.billing.alerts.v2.WalletAlertResponse\"H\xe2\xf2\x19&\n" +
-	"$Invora.Billing.Alerts.v2.WalletAlert\x82\xd3\xe4\x93\x02\x18\x12\x16/api/v2/billing/alerts\x12\xb8\x01\n" +
-	"\fWalletAlerts\x12-.invora.billing.alerts.v2.WalletAlertsRequest\x1a..invora.billing.alerts.v2.WalletAlertsResponse\"I\xe2\xf2\x19'\n" +
-	"%Invora.Billing.Alerts.v2.WalletAlerts\x82\xd3\xe4\x93\x02\x18\x12\x16/api/v2/billing/alertsB\xfd\x01\n" +
+	"\x1cInvora.Billing.Alerts.v2.Get\x82\xd3\xe4\x93\x02\x1d\x12\x1b/api/billing/v2/alerts/{id}\x12\xea\x01\n" +
+	"\x17CreateSubscriptionAlert\x128.invora.billing.alerts.v2.CreateSubscriptionAlertRequest\x1a9.invora.billing.alerts.v2.CreateSubscriptionAlertResponse\"Z\xe2\xf2\x19(\n" +
+	"&Invora.Billing.Alerts.v2.Modify.Create\x82\xd3\xe4\x93\x02(:\x01*\"#/api/billing/v2/alerts/subscription\x12\xea\x01\n" +
+	"\x19CreateCustomerWalletAlert\x12:.invora.billing.alerts.v2.CreateCustomerWalletAlertRequest\x1a;.invora.billing.alerts.v2.CreateCustomerWalletAlertResponse\"T\xe2\xf2\x19(\n" +
+	"&Invora.Billing.Alerts.v2.Modify.Create\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/api/billing/v2/alerts/wallet\x12\xef\x01\n" +
+	"\x17UpdateSubscriptionAlert\x128.invora.billing.alerts.v2.UpdateSubscriptionAlertRequest\x1a9.invora.billing.alerts.v2.UpdateSubscriptionAlertResponse\"_\xe2\xf2\x19(\n" +
+	"&Invora.Billing.Alerts.v2.Modify.Update\x82\xd3\xe4\x93\x02-:\x01*\x1a(/api/billing/v2/alerts/{id}/subscription\x12\xef\x01\n" +
+	"\x19UpdateCustomerWalletAlert\x12:.invora.billing.alerts.v2.UpdateCustomerWalletAlertRequest\x1a;.invora.billing.alerts.v2.UpdateCustomerWalletAlertResponse\"Y\xe2\xf2\x19(\n" +
+	"&Invora.Billing.Alerts.v2.Modify.Update\x82\xd3\xe4\x93\x02':\x01*\x1a\"/api/billing/v2/alerts/{id}/wallet\x12\xb1\x01\n" +
+	"\x06Delete\x12'.invora.billing.alerts.v2.DeleteRequest\x1a(.invora.billing.alerts.v2.DeleteResponse\"T\xe2\xf2\x19(\n" +
+	"&Invora.Billing.Alerts.v2.Modify.Delete\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/api/billing/v2/alerts/deleteB\xfd\x01\n" +
 	"\x1ccom.invora.billing.alerts.v2B\fServiceProtoP\x01ZLgithub.com/invoraapp/invora-controller/gen/invora/billing/alerts/v2;alertsv2\xa2\x02\x03IBA\xaa\x02\x18Invora.Billing.Alerts.V2\xca\x02\x18Invora\\Billing\\Alerts\\V2\xe2\x02$Invora\\Billing\\Alerts\\V2\\GPBMetadata\xea\x02\x1bInvora::Billing::Alerts::V2b\x06proto3"
 
 var (
@@ -2459,135 +1535,82 @@ func file_invora_billing_alerts_v2_service_proto_rawDescGZIP() []byte {
 	return file_invora_billing_alerts_v2_service_proto_rawDescData
 }
 
-var file_invora_billing_alerts_v2_service_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_invora_billing_alerts_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 36)
+var file_invora_billing_alerts_v2_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_invora_billing_alerts_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_invora_billing_alerts_v2_service_proto_goTypes = []any{
-	(View)(0),                                 // 0: invora.billing.alerts.v2.View
-	(AlertTypeEnum)(0),                        // 1: invora.billing.alerts.v2.AlertTypeEnum
-	(DirectionEnum)(0),                        // 2: invora.billing.alerts.v2.DirectionEnum
-	(*GetRequest)(nil),                        // 3: invora.billing.alerts.v2.GetRequest
-	(*GetResponse)(nil),                       // 4: invora.billing.alerts.v2.GetResponse
-	(*ListRequest)(nil),                       // 5: invora.billing.alerts.v2.ListRequest
-	(*ListResponse)(nil),                      // 6: invora.billing.alerts.v2.ListResponse
-	(*ListFilter)(nil),                        // 7: invora.billing.alerts.v2.ListFilter
-	(*ListFilterPart)(nil),                    // 8: invora.billing.alerts.v2.ListFilterPart
-	(*ListSort)(nil),                          // 9: invora.billing.alerts.v2.ListSort
-	(*ListSortRule)(nil),                      // 10: invora.billing.alerts.v2.ListSortRule
-	(*SubscriptionAlertRequest)(nil),          // 11: invora.billing.alerts.v2.SubscriptionAlertRequest
-	(*SubscriptionAlertResponse)(nil),         // 12: invora.billing.alerts.v2.SubscriptionAlertResponse
-	(*SubscriptionAlertsRequest)(nil),         // 13: invora.billing.alerts.v2.SubscriptionAlertsRequest
-	(*SubscriptionAlertsResponse)(nil),        // 14: invora.billing.alerts.v2.SubscriptionAlertsResponse
-	(*WalletAlertRequest)(nil),                // 15: invora.billing.alerts.v2.WalletAlertRequest
-	(*WalletAlertResponse)(nil),               // 16: invora.billing.alerts.v2.WalletAlertResponse
-	(*WalletAlertsRequest)(nil),               // 17: invora.billing.alerts.v2.WalletAlertsRequest
-	(*WalletAlertsResponse)(nil),              // 18: invora.billing.alerts.v2.WalletAlertsResponse
-	(*CreateCustomerWalletAlertRequest)(nil),  // 19: invora.billing.alerts.v2.CreateCustomerWalletAlertRequest
-	(*CreateCustomerWalletAlertResponse)(nil), // 20: invora.billing.alerts.v2.CreateCustomerWalletAlertResponse
-	(*CreateSubscriptionAlertRequest)(nil),    // 21: invora.billing.alerts.v2.CreateSubscriptionAlertRequest
-	(*CreateSubscriptionAlertResponse)(nil),   // 22: invora.billing.alerts.v2.CreateSubscriptionAlertResponse
-	(*DeleteCustomerWalletAlertRequest)(nil),  // 23: invora.billing.alerts.v2.DeleteCustomerWalletAlertRequest
-	(*DeleteCustomerWalletAlertResponse)(nil), // 24: invora.billing.alerts.v2.DeleteCustomerWalletAlertResponse
-	(*DeleteSubscriptionAlertRequest)(nil),    // 25: invora.billing.alerts.v2.DeleteSubscriptionAlertRequest
-	(*DeleteSubscriptionAlertResponse)(nil),   // 26: invora.billing.alerts.v2.DeleteSubscriptionAlertResponse
-	(*UpdateCustomerWalletAlertRequest)(nil),  // 27: invora.billing.alerts.v2.UpdateCustomerWalletAlertRequest
-	(*UpdateCustomerWalletAlertResponse)(nil), // 28: invora.billing.alerts.v2.UpdateCustomerWalletAlertResponse
-	(*UpdateSubscriptionAlertRequest)(nil),    // 29: invora.billing.alerts.v2.UpdateSubscriptionAlertRequest
-	(*UpdateSubscriptionAlertResponse)(nil),   // 30: invora.billing.alerts.v2.UpdateSubscriptionAlertResponse
-	(*UpdateSubscriptionAlertInput)(nil),      // 31: invora.billing.alerts.v2.UpdateSubscriptionAlertInput
-	(*ThresholdInput)(nil),                    // 32: invora.billing.alerts.v2.ThresholdInput
-	(*UpdateCustomerWalletAlertInput)(nil),    // 33: invora.billing.alerts.v2.UpdateCustomerWalletAlertInput
-	(*DestroySubscriptionAlertInput)(nil),     // 34: invora.billing.alerts.v2.DestroySubscriptionAlertInput
-	(*DestroyCustomerWalletAlertInput)(nil),   // 35: invora.billing.alerts.v2.DestroyCustomerWalletAlertInput
-	(*CreateSubscriptionAlertInput)(nil),      // 36: invora.billing.alerts.v2.CreateSubscriptionAlertInput
-	(*CreateCustomerWalletAlertInput)(nil),    // 37: invora.billing.alerts.v2.CreateCustomerWalletAlertInput
-	(*AlertThreshold)(nil),                    // 38: invora.billing.alerts.v2.AlertThreshold
-	(*fieldmaskpb.FieldMask)(nil),             // 39: google.protobuf.FieldMask
-	(*v2.BillingAlert)(nil),                   // 40: invora.billing.common.v2.BillingAlert
-	(*kernel.PaginationInfo)(nil),             // 41: kernel.PaginationInfo
-	(*wrapperspb.StringValue)(nil),            // 42: google.protobuf.StringValue
-	(kernel.SortDirection)(0),                 // 43: kernel.SortDirection
+	(AlertType)(0),                            // 0: invora.billing.alerts.v2.AlertType
+	(Direction)(0),                            // 1: invora.billing.alerts.v2.Direction
+	(*GetRequest)(nil),                        // 2: invora.billing.alerts.v2.GetRequest
+	(*GetResponse)(nil),                       // 3: invora.billing.alerts.v2.GetResponse
+	(*ListRequest)(nil),                       // 4: invora.billing.alerts.v2.ListRequest
+	(*ListResponse)(nil),                      // 5: invora.billing.alerts.v2.ListResponse
+	(*ListFilter)(nil),                        // 6: invora.billing.alerts.v2.ListFilter
+	(*ListFilterPart)(nil),                    // 7: invora.billing.alerts.v2.ListFilterPart
+	(*ListSort)(nil),                          // 8: invora.billing.alerts.v2.ListSort
+	(*ListSortRule)(nil),                      // 9: invora.billing.alerts.v2.ListSortRule
+	(*ThresholdInput)(nil),                    // 10: invora.billing.alerts.v2.ThresholdInput
+	(*CreateSubscriptionAlertRequest)(nil),    // 11: invora.billing.alerts.v2.CreateSubscriptionAlertRequest
+	(*CreateSubscriptionAlertResponse)(nil),   // 12: invora.billing.alerts.v2.CreateSubscriptionAlertResponse
+	(*CreateCustomerWalletAlertRequest)(nil),  // 13: invora.billing.alerts.v2.CreateCustomerWalletAlertRequest
+	(*CreateCustomerWalletAlertResponse)(nil), // 14: invora.billing.alerts.v2.CreateCustomerWalletAlertResponse
+	(*UpdateSubscriptionAlertRequest)(nil),    // 15: invora.billing.alerts.v2.UpdateSubscriptionAlertRequest
+	(*UpdateSubscriptionAlertResponse)(nil),   // 16: invora.billing.alerts.v2.UpdateSubscriptionAlertResponse
+	(*UpdateCustomerWalletAlertRequest)(nil),  // 17: invora.billing.alerts.v2.UpdateCustomerWalletAlertRequest
+	(*UpdateCustomerWalletAlertResponse)(nil), // 18: invora.billing.alerts.v2.UpdateCustomerWalletAlertResponse
+	(*DeleteRequest)(nil),                     // 19: invora.billing.alerts.v2.DeleteRequest
+	(*DeleteResponse)(nil),                    // 20: invora.billing.alerts.v2.DeleteResponse
+	(*AlertThreshold)(nil),                    // 21: invora.billing.alerts.v2.AlertThreshold
+	(*fieldmaskpb.FieldMask)(nil),             // 22: google.protobuf.FieldMask
+	(v2.View)(0),                              // 23: invora.billing.common.v2.View
+	(*v2.BillingAlert)(nil),                   // 24: invora.billing.common.v2.BillingAlert
+	(*kernel.PaginationInfo)(nil),             // 25: kernel.PaginationInfo
+	(kernel.SortDirection)(0),                 // 26: kernel.SortDirection
 }
 var file_invora_billing_alerts_v2_service_proto_depIdxs = []int32{
-	39, // 0: invora.billing.alerts.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 1: invora.billing.alerts.v2.GetRequest.view:type_name -> invora.billing.alerts.v2.View
-	40, // 2: invora.billing.alerts.v2.GetResponse.alert:type_name -> invora.billing.common.v2.BillingAlert
-	7,  // 3: invora.billing.alerts.v2.ListRequest.filter:type_name -> invora.billing.alerts.v2.ListFilter
-	9,  // 4: invora.billing.alerts.v2.ListRequest.sort:type_name -> invora.billing.alerts.v2.ListSort
-	41, // 5: invora.billing.alerts.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
-	39, // 6: invora.billing.alerts.v2.ListRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 7: invora.billing.alerts.v2.ListRequest.view:type_name -> invora.billing.alerts.v2.View
-	40, // 8: invora.billing.alerts.v2.ListResponse.items:type_name -> invora.billing.common.v2.BillingAlert
-	42, // 9: invora.billing.alerts.v2.ListResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	8,  // 10: invora.billing.alerts.v2.ListFilter.part:type_name -> invora.billing.alerts.v2.ListFilterPart
-	10, // 11: invora.billing.alerts.v2.ListSort.rules:type_name -> invora.billing.alerts.v2.ListSortRule
-	43, // 12: invora.billing.alerts.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
-	39, // 13: invora.billing.alerts.v2.SubscriptionAlertRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 14: invora.billing.alerts.v2.SubscriptionAlertRequest.view:type_name -> invora.billing.alerts.v2.View
-	40, // 15: invora.billing.alerts.v2.SubscriptionAlertResponse.alert:type_name -> invora.billing.common.v2.BillingAlert
-	7,  // 16: invora.billing.alerts.v2.SubscriptionAlertsRequest.filter:type_name -> invora.billing.alerts.v2.ListFilter
-	9,  // 17: invora.billing.alerts.v2.SubscriptionAlertsRequest.sort:type_name -> invora.billing.alerts.v2.ListSort
-	41, // 18: invora.billing.alerts.v2.SubscriptionAlertsRequest.pagination:type_name -> kernel.PaginationInfo
-	39, // 19: invora.billing.alerts.v2.SubscriptionAlertsRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 20: invora.billing.alerts.v2.SubscriptionAlertsRequest.view:type_name -> invora.billing.alerts.v2.View
-	40, // 21: invora.billing.alerts.v2.SubscriptionAlertsResponse.items:type_name -> invora.billing.common.v2.BillingAlert
-	42, // 22: invora.billing.alerts.v2.SubscriptionAlertsResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	39, // 23: invora.billing.alerts.v2.WalletAlertRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 24: invora.billing.alerts.v2.WalletAlertRequest.view:type_name -> invora.billing.alerts.v2.View
-	40, // 25: invora.billing.alerts.v2.WalletAlertResponse.alert:type_name -> invora.billing.common.v2.BillingAlert
-	7,  // 26: invora.billing.alerts.v2.WalletAlertsRequest.filter:type_name -> invora.billing.alerts.v2.ListFilter
-	9,  // 27: invora.billing.alerts.v2.WalletAlertsRequest.sort:type_name -> invora.billing.alerts.v2.ListSort
-	41, // 28: invora.billing.alerts.v2.WalletAlertsRequest.pagination:type_name -> kernel.PaginationInfo
-	39, // 29: invora.billing.alerts.v2.WalletAlertsRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 30: invora.billing.alerts.v2.WalletAlertsRequest.view:type_name -> invora.billing.alerts.v2.View
-	40, // 31: invora.billing.alerts.v2.WalletAlertsResponse.items:type_name -> invora.billing.common.v2.BillingAlert
-	42, // 32: invora.billing.alerts.v2.WalletAlertsResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	37, // 33: invora.billing.alerts.v2.CreateCustomerWalletAlertRequest.input:type_name -> invora.billing.alerts.v2.CreateCustomerWalletAlertInput
-	40, // 34: invora.billing.alerts.v2.CreateCustomerWalletAlertResponse.alert:type_name -> invora.billing.common.v2.BillingAlert
-	36, // 35: invora.billing.alerts.v2.CreateSubscriptionAlertRequest.input:type_name -> invora.billing.alerts.v2.CreateSubscriptionAlertInput
-	40, // 36: invora.billing.alerts.v2.CreateSubscriptionAlertResponse.alert:type_name -> invora.billing.common.v2.BillingAlert
-	35, // 37: invora.billing.alerts.v2.DeleteCustomerWalletAlertRequest.input:type_name -> invora.billing.alerts.v2.DestroyCustomerWalletAlertInput
-	40, // 38: invora.billing.alerts.v2.DeleteCustomerWalletAlertResponse.alert:type_name -> invora.billing.common.v2.BillingAlert
-	34, // 39: invora.billing.alerts.v2.DeleteSubscriptionAlertRequest.input:type_name -> invora.billing.alerts.v2.DestroySubscriptionAlertInput
-	40, // 40: invora.billing.alerts.v2.DeleteSubscriptionAlertResponse.alert:type_name -> invora.billing.common.v2.BillingAlert
-	33, // 41: invora.billing.alerts.v2.UpdateCustomerWalletAlertRequest.input:type_name -> invora.billing.alerts.v2.UpdateCustomerWalletAlertInput
-	40, // 42: invora.billing.alerts.v2.UpdateCustomerWalletAlertResponse.alert:type_name -> invora.billing.common.v2.BillingAlert
-	31, // 43: invora.billing.alerts.v2.UpdateSubscriptionAlertRequest.input:type_name -> invora.billing.alerts.v2.UpdateSubscriptionAlertInput
-	40, // 44: invora.billing.alerts.v2.UpdateSubscriptionAlertResponse.alert:type_name -> invora.billing.common.v2.BillingAlert
-	32, // 45: invora.billing.alerts.v2.UpdateSubscriptionAlertInput.thresholds:type_name -> invora.billing.alerts.v2.ThresholdInput
-	32, // 46: invora.billing.alerts.v2.UpdateCustomerWalletAlertInput.thresholds:type_name -> invora.billing.alerts.v2.ThresholdInput
-	1,  // 47: invora.billing.alerts.v2.CreateSubscriptionAlertInput.alert_type:type_name -> invora.billing.alerts.v2.AlertTypeEnum
-	32, // 48: invora.billing.alerts.v2.CreateSubscriptionAlertInput.thresholds:type_name -> invora.billing.alerts.v2.ThresholdInput
-	1,  // 49: invora.billing.alerts.v2.CreateCustomerWalletAlertInput.alert_type:type_name -> invora.billing.alerts.v2.AlertTypeEnum
-	32, // 50: invora.billing.alerts.v2.CreateCustomerWalletAlertInput.thresholds:type_name -> invora.billing.alerts.v2.ThresholdInput
-	3,  // 51: invora.billing.alerts.v2.AlertService.Get:input_type -> invora.billing.alerts.v2.GetRequest
-	5,  // 52: invora.billing.alerts.v2.AlertService.List:input_type -> invora.billing.alerts.v2.ListRequest
-	19, // 53: invora.billing.alerts.v2.AlertService.CreateCustomerWalletAlert:input_type -> invora.billing.alerts.v2.CreateCustomerWalletAlertRequest
-	21, // 54: invora.billing.alerts.v2.AlertService.CreateSubscriptionAlert:input_type -> invora.billing.alerts.v2.CreateSubscriptionAlertRequest
-	23, // 55: invora.billing.alerts.v2.AlertService.DeleteCustomerWalletAlert:input_type -> invora.billing.alerts.v2.DeleteCustomerWalletAlertRequest
-	25, // 56: invora.billing.alerts.v2.AlertService.DeleteSubscriptionAlert:input_type -> invora.billing.alerts.v2.DeleteSubscriptionAlertRequest
-	11, // 57: invora.billing.alerts.v2.AlertService.SubscriptionAlert:input_type -> invora.billing.alerts.v2.SubscriptionAlertRequest
-	13, // 58: invora.billing.alerts.v2.AlertService.SubscriptionAlerts:input_type -> invora.billing.alerts.v2.SubscriptionAlertsRequest
-	27, // 59: invora.billing.alerts.v2.AlertService.UpdateCustomerWalletAlert:input_type -> invora.billing.alerts.v2.UpdateCustomerWalletAlertRequest
-	29, // 60: invora.billing.alerts.v2.AlertService.UpdateSubscriptionAlert:input_type -> invora.billing.alerts.v2.UpdateSubscriptionAlertRequest
-	15, // 61: invora.billing.alerts.v2.AlertService.WalletAlert:input_type -> invora.billing.alerts.v2.WalletAlertRequest
-	17, // 62: invora.billing.alerts.v2.AlertService.WalletAlerts:input_type -> invora.billing.alerts.v2.WalletAlertsRequest
-	4,  // 63: invora.billing.alerts.v2.AlertService.Get:output_type -> invora.billing.alerts.v2.GetResponse
-	6,  // 64: invora.billing.alerts.v2.AlertService.List:output_type -> invora.billing.alerts.v2.ListResponse
-	20, // 65: invora.billing.alerts.v2.AlertService.CreateCustomerWalletAlert:output_type -> invora.billing.alerts.v2.CreateCustomerWalletAlertResponse
-	22, // 66: invora.billing.alerts.v2.AlertService.CreateSubscriptionAlert:output_type -> invora.billing.alerts.v2.CreateSubscriptionAlertResponse
-	24, // 67: invora.billing.alerts.v2.AlertService.DeleteCustomerWalletAlert:output_type -> invora.billing.alerts.v2.DeleteCustomerWalletAlertResponse
-	26, // 68: invora.billing.alerts.v2.AlertService.DeleteSubscriptionAlert:output_type -> invora.billing.alerts.v2.DeleteSubscriptionAlertResponse
-	12, // 69: invora.billing.alerts.v2.AlertService.SubscriptionAlert:output_type -> invora.billing.alerts.v2.SubscriptionAlertResponse
-	14, // 70: invora.billing.alerts.v2.AlertService.SubscriptionAlerts:output_type -> invora.billing.alerts.v2.SubscriptionAlertsResponse
-	28, // 71: invora.billing.alerts.v2.AlertService.UpdateCustomerWalletAlert:output_type -> invora.billing.alerts.v2.UpdateCustomerWalletAlertResponse
-	30, // 72: invora.billing.alerts.v2.AlertService.UpdateSubscriptionAlert:output_type -> invora.billing.alerts.v2.UpdateSubscriptionAlertResponse
-	16, // 73: invora.billing.alerts.v2.AlertService.WalletAlert:output_type -> invora.billing.alerts.v2.WalletAlertResponse
-	18, // 74: invora.billing.alerts.v2.AlertService.WalletAlerts:output_type -> invora.billing.alerts.v2.WalletAlertsResponse
-	63, // [63:75] is the sub-list for method output_type
-	51, // [51:63] is the sub-list for method input_type
-	51, // [51:51] is the sub-list for extension type_name
-	51, // [51:51] is the sub-list for extension extendee
-	0,  // [0:51] is the sub-list for field type_name
+	22, // 0: invora.billing.alerts.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
+	23, // 1: invora.billing.alerts.v2.GetRequest.view:type_name -> invora.billing.common.v2.View
+	24, // 2: invora.billing.alerts.v2.GetResponse.alert:type_name -> invora.billing.common.v2.BillingAlert
+	6,  // 3: invora.billing.alerts.v2.ListRequest.filter:type_name -> invora.billing.alerts.v2.ListFilter
+	8,  // 4: invora.billing.alerts.v2.ListRequest.sort:type_name -> invora.billing.alerts.v2.ListSort
+	25, // 5: invora.billing.alerts.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
+	22, // 6: invora.billing.alerts.v2.ListRequest.read_mask:type_name -> google.protobuf.FieldMask
+	23, // 7: invora.billing.alerts.v2.ListRequest.view:type_name -> invora.billing.common.v2.View
+	24, // 8: invora.billing.alerts.v2.ListResponse.items:type_name -> invora.billing.common.v2.BillingAlert
+	7,  // 9: invora.billing.alerts.v2.ListFilter.part:type_name -> invora.billing.alerts.v2.ListFilterPart
+	0,  // 10: invora.billing.alerts.v2.ListFilterPart.alert_type:type_name -> invora.billing.alerts.v2.AlertType
+	9,  // 11: invora.billing.alerts.v2.ListSort.rules:type_name -> invora.billing.alerts.v2.ListSortRule
+	26, // 12: invora.billing.alerts.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
+	0,  // 13: invora.billing.alerts.v2.CreateSubscriptionAlertRequest.alert_type:type_name -> invora.billing.alerts.v2.AlertType
+	10, // 14: invora.billing.alerts.v2.CreateSubscriptionAlertRequest.thresholds:type_name -> invora.billing.alerts.v2.ThresholdInput
+	24, // 15: invora.billing.alerts.v2.CreateSubscriptionAlertResponse.alert:type_name -> invora.billing.common.v2.BillingAlert
+	0,  // 16: invora.billing.alerts.v2.CreateCustomerWalletAlertRequest.alert_type:type_name -> invora.billing.alerts.v2.AlertType
+	10, // 17: invora.billing.alerts.v2.CreateCustomerWalletAlertRequest.thresholds:type_name -> invora.billing.alerts.v2.ThresholdInput
+	24, // 18: invora.billing.alerts.v2.CreateCustomerWalletAlertResponse.alert:type_name -> invora.billing.common.v2.BillingAlert
+	10, // 19: invora.billing.alerts.v2.UpdateSubscriptionAlertRequest.thresholds:type_name -> invora.billing.alerts.v2.ThresholdInput
+	22, // 20: invora.billing.alerts.v2.UpdateSubscriptionAlertRequest.update_mask:type_name -> google.protobuf.FieldMask
+	24, // 21: invora.billing.alerts.v2.UpdateSubscriptionAlertResponse.alert:type_name -> invora.billing.common.v2.BillingAlert
+	10, // 22: invora.billing.alerts.v2.UpdateCustomerWalletAlertRequest.thresholds:type_name -> invora.billing.alerts.v2.ThresholdInput
+	22, // 23: invora.billing.alerts.v2.UpdateCustomerWalletAlertRequest.update_mask:type_name -> google.protobuf.FieldMask
+	24, // 24: invora.billing.alerts.v2.UpdateCustomerWalletAlertResponse.alert:type_name -> invora.billing.common.v2.BillingAlert
+	4,  // 25: invora.billing.alerts.v2.AlertsService.List:input_type -> invora.billing.alerts.v2.ListRequest
+	2,  // 26: invora.billing.alerts.v2.AlertsService.Get:input_type -> invora.billing.alerts.v2.GetRequest
+	11, // 27: invora.billing.alerts.v2.AlertsService.CreateSubscriptionAlert:input_type -> invora.billing.alerts.v2.CreateSubscriptionAlertRequest
+	13, // 28: invora.billing.alerts.v2.AlertsService.CreateCustomerWalletAlert:input_type -> invora.billing.alerts.v2.CreateCustomerWalletAlertRequest
+	15, // 29: invora.billing.alerts.v2.AlertsService.UpdateSubscriptionAlert:input_type -> invora.billing.alerts.v2.UpdateSubscriptionAlertRequest
+	17, // 30: invora.billing.alerts.v2.AlertsService.UpdateCustomerWalletAlert:input_type -> invora.billing.alerts.v2.UpdateCustomerWalletAlertRequest
+	19, // 31: invora.billing.alerts.v2.AlertsService.Delete:input_type -> invora.billing.alerts.v2.DeleteRequest
+	5,  // 32: invora.billing.alerts.v2.AlertsService.List:output_type -> invora.billing.alerts.v2.ListResponse
+	3,  // 33: invora.billing.alerts.v2.AlertsService.Get:output_type -> invora.billing.alerts.v2.GetResponse
+	12, // 34: invora.billing.alerts.v2.AlertsService.CreateSubscriptionAlert:output_type -> invora.billing.alerts.v2.CreateSubscriptionAlertResponse
+	14, // 35: invora.billing.alerts.v2.AlertsService.CreateCustomerWalletAlert:output_type -> invora.billing.alerts.v2.CreateCustomerWalletAlertResponse
+	16, // 36: invora.billing.alerts.v2.AlertsService.UpdateSubscriptionAlert:output_type -> invora.billing.alerts.v2.UpdateSubscriptionAlertResponse
+	18, // 37: invora.billing.alerts.v2.AlertsService.UpdateCustomerWalletAlert:output_type -> invora.billing.alerts.v2.UpdateCustomerWalletAlertResponse
+	20, // 38: invora.billing.alerts.v2.AlertsService.Delete:output_type -> invora.billing.alerts.v2.DeleteResponse
+	32, // [32:39] is the sub-list for method output_type
+	25, // [25:32] is the sub-list for method input_type
+	25, // [25:25] is the sub-list for extension type_name
+	25, // [25:25] is the sub-list for extension extendee
+	0,  // [0:25] is the sub-list for field type_name
 }
 
 func init() { file_invora_billing_alerts_v2_service_proto_init() }
@@ -2595,25 +1618,28 @@ func file_invora_billing_alerts_v2_service_proto_init() {
 	if File_invora_billing_alerts_v2_service_proto != nil {
 		return
 	}
+	file_invora_billing_alerts_v2_service_proto_msgTypes[3].OneofWrappers = []any{}
 	file_invora_billing_alerts_v2_service_proto_msgTypes[5].OneofWrappers = []any{
 		(*ListFilterPart_SubscriptionExternalId)(nil),
+		(*ListFilterPart_WalletId)(nil),
+		(*ListFilterPart_AlertType)(nil),
 	}
 	file_invora_billing_alerts_v2_service_proto_msgTypes[7].OneofWrappers = []any{
 		(*ListSortRule_CreatedAt)(nil),
 	}
-	file_invora_billing_alerts_v2_service_proto_msgTypes[28].OneofWrappers = []any{}
-	file_invora_billing_alerts_v2_service_proto_msgTypes[29].OneofWrappers = []any{}
-	file_invora_billing_alerts_v2_service_proto_msgTypes[30].OneofWrappers = []any{}
-	file_invora_billing_alerts_v2_service_proto_msgTypes[33].OneofWrappers = []any{}
-	file_invora_billing_alerts_v2_service_proto_msgTypes[34].OneofWrappers = []any{}
-	file_invora_billing_alerts_v2_service_proto_msgTypes[35].OneofWrappers = []any{}
+	file_invora_billing_alerts_v2_service_proto_msgTypes[8].OneofWrappers = []any{}
+	file_invora_billing_alerts_v2_service_proto_msgTypes[9].OneofWrappers = []any{}
+	file_invora_billing_alerts_v2_service_proto_msgTypes[11].OneofWrappers = []any{}
+	file_invora_billing_alerts_v2_service_proto_msgTypes[13].OneofWrappers = []any{}
+	file_invora_billing_alerts_v2_service_proto_msgTypes[15].OneofWrappers = []any{}
+	file_invora_billing_alerts_v2_service_proto_msgTypes[19].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_billing_alerts_v2_service_proto_rawDesc), len(file_invora_billing_alerts_v2_service_proto_rawDesc)),
-			NumEnums:      3,
-			NumMessages:   36,
+			NumEnums:      2,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

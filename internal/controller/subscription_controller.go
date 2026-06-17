@@ -38,9 +38,9 @@ func (r *InvoraBillingSubscriptionReconciler) Reconcile(ctx context.Context, req
 			sub.Spec.OrganizationRef, sub.Spec.DeletionPolicy,
 			sub.Status.ExternalID, &sub.Status.Conditions, sub.Generation,
 			func(ctx context.Context, orc *orgResourceContext) error {
-				svc := subscriptionspb.NewSubscriptionServiceClient(orc.Conn())
+				svc := subscriptionspb.NewSubscriptionsServiceClient(orc.Conn())
 				_, err := svc.Terminate(orc.GrpcCtx(ctx), &subscriptionspb.TerminateRequest{
-					Input: &subscriptionspb.TerminateSubscriptionInput{Id: sub.Status.ExternalID},
+					Id: sub.Status.ExternalID,
 				})
 				return err
 			})
@@ -89,8 +89,8 @@ func (r *InvoraBillingSubscriptionReconciler) Reconcile(ctx context.Context, req
 		return SuccessResult(&sub), nil
 	}
 
-	svc := subscriptionspb.NewSubscriptionServiceClient(orc.Conn())
-	custSvc := customerspb.NewCustomerServiceClient(orc.Conn())
+	svc := subscriptionspb.NewSubscriptionsServiceClient(orc.Conn())
+	custSvc := customerspb.NewCustomersServiceClient(orc.Conn())
 	grpcCtx := orc.GrpcCtx(ctx)
 
 	customerID, err := resolveBillingCustomerID(grpcCtx, custSvc, customerExternalID)
@@ -107,8 +107,7 @@ func (r *InvoraBillingSubscriptionReconciler) Reconcile(ctx context.Context, req
 			extID := sub.Spec.ExternalID
 			getReq = &subscriptionspb.GetRequest{ExternalId: &extID}
 		} else {
-			id := sub.Status.ExternalID
-			getReq = &subscriptionspb.GetRequest{Id: &id}
+			getReq = &subscriptionspb.GetRequest{Id: sub.Status.ExternalID}
 		}
 		remote, err := svc.Get(grpcCtx, getReq)
 		if err != nil {
@@ -124,10 +123,8 @@ func (r *InvoraBillingSubscriptionReconciler) Reconcile(ctx context.Context, req
 			sub.Status.SubscriptionStatus = remote.GetSubscription().GetStatus().String()
 			name := sub.Spec.Name
 			_, err := svc.Update(grpcCtx, &subscriptionspb.UpdateRequest{
-				Input: &subscriptionspb.UpdateSubscriptionInput{
-					Id:   sub.Status.ExternalID,
-					Name: &name,
-				},
+				Id:   sub.Status.ExternalID,
+				Name: &name,
 			})
 			if err != nil {
 				SetCondition(&sub.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "UpdateFailed", err.Error(), sub.Generation)
@@ -141,18 +138,18 @@ func (r *InvoraBillingSubscriptionReconciler) Reconcile(ctx context.Context, req
 	}
 
 	logger.Info("creating subscription", "externalId", sub.Spec.ExternalID)
-	createIn := &subscriptionspb.CreateSubscriptionInput{
+	createReq := &subscriptionspb.CreateRequest{
 		CustomerId:  customerID,
 		PlanId:      planID,
 		BillingTime: convert.BillingTime(sub.Spec.BillingTime),
 	}
 	if sub.Spec.ExternalID != "" {
-		createIn.ExternalId = &sub.Spec.ExternalID
+		createReq.ExternalId = &sub.Spec.ExternalID
 	}
 	if sub.Spec.Name != "" {
-		createIn.Name = &sub.Spec.Name
+		createReq.Name = &sub.Spec.Name
 	}
-	created, err := svc.Create(grpcCtx, &subscriptionspb.CreateRequest{Input: createIn})
+	created, err := svc.Create(grpcCtx, createReq)
 	if err != nil {
 		SetCondition(&sub.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "CreateFailed", err.Error(), sub.Generation)
 		_ = r.Status().Update(ctx, &sub)
@@ -168,7 +165,7 @@ func (r *InvoraBillingSubscriptionReconciler) Reconcile(ctx context.Context, req
 	return SuccessResult(&sub), nil
 }
 
-func resolveBillingCustomerID(ctx context.Context, svc customerspb.CustomerServiceClient, externalID string) (string, error) {
+func resolveBillingCustomerID(ctx context.Context, svc customerspb.CustomersServiceClient, externalID string) (string, error) {
 	resp, err := svc.Get(ctx, &customerspb.GetRequest{ExternalId: &externalID})
 	if err != nil {
 		return "", fmt.Errorf("getting customer %q: %w", externalID, err)

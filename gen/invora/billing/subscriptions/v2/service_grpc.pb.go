@@ -19,503 +19,631 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SubscriptionService_Create_FullMethodName                         = "/invora.billing.subscriptions.v2.SubscriptionService/Create"
-	SubscriptionService_Get_FullMethodName                            = "/invora.billing.subscriptions.v2.SubscriptionService/Get"
-	SubscriptionService_List_FullMethodName                           = "/invora.billing.subscriptions.v2.SubscriptionService/List"
-	SubscriptionService_Update_FullMethodName                         = "/invora.billing.subscriptions.v2.SubscriptionService/Update"
-	SubscriptionService_Terminate_FullMethodName                      = "/invora.billing.subscriptions.v2.SubscriptionService/Terminate"
-	SubscriptionService_CreateChargeFilter_FullMethodName             = "/invora.billing.subscriptions.v2.SubscriptionService/CreateChargeFilter"
-	SubscriptionService_DeleteSubscriptionChargeFilter_FullMethodName = "/invora.billing.subscriptions.v2.SubscriptionService/DeleteSubscriptionChargeFilter"
-	SubscriptionService_RemoveSubscriptionEntitlement_FullMethodName  = "/invora.billing.subscriptions.v2.SubscriptionService/RemoveSubscriptionEntitlement"
-	SubscriptionService_UpdateSubscriptionCharge_FullMethodName       = "/invora.billing.subscriptions.v2.SubscriptionService/UpdateSubscriptionCharge"
-	SubscriptionService_UpdateSubscriptionChargeFilter_FullMethodName = "/invora.billing.subscriptions.v2.SubscriptionService/UpdateSubscriptionChargeFilter"
-	SubscriptionService_UpdateSubscriptionFixedCharge_FullMethodName  = "/invora.billing.subscriptions.v2.SubscriptionService/UpdateSubscriptionFixedCharge"
+	SubscriptionsService_List_FullMethodName                      = "/invora.billing.subscriptions.v2.SubscriptionsService/List"
+	SubscriptionsService_Get_FullMethodName                       = "/invora.billing.subscriptions.v2.SubscriptionsService/Get"
+	SubscriptionsService_Create_FullMethodName                    = "/invora.billing.subscriptions.v2.SubscriptionsService/Create"
+	SubscriptionsService_Update_FullMethodName                    = "/invora.billing.subscriptions.v2.SubscriptionsService/Update"
+	SubscriptionsService_Terminate_FullMethodName                 = "/invora.billing.subscriptions.v2.SubscriptionsService/Terminate"
+	SubscriptionsService_UpdateCharge_FullMethodName              = "/invora.billing.subscriptions.v2.SubscriptionsService/UpdateCharge"
+	SubscriptionsService_CreateChargeFilter_FullMethodName        = "/invora.billing.subscriptions.v2.SubscriptionsService/CreateChargeFilter"
+	SubscriptionsService_UpdateChargeFilter_FullMethodName        = "/invora.billing.subscriptions.v2.SubscriptionsService/UpdateChargeFilter"
+	SubscriptionsService_DeleteChargeFilter_FullMethodName        = "/invora.billing.subscriptions.v2.SubscriptionsService/DeleteChargeFilter"
+	SubscriptionsService_CreateOrUpdateEntitlement_FullMethodName = "/invora.billing.subscriptions.v2.SubscriptionsService/CreateOrUpdateEntitlement"
+	SubscriptionsService_GetEntitlement_FullMethodName            = "/invora.billing.subscriptions.v2.SubscriptionsService/GetEntitlement"
+	SubscriptionsService_ListEntitlements_FullMethodName          = "/invora.billing.subscriptions.v2.SubscriptionsService/ListEntitlements"
+	SubscriptionsService_RemoveEntitlement_FullMethodName         = "/invora.billing.subscriptions.v2.SubscriptionsService/RemoveEntitlement"
+	SubscriptionsService_UpdateFixedCharge_FullMethodName         = "/invora.billing.subscriptions.v2.SubscriptionsService/UpdateFixedCharge"
 )
 
-// SubscriptionServiceClient is the client API for SubscriptionService service.
+// SubscriptionsServiceClient is the client API for SubscriptionsService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type SubscriptionServiceClient interface {
-	// Create a new Subscription
-	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
-	// Query a single subscription of an organization
-	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
-	// Query subscriptions of an organization
+//
+// Manage billing subscriptions for customers. Subscriptions link a customer
+// to a plan and control the billing lifecycle including charges, entitlements,
+// and usage thresholds.
+type SubscriptionsServiceClient interface {
+	// List subscriptions with filtering and pagination.
 	List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error)
-	// Update a Subscription
+	// Get a single subscription by ID or external ID.
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
+	// Create a new subscription linking a customer to a plan.
+	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
+	// Update an existing subscription's configuration.
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
-	// Terminate a Subscription
+	// Terminate a subscription, optionally generating a final invoice or credit note.
 	Terminate(ctx context.Context, in *TerminateRequest, opts ...grpc.CallOption) (*TerminateResponse, error)
-	// Create a charge filter for a subscription
+	// Update a charge override on a subscription.
+	UpdateCharge(ctx context.Context, in *UpdateChargeRequest, opts ...grpc.CallOption) (*UpdateChargeResponse, error)
+	// Create a charge filter on a subscription charge.
 	CreateChargeFilter(ctx context.Context, in *CreateChargeFilterRequest, opts ...grpc.CallOption) (*CreateChargeFilterResponse, error)
-	// Destroy a charge filter for a subscription
-	DeleteSubscriptionChargeFilter(ctx context.Context, in *DeleteSubscriptionChargeFilterRequest, opts ...grpc.CallOption) (*DeleteSubscriptionChargeFilterResponse, error)
-	// Removes a feature entitlement from a subscription
-	RemoveSubscriptionEntitlement(ctx context.Context, in *RemoveSubscriptionEntitlementRequest, opts ...grpc.CallOption) (*RemoveSubscriptionEntitlementResponse, error)
-	// Update a charge for a subscription
-	UpdateSubscriptionCharge(ctx context.Context, in *UpdateSubscriptionChargeRequest, opts ...grpc.CallOption) (*UpdateSubscriptionChargeResponse, error)
-	// Update a charge filter for a subscription
-	UpdateSubscriptionChargeFilter(ctx context.Context, in *UpdateSubscriptionChargeFilterRequest, opts ...grpc.CallOption) (*UpdateSubscriptionChargeFilterResponse, error)
-	// Update a fixed charge for a subscription
-	UpdateSubscriptionFixedCharge(ctx context.Context, in *UpdateSubscriptionFixedChargeRequest, opts ...grpc.CallOption) (*UpdateSubscriptionFixedChargeResponse, error)
+	// Update a charge filter on a subscription charge.
+	UpdateChargeFilter(ctx context.Context, in *UpdateChargeFilterRequest, opts ...grpc.CallOption) (*UpdateChargeFilterResponse, error)
+	// Delete a charge filter from a subscription charge.
+	DeleteChargeFilter(ctx context.Context, in *DeleteChargeFilterRequest, opts ...grpc.CallOption) (*DeleteChargeFilterResponse, error)
+	// Create or update a subscription entitlement.
+	CreateOrUpdateEntitlement(ctx context.Context, in *CreateOrUpdateEntitlementRequest, opts ...grpc.CallOption) (*CreateOrUpdateEntitlementResponse, error)
+	// Get a subscription entitlement by feature code.
+	GetEntitlement(ctx context.Context, in *GetEntitlementRequest, opts ...grpc.CallOption) (*GetEntitlementResponse, error)
+	// List entitlements for a subscription.
+	ListEntitlements(ctx context.Context, in *ListEntitlementsRequest, opts ...grpc.CallOption) (*ListEntitlementsResponse, error)
+	// Remove a feature entitlement from a subscription.
+	RemoveEntitlement(ctx context.Context, in *RemoveEntitlementRequest, opts ...grpc.CallOption) (*RemoveEntitlementResponse, error)
+	// Update a fixed charge override on a subscription.
+	UpdateFixedCharge(ctx context.Context, in *UpdateFixedChargeRequest, opts ...grpc.CallOption) (*UpdateFixedChargeResponse, error)
 }
 
-type subscriptionServiceClient struct {
+type subscriptionsServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewSubscriptionServiceClient(cc grpc.ClientConnInterface) SubscriptionServiceClient {
-	return &subscriptionServiceClient{cc}
+func NewSubscriptionsServiceClient(cc grpc.ClientConnInterface) SubscriptionsServiceClient {
+	return &subscriptionsServiceClient{cc}
 }
 
-func (c *subscriptionServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateResponse)
-	err := c.cc.Invoke(ctx, SubscriptionService_Create_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *subscriptionServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetResponse)
-	err := c.cc.Invoke(ctx, SubscriptionService_Get_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *subscriptionServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
+func (c *subscriptionsServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListResponse)
-	err := c.cc.Invoke(ctx, SubscriptionService_List_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, SubscriptionsService_List_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *subscriptionServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
+func (c *subscriptionsServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetResponse)
+	err := c.cc.Invoke(ctx, SubscriptionsService_Get_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *subscriptionsServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateResponse)
+	err := c.cc.Invoke(ctx, SubscriptionsService_Create_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *subscriptionsServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UpdateResponse)
-	err := c.cc.Invoke(ctx, SubscriptionService_Update_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, SubscriptionsService_Update_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *subscriptionServiceClient) Terminate(ctx context.Context, in *TerminateRequest, opts ...grpc.CallOption) (*TerminateResponse, error) {
+func (c *subscriptionsServiceClient) Terminate(ctx context.Context, in *TerminateRequest, opts ...grpc.CallOption) (*TerminateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(TerminateResponse)
-	err := c.cc.Invoke(ctx, SubscriptionService_Terminate_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, SubscriptionsService_Terminate_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *subscriptionServiceClient) CreateChargeFilter(ctx context.Context, in *CreateChargeFilterRequest, opts ...grpc.CallOption) (*CreateChargeFilterResponse, error) {
+func (c *subscriptionsServiceClient) UpdateCharge(ctx context.Context, in *UpdateChargeRequest, opts ...grpc.CallOption) (*UpdateChargeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateChargeResponse)
+	err := c.cc.Invoke(ctx, SubscriptionsService_UpdateCharge_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *subscriptionsServiceClient) CreateChargeFilter(ctx context.Context, in *CreateChargeFilterRequest, opts ...grpc.CallOption) (*CreateChargeFilterResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreateChargeFilterResponse)
-	err := c.cc.Invoke(ctx, SubscriptionService_CreateChargeFilter_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, SubscriptionsService_CreateChargeFilter_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *subscriptionServiceClient) DeleteSubscriptionChargeFilter(ctx context.Context, in *DeleteSubscriptionChargeFilterRequest, opts ...grpc.CallOption) (*DeleteSubscriptionChargeFilterResponse, error) {
+func (c *subscriptionsServiceClient) UpdateChargeFilter(ctx context.Context, in *UpdateChargeFilterRequest, opts ...grpc.CallOption) (*UpdateChargeFilterResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DeleteSubscriptionChargeFilterResponse)
-	err := c.cc.Invoke(ctx, SubscriptionService_DeleteSubscriptionChargeFilter_FullMethodName, in, out, cOpts...)
+	out := new(UpdateChargeFilterResponse)
+	err := c.cc.Invoke(ctx, SubscriptionsService_UpdateChargeFilter_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *subscriptionServiceClient) RemoveSubscriptionEntitlement(ctx context.Context, in *RemoveSubscriptionEntitlementRequest, opts ...grpc.CallOption) (*RemoveSubscriptionEntitlementResponse, error) {
+func (c *subscriptionsServiceClient) DeleteChargeFilter(ctx context.Context, in *DeleteChargeFilterRequest, opts ...grpc.CallOption) (*DeleteChargeFilterResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RemoveSubscriptionEntitlementResponse)
-	err := c.cc.Invoke(ctx, SubscriptionService_RemoveSubscriptionEntitlement_FullMethodName, in, out, cOpts...)
+	out := new(DeleteChargeFilterResponse)
+	err := c.cc.Invoke(ctx, SubscriptionsService_DeleteChargeFilter_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *subscriptionServiceClient) UpdateSubscriptionCharge(ctx context.Context, in *UpdateSubscriptionChargeRequest, opts ...grpc.CallOption) (*UpdateSubscriptionChargeResponse, error) {
+func (c *subscriptionsServiceClient) CreateOrUpdateEntitlement(ctx context.Context, in *CreateOrUpdateEntitlementRequest, opts ...grpc.CallOption) (*CreateOrUpdateEntitlementResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateSubscriptionChargeResponse)
-	err := c.cc.Invoke(ctx, SubscriptionService_UpdateSubscriptionCharge_FullMethodName, in, out, cOpts...)
+	out := new(CreateOrUpdateEntitlementResponse)
+	err := c.cc.Invoke(ctx, SubscriptionsService_CreateOrUpdateEntitlement_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *subscriptionServiceClient) UpdateSubscriptionChargeFilter(ctx context.Context, in *UpdateSubscriptionChargeFilterRequest, opts ...grpc.CallOption) (*UpdateSubscriptionChargeFilterResponse, error) {
+func (c *subscriptionsServiceClient) GetEntitlement(ctx context.Context, in *GetEntitlementRequest, opts ...grpc.CallOption) (*GetEntitlementResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateSubscriptionChargeFilterResponse)
-	err := c.cc.Invoke(ctx, SubscriptionService_UpdateSubscriptionChargeFilter_FullMethodName, in, out, cOpts...)
+	out := new(GetEntitlementResponse)
+	err := c.cc.Invoke(ctx, SubscriptionsService_GetEntitlement_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *subscriptionServiceClient) UpdateSubscriptionFixedCharge(ctx context.Context, in *UpdateSubscriptionFixedChargeRequest, opts ...grpc.CallOption) (*UpdateSubscriptionFixedChargeResponse, error) {
+func (c *subscriptionsServiceClient) ListEntitlements(ctx context.Context, in *ListEntitlementsRequest, opts ...grpc.CallOption) (*ListEntitlementsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateSubscriptionFixedChargeResponse)
-	err := c.cc.Invoke(ctx, SubscriptionService_UpdateSubscriptionFixedCharge_FullMethodName, in, out, cOpts...)
+	out := new(ListEntitlementsResponse)
+	err := c.cc.Invoke(ctx, SubscriptionsService_ListEntitlements_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// SubscriptionServiceServer is the server API for SubscriptionService service.
-// All implementations must embed UnimplementedSubscriptionServiceServer
+func (c *subscriptionsServiceClient) RemoveEntitlement(ctx context.Context, in *RemoveEntitlementRequest, opts ...grpc.CallOption) (*RemoveEntitlementResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RemoveEntitlementResponse)
+	err := c.cc.Invoke(ctx, SubscriptionsService_RemoveEntitlement_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *subscriptionsServiceClient) UpdateFixedCharge(ctx context.Context, in *UpdateFixedChargeRequest, opts ...grpc.CallOption) (*UpdateFixedChargeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateFixedChargeResponse)
+	err := c.cc.Invoke(ctx, SubscriptionsService_UpdateFixedCharge_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// SubscriptionsServiceServer is the server API for SubscriptionsService service.
+// All implementations must embed UnimplementedSubscriptionsServiceServer
 // for forward compatibility.
-type SubscriptionServiceServer interface {
-	// Create a new Subscription
-	Create(context.Context, *CreateRequest) (*CreateResponse, error)
-	// Query a single subscription of an organization
-	Get(context.Context, *GetRequest) (*GetResponse, error)
-	// Query subscriptions of an organization
+//
+// Manage billing subscriptions for customers. Subscriptions link a customer
+// to a plan and control the billing lifecycle including charges, entitlements,
+// and usage thresholds.
+type SubscriptionsServiceServer interface {
+	// List subscriptions with filtering and pagination.
 	List(context.Context, *ListRequest) (*ListResponse, error)
-	// Update a Subscription
+	// Get a single subscription by ID or external ID.
+	Get(context.Context, *GetRequest) (*GetResponse, error)
+	// Create a new subscription linking a customer to a plan.
+	Create(context.Context, *CreateRequest) (*CreateResponse, error)
+	// Update an existing subscription's configuration.
 	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
-	// Terminate a Subscription
+	// Terminate a subscription, optionally generating a final invoice or credit note.
 	Terminate(context.Context, *TerminateRequest) (*TerminateResponse, error)
-	// Create a charge filter for a subscription
+	// Update a charge override on a subscription.
+	UpdateCharge(context.Context, *UpdateChargeRequest) (*UpdateChargeResponse, error)
+	// Create a charge filter on a subscription charge.
 	CreateChargeFilter(context.Context, *CreateChargeFilterRequest) (*CreateChargeFilterResponse, error)
-	// Destroy a charge filter for a subscription
-	DeleteSubscriptionChargeFilter(context.Context, *DeleteSubscriptionChargeFilterRequest) (*DeleteSubscriptionChargeFilterResponse, error)
-	// Removes a feature entitlement from a subscription
-	RemoveSubscriptionEntitlement(context.Context, *RemoveSubscriptionEntitlementRequest) (*RemoveSubscriptionEntitlementResponse, error)
-	// Update a charge for a subscription
-	UpdateSubscriptionCharge(context.Context, *UpdateSubscriptionChargeRequest) (*UpdateSubscriptionChargeResponse, error)
-	// Update a charge filter for a subscription
-	UpdateSubscriptionChargeFilter(context.Context, *UpdateSubscriptionChargeFilterRequest) (*UpdateSubscriptionChargeFilterResponse, error)
-	// Update a fixed charge for a subscription
-	UpdateSubscriptionFixedCharge(context.Context, *UpdateSubscriptionFixedChargeRequest) (*UpdateSubscriptionFixedChargeResponse, error)
-	mustEmbedUnimplementedSubscriptionServiceServer()
+	// Update a charge filter on a subscription charge.
+	UpdateChargeFilter(context.Context, *UpdateChargeFilterRequest) (*UpdateChargeFilterResponse, error)
+	// Delete a charge filter from a subscription charge.
+	DeleteChargeFilter(context.Context, *DeleteChargeFilterRequest) (*DeleteChargeFilterResponse, error)
+	// Create or update a subscription entitlement.
+	CreateOrUpdateEntitlement(context.Context, *CreateOrUpdateEntitlementRequest) (*CreateOrUpdateEntitlementResponse, error)
+	// Get a subscription entitlement by feature code.
+	GetEntitlement(context.Context, *GetEntitlementRequest) (*GetEntitlementResponse, error)
+	// List entitlements for a subscription.
+	ListEntitlements(context.Context, *ListEntitlementsRequest) (*ListEntitlementsResponse, error)
+	// Remove a feature entitlement from a subscription.
+	RemoveEntitlement(context.Context, *RemoveEntitlementRequest) (*RemoveEntitlementResponse, error)
+	// Update a fixed charge override on a subscription.
+	UpdateFixedCharge(context.Context, *UpdateFixedChargeRequest) (*UpdateFixedChargeResponse, error)
+	mustEmbedUnimplementedSubscriptionsServiceServer()
 }
 
-// UnimplementedSubscriptionServiceServer must be embedded to have
+// UnimplementedSubscriptionsServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedSubscriptionServiceServer struct{}
+type UnimplementedSubscriptionsServiceServer struct{}
 
-func (UnimplementedSubscriptionServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
-}
-func (UnimplementedSubscriptionServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
-}
-func (UnimplementedSubscriptionServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
+func (UnimplementedSubscriptionsServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method List not implemented")
 }
-func (UnimplementedSubscriptionServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
+func (UnimplementedSubscriptionsServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
+}
+func (UnimplementedSubscriptionsServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedSubscriptionsServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedSubscriptionServiceServer) Terminate(context.Context, *TerminateRequest) (*TerminateResponse, error) {
+func (UnimplementedSubscriptionsServiceServer) Terminate(context.Context, *TerminateRequest) (*TerminateResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Terminate not implemented")
 }
-func (UnimplementedSubscriptionServiceServer) CreateChargeFilter(context.Context, *CreateChargeFilterRequest) (*CreateChargeFilterResponse, error) {
+func (UnimplementedSubscriptionsServiceServer) UpdateCharge(context.Context, *UpdateChargeRequest) (*UpdateChargeResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateCharge not implemented")
+}
+func (UnimplementedSubscriptionsServiceServer) CreateChargeFilter(context.Context, *CreateChargeFilterRequest) (*CreateChargeFilterResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CreateChargeFilter not implemented")
 }
-func (UnimplementedSubscriptionServiceServer) DeleteSubscriptionChargeFilter(context.Context, *DeleteSubscriptionChargeFilterRequest) (*DeleteSubscriptionChargeFilterResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method DeleteSubscriptionChargeFilter not implemented")
+func (UnimplementedSubscriptionsServiceServer) UpdateChargeFilter(context.Context, *UpdateChargeFilterRequest) (*UpdateChargeFilterResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateChargeFilter not implemented")
 }
-func (UnimplementedSubscriptionServiceServer) RemoveSubscriptionEntitlement(context.Context, *RemoveSubscriptionEntitlementRequest) (*RemoveSubscriptionEntitlementResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method RemoveSubscriptionEntitlement not implemented")
+func (UnimplementedSubscriptionsServiceServer) DeleteChargeFilter(context.Context, *DeleteChargeFilterRequest) (*DeleteChargeFilterResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteChargeFilter not implemented")
 }
-func (UnimplementedSubscriptionServiceServer) UpdateSubscriptionCharge(context.Context, *UpdateSubscriptionChargeRequest) (*UpdateSubscriptionChargeResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method UpdateSubscriptionCharge not implemented")
+func (UnimplementedSubscriptionsServiceServer) CreateOrUpdateEntitlement(context.Context, *CreateOrUpdateEntitlementRequest) (*CreateOrUpdateEntitlementResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateOrUpdateEntitlement not implemented")
 }
-func (UnimplementedSubscriptionServiceServer) UpdateSubscriptionChargeFilter(context.Context, *UpdateSubscriptionChargeFilterRequest) (*UpdateSubscriptionChargeFilterResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method UpdateSubscriptionChargeFilter not implemented")
+func (UnimplementedSubscriptionsServiceServer) GetEntitlement(context.Context, *GetEntitlementRequest) (*GetEntitlementResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetEntitlement not implemented")
 }
-func (UnimplementedSubscriptionServiceServer) UpdateSubscriptionFixedCharge(context.Context, *UpdateSubscriptionFixedChargeRequest) (*UpdateSubscriptionFixedChargeResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method UpdateSubscriptionFixedCharge not implemented")
+func (UnimplementedSubscriptionsServiceServer) ListEntitlements(context.Context, *ListEntitlementsRequest) (*ListEntitlementsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListEntitlements not implemented")
 }
-func (UnimplementedSubscriptionServiceServer) mustEmbedUnimplementedSubscriptionServiceServer() {}
-func (UnimplementedSubscriptionServiceServer) testEmbeddedByValue()                             {}
+func (UnimplementedSubscriptionsServiceServer) RemoveEntitlement(context.Context, *RemoveEntitlementRequest) (*RemoveEntitlementResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RemoveEntitlement not implemented")
+}
+func (UnimplementedSubscriptionsServiceServer) UpdateFixedCharge(context.Context, *UpdateFixedChargeRequest) (*UpdateFixedChargeResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateFixedCharge not implemented")
+}
+func (UnimplementedSubscriptionsServiceServer) mustEmbedUnimplementedSubscriptionsServiceServer() {}
+func (UnimplementedSubscriptionsServiceServer) testEmbeddedByValue()                              {}
 
-// UnsafeSubscriptionServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to SubscriptionServiceServer will
+// UnsafeSubscriptionsServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to SubscriptionsServiceServer will
 // result in compilation errors.
-type UnsafeSubscriptionServiceServer interface {
-	mustEmbedUnimplementedSubscriptionServiceServer()
+type UnsafeSubscriptionsServiceServer interface {
+	mustEmbedUnimplementedSubscriptionsServiceServer()
 }
 
-func RegisterSubscriptionServiceServer(s grpc.ServiceRegistrar, srv SubscriptionServiceServer) {
-	// If the following call panics, it indicates UnimplementedSubscriptionServiceServer was
+func RegisterSubscriptionsServiceServer(s grpc.ServiceRegistrar, srv SubscriptionsServiceServer) {
+	// If the following call panics, it indicates UnimplementedSubscriptionsServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&SubscriptionService_ServiceDesc, srv)
+	s.RegisterService(&SubscriptionsService_ServiceDesc, srv)
 }
 
-func _SubscriptionService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).Create(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: SubscriptionService_Create_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).Create(ctx, req.(*CreateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _SubscriptionService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).Get(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: SubscriptionService_Get_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).Get(ctx, req.(*GetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _SubscriptionService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SubscriptionsService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).List(ctx, in)
+		return srv.(SubscriptionsServiceServer).List(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SubscriptionService_List_FullMethodName,
+		FullMethod: SubscriptionsService_List_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).List(ctx, req.(*ListRequest))
+		return srv.(SubscriptionsServiceServer).List(ctx, req.(*ListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SubscriptionService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SubscriptionsService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionsServiceServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionsService_Get_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionsServiceServer).Get(ctx, req.(*GetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SubscriptionsService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionsServiceServer).Create(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionsService_Create_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionsServiceServer).Create(ctx, req.(*CreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SubscriptionsService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).Update(ctx, in)
+		return srv.(SubscriptionsServiceServer).Update(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SubscriptionService_Update_FullMethodName,
+		FullMethod: SubscriptionsService_Update_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).Update(ctx, req.(*UpdateRequest))
+		return srv.(SubscriptionsServiceServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SubscriptionService_Terminate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SubscriptionsService_Terminate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TerminateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).Terminate(ctx, in)
+		return srv.(SubscriptionsServiceServer).Terminate(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SubscriptionService_Terminate_FullMethodName,
+		FullMethod: SubscriptionsService_Terminate_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).Terminate(ctx, req.(*TerminateRequest))
+		return srv.(SubscriptionsServiceServer).Terminate(ctx, req.(*TerminateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SubscriptionService_CreateChargeFilter_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _SubscriptionsService_UpdateCharge_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateChargeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionsServiceServer).UpdateCharge(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionsService_UpdateCharge_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionsServiceServer).UpdateCharge(ctx, req.(*UpdateChargeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SubscriptionsService_CreateChargeFilter_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateChargeFilterRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).CreateChargeFilter(ctx, in)
+		return srv.(SubscriptionsServiceServer).CreateChargeFilter(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SubscriptionService_CreateChargeFilter_FullMethodName,
+		FullMethod: SubscriptionsService_CreateChargeFilter_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).CreateChargeFilter(ctx, req.(*CreateChargeFilterRequest))
+		return srv.(SubscriptionsServiceServer).CreateChargeFilter(ctx, req.(*CreateChargeFilterRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SubscriptionService_DeleteSubscriptionChargeFilter_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteSubscriptionChargeFilterRequest)
+func _SubscriptionsService_UpdateChargeFilter_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateChargeFilterRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).DeleteSubscriptionChargeFilter(ctx, in)
+		return srv.(SubscriptionsServiceServer).UpdateChargeFilter(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SubscriptionService_DeleteSubscriptionChargeFilter_FullMethodName,
+		FullMethod: SubscriptionsService_UpdateChargeFilter_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).DeleteSubscriptionChargeFilter(ctx, req.(*DeleteSubscriptionChargeFilterRequest))
+		return srv.(SubscriptionsServiceServer).UpdateChargeFilter(ctx, req.(*UpdateChargeFilterRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SubscriptionService_RemoveSubscriptionEntitlement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RemoveSubscriptionEntitlementRequest)
+func _SubscriptionsService_DeleteChargeFilter_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteChargeFilterRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).RemoveSubscriptionEntitlement(ctx, in)
+		return srv.(SubscriptionsServiceServer).DeleteChargeFilter(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SubscriptionService_RemoveSubscriptionEntitlement_FullMethodName,
+		FullMethod: SubscriptionsService_DeleteChargeFilter_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).RemoveSubscriptionEntitlement(ctx, req.(*RemoveSubscriptionEntitlementRequest))
+		return srv.(SubscriptionsServiceServer).DeleteChargeFilter(ctx, req.(*DeleteChargeFilterRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SubscriptionService_UpdateSubscriptionCharge_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateSubscriptionChargeRequest)
+func _SubscriptionsService_CreateOrUpdateEntitlement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateOrUpdateEntitlementRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).UpdateSubscriptionCharge(ctx, in)
+		return srv.(SubscriptionsServiceServer).CreateOrUpdateEntitlement(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SubscriptionService_UpdateSubscriptionCharge_FullMethodName,
+		FullMethod: SubscriptionsService_CreateOrUpdateEntitlement_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).UpdateSubscriptionCharge(ctx, req.(*UpdateSubscriptionChargeRequest))
+		return srv.(SubscriptionsServiceServer).CreateOrUpdateEntitlement(ctx, req.(*CreateOrUpdateEntitlementRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SubscriptionService_UpdateSubscriptionChargeFilter_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateSubscriptionChargeFilterRequest)
+func _SubscriptionsService_GetEntitlement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetEntitlementRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).UpdateSubscriptionChargeFilter(ctx, in)
+		return srv.(SubscriptionsServiceServer).GetEntitlement(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SubscriptionService_UpdateSubscriptionChargeFilter_FullMethodName,
+		FullMethod: SubscriptionsService_GetEntitlement_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).UpdateSubscriptionChargeFilter(ctx, req.(*UpdateSubscriptionChargeFilterRequest))
+		return srv.(SubscriptionsServiceServer).GetEntitlement(ctx, req.(*GetEntitlementRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SubscriptionService_UpdateSubscriptionFixedCharge_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateSubscriptionFixedChargeRequest)
+func _SubscriptionsService_ListEntitlements_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListEntitlementsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).UpdateSubscriptionFixedCharge(ctx, in)
+		return srv.(SubscriptionsServiceServer).ListEntitlements(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SubscriptionService_UpdateSubscriptionFixedCharge_FullMethodName,
+		FullMethod: SubscriptionsService_ListEntitlements_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).UpdateSubscriptionFixedCharge(ctx, req.(*UpdateSubscriptionFixedChargeRequest))
+		return srv.(SubscriptionsServiceServer).ListEntitlements(ctx, req.(*ListEntitlementsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// SubscriptionService_ServiceDesc is the grpc.ServiceDesc for SubscriptionService service.
+func _SubscriptionsService_RemoveEntitlement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveEntitlementRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionsServiceServer).RemoveEntitlement(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionsService_RemoveEntitlement_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionsServiceServer).RemoveEntitlement(ctx, req.(*RemoveEntitlementRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SubscriptionsService_UpdateFixedCharge_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateFixedChargeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionsServiceServer).UpdateFixedCharge(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SubscriptionsService_UpdateFixedCharge_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionsServiceServer).UpdateFixedCharge(ctx, req.(*UpdateFixedChargeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// SubscriptionsService_ServiceDesc is the grpc.ServiceDesc for SubscriptionsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "invora.billing.subscriptions.v2.SubscriptionService",
-	HandlerType: (*SubscriptionServiceServer)(nil),
+var SubscriptionsService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "invora.billing.subscriptions.v2.SubscriptionsService",
+	HandlerType: (*SubscriptionsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Create",
-			Handler:    _SubscriptionService_Create_Handler,
+			MethodName: "List",
+			Handler:    _SubscriptionsService_List_Handler,
 		},
 		{
 			MethodName: "Get",
-			Handler:    _SubscriptionService_Get_Handler,
+			Handler:    _SubscriptionsService_Get_Handler,
 		},
 		{
-			MethodName: "List",
-			Handler:    _SubscriptionService_List_Handler,
+			MethodName: "Create",
+			Handler:    _SubscriptionsService_Create_Handler,
 		},
 		{
 			MethodName: "Update",
-			Handler:    _SubscriptionService_Update_Handler,
+			Handler:    _SubscriptionsService_Update_Handler,
 		},
 		{
 			MethodName: "Terminate",
-			Handler:    _SubscriptionService_Terminate_Handler,
+			Handler:    _SubscriptionsService_Terminate_Handler,
+		},
+		{
+			MethodName: "UpdateCharge",
+			Handler:    _SubscriptionsService_UpdateCharge_Handler,
 		},
 		{
 			MethodName: "CreateChargeFilter",
-			Handler:    _SubscriptionService_CreateChargeFilter_Handler,
+			Handler:    _SubscriptionsService_CreateChargeFilter_Handler,
 		},
 		{
-			MethodName: "DeleteSubscriptionChargeFilter",
-			Handler:    _SubscriptionService_DeleteSubscriptionChargeFilter_Handler,
+			MethodName: "UpdateChargeFilter",
+			Handler:    _SubscriptionsService_UpdateChargeFilter_Handler,
 		},
 		{
-			MethodName: "RemoveSubscriptionEntitlement",
-			Handler:    _SubscriptionService_RemoveSubscriptionEntitlement_Handler,
+			MethodName: "DeleteChargeFilter",
+			Handler:    _SubscriptionsService_DeleteChargeFilter_Handler,
 		},
 		{
-			MethodName: "UpdateSubscriptionCharge",
-			Handler:    _SubscriptionService_UpdateSubscriptionCharge_Handler,
+			MethodName: "CreateOrUpdateEntitlement",
+			Handler:    _SubscriptionsService_CreateOrUpdateEntitlement_Handler,
 		},
 		{
-			MethodName: "UpdateSubscriptionChargeFilter",
-			Handler:    _SubscriptionService_UpdateSubscriptionChargeFilter_Handler,
+			MethodName: "GetEntitlement",
+			Handler:    _SubscriptionsService_GetEntitlement_Handler,
 		},
 		{
-			MethodName: "UpdateSubscriptionFixedCharge",
-			Handler:    _SubscriptionService_UpdateSubscriptionFixedCharge_Handler,
+			MethodName: "ListEntitlements",
+			Handler:    _SubscriptionsService_ListEntitlements_Handler,
+		},
+		{
+			MethodName: "RemoveEntitlement",
+			Handler:    _SubscriptionsService_RemoveEntitlement_Handler,
+		},
+		{
+			MethodName: "UpdateFixedCharge",
+			Handler:    _SubscriptionsService_UpdateFixedCharge_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

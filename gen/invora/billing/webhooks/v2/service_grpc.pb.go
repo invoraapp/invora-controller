@@ -19,384 +19,390 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	WebhookEndpointService_Create_FullMethodName       = "/invora.billing.webhooks.v2.WebhookEndpointService/Create"
-	WebhookEndpointService_Get_FullMethodName          = "/invora.billing.webhooks.v2.WebhookEndpointService/Get"
-	WebhookEndpointService_List_FullMethodName         = "/invora.billing.webhooks.v2.WebhookEndpointService/List"
-	WebhookEndpointService_Update_FullMethodName       = "/invora.billing.webhooks.v2.WebhookEndpointService/Update"
-	WebhookEndpointService_Delete_FullMethodName       = "/invora.billing.webhooks.v2.WebhookEndpointService/Delete"
-	WebhookEndpointService_RetryWebhook_FullMethodName = "/invora.billing.webhooks.v2.WebhookEndpointService/RetryWebhook"
-	WebhookEndpointService_Webhook_FullMethodName      = "/invora.billing.webhooks.v2.WebhookEndpointService/Webhook"
-	WebhookEndpointService_Webhooks_FullMethodName     = "/invora.billing.webhooks.v2.WebhookEndpointService/Webhooks"
+	WebhookEndpointsService_List_FullMethodName         = "/invora.billing.webhooks.v2.WebhookEndpointsService/List"
+	WebhookEndpointsService_Get_FullMethodName          = "/invora.billing.webhooks.v2.WebhookEndpointsService/Get"
+	WebhookEndpointsService_Create_FullMethodName       = "/invora.billing.webhooks.v2.WebhookEndpointsService/Create"
+	WebhookEndpointsService_Update_FullMethodName       = "/invora.billing.webhooks.v2.WebhookEndpointsService/Update"
+	WebhookEndpointsService_Delete_FullMethodName       = "/invora.billing.webhooks.v2.WebhookEndpointsService/Delete"
+	WebhookEndpointsService_ListWebhooks_FullMethodName = "/invora.billing.webhooks.v2.WebhookEndpointsService/ListWebhooks"
+	WebhookEndpointsService_GetWebhook_FullMethodName   = "/invora.billing.webhooks.v2.WebhookEndpointsService/GetWebhook"
+	WebhookEndpointsService_RetryWebhook_FullMethodName = "/invora.billing.webhooks.v2.WebhookEndpointsService/RetryWebhook"
 )
 
-// WebhookEndpointServiceClient is the client API for WebhookEndpointService service.
+// WebhookEndpointsServiceClient is the client API for WebhookEndpointsService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type WebhookEndpointServiceClient interface {
-	// Create a new webhook endpoint
-	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
-	// Query a single webhook endpoint
-	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
-	// Query webhook endpoints of an organization
+//
+// Manage webhook endpoints and inspect webhook delivery logs.
+// Endpoints receive event notifications; delivery logs track each attempt.
+type WebhookEndpointsServiceClient interface {
+	// List webhook endpoints for the organization.
 	List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error)
-	// Update a new webhook endpoint
+	// Get a single webhook endpoint by ID.
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
+	// Create a new webhook endpoint.
+	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
+	// Update an existing webhook endpoint.
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
-	// Deletes a webhook endpoint
+	// Delete a webhook endpoint.
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
-	// Retry a Webhook
+	// List webhook delivery logs for an endpoint.
+	ListWebhooks(ctx context.Context, in *ListWebhooksRequest, opts ...grpc.CallOption) (*ListWebhooksResponse, error)
+	// Get a single webhook delivery log by ID.
+	GetWebhook(ctx context.Context, in *GetWebhookRequest, opts ...grpc.CallOption) (*GetWebhookResponse, error)
+	// Retry a failed webhook delivery.
 	RetryWebhook(ctx context.Context, in *RetryWebhookRequest, opts ...grpc.CallOption) (*RetryWebhookResponse, error)
-	// Query a webhook
-	Webhook(ctx context.Context, in *WebhookRequest, opts ...grpc.CallOption) (*WebhookResponse, error)
-	// Query Webhooks
-	Webhooks(ctx context.Context, in *WebhooksRequest, opts ...grpc.CallOption) (*WebhooksResponse, error)
 }
 
-type webhookEndpointServiceClient struct {
+type webhookEndpointsServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewWebhookEndpointServiceClient(cc grpc.ClientConnInterface) WebhookEndpointServiceClient {
-	return &webhookEndpointServiceClient{cc}
+func NewWebhookEndpointsServiceClient(cc grpc.ClientConnInterface) WebhookEndpointsServiceClient {
+	return &webhookEndpointsServiceClient{cc}
 }
 
-func (c *webhookEndpointServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateResponse)
-	err := c.cc.Invoke(ctx, WebhookEndpointService_Create_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *webhookEndpointServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetResponse)
-	err := c.cc.Invoke(ctx, WebhookEndpointService_Get_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *webhookEndpointServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
+func (c *webhookEndpointsServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListResponse)
-	err := c.cc.Invoke(ctx, WebhookEndpointService_List_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, WebhookEndpointsService_List_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *webhookEndpointServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
+func (c *webhookEndpointsServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetResponse)
+	err := c.cc.Invoke(ctx, WebhookEndpointsService_Get_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *webhookEndpointsServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateResponse)
+	err := c.cc.Invoke(ctx, WebhookEndpointsService_Create_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *webhookEndpointsServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UpdateResponse)
-	err := c.cc.Invoke(ctx, WebhookEndpointService_Update_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, WebhookEndpointsService_Update_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *webhookEndpointServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
+func (c *webhookEndpointsServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DeleteResponse)
-	err := c.cc.Invoke(ctx, WebhookEndpointService_Delete_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, WebhookEndpointsService_Delete_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *webhookEndpointServiceClient) RetryWebhook(ctx context.Context, in *RetryWebhookRequest, opts ...grpc.CallOption) (*RetryWebhookResponse, error) {
+func (c *webhookEndpointsServiceClient) ListWebhooks(ctx context.Context, in *ListWebhooksRequest, opts ...grpc.CallOption) (*ListWebhooksResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListWebhooksResponse)
+	err := c.cc.Invoke(ctx, WebhookEndpointsService_ListWebhooks_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *webhookEndpointsServiceClient) GetWebhook(ctx context.Context, in *GetWebhookRequest, opts ...grpc.CallOption) (*GetWebhookResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetWebhookResponse)
+	err := c.cc.Invoke(ctx, WebhookEndpointsService_GetWebhook_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *webhookEndpointsServiceClient) RetryWebhook(ctx context.Context, in *RetryWebhookRequest, opts ...grpc.CallOption) (*RetryWebhookResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(RetryWebhookResponse)
-	err := c.cc.Invoke(ctx, WebhookEndpointService_RetryWebhook_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, WebhookEndpointsService_RetryWebhook_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *webhookEndpointServiceClient) Webhook(ctx context.Context, in *WebhookRequest, opts ...grpc.CallOption) (*WebhookResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(WebhookResponse)
-	err := c.cc.Invoke(ctx, WebhookEndpointService_Webhook_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *webhookEndpointServiceClient) Webhooks(ctx context.Context, in *WebhooksRequest, opts ...grpc.CallOption) (*WebhooksResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(WebhooksResponse)
-	err := c.cc.Invoke(ctx, WebhookEndpointService_Webhooks_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// WebhookEndpointServiceServer is the server API for WebhookEndpointService service.
-// All implementations must embed UnimplementedWebhookEndpointServiceServer
+// WebhookEndpointsServiceServer is the server API for WebhookEndpointsService service.
+// All implementations must embed UnimplementedWebhookEndpointsServiceServer
 // for forward compatibility.
-type WebhookEndpointServiceServer interface {
-	// Create a new webhook endpoint
-	Create(context.Context, *CreateRequest) (*CreateResponse, error)
-	// Query a single webhook endpoint
-	Get(context.Context, *GetRequest) (*GetResponse, error)
-	// Query webhook endpoints of an organization
+//
+// Manage webhook endpoints and inspect webhook delivery logs.
+// Endpoints receive event notifications; delivery logs track each attempt.
+type WebhookEndpointsServiceServer interface {
+	// List webhook endpoints for the organization.
 	List(context.Context, *ListRequest) (*ListResponse, error)
-	// Update a new webhook endpoint
+	// Get a single webhook endpoint by ID.
+	Get(context.Context, *GetRequest) (*GetResponse, error)
+	// Create a new webhook endpoint.
+	Create(context.Context, *CreateRequest) (*CreateResponse, error)
+	// Update an existing webhook endpoint.
 	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
-	// Deletes a webhook endpoint
+	// Delete a webhook endpoint.
 	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
-	// Retry a Webhook
+	// List webhook delivery logs for an endpoint.
+	ListWebhooks(context.Context, *ListWebhooksRequest) (*ListWebhooksResponse, error)
+	// Get a single webhook delivery log by ID.
+	GetWebhook(context.Context, *GetWebhookRequest) (*GetWebhookResponse, error)
+	// Retry a failed webhook delivery.
 	RetryWebhook(context.Context, *RetryWebhookRequest) (*RetryWebhookResponse, error)
-	// Query a webhook
-	Webhook(context.Context, *WebhookRequest) (*WebhookResponse, error)
-	// Query Webhooks
-	Webhooks(context.Context, *WebhooksRequest) (*WebhooksResponse, error)
-	mustEmbedUnimplementedWebhookEndpointServiceServer()
+	mustEmbedUnimplementedWebhookEndpointsServiceServer()
 }
 
-// UnimplementedWebhookEndpointServiceServer must be embedded to have
+// UnimplementedWebhookEndpointsServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedWebhookEndpointServiceServer struct{}
+type UnimplementedWebhookEndpointsServiceServer struct{}
 
-func (UnimplementedWebhookEndpointServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
-}
-func (UnimplementedWebhookEndpointServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
-}
-func (UnimplementedWebhookEndpointServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
+func (UnimplementedWebhookEndpointsServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method List not implemented")
 }
-func (UnimplementedWebhookEndpointServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
+func (UnimplementedWebhookEndpointsServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Get not implemented")
+}
+func (UnimplementedWebhookEndpointsServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedWebhookEndpointsServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedWebhookEndpointServiceServer) Delete(context.Context, *DeleteRequest) (*DeleteResponse, error) {
+func (UnimplementedWebhookEndpointsServiceServer) Delete(context.Context, *DeleteRequest) (*DeleteResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedWebhookEndpointServiceServer) RetryWebhook(context.Context, *RetryWebhookRequest) (*RetryWebhookResponse, error) {
+func (UnimplementedWebhookEndpointsServiceServer) ListWebhooks(context.Context, *ListWebhooksRequest) (*ListWebhooksResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListWebhooks not implemented")
+}
+func (UnimplementedWebhookEndpointsServiceServer) GetWebhook(context.Context, *GetWebhookRequest) (*GetWebhookResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetWebhook not implemented")
+}
+func (UnimplementedWebhookEndpointsServiceServer) RetryWebhook(context.Context, *RetryWebhookRequest) (*RetryWebhookResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method RetryWebhook not implemented")
 }
-func (UnimplementedWebhookEndpointServiceServer) Webhook(context.Context, *WebhookRequest) (*WebhookResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Webhook not implemented")
+func (UnimplementedWebhookEndpointsServiceServer) mustEmbedUnimplementedWebhookEndpointsServiceServer() {
 }
-func (UnimplementedWebhookEndpointServiceServer) Webhooks(context.Context, *WebhooksRequest) (*WebhooksResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Webhooks not implemented")
-}
-func (UnimplementedWebhookEndpointServiceServer) mustEmbedUnimplementedWebhookEndpointServiceServer() {
-}
-func (UnimplementedWebhookEndpointServiceServer) testEmbeddedByValue() {}
+func (UnimplementedWebhookEndpointsServiceServer) testEmbeddedByValue() {}
 
-// UnsafeWebhookEndpointServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to WebhookEndpointServiceServer will
+// UnsafeWebhookEndpointsServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to WebhookEndpointsServiceServer will
 // result in compilation errors.
-type UnsafeWebhookEndpointServiceServer interface {
-	mustEmbedUnimplementedWebhookEndpointServiceServer()
+type UnsafeWebhookEndpointsServiceServer interface {
+	mustEmbedUnimplementedWebhookEndpointsServiceServer()
 }
 
-func RegisterWebhookEndpointServiceServer(s grpc.ServiceRegistrar, srv WebhookEndpointServiceServer) {
-	// If the following call panics, it indicates UnimplementedWebhookEndpointServiceServer was
+func RegisterWebhookEndpointsServiceServer(s grpc.ServiceRegistrar, srv WebhookEndpointsServiceServer) {
+	// If the following call panics, it indicates UnimplementedWebhookEndpointsServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&WebhookEndpointService_ServiceDesc, srv)
+	s.RegisterService(&WebhookEndpointsService_ServiceDesc, srv)
 }
 
-func _WebhookEndpointService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WebhookEndpointServiceServer).Create(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: WebhookEndpointService_Create_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WebhookEndpointServiceServer).Create(ctx, req.(*CreateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _WebhookEndpointService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WebhookEndpointServiceServer).Get(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: WebhookEndpointService_Get_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WebhookEndpointServiceServer).Get(ctx, req.(*GetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _WebhookEndpointService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _WebhookEndpointsService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WebhookEndpointServiceServer).List(ctx, in)
+		return srv.(WebhookEndpointsServiceServer).List(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WebhookEndpointService_List_FullMethodName,
+		FullMethod: WebhookEndpointsService_List_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WebhookEndpointServiceServer).List(ctx, req.(*ListRequest))
+		return srv.(WebhookEndpointsServiceServer).List(ctx, req.(*ListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WebhookEndpointService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _WebhookEndpointsService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WebhookEndpointsServiceServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WebhookEndpointsService_Get_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WebhookEndpointsServiceServer).Get(ctx, req.(*GetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WebhookEndpointsService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WebhookEndpointsServiceServer).Create(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WebhookEndpointsService_Create_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WebhookEndpointsServiceServer).Create(ctx, req.(*CreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WebhookEndpointsService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WebhookEndpointServiceServer).Update(ctx, in)
+		return srv.(WebhookEndpointsServiceServer).Update(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WebhookEndpointService_Update_FullMethodName,
+		FullMethod: WebhookEndpointsService_Update_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WebhookEndpointServiceServer).Update(ctx, req.(*UpdateRequest))
+		return srv.(WebhookEndpointsServiceServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WebhookEndpointService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _WebhookEndpointsService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WebhookEndpointServiceServer).Delete(ctx, in)
+		return srv.(WebhookEndpointsServiceServer).Delete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WebhookEndpointService_Delete_FullMethodName,
+		FullMethod: WebhookEndpointsService_Delete_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WebhookEndpointServiceServer).Delete(ctx, req.(*DeleteRequest))
+		return srv.(WebhookEndpointsServiceServer).Delete(ctx, req.(*DeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WebhookEndpointService_RetryWebhook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _WebhookEndpointsService_ListWebhooks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListWebhooksRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WebhookEndpointsServiceServer).ListWebhooks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WebhookEndpointsService_ListWebhooks_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WebhookEndpointsServiceServer).ListWebhooks(ctx, req.(*ListWebhooksRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WebhookEndpointsService_GetWebhook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetWebhookRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WebhookEndpointsServiceServer).GetWebhook(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WebhookEndpointsService_GetWebhook_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WebhookEndpointsServiceServer).GetWebhook(ctx, req.(*GetWebhookRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WebhookEndpointsService_RetryWebhook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RetryWebhookRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WebhookEndpointServiceServer).RetryWebhook(ctx, in)
+		return srv.(WebhookEndpointsServiceServer).RetryWebhook(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WebhookEndpointService_RetryWebhook_FullMethodName,
+		FullMethod: WebhookEndpointsService_RetryWebhook_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WebhookEndpointServiceServer).RetryWebhook(ctx, req.(*RetryWebhookRequest))
+		return srv.(WebhookEndpointsServiceServer).RetryWebhook(ctx, req.(*RetryWebhookRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WebhookEndpointService_Webhook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WebhookRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WebhookEndpointServiceServer).Webhook(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: WebhookEndpointService_Webhook_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WebhookEndpointServiceServer).Webhook(ctx, req.(*WebhookRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _WebhookEndpointService_Webhooks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WebhooksRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WebhookEndpointServiceServer).Webhooks(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: WebhookEndpointService_Webhooks_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WebhookEndpointServiceServer).Webhooks(ctx, req.(*WebhooksRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// WebhookEndpointService_ServiceDesc is the grpc.ServiceDesc for WebhookEndpointService service.
+// WebhookEndpointsService_ServiceDesc is the grpc.ServiceDesc for WebhookEndpointsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var WebhookEndpointService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "invora.billing.webhooks.v2.WebhookEndpointService",
-	HandlerType: (*WebhookEndpointServiceServer)(nil),
+var WebhookEndpointsService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "invora.billing.webhooks.v2.WebhookEndpointsService",
+	HandlerType: (*WebhookEndpointsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Create",
-			Handler:    _WebhookEndpointService_Create_Handler,
+			MethodName: "List",
+			Handler:    _WebhookEndpointsService_List_Handler,
 		},
 		{
 			MethodName: "Get",
-			Handler:    _WebhookEndpointService_Get_Handler,
+			Handler:    _WebhookEndpointsService_Get_Handler,
 		},
 		{
-			MethodName: "List",
-			Handler:    _WebhookEndpointService_List_Handler,
+			MethodName: "Create",
+			Handler:    _WebhookEndpointsService_Create_Handler,
 		},
 		{
 			MethodName: "Update",
-			Handler:    _WebhookEndpointService_Update_Handler,
+			Handler:    _WebhookEndpointsService_Update_Handler,
 		},
 		{
 			MethodName: "Delete",
-			Handler:    _WebhookEndpointService_Delete_Handler,
+			Handler:    _WebhookEndpointsService_Delete_Handler,
+		},
+		{
+			MethodName: "ListWebhooks",
+			Handler:    _WebhookEndpointsService_ListWebhooks_Handler,
+		},
+		{
+			MethodName: "GetWebhook",
+			Handler:    _WebhookEndpointsService_GetWebhook_Handler,
 		},
 		{
 			MethodName: "RetryWebhook",
-			Handler:    _WebhookEndpointService_RetryWebhook_Handler,
-		},
-		{
-			MethodName: "Webhook",
-			Handler:    _WebhookEndpointService_Webhook_Handler,
-		},
-		{
-			MethodName: "Webhooks",
-			Handler:    _WebhookEndpointService_Webhooks_Handler,
+			Handler:    _WebhookEndpointsService_RetryWebhook_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

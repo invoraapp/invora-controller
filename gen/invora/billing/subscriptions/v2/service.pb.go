@@ -15,7 +15,6 @@ import (
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
 	structpb "google.golang.org/protobuf/types/known/structpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
-	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -28,66 +27,16 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Controls response detail level for List and Get operations.
-type View int32
-
-const (
-	View_VIEW_UNSPECIFIED View = 0
-	View_VIEW_BASIC       View = 1
-	View_VIEW_FULL        View = 2
-)
-
-// Enum value maps for View.
-var (
-	View_name = map[int32]string{
-		0: "VIEW_UNSPECIFIED",
-		1: "VIEW_BASIC",
-		2: "VIEW_FULL",
-	}
-	View_value = map[string]int32{
-		"VIEW_UNSPECIFIED": 0,
-		"VIEW_BASIC":       1,
-		"VIEW_FULL":        2,
-	}
-)
-
-func (x View) Enum() *View {
-	p := new(View)
-	*p = x
-	return p
-}
-
-func (x View) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (View) Descriptor() protoreflect.EnumDescriptor {
-	return file_invora_billing_subscriptions_v2_service_proto_enumTypes[0].Descriptor()
-}
-
-func (View) Type() protoreflect.EnumType {
-	return &file_invora_billing_subscriptions_v2_service_proto_enumTypes[0]
-}
-
-func (x View) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use View.Descriptor instead.
-func (View) EnumDescriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{0}
-}
-
 type GetRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// External ID of the subscription
-	ExternalId *string `protobuf:"bytes,1,opt,name=external_id,json=externalId,proto3,oneof" json:"external_id,omitempty"`
-	// Invora ID of the subscription
-	Id *string `protobuf:"bytes,2,opt,name=id,proto3,oneof" json:"id,omitempty"`
+	// Invora ID of the subscription.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// External ID of the subscription (alternative lookup).
+	ExternalId *string `protobuf:"bytes,2,opt,name=external_id,json=externalId,proto3,oneof" json:"external_id,omitempty"`
 	// Fields to return in the response.
 	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.subscriptions.v2.View" json:"view,omitempty"`
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -122,16 +71,16 @@ func (*GetRequest) Descriptor() ([]byte, []int) {
 	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *GetRequest) GetExternalId() string {
-	if x != nil && x.ExternalId != nil {
-		return *x.ExternalId
+func (x *GetRequest) GetId() string {
+	if x != nil {
+		return x.Id
 	}
 	return ""
 }
 
-func (x *GetRequest) GetId() string {
-	if x != nil && x.Id != nil {
-		return *x.Id
+func (x *GetRequest) GetExternalId() string {
+	if x != nil && x.ExternalId != nil {
+		return *x.ExternalId
 	}
 	return ""
 }
@@ -143,11 +92,11 @@ func (x *GetRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	return nil
 }
 
-func (x *GetRequest) GetView() View {
+func (x *GetRequest) GetView() v2.View {
 	if x != nil {
 		return x.View
 	}
-	return View_VIEW_UNSPECIFIED
+	return v2.View(0)
 }
 
 type GetResponse struct {
@@ -202,7 +151,7 @@ type ListRequest struct {
 	// Fields to return in the response.
 	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
 	// Response detail level.
-	View          View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.subscriptions.v2.View" json:"view,omitempty"`
+	View          v2.View `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -265,18 +214,18 @@ func (x *ListRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	return nil
 }
 
-func (x *ListRequest) GetView() View {
+func (x *ListRequest) GetView() v2.View {
 	if x != nil {
 		return x.View
 	}
-	return View_VIEW_UNSPECIFIED
+	return v2.View(0)
 }
 
 type ListResponse struct {
 	state          protoimpl.MessageState    `protogen:"open.v1"`
 	Items          []*v2.BillingSubscription `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
 	TotalCount     uint64                    `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
-	NextPageCursor *wrapperspb.StringValue   `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3" json:"next_page_cursor,omitempty"`
+	NextPageCursor *string                   `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -325,11 +274,11 @@ func (x *ListResponse) GetTotalCount() uint64 {
 	return 0
 }
 
-func (x *ListResponse) GetNextPageCursor() *wrapperspb.StringValue {
-	if x != nil {
-		return x.NextPageCursor
+func (x *ListResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
 	}
-	return nil
+	return ""
 }
 
 type ListFilter struct {
@@ -387,7 +336,7 @@ func (x *ListFilter) GetTextSearch() string {
 
 type ListStatusFilter struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	InValues      []v2.StatusTypeEnum    `protobuf:"varint,1,rep,packed,name=in_values,json=inValues,proto3,enum=invora.billing.common.v2.StatusTypeEnum" json:"in_values,omitempty"`
+	InValues      []v2.StatusType        `protobuf:"varint,1,rep,packed,name=in_values,json=inValues,proto3,enum=invora.billing.common.v2.StatusType" json:"in_values,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -422,7 +371,7 @@ func (*ListStatusFilter) Descriptor() ([]byte, []int) {
 	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *ListStatusFilter) GetInValues() []v2.StatusTypeEnum {
+func (x *ListStatusFilter) GetInValues() []v2.StatusType {
 	if x != nil {
 		return x.InValues
 	}
@@ -654,10 +603,22 @@ type ListSortRule_CreatedAt struct {
 func (*ListSortRule_CreatedAt) isListSortRule_Type() {}
 
 type CreateRequest struct {
-	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Input         *CreateSubscriptionInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                      protoimpl.MessageState                  `protogen:"open.v1"`
+	BillingTime                v2.BillingTime                          `protobuf:"varint,1,opt,name=billing_time,json=billingTime,proto3,enum=invora.billing.common.v2.BillingTime" json:"billing_time,omitempty"`
+	CustomerId                 string                                  `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	EndingAt                   *timestamppb.Timestamp                  `protobuf:"bytes,3,opt,name=ending_at,json=endingAt,proto3,oneof" json:"ending_at,omitempty"`
+	ExternalId                 *string                                 `protobuf:"bytes,4,opt,name=external_id,json=externalId,proto3,oneof" json:"external_id,omitempty"`
+	InvoiceCustomSection       *v2.InvoiceCustomSectionsReferenceInput `protobuf:"bytes,5,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3,oneof" json:"invoice_custom_section,omitempty"`
+	Name                       *string                                 `protobuf:"bytes,6,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	PaymentMethod              *v2.PaymentMethodReferenceInput         `protobuf:"bytes,7,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
+	PlanId                     string                                  `protobuf:"bytes,8,opt,name=plan_id,json=planId,proto3" json:"plan_id,omitempty"`
+	PlanOverrides              *PlanOverridesInput                     `protobuf:"bytes,9,opt,name=plan_overrides,json=planOverrides,proto3,oneof" json:"plan_overrides,omitempty"`
+	ProgressiveBillingDisabled *bool                                   `protobuf:"varint,10,opt,name=progressive_billing_disabled,json=progressiveBillingDisabled,proto3,oneof" json:"progressive_billing_disabled,omitempty"`
+	SubscriptionAt             *timestamppb.Timestamp                  `protobuf:"bytes,11,opt,name=subscription_at,json=subscriptionAt,proto3,oneof" json:"subscription_at,omitempty"`
+	SubscriptionId             *string                                 `protobuf:"bytes,12,opt,name=subscription_id,json=subscriptionId,proto3,oneof" json:"subscription_id,omitempty"`
+	UsageThresholds            []*v2.UsageThresholdInput               `protobuf:"bytes,13,rep,name=usage_thresholds,json=usageThresholds,proto3" json:"usage_thresholds,omitempty"`
+	unknownFields              protoimpl.UnknownFields
+	sizeCache                  protoimpl.SizeCache
 }
 
 func (x *CreateRequest) Reset() {
@@ -690,9 +651,93 @@ func (*CreateRequest) Descriptor() ([]byte, []int) {
 	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *CreateRequest) GetInput() *CreateSubscriptionInput {
+func (x *CreateRequest) GetBillingTime() v2.BillingTime {
 	if x != nil {
-		return x.Input
+		return x.BillingTime
+	}
+	return v2.BillingTime(0)
+}
+
+func (x *CreateRequest) GetCustomerId() string {
+	if x != nil {
+		return x.CustomerId
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetEndingAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.EndingAt
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetExternalId() string {
+	if x != nil && x.ExternalId != nil {
+		return *x.ExternalId
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetInvoiceCustomSection() *v2.InvoiceCustomSectionsReferenceInput {
+	if x != nil {
+		return x.InvoiceCustomSection
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetPaymentMethod() *v2.PaymentMethodReferenceInput {
+	if x != nil {
+		return x.PaymentMethod
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetPlanId() string {
+	if x != nil {
+		return x.PlanId
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetPlanOverrides() *PlanOverridesInput {
+	if x != nil {
+		return x.PlanOverrides
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetProgressiveBillingDisabled() bool {
+	if x != nil && x.ProgressiveBillingDisabled != nil {
+		return *x.ProgressiveBillingDisabled
+	}
+	return false
+}
+
+func (x *CreateRequest) GetSubscriptionAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.SubscriptionAt
+	}
+	return nil
+}
+
+func (x *CreateRequest) GetSubscriptionId() string {
+	if x != nil && x.SubscriptionId != nil {
+		return *x.SubscriptionId
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetUsageThresholds() []*v2.UsageThresholdInput {
+	if x != nil {
+		return x.UsageThresholds
 	}
 	return nil
 }
@@ -741,368 +786,25 @@ func (x *CreateResponse) GetSubscription() *v2.BillingSubscription {
 	return nil
 }
 
-type CreateChargeFilterRequest struct {
-	state         protoimpl.MessageState               `protogen:"open.v1"`
-	Input         *CreateSubscriptionChargeFilterInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateChargeFilterRequest) Reset() {
-	*x = CreateChargeFilterRequest{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[11]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateChargeFilterRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateChargeFilterRequest) ProtoMessage() {}
-
-func (x *CreateChargeFilterRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[11]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateChargeFilterRequest.ProtoReflect.Descriptor instead.
-func (*CreateChargeFilterRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{11}
-}
-
-func (x *CreateChargeFilterRequest) GetInput() *CreateSubscriptionChargeFilterInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type CreateChargeFilterResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	ChargeFilter  *v2.ChargeFilter       `protobuf:"bytes,1,opt,name=charge_filter,json=chargeFilter,proto3" json:"charge_filter,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateChargeFilterResponse) Reset() {
-	*x = CreateChargeFilterResponse{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[12]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateChargeFilterResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateChargeFilterResponse) ProtoMessage() {}
-
-func (x *CreateChargeFilterResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[12]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateChargeFilterResponse.ProtoReflect.Descriptor instead.
-func (*CreateChargeFilterResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{12}
-}
-
-func (x *CreateChargeFilterResponse) GetChargeFilter() *v2.ChargeFilter {
-	if x != nil {
-		return x.ChargeFilter
-	}
-	return nil
-}
-
-type DeleteSubscriptionChargeFilterRequest struct {
-	state         protoimpl.MessageState                `protogen:"open.v1"`
-	Input         *DestroySubscriptionChargeFilterInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteSubscriptionChargeFilterRequest) Reset() {
-	*x = DeleteSubscriptionChargeFilterRequest{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[13]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteSubscriptionChargeFilterRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteSubscriptionChargeFilterRequest) ProtoMessage() {}
-
-func (x *DeleteSubscriptionChargeFilterRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[13]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteSubscriptionChargeFilterRequest.ProtoReflect.Descriptor instead.
-func (*DeleteSubscriptionChargeFilterRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{13}
-}
-
-func (x *DeleteSubscriptionChargeFilterRequest) GetInput() *DestroySubscriptionChargeFilterInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type DeleteSubscriptionChargeFilterResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	ChargeFilter  *v2.ChargeFilter       `protobuf:"bytes,1,opt,name=charge_filter,json=chargeFilter,proto3" json:"charge_filter,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteSubscriptionChargeFilterResponse) Reset() {
-	*x = DeleteSubscriptionChargeFilterResponse{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[14]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteSubscriptionChargeFilterResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteSubscriptionChargeFilterResponse) ProtoMessage() {}
-
-func (x *DeleteSubscriptionChargeFilterResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[14]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteSubscriptionChargeFilterResponse.ProtoReflect.Descriptor instead.
-func (*DeleteSubscriptionChargeFilterResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{14}
-}
-
-func (x *DeleteSubscriptionChargeFilterResponse) GetChargeFilter() *v2.ChargeFilter {
-	if x != nil {
-		return x.ChargeFilter
-	}
-	return nil
-}
-
-type RemoveSubscriptionEntitlementRequest struct {
-	state         protoimpl.MessageState              `protogen:"open.v1"`
-	Input         *RemoveSubscriptionEntitlementInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RemoveSubscriptionEntitlementRequest) Reset() {
-	*x = RemoveSubscriptionEntitlementRequest{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[15]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RemoveSubscriptionEntitlementRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RemoveSubscriptionEntitlementRequest) ProtoMessage() {}
-
-func (x *RemoveSubscriptionEntitlementRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[15]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RemoveSubscriptionEntitlementRequest.ProtoReflect.Descriptor instead.
-func (*RemoveSubscriptionEntitlementRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{15}
-}
-
-func (x *RemoveSubscriptionEntitlementRequest) GetInput() *RemoveSubscriptionEntitlementInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type RemoveSubscriptionEntitlementResponse struct {
-	state                                protoimpl.MessageState                `protogen:"open.v1"`
-	RemoveSubscriptionEntitlementPayload *RemoveSubscriptionEntitlementPayload `protobuf:"bytes,1,opt,name=remove_subscription_entitlement_payload,json=removeSubscriptionEntitlementPayload,proto3" json:"remove_subscription_entitlement_payload,omitempty"`
-	unknownFields                        protoimpl.UnknownFields
-	sizeCache                            protoimpl.SizeCache
-}
-
-func (x *RemoveSubscriptionEntitlementResponse) Reset() {
-	*x = RemoveSubscriptionEntitlementResponse{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[16]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RemoveSubscriptionEntitlementResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RemoveSubscriptionEntitlementResponse) ProtoMessage() {}
-
-func (x *RemoveSubscriptionEntitlementResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[16]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RemoveSubscriptionEntitlementResponse.ProtoReflect.Descriptor instead.
-func (*RemoveSubscriptionEntitlementResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{16}
-}
-
-func (x *RemoveSubscriptionEntitlementResponse) GetRemoveSubscriptionEntitlementPayload() *RemoveSubscriptionEntitlementPayload {
-	if x != nil {
-		return x.RemoveSubscriptionEntitlementPayload
-	}
-	return nil
-}
-
-type TerminateRequest struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	Input         *TerminateSubscriptionInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *TerminateRequest) Reset() {
-	*x = TerminateRequest{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[17]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *TerminateRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TerminateRequest) ProtoMessage() {}
-
-func (x *TerminateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[17]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TerminateRequest.ProtoReflect.Descriptor instead.
-func (*TerminateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{17}
-}
-
-func (x *TerminateRequest) GetInput() *TerminateSubscriptionInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type TerminateResponse struct {
-	state         protoimpl.MessageState  `protogen:"open.v1"`
-	Subscription  *v2.BillingSubscription `protobuf:"bytes,1,opt,name=subscription,proto3" json:"subscription,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *TerminateResponse) Reset() {
-	*x = TerminateResponse{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[18]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *TerminateResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TerminateResponse) ProtoMessage() {}
-
-func (x *TerminateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[18]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TerminateResponse.ProtoReflect.Descriptor instead.
-func (*TerminateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{18}
-}
-
-func (x *TerminateResponse) GetSubscription() *v2.BillingSubscription {
-	if x != nil {
-		return x.Subscription
-	}
-	return nil
-}
-
 type UpdateRequest struct {
-	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Input         *UpdateSubscriptionInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                      protoimpl.MessageState                  `protogen:"open.v1"`
+	Id                         string                                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	EndingAt                   *timestamppb.Timestamp                  `protobuf:"bytes,2,opt,name=ending_at,json=endingAt,proto3,oneof" json:"ending_at,omitempty"`
+	InvoiceCustomSection       *v2.InvoiceCustomSectionsReferenceInput `protobuf:"bytes,3,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3,oneof" json:"invoice_custom_section,omitempty"`
+	Name                       *string                                 `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	PaymentMethod              *v2.PaymentMethodReferenceInput         `protobuf:"bytes,5,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
+	PlanOverrides              *PlanOverridesInput                     `protobuf:"bytes,6,opt,name=plan_overrides,json=planOverrides,proto3,oneof" json:"plan_overrides,omitempty"`
+	ProgressiveBillingDisabled *bool                                   `protobuf:"varint,7,opt,name=progressive_billing_disabled,json=progressiveBillingDisabled,proto3,oneof" json:"progressive_billing_disabled,omitempty"`
+	SubscriptionAt             *timestamppb.Timestamp                  `protobuf:"bytes,8,opt,name=subscription_at,json=subscriptionAt,proto3,oneof" json:"subscription_at,omitempty"`
+	UsageThresholds            []*v2.UsageThresholdInput               `protobuf:"bytes,9,rep,name=usage_thresholds,json=usageThresholds,proto3" json:"usage_thresholds,omitempty"`
+	UpdateMask                 *fieldmaskpb.FieldMask                  `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields              protoimpl.UnknownFields
+	sizeCache                  protoimpl.SizeCache
 }
 
 func (x *UpdateRequest) Reset() {
 	*x = UpdateRequest{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[19]
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1114,7 +816,7 @@ func (x *UpdateRequest) String() string {
 func (*UpdateRequest) ProtoMessage() {}
 
 func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[19]
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1127,12 +829,75 @@ func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateRequest.ProtoReflect.Descriptor instead.
 func (*UpdateRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{19}
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *UpdateRequest) GetInput() *UpdateSubscriptionInput {
+func (x *UpdateRequest) GetId() string {
 	if x != nil {
-		return x.Input
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetEndingAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.EndingAt
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetInvoiceCustomSection() *v2.InvoiceCustomSectionsReferenceInput {
+	if x != nil {
+		return x.InvoiceCustomSection
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *UpdateRequest) GetPaymentMethod() *v2.PaymentMethodReferenceInput {
+	if x != nil {
+		return x.PaymentMethod
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetPlanOverrides() *PlanOverridesInput {
+	if x != nil {
+		return x.PlanOverrides
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetProgressiveBillingDisabled() bool {
+	if x != nil && x.ProgressiveBillingDisabled != nil {
+		return *x.ProgressiveBillingDisabled
+	}
+	return false
+}
+
+func (x *UpdateRequest) GetSubscriptionAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.SubscriptionAt
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetUsageThresholds() []*v2.UsageThresholdInput {
+	if x != nil {
+		return x.UsageThresholds
+	}
+	return nil
+}
+
+func (x *UpdateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
 	}
 	return nil
 }
@@ -1146,7 +911,7 @@ type UpdateResponse struct {
 
 func (x *UpdateResponse) Reset() {
 	*x = UpdateResponse{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[20]
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1158,7 +923,7 @@ func (x *UpdateResponse) String() string {
 func (*UpdateResponse) ProtoMessage() {}
 
 func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[20]
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1171,7 +936,7 @@ func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateResponse.ProtoReflect.Descriptor instead.
 func (*UpdateResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{20}
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *UpdateResponse) GetSubscription() *v2.BillingSubscription {
@@ -1181,28 +946,30 @@ func (x *UpdateResponse) GetSubscription() *v2.BillingSubscription {
 	return nil
 }
 
-type UpdateSubscriptionChargeRequest struct {
-	state         protoimpl.MessageState         `protogen:"open.v1"`
-	Input         *UpdateSubscriptionChargeInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+type TerminateRequest struct {
+	state                   protoimpl.MessageState      `protogen:"open.v1"`
+	Id                      string                      `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	OnTerminationCreditNote *v2.OnTerminationCreditNote `protobuf:"varint,2,opt,name=on_termination_credit_note,json=onTerminationCreditNote,proto3,enum=invora.billing.common.v2.OnTerminationCreditNote,oneof" json:"on_termination_credit_note,omitempty"`
+	OnTerminationInvoice    *v2.OnTerminationInvoice    `protobuf:"varint,3,opt,name=on_termination_invoice,json=onTerminationInvoice,proto3,enum=invora.billing.common.v2.OnTerminationInvoice,oneof" json:"on_termination_invoice,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
-func (x *UpdateSubscriptionChargeRequest) Reset() {
-	*x = UpdateSubscriptionChargeRequest{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[21]
+func (x *TerminateRequest) Reset() {
+	*x = TerminateRequest{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *UpdateSubscriptionChargeRequest) String() string {
+func (x *TerminateRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UpdateSubscriptionChargeRequest) ProtoMessage() {}
+func (*TerminateRequest) ProtoMessage() {}
 
-func (x *UpdateSubscriptionChargeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[21]
+func (x *TerminateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1213,519 +980,238 @@ func (x *UpdateSubscriptionChargeRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UpdateSubscriptionChargeRequest.ProtoReflect.Descriptor instead.
-func (*UpdateSubscriptionChargeRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{21}
+// Deprecated: Use TerminateRequest.ProtoReflect.Descriptor instead.
+func (*TerminateRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *UpdateSubscriptionChargeRequest) GetInput() *UpdateSubscriptionChargeInput {
+func (x *TerminateRequest) GetId() string {
 	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type UpdateSubscriptionChargeResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Charge        *v2.Charge             `protobuf:"bytes,1,opt,name=charge,proto3" json:"charge,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateSubscriptionChargeResponse) Reset() {
-	*x = UpdateSubscriptionChargeResponse{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[22]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateSubscriptionChargeResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateSubscriptionChargeResponse) ProtoMessage() {}
-
-func (x *UpdateSubscriptionChargeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[22]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateSubscriptionChargeResponse.ProtoReflect.Descriptor instead.
-func (*UpdateSubscriptionChargeResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{22}
-}
-
-func (x *UpdateSubscriptionChargeResponse) GetCharge() *v2.Charge {
-	if x != nil {
-		return x.Charge
-	}
-	return nil
-}
-
-type UpdateSubscriptionChargeFilterRequest struct {
-	state         protoimpl.MessageState               `protogen:"open.v1"`
-	Input         *UpdateSubscriptionChargeFilterInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateSubscriptionChargeFilterRequest) Reset() {
-	*x = UpdateSubscriptionChargeFilterRequest{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[23]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateSubscriptionChargeFilterRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateSubscriptionChargeFilterRequest) ProtoMessage() {}
-
-func (x *UpdateSubscriptionChargeFilterRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[23]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateSubscriptionChargeFilterRequest.ProtoReflect.Descriptor instead.
-func (*UpdateSubscriptionChargeFilterRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{23}
-}
-
-func (x *UpdateSubscriptionChargeFilterRequest) GetInput() *UpdateSubscriptionChargeFilterInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type UpdateSubscriptionChargeFilterResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	ChargeFilter  *v2.ChargeFilter       `protobuf:"bytes,1,opt,name=charge_filter,json=chargeFilter,proto3" json:"charge_filter,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateSubscriptionChargeFilterResponse) Reset() {
-	*x = UpdateSubscriptionChargeFilterResponse{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[24]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateSubscriptionChargeFilterResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateSubscriptionChargeFilterResponse) ProtoMessage() {}
-
-func (x *UpdateSubscriptionChargeFilterResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[24]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateSubscriptionChargeFilterResponse.ProtoReflect.Descriptor instead.
-func (*UpdateSubscriptionChargeFilterResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{24}
-}
-
-func (x *UpdateSubscriptionChargeFilterResponse) GetChargeFilter() *v2.ChargeFilter {
-	if x != nil {
-		return x.ChargeFilter
-	}
-	return nil
-}
-
-type UpdateSubscriptionFixedChargeRequest struct {
-	state         protoimpl.MessageState              `protogen:"open.v1"`
-	Input         *UpdateSubscriptionFixedChargeInput `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateSubscriptionFixedChargeRequest) Reset() {
-	*x = UpdateSubscriptionFixedChargeRequest{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[25]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateSubscriptionFixedChargeRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateSubscriptionFixedChargeRequest) ProtoMessage() {}
-
-func (x *UpdateSubscriptionFixedChargeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[25]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateSubscriptionFixedChargeRequest.ProtoReflect.Descriptor instead.
-func (*UpdateSubscriptionFixedChargeRequest) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{25}
-}
-
-func (x *UpdateSubscriptionFixedChargeRequest) GetInput() *UpdateSubscriptionFixedChargeInput {
-	if x != nil {
-		return x.Input
-	}
-	return nil
-}
-
-type UpdateSubscriptionFixedChargeResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	FixedCharge   *v2.FixedCharge        `protobuf:"bytes,1,opt,name=fixed_charge,json=fixedCharge,proto3" json:"fixed_charge,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateSubscriptionFixedChargeResponse) Reset() {
-	*x = UpdateSubscriptionFixedChargeResponse{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[26]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateSubscriptionFixedChargeResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateSubscriptionFixedChargeResponse) ProtoMessage() {}
-
-func (x *UpdateSubscriptionFixedChargeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[26]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateSubscriptionFixedChargeResponse.ProtoReflect.Descriptor instead.
-func (*UpdateSubscriptionFixedChargeResponse) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{26}
-}
-
-func (x *UpdateSubscriptionFixedChargeResponse) GetFixedCharge() *v2.FixedCharge {
-	if x != nil {
-		return x.FixedCharge
-	}
-	return nil
-}
-
-// Autogenerated input type of UpdateSubscriptionFixedCharge
-type UpdateSubscriptionFixedChargeInput struct {
-	state                 protoimpl.MessageState         `protogen:"open.v1"`
-	ApplyUnitsImmediately *bool                          `protobuf:"varint,1,opt,name=apply_units_immediately,json=applyUnitsImmediately,proto3,oneof" json:"apply_units_immediately,omitempty"`
-	FixedChargeCode       string                         `protobuf:"bytes,2,opt,name=fixed_charge_code,json=fixedChargeCode,proto3" json:"fixed_charge_code,omitempty"`
-	InvoiceDisplayName    *string                        `protobuf:"bytes,3,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
-	Properties            *v2.FixedChargePropertiesInput `protobuf:"bytes,4,opt,name=properties,proto3,oneof" json:"properties,omitempty"`
-	SubscriptionId        string                         `protobuf:"bytes,5,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
-	TaxCodes              []string                       `protobuf:"bytes,6,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
-	Units                 *string                        `protobuf:"bytes,7,opt,name=units,proto3,oneof" json:"units,omitempty"`
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
-}
-
-func (x *UpdateSubscriptionFixedChargeInput) Reset() {
-	*x = UpdateSubscriptionFixedChargeInput{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[27]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateSubscriptionFixedChargeInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateSubscriptionFixedChargeInput) ProtoMessage() {}
-
-func (x *UpdateSubscriptionFixedChargeInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[27]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateSubscriptionFixedChargeInput.ProtoReflect.Descriptor instead.
-func (*UpdateSubscriptionFixedChargeInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{27}
-}
-
-func (x *UpdateSubscriptionFixedChargeInput) GetApplyUnitsImmediately() bool {
-	if x != nil && x.ApplyUnitsImmediately != nil {
-		return *x.ApplyUnitsImmediately
-	}
-	return false
-}
-
-func (x *UpdateSubscriptionFixedChargeInput) GetFixedChargeCode() string {
-	if x != nil {
-		return x.FixedChargeCode
+		return x.Id
 	}
 	return ""
 }
 
-func (x *UpdateSubscriptionFixedChargeInput) GetInvoiceDisplayName() string {
-	if x != nil && x.InvoiceDisplayName != nil {
-		return *x.InvoiceDisplayName
+func (x *TerminateRequest) GetOnTerminationCreditNote() v2.OnTerminationCreditNote {
+	if x != nil && x.OnTerminationCreditNote != nil {
+		return *x.OnTerminationCreditNote
 	}
-	return ""
+	return v2.OnTerminationCreditNote(0)
 }
 
-func (x *UpdateSubscriptionFixedChargeInput) GetProperties() *v2.FixedChargePropertiesInput {
+func (x *TerminateRequest) GetOnTerminationInvoice() v2.OnTerminationInvoice {
+	if x != nil && x.OnTerminationInvoice != nil {
+		return *x.OnTerminationInvoice
+	}
+	return v2.OnTerminationInvoice(0)
+}
+
+type TerminateResponse struct {
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Subscription  *v2.BillingSubscription `protobuf:"bytes,1,opt,name=subscription,proto3" json:"subscription,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TerminateResponse) Reset() {
+	*x = TerminateResponse{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TerminateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TerminateResponse) ProtoMessage() {}
+
+func (x *TerminateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[14]
 	if x != nil {
-		return x.Properties
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TerminateResponse.ProtoReflect.Descriptor instead.
+func (*TerminateResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *TerminateResponse) GetSubscription() *v2.BillingSubscription {
+	if x != nil {
+		return x.Subscription
 	}
 	return nil
 }
 
-func (x *UpdateSubscriptionFixedChargeInput) GetSubscriptionId() string {
+type UpdateChargeRequest struct {
+	state              protoimpl.MessageState           `protogen:"open.v1"`
+	SubscriptionId     string                           `protobuf:"bytes,1,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
+	ChargeCode         string                           `protobuf:"bytes,2,opt,name=charge_code,json=chargeCode,proto3" json:"charge_code,omitempty"`
+	AppliedPricingUnit *AppliedPricingUnitOverrideInput `protobuf:"bytes,3,opt,name=applied_pricing_unit,json=appliedPricingUnit,proto3,oneof" json:"applied_pricing_unit,omitempty"`
+	Filters            []*v2.ChargeFilterInput          `protobuf:"bytes,4,rep,name=filters,proto3" json:"filters,omitempty"`
+	InvoiceDisplayName *string                          `protobuf:"bytes,5,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
+	MinAmountCents     *int64                           `protobuf:"varint,6,opt,name=min_amount_cents,json=minAmountCents,proto3,oneof" json:"min_amount_cents,omitempty"`
+	Properties         *v2.PropertiesInput              `protobuf:"bytes,7,opt,name=properties,proto3,oneof" json:"properties,omitempty"`
+	TaxCodes           []string                         `protobuf:"bytes,8,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
+	UpdateMask         *fieldmaskpb.FieldMask           `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *UpdateChargeRequest) Reset() {
+	*x = UpdateChargeRequest{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateChargeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateChargeRequest) ProtoMessage() {}
+
+func (x *UpdateChargeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateChargeRequest.ProtoReflect.Descriptor instead.
+func (*UpdateChargeRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *UpdateChargeRequest) GetSubscriptionId() string {
 	if x != nil {
 		return x.SubscriptionId
 	}
 	return ""
 }
 
-func (x *UpdateSubscriptionFixedChargeInput) GetTaxCodes() []string {
-	if x != nil {
-		return x.TaxCodes
-	}
-	return nil
-}
-
-func (x *UpdateSubscriptionFixedChargeInput) GetUnits() string {
-	if x != nil && x.Units != nil {
-		return *x.Units
-	}
-	return ""
-}
-
-// Update subscription charge filter input arguments
-type UpdateSubscriptionChargeFilterInput struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	ChargeCode         string                 `protobuf:"bytes,1,opt,name=charge_code,json=chargeCode,proto3" json:"charge_code,omitempty"`
-	InvoiceDisplayName *string                `protobuf:"bytes,2,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
-	Properties         *v2.PropertiesInput    `protobuf:"bytes,3,opt,name=properties,proto3,oneof" json:"properties,omitempty"`
-	SubscriptionId     string                 `protobuf:"bytes,4,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
-	Values             *structpb.Struct       `protobuf:"bytes,5,opt,name=values,proto3" json:"values,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *UpdateSubscriptionChargeFilterInput) Reset() {
-	*x = UpdateSubscriptionChargeFilterInput{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[28]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateSubscriptionChargeFilterInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateSubscriptionChargeFilterInput) ProtoMessage() {}
-
-func (x *UpdateSubscriptionChargeFilterInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[28]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateSubscriptionChargeFilterInput.ProtoReflect.Descriptor instead.
-func (*UpdateSubscriptionChargeFilterInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{28}
-}
-
-func (x *UpdateSubscriptionChargeFilterInput) GetChargeCode() string {
+func (x *UpdateChargeRequest) GetChargeCode() string {
 	if x != nil {
 		return x.ChargeCode
 	}
 	return ""
 }
 
-func (x *UpdateSubscriptionChargeFilterInput) GetInvoiceDisplayName() string {
-	if x != nil && x.InvoiceDisplayName != nil {
-		return *x.InvoiceDisplayName
-	}
-	return ""
-}
-
-func (x *UpdateSubscriptionChargeFilterInput) GetProperties() *v2.PropertiesInput {
-	if x != nil {
-		return x.Properties
-	}
-	return nil
-}
-
-func (x *UpdateSubscriptionChargeFilterInput) GetSubscriptionId() string {
-	if x != nil {
-		return x.SubscriptionId
-	}
-	return ""
-}
-
-func (x *UpdateSubscriptionChargeFilterInput) GetValues() *structpb.Struct {
-	if x != nil {
-		return x.Values
-	}
-	return nil
-}
-
-// Autogenerated input type of UpdateSubscriptionCharge
-type UpdateSubscriptionChargeInput struct {
-	state              protoimpl.MessageState           `protogen:"open.v1"`
-	AppliedPricingUnit *AppliedPricingUnitOverrideInput `protobuf:"bytes,1,opt,name=applied_pricing_unit,json=appliedPricingUnit,proto3,oneof" json:"applied_pricing_unit,omitempty"`
-	ChargeCode         string                           `protobuf:"bytes,2,opt,name=charge_code,json=chargeCode,proto3" json:"charge_code,omitempty"`
-	Filters            []*v2.ChargeFilterInput          `protobuf:"bytes,3,rep,name=filters,proto3" json:"filters,omitempty"`
-	InvoiceDisplayName *string                          `protobuf:"bytes,4,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
-	MinAmountCents     *int64                           `protobuf:"varint,5,opt,name=min_amount_cents,json=minAmountCents,proto3,oneof" json:"min_amount_cents,omitempty"`
-	Properties         *v2.PropertiesInput              `protobuf:"bytes,6,opt,name=properties,proto3,oneof" json:"properties,omitempty"`
-	SubscriptionId     string                           `protobuf:"bytes,7,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
-	TaxCodes           []string                         `protobuf:"bytes,8,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *UpdateSubscriptionChargeInput) Reset() {
-	*x = UpdateSubscriptionChargeInput{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[29]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateSubscriptionChargeInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateSubscriptionChargeInput) ProtoMessage() {}
-
-func (x *UpdateSubscriptionChargeInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[29]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateSubscriptionChargeInput.ProtoReflect.Descriptor instead.
-func (*UpdateSubscriptionChargeInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{29}
-}
-
-func (x *UpdateSubscriptionChargeInput) GetAppliedPricingUnit() *AppliedPricingUnitOverrideInput {
+func (x *UpdateChargeRequest) GetAppliedPricingUnit() *AppliedPricingUnitOverrideInput {
 	if x != nil {
 		return x.AppliedPricingUnit
 	}
 	return nil
 }
 
-func (x *UpdateSubscriptionChargeInput) GetChargeCode() string {
-	if x != nil {
-		return x.ChargeCode
-	}
-	return ""
-}
-
-func (x *UpdateSubscriptionChargeInput) GetFilters() []*v2.ChargeFilterInput {
+func (x *UpdateChargeRequest) GetFilters() []*v2.ChargeFilterInput {
 	if x != nil {
 		return x.Filters
 	}
 	return nil
 }
 
-func (x *UpdateSubscriptionChargeInput) GetInvoiceDisplayName() string {
+func (x *UpdateChargeRequest) GetInvoiceDisplayName() string {
 	if x != nil && x.InvoiceDisplayName != nil {
 		return *x.InvoiceDisplayName
 	}
 	return ""
 }
 
-func (x *UpdateSubscriptionChargeInput) GetMinAmountCents() int64 {
+func (x *UpdateChargeRequest) GetMinAmountCents() int64 {
 	if x != nil && x.MinAmountCents != nil {
 		return *x.MinAmountCents
 	}
 	return 0
 }
 
-func (x *UpdateSubscriptionChargeInput) GetProperties() *v2.PropertiesInput {
+func (x *UpdateChargeRequest) GetProperties() *v2.PropertiesInput {
 	if x != nil {
 		return x.Properties
 	}
 	return nil
 }
 
-func (x *UpdateSubscriptionChargeInput) GetSubscriptionId() string {
-	if x != nil {
-		return x.SubscriptionId
-	}
-	return ""
-}
-
-func (x *UpdateSubscriptionChargeInput) GetTaxCodes() []string {
+func (x *UpdateChargeRequest) GetTaxCodes() []string {
 	if x != nil {
 		return x.TaxCodes
 	}
 	return nil
 }
 
+func (x *UpdateChargeRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+type UpdateChargeResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Charge        *v2.Charge             `protobuf:"bytes,1,opt,name=charge,proto3" json:"charge,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateChargeResponse) Reset() {
+	*x = UpdateChargeResponse{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateChargeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateChargeResponse) ProtoMessage() {}
+
+func (x *UpdateChargeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateChargeResponse.ProtoReflect.Descriptor instead.
+func (*UpdateChargeResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *UpdateChargeResponse) GetCharge() *v2.Charge {
+	if x != nil {
+		return x.Charge
+	}
+	return nil
+}
+
 type AppliedPricingUnitOverrideInput struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	ConversionRate float64                `protobuf:"fixed64,1,opt,name=conversion_rate,json=conversionRate,proto3" json:"conversion_rate,omitempty"`
+	ConversionRate *kernel.DecimalValue   `protobuf:"bytes,1,opt,name=conversion_rate,json=conversionRate,proto3" json:"conversion_rate,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
 func (x *AppliedPricingUnitOverrideInput) Reset() {
 	*x = AppliedPricingUnitOverrideInput{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[30]
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1737,7 +1223,7 @@ func (x *AppliedPricingUnitOverrideInput) String() string {
 func (*AppliedPricingUnitOverrideInput) ProtoMessage() {}
 
 func (x *AppliedPricingUnitOverrideInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[30]
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1750,47 +1236,42 @@ func (x *AppliedPricingUnitOverrideInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AppliedPricingUnitOverrideInput.ProtoReflect.Descriptor instead.
 func (*AppliedPricingUnitOverrideInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{30}
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{17}
 }
 
-func (x *AppliedPricingUnitOverrideInput) GetConversionRate() float64 {
+func (x *AppliedPricingUnitOverrideInput) GetConversionRate() *kernel.DecimalValue {
 	if x != nil {
 		return x.ConversionRate
 	}
-	return 0
+	return nil
 }
 
-// Update Subscription input arguments
-type UpdateSubscriptionInput struct {
-	state                      protoimpl.MessageState                  `protogen:"open.v1"`
-	EndingAt                   *timestamppb.Timestamp                  `protobuf:"bytes,1,opt,name=ending_at,json=endingAt,proto3,oneof" json:"ending_at,omitempty"`
-	Id                         string                                  `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
-	InvoiceCustomSection       *v2.InvoiceCustomSectionsReferenceInput `protobuf:"bytes,3,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3,oneof" json:"invoice_custom_section,omitempty"`
-	Name                       *string                                 `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	PaymentMethod              *v2.PaymentMethodReferenceInput         `protobuf:"bytes,5,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
-	PlanOverrides              *PlanOverridesInput                     `protobuf:"bytes,6,opt,name=plan_overrides,json=planOverrides,proto3,oneof" json:"plan_overrides,omitempty"`
-	ProgressiveBillingDisabled *bool                                   `protobuf:"varint,7,opt,name=progressive_billing_disabled,json=progressiveBillingDisabled,proto3,oneof" json:"progressive_billing_disabled,omitempty"`
-	SubscriptionAt             *timestamppb.Timestamp                  `protobuf:"bytes,8,opt,name=subscription_at,json=subscriptionAt,proto3,oneof" json:"subscription_at,omitempty"`
-	UsageThresholds            []*v2.UsageThresholdInput               `protobuf:"bytes,9,rep,name=usage_thresholds,json=usageThresholds,proto3" json:"usage_thresholds,omitempty"`
-	unknownFields              protoimpl.UnknownFields
-	sizeCache                  protoimpl.SizeCache
+type CreateChargeFilterRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	SubscriptionId     string                 `protobuf:"bytes,1,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
+	ChargeCode         string                 `protobuf:"bytes,2,opt,name=charge_code,json=chargeCode,proto3" json:"charge_code,omitempty"`
+	InvoiceDisplayName *string                `protobuf:"bytes,3,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
+	Properties         *v2.PropertiesInput    `protobuf:"bytes,4,opt,name=properties,proto3" json:"properties,omitempty"`
+	Values             *structpb.Struct       `protobuf:"bytes,5,opt,name=values,proto3" json:"values,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
-func (x *UpdateSubscriptionInput) Reset() {
-	*x = UpdateSubscriptionInput{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[31]
+func (x *CreateChargeFilterRequest) Reset() {
+	*x = CreateChargeFilterRequest{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *UpdateSubscriptionInput) String() string {
+func (x *CreateChargeFilterRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UpdateSubscriptionInput) ProtoMessage() {}
+func (*CreateChargeFilterRequest) ProtoMessage() {}
 
-func (x *UpdateSubscriptionInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[31]
+func (x *CreateChargeFilterRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1801,70 +1282,558 @@ func (x *UpdateSubscriptionInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UpdateSubscriptionInput.ProtoReflect.Descriptor instead.
-func (*UpdateSubscriptionInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{31}
+// Deprecated: Use CreateChargeFilterRequest.ProtoReflect.Descriptor instead.
+func (*CreateChargeFilterRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{18}
 }
 
-func (x *UpdateSubscriptionInput) GetEndingAt() *timestamppb.Timestamp {
+func (x *CreateChargeFilterRequest) GetSubscriptionId() string {
 	if x != nil {
-		return x.EndingAt
-	}
-	return nil
-}
-
-func (x *UpdateSubscriptionInput) GetId() string {
-	if x != nil {
-		return x.Id
+		return x.SubscriptionId
 	}
 	return ""
 }
 
-func (x *UpdateSubscriptionInput) GetInvoiceCustomSection() *v2.InvoiceCustomSectionsReferenceInput {
+func (x *CreateChargeFilterRequest) GetChargeCode() string {
 	if x != nil {
-		return x.InvoiceCustomSection
-	}
-	return nil
-}
-
-func (x *UpdateSubscriptionInput) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
+		return x.ChargeCode
 	}
 	return ""
 }
 
-func (x *UpdateSubscriptionInput) GetPaymentMethod() *v2.PaymentMethodReferenceInput {
+func (x *CreateChargeFilterRequest) GetInvoiceDisplayName() string {
+	if x != nil && x.InvoiceDisplayName != nil {
+		return *x.InvoiceDisplayName
+	}
+	return ""
+}
+
+func (x *CreateChargeFilterRequest) GetProperties() *v2.PropertiesInput {
 	if x != nil {
-		return x.PaymentMethod
+		return x.Properties
 	}
 	return nil
 }
 
-func (x *UpdateSubscriptionInput) GetPlanOverrides() *PlanOverridesInput {
+func (x *CreateChargeFilterRequest) GetValues() *structpb.Struct {
 	if x != nil {
-		return x.PlanOverrides
+		return x.Values
 	}
 	return nil
 }
 
-func (x *UpdateSubscriptionInput) GetProgressiveBillingDisabled() bool {
-	if x != nil && x.ProgressiveBillingDisabled != nil {
-		return *x.ProgressiveBillingDisabled
+type CreateChargeFilterResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ChargeFilter  *v2.ChargeFilter       `protobuf:"bytes,1,opt,name=charge_filter,json=chargeFilter,proto3" json:"charge_filter,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateChargeFilterResponse) Reset() {
+	*x = CreateChargeFilterResponse{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateChargeFilterResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateChargeFilterResponse) ProtoMessage() {}
+
+func (x *CreateChargeFilterResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateChargeFilterResponse.ProtoReflect.Descriptor instead.
+func (*CreateChargeFilterResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *CreateChargeFilterResponse) GetChargeFilter() *v2.ChargeFilter {
+	if x != nil {
+		return x.ChargeFilter
+	}
+	return nil
+}
+
+type UpdateChargeFilterRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	SubscriptionId     string                 `protobuf:"bytes,1,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
+	ChargeCode         string                 `protobuf:"bytes,2,opt,name=charge_code,json=chargeCode,proto3" json:"charge_code,omitempty"`
+	InvoiceDisplayName *string                `protobuf:"bytes,3,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
+	Properties         *v2.PropertiesInput    `protobuf:"bytes,4,opt,name=properties,proto3,oneof" json:"properties,omitempty"`
+	Values             *structpb.Struct       `protobuf:"bytes,5,opt,name=values,proto3" json:"values,omitempty"`
+	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *UpdateChargeFilterRequest) Reset() {
+	*x = UpdateChargeFilterRequest{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateChargeFilterRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateChargeFilterRequest) ProtoMessage() {}
+
+func (x *UpdateChargeFilterRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateChargeFilterRequest.ProtoReflect.Descriptor instead.
+func (*UpdateChargeFilterRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *UpdateChargeFilterRequest) GetSubscriptionId() string {
+	if x != nil {
+		return x.SubscriptionId
+	}
+	return ""
+}
+
+func (x *UpdateChargeFilterRequest) GetChargeCode() string {
+	if x != nil {
+		return x.ChargeCode
+	}
+	return ""
+}
+
+func (x *UpdateChargeFilterRequest) GetInvoiceDisplayName() string {
+	if x != nil && x.InvoiceDisplayName != nil {
+		return *x.InvoiceDisplayName
+	}
+	return ""
+}
+
+func (x *UpdateChargeFilterRequest) GetProperties() *v2.PropertiesInput {
+	if x != nil {
+		return x.Properties
+	}
+	return nil
+}
+
+func (x *UpdateChargeFilterRequest) GetValues() *structpb.Struct {
+	if x != nil {
+		return x.Values
+	}
+	return nil
+}
+
+func (x *UpdateChargeFilterRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+type UpdateChargeFilterResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ChargeFilter  *v2.ChargeFilter       `protobuf:"bytes,1,opt,name=charge_filter,json=chargeFilter,proto3" json:"charge_filter,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateChargeFilterResponse) Reset() {
+	*x = UpdateChargeFilterResponse{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateChargeFilterResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateChargeFilterResponse) ProtoMessage() {}
+
+func (x *UpdateChargeFilterResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateChargeFilterResponse.ProtoReflect.Descriptor instead.
+func (*UpdateChargeFilterResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *UpdateChargeFilterResponse) GetChargeFilter() *v2.ChargeFilter {
+	if x != nil {
+		return x.ChargeFilter
+	}
+	return nil
+}
+
+type DeleteChargeFilterRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	SubscriptionId string                 `protobuf:"bytes,1,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
+	ChargeCode     string                 `protobuf:"bytes,2,opt,name=charge_code,json=chargeCode,proto3" json:"charge_code,omitempty"`
+	Values         *structpb.Struct       `protobuf:"bytes,3,opt,name=values,proto3" json:"values,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *DeleteChargeFilterRequest) Reset() {
+	*x = DeleteChargeFilterRequest{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteChargeFilterRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteChargeFilterRequest) ProtoMessage() {}
+
+func (x *DeleteChargeFilterRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteChargeFilterRequest.ProtoReflect.Descriptor instead.
+func (*DeleteChargeFilterRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *DeleteChargeFilterRequest) GetSubscriptionId() string {
+	if x != nil {
+		return x.SubscriptionId
+	}
+	return ""
+}
+
+func (x *DeleteChargeFilterRequest) GetChargeCode() string {
+	if x != nil {
+		return x.ChargeCode
+	}
+	return ""
+}
+
+func (x *DeleteChargeFilterRequest) GetValues() *structpb.Struct {
+	if x != nil {
+		return x.Values
+	}
+	return nil
+}
+
+type DeleteChargeFilterResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ChargeFilter  *v2.ChargeFilter       `protobuf:"bytes,1,opt,name=charge_filter,json=chargeFilter,proto3" json:"charge_filter,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteChargeFilterResponse) Reset() {
+	*x = DeleteChargeFilterResponse{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteChargeFilterResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteChargeFilterResponse) ProtoMessage() {}
+
+func (x *DeleteChargeFilterResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteChargeFilterResponse.ProtoReflect.Descriptor instead.
+func (*DeleteChargeFilterResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *DeleteChargeFilterResponse) GetChargeFilter() *v2.ChargeFilter {
+	if x != nil {
+		return x.ChargeFilter
+	}
+	return nil
+}
+
+type RemoveEntitlementRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	SubscriptionId string                 `protobuf:"bytes,1,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
+	FeatureCode    string                 `protobuf:"bytes,2,opt,name=feature_code,json=featureCode,proto3" json:"feature_code,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *RemoveEntitlementRequest) Reset() {
+	*x = RemoveEntitlementRequest{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RemoveEntitlementRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemoveEntitlementRequest) ProtoMessage() {}
+
+func (x *RemoveEntitlementRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemoveEntitlementRequest.ProtoReflect.Descriptor instead.
+func (*RemoveEntitlementRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *RemoveEntitlementRequest) GetSubscriptionId() string {
+	if x != nil {
+		return x.SubscriptionId
+	}
+	return ""
+}
+
+func (x *RemoveEntitlementRequest) GetFeatureCode() string {
+	if x != nil {
+		return x.FeatureCode
+	}
+	return ""
+}
+
+type RemoveEntitlementResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	FeatureCode   *string                `protobuf:"bytes,1,opt,name=feature_code,json=featureCode,proto3,oneof" json:"feature_code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RemoveEntitlementResponse) Reset() {
+	*x = RemoveEntitlementResponse{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RemoveEntitlementResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemoveEntitlementResponse) ProtoMessage() {}
+
+func (x *RemoveEntitlementResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemoveEntitlementResponse.ProtoReflect.Descriptor instead.
+func (*RemoveEntitlementResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *RemoveEntitlementResponse) GetFeatureCode() string {
+	if x != nil && x.FeatureCode != nil {
+		return *x.FeatureCode
+	}
+	return ""
+}
+
+type UpdateFixedChargeRequest struct {
+	state                 protoimpl.MessageState         `protogen:"open.v1"`
+	SubscriptionId        string                         `protobuf:"bytes,1,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
+	FixedChargeCode       string                         `protobuf:"bytes,2,opt,name=fixed_charge_code,json=fixedChargeCode,proto3" json:"fixed_charge_code,omitempty"`
+	ApplyUnitsImmediately *bool                          `protobuf:"varint,3,opt,name=apply_units_immediately,json=applyUnitsImmediately,proto3,oneof" json:"apply_units_immediately,omitempty"`
+	InvoiceDisplayName    *string                        `protobuf:"bytes,4,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
+	Properties            *v2.FixedChargePropertiesInput `protobuf:"bytes,5,opt,name=properties,proto3,oneof" json:"properties,omitempty"`
+	TaxCodes              []string                       `protobuf:"bytes,6,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
+	Units                 *string                        `protobuf:"bytes,7,opt,name=units,proto3,oneof" json:"units,omitempty"`
+	UpdateMask            *fieldmaskpb.FieldMask         `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *UpdateFixedChargeRequest) Reset() {
+	*x = UpdateFixedChargeRequest{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateFixedChargeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateFixedChargeRequest) ProtoMessage() {}
+
+func (x *UpdateFixedChargeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateFixedChargeRequest.ProtoReflect.Descriptor instead.
+func (*UpdateFixedChargeRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *UpdateFixedChargeRequest) GetSubscriptionId() string {
+	if x != nil {
+		return x.SubscriptionId
+	}
+	return ""
+}
+
+func (x *UpdateFixedChargeRequest) GetFixedChargeCode() string {
+	if x != nil {
+		return x.FixedChargeCode
+	}
+	return ""
+}
+
+func (x *UpdateFixedChargeRequest) GetApplyUnitsImmediately() bool {
+	if x != nil && x.ApplyUnitsImmediately != nil {
+		return *x.ApplyUnitsImmediately
 	}
 	return false
 }
 
-func (x *UpdateSubscriptionInput) GetSubscriptionAt() *timestamppb.Timestamp {
+func (x *UpdateFixedChargeRequest) GetInvoiceDisplayName() string {
+	if x != nil && x.InvoiceDisplayName != nil {
+		return *x.InvoiceDisplayName
+	}
+	return ""
+}
+
+func (x *UpdateFixedChargeRequest) GetProperties() *v2.FixedChargePropertiesInput {
 	if x != nil {
-		return x.SubscriptionAt
+		return x.Properties
 	}
 	return nil
 }
 
-func (x *UpdateSubscriptionInput) GetUsageThresholds() []*v2.UsageThresholdInput {
+func (x *UpdateFixedChargeRequest) GetTaxCodes() []string {
 	if x != nil {
-		return x.UsageThresholds
+		return x.TaxCodes
+	}
+	return nil
+}
+
+func (x *UpdateFixedChargeRequest) GetUnits() string {
+	if x != nil && x.Units != nil {
+		return *x.Units
+	}
+	return ""
+}
+
+func (x *UpdateFixedChargeRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+type UpdateFixedChargeResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	FixedCharge   *v2.FixedCharge        `protobuf:"bytes,1,opt,name=fixed_charge,json=fixedCharge,proto3" json:"fixed_charge,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateFixedChargeResponse) Reset() {
+	*x = UpdateFixedChargeResponse{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateFixedChargeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateFixedChargeResponse) ProtoMessage() {}
+
+func (x *UpdateFixedChargeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateFixedChargeResponse.ProtoReflect.Descriptor instead.
+func (*UpdateFixedChargeResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *UpdateFixedChargeResponse) GetFixedCharge() *v2.FixedCharge {
+	if x != nil {
+		return x.FixedCharge
 	}
 	return nil
 }
@@ -1887,7 +1856,7 @@ type PlanOverridesInput struct {
 
 func (x *PlanOverridesInput) Reset() {
 	*x = PlanOverridesInput{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[32]
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1899,7 +1868,7 @@ func (x *PlanOverridesInput) String() string {
 func (*PlanOverridesInput) ProtoMessage() {}
 
 func (x *PlanOverridesInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[32]
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1912,7 +1881,7 @@ func (x *PlanOverridesInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PlanOverridesInput.ProtoReflect.Descriptor instead.
 func (*PlanOverridesInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{32}
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *PlanOverridesInput) GetAmountCents() int64 {
@@ -2000,7 +1969,7 @@ type FixedChargeOverridesInput struct {
 
 func (x *FixedChargeOverridesInput) Reset() {
 	*x = FixedChargeOverridesInput{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[33]
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2012,7 +1981,7 @@ func (x *FixedChargeOverridesInput) String() string {
 func (*FixedChargeOverridesInput) ProtoMessage() {}
 
 func (x *FixedChargeOverridesInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[33]
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2025,7 +1994,7 @@ func (x *FixedChargeOverridesInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FixedChargeOverridesInput.ProtoReflect.Descriptor instead.
 func (*FixedChargeOverridesInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{33}
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *FixedChargeOverridesInput) GetAddOnId() string {
@@ -2093,7 +2062,7 @@ type ChargeOverridesInput struct {
 
 func (x *ChargeOverridesInput) Reset() {
 	*x = ChargeOverridesInput{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[34]
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2105,7 +2074,7 @@ func (x *ChargeOverridesInput) String() string {
 func (*ChargeOverridesInput) ProtoMessage() {}
 
 func (x *ChargeOverridesInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[34]
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2118,7 +2087,7 @@ func (x *ChargeOverridesInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChargeOverridesInput.ProtoReflect.Descriptor instead.
 func (*ChargeOverridesInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{34}
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *ChargeOverridesInput) GetAppliedPricingUnit() *AppliedPricingUnitOverrideInput {
@@ -2177,91 +2146,29 @@ func (x *ChargeOverridesInput) GetTaxCodes() []string {
 	return nil
 }
 
-// Input for terminating a subscription
-type TerminateSubscriptionInput struct {
-	state                   protoimpl.MessageState          `protogen:"open.v1"`
-	Id                      string                          `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	OnTerminationCreditNote *v2.OnTerminationCreditNoteEnum `protobuf:"varint,2,opt,name=on_termination_credit_note,json=onTerminationCreditNote,proto3,enum=invora.billing.common.v2.OnTerminationCreditNoteEnum,oneof" json:"on_termination_credit_note,omitempty"`
-	OnTerminationInvoice    *v2.OnTerminationInvoiceEnum    `protobuf:"varint,3,opt,name=on_termination_invoice,json=onTerminationInvoice,proto3,enum=invora.billing.common.v2.OnTerminationInvoiceEnum,oneof" json:"on_termination_invoice,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
-}
-
-func (x *TerminateSubscriptionInput) Reset() {
-	*x = TerminateSubscriptionInput{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[35]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *TerminateSubscriptionInput) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TerminateSubscriptionInput) ProtoMessage() {}
-
-func (x *TerminateSubscriptionInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[35]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TerminateSubscriptionInput.ProtoReflect.Descriptor instead.
-func (*TerminateSubscriptionInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{35}
-}
-
-func (x *TerminateSubscriptionInput) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *TerminateSubscriptionInput) GetOnTerminationCreditNote() v2.OnTerminationCreditNoteEnum {
-	if x != nil && x.OnTerminationCreditNote != nil {
-		return *x.OnTerminationCreditNote
-	}
-	return v2.OnTerminationCreditNoteEnum(0)
-}
-
-func (x *TerminateSubscriptionInput) GetOnTerminationInvoice() v2.OnTerminationInvoiceEnum {
-	if x != nil && x.OnTerminationInvoice != nil {
-		return *x.OnTerminationInvoice
-	}
-	return v2.OnTerminationInvoiceEnum(0)
-}
-
-// Autogenerated input type of RemoveSubscriptionEntitlement
-type RemoveSubscriptionEntitlementInput struct {
+type CreateOrUpdateEntitlementRequest struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	FeatureCode    string                 `protobuf:"bytes,1,opt,name=feature_code,json=featureCode,proto3" json:"feature_code,omitempty"`
-	SubscriptionId string                 `protobuf:"bytes,2,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
+	SubscriptionId string                 `protobuf:"bytes,1,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
+	Entitlement    *v2.EntitlementInput   `protobuf:"bytes,2,opt,name=entitlement,proto3" json:"entitlement,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
-func (x *RemoveSubscriptionEntitlementInput) Reset() {
-	*x = RemoveSubscriptionEntitlementInput{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[36]
+func (x *CreateOrUpdateEntitlementRequest) Reset() {
+	*x = CreateOrUpdateEntitlementRequest{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *RemoveSubscriptionEntitlementInput) String() string {
+func (x *CreateOrUpdateEntitlementRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RemoveSubscriptionEntitlementInput) ProtoMessage() {}
+func (*CreateOrUpdateEntitlementRequest) ProtoMessage() {}
 
-func (x *RemoveSubscriptionEntitlementInput) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[36]
+func (x *CreateOrUpdateEntitlementRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2272,48 +2179,159 @@ func (x *RemoveSubscriptionEntitlementInput) ProtoReflect() protoreflect.Message
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RemoveSubscriptionEntitlementInput.ProtoReflect.Descriptor instead.
-func (*RemoveSubscriptionEntitlementInput) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{36}
+// Deprecated: Use CreateOrUpdateEntitlementRequest.ProtoReflect.Descriptor instead.
+func (*CreateOrUpdateEntitlementRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{31}
 }
 
-func (x *RemoveSubscriptionEntitlementInput) GetFeatureCode() string {
+func (x *CreateOrUpdateEntitlementRequest) GetSubscriptionId() string {
+	if x != nil {
+		return x.SubscriptionId
+	}
+	return ""
+}
+
+func (x *CreateOrUpdateEntitlementRequest) GetEntitlement() *v2.EntitlementInput {
+	if x != nil {
+		return x.Entitlement
+	}
+	return nil
+}
+
+type CreateOrUpdateEntitlementResponse struct {
+	state         protoimpl.MessageState   `protogen:"open.v1"`
+	Entitlement   *SubscriptionEntitlement `protobuf:"bytes,1,opt,name=entitlement,proto3" json:"entitlement,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateOrUpdateEntitlementResponse) Reset() {
+	*x = CreateOrUpdateEntitlementResponse{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateOrUpdateEntitlementResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateOrUpdateEntitlementResponse) ProtoMessage() {}
+
+func (x *CreateOrUpdateEntitlementResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateOrUpdateEntitlementResponse.ProtoReflect.Descriptor instead.
+func (*CreateOrUpdateEntitlementResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *CreateOrUpdateEntitlementResponse) GetEntitlement() *SubscriptionEntitlement {
+	if x != nil {
+		return x.Entitlement
+	}
+	return nil
+}
+
+type GetEntitlementRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	SubscriptionId string                 `protobuf:"bytes,1,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
+	FeatureCode    string                 `protobuf:"bytes,2,opt,name=feature_code,json=featureCode,proto3" json:"feature_code,omitempty"`
+	ReadMask       *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	View           v2.View                `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *GetEntitlementRequest) Reset() {
+	*x = GetEntitlementRequest{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetEntitlementRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetEntitlementRequest) ProtoMessage() {}
+
+func (x *GetEntitlementRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetEntitlementRequest.ProtoReflect.Descriptor instead.
+func (*GetEntitlementRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *GetEntitlementRequest) GetSubscriptionId() string {
+	if x != nil {
+		return x.SubscriptionId
+	}
+	return ""
+}
+
+func (x *GetEntitlementRequest) GetFeatureCode() string {
 	if x != nil {
 		return x.FeatureCode
 	}
 	return ""
 }
 
-func (x *RemoveSubscriptionEntitlementInput) GetSubscriptionId() string {
+func (x *GetEntitlementRequest) GetReadMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.SubscriptionId
+		return x.ReadMask
 	}
-	return ""
+	return nil
 }
 
-// Autogenerated return type of RemoveSubscriptionEntitlement.
-type RemoveSubscriptionEntitlementPayload struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	FeatureCode   *string                `protobuf:"bytes,1,opt,name=feature_code,json=featureCode,proto3,oneof" json:"feature_code,omitempty"`
+func (x *GetEntitlementRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
+}
+
+type GetEntitlementResponse struct {
+	state         protoimpl.MessageState   `protogen:"open.v1"`
+	Entitlement   *SubscriptionEntitlement `protobuf:"bytes,1,opt,name=entitlement,proto3" json:"entitlement,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *RemoveSubscriptionEntitlementPayload) Reset() {
-	*x = RemoveSubscriptionEntitlementPayload{}
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[37]
+func (x *GetEntitlementResponse) Reset() {
+	*x = GetEntitlementResponse{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *RemoveSubscriptionEntitlementPayload) String() string {
+func (x *GetEntitlementResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RemoveSubscriptionEntitlementPayload) ProtoMessage() {}
+func (*GetEntitlementResponse) ProtoMessage() {}
 
-func (x *RemoveSubscriptionEntitlementPayload) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[37]
+func (x *GetEntitlementResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2324,42 +2342,227 @@ func (x *RemoveSubscriptionEntitlementPayload) ProtoReflect() protoreflect.Messa
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RemoveSubscriptionEntitlementPayload.ProtoReflect.Descriptor instead.
-func (*RemoveSubscriptionEntitlementPayload) Descriptor() ([]byte, []int) {
-	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{37}
+// Deprecated: Use GetEntitlementResponse.ProtoReflect.Descriptor instead.
+func (*GetEntitlementResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{34}
 }
 
-func (x *RemoveSubscriptionEntitlementPayload) GetFeatureCode() string {
-	if x != nil && x.FeatureCode != nil {
-		return *x.FeatureCode
+func (x *GetEntitlementResponse) GetEntitlement() *SubscriptionEntitlement {
+	if x != nil {
+		return x.Entitlement
 	}
-	return ""
+	return nil
 }
 
-// Destroy subscription charge filter input arguments
-type DestroySubscriptionChargeFilterInput struct {
+type ListEntitlementsRequest struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	ChargeCode     string                 `protobuf:"bytes,1,opt,name=charge_code,json=chargeCode,proto3" json:"charge_code,omitempty"`
-	SubscriptionId string                 `protobuf:"bytes,2,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
-	Values         *structpb.Struct       `protobuf:"bytes,3,opt,name=values,proto3" json:"values,omitempty"`
+	SubscriptionId string                 `protobuf:"bytes,1,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
+	Filter         *EntitlementFilter     `protobuf:"bytes,2,opt,name=filter,proto3" json:"filter,omitempty"`
+	Sort           *EntitlementSort       `protobuf:"bytes,3,opt,name=sort,proto3" json:"sort,omitempty"`
+	Pagination     *kernel.PaginationInfo `protobuf:"bytes,4,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	ReadMask       *fieldmaskpb.FieldMask `protobuf:"bytes,10,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
+	View           v2.View                `protobuf:"varint,11,opt,name=view,proto3,enum=invora.billing.common.v2.View" json:"view,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
-func (x *DestroySubscriptionChargeFilterInput) Reset() {
-	*x = DestroySubscriptionChargeFilterInput{}
+func (x *ListEntitlementsRequest) Reset() {
+	*x = ListEntitlementsRequest{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListEntitlementsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListEntitlementsRequest) ProtoMessage() {}
+
+func (x *ListEntitlementsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListEntitlementsRequest.ProtoReflect.Descriptor instead.
+func (*ListEntitlementsRequest) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *ListEntitlementsRequest) GetSubscriptionId() string {
+	if x != nil {
+		return x.SubscriptionId
+	}
+	return ""
+}
+
+func (x *ListEntitlementsRequest) GetFilter() *EntitlementFilter {
+	if x != nil {
+		return x.Filter
+	}
+	return nil
+}
+
+func (x *ListEntitlementsRequest) GetSort() *EntitlementSort {
+	if x != nil {
+		return x.Sort
+	}
+	return nil
+}
+
+func (x *ListEntitlementsRequest) GetPagination() *kernel.PaginationInfo {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *ListEntitlementsRequest) GetReadMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.ReadMask
+	}
+	return nil
+}
+
+func (x *ListEntitlementsRequest) GetView() v2.View {
+	if x != nil {
+		return x.View
+	}
+	return v2.View(0)
+}
+
+type ListEntitlementsResponse struct {
+	state          protoimpl.MessageState     `protogen:"open.v1"`
+	Items          []*SubscriptionEntitlement `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	TotalCount     uint64                     `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	NextPageCursor *string                    `protobuf:"bytes,3,opt,name=next_page_cursor,json=nextPageCursor,proto3,oneof" json:"next_page_cursor,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ListEntitlementsResponse) Reset() {
+	*x = ListEntitlementsResponse{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[36]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListEntitlementsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListEntitlementsResponse) ProtoMessage() {}
+
+func (x *ListEntitlementsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[36]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListEntitlementsResponse.ProtoReflect.Descriptor instead.
+func (*ListEntitlementsResponse) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *ListEntitlementsResponse) GetItems() []*SubscriptionEntitlement {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+func (x *ListEntitlementsResponse) GetTotalCount() uint64 {
+	if x != nil {
+		return x.TotalCount
+	}
+	return 0
+}
+
+func (x *ListEntitlementsResponse) GetNextPageCursor() string {
+	if x != nil && x.NextPageCursor != nil {
+		return *x.NextPageCursor
+	}
+	return ""
+}
+
+type EntitlementFilter struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TextSearch    string                 `protobuf:"bytes,1,opt,name=text_search,json=textSearch,proto3" json:"text_search,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EntitlementFilter) Reset() {
+	*x = EntitlementFilter{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[37]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EntitlementFilter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EntitlementFilter) ProtoMessage() {}
+
+func (x *EntitlementFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[37]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EntitlementFilter.ProtoReflect.Descriptor instead.
+func (*EntitlementFilter) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *EntitlementFilter) GetTextSearch() string {
+	if x != nil {
+		return x.TextSearch
+	}
+	return ""
+}
+
+type EntitlementSort struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Rules         []*EntitlementSortRule `protobuf:"bytes,1,rep,name=rules,proto3" json:"rules,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EntitlementSort) Reset() {
+	*x = EntitlementSort{}
 	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DestroySubscriptionChargeFilterInput) String() string {
+func (x *EntitlementSort) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DestroySubscriptionChargeFilterInput) ProtoMessage() {}
+func (*EntitlementSort) ProtoMessage() {}
 
-func (x *DestroySubscriptionChargeFilterInput) ProtoReflect() protoreflect.Message {
+func (x *EntitlementSort) ProtoReflect() protoreflect.Message {
 	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -2371,58 +2574,42 @@ func (x *DestroySubscriptionChargeFilterInput) ProtoReflect() protoreflect.Messa
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DestroySubscriptionChargeFilterInput.ProtoReflect.Descriptor instead.
-func (*DestroySubscriptionChargeFilterInput) Descriptor() ([]byte, []int) {
+// Deprecated: Use EntitlementSort.ProtoReflect.Descriptor instead.
+func (*EntitlementSort) Descriptor() ([]byte, []int) {
 	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{38}
 }
 
-func (x *DestroySubscriptionChargeFilterInput) GetChargeCode() string {
+func (x *EntitlementSort) GetRules() []*EntitlementSortRule {
 	if x != nil {
-		return x.ChargeCode
-	}
-	return ""
-}
-
-func (x *DestroySubscriptionChargeFilterInput) GetSubscriptionId() string {
-	if x != nil {
-		return x.SubscriptionId
-	}
-	return ""
-}
-
-func (x *DestroySubscriptionChargeFilterInput) GetValues() *structpb.Struct {
-	if x != nil {
-		return x.Values
+		return x.Rules
 	}
 	return nil
 }
 
-// Create subscription charge filter input arguments
-type CreateSubscriptionChargeFilterInput struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	ChargeCode         string                 `protobuf:"bytes,1,opt,name=charge_code,json=chargeCode,proto3" json:"charge_code,omitempty"`
-	InvoiceDisplayName *string                `protobuf:"bytes,2,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
-	Properties         *v2.PropertiesInput    `protobuf:"bytes,3,opt,name=properties,proto3" json:"properties,omitempty"`
-	SubscriptionId     string                 `protobuf:"bytes,4,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
-	Values             *structpb.Struct       `protobuf:"bytes,5,opt,name=values,proto3" json:"values,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+type EntitlementSortRule struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Type:
+	//
+	//	*EntitlementSortRule_CreatedAt
+	Type          isEntitlementSortRule_Type `protobuf_oneof:"type"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateSubscriptionChargeFilterInput) Reset() {
-	*x = CreateSubscriptionChargeFilterInput{}
+func (x *EntitlementSortRule) Reset() {
+	*x = EntitlementSortRule{}
 	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateSubscriptionChargeFilterInput) String() string {
+func (x *EntitlementSortRule) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateSubscriptionChargeFilterInput) ProtoMessage() {}
+func (*EntitlementSortRule) ProtoMessage() {}
 
-func (x *CreateSubscriptionChargeFilterInput) ProtoReflect() protoreflect.Message {
+func (x *EntitlementSortRule) ProtoReflect() protoreflect.Message {
 	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -2434,80 +2621,61 @@ func (x *CreateSubscriptionChargeFilterInput) ProtoReflect() protoreflect.Messag
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateSubscriptionChargeFilterInput.ProtoReflect.Descriptor instead.
-func (*CreateSubscriptionChargeFilterInput) Descriptor() ([]byte, []int) {
+// Deprecated: Use EntitlementSortRule.ProtoReflect.Descriptor instead.
+func (*EntitlementSortRule) Descriptor() ([]byte, []int) {
 	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{39}
 }
 
-func (x *CreateSubscriptionChargeFilterInput) GetChargeCode() string {
+func (x *EntitlementSortRule) GetType() isEntitlementSortRule_Type {
 	if x != nil {
-		return x.ChargeCode
-	}
-	return ""
-}
-
-func (x *CreateSubscriptionChargeFilterInput) GetInvoiceDisplayName() string {
-	if x != nil && x.InvoiceDisplayName != nil {
-		return *x.InvoiceDisplayName
-	}
-	return ""
-}
-
-func (x *CreateSubscriptionChargeFilterInput) GetProperties() *v2.PropertiesInput {
-	if x != nil {
-		return x.Properties
+		return x.Type
 	}
 	return nil
 }
 
-func (x *CreateSubscriptionChargeFilterInput) GetSubscriptionId() string {
+func (x *EntitlementSortRule) GetCreatedAt() kernel.SortDirection {
 	if x != nil {
-		return x.SubscriptionId
+		if x, ok := x.Type.(*EntitlementSortRule_CreatedAt); ok {
+			return x.CreatedAt
+		}
 	}
-	return ""
+	return kernel.SortDirection(0)
 }
 
-func (x *CreateSubscriptionChargeFilterInput) GetValues() *structpb.Struct {
-	if x != nil {
-		return x.Values
-	}
-	return nil
+type isEntitlementSortRule_Type interface {
+	isEntitlementSortRule_Type()
 }
 
-// Create Subscription input arguments
-type CreateSubscriptionInput struct {
-	state                      protoimpl.MessageState                  `protogen:"open.v1"`
-	BillingTime                v2.BillingTimeEnum                      `protobuf:"varint,1,opt,name=billing_time,json=billingTime,proto3,enum=invora.billing.common.v2.BillingTimeEnum" json:"billing_time,omitempty"`
-	CustomerId                 string                                  `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	EndingAt                   *timestamppb.Timestamp                  `protobuf:"bytes,3,opt,name=ending_at,json=endingAt,proto3,oneof" json:"ending_at,omitempty"`
-	ExternalId                 *string                                 `protobuf:"bytes,4,opt,name=external_id,json=externalId,proto3,oneof" json:"external_id,omitempty"`
-	InvoiceCustomSection       *v2.InvoiceCustomSectionsReferenceInput `protobuf:"bytes,5,opt,name=invoice_custom_section,json=invoiceCustomSection,proto3,oneof" json:"invoice_custom_section,omitempty"`
-	Name                       *string                                 `protobuf:"bytes,6,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	PaymentMethod              *v2.PaymentMethodReferenceInput         `protobuf:"bytes,7,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
-	PlanId                     string                                  `protobuf:"bytes,8,opt,name=plan_id,json=planId,proto3" json:"plan_id,omitempty"`
-	PlanOverrides              *PlanOverridesInput                     `protobuf:"bytes,9,opt,name=plan_overrides,json=planOverrides,proto3,oneof" json:"plan_overrides,omitempty"`
-	ProgressiveBillingDisabled *bool                                   `protobuf:"varint,10,opt,name=progressive_billing_disabled,json=progressiveBillingDisabled,proto3,oneof" json:"progressive_billing_disabled,omitempty"`
-	SubscriptionAt             *timestamppb.Timestamp                  `protobuf:"bytes,11,opt,name=subscription_at,json=subscriptionAt,proto3,oneof" json:"subscription_at,omitempty"`
-	SubscriptionId             *string                                 `protobuf:"bytes,12,opt,name=subscription_id,json=subscriptionId,proto3,oneof" json:"subscription_id,omitempty"`
-	UsageThresholds            []*v2.UsageThresholdInput               `protobuf:"bytes,13,rep,name=usage_thresholds,json=usageThresholds,proto3" json:"usage_thresholds,omitempty"`
-	unknownFields              protoimpl.UnknownFields
-	sizeCache                  protoimpl.SizeCache
+type EntitlementSortRule_CreatedAt struct {
+	CreatedAt kernel.SortDirection `protobuf:"varint,1,opt,name=created_at,json=createdAt,proto3,enum=kernel.SortDirection,oneof"`
 }
 
-func (x *CreateSubscriptionInput) Reset() {
-	*x = CreateSubscriptionInput{}
+func (*EntitlementSortRule_CreatedAt) isEntitlementSortRule_Type() {}
+
+type SubscriptionEntitlement struct {
+	state         protoimpl.MessageState              `protogen:"open.v1"`
+	Code          string                              `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Description   *string                             `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	Name          string                              `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Privileges    []*SubscriptionEntitlementPrivilege `protobuf:"bytes,4,rep,name=privileges,proto3" json:"privileges,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubscriptionEntitlement) Reset() {
+	*x = SubscriptionEntitlement{}
 	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateSubscriptionInput) String() string {
+func (x *SubscriptionEntitlement) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateSubscriptionInput) ProtoMessage() {}
+func (*SubscriptionEntitlement) ProtoMessage() {}
 
-func (x *CreateSubscriptionInput) ProtoReflect() protoreflect.Message {
+func (x *SubscriptionEntitlement) ProtoReflect() protoreflect.Message {
 	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -2519,119 +2687,131 @@ func (x *CreateSubscriptionInput) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateSubscriptionInput.ProtoReflect.Descriptor instead.
-func (*CreateSubscriptionInput) Descriptor() ([]byte, []int) {
+// Deprecated: Use SubscriptionEntitlement.ProtoReflect.Descriptor instead.
+func (*SubscriptionEntitlement) Descriptor() ([]byte, []int) {
 	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{40}
 }
 
-func (x *CreateSubscriptionInput) GetBillingTime() v2.BillingTimeEnum {
+func (x *SubscriptionEntitlement) GetCode() string {
 	if x != nil {
-		return x.BillingTime
-	}
-	return v2.BillingTimeEnum(0)
-}
-
-func (x *CreateSubscriptionInput) GetCustomerId() string {
-	if x != nil {
-		return x.CustomerId
+		return x.Code
 	}
 	return ""
 }
 
-func (x *CreateSubscriptionInput) GetEndingAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.EndingAt
-	}
-	return nil
-}
-
-func (x *CreateSubscriptionInput) GetExternalId() string {
-	if x != nil && x.ExternalId != nil {
-		return *x.ExternalId
+func (x *SubscriptionEntitlement) GetDescription() string {
+	if x != nil && x.Description != nil {
+		return *x.Description
 	}
 	return ""
 }
 
-func (x *CreateSubscriptionInput) GetInvoiceCustomSection() *v2.InvoiceCustomSectionsReferenceInput {
+func (x *SubscriptionEntitlement) GetName() string {
 	if x != nil {
-		return x.InvoiceCustomSection
+		return x.Name
+	}
+	return ""
+}
+
+func (x *SubscriptionEntitlement) GetPrivileges() []*SubscriptionEntitlementPrivilege {
+	if x != nil {
+		return x.Privileges
 	}
 	return nil
 }
 
-func (x *CreateSubscriptionInput) GetName() string {
+type SubscriptionEntitlementPrivilege struct {
+	state         protoimpl.MessageState    `protogen:"open.v1"`
+	Code          string                    `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Config        *v2.PrivilegeConfigObject `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
+	Name          *string                   `protobuf:"bytes,3,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Value         *string                   `protobuf:"bytes,4,opt,name=value,proto3,oneof" json:"value,omitempty"`
+	ValueType     v2.PrivilegeValueTypeEnum `protobuf:"varint,5,opt,name=value_type,json=valueType,proto3,enum=invora.billing.common.v2.PrivilegeValueTypeEnum" json:"value_type,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubscriptionEntitlementPrivilege) Reset() {
+	*x = SubscriptionEntitlementPrivilege{}
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[41]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubscriptionEntitlementPrivilege) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubscriptionEntitlementPrivilege) ProtoMessage() {}
+
+func (x *SubscriptionEntitlementPrivilege) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_billing_subscriptions_v2_service_proto_msgTypes[41]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubscriptionEntitlementPrivilege.ProtoReflect.Descriptor instead.
+func (*SubscriptionEntitlementPrivilege) Descriptor() ([]byte, []int) {
+	return file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP(), []int{41}
+}
+
+func (x *SubscriptionEntitlementPrivilege) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *SubscriptionEntitlementPrivilege) GetConfig() *v2.PrivilegeConfigObject {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
+func (x *SubscriptionEntitlementPrivilege) GetName() string {
 	if x != nil && x.Name != nil {
 		return *x.Name
 	}
 	return ""
 }
 
-func (x *CreateSubscriptionInput) GetPaymentMethod() *v2.PaymentMethodReferenceInput {
-	if x != nil {
-		return x.PaymentMethod
-	}
-	return nil
-}
-
-func (x *CreateSubscriptionInput) GetPlanId() string {
-	if x != nil {
-		return x.PlanId
+func (x *SubscriptionEntitlementPrivilege) GetValue() string {
+	if x != nil && x.Value != nil {
+		return *x.Value
 	}
 	return ""
 }
 
-func (x *CreateSubscriptionInput) GetPlanOverrides() *PlanOverridesInput {
+func (x *SubscriptionEntitlementPrivilege) GetValueType() v2.PrivilegeValueTypeEnum {
 	if x != nil {
-		return x.PlanOverrides
+		return x.ValueType
 	}
-	return nil
-}
-
-func (x *CreateSubscriptionInput) GetProgressiveBillingDisabled() bool {
-	if x != nil && x.ProgressiveBillingDisabled != nil {
-		return *x.ProgressiveBillingDisabled
-	}
-	return false
-}
-
-func (x *CreateSubscriptionInput) GetSubscriptionAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.SubscriptionAt
-	}
-	return nil
-}
-
-func (x *CreateSubscriptionInput) GetSubscriptionId() string {
-	if x != nil && x.SubscriptionId != nil {
-		return *x.SubscriptionId
-	}
-	return ""
-}
-
-func (x *CreateSubscriptionInput) GetUsageThresholds() []*v2.UsageThresholdInput {
-	if x != nil {
-		return x.UsageThresholds
-	}
-	return nil
+	return v2.PrivilegeValueTypeEnum(0)
 }
 
 var File_invora_billing_subscriptions_v2_service_proto protoreflect.FileDescriptor
 
 const file_invora_billing_subscriptions_v2_service_proto_rawDesc = "" +
 	"\n" +
-	"-invora/billing/subscriptions/v2/service.proto\x12\x1finvora.billing.subscriptions.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\xd2\x01\n" +
+	"-invora/billing/subscriptions/v2/service.proto\x12\x1finvora.billing.subscriptions.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/decimal.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\xbf\x01\n" +
 	"\n" +
-	"GetRequest\x12$\n" +
-	"\vexternal_id\x18\x01 \x01(\tH\x00R\n" +
-	"externalId\x88\x01\x01\x12\x13\n" +
-	"\x02id\x18\x02 \x01(\tH\x01R\x02id\x88\x01\x01\x127\n" +
+	"GetRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12$\n" +
+	"\vexternal_id\x18\x02 \x01(\tH\x00R\n" +
+	"externalId\x88\x01\x01\x127\n" +
 	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x129\n" +
-	"\x04view\x18\v \x01(\x0e2%.invora.billing.subscriptions.v2.ViewR\x04viewB\x0e\n" +
-	"\f_external_idB\x05\n" +
-	"\x03_id\"`\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04viewB\x0e\n" +
+	"\f_external_id\"`\n" +
 	"\vGetResponse\x12Q\n" +
-	"\fsubscription\x18\x01 \x01(\v2-.invora.billing.common.v2.BillingSubscriptionR\fsubscription\"\xbd\x02\n" +
+	"\fsubscription\x18\x01 \x01(\v2-.invora.billing.common.v2.BillingSubscriptionR\fsubscription\"\xb6\x02\n" +
 	"\vListRequest\x12C\n" +
 	"\x06filter\x18\x01 \x01(\v2+.invora.billing.subscriptions.v2.ListFilterR\x06filter\x12=\n" +
 	"\x04sort\x18\x02 \x01(\v2).invora.billing.subscriptions.v2.ListSortR\x04sort\x126\n" +
@@ -2639,20 +2819,21 @@ const file_invora_billing_subscriptions_v2_service_proto_rawDesc = "" +
 	"pagination\x18\x03 \x01(\v2\x16.kernel.PaginationInfoR\n" +
 	"pagination\x127\n" +
 	"\tread_mask\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x129\n" +
-	"\x04view\x18\v \x01(\x0e2%.invora.billing.subscriptions.v2.ViewR\x04view\"\xbc\x01\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xb8\x01\n" +
 	"\fListResponse\x12C\n" +
 	"\x05items\x18\x01 \x03(\v2-.invora.billing.common.v2.BillingSubscriptionR\x05items\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12F\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x0enextPageCursor\"r\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"r\n" +
 	"\n" +
 	"ListFilter\x12C\n" +
 	"\x04part\x18\x01 \x01(\v2/.invora.billing.subscriptions.v2.ListFilterPartR\x04part\x12\x1f\n" +
 	"\vtext_search\x18\x02 \x01(\tR\n" +
-	"textSearch\"Y\n" +
-	"\x10ListStatusFilter\x12E\n" +
-	"\tin_values\x18\x01 \x03(\x0e2(.invora.billing.common.v2.StatusTypeEnumR\binValues\"\xd8\x01\n" +
+	"textSearch\"U\n" +
+	"\x10ListStatusFilter\x12A\n" +
+	"\tin_values\x18\x01 \x03(\x0e2$.invora.billing.common.v2.StatusTypeR\binValues\"\xd8\x01\n" +
 	"\x0eListFilterPart\x122\n" +
 	"\x14external_customer_id\x18\x01 \x01(\tH\x00R\x12externalCustomerId\x12\x1e\n" +
 	"\toverriden\x18\x02 \x01(\bH\x00R\toverriden\x12\x1d\n" +
@@ -2664,96 +2845,48 @@ const file_invora_billing_subscriptions_v2_service_proto_rawDesc = "" +
 	"\fListSortRule\x126\n" +
 	"\n" +
 	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAtB\x06\n" +
-	"\x04type\"_\n" +
-	"\rCreateRequest\x12N\n" +
-	"\x05input\x18\x01 \x01(\v28.invora.billing.subscriptions.v2.CreateSubscriptionInputR\x05input\"c\n" +
+	"\x04type\"\x98\b\n" +
+	"\rCreateRequest\x12H\n" +
+	"\fbilling_time\x18\x01 \x01(\x0e2%.invora.billing.common.v2.BillingTimeR\vbillingTime\x12\x1f\n" +
+	"\vcustomer_id\x18\x02 \x01(\tR\n" +
+	"customerId\x12<\n" +
+	"\tending_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\bendingAt\x88\x01\x01\x12$\n" +
+	"\vexternal_id\x18\x04 \x01(\tH\x01R\n" +
+	"externalId\x88\x01\x01\x12x\n" +
+	"\x16invoice_custom_section\x18\x05 \x01(\v2=.invora.billing.common.v2.InvoiceCustomSectionsReferenceInputH\x02R\x14invoiceCustomSection\x88\x01\x01\x12\x17\n" +
+	"\x04name\x18\x06 \x01(\tH\x03R\x04name\x88\x01\x01\x12a\n" +
+	"\x0epayment_method\x18\a \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\x04R\rpaymentMethod\x88\x01\x01\x12\x17\n" +
+	"\aplan_id\x18\b \x01(\tR\x06planId\x12_\n" +
+	"\x0eplan_overrides\x18\t \x01(\v23.invora.billing.subscriptions.v2.PlanOverridesInputH\x05R\rplanOverrides\x88\x01\x01\x12E\n" +
+	"\x1cprogressive_billing_disabled\x18\n" +
+	" \x01(\bH\x06R\x1aprogressiveBillingDisabled\x88\x01\x01\x12H\n" +
+	"\x0fsubscription_at\x18\v \x01(\v2\x1a.google.protobuf.TimestampH\aR\x0esubscriptionAt\x88\x01\x01\x12,\n" +
+	"\x0fsubscription_id\x18\f \x01(\tH\bR\x0esubscriptionId\x88\x01\x01\x12X\n" +
+	"\x10usage_thresholds\x18\r \x03(\v2-.invora.billing.common.v2.UsageThresholdInputR\x0fusageThresholdsB\f\n" +
+	"\n" +
+	"_ending_atB\x0e\n" +
+	"\f_external_idB\x19\n" +
+	"\x17_invoice_custom_sectionB\a\n" +
+	"\x05_nameB\x11\n" +
+	"\x0f_payment_methodB\x11\n" +
+	"\x0f_plan_overridesB\x1f\n" +
+	"\x1d_progressive_billing_disabledB\x12\n" +
+	"\x10_subscription_atB\x12\n" +
+	"\x10_subscription_id\"c\n" +
 	"\x0eCreateResponse\x12Q\n" +
-	"\fsubscription\x18\x01 \x01(\v2-.invora.billing.common.v2.BillingSubscriptionR\fsubscription\"w\n" +
-	"\x19CreateChargeFilterRequest\x12Z\n" +
-	"\x05input\x18\x01 \x01(\v2D.invora.billing.subscriptions.v2.CreateSubscriptionChargeFilterInputR\x05input\"i\n" +
-	"\x1aCreateChargeFilterResponse\x12K\n" +
-	"\rcharge_filter\x18\x01 \x01(\v2&.invora.billing.common.v2.ChargeFilterR\fchargeFilter\"\x84\x01\n" +
-	"%DeleteSubscriptionChargeFilterRequest\x12[\n" +
-	"\x05input\x18\x01 \x01(\v2E.invora.billing.subscriptions.v2.DestroySubscriptionChargeFilterInputR\x05input\"u\n" +
-	"&DeleteSubscriptionChargeFilterResponse\x12K\n" +
-	"\rcharge_filter\x18\x01 \x01(\v2&.invora.billing.common.v2.ChargeFilterR\fchargeFilter\"\x81\x01\n" +
-	"$RemoveSubscriptionEntitlementRequest\x12Y\n" +
-	"\x05input\x18\x01 \x01(\v2C.invora.billing.subscriptions.v2.RemoveSubscriptionEntitlementInputR\x05input\"\xc6\x01\n" +
-	"%RemoveSubscriptionEntitlementResponse\x12\x9c\x01\n" +
-	"'remove_subscription_entitlement_payload\x18\x01 \x01(\v2E.invora.billing.subscriptions.v2.RemoveSubscriptionEntitlementPayloadR$removeSubscriptionEntitlementPayload\"e\n" +
-	"\x10TerminateRequest\x12Q\n" +
-	"\x05input\x18\x01 \x01(\v2;.invora.billing.subscriptions.v2.TerminateSubscriptionInputR\x05input\"f\n" +
-	"\x11TerminateResponse\x12Q\n" +
-	"\fsubscription\x18\x01 \x01(\v2-.invora.billing.common.v2.BillingSubscriptionR\fsubscription\"_\n" +
-	"\rUpdateRequest\x12N\n" +
-	"\x05input\x18\x01 \x01(\v28.invora.billing.subscriptions.v2.UpdateSubscriptionInputR\x05input\"c\n" +
-	"\x0eUpdateResponse\x12Q\n" +
-	"\fsubscription\x18\x01 \x01(\v2-.invora.billing.common.v2.BillingSubscriptionR\fsubscription\"w\n" +
-	"\x1fUpdateSubscriptionChargeRequest\x12T\n" +
-	"\x05input\x18\x01 \x01(\v2>.invora.billing.subscriptions.v2.UpdateSubscriptionChargeInputR\x05input\"\\\n" +
-	" UpdateSubscriptionChargeResponse\x128\n" +
-	"\x06charge\x18\x01 \x01(\v2 .invora.billing.common.v2.ChargeR\x06charge\"\x83\x01\n" +
-	"%UpdateSubscriptionChargeFilterRequest\x12Z\n" +
-	"\x05input\x18\x01 \x01(\v2D.invora.billing.subscriptions.v2.UpdateSubscriptionChargeFilterInputR\x05input\"u\n" +
-	"&UpdateSubscriptionChargeFilterResponse\x12K\n" +
-	"\rcharge_filter\x18\x01 \x01(\v2&.invora.billing.common.v2.ChargeFilterR\fchargeFilter\"\x81\x01\n" +
-	"$UpdateSubscriptionFixedChargeRequest\x12Y\n" +
-	"\x05input\x18\x01 \x01(\v2C.invora.billing.subscriptions.v2.UpdateSubscriptionFixedChargeInputR\x05input\"q\n" +
-	"%UpdateSubscriptionFixedChargeResponse\x12H\n" +
-	"\ffixed_charge\x18\x01 \x01(\v2%.invora.billing.common.v2.FixedChargeR\vfixedCharge\"\xce\x03\n" +
-	"\"UpdateSubscriptionFixedChargeInput\x12;\n" +
-	"\x17apply_units_immediately\x18\x01 \x01(\bH\x00R\x15applyUnitsImmediately\x88\x01\x01\x12*\n" +
-	"\x11fixed_charge_code\x18\x02 \x01(\tR\x0ffixedChargeCode\x125\n" +
-	"\x14invoice_display_name\x18\x03 \x01(\tH\x01R\x12invoiceDisplayName\x88\x01\x01\x12Y\n" +
-	"\n" +
-	"properties\x18\x04 \x01(\v24.invora.billing.common.v2.FixedChargePropertiesInputH\x02R\n" +
-	"properties\x88\x01\x01\x12'\n" +
-	"\x0fsubscription_id\x18\x05 \x01(\tR\x0esubscriptionId\x12\x1b\n" +
-	"\ttax_codes\x18\x06 \x03(\tR\btaxCodes\x12\x19\n" +
-	"\x05units\x18\a \x01(\tH\x03R\x05units\x88\x01\x01B\x1a\n" +
-	"\x18_apply_units_immediatelyB\x17\n" +
-	"\x15_invoice_display_nameB\r\n" +
-	"\v_propertiesB\b\n" +
-	"\x06_units\"\xcf\x02\n" +
-	"#UpdateSubscriptionChargeFilterInput\x12\x1f\n" +
-	"\vcharge_code\x18\x01 \x01(\tR\n" +
-	"chargeCode\x125\n" +
-	"\x14invoice_display_name\x18\x02 \x01(\tH\x00R\x12invoiceDisplayName\x88\x01\x01\x12N\n" +
-	"\n" +
-	"properties\x18\x03 \x01(\v2).invora.billing.common.v2.PropertiesInputH\x01R\n" +
-	"properties\x88\x01\x01\x12'\n" +
-	"\x0fsubscription_id\x18\x04 \x01(\tR\x0esubscriptionId\x12/\n" +
-	"\x06values\x18\x05 \x01(\v2\x17.google.protobuf.StructR\x06valuesB\x17\n" +
-	"\x15_invoice_display_nameB\r\n" +
-	"\v_properties\"\xd2\x04\n" +
-	"\x1dUpdateSubscriptionChargeInput\x12w\n" +
-	"\x14applied_pricing_unit\x18\x01 \x01(\v2@.invora.billing.subscriptions.v2.AppliedPricingUnitOverrideInputH\x00R\x12appliedPricingUnit\x88\x01\x01\x12\x1f\n" +
-	"\vcharge_code\x18\x02 \x01(\tR\n" +
-	"chargeCode\x12E\n" +
-	"\afilters\x18\x03 \x03(\v2+.invora.billing.common.v2.ChargeFilterInputR\afilters\x125\n" +
-	"\x14invoice_display_name\x18\x04 \x01(\tH\x01R\x12invoiceDisplayName\x88\x01\x01\x12-\n" +
-	"\x10min_amount_cents\x18\x05 \x01(\x03H\x02R\x0eminAmountCents\x88\x01\x01\x12N\n" +
-	"\n" +
-	"properties\x18\x06 \x01(\v2).invora.billing.common.v2.PropertiesInputH\x03R\n" +
-	"properties\x88\x01\x01\x12'\n" +
-	"\x0fsubscription_id\x18\a \x01(\tR\x0esubscriptionId\x12\x1b\n" +
-	"\ttax_codes\x18\b \x03(\tR\btaxCodesB\x17\n" +
-	"\x15_applied_pricing_unitB\x17\n" +
-	"\x15_invoice_display_nameB\x13\n" +
-	"\x11_min_amount_centsB\r\n" +
-	"\v_properties\"J\n" +
-	"\x1fAppliedPricingUnitOverrideInput\x12'\n" +
-	"\x0fconversion_rate\x18\x01 \x01(\x01R\x0econversionRate\"\xb6\x06\n" +
-	"\x17UpdateSubscriptionInput\x12<\n" +
-	"\tending_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\bendingAt\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\tR\x02id\x12x\n" +
+	"\fsubscription\x18\x01 \x01(\v2-.invora.billing.common.v2.BillingSubscriptionR\fsubscription\"\xe9\x06\n" +
+	"\rUpdateRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12<\n" +
+	"\tending_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\bendingAt\x88\x01\x01\x12x\n" +
 	"\x16invoice_custom_section\x18\x03 \x01(\v2=.invora.billing.common.v2.InvoiceCustomSectionsReferenceInputH\x01R\x14invoiceCustomSection\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x12a\n" +
 	"\x0epayment_method\x18\x05 \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\x03R\rpaymentMethod\x88\x01\x01\x12_\n" +
 	"\x0eplan_overrides\x18\x06 \x01(\v23.invora.billing.subscriptions.v2.PlanOverridesInputH\x04R\rplanOverrides\x88\x01\x01\x12E\n" +
 	"\x1cprogressive_billing_disabled\x18\a \x01(\bH\x05R\x1aprogressiveBillingDisabled\x88\x01\x01\x12H\n" +
 	"\x0fsubscription_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampH\x06R\x0esubscriptionAt\x88\x01\x01\x12X\n" +
-	"\x10usage_thresholds\x18\t \x03(\v2-.invora.billing.common.v2.UsageThresholdInputR\x0fusageThresholdsB\f\n" +
+	"\x10usage_thresholds\x18\t \x03(\v2-.invora.billing.common.v2.UsageThresholdInputR\x0fusageThresholds\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\f\n" +
 	"\n" +
 	"_ending_atB\x19\n" +
 	"\x17_invoice_custom_sectionB\a\n" +
@@ -2761,7 +2894,97 @@ const file_invora_billing_subscriptions_v2_service_proto_rawDesc = "" +
 	"\x0f_payment_methodB\x11\n" +
 	"\x0f_plan_overridesB\x1f\n" +
 	"\x1d_progressive_billing_disabledB\x12\n" +
-	"\x10_subscription_at\"\xde\x05\n" +
+	"\x10_subscription_at\"c\n" +
+	"\x0eUpdateResponse\x12Q\n" +
+	"\fsubscription\x18\x01 \x01(\v2-.invora.billing.common.v2.BillingSubscriptionR\fsubscription\"\xbc\x02\n" +
+	"\x10TerminateRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12s\n" +
+	"\x1aon_termination_credit_note\x18\x02 \x01(\x0e21.invora.billing.common.v2.OnTerminationCreditNoteH\x00R\x17onTerminationCreditNote\x88\x01\x01\x12i\n" +
+	"\x16on_termination_invoice\x18\x03 \x01(\x0e2..invora.billing.common.v2.OnTerminationInvoiceH\x01R\x14onTerminationInvoice\x88\x01\x01B\x1d\n" +
+	"\x1b_on_termination_credit_noteB\x19\n" +
+	"\x17_on_termination_invoice\"f\n" +
+	"\x11TerminateResponse\x12Q\n" +
+	"\fsubscription\x18\x01 \x01(\v2-.invora.billing.common.v2.BillingSubscriptionR\fsubscription\"\x85\x05\n" +
+	"\x13UpdateChargeRequest\x12'\n" +
+	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\x12\x1f\n" +
+	"\vcharge_code\x18\x02 \x01(\tR\n" +
+	"chargeCode\x12w\n" +
+	"\x14applied_pricing_unit\x18\x03 \x01(\v2@.invora.billing.subscriptions.v2.AppliedPricingUnitOverrideInputH\x00R\x12appliedPricingUnit\x88\x01\x01\x12E\n" +
+	"\afilters\x18\x04 \x03(\v2+.invora.billing.common.v2.ChargeFilterInputR\afilters\x125\n" +
+	"\x14invoice_display_name\x18\x05 \x01(\tH\x01R\x12invoiceDisplayName\x88\x01\x01\x12-\n" +
+	"\x10min_amount_cents\x18\x06 \x01(\x03H\x02R\x0eminAmountCents\x88\x01\x01\x12N\n" +
+	"\n" +
+	"properties\x18\a \x01(\v2).invora.billing.common.v2.PropertiesInputH\x03R\n" +
+	"properties\x88\x01\x01\x12\x1b\n" +
+	"\ttax_codes\x18\b \x03(\tR\btaxCodes\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\x17\n" +
+	"\x15_applied_pricing_unitB\x17\n" +
+	"\x15_invoice_display_nameB\x13\n" +
+	"\x11_min_amount_centsB\r\n" +
+	"\v_properties\"P\n" +
+	"\x14UpdateChargeResponse\x128\n" +
+	"\x06charge\x18\x01 \x01(\v2 .invora.billing.common.v2.ChargeR\x06charge\"`\n" +
+	"\x1fAppliedPricingUnitOverrideInput\x12=\n" +
+	"\x0fconversion_rate\x18\x01 \x01(\v2\x14.kernel.DecimalValueR\x0econversionRate\"\xb1\x02\n" +
+	"\x19CreateChargeFilterRequest\x12'\n" +
+	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\x12\x1f\n" +
+	"\vcharge_code\x18\x02 \x01(\tR\n" +
+	"chargeCode\x125\n" +
+	"\x14invoice_display_name\x18\x03 \x01(\tH\x00R\x12invoiceDisplayName\x88\x01\x01\x12I\n" +
+	"\n" +
+	"properties\x18\x04 \x01(\v2).invora.billing.common.v2.PropertiesInputR\n" +
+	"properties\x12/\n" +
+	"\x06values\x18\x05 \x01(\v2\x17.google.protobuf.StructR\x06valuesB\x17\n" +
+	"\x15_invoice_display_name\"i\n" +
+	"\x1aCreateChargeFilterResponse\x12K\n" +
+	"\rcharge_filter\x18\x01 \x01(\v2&.invora.billing.common.v2.ChargeFilterR\fchargeFilter\"\x82\x03\n" +
+	"\x19UpdateChargeFilterRequest\x12'\n" +
+	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\x12\x1f\n" +
+	"\vcharge_code\x18\x02 \x01(\tR\n" +
+	"chargeCode\x125\n" +
+	"\x14invoice_display_name\x18\x03 \x01(\tH\x00R\x12invoiceDisplayName\x88\x01\x01\x12N\n" +
+	"\n" +
+	"properties\x18\x04 \x01(\v2).invora.billing.common.v2.PropertiesInputH\x01R\n" +
+	"properties\x88\x01\x01\x12/\n" +
+	"\x06values\x18\x05 \x01(\v2\x17.google.protobuf.StructR\x06values\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\x17\n" +
+	"\x15_invoice_display_nameB\r\n" +
+	"\v_properties\"i\n" +
+	"\x1aUpdateChargeFilterResponse\x12K\n" +
+	"\rcharge_filter\x18\x01 \x01(\v2&.invora.billing.common.v2.ChargeFilterR\fchargeFilter\"\x96\x01\n" +
+	"\x19DeleteChargeFilterRequest\x12'\n" +
+	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\x12\x1f\n" +
+	"\vcharge_code\x18\x02 \x01(\tR\n" +
+	"chargeCode\x12/\n" +
+	"\x06values\x18\x03 \x01(\v2\x17.google.protobuf.StructR\x06values\"i\n" +
+	"\x1aDeleteChargeFilterResponse\x12K\n" +
+	"\rcharge_filter\x18\x01 \x01(\v2&.invora.billing.common.v2.ChargeFilterR\fchargeFilter\"f\n" +
+	"\x18RemoveEntitlementRequest\x12'\n" +
+	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\x12!\n" +
+	"\ffeature_code\x18\x02 \x01(\tR\vfeatureCode\"T\n" +
+	"\x19RemoveEntitlementResponse\x12&\n" +
+	"\ffeature_code\x18\x01 \x01(\tH\x00R\vfeatureCode\x88\x01\x01B\x0f\n" +
+	"\r_feature_code\"\x81\x04\n" +
+	"\x18UpdateFixedChargeRequest\x12'\n" +
+	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\x12*\n" +
+	"\x11fixed_charge_code\x18\x02 \x01(\tR\x0ffixedChargeCode\x12;\n" +
+	"\x17apply_units_immediately\x18\x03 \x01(\bH\x00R\x15applyUnitsImmediately\x88\x01\x01\x125\n" +
+	"\x14invoice_display_name\x18\x04 \x01(\tH\x01R\x12invoiceDisplayName\x88\x01\x01\x12Y\n" +
+	"\n" +
+	"properties\x18\x05 \x01(\v24.invora.billing.common.v2.FixedChargePropertiesInputH\x02R\n" +
+	"properties\x88\x01\x01\x12\x1b\n" +
+	"\ttax_codes\x18\x06 \x03(\tR\btaxCodes\x12\x19\n" +
+	"\x05units\x18\a \x01(\tH\x03R\x05units\x88\x01\x01\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMaskB\x1a\n" +
+	"\x18_apply_units_immediatelyB\x17\n" +
+	"\x15_invoice_display_nameB\r\n" +
+	"\v_propertiesB\b\n" +
+	"\x06_units\"e\n" +
+	"\x19UpdateFixedChargeResponse\x12H\n" +
+	"\ffixed_charge\x18\x01 \x01(\v2%.invora.billing.common.v2.FixedChargeR\vfixedCharge\"\xde\x05\n" +
 	"\x12PlanOverridesInput\x12&\n" +
 	"\famount_cents\x18\x01 \x01(\x03H\x00R\vamountCents\x88\x01\x01\x12T\n" +
 	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\x01R\x0eamountCurrency\x88\x01\x01\x12O\n" +
@@ -2813,89 +3036,91 @@ const file_invora_billing_subscriptions_v2_service_proto_rawDesc = "" +
 	"\x03_idB\x17\n" +
 	"\x15_invoice_display_nameB\x13\n" +
 	"\x11_min_amount_centsB\r\n" +
-	"\v_properties\"\xce\x02\n" +
-	"\x1aTerminateSubscriptionInput\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12w\n" +
-	"\x1aon_termination_credit_note\x18\x02 \x01(\x0e25.invora.billing.common.v2.OnTerminationCreditNoteEnumH\x00R\x17onTerminationCreditNote\x88\x01\x01\x12m\n" +
-	"\x16on_termination_invoice\x18\x03 \x01(\x0e22.invora.billing.common.v2.OnTerminationInvoiceEnumH\x01R\x14onTerminationInvoice\x88\x01\x01B\x1d\n" +
-	"\x1b_on_termination_credit_noteB\x19\n" +
-	"\x17_on_termination_invoice\"p\n" +
-	"\"RemoveSubscriptionEntitlementInput\x12!\n" +
-	"\ffeature_code\x18\x01 \x01(\tR\vfeatureCode\x12'\n" +
-	"\x0fsubscription_id\x18\x02 \x01(\tR\x0esubscriptionId\"_\n" +
-	"$RemoveSubscriptionEntitlementPayload\x12&\n" +
-	"\ffeature_code\x18\x01 \x01(\tH\x00R\vfeatureCode\x88\x01\x01B\x0f\n" +
-	"\r_feature_code\"\xa1\x01\n" +
-	"$DestroySubscriptionChargeFilterInput\x12\x1f\n" +
-	"\vcharge_code\x18\x01 \x01(\tR\n" +
-	"chargeCode\x12'\n" +
-	"\x0fsubscription_id\x18\x02 \x01(\tR\x0esubscriptionId\x12/\n" +
-	"\x06values\x18\x03 \x01(\v2\x17.google.protobuf.StructR\x06values\"\xbb\x02\n" +
-	"#CreateSubscriptionChargeFilterInput\x12\x1f\n" +
-	"\vcharge_code\x18\x01 \x01(\tR\n" +
-	"chargeCode\x125\n" +
-	"\x14invoice_display_name\x18\x02 \x01(\tH\x00R\x12invoiceDisplayName\x88\x01\x01\x12I\n" +
+	"\v_properties\"\x99\x01\n" +
+	" CreateOrUpdateEntitlementRequest\x12'\n" +
+	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\x12L\n" +
+	"\ventitlement\x18\x02 \x01(\v2*.invora.billing.common.v2.EntitlementInputR\ventitlement\"\x7f\n" +
+	"!CreateOrUpdateEntitlementResponse\x12Z\n" +
+	"\ventitlement\x18\x01 \x01(\v28.invora.billing.subscriptions.v2.SubscriptionEntitlementR\ventitlement\"\xd0\x01\n" +
+	"\x15GetEntitlementRequest\x12'\n" +
+	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\x12!\n" +
+	"\ffeature_code\x18\x02 \x01(\tR\vfeatureCode\x127\n" +
+	"\tread_mask\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"t\n" +
+	"\x16GetEntitlementResponse\x12Z\n" +
+	"\ventitlement\x18\x01 \x01(\v28.invora.billing.subscriptions.v2.SubscriptionEntitlementR\ventitlement\"\xf9\x02\n" +
+	"\x17ListEntitlementsRequest\x12'\n" +
+	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\x12J\n" +
+	"\x06filter\x18\x02 \x01(\v22.invora.billing.subscriptions.v2.EntitlementFilterR\x06filter\x12D\n" +
+	"\x04sort\x18\x03 \x01(\v20.invora.billing.subscriptions.v2.EntitlementSortR\x04sort\x126\n" +
 	"\n" +
-	"properties\x18\x03 \x01(\v2).invora.billing.common.v2.PropertiesInputR\n" +
-	"properties\x12'\n" +
-	"\x0fsubscription_id\x18\x04 \x01(\tR\x0esubscriptionId\x12/\n" +
-	"\x06values\x18\x05 \x01(\v2\x17.google.protobuf.StructR\x06valuesB\x17\n" +
-	"\x15_invoice_display_name\"\xa6\b\n" +
-	"\x17CreateSubscriptionInput\x12L\n" +
-	"\fbilling_time\x18\x01 \x01(\x0e2).invora.billing.common.v2.BillingTimeEnumR\vbillingTime\x12\x1f\n" +
-	"\vcustomer_id\x18\x02 \x01(\tR\n" +
-	"customerId\x12<\n" +
-	"\tending_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\bendingAt\x88\x01\x01\x12$\n" +
-	"\vexternal_id\x18\x04 \x01(\tH\x01R\n" +
-	"externalId\x88\x01\x01\x12x\n" +
-	"\x16invoice_custom_section\x18\x05 \x01(\v2=.invora.billing.common.v2.InvoiceCustomSectionsReferenceInputH\x02R\x14invoiceCustomSection\x88\x01\x01\x12\x17\n" +
-	"\x04name\x18\x06 \x01(\tH\x03R\x04name\x88\x01\x01\x12a\n" +
-	"\x0epayment_method\x18\a \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\x04R\rpaymentMethod\x88\x01\x01\x12\x17\n" +
-	"\aplan_id\x18\b \x01(\tR\x06planId\x12_\n" +
-	"\x0eplan_overrides\x18\t \x01(\v23.invora.billing.subscriptions.v2.PlanOverridesInputH\x05R\rplanOverrides\x88\x01\x01\x12E\n" +
-	"\x1cprogressive_billing_disabled\x18\n" +
-	" \x01(\bH\x06R\x1aprogressiveBillingDisabled\x88\x01\x01\x12H\n" +
-	"\x0fsubscription_at\x18\v \x01(\v2\x1a.google.protobuf.TimestampH\aR\x0esubscriptionAt\x88\x01\x01\x12,\n" +
-	"\x0fsubscription_id\x18\f \x01(\tH\bR\x0esubscriptionId\x88\x01\x01\x12X\n" +
-	"\x10usage_thresholds\x18\r \x03(\v2-.invora.billing.common.v2.UsageThresholdInputR\x0fusageThresholdsB\f\n" +
+	"pagination\x18\x04 \x01(\v2\x16.kernel.PaginationInfoR\n" +
+	"pagination\x127\n" +
+	"\tread_mask\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xcf\x01\n" +
+	"\x18ListEntitlementsResponse\x12N\n" +
+	"\x05items\x18\x01 \x03(\v28.invora.billing.subscriptions.v2.SubscriptionEntitlementR\x05items\x12\x1f\n" +
+	"\vtotal_count\x18\x02 \x01(\x04R\n" +
+	"totalCount\x12-\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"4\n" +
+	"\x11EntitlementFilter\x12\x1f\n" +
+	"\vtext_search\x18\x01 \x01(\tR\n" +
+	"textSearch\"]\n" +
+	"\x0fEntitlementSort\x12J\n" +
+	"\x05rules\x18\x01 \x03(\v24.invora.billing.subscriptions.v2.EntitlementSortRuleR\x05rules\"U\n" +
+	"\x13EntitlementSortRule\x126\n" +
 	"\n" +
-	"_ending_atB\x0e\n" +
-	"\f_external_idB\x19\n" +
-	"\x17_invoice_custom_sectionB\a\n" +
-	"\x05_nameB\x11\n" +
-	"\x0f_payment_methodB\x11\n" +
-	"\x0f_plan_overridesB\x1f\n" +
-	"\x1d_progressive_billing_disabledB\x12\n" +
-	"\x10_subscription_atB\x12\n" +
-	"\x10_subscription_id*;\n" +
-	"\x04View\x12\x14\n" +
-	"\x10VIEW_UNSPECIFIED\x10\x00\x12\x0e\n" +
+	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAtB\x06\n" +
+	"\x04type\"\xdb\x01\n" +
+	"\x17SubscriptionEntitlement\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\tR\x04code\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x00R\vdescription\x88\x01\x01\x12\x12\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x12a\n" +
 	"\n" +
-	"VIEW_BASIC\x10\x01\x12\r\n" +
-	"\tVIEW_FULL\x10\x022\xd1\x14\n" +
-	"\x13SubscriptionService\x12\xbf\x01\n" +
-	"\x06Create\x12..invora.billing.subscriptions.v2.CreateRequest\x1a/.invora.billing.subscriptions.v2.CreateResponse\"T\xe2\xf2\x19(\n" +
-	"&Invora.Billing.Subscriptions.v2.Create\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/api/v2/billing/subscriptions\x12\xb0\x01\n" +
-	"\x03Get\x12+.invora.billing.subscriptions.v2.GetRequest\x1a,.invora.billing.subscriptions.v2.GetResponse\"N\xe2\xf2\x19%\n" +
-	"#Invora.Billing.Subscriptions.v2.Get\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v2/billing/subscriptions\x12\xb4\x01\n" +
-	"\x04List\x12,.invora.billing.subscriptions.v2.ListRequest\x1a-.invora.billing.subscriptions.v2.ListResponse\"O\xe2\xf2\x19&\n" +
-	"$Invora.Billing.Subscriptions.v2.List\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v2/billing/subscriptions\x12\xbf\x01\n" +
-	"\x06Update\x12..invora.billing.subscriptions.v2.UpdateRequest\x1a/.invora.billing.subscriptions.v2.UpdateResponse\"T\xe2\xf2\x19(\n" +
-	"&Invora.Billing.Subscriptions.v2.Update\x82\xd3\xe4\x93\x02\":\x01*2\x1d/api/v2/billing/subscriptions\x12\xd5\x01\n" +
-	"\tTerminate\x121.invora.billing.subscriptions.v2.TerminateRequest\x1a2.invora.billing.subscriptions.v2.TerminateResponse\"a\xe2\xf2\x19+\n" +
-	")Invora.Billing.Subscriptions.v2.Terminate\x82\xd3\xe4\x93\x02,:\x01*\"'/api/v2/billing/subscriptions:terminate\x12\xef\x01\n" +
-	"\x12CreateChargeFilter\x12:.invora.billing.subscriptions.v2.CreateChargeFilterRequest\x1a;.invora.billing.subscriptions.v2.CreateChargeFilterResponse\"`\xe2\xf2\x194\n" +
-	"2Invora.Billing.Subscriptions.v2.CreateChargeFilter\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/api/v2/billing/subscriptions\x12\x9c\x02\n" +
-	"\x1eDeleteSubscriptionChargeFilter\x12F.invora.billing.subscriptions.v2.DeleteSubscriptionChargeFilterRequest\x1aG.invora.billing.subscriptions.v2.DeleteSubscriptionChargeFilterResponse\"i\xe2\xf2\x19@\n" +
-	">Invora.Billing.Subscriptions.v2.DeleteSubscriptionChargeFilter\x82\xd3\xe4\x93\x02\x1f*\x1d/api/v2/billing/subscriptions\x12\x98\x02\n" +
-	"\x1dRemoveSubscriptionEntitlement\x12E.invora.billing.subscriptions.v2.RemoveSubscriptionEntitlementRequest\x1aF.invora.billing.subscriptions.v2.RemoveSubscriptionEntitlementResponse\"h\xe2\xf2\x19?\n" +
-	"=Invora.Billing.Subscriptions.v2.RemoveSubscriptionEntitlement\x82\xd3\xe4\x93\x02\x1f*\x1d/api/v2/billing/subscriptions\x12\x87\x02\n" +
-	"\x18UpdateSubscriptionCharge\x12@.invora.billing.subscriptions.v2.UpdateSubscriptionChargeRequest\x1aA.invora.billing.subscriptions.v2.UpdateSubscriptionChargeResponse\"f\xe2\xf2\x19:\n" +
-	"8Invora.Billing.Subscriptions.v2.UpdateSubscriptionCharge\x82\xd3\xe4\x93\x02\":\x01*2\x1d/api/v2/billing/subscriptions\x12\x9f\x02\n" +
-	"\x1eUpdateSubscriptionChargeFilter\x12F.invora.billing.subscriptions.v2.UpdateSubscriptionChargeFilterRequest\x1aG.invora.billing.subscriptions.v2.UpdateSubscriptionChargeFilterResponse\"l\xe2\xf2\x19@\n" +
-	">Invora.Billing.Subscriptions.v2.UpdateSubscriptionChargeFilter\x82\xd3\xe4\x93\x02\":\x01*2\x1d/api/v2/billing/subscriptions\x12\x9b\x02\n" +
-	"\x1dUpdateSubscriptionFixedCharge\x12E.invora.billing.subscriptions.v2.UpdateSubscriptionFixedChargeRequest\x1aF.invora.billing.subscriptions.v2.UpdateSubscriptionFixedChargeResponse\"k\xe2\xf2\x19?\n" +
-	"=Invora.Billing.Subscriptions.v2.UpdateSubscriptionFixedCharge\x82\xd3\xe4\x93\x02\":\x01*2\x1d/api/v2/billing/subscriptionsB\xae\x02\n" +
+	"privileges\x18\x04 \x03(\v2A.invora.billing.subscriptions.v2.SubscriptionEntitlementPrivilegeR\n" +
+	"privilegesB\x0e\n" +
+	"\f_description\"\x97\x02\n" +
+	" SubscriptionEntitlementPrivilege\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\tR\x04code\x12G\n" +
+	"\x06config\x18\x02 \x01(\v2/.invora.billing.common.v2.PrivilegeConfigObjectR\x06config\x12\x17\n" +
+	"\x04name\x18\x03 \x01(\tH\x00R\x04name\x88\x01\x01\x12\x19\n" +
+	"\x05value\x18\x04 \x01(\tH\x01R\x05value\x88\x01\x01\x12O\n" +
+	"\n" +
+	"value_type\x18\x05 \x01(\x0e20.invora.billing.common.v2.PrivilegeValueTypeEnumR\tvalueTypeB\a\n" +
+	"\x05_nameB\b\n" +
+	"\x06_value2\x97\x1c\n" +
+	"\x14SubscriptionsService\x12\xbc\x01\n" +
+	"\x04List\x12,.invora.billing.subscriptions.v2.ListRequest\x1a-.invora.billing.subscriptions.v2.ListResponse\"W\xe2\xf2\x19&\n" +
+	"$Invora.Billing.Subscriptions.v2.List\x82\xd3\xe4\x93\x02':\x01*\"\"/api/billing/v2/subscriptions/list\x12\xb5\x01\n" +
+	"\x03Get\x12+.invora.billing.subscriptions.v2.GetRequest\x1a,.invora.billing.subscriptions.v2.GetResponse\"S\xe2\xf2\x19%\n" +
+	"#Invora.Billing.Subscriptions.v2.Get\x82\xd3\xe4\x93\x02$\x12\"/api/billing/v2/subscriptions/{id}\x12\xc6\x01\n" +
+	"\x06Create\x12..invora.billing.subscriptions.v2.CreateRequest\x1a/.invora.billing.subscriptions.v2.CreateResponse\"[\xe2\xf2\x19/\n" +
+	"-Invora.Billing.Subscriptions.v2.Modify.Create\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/api/billing/v2/subscriptions\x12\xcb\x01\n" +
+	"\x06Update\x12..invora.billing.subscriptions.v2.UpdateRequest\x1a/.invora.billing.subscriptions.v2.UpdateResponse\"`\xe2\xf2\x19/\n" +
+	"-Invora.Billing.Subscriptions.v2.Modify.Update\x82\xd3\xe4\x93\x02':\x01*\x1a\"/api/billing/v2/subscriptions/{id}\x12\xe1\x01\n" +
+	"\tTerminate\x121.invora.billing.subscriptions.v2.TerminateRequest\x1a2.invora.billing.subscriptions.v2.TerminateResponse\"m\xe2\xf2\x192\n" +
+	"0Invora.Billing.Subscriptions.v2.Modify.Terminate\x82\xd3\xe4\x93\x021:\x01*\",/api/billing/v2/subscriptions/{id}/terminate\x12\x87\x02\n" +
+	"\fUpdateCharge\x124.invora.billing.subscriptions.v2.UpdateChargeRequest\x1a5.invora.billing.subscriptions.v2.UpdateChargeResponse\"\x89\x01\xe2\xf2\x195\n" +
+	"3Invora.Billing.Subscriptions.v2.Modify.UpdateCharge\x82\xd3\xe4\x93\x02J:\x01*\x1aE/api/billing/v2/subscriptions/{subscription_id}/charges/{charge_code}\x12\x98\x02\n" +
+	"\x12CreateChargeFilter\x12:.invora.billing.subscriptions.v2.CreateChargeFilterRequest\x1a;.invora.billing.subscriptions.v2.CreateChargeFilterResponse\"\x88\x01\xe2\xf2\x19;\n" +
+	"9Invora.Billing.Subscriptions.v2.Modify.CreateChargeFilter\x82\xd3\xe4\x93\x02C:\x01*\">/api/billing/v2/subscriptions/{subscription_id}/charge-filters\x12\xa6\x02\n" +
+	"\x12UpdateChargeFilter\x12:.invora.billing.subscriptions.v2.UpdateChargeFilterRequest\x1a;.invora.billing.subscriptions.v2.UpdateChargeFilterResponse\"\x96\x01\xe2\xf2\x19;\n" +
+	"9Invora.Billing.Subscriptions.v2.Modify.UpdateChargeFilter\x82\xd3\xe4\x93\x02Q:\x01*\x1aL/api/billing/v2/subscriptions/{subscription_id}/charge-filters/{charge_code}\x12\x9f\x02\n" +
+	"\x12DeleteChargeFilter\x12:.invora.billing.subscriptions.v2.DeleteChargeFilterRequest\x1a;.invora.billing.subscriptions.v2.DeleteChargeFilterResponse\"\x8f\x01\xe2\xf2\x19;\n" +
+	"9Invora.Billing.Subscriptions.v2.Modify.DeleteChargeFilter\x82\xd3\xe4\x93\x02J:\x01*\"E/api/billing/v2/subscriptions/{subscription_id}/charge-filters/delete\x12\xb4\x02\n" +
+	"\x19CreateOrUpdateEntitlement\x12A.invora.billing.subscriptions.v2.CreateOrUpdateEntitlementRequest\x1aB.invora.billing.subscriptions.v2.CreateOrUpdateEntitlementResponse\"\x8f\x01\xe2\xf2\x19D\n" +
+	"BInvora.Billing.Subscriptions.v2.Entitlements.Modify.CreateOrUpdate\x82\xd3\xe4\x93\x02A:\x01*\"</api/billing/v2/subscriptions/{subscription_id}/entitlements\x12\x8d\x02\n" +
+	"\x0eGetEntitlement\x126.invora.billing.subscriptions.v2.GetEntitlementRequest\x1a7.invora.billing.subscriptions.v2.GetEntitlementResponse\"\x89\x01\xe2\xf2\x192\n" +
+	"0Invora.Billing.Subscriptions.v2.Entitlements.Get\x82\xd3\xe4\x93\x02M\x12K/api/billing/v2/subscriptions/{subscription_id}/entitlements/{feature_code}\x12\x8d\x02\n" +
+	"\x10ListEntitlements\x128.invora.billing.subscriptions.v2.ListEntitlementsRequest\x1a9.invora.billing.subscriptions.v2.ListEntitlementsResponse\"\x83\x01\xe2\xf2\x193\n" +
+	"1Invora.Billing.Subscriptions.v2.Entitlements.List\x82\xd3\xe4\x93\x02F:\x01*\"A/api/billing/v2/subscriptions/{subscription_id}/entitlements/list\x12\x9b\x02\n" +
+	"\x11RemoveEntitlement\x129.invora.billing.subscriptions.v2.RemoveEntitlementRequest\x1a:.invora.billing.subscriptions.v2.RemoveEntitlementResponse\"\x8e\x01\xe2\xf2\x19<\n" +
+	":Invora.Billing.Subscriptions.v2.Entitlements.Modify.Remove\x82\xd3\xe4\x93\x02H:\x01*\"C/api/billing/v2/subscriptions/{subscription_id}/entitlements/delete\x12\xa7\x02\n" +
+	"\x11UpdateFixedCharge\x129.invora.billing.subscriptions.v2.UpdateFixedChargeRequest\x1a:.invora.billing.subscriptions.v2.UpdateFixedChargeResponse\"\x9a\x01\xe2\xf2\x19:\n" +
+	"8Invora.Billing.Subscriptions.v2.Modify.UpdateFixedCharge\x82\xd3\xe4\x93\x02V:\x01*\x1aQ/api/billing/v2/subscriptions/{subscription_id}/fixed-charges/{fixed_charge_code}B\xae\x02\n" +
 	"#com.invora.billing.subscriptions.v2B\fServiceProtoP\x01ZZgithub.com/invoraapp/invora-controller/gen/invora/billing/subscriptions/v2;subscriptionsv2\xa2\x02\x03IBS\xaa\x02\x1fInvora.Billing.Subscriptions.V2\xca\x02\x1fInvora\\Billing\\Subscriptions\\V2\xe2\x02+Invora\\Billing\\Subscriptions\\V2\\GPBMetadata\xea\x02\"Invora::Billing::Subscriptions::V2b\x06proto3"
 
 var (
@@ -2910,167 +3135,186 @@ func file_invora_billing_subscriptions_v2_service_proto_rawDescGZIP() []byte {
 	return file_invora_billing_subscriptions_v2_service_proto_rawDescData
 }
 
-var file_invora_billing_subscriptions_v2_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_invora_billing_subscriptions_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 41)
+var file_invora_billing_subscriptions_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 42)
 var file_invora_billing_subscriptions_v2_service_proto_goTypes = []any{
-	(View)(0),                                      // 0: invora.billing.subscriptions.v2.View
-	(*GetRequest)(nil),                             // 1: invora.billing.subscriptions.v2.GetRequest
-	(*GetResponse)(nil),                            // 2: invora.billing.subscriptions.v2.GetResponse
-	(*ListRequest)(nil),                            // 3: invora.billing.subscriptions.v2.ListRequest
-	(*ListResponse)(nil),                           // 4: invora.billing.subscriptions.v2.ListResponse
-	(*ListFilter)(nil),                             // 5: invora.billing.subscriptions.v2.ListFilter
-	(*ListStatusFilter)(nil),                       // 6: invora.billing.subscriptions.v2.ListStatusFilter
-	(*ListFilterPart)(nil),                         // 7: invora.billing.subscriptions.v2.ListFilterPart
-	(*ListSort)(nil),                               // 8: invora.billing.subscriptions.v2.ListSort
-	(*ListSortRule)(nil),                           // 9: invora.billing.subscriptions.v2.ListSortRule
-	(*CreateRequest)(nil),                          // 10: invora.billing.subscriptions.v2.CreateRequest
-	(*CreateResponse)(nil),                         // 11: invora.billing.subscriptions.v2.CreateResponse
-	(*CreateChargeFilterRequest)(nil),              // 12: invora.billing.subscriptions.v2.CreateChargeFilterRequest
-	(*CreateChargeFilterResponse)(nil),             // 13: invora.billing.subscriptions.v2.CreateChargeFilterResponse
-	(*DeleteSubscriptionChargeFilterRequest)(nil),  // 14: invora.billing.subscriptions.v2.DeleteSubscriptionChargeFilterRequest
-	(*DeleteSubscriptionChargeFilterResponse)(nil), // 15: invora.billing.subscriptions.v2.DeleteSubscriptionChargeFilterResponse
-	(*RemoveSubscriptionEntitlementRequest)(nil),   // 16: invora.billing.subscriptions.v2.RemoveSubscriptionEntitlementRequest
-	(*RemoveSubscriptionEntitlementResponse)(nil),  // 17: invora.billing.subscriptions.v2.RemoveSubscriptionEntitlementResponse
-	(*TerminateRequest)(nil),                       // 18: invora.billing.subscriptions.v2.TerminateRequest
-	(*TerminateResponse)(nil),                      // 19: invora.billing.subscriptions.v2.TerminateResponse
-	(*UpdateRequest)(nil),                          // 20: invora.billing.subscriptions.v2.UpdateRequest
-	(*UpdateResponse)(nil),                         // 21: invora.billing.subscriptions.v2.UpdateResponse
-	(*UpdateSubscriptionChargeRequest)(nil),        // 22: invora.billing.subscriptions.v2.UpdateSubscriptionChargeRequest
-	(*UpdateSubscriptionChargeResponse)(nil),       // 23: invora.billing.subscriptions.v2.UpdateSubscriptionChargeResponse
-	(*UpdateSubscriptionChargeFilterRequest)(nil),  // 24: invora.billing.subscriptions.v2.UpdateSubscriptionChargeFilterRequest
-	(*UpdateSubscriptionChargeFilterResponse)(nil), // 25: invora.billing.subscriptions.v2.UpdateSubscriptionChargeFilterResponse
-	(*UpdateSubscriptionFixedChargeRequest)(nil),   // 26: invora.billing.subscriptions.v2.UpdateSubscriptionFixedChargeRequest
-	(*UpdateSubscriptionFixedChargeResponse)(nil),  // 27: invora.billing.subscriptions.v2.UpdateSubscriptionFixedChargeResponse
-	(*UpdateSubscriptionFixedChargeInput)(nil),     // 28: invora.billing.subscriptions.v2.UpdateSubscriptionFixedChargeInput
-	(*UpdateSubscriptionChargeFilterInput)(nil),    // 29: invora.billing.subscriptions.v2.UpdateSubscriptionChargeFilterInput
-	(*UpdateSubscriptionChargeInput)(nil),          // 30: invora.billing.subscriptions.v2.UpdateSubscriptionChargeInput
-	(*AppliedPricingUnitOverrideInput)(nil),        // 31: invora.billing.subscriptions.v2.AppliedPricingUnitOverrideInput
-	(*UpdateSubscriptionInput)(nil),                // 32: invora.billing.subscriptions.v2.UpdateSubscriptionInput
-	(*PlanOverridesInput)(nil),                     // 33: invora.billing.subscriptions.v2.PlanOverridesInput
-	(*FixedChargeOverridesInput)(nil),              // 34: invora.billing.subscriptions.v2.FixedChargeOverridesInput
-	(*ChargeOverridesInput)(nil),                   // 35: invora.billing.subscriptions.v2.ChargeOverridesInput
-	(*TerminateSubscriptionInput)(nil),             // 36: invora.billing.subscriptions.v2.TerminateSubscriptionInput
-	(*RemoveSubscriptionEntitlementInput)(nil),     // 37: invora.billing.subscriptions.v2.RemoveSubscriptionEntitlementInput
-	(*RemoveSubscriptionEntitlementPayload)(nil),   // 38: invora.billing.subscriptions.v2.RemoveSubscriptionEntitlementPayload
-	(*DestroySubscriptionChargeFilterInput)(nil),   // 39: invora.billing.subscriptions.v2.DestroySubscriptionChargeFilterInput
-	(*CreateSubscriptionChargeFilterInput)(nil),    // 40: invora.billing.subscriptions.v2.CreateSubscriptionChargeFilterInput
-	(*CreateSubscriptionInput)(nil),                // 41: invora.billing.subscriptions.v2.CreateSubscriptionInput
+	(*GetRequest)(nil),                             // 0: invora.billing.subscriptions.v2.GetRequest
+	(*GetResponse)(nil),                            // 1: invora.billing.subscriptions.v2.GetResponse
+	(*ListRequest)(nil),                            // 2: invora.billing.subscriptions.v2.ListRequest
+	(*ListResponse)(nil),                           // 3: invora.billing.subscriptions.v2.ListResponse
+	(*ListFilter)(nil),                             // 4: invora.billing.subscriptions.v2.ListFilter
+	(*ListStatusFilter)(nil),                       // 5: invora.billing.subscriptions.v2.ListStatusFilter
+	(*ListFilterPart)(nil),                         // 6: invora.billing.subscriptions.v2.ListFilterPart
+	(*ListSort)(nil),                               // 7: invora.billing.subscriptions.v2.ListSort
+	(*ListSortRule)(nil),                           // 8: invora.billing.subscriptions.v2.ListSortRule
+	(*CreateRequest)(nil),                          // 9: invora.billing.subscriptions.v2.CreateRequest
+	(*CreateResponse)(nil),                         // 10: invora.billing.subscriptions.v2.CreateResponse
+	(*UpdateRequest)(nil),                          // 11: invora.billing.subscriptions.v2.UpdateRequest
+	(*UpdateResponse)(nil),                         // 12: invora.billing.subscriptions.v2.UpdateResponse
+	(*TerminateRequest)(nil),                       // 13: invora.billing.subscriptions.v2.TerminateRequest
+	(*TerminateResponse)(nil),                      // 14: invora.billing.subscriptions.v2.TerminateResponse
+	(*UpdateChargeRequest)(nil),                    // 15: invora.billing.subscriptions.v2.UpdateChargeRequest
+	(*UpdateChargeResponse)(nil),                   // 16: invora.billing.subscriptions.v2.UpdateChargeResponse
+	(*AppliedPricingUnitOverrideInput)(nil),        // 17: invora.billing.subscriptions.v2.AppliedPricingUnitOverrideInput
+	(*CreateChargeFilterRequest)(nil),              // 18: invora.billing.subscriptions.v2.CreateChargeFilterRequest
+	(*CreateChargeFilterResponse)(nil),             // 19: invora.billing.subscriptions.v2.CreateChargeFilterResponse
+	(*UpdateChargeFilterRequest)(nil),              // 20: invora.billing.subscriptions.v2.UpdateChargeFilterRequest
+	(*UpdateChargeFilterResponse)(nil),             // 21: invora.billing.subscriptions.v2.UpdateChargeFilterResponse
+	(*DeleteChargeFilterRequest)(nil),              // 22: invora.billing.subscriptions.v2.DeleteChargeFilterRequest
+	(*DeleteChargeFilterResponse)(nil),             // 23: invora.billing.subscriptions.v2.DeleteChargeFilterResponse
+	(*RemoveEntitlementRequest)(nil),               // 24: invora.billing.subscriptions.v2.RemoveEntitlementRequest
+	(*RemoveEntitlementResponse)(nil),              // 25: invora.billing.subscriptions.v2.RemoveEntitlementResponse
+	(*UpdateFixedChargeRequest)(nil),               // 26: invora.billing.subscriptions.v2.UpdateFixedChargeRequest
+	(*UpdateFixedChargeResponse)(nil),              // 27: invora.billing.subscriptions.v2.UpdateFixedChargeResponse
+	(*PlanOverridesInput)(nil),                     // 28: invora.billing.subscriptions.v2.PlanOverridesInput
+	(*FixedChargeOverridesInput)(nil),              // 29: invora.billing.subscriptions.v2.FixedChargeOverridesInput
+	(*ChargeOverridesInput)(nil),                   // 30: invora.billing.subscriptions.v2.ChargeOverridesInput
+	(*CreateOrUpdateEntitlementRequest)(nil),       // 31: invora.billing.subscriptions.v2.CreateOrUpdateEntitlementRequest
+	(*CreateOrUpdateEntitlementResponse)(nil),      // 32: invora.billing.subscriptions.v2.CreateOrUpdateEntitlementResponse
+	(*GetEntitlementRequest)(nil),                  // 33: invora.billing.subscriptions.v2.GetEntitlementRequest
+	(*GetEntitlementResponse)(nil),                 // 34: invora.billing.subscriptions.v2.GetEntitlementResponse
+	(*ListEntitlementsRequest)(nil),                // 35: invora.billing.subscriptions.v2.ListEntitlementsRequest
+	(*ListEntitlementsResponse)(nil),               // 36: invora.billing.subscriptions.v2.ListEntitlementsResponse
+	(*EntitlementFilter)(nil),                      // 37: invora.billing.subscriptions.v2.EntitlementFilter
+	(*EntitlementSort)(nil),                        // 38: invora.billing.subscriptions.v2.EntitlementSort
+	(*EntitlementSortRule)(nil),                    // 39: invora.billing.subscriptions.v2.EntitlementSortRule
+	(*SubscriptionEntitlement)(nil),                // 40: invora.billing.subscriptions.v2.SubscriptionEntitlement
+	(*SubscriptionEntitlementPrivilege)(nil),       // 41: invora.billing.subscriptions.v2.SubscriptionEntitlementPrivilege
 	(*fieldmaskpb.FieldMask)(nil),                  // 42: google.protobuf.FieldMask
-	(*v2.BillingSubscription)(nil),                 // 43: invora.billing.common.v2.BillingSubscription
-	(*kernel.PaginationInfo)(nil),                  // 44: kernel.PaginationInfo
-	(*wrapperspb.StringValue)(nil),                 // 45: google.protobuf.StringValue
-	(v2.StatusTypeEnum)(0),                         // 46: invora.billing.common.v2.StatusTypeEnum
+	(v2.View)(0),                                   // 43: invora.billing.common.v2.View
+	(*v2.BillingSubscription)(nil),                 // 44: invora.billing.common.v2.BillingSubscription
+	(*kernel.PaginationInfo)(nil),                  // 45: kernel.PaginationInfo
+	(v2.StatusType)(0),                             // 46: invora.billing.common.v2.StatusType
 	(kernel.SortDirection)(0),                      // 47: kernel.SortDirection
-	(*v2.ChargeFilter)(nil),                        // 48: invora.billing.common.v2.ChargeFilter
-	(*v2.Charge)(nil),                              // 49: invora.billing.common.v2.Charge
-	(*v2.FixedCharge)(nil),                         // 50: invora.billing.common.v2.FixedCharge
-	(*v2.FixedChargePropertiesInput)(nil),          // 51: invora.billing.common.v2.FixedChargePropertiesInput
-	(*v2.PropertiesInput)(nil),                     // 52: invora.billing.common.v2.PropertiesInput
-	(*structpb.Struct)(nil),                        // 53: google.protobuf.Struct
-	(*v2.ChargeFilterInput)(nil),                   // 54: invora.billing.common.v2.ChargeFilterInput
-	(*timestamppb.Timestamp)(nil),                  // 55: google.protobuf.Timestamp
-	(*v2.InvoiceCustomSectionsReferenceInput)(nil), // 56: invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
-	(*v2.PaymentMethodReferenceInput)(nil),         // 57: invora.billing.common.v2.PaymentMethodReferenceInput
-	(*v2.UsageThresholdInput)(nil),                 // 58: invora.billing.common.v2.UsageThresholdInput
-	(v2.CurrencyEnum)(0),                           // 59: invora.billing.common.v2.CurrencyEnum
-	(*v2.CommitmentInput)(nil),                     // 60: invora.billing.common.v2.CommitmentInput
-	(v2.OnTerminationCreditNoteEnum)(0),            // 61: invora.billing.common.v2.OnTerminationCreditNoteEnum
-	(v2.OnTerminationInvoiceEnum)(0),               // 62: invora.billing.common.v2.OnTerminationInvoiceEnum
-	(v2.BillingTimeEnum)(0),                        // 63: invora.billing.common.v2.BillingTimeEnum
+	(v2.BillingTime)(0),                            // 48: invora.billing.common.v2.BillingTime
+	(*timestamppb.Timestamp)(nil),                  // 49: google.protobuf.Timestamp
+	(*v2.InvoiceCustomSectionsReferenceInput)(nil), // 50: invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
+	(*v2.PaymentMethodReferenceInput)(nil),         // 51: invora.billing.common.v2.PaymentMethodReferenceInput
+	(*v2.UsageThresholdInput)(nil),                 // 52: invora.billing.common.v2.UsageThresholdInput
+	(v2.OnTerminationCreditNote)(0),                // 53: invora.billing.common.v2.OnTerminationCreditNote
+	(v2.OnTerminationInvoice)(0),                   // 54: invora.billing.common.v2.OnTerminationInvoice
+	(*v2.ChargeFilterInput)(nil),                   // 55: invora.billing.common.v2.ChargeFilterInput
+	(*v2.PropertiesInput)(nil),                     // 56: invora.billing.common.v2.PropertiesInput
+	(*v2.Charge)(nil),                              // 57: invora.billing.common.v2.Charge
+	(*kernel.DecimalValue)(nil),                    // 58: kernel.DecimalValue
+	(*structpb.Struct)(nil),                        // 59: google.protobuf.Struct
+	(*v2.ChargeFilter)(nil),                        // 60: invora.billing.common.v2.ChargeFilter
+	(*v2.FixedChargePropertiesInput)(nil),          // 61: invora.billing.common.v2.FixedChargePropertiesInput
+	(*v2.FixedCharge)(nil),                         // 62: invora.billing.common.v2.FixedCharge
+	(v2.CurrencyEnum)(0),                           // 63: invora.billing.common.v2.CurrencyEnum
+	(*v2.CommitmentInput)(nil),                     // 64: invora.billing.common.v2.CommitmentInput
+	(*v2.EntitlementInput)(nil),                    // 65: invora.billing.common.v2.EntitlementInput
+	(*v2.PrivilegeConfigObject)(nil),               // 66: invora.billing.common.v2.PrivilegeConfigObject
+	(v2.PrivilegeValueTypeEnum)(0),                 // 67: invora.billing.common.v2.PrivilegeValueTypeEnum
 }
 var file_invora_billing_subscriptions_v2_service_proto_depIdxs = []int32{
 	42, // 0: invora.billing.subscriptions.v2.GetRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 1: invora.billing.subscriptions.v2.GetRequest.view:type_name -> invora.billing.subscriptions.v2.View
-	43, // 2: invora.billing.subscriptions.v2.GetResponse.subscription:type_name -> invora.billing.common.v2.BillingSubscription
-	5,  // 3: invora.billing.subscriptions.v2.ListRequest.filter:type_name -> invora.billing.subscriptions.v2.ListFilter
-	8,  // 4: invora.billing.subscriptions.v2.ListRequest.sort:type_name -> invora.billing.subscriptions.v2.ListSort
-	44, // 5: invora.billing.subscriptions.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
+	43, // 1: invora.billing.subscriptions.v2.GetRequest.view:type_name -> invora.billing.common.v2.View
+	44, // 2: invora.billing.subscriptions.v2.GetResponse.subscription:type_name -> invora.billing.common.v2.BillingSubscription
+	4,  // 3: invora.billing.subscriptions.v2.ListRequest.filter:type_name -> invora.billing.subscriptions.v2.ListFilter
+	7,  // 4: invora.billing.subscriptions.v2.ListRequest.sort:type_name -> invora.billing.subscriptions.v2.ListSort
+	45, // 5: invora.billing.subscriptions.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
 	42, // 6: invora.billing.subscriptions.v2.ListRequest.read_mask:type_name -> google.protobuf.FieldMask
-	0,  // 7: invora.billing.subscriptions.v2.ListRequest.view:type_name -> invora.billing.subscriptions.v2.View
-	43, // 8: invora.billing.subscriptions.v2.ListResponse.items:type_name -> invora.billing.common.v2.BillingSubscription
-	45, // 9: invora.billing.subscriptions.v2.ListResponse.next_page_cursor:type_name -> google.protobuf.StringValue
-	7,  // 10: invora.billing.subscriptions.v2.ListFilter.part:type_name -> invora.billing.subscriptions.v2.ListFilterPart
-	46, // 11: invora.billing.subscriptions.v2.ListStatusFilter.in_values:type_name -> invora.billing.common.v2.StatusTypeEnum
-	6,  // 12: invora.billing.subscriptions.v2.ListFilterPart.status:type_name -> invora.billing.subscriptions.v2.ListStatusFilter
-	9,  // 13: invora.billing.subscriptions.v2.ListSort.rules:type_name -> invora.billing.subscriptions.v2.ListSortRule
-	47, // 14: invora.billing.subscriptions.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
-	41, // 15: invora.billing.subscriptions.v2.CreateRequest.input:type_name -> invora.billing.subscriptions.v2.CreateSubscriptionInput
-	43, // 16: invora.billing.subscriptions.v2.CreateResponse.subscription:type_name -> invora.billing.common.v2.BillingSubscription
-	40, // 17: invora.billing.subscriptions.v2.CreateChargeFilterRequest.input:type_name -> invora.billing.subscriptions.v2.CreateSubscriptionChargeFilterInput
-	48, // 18: invora.billing.subscriptions.v2.CreateChargeFilterResponse.charge_filter:type_name -> invora.billing.common.v2.ChargeFilter
-	39, // 19: invora.billing.subscriptions.v2.DeleteSubscriptionChargeFilterRequest.input:type_name -> invora.billing.subscriptions.v2.DestroySubscriptionChargeFilterInput
-	48, // 20: invora.billing.subscriptions.v2.DeleteSubscriptionChargeFilterResponse.charge_filter:type_name -> invora.billing.common.v2.ChargeFilter
-	37, // 21: invora.billing.subscriptions.v2.RemoveSubscriptionEntitlementRequest.input:type_name -> invora.billing.subscriptions.v2.RemoveSubscriptionEntitlementInput
-	38, // 22: invora.billing.subscriptions.v2.RemoveSubscriptionEntitlementResponse.remove_subscription_entitlement_payload:type_name -> invora.billing.subscriptions.v2.RemoveSubscriptionEntitlementPayload
-	36, // 23: invora.billing.subscriptions.v2.TerminateRequest.input:type_name -> invora.billing.subscriptions.v2.TerminateSubscriptionInput
-	43, // 24: invora.billing.subscriptions.v2.TerminateResponse.subscription:type_name -> invora.billing.common.v2.BillingSubscription
-	32, // 25: invora.billing.subscriptions.v2.UpdateRequest.input:type_name -> invora.billing.subscriptions.v2.UpdateSubscriptionInput
-	43, // 26: invora.billing.subscriptions.v2.UpdateResponse.subscription:type_name -> invora.billing.common.v2.BillingSubscription
-	30, // 27: invora.billing.subscriptions.v2.UpdateSubscriptionChargeRequest.input:type_name -> invora.billing.subscriptions.v2.UpdateSubscriptionChargeInput
-	49, // 28: invora.billing.subscriptions.v2.UpdateSubscriptionChargeResponse.charge:type_name -> invora.billing.common.v2.Charge
-	29, // 29: invora.billing.subscriptions.v2.UpdateSubscriptionChargeFilterRequest.input:type_name -> invora.billing.subscriptions.v2.UpdateSubscriptionChargeFilterInput
-	48, // 30: invora.billing.subscriptions.v2.UpdateSubscriptionChargeFilterResponse.charge_filter:type_name -> invora.billing.common.v2.ChargeFilter
-	28, // 31: invora.billing.subscriptions.v2.UpdateSubscriptionFixedChargeRequest.input:type_name -> invora.billing.subscriptions.v2.UpdateSubscriptionFixedChargeInput
-	50, // 32: invora.billing.subscriptions.v2.UpdateSubscriptionFixedChargeResponse.fixed_charge:type_name -> invora.billing.common.v2.FixedCharge
-	51, // 33: invora.billing.subscriptions.v2.UpdateSubscriptionFixedChargeInput.properties:type_name -> invora.billing.common.v2.FixedChargePropertiesInput
-	52, // 34: invora.billing.subscriptions.v2.UpdateSubscriptionChargeFilterInput.properties:type_name -> invora.billing.common.v2.PropertiesInput
-	53, // 35: invora.billing.subscriptions.v2.UpdateSubscriptionChargeFilterInput.values:type_name -> google.protobuf.Struct
-	31, // 36: invora.billing.subscriptions.v2.UpdateSubscriptionChargeInput.applied_pricing_unit:type_name -> invora.billing.subscriptions.v2.AppliedPricingUnitOverrideInput
-	54, // 37: invora.billing.subscriptions.v2.UpdateSubscriptionChargeInput.filters:type_name -> invora.billing.common.v2.ChargeFilterInput
-	52, // 38: invora.billing.subscriptions.v2.UpdateSubscriptionChargeInput.properties:type_name -> invora.billing.common.v2.PropertiesInput
-	55, // 39: invora.billing.subscriptions.v2.UpdateSubscriptionInput.ending_at:type_name -> google.protobuf.Timestamp
-	56, // 40: invora.billing.subscriptions.v2.UpdateSubscriptionInput.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
-	57, // 41: invora.billing.subscriptions.v2.UpdateSubscriptionInput.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
-	33, // 42: invora.billing.subscriptions.v2.UpdateSubscriptionInput.plan_overrides:type_name -> invora.billing.subscriptions.v2.PlanOverridesInput
-	55, // 43: invora.billing.subscriptions.v2.UpdateSubscriptionInput.subscription_at:type_name -> google.protobuf.Timestamp
-	58, // 44: invora.billing.subscriptions.v2.UpdateSubscriptionInput.usage_thresholds:type_name -> invora.billing.common.v2.UsageThresholdInput
-	59, // 45: invora.billing.subscriptions.v2.PlanOverridesInput.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	35, // 46: invora.billing.subscriptions.v2.PlanOverridesInput.charges:type_name -> invora.billing.subscriptions.v2.ChargeOverridesInput
-	34, // 47: invora.billing.subscriptions.v2.PlanOverridesInput.fixed_charges:type_name -> invora.billing.subscriptions.v2.FixedChargeOverridesInput
-	60, // 48: invora.billing.subscriptions.v2.PlanOverridesInput.minimum_commitment:type_name -> invora.billing.common.v2.CommitmentInput
-	51, // 49: invora.billing.subscriptions.v2.FixedChargeOverridesInput.properties:type_name -> invora.billing.common.v2.FixedChargePropertiesInput
-	31, // 50: invora.billing.subscriptions.v2.ChargeOverridesInput.applied_pricing_unit:type_name -> invora.billing.subscriptions.v2.AppliedPricingUnitOverrideInput
-	54, // 51: invora.billing.subscriptions.v2.ChargeOverridesInput.filters:type_name -> invora.billing.common.v2.ChargeFilterInput
-	52, // 52: invora.billing.subscriptions.v2.ChargeOverridesInput.properties:type_name -> invora.billing.common.v2.PropertiesInput
-	61, // 53: invora.billing.subscriptions.v2.TerminateSubscriptionInput.on_termination_credit_note:type_name -> invora.billing.common.v2.OnTerminationCreditNoteEnum
-	62, // 54: invora.billing.subscriptions.v2.TerminateSubscriptionInput.on_termination_invoice:type_name -> invora.billing.common.v2.OnTerminationInvoiceEnum
-	53, // 55: invora.billing.subscriptions.v2.DestroySubscriptionChargeFilterInput.values:type_name -> google.protobuf.Struct
-	52, // 56: invora.billing.subscriptions.v2.CreateSubscriptionChargeFilterInput.properties:type_name -> invora.billing.common.v2.PropertiesInput
-	53, // 57: invora.billing.subscriptions.v2.CreateSubscriptionChargeFilterInput.values:type_name -> google.protobuf.Struct
-	63, // 58: invora.billing.subscriptions.v2.CreateSubscriptionInput.billing_time:type_name -> invora.billing.common.v2.BillingTimeEnum
-	55, // 59: invora.billing.subscriptions.v2.CreateSubscriptionInput.ending_at:type_name -> google.protobuf.Timestamp
-	56, // 60: invora.billing.subscriptions.v2.CreateSubscriptionInput.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
-	57, // 61: invora.billing.subscriptions.v2.CreateSubscriptionInput.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
-	33, // 62: invora.billing.subscriptions.v2.CreateSubscriptionInput.plan_overrides:type_name -> invora.billing.subscriptions.v2.PlanOverridesInput
-	55, // 63: invora.billing.subscriptions.v2.CreateSubscriptionInput.subscription_at:type_name -> google.protobuf.Timestamp
-	58, // 64: invora.billing.subscriptions.v2.CreateSubscriptionInput.usage_thresholds:type_name -> invora.billing.common.v2.UsageThresholdInput
-	10, // 65: invora.billing.subscriptions.v2.SubscriptionService.Create:input_type -> invora.billing.subscriptions.v2.CreateRequest
-	1,  // 66: invora.billing.subscriptions.v2.SubscriptionService.Get:input_type -> invora.billing.subscriptions.v2.GetRequest
-	3,  // 67: invora.billing.subscriptions.v2.SubscriptionService.List:input_type -> invora.billing.subscriptions.v2.ListRequest
-	20, // 68: invora.billing.subscriptions.v2.SubscriptionService.Update:input_type -> invora.billing.subscriptions.v2.UpdateRequest
-	18, // 69: invora.billing.subscriptions.v2.SubscriptionService.Terminate:input_type -> invora.billing.subscriptions.v2.TerminateRequest
-	12, // 70: invora.billing.subscriptions.v2.SubscriptionService.CreateChargeFilter:input_type -> invora.billing.subscriptions.v2.CreateChargeFilterRequest
-	14, // 71: invora.billing.subscriptions.v2.SubscriptionService.DeleteSubscriptionChargeFilter:input_type -> invora.billing.subscriptions.v2.DeleteSubscriptionChargeFilterRequest
-	16, // 72: invora.billing.subscriptions.v2.SubscriptionService.RemoveSubscriptionEntitlement:input_type -> invora.billing.subscriptions.v2.RemoveSubscriptionEntitlementRequest
-	22, // 73: invora.billing.subscriptions.v2.SubscriptionService.UpdateSubscriptionCharge:input_type -> invora.billing.subscriptions.v2.UpdateSubscriptionChargeRequest
-	24, // 74: invora.billing.subscriptions.v2.SubscriptionService.UpdateSubscriptionChargeFilter:input_type -> invora.billing.subscriptions.v2.UpdateSubscriptionChargeFilterRequest
-	26, // 75: invora.billing.subscriptions.v2.SubscriptionService.UpdateSubscriptionFixedCharge:input_type -> invora.billing.subscriptions.v2.UpdateSubscriptionFixedChargeRequest
-	11, // 76: invora.billing.subscriptions.v2.SubscriptionService.Create:output_type -> invora.billing.subscriptions.v2.CreateResponse
-	2,  // 77: invora.billing.subscriptions.v2.SubscriptionService.Get:output_type -> invora.billing.subscriptions.v2.GetResponse
-	4,  // 78: invora.billing.subscriptions.v2.SubscriptionService.List:output_type -> invora.billing.subscriptions.v2.ListResponse
-	21, // 79: invora.billing.subscriptions.v2.SubscriptionService.Update:output_type -> invora.billing.subscriptions.v2.UpdateResponse
-	19, // 80: invora.billing.subscriptions.v2.SubscriptionService.Terminate:output_type -> invora.billing.subscriptions.v2.TerminateResponse
-	13, // 81: invora.billing.subscriptions.v2.SubscriptionService.CreateChargeFilter:output_type -> invora.billing.subscriptions.v2.CreateChargeFilterResponse
-	15, // 82: invora.billing.subscriptions.v2.SubscriptionService.DeleteSubscriptionChargeFilter:output_type -> invora.billing.subscriptions.v2.DeleteSubscriptionChargeFilterResponse
-	17, // 83: invora.billing.subscriptions.v2.SubscriptionService.RemoveSubscriptionEntitlement:output_type -> invora.billing.subscriptions.v2.RemoveSubscriptionEntitlementResponse
-	23, // 84: invora.billing.subscriptions.v2.SubscriptionService.UpdateSubscriptionCharge:output_type -> invora.billing.subscriptions.v2.UpdateSubscriptionChargeResponse
-	25, // 85: invora.billing.subscriptions.v2.SubscriptionService.UpdateSubscriptionChargeFilter:output_type -> invora.billing.subscriptions.v2.UpdateSubscriptionChargeFilterResponse
-	27, // 86: invora.billing.subscriptions.v2.SubscriptionService.UpdateSubscriptionFixedCharge:output_type -> invora.billing.subscriptions.v2.UpdateSubscriptionFixedChargeResponse
-	76, // [76:87] is the sub-list for method output_type
-	65, // [65:76] is the sub-list for method input_type
-	65, // [65:65] is the sub-list for extension type_name
-	65, // [65:65] is the sub-list for extension extendee
-	0,  // [0:65] is the sub-list for field type_name
+	43, // 7: invora.billing.subscriptions.v2.ListRequest.view:type_name -> invora.billing.common.v2.View
+	44, // 8: invora.billing.subscriptions.v2.ListResponse.items:type_name -> invora.billing.common.v2.BillingSubscription
+	6,  // 9: invora.billing.subscriptions.v2.ListFilter.part:type_name -> invora.billing.subscriptions.v2.ListFilterPart
+	46, // 10: invora.billing.subscriptions.v2.ListStatusFilter.in_values:type_name -> invora.billing.common.v2.StatusType
+	5,  // 11: invora.billing.subscriptions.v2.ListFilterPart.status:type_name -> invora.billing.subscriptions.v2.ListStatusFilter
+	8,  // 12: invora.billing.subscriptions.v2.ListSort.rules:type_name -> invora.billing.subscriptions.v2.ListSortRule
+	47, // 13: invora.billing.subscriptions.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
+	48, // 14: invora.billing.subscriptions.v2.CreateRequest.billing_time:type_name -> invora.billing.common.v2.BillingTime
+	49, // 15: invora.billing.subscriptions.v2.CreateRequest.ending_at:type_name -> google.protobuf.Timestamp
+	50, // 16: invora.billing.subscriptions.v2.CreateRequest.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
+	51, // 17: invora.billing.subscriptions.v2.CreateRequest.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
+	28, // 18: invora.billing.subscriptions.v2.CreateRequest.plan_overrides:type_name -> invora.billing.subscriptions.v2.PlanOverridesInput
+	49, // 19: invora.billing.subscriptions.v2.CreateRequest.subscription_at:type_name -> google.protobuf.Timestamp
+	52, // 20: invora.billing.subscriptions.v2.CreateRequest.usage_thresholds:type_name -> invora.billing.common.v2.UsageThresholdInput
+	44, // 21: invora.billing.subscriptions.v2.CreateResponse.subscription:type_name -> invora.billing.common.v2.BillingSubscription
+	49, // 22: invora.billing.subscriptions.v2.UpdateRequest.ending_at:type_name -> google.protobuf.Timestamp
+	50, // 23: invora.billing.subscriptions.v2.UpdateRequest.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput
+	51, // 24: invora.billing.subscriptions.v2.UpdateRequest.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
+	28, // 25: invora.billing.subscriptions.v2.UpdateRequest.plan_overrides:type_name -> invora.billing.subscriptions.v2.PlanOverridesInput
+	49, // 26: invora.billing.subscriptions.v2.UpdateRequest.subscription_at:type_name -> google.protobuf.Timestamp
+	52, // 27: invora.billing.subscriptions.v2.UpdateRequest.usage_thresholds:type_name -> invora.billing.common.v2.UsageThresholdInput
+	42, // 28: invora.billing.subscriptions.v2.UpdateRequest.update_mask:type_name -> google.protobuf.FieldMask
+	44, // 29: invora.billing.subscriptions.v2.UpdateResponse.subscription:type_name -> invora.billing.common.v2.BillingSubscription
+	53, // 30: invora.billing.subscriptions.v2.TerminateRequest.on_termination_credit_note:type_name -> invora.billing.common.v2.OnTerminationCreditNote
+	54, // 31: invora.billing.subscriptions.v2.TerminateRequest.on_termination_invoice:type_name -> invora.billing.common.v2.OnTerminationInvoice
+	44, // 32: invora.billing.subscriptions.v2.TerminateResponse.subscription:type_name -> invora.billing.common.v2.BillingSubscription
+	17, // 33: invora.billing.subscriptions.v2.UpdateChargeRequest.applied_pricing_unit:type_name -> invora.billing.subscriptions.v2.AppliedPricingUnitOverrideInput
+	55, // 34: invora.billing.subscriptions.v2.UpdateChargeRequest.filters:type_name -> invora.billing.common.v2.ChargeFilterInput
+	56, // 35: invora.billing.subscriptions.v2.UpdateChargeRequest.properties:type_name -> invora.billing.common.v2.PropertiesInput
+	42, // 36: invora.billing.subscriptions.v2.UpdateChargeRequest.update_mask:type_name -> google.protobuf.FieldMask
+	57, // 37: invora.billing.subscriptions.v2.UpdateChargeResponse.charge:type_name -> invora.billing.common.v2.Charge
+	58, // 38: invora.billing.subscriptions.v2.AppliedPricingUnitOverrideInput.conversion_rate:type_name -> kernel.DecimalValue
+	56, // 39: invora.billing.subscriptions.v2.CreateChargeFilterRequest.properties:type_name -> invora.billing.common.v2.PropertiesInput
+	59, // 40: invora.billing.subscriptions.v2.CreateChargeFilterRequest.values:type_name -> google.protobuf.Struct
+	60, // 41: invora.billing.subscriptions.v2.CreateChargeFilterResponse.charge_filter:type_name -> invora.billing.common.v2.ChargeFilter
+	56, // 42: invora.billing.subscriptions.v2.UpdateChargeFilterRequest.properties:type_name -> invora.billing.common.v2.PropertiesInput
+	59, // 43: invora.billing.subscriptions.v2.UpdateChargeFilterRequest.values:type_name -> google.protobuf.Struct
+	42, // 44: invora.billing.subscriptions.v2.UpdateChargeFilterRequest.update_mask:type_name -> google.protobuf.FieldMask
+	60, // 45: invora.billing.subscriptions.v2.UpdateChargeFilterResponse.charge_filter:type_name -> invora.billing.common.v2.ChargeFilter
+	59, // 46: invora.billing.subscriptions.v2.DeleteChargeFilterRequest.values:type_name -> google.protobuf.Struct
+	60, // 47: invora.billing.subscriptions.v2.DeleteChargeFilterResponse.charge_filter:type_name -> invora.billing.common.v2.ChargeFilter
+	61, // 48: invora.billing.subscriptions.v2.UpdateFixedChargeRequest.properties:type_name -> invora.billing.common.v2.FixedChargePropertiesInput
+	42, // 49: invora.billing.subscriptions.v2.UpdateFixedChargeRequest.update_mask:type_name -> google.protobuf.FieldMask
+	62, // 50: invora.billing.subscriptions.v2.UpdateFixedChargeResponse.fixed_charge:type_name -> invora.billing.common.v2.FixedCharge
+	63, // 51: invora.billing.subscriptions.v2.PlanOverridesInput.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	30, // 52: invora.billing.subscriptions.v2.PlanOverridesInput.charges:type_name -> invora.billing.subscriptions.v2.ChargeOverridesInput
+	29, // 53: invora.billing.subscriptions.v2.PlanOverridesInput.fixed_charges:type_name -> invora.billing.subscriptions.v2.FixedChargeOverridesInput
+	64, // 54: invora.billing.subscriptions.v2.PlanOverridesInput.minimum_commitment:type_name -> invora.billing.common.v2.CommitmentInput
+	61, // 55: invora.billing.subscriptions.v2.FixedChargeOverridesInput.properties:type_name -> invora.billing.common.v2.FixedChargePropertiesInput
+	17, // 56: invora.billing.subscriptions.v2.ChargeOverridesInput.applied_pricing_unit:type_name -> invora.billing.subscriptions.v2.AppliedPricingUnitOverrideInput
+	55, // 57: invora.billing.subscriptions.v2.ChargeOverridesInput.filters:type_name -> invora.billing.common.v2.ChargeFilterInput
+	56, // 58: invora.billing.subscriptions.v2.ChargeOverridesInput.properties:type_name -> invora.billing.common.v2.PropertiesInput
+	65, // 59: invora.billing.subscriptions.v2.CreateOrUpdateEntitlementRequest.entitlement:type_name -> invora.billing.common.v2.EntitlementInput
+	40, // 60: invora.billing.subscriptions.v2.CreateOrUpdateEntitlementResponse.entitlement:type_name -> invora.billing.subscriptions.v2.SubscriptionEntitlement
+	42, // 61: invora.billing.subscriptions.v2.GetEntitlementRequest.read_mask:type_name -> google.protobuf.FieldMask
+	43, // 62: invora.billing.subscriptions.v2.GetEntitlementRequest.view:type_name -> invora.billing.common.v2.View
+	40, // 63: invora.billing.subscriptions.v2.GetEntitlementResponse.entitlement:type_name -> invora.billing.subscriptions.v2.SubscriptionEntitlement
+	37, // 64: invora.billing.subscriptions.v2.ListEntitlementsRequest.filter:type_name -> invora.billing.subscriptions.v2.EntitlementFilter
+	38, // 65: invora.billing.subscriptions.v2.ListEntitlementsRequest.sort:type_name -> invora.billing.subscriptions.v2.EntitlementSort
+	45, // 66: invora.billing.subscriptions.v2.ListEntitlementsRequest.pagination:type_name -> kernel.PaginationInfo
+	42, // 67: invora.billing.subscriptions.v2.ListEntitlementsRequest.read_mask:type_name -> google.protobuf.FieldMask
+	43, // 68: invora.billing.subscriptions.v2.ListEntitlementsRequest.view:type_name -> invora.billing.common.v2.View
+	40, // 69: invora.billing.subscriptions.v2.ListEntitlementsResponse.items:type_name -> invora.billing.subscriptions.v2.SubscriptionEntitlement
+	39, // 70: invora.billing.subscriptions.v2.EntitlementSort.rules:type_name -> invora.billing.subscriptions.v2.EntitlementSortRule
+	47, // 71: invora.billing.subscriptions.v2.EntitlementSortRule.created_at:type_name -> kernel.SortDirection
+	41, // 72: invora.billing.subscriptions.v2.SubscriptionEntitlement.privileges:type_name -> invora.billing.subscriptions.v2.SubscriptionEntitlementPrivilege
+	66, // 73: invora.billing.subscriptions.v2.SubscriptionEntitlementPrivilege.config:type_name -> invora.billing.common.v2.PrivilegeConfigObject
+	67, // 74: invora.billing.subscriptions.v2.SubscriptionEntitlementPrivilege.value_type:type_name -> invora.billing.common.v2.PrivilegeValueTypeEnum
+	2,  // 75: invora.billing.subscriptions.v2.SubscriptionsService.List:input_type -> invora.billing.subscriptions.v2.ListRequest
+	0,  // 76: invora.billing.subscriptions.v2.SubscriptionsService.Get:input_type -> invora.billing.subscriptions.v2.GetRequest
+	9,  // 77: invora.billing.subscriptions.v2.SubscriptionsService.Create:input_type -> invora.billing.subscriptions.v2.CreateRequest
+	11, // 78: invora.billing.subscriptions.v2.SubscriptionsService.Update:input_type -> invora.billing.subscriptions.v2.UpdateRequest
+	13, // 79: invora.billing.subscriptions.v2.SubscriptionsService.Terminate:input_type -> invora.billing.subscriptions.v2.TerminateRequest
+	15, // 80: invora.billing.subscriptions.v2.SubscriptionsService.UpdateCharge:input_type -> invora.billing.subscriptions.v2.UpdateChargeRequest
+	18, // 81: invora.billing.subscriptions.v2.SubscriptionsService.CreateChargeFilter:input_type -> invora.billing.subscriptions.v2.CreateChargeFilterRequest
+	20, // 82: invora.billing.subscriptions.v2.SubscriptionsService.UpdateChargeFilter:input_type -> invora.billing.subscriptions.v2.UpdateChargeFilterRequest
+	22, // 83: invora.billing.subscriptions.v2.SubscriptionsService.DeleteChargeFilter:input_type -> invora.billing.subscriptions.v2.DeleteChargeFilterRequest
+	31, // 84: invora.billing.subscriptions.v2.SubscriptionsService.CreateOrUpdateEntitlement:input_type -> invora.billing.subscriptions.v2.CreateOrUpdateEntitlementRequest
+	33, // 85: invora.billing.subscriptions.v2.SubscriptionsService.GetEntitlement:input_type -> invora.billing.subscriptions.v2.GetEntitlementRequest
+	35, // 86: invora.billing.subscriptions.v2.SubscriptionsService.ListEntitlements:input_type -> invora.billing.subscriptions.v2.ListEntitlementsRequest
+	24, // 87: invora.billing.subscriptions.v2.SubscriptionsService.RemoveEntitlement:input_type -> invora.billing.subscriptions.v2.RemoveEntitlementRequest
+	26, // 88: invora.billing.subscriptions.v2.SubscriptionsService.UpdateFixedCharge:input_type -> invora.billing.subscriptions.v2.UpdateFixedChargeRequest
+	3,  // 89: invora.billing.subscriptions.v2.SubscriptionsService.List:output_type -> invora.billing.subscriptions.v2.ListResponse
+	1,  // 90: invora.billing.subscriptions.v2.SubscriptionsService.Get:output_type -> invora.billing.subscriptions.v2.GetResponse
+	10, // 91: invora.billing.subscriptions.v2.SubscriptionsService.Create:output_type -> invora.billing.subscriptions.v2.CreateResponse
+	12, // 92: invora.billing.subscriptions.v2.SubscriptionsService.Update:output_type -> invora.billing.subscriptions.v2.UpdateResponse
+	14, // 93: invora.billing.subscriptions.v2.SubscriptionsService.Terminate:output_type -> invora.billing.subscriptions.v2.TerminateResponse
+	16, // 94: invora.billing.subscriptions.v2.SubscriptionsService.UpdateCharge:output_type -> invora.billing.subscriptions.v2.UpdateChargeResponse
+	19, // 95: invora.billing.subscriptions.v2.SubscriptionsService.CreateChargeFilter:output_type -> invora.billing.subscriptions.v2.CreateChargeFilterResponse
+	21, // 96: invora.billing.subscriptions.v2.SubscriptionsService.UpdateChargeFilter:output_type -> invora.billing.subscriptions.v2.UpdateChargeFilterResponse
+	23, // 97: invora.billing.subscriptions.v2.SubscriptionsService.DeleteChargeFilter:output_type -> invora.billing.subscriptions.v2.DeleteChargeFilterResponse
+	32, // 98: invora.billing.subscriptions.v2.SubscriptionsService.CreateOrUpdateEntitlement:output_type -> invora.billing.subscriptions.v2.CreateOrUpdateEntitlementResponse
+	34, // 99: invora.billing.subscriptions.v2.SubscriptionsService.GetEntitlement:output_type -> invora.billing.subscriptions.v2.GetEntitlementResponse
+	36, // 100: invora.billing.subscriptions.v2.SubscriptionsService.ListEntitlements:output_type -> invora.billing.subscriptions.v2.ListEntitlementsResponse
+	25, // 101: invora.billing.subscriptions.v2.SubscriptionsService.RemoveEntitlement:output_type -> invora.billing.subscriptions.v2.RemoveEntitlementResponse
+	27, // 102: invora.billing.subscriptions.v2.SubscriptionsService.UpdateFixedCharge:output_type -> invora.billing.subscriptions.v2.UpdateFixedChargeResponse
+	89, // [89:103] is the sub-list for method output_type
+	75, // [75:89] is the sub-list for method input_type
+	75, // [75:75] is the sub-list for extension type_name
+	75, // [75:75] is the sub-list for extension extendee
+	0,  // [0:75] is the sub-list for field type_name
 }
 
 func init() { file_invora_billing_subscriptions_v2_service_proto_init() }
@@ -3079,6 +3323,7 @@ func file_invora_billing_subscriptions_v2_service_proto_init() {
 		return
 	}
 	file_invora_billing_subscriptions_v2_service_proto_msgTypes[0].OneofWrappers = []any{}
+	file_invora_billing_subscriptions_v2_service_proto_msgTypes[3].OneofWrappers = []any{}
 	file_invora_billing_subscriptions_v2_service_proto_msgTypes[6].OneofWrappers = []any{
 		(*ListFilterPart_ExternalCustomerId)(nil),
 		(*ListFilterPart_Overriden)(nil),
@@ -3088,30 +3333,35 @@ func file_invora_billing_subscriptions_v2_service_proto_init() {
 	file_invora_billing_subscriptions_v2_service_proto_msgTypes[8].OneofWrappers = []any{
 		(*ListSortRule_CreatedAt)(nil),
 	}
-	file_invora_billing_subscriptions_v2_service_proto_msgTypes[27].OneofWrappers = []any{}
+	file_invora_billing_subscriptions_v2_service_proto_msgTypes[9].OneofWrappers = []any{}
+	file_invora_billing_subscriptions_v2_service_proto_msgTypes[11].OneofWrappers = []any{}
+	file_invora_billing_subscriptions_v2_service_proto_msgTypes[13].OneofWrappers = []any{}
+	file_invora_billing_subscriptions_v2_service_proto_msgTypes[15].OneofWrappers = []any{}
+	file_invora_billing_subscriptions_v2_service_proto_msgTypes[18].OneofWrappers = []any{}
+	file_invora_billing_subscriptions_v2_service_proto_msgTypes[20].OneofWrappers = []any{}
+	file_invora_billing_subscriptions_v2_service_proto_msgTypes[25].OneofWrappers = []any{}
+	file_invora_billing_subscriptions_v2_service_proto_msgTypes[26].OneofWrappers = []any{}
 	file_invora_billing_subscriptions_v2_service_proto_msgTypes[28].OneofWrappers = []any{}
 	file_invora_billing_subscriptions_v2_service_proto_msgTypes[29].OneofWrappers = []any{}
-	file_invora_billing_subscriptions_v2_service_proto_msgTypes[31].OneofWrappers = []any{}
-	file_invora_billing_subscriptions_v2_service_proto_msgTypes[32].OneofWrappers = []any{}
-	file_invora_billing_subscriptions_v2_service_proto_msgTypes[33].OneofWrappers = []any{}
-	file_invora_billing_subscriptions_v2_service_proto_msgTypes[34].OneofWrappers = []any{}
-	file_invora_billing_subscriptions_v2_service_proto_msgTypes[35].OneofWrappers = []any{}
-	file_invora_billing_subscriptions_v2_service_proto_msgTypes[37].OneofWrappers = []any{}
-	file_invora_billing_subscriptions_v2_service_proto_msgTypes[39].OneofWrappers = []any{}
+	file_invora_billing_subscriptions_v2_service_proto_msgTypes[30].OneofWrappers = []any{}
+	file_invora_billing_subscriptions_v2_service_proto_msgTypes[36].OneofWrappers = []any{}
+	file_invora_billing_subscriptions_v2_service_proto_msgTypes[39].OneofWrappers = []any{
+		(*EntitlementSortRule_CreatedAt)(nil),
+	}
 	file_invora_billing_subscriptions_v2_service_proto_msgTypes[40].OneofWrappers = []any{}
+	file_invora_billing_subscriptions_v2_service_proto_msgTypes[41].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_billing_subscriptions_v2_service_proto_rawDesc), len(file_invora_billing_subscriptions_v2_service_proto_rawDesc)),
-			NumEnums:      1,
-			NumMessages:   41,
+			NumEnums:      0,
+			NumMessages:   42,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_invora_billing_subscriptions_v2_service_proto_goTypes,
 		DependencyIndexes: file_invora_billing_subscriptions_v2_service_proto_depIdxs,
-		EnumInfos:         file_invora_billing_subscriptions_v2_service_proto_enumTypes,
 		MessageInfos:      file_invora_billing_subscriptions_v2_service_proto_msgTypes,
 	}.Build()
 	File_invora_billing_subscriptions_v2_service_proto = out.File
