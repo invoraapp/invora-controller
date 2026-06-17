@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/invoraapp/invora-controller/compare/v1.0.0...v1.0.1) (2026-06-17)
+
+
+### Bug Fixes
+
+* **gateway:** dial gateway by host:port, not the raw URL ([#2](https://github.com/invoraapp/invora-controller/issues/2)) ([e7b5a01](https://github.com/invoraapp/invora-controller/commit/e7b5a0189bc23ef59424b8b21124b39be8897ae4))
+
 # 1.0.0 (2026-05-25)
 
 
