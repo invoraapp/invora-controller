@@ -7,8 +7,6 @@ import (
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/credentials"
-	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -19,6 +17,7 @@ import (
 
 	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
 	"github.com/invoraapp/invora-controller/internal/billingclient"
+	"github.com/invoraapp/invora-controller/internal/gateway"
 )
 
 // orgResourceContext holds the resolved dependencies for an org-scoped resource.
@@ -58,13 +57,11 @@ func (i *instanceAdminContext) Conn() *grpc.ClientConn { return i.conn }
 
 // dialGateway creates a gRPC connection to the given gateway URL.
 func dialGateway(url string) (*grpc.ClientConn, error) {
-	var cred grpc.DialOption
-	if len(url) >= 5 && url[:5] == "https" {
-		cred = grpc.WithTransportCredentials(credentials.NewClientTLSFromCert(nil, ""))
-	} else {
-		cred = grpc.WithTransportCredentials(insecure.NewCredentials())
-	}
-	return grpc.NewClient(url, cred)
+	// gatewayURL is a URL (e.g. https://dev-gateway.invora.app); gateway.Dial
+	// translates it to a proper gRPC "host:port" target + transport creds. Passing
+	// the raw URL to grpc.NewClient leaves the channel stuck (context deadline
+	// exceeded) because "https" is not a gRPC resolver scheme.
+	return gateway.Dial(url)
 }
 
 // resolveOrgDependencies resolves the organization reference and sets

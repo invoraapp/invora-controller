@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"time"
 
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -48,8 +46,7 @@ func (r *InvoraInvoicingRegulationReconciler) Reconcile(ctx context.Context, req
 		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 	}
 
-	conn, err := grpc.NewClient(instance.Spec.GatewayURL,
-		grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := dialGateway(instance.Spec.GatewayURL)
 	if err != nil {
 		return ctrl.Result{}, fmt.Errorf("creating gRPC connection: %w", err)
 	}
@@ -74,7 +71,7 @@ func (r *InvoraInvoicingRegulationReconciler) Reconcile(ctx context.Context, req
 	meta.SetStatusCondition(&reg.Status.Conditions, metav1.Condition{
 		Type: "Ready", Status: metav1.ConditionTrue,
 		ObservedGeneration: reg.Generation,
-		Reason: "Synced", Message: fmt.Sprintf("enrollment state: %s", reg.Status.EnrollmentStatus),
+		Reason:             "Synced", Message: fmt.Sprintf("enrollment state: %s", reg.Status.EnrollmentStatus),
 	})
 	if err := r.Status().Update(ctx, &reg); err != nil {
 		return ctrl.Result{}, err

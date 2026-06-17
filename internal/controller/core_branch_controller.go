@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"time"
 
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -43,8 +41,7 @@ func (r *InvoraBranchReconciler) Reconcile(ctx context.Context, req ctrl.Request
 		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 	}
 
-	conn, err := grpc.NewClient(instance.Spec.GatewayURL,
-		grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := dialGateway(instance.Spec.GatewayURL)
 	if err != nil {
 		return ctrl.Result{}, fmt.Errorf("creating gRPC connection: %w", err)
 	}
@@ -78,7 +75,7 @@ func (r *InvoraBranchReconciler) Reconcile(ctx context.Context, req ctrl.Request
 	meta.SetStatusCondition(&branch.Status.Conditions, metav1.Condition{
 		Type: "Ready", Status: metav1.ConditionTrue,
 		ObservedGeneration: branch.Generation,
-		Reason: "Synced", Message: "branch synced to gateway",
+		Reason:             "Synced", Message: "branch synced to gateway",
 	})
 	if err := r.Status().Update(ctx, &branch); err != nil {
 		return ctrl.Result{}, err
@@ -118,6 +115,6 @@ func setFailed(conditions *[]metav1.Condition, generation int64, reason string, 
 	meta.SetStatusCondition(conditions, metav1.Condition{
 		Type: "Ready", Status: metav1.ConditionFalse,
 		ObservedGeneration: generation,
-		Reason: reason, Message: err.Error(),
+		Reason:             reason, Message: err.Error(),
 	})
 }
