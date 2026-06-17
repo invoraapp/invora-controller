@@ -6,8 +6,6 @@ import (
 	"sync"
 
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials"
-	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
 )
 
@@ -22,7 +20,7 @@ func NewConnCache() *ConnCache {
 }
 
 // Get returns a cached connection or creates a new one for the given gateway URL.
-func (c *ConnCache) Get(gatewayURL string, useTLS bool) (*grpc.ClientConn, error) {
+func (c *ConnCache) Get(gatewayURL string) (*grpc.ClientConn, error) {
 	c.mu.RLock()
 	if conn, ok := c.conns[gatewayURL]; ok {
 		c.mu.RUnlock()
@@ -37,14 +35,9 @@ func (c *ConnCache) Get(gatewayURL string, useTLS bool) (*grpc.ClientConn, error
 		return conn, nil
 	}
 
-	var cred grpc.DialOption
-	if useTLS {
-		cred = grpc.WithTransportCredentials(credentials.NewClientTLSFromCert(nil, ""))
-	} else {
-		cred = grpc.WithTransportCredentials(insecure.NewCredentials())
-	}
-
-	conn, err := grpc.NewClient(gatewayURL, cred)
+	// Dial derives the gRPC target (host:port) + transport creds from the URL
+	// scheme. Never pass the raw URL to grpc.NewClient — see gateway.Target.
+	conn, err := Dial(gatewayURL)
 	if err != nil {
 		return nil, fmt.Errorf("dialing gateway %s: %w", gatewayURL, err)
 	}
@@ -69,9 +62,4 @@ func AuthContext(ctx context.Context, token, orgID string) context.Context {
 		pairs = append(pairs, "x-invora-org-id", orgID)
 	}
 	return metadata.AppendToOutgoingContext(ctx, pairs...)
-}
-
-// UseTLS returns true if the URL uses https.
-func UseTLS(url string) bool {
-	return len(url) >= 5 && url[:5] == "https"
 }
