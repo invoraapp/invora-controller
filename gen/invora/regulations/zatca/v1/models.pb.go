@@ -150,28 +150,22 @@ func (ZatcaSubmissionStatus) EnumDescriptor() ([]byte, []int) {
 	return file_invora_regulations_zatca_v1_models_proto_rawDescGZIP(), []int{1}
 }
 
-// Typed configuration for a ZATCA-enabled branch.
-// Serialize this into a google.protobuf.Struct for RegulationConfig.config.
+// Typed configuration for a ZATCA-enabled branch. Serialize into a
+// google.protobuf.Struct for RegulationConfig.config. Only ZATCA-specific
+// settings live here — the CSR subject-DN identity (org name, CRN, VAT,
+// address) is derived from the branch's UBL party (branches/v2 Branch.party).
 type ZatcaConfig struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// ZATCA environment for this branch.
 	Environment ZatcaEnvironment `protobuf:"varint,1,opt,name=environment,proto3,enum=invora.regulations.zatca.v1.ZatcaEnvironment" json:"environment,omitempty"`
-	// Seller's VAT registration number (must match ZATCA records).
-	VatRegistrationNumber string `protobuf:"bytes,2,opt,name=vat_registration_number,json=vatRegistrationNumber,proto3" json:"vat_registration_number,omitempty"`
-	// Building number in the address (required by ZATCA).
-	BuildingNumber string `protobuf:"bytes,3,opt,name=building_number,json=buildingNumber,proto3" json:"building_number,omitempty"`
-	// Additional street name (required for SA addresses).
-	AdditionalStreet string `protobuf:"bytes,4,opt,name=additional_street,json=additionalStreet,proto3" json:"additional_street,omitempty"`
-	// City subdivision / district.
-	CitySubdivision string `protobuf:"bytes,5,opt,name=city_subdivision,json=citySubdivision,proto3" json:"city_subdivision,omitempty"`
-	// Commercial Registration Number.
-	Crn string `protobuf:"bytes,6,opt,name=crn,proto3" json:"crn,omitempty"`
 	// Whether simplified invoices (B2C) auto-report on freeze.
 	AutoReportSimplified bool `protobuf:"varint,7,opt,name=auto_report_simplified,json=autoReportSimplified,proto3" json:"auto_report_simplified,omitempty"`
 	// Whether standard invoices (B2B) auto-clear on freeze.
 	AutoClearStandard bool `protobuf:"varint,8,opt,name=auto_clear_standard,json=autoClearStandard,proto3" json:"auto_clear_standard,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// EGS industry/business category for the ZATCA CSR subject DN (e.g. "Retail").
+	IndustryCategory string `protobuf:"bytes,9,opt,name=industry_category,json=industryCategory,proto3" json:"industry_category,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *ZatcaConfig) Reset() {
@@ -211,41 +205,6 @@ func (x *ZatcaConfig) GetEnvironment() ZatcaEnvironment {
 	return ZatcaEnvironment_ZATCA_ENVIRONMENT_UNSPECIFIED
 }
 
-func (x *ZatcaConfig) GetVatRegistrationNumber() string {
-	if x != nil {
-		return x.VatRegistrationNumber
-	}
-	return ""
-}
-
-func (x *ZatcaConfig) GetBuildingNumber() string {
-	if x != nil {
-		return x.BuildingNumber
-	}
-	return ""
-}
-
-func (x *ZatcaConfig) GetAdditionalStreet() string {
-	if x != nil {
-		return x.AdditionalStreet
-	}
-	return ""
-}
-
-func (x *ZatcaConfig) GetCitySubdivision() string {
-	if x != nil {
-		return x.CitySubdivision
-	}
-	return ""
-}
-
-func (x *ZatcaConfig) GetCrn() string {
-	if x != nil {
-		return x.Crn
-	}
-	return ""
-}
-
 func (x *ZatcaConfig) GetAutoReportSimplified() bool {
 	if x != nil {
 		return x.AutoReportSimplified
@@ -258,6 +217,13 @@ func (x *ZatcaConfig) GetAutoClearStandard() bool {
 		return x.AutoClearStandard
 	}
 	return false
+}
+
+func (x *ZatcaConfig) GetIndustryCategory() string {
+	if x != nil {
+		return x.IndustryCategory
+	}
+	return ""
 }
 
 // A single validation message returned by ZATCA during submission.
@@ -559,16 +525,13 @@ var File_invora_regulations_zatca_v1_models_proto protoreflect.FileDescriptor
 
 const file_invora_regulations_zatca_v1_models_proto_rawDesc = "" +
 	"\n" +
-	"(invora/regulations/zatca/v1/models.proto\x12\x1binvora.regulations.zatca.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8f\x03\n" +
+	"(invora/regulations/zatca/v1/models.proto\x12\x1binvora.regulations.zatca.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xfb\x02\n" +
 	"\vZatcaConfig\x12O\n" +
-	"\venvironment\x18\x01 \x01(\x0e2-.invora.regulations.zatca.v1.ZatcaEnvironmentR\venvironment\x126\n" +
-	"\x17vat_registration_number\x18\x02 \x01(\tR\x15vatRegistrationNumber\x12'\n" +
-	"\x0fbuilding_number\x18\x03 \x01(\tR\x0ebuildingNumber\x12+\n" +
-	"\x11additional_street\x18\x04 \x01(\tR\x10additionalStreet\x12)\n" +
-	"\x10city_subdivision\x18\x05 \x01(\tR\x0fcitySubdivision\x12\x10\n" +
-	"\x03crn\x18\x06 \x01(\tR\x03crn\x124\n" +
+	"\venvironment\x18\x01 \x01(\x0e2-.invora.regulations.zatca.v1.ZatcaEnvironmentR\venvironment\x124\n" +
 	"\x16auto_report_simplified\x18\a \x01(\bR\x14autoReportSimplified\x12.\n" +
-	"\x13auto_clear_standard\x18\b \x01(\bR\x11autoClearStandard\"a\n" +
+	"\x13auto_clear_standard\x18\b \x01(\bR\x11autoClearStandard\x12+\n" +
+	"\x11industry_category\x18\t \x01(\tR\x10industryCategoryJ\x04\b\x02\x10\x03J\x04\b\x03\x10\x04J\x04\b\x04\x10\x05J\x04\b\x05\x10\x06J\x04\b\x06\x10\aJ\x04\b\n" +
+	"\x10\vR\x17vat_registration_numberR\x0fbuilding_numberR\x11additional_streetR\x10city_subdivisionR\x03crnR\x10location_address\"a\n" +
 	"\x15ZatcaValidationResult\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x12\x1a\n" +
 	"\bcategory\x18\x02 \x01(\tR\bcategory\x12\x18\n" +

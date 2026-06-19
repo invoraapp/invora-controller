@@ -10159,9 +10159,13 @@ func (x *BillingAlert) GetWalletId() string {
 }
 
 type BillingOrg struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Id             string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	TenantId       string                 `protobuf:"bytes,2,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	state    protoimpl.MessageState `protogen:"open.v1"`
+	Id       string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	TenantId string                 `protobuf:"bytes,2,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	// The Zitadel organization id this billing org is bound to. Populated
+	// by the platform during ProvisionOrg (the tenant's Zitadel org is the
+	// single source of truth for identity); set server-side and read-only
+	// to clients.
 	OrganizationId string                 `protobuf:"bytes,3,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
 	DisplayName    string                 `protobuf:"bytes,4,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
 	Status         BillingOrgStatus       `protobuf:"varint,5,opt,name=status,proto3,enum=invora.billing.common.v2.BillingOrgStatus" json:"status,omitempty"`

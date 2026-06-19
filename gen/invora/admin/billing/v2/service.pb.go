@@ -12,6 +12,7 @@ import (
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
@@ -919,9 +920,15 @@ func (x *OrgSettings) GetFinalizeZeroAmountInvoice() bool {
 }
 
 type UpdateOrgSettingsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	TenantId      string                 `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
-	Settings      *OrgSettings           `protobuf:"bytes,2,opt,name=settings,proto3" json:"settings,omitempty"`
+	state    protoimpl.MessageState `protogen:"open.v1"`
+	TenantId string                 `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	Settings *OrgSettings           `protobuf:"bytes,2,opt,name=settings,proto3" json:"settings,omitempty"`
+	// Restricts which `settings` fields are updated. When omitted, every
+	// field in `settings` is applied (full replace). Supply a mask to make
+	// a partial update — only the listed paths are changed and the rest are
+	// left as-is. Mirrors the mask used by UpdateTenant /
+	// UpdateConnectedBusiness.
+	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,3,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -966,6 +973,13 @@ func (x *UpdateOrgSettingsRequest) GetTenantId() string {
 func (x *UpdateOrgSettingsRequest) GetSettings() *OrgSettings {
 	if x != nil {
 		return x.Settings
+	}
+	return nil
+}
+
+func (x *UpdateOrgSettingsRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
 	}
 	return nil
 }
@@ -2251,7 +2265,7 @@ var File_invora_admin_billing_v2_service_proto protoreflect.FileDescriptor
 
 const file_invora_admin_billing_v2_service_proto_rawDesc = "" +
 	"\n" +
-	"%invora/admin/billing/v2/service.proto\x12\x17invora.admin.billing.v2\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\x99\x01\n" +
+	"%invora/admin/billing/v2/service.proto\x12\x17invora.admin.billing.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\x99\x01\n" +
 	"\x13ProvisionOrgRequest\x12\x1b\n" +
 	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12!\n" +
 	"\fdisplay_name\x18\x02 \x01(\tR\vdisplayName\x12B\n" +
@@ -2295,10 +2309,12 @@ const file_invora_admin_billing_v2_service_proto_rawDesc = "" +
 	"\fgrace_period\x18\x06 \x01(\x05R\vgracePeriod\x12\x16\n" +
 	"\x06locale\x18\a \x01(\tR\x06locale\x12(\n" +
 	"\x10net_payment_term\x18\b \x01(\x05R\x0enetPaymentTerm\x12?\n" +
-	"\x1cfinalize_zero_amount_invoice\x18\t \x01(\bR\x19finalizeZeroAmountInvoice\"y\n" +
+	"\x1cfinalize_zero_amount_invoice\x18\t \x01(\bR\x19finalizeZeroAmountInvoice\"\xb6\x01\n" +
 	"\x18UpdateOrgSettingsRequest\x12\x1b\n" +
 	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12@\n" +
-	"\bsettings\x18\x02 \x01(\v2$.invora.admin.billing.v2.OrgSettingsR\bsettings\"]\n" +
+	"\bsettings\x18\x02 \x01(\v2$.invora.admin.billing.v2.OrgSettingsR\bsettings\x12;\n" +
+	"\vupdate_mask\x18\x03 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
+	"updateMask\"]\n" +
 	"\x19UpdateOrgSettingsResponse\x12@\n" +
 	"\bsettings\x18\x01 \x01(\v2$.invora.admin.billing.v2.OrgSettingsR\bsettings\"\x82\x01\n" +
 	"\x16ListActivityLogsFilter\x12G\n" +
@@ -2502,12 +2518,13 @@ var file_invora_admin_billing_v2_service_proto_goTypes = []any{
 	(v2.BillingOrgStatus)(0),                  // 39: invora.billing.common.v2.BillingOrgStatus
 	(v2.Timezone)(0),                          // 40: invora.billing.common.v2.Timezone
 	(v2.BillingEntityDocumentNumbering)(0),    // 41: invora.billing.common.v2.BillingEntityDocumentNumbering
-	(*kernel.ListRequestFilterPartDate)(nil),  // 42: kernel.ListRequestFilterPartDate
-	(v2.ActivityTypeEnum)(0),                  // 43: invora.billing.common.v2.ActivityTypeEnum
-	(kernel.SortDirection)(0),                 // 44: kernel.SortDirection
-	(*kernel.PaginationInfo)(nil),             // 45: kernel.PaginationInfo
-	(*v2.ActivityLog)(nil),                    // 46: invora.billing.common.v2.ActivityLog
-	(*timestamppb.Timestamp)(nil),             // 47: google.protobuf.Timestamp
+	(*fieldmaskpb.FieldMask)(nil),             // 42: google.protobuf.FieldMask
+	(*kernel.ListRequestFilterPartDate)(nil),  // 43: kernel.ListRequestFilterPartDate
+	(v2.ActivityTypeEnum)(0),                  // 44: invora.billing.common.v2.ActivityTypeEnum
+	(kernel.SortDirection)(0),                 // 45: kernel.SortDirection
+	(*kernel.PaginationInfo)(nil),             // 46: kernel.PaginationInfo
+	(*v2.ActivityLog)(nil),                    // 47: invora.billing.common.v2.ActivityLog
+	(*timestamppb.Timestamp)(nil),             // 48: google.protobuf.Timestamp
 }
 var file_invora_admin_billing_v2_service_proto_depIdxs = []int32{
 	37, // 0: invora.admin.billing.v2.ProvisionOrgRequest.currency:type_name -> invora.billing.common.v2.CurrencyEnum
@@ -2522,58 +2539,59 @@ var file_invora_admin_billing_v2_service_proto_depIdxs = []int32{
 	41, // 9: invora.admin.billing.v2.OrgSettings.document_numbering:type_name -> invora.billing.common.v2.BillingEntityDocumentNumbering
 	14, // 10: invora.admin.billing.v2.OrgSettings.email_settings:type_name -> invora.admin.billing.v2.OrgEmailSettings
 	15, // 11: invora.admin.billing.v2.UpdateOrgSettingsRequest.settings:type_name -> invora.admin.billing.v2.OrgSettings
-	15, // 12: invora.admin.billing.v2.UpdateOrgSettingsResponse.settings:type_name -> invora.admin.billing.v2.OrgSettings
-	19, // 13: invora.admin.billing.v2.ListActivityLogsFilter.part:type_name -> invora.admin.billing.v2.ListActivityLogsFilterPart
-	20, // 14: invora.admin.billing.v2.ListActivityLogsFilterPart.action:type_name -> invora.admin.billing.v2.ListActivityLogActionFilter
-	21, // 15: invora.admin.billing.v2.ListActivityLogsFilterPart.resource_type:type_name -> invora.admin.billing.v2.ListActivityLogResourceTypeFilter
-	42, // 16: invora.admin.billing.v2.ListActivityLogsFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDate
-	43, // 17: invora.admin.billing.v2.ListActivityLogActionFilter.in_values:type_name -> invora.billing.common.v2.ActivityTypeEnum
-	0,  // 18: invora.admin.billing.v2.ListActivityLogResourceTypeFilter.in_values:type_name -> invora.admin.billing.v2.ActivityResourceTypeEnum
-	23, // 19: invora.admin.billing.v2.ListActivityLogsSort.rules:type_name -> invora.admin.billing.v2.ListActivityLogsSortRule
-	44, // 20: invora.admin.billing.v2.ListActivityLogsSortRule.created_at:type_name -> kernel.SortDirection
-	18, // 21: invora.admin.billing.v2.ListActivityLogsRequest.filter:type_name -> invora.admin.billing.v2.ListActivityLogsFilter
-	22, // 22: invora.admin.billing.v2.ListActivityLogsRequest.sort:type_name -> invora.admin.billing.v2.ListActivityLogsSort
-	45, // 23: invora.admin.billing.v2.ListActivityLogsRequest.pagination:type_name -> kernel.PaginationInfo
-	46, // 24: invora.admin.billing.v2.ListActivityLogsResponse.items:type_name -> invora.billing.common.v2.ActivityLog
-	46, // 25: invora.admin.billing.v2.GetActivityLogResponse.log:type_name -> invora.billing.common.v2.ActivityLog
-	47, // 26: invora.admin.billing.v2.ApiLog.created_at:type_name -> google.protobuf.Timestamp
-	30, // 27: invora.admin.billing.v2.ListApiLogsFilter.part:type_name -> invora.admin.billing.v2.ListApiLogsFilterPart
-	31, // 28: invora.admin.billing.v2.ListApiLogsFilterPart.method:type_name -> invora.admin.billing.v2.ListApiLogMethodFilter
-	32, // 29: invora.admin.billing.v2.ListApiLogsFilterPart.status_code:type_name -> invora.admin.billing.v2.ListApiLogStatusFilter
-	42, // 30: invora.admin.billing.v2.ListApiLogsFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDate
-	1,  // 31: invora.admin.billing.v2.ListApiLogMethodFilter.in_values:type_name -> invora.admin.billing.v2.HttpMethod
-	34, // 32: invora.admin.billing.v2.ListApiLogsSort.rules:type_name -> invora.admin.billing.v2.ListApiLogsSortRule
-	44, // 33: invora.admin.billing.v2.ListApiLogsSortRule.created_at:type_name -> kernel.SortDirection
-	44, // 34: invora.admin.billing.v2.ListApiLogsSortRule.duration_ms:type_name -> kernel.SortDirection
-	29, // 35: invora.admin.billing.v2.ListApiLogsRequest.filter:type_name -> invora.admin.billing.v2.ListApiLogsFilter
-	33, // 36: invora.admin.billing.v2.ListApiLogsRequest.sort:type_name -> invora.admin.billing.v2.ListApiLogsSort
-	45, // 37: invora.admin.billing.v2.ListApiLogsRequest.pagination:type_name -> kernel.PaginationInfo
-	28, // 38: invora.admin.billing.v2.ListApiLogsResponse.items:type_name -> invora.admin.billing.v2.ApiLog
-	2,  // 39: invora.admin.billing.v2.BillingOrgAdminService.ProvisionOrg:input_type -> invora.admin.billing.v2.ProvisionOrgRequest
-	4,  // 40: invora.admin.billing.v2.BillingOrgAdminService.DeprovisionOrg:input_type -> invora.admin.billing.v2.DeprovisionOrgRequest
-	6,  // 41: invora.admin.billing.v2.BillingOrgAdminService.ListOrgs:input_type -> invora.admin.billing.v2.ListOrgsRequest
-	8,  // 42: invora.admin.billing.v2.BillingOrgAdminService.GetOrgStatus:input_type -> invora.admin.billing.v2.GetOrgStatusRequest
-	10, // 43: invora.admin.billing.v2.BillingOrgAdminService.SuspendOrg:input_type -> invora.admin.billing.v2.SuspendOrgRequest
-	12, // 44: invora.admin.billing.v2.BillingOrgAdminService.ReactivateOrg:input_type -> invora.admin.billing.v2.ReactivateOrgRequest
-	16, // 45: invora.admin.billing.v2.BillingOrgAdminService.UpdateOrgSettings:input_type -> invora.admin.billing.v2.UpdateOrgSettingsRequest
-	24, // 46: invora.admin.billing.v2.BillingOrgAdminService.ListActivityLogs:input_type -> invora.admin.billing.v2.ListActivityLogsRequest
-	26, // 47: invora.admin.billing.v2.BillingOrgAdminService.GetActivityLog:input_type -> invora.admin.billing.v2.GetActivityLogRequest
-	35, // 48: invora.admin.billing.v2.BillingOrgAdminService.ListApiLogs:input_type -> invora.admin.billing.v2.ListApiLogsRequest
-	3,  // 49: invora.admin.billing.v2.BillingOrgAdminService.ProvisionOrg:output_type -> invora.admin.billing.v2.ProvisionOrgResponse
-	5,  // 50: invora.admin.billing.v2.BillingOrgAdminService.DeprovisionOrg:output_type -> invora.admin.billing.v2.DeprovisionOrgResponse
-	7,  // 51: invora.admin.billing.v2.BillingOrgAdminService.ListOrgs:output_type -> invora.admin.billing.v2.ListOrgsResponse
-	9,  // 52: invora.admin.billing.v2.BillingOrgAdminService.GetOrgStatus:output_type -> invora.admin.billing.v2.GetOrgStatusResponse
-	11, // 53: invora.admin.billing.v2.BillingOrgAdminService.SuspendOrg:output_type -> invora.admin.billing.v2.SuspendOrgResponse
-	13, // 54: invora.admin.billing.v2.BillingOrgAdminService.ReactivateOrg:output_type -> invora.admin.billing.v2.ReactivateOrgResponse
-	17, // 55: invora.admin.billing.v2.BillingOrgAdminService.UpdateOrgSettings:output_type -> invora.admin.billing.v2.UpdateOrgSettingsResponse
-	25, // 56: invora.admin.billing.v2.BillingOrgAdminService.ListActivityLogs:output_type -> invora.admin.billing.v2.ListActivityLogsResponse
-	27, // 57: invora.admin.billing.v2.BillingOrgAdminService.GetActivityLog:output_type -> invora.admin.billing.v2.GetActivityLogResponse
-	36, // 58: invora.admin.billing.v2.BillingOrgAdminService.ListApiLogs:output_type -> invora.admin.billing.v2.ListApiLogsResponse
-	49, // [49:59] is the sub-list for method output_type
-	39, // [39:49] is the sub-list for method input_type
-	39, // [39:39] is the sub-list for extension type_name
-	39, // [39:39] is the sub-list for extension extendee
-	0,  // [0:39] is the sub-list for field type_name
+	42, // 12: invora.admin.billing.v2.UpdateOrgSettingsRequest.update_mask:type_name -> google.protobuf.FieldMask
+	15, // 13: invora.admin.billing.v2.UpdateOrgSettingsResponse.settings:type_name -> invora.admin.billing.v2.OrgSettings
+	19, // 14: invora.admin.billing.v2.ListActivityLogsFilter.part:type_name -> invora.admin.billing.v2.ListActivityLogsFilterPart
+	20, // 15: invora.admin.billing.v2.ListActivityLogsFilterPart.action:type_name -> invora.admin.billing.v2.ListActivityLogActionFilter
+	21, // 16: invora.admin.billing.v2.ListActivityLogsFilterPart.resource_type:type_name -> invora.admin.billing.v2.ListActivityLogResourceTypeFilter
+	43, // 17: invora.admin.billing.v2.ListActivityLogsFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDate
+	44, // 18: invora.admin.billing.v2.ListActivityLogActionFilter.in_values:type_name -> invora.billing.common.v2.ActivityTypeEnum
+	0,  // 19: invora.admin.billing.v2.ListActivityLogResourceTypeFilter.in_values:type_name -> invora.admin.billing.v2.ActivityResourceTypeEnum
+	23, // 20: invora.admin.billing.v2.ListActivityLogsSort.rules:type_name -> invora.admin.billing.v2.ListActivityLogsSortRule
+	45, // 21: invora.admin.billing.v2.ListActivityLogsSortRule.created_at:type_name -> kernel.SortDirection
+	18, // 22: invora.admin.billing.v2.ListActivityLogsRequest.filter:type_name -> invora.admin.billing.v2.ListActivityLogsFilter
+	22, // 23: invora.admin.billing.v2.ListActivityLogsRequest.sort:type_name -> invora.admin.billing.v2.ListActivityLogsSort
+	46, // 24: invora.admin.billing.v2.ListActivityLogsRequest.pagination:type_name -> kernel.PaginationInfo
+	47, // 25: invora.admin.billing.v2.ListActivityLogsResponse.items:type_name -> invora.billing.common.v2.ActivityLog
+	47, // 26: invora.admin.billing.v2.GetActivityLogResponse.log:type_name -> invora.billing.common.v2.ActivityLog
+	48, // 27: invora.admin.billing.v2.ApiLog.created_at:type_name -> google.protobuf.Timestamp
+	30, // 28: invora.admin.billing.v2.ListApiLogsFilter.part:type_name -> invora.admin.billing.v2.ListApiLogsFilterPart
+	31, // 29: invora.admin.billing.v2.ListApiLogsFilterPart.method:type_name -> invora.admin.billing.v2.ListApiLogMethodFilter
+	32, // 30: invora.admin.billing.v2.ListApiLogsFilterPart.status_code:type_name -> invora.admin.billing.v2.ListApiLogStatusFilter
+	43, // 31: invora.admin.billing.v2.ListApiLogsFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDate
+	1,  // 32: invora.admin.billing.v2.ListApiLogMethodFilter.in_values:type_name -> invora.admin.billing.v2.HttpMethod
+	34, // 33: invora.admin.billing.v2.ListApiLogsSort.rules:type_name -> invora.admin.billing.v2.ListApiLogsSortRule
+	45, // 34: invora.admin.billing.v2.ListApiLogsSortRule.created_at:type_name -> kernel.SortDirection
+	45, // 35: invora.admin.billing.v2.ListApiLogsSortRule.duration_ms:type_name -> kernel.SortDirection
+	29, // 36: invora.admin.billing.v2.ListApiLogsRequest.filter:type_name -> invora.admin.billing.v2.ListApiLogsFilter
+	33, // 37: invora.admin.billing.v2.ListApiLogsRequest.sort:type_name -> invora.admin.billing.v2.ListApiLogsSort
+	46, // 38: invora.admin.billing.v2.ListApiLogsRequest.pagination:type_name -> kernel.PaginationInfo
+	28, // 39: invora.admin.billing.v2.ListApiLogsResponse.items:type_name -> invora.admin.billing.v2.ApiLog
+	2,  // 40: invora.admin.billing.v2.BillingOrgAdminService.ProvisionOrg:input_type -> invora.admin.billing.v2.ProvisionOrgRequest
+	4,  // 41: invora.admin.billing.v2.BillingOrgAdminService.DeprovisionOrg:input_type -> invora.admin.billing.v2.DeprovisionOrgRequest
+	6,  // 42: invora.admin.billing.v2.BillingOrgAdminService.ListOrgs:input_type -> invora.admin.billing.v2.ListOrgsRequest
+	8,  // 43: invora.admin.billing.v2.BillingOrgAdminService.GetOrgStatus:input_type -> invora.admin.billing.v2.GetOrgStatusRequest
+	10, // 44: invora.admin.billing.v2.BillingOrgAdminService.SuspendOrg:input_type -> invora.admin.billing.v2.SuspendOrgRequest
+	12, // 45: invora.admin.billing.v2.BillingOrgAdminService.ReactivateOrg:input_type -> invora.admin.billing.v2.ReactivateOrgRequest
+	16, // 46: invora.admin.billing.v2.BillingOrgAdminService.UpdateOrgSettings:input_type -> invora.admin.billing.v2.UpdateOrgSettingsRequest
+	24, // 47: invora.admin.billing.v2.BillingOrgAdminService.ListActivityLogs:input_type -> invora.admin.billing.v2.ListActivityLogsRequest
+	26, // 48: invora.admin.billing.v2.BillingOrgAdminService.GetActivityLog:input_type -> invora.admin.billing.v2.GetActivityLogRequest
+	35, // 49: invora.admin.billing.v2.BillingOrgAdminService.ListApiLogs:input_type -> invora.admin.billing.v2.ListApiLogsRequest
+	3,  // 50: invora.admin.billing.v2.BillingOrgAdminService.ProvisionOrg:output_type -> invora.admin.billing.v2.ProvisionOrgResponse
+	5,  // 51: invora.admin.billing.v2.BillingOrgAdminService.DeprovisionOrg:output_type -> invora.admin.billing.v2.DeprovisionOrgResponse
+	7,  // 52: invora.admin.billing.v2.BillingOrgAdminService.ListOrgs:output_type -> invora.admin.billing.v2.ListOrgsResponse
+	9,  // 53: invora.admin.billing.v2.BillingOrgAdminService.GetOrgStatus:output_type -> invora.admin.billing.v2.GetOrgStatusResponse
+	11, // 54: invora.admin.billing.v2.BillingOrgAdminService.SuspendOrg:output_type -> invora.admin.billing.v2.SuspendOrgResponse
+	13, // 55: invora.admin.billing.v2.BillingOrgAdminService.ReactivateOrg:output_type -> invora.admin.billing.v2.ReactivateOrgResponse
+	17, // 56: invora.admin.billing.v2.BillingOrgAdminService.UpdateOrgSettings:output_type -> invora.admin.billing.v2.UpdateOrgSettingsResponse
+	25, // 57: invora.admin.billing.v2.BillingOrgAdminService.ListActivityLogs:output_type -> invora.admin.billing.v2.ListActivityLogsResponse
+	27, // 58: invora.admin.billing.v2.BillingOrgAdminService.GetActivityLog:output_type -> invora.admin.billing.v2.GetActivityLogResponse
+	36, // 59: invora.admin.billing.v2.BillingOrgAdminService.ListApiLogs:output_type -> invora.admin.billing.v2.ListApiLogsResponse
+	50, // [50:60] is the sub-list for method output_type
+	40, // [40:50] is the sub-list for method input_type
+	40, // [40:40] is the sub-list for extension type_name
+	40, // [40:40] is the sub-list for extension extendee
+	0,  // [0:40] is the sub-list for field type_name
 }
 
 func init() { file_invora_admin_billing_v2_service_proto_init() }
