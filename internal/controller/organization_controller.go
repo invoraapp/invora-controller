@@ -173,16 +173,17 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 	return r.updateOrgStatusSuccess(ctx, &org, "Created")
 }
 
-// ensureApiKey checks whether the org's API key Secret already exists.
-// The BillingOrgAdminService proto does not expose API key RPCs (no
-// ListApiKeys, RotateApiKey, etc.), so this method cannot generate new keys.
-// If the Secret is missing or empty, it returns an error describing the gap.
+// ensureApiKey makes sure the org's API key Secret holds a usable key. If the
+// Secret already has a non-empty "apiKey", it is left untouched. Otherwise a
+// fresh key is minted via BillingOrgAdminService.CreateApiKey — which returns
+// the plaintext value exactly once — and written to the Secret. This closes the
+// former contract gap where provisioning looped forever because the proto had
+// no key-management RPCs.
 func (r *InvoraBillingOrganizationReconciler) ensureApiKey(
 	ctx context.Context,
 	instCtx *instanceAdminContext,
 	org *billingv1alpha1.InvoraBillingOrganization,
 ) error {
-	// Check if Secret already has a valid key
 	secretRef := org.Spec.WriteSecretToRef
 	secretNS := secretRef.Namespace
 	if secretNS == "" {
@@ -193,19 +194,37 @@ func (r *InvoraBillingOrganizationReconciler) ensureApiKey(
 	// This is a trusted internal caller — no tenant-authored CR is involved here.
 	existingKey, err := billingclient.ResolveSecretValue(ctx, r.Client, secretRef.Name, secretNS, "apiKey", "")
 	if err == nil && existingKey != "" {
-		// Secret exists and has a key, nothing to do
+		// Secret exists and has a key, nothing to do.
 		SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionCredentialsWritten,
 			metav1.ConditionTrue, "SecretExists", "API key Secret is up to date", org.Generation)
 		return nil
 	}
 
-	// CONTRACT GAP: BillingOrgAdminService proto does not include API key
-	// management RPCs. The old REST-based AdminClient had ListApiKeys and
-	// RotateApiKey, but these have no gRPC equivalent yet. Until the admin
-	// proto adds API key RPCs, keys must be provisioned out-of-band or the
-	// Secret must be pre-populated manually.
-	return fmt.Errorf("API key Secret %s/%s is missing or empty and cannot be auto-provisioned: "+
-		"BillingOrgAdminService proto has no API key RPCs (CONTRACT GAP)", secretNS, secretRef.Name)
+	// No usable key on the Secret — mint one via the admin API. The plaintext
+	// value is returned only on this call, so it must be persisted immediately.
+	adminSvc := adminpb.NewBillingOrgAdminServiceClient(instCtx.Conn())
+	keyName := fmt.Sprintf("controller-%s", org.Name)
+	createResp, err := adminSvc.CreateApiKey(instCtx.GrpcCtx(ctx), &adminpb.CreateApiKeyRequest{
+		TenantId: org.Name,
+		Name:     &keyName,
+	})
+	if err != nil {
+		return fmt.Errorf("creating API key for org %s: %w", org.Name, err)
+	}
+	apiKey := createResp.GetValue()
+	if apiKey == "" {
+		return fmt.Errorf("CreateApiKey for org %s returned an empty value", org.Name)
+	}
+
+	if err := r.WriteSecret(ctx, org, secretRef, org.Namespace, map[string][]byte{
+		"apiKey": []byte(apiKey),
+	}); err != nil {
+		return fmt.Errorf("writing API key Secret %s/%s: %w", secretNS, secretRef.Name, err)
+	}
+
+	SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionCredentialsWritten,
+		metav1.ConditionTrue, "SecretCreated", "API key minted and written to Secret", org.Generation)
+	return nil
 }
 
 func (r *InvoraBillingOrganizationReconciler) updateOrgStatusSuccess(

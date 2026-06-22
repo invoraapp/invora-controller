@@ -13,6 +13,7 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
+	structpb "google.golang.org/protobuf/types/known/structpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
@@ -169,6 +170,421 @@ func (HttpMethod) EnumDescriptor() ([]byte, []int) {
 	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{1}
 }
 
+type CreateApiKeyRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The billing organization (tenant) to create the key under.
+	TenantId string `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	// Optional human-readable label for the key.
+	Name *string `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	// Optional permission grants for the key, expressed as the same structure
+	// surfaced on SanitizedApiKey.permissions. When omitted the platform
+	// applies the organization's default permission set.
+	Permissions *structpb.Struct `protobuf:"bytes,3,opt,name=permissions,proto3,oneof" json:"permissions,omitempty"`
+	// Optional expiry; when omitted the key does not expire.
+	ExpiresAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=expires_at,json=expiresAt,proto3,oneof" json:"expires_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateApiKeyRequest) Reset() {
+	*x = CreateApiKeyRequest{}
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateApiKeyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateApiKeyRequest) ProtoMessage() {}
+
+func (x *CreateApiKeyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateApiKeyRequest.ProtoReflect.Descriptor instead.
+func (*CreateApiKeyRequest) Descriptor() ([]byte, []int) {
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *CreateApiKeyRequest) GetTenantId() string {
+	if x != nil {
+		return x.TenantId
+	}
+	return ""
+}
+
+func (x *CreateApiKeyRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *CreateApiKeyRequest) GetPermissions() *structpb.Struct {
+	if x != nil {
+		return x.Permissions
+	}
+	return nil
+}
+
+func (x *CreateApiKeyRequest) GetExpiresAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ExpiresAt
+	}
+	return nil
+}
+
+type CreateApiKeyResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The full plaintext API key value. Returned ONCE; store it now.
+	Value string `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
+	// Masked metadata for the newly created key.
+	ApiKey        *v2.SanitizedApiKey `protobuf:"bytes,2,opt,name=api_key,json=apiKey,proto3" json:"api_key,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateApiKeyResponse) Reset() {
+	*x = CreateApiKeyResponse{}
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateApiKeyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateApiKeyResponse) ProtoMessage() {}
+
+func (x *CreateApiKeyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateApiKeyResponse.ProtoReflect.Descriptor instead.
+func (*CreateApiKeyResponse) Descriptor() ([]byte, []int) {
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *CreateApiKeyResponse) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+func (x *CreateApiKeyResponse) GetApiKey() *v2.SanitizedApiKey {
+	if x != nil {
+		return x.ApiKey
+	}
+	return nil
+}
+
+type RotateApiKeyRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The billing organization (tenant) that owns the key.
+	TenantId string `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	// Id of the API key to rotate (SanitizedApiKey.id).
+	Id            string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RotateApiKeyRequest) Reset() {
+	*x = RotateApiKeyRequest{}
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RotateApiKeyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RotateApiKeyRequest) ProtoMessage() {}
+
+func (x *RotateApiKeyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RotateApiKeyRequest.ProtoReflect.Descriptor instead.
+func (*RotateApiKeyRequest) Descriptor() ([]byte, []int) {
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *RotateApiKeyRequest) GetTenantId() string {
+	if x != nil {
+		return x.TenantId
+	}
+	return ""
+}
+
+func (x *RotateApiKeyRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type RotateApiKeyResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The new full plaintext API key value. Returned ONCE; store it now.
+	Value string `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
+	// Masked metadata for the rotated key (same id, new secret).
+	ApiKey        *v2.SanitizedApiKey `protobuf:"bytes,2,opt,name=api_key,json=apiKey,proto3" json:"api_key,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RotateApiKeyResponse) Reset() {
+	*x = RotateApiKeyResponse{}
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RotateApiKeyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RotateApiKeyResponse) ProtoMessage() {}
+
+func (x *RotateApiKeyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RotateApiKeyResponse.ProtoReflect.Descriptor instead.
+func (*RotateApiKeyResponse) Descriptor() ([]byte, []int) {
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *RotateApiKeyResponse) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+func (x *RotateApiKeyResponse) GetApiKey() *v2.SanitizedApiKey {
+	if x != nil {
+		return x.ApiKey
+	}
+	return nil
+}
+
+type ListApiKeysRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The billing organization (tenant) whose keys to list.
+	TenantId      string `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListApiKeysRequest) Reset() {
+	*x = ListApiKeysRequest{}
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListApiKeysRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListApiKeysRequest) ProtoMessage() {}
+
+func (x *ListApiKeysRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListApiKeysRequest.ProtoReflect.Descriptor instead.
+func (*ListApiKeysRequest) Descriptor() ([]byte, []int) {
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ListApiKeysRequest) GetTenantId() string {
+	if x != nil {
+		return x.TenantId
+	}
+	return ""
+}
+
+type ListApiKeysResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Items         []*v2.SanitizedApiKey  `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListApiKeysResponse) Reset() {
+	*x = ListApiKeysResponse{}
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListApiKeysResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListApiKeysResponse) ProtoMessage() {}
+
+func (x *ListApiKeysResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListApiKeysResponse.ProtoReflect.Descriptor instead.
+func (*ListApiKeysResponse) Descriptor() ([]byte, []int) {
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ListApiKeysResponse) GetItems() []*v2.SanitizedApiKey {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+type RevokeApiKeyRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The billing organization (tenant) that owns the key.
+	TenantId string `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	// Id of the API key to revoke (SanitizedApiKey.id).
+	Id            string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RevokeApiKeyRequest) Reset() {
+	*x = RevokeApiKeyRequest{}
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RevokeApiKeyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RevokeApiKeyRequest) ProtoMessage() {}
+
+func (x *RevokeApiKeyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RevokeApiKeyRequest.ProtoReflect.Descriptor instead.
+func (*RevokeApiKeyRequest) Descriptor() ([]byte, []int) {
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *RevokeApiKeyRequest) GetTenantId() string {
+	if x != nil {
+		return x.TenantId
+	}
+	return ""
+}
+
+func (x *RevokeApiKeyRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type RevokeApiKeyResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RevokeApiKeyResponse) Reset() {
+	*x = RevokeApiKeyResponse{}
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RevokeApiKeyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RevokeApiKeyResponse) ProtoMessage() {}
+
+func (x *RevokeApiKeyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RevokeApiKeyResponse.ProtoReflect.Descriptor instead.
+func (*RevokeApiKeyResponse) Descriptor() ([]byte, []int) {
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{7}
+}
+
 type ProvisionOrgRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TenantId      string                 `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
@@ -180,7 +596,7 @@ type ProvisionOrgRequest struct {
 
 func (x *ProvisionOrgRequest) Reset() {
 	*x = ProvisionOrgRequest{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[0]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -192,7 +608,7 @@ func (x *ProvisionOrgRequest) String() string {
 func (*ProvisionOrgRequest) ProtoMessage() {}
 
 func (x *ProvisionOrgRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[0]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -205,7 +621,7 @@ func (x *ProvisionOrgRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProvisionOrgRequest.ProtoReflect.Descriptor instead.
 func (*ProvisionOrgRequest) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{0}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ProvisionOrgRequest) GetTenantId() string {
@@ -238,7 +654,7 @@ type ProvisionOrgResponse struct {
 
 func (x *ProvisionOrgResponse) Reset() {
 	*x = ProvisionOrgResponse{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[1]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -250,7 +666,7 @@ func (x *ProvisionOrgResponse) String() string {
 func (*ProvisionOrgResponse) ProtoMessage() {}
 
 func (x *ProvisionOrgResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[1]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -263,7 +679,7 @@ func (x *ProvisionOrgResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProvisionOrgResponse.ProtoReflect.Descriptor instead.
 func (*ProvisionOrgResponse) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{1}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ProvisionOrgResponse) GetOrg() *v2.BillingOrg {
@@ -282,7 +698,7 @@ type DeprovisionOrgRequest struct {
 
 func (x *DeprovisionOrgRequest) Reset() {
 	*x = DeprovisionOrgRequest{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[2]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -294,7 +710,7 @@ func (x *DeprovisionOrgRequest) String() string {
 func (*DeprovisionOrgRequest) ProtoMessage() {}
 
 func (x *DeprovisionOrgRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[2]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -307,7 +723,7 @@ func (x *DeprovisionOrgRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeprovisionOrgRequest.ProtoReflect.Descriptor instead.
 func (*DeprovisionOrgRequest) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{2}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *DeprovisionOrgRequest) GetTenantId() string {
@@ -325,7 +741,7 @@ type DeprovisionOrgResponse struct {
 
 func (x *DeprovisionOrgResponse) Reset() {
 	*x = DeprovisionOrgResponse{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[3]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -337,7 +753,7 @@ func (x *DeprovisionOrgResponse) String() string {
 func (*DeprovisionOrgResponse) ProtoMessage() {}
 
 func (x *DeprovisionOrgResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[3]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -350,7 +766,7 @@ func (x *DeprovisionOrgResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeprovisionOrgResponse.ProtoReflect.Descriptor instead.
 func (*DeprovisionOrgResponse) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{3}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{11}
 }
 
 type ListOrgsRequest struct {
@@ -364,7 +780,7 @@ type ListOrgsRequest struct {
 
 func (x *ListOrgsRequest) Reset() {
 	*x = ListOrgsRequest{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[4]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -376,7 +792,7 @@ func (x *ListOrgsRequest) String() string {
 func (*ListOrgsRequest) ProtoMessage() {}
 
 func (x *ListOrgsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[4]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -389,7 +805,7 @@ func (x *ListOrgsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListOrgsRequest.ProtoReflect.Descriptor instead.
 func (*ListOrgsRequest) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{4}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *ListOrgsRequest) GetPageSize() int32 {
@@ -423,7 +839,7 @@ type ListOrgsResponse struct {
 
 func (x *ListOrgsResponse) Reset() {
 	*x = ListOrgsResponse{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[5]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -435,7 +851,7 @@ func (x *ListOrgsResponse) String() string {
 func (*ListOrgsResponse) ProtoMessage() {}
 
 func (x *ListOrgsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[5]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -448,7 +864,7 @@ func (x *ListOrgsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListOrgsResponse.ProtoReflect.Descriptor instead.
 func (*ListOrgsResponse) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{5}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *ListOrgsResponse) GetItems() []*v2.BillingOrg {
@@ -474,7 +890,7 @@ type GetOrgStatusRequest struct {
 
 func (x *GetOrgStatusRequest) Reset() {
 	*x = GetOrgStatusRequest{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[6]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -486,7 +902,7 @@ func (x *GetOrgStatusRequest) String() string {
 func (*GetOrgStatusRequest) ProtoMessage() {}
 
 func (x *GetOrgStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[6]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -499,7 +915,7 @@ func (x *GetOrgStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetOrgStatusRequest.ProtoReflect.Descriptor instead.
 func (*GetOrgStatusRequest) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{6}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *GetOrgStatusRequest) GetTenantId() string {
@@ -518,7 +934,7 @@ type GetOrgStatusResponse struct {
 
 func (x *GetOrgStatusResponse) Reset() {
 	*x = GetOrgStatusResponse{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[7]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -530,7 +946,7 @@ func (x *GetOrgStatusResponse) String() string {
 func (*GetOrgStatusResponse) ProtoMessage() {}
 
 func (x *GetOrgStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[7]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -543,7 +959,7 @@ func (x *GetOrgStatusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetOrgStatusResponse.ProtoReflect.Descriptor instead.
 func (*GetOrgStatusResponse) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{7}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *GetOrgStatusResponse) GetOrg() *v2.BillingOrg {
@@ -563,7 +979,7 @@ type SuspendOrgRequest struct {
 
 func (x *SuspendOrgRequest) Reset() {
 	*x = SuspendOrgRequest{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[8]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -575,7 +991,7 @@ func (x *SuspendOrgRequest) String() string {
 func (*SuspendOrgRequest) ProtoMessage() {}
 
 func (x *SuspendOrgRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[8]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -588,7 +1004,7 @@ func (x *SuspendOrgRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SuspendOrgRequest.ProtoReflect.Descriptor instead.
 func (*SuspendOrgRequest) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{8}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *SuspendOrgRequest) GetTenantId() string {
@@ -614,7 +1030,7 @@ type SuspendOrgResponse struct {
 
 func (x *SuspendOrgResponse) Reset() {
 	*x = SuspendOrgResponse{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[9]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -626,7 +1042,7 @@ func (x *SuspendOrgResponse) String() string {
 func (*SuspendOrgResponse) ProtoMessage() {}
 
 func (x *SuspendOrgResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[9]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -639,7 +1055,7 @@ func (x *SuspendOrgResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SuspendOrgResponse.ProtoReflect.Descriptor instead.
 func (*SuspendOrgResponse) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{9}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *SuspendOrgResponse) GetOrg() *v2.BillingOrg {
@@ -658,7 +1074,7 @@ type ReactivateOrgRequest struct {
 
 func (x *ReactivateOrgRequest) Reset() {
 	*x = ReactivateOrgRequest{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[10]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -670,7 +1086,7 @@ func (x *ReactivateOrgRequest) String() string {
 func (*ReactivateOrgRequest) ProtoMessage() {}
 
 func (x *ReactivateOrgRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[10]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -683,7 +1099,7 @@ func (x *ReactivateOrgRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReactivateOrgRequest.ProtoReflect.Descriptor instead.
 func (*ReactivateOrgRequest) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{10}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *ReactivateOrgRequest) GetTenantId() string {
@@ -702,7 +1118,7 @@ type ReactivateOrgResponse struct {
 
 func (x *ReactivateOrgResponse) Reset() {
 	*x = ReactivateOrgResponse{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[11]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -714,7 +1130,7 @@ func (x *ReactivateOrgResponse) String() string {
 func (*ReactivateOrgResponse) ProtoMessage() {}
 
 func (x *ReactivateOrgResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[11]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -727,7 +1143,7 @@ func (x *ReactivateOrgResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReactivateOrgResponse.ProtoReflect.Descriptor instead.
 func (*ReactivateOrgResponse) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{11}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *ReactivateOrgResponse) GetOrg() *v2.BillingOrg {
@@ -752,7 +1168,7 @@ type OrgEmailSettings struct {
 
 func (x *OrgEmailSettings) Reset() {
 	*x = OrgEmailSettings{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[12]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -764,7 +1180,7 @@ func (x *OrgEmailSettings) String() string {
 func (*OrgEmailSettings) ProtoMessage() {}
 
 func (x *OrgEmailSettings) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[12]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -777,7 +1193,7 @@ func (x *OrgEmailSettings) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OrgEmailSettings.ProtoReflect.Descriptor instead.
 func (*OrgEmailSettings) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{12}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *OrgEmailSettings) GetInvoiceFinalized() bool {
@@ -828,7 +1244,7 @@ type OrgSettings struct {
 
 func (x *OrgSettings) Reset() {
 	*x = OrgSettings{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[13]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -840,7 +1256,7 @@ func (x *OrgSettings) String() string {
 func (*OrgSettings) ProtoMessage() {}
 
 func (x *OrgSettings) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[13]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -853,7 +1269,7 @@ func (x *OrgSettings) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OrgSettings.ProtoReflect.Descriptor instead.
 func (*OrgSettings) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{13}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *OrgSettings) GetDefaultCurrency() v2.CurrencyEnum {
@@ -935,7 +1351,7 @@ type UpdateOrgSettingsRequest struct {
 
 func (x *UpdateOrgSettingsRequest) Reset() {
 	*x = UpdateOrgSettingsRequest{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[14]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -947,7 +1363,7 @@ func (x *UpdateOrgSettingsRequest) String() string {
 func (*UpdateOrgSettingsRequest) ProtoMessage() {}
 
 func (x *UpdateOrgSettingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[14]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -960,7 +1376,7 @@ func (x *UpdateOrgSettingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateOrgSettingsRequest.ProtoReflect.Descriptor instead.
 func (*UpdateOrgSettingsRequest) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{14}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *UpdateOrgSettingsRequest) GetTenantId() string {
@@ -993,7 +1409,7 @@ type UpdateOrgSettingsResponse struct {
 
 func (x *UpdateOrgSettingsResponse) Reset() {
 	*x = UpdateOrgSettingsResponse{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[15]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1005,7 +1421,7 @@ func (x *UpdateOrgSettingsResponse) String() string {
 func (*UpdateOrgSettingsResponse) ProtoMessage() {}
 
 func (x *UpdateOrgSettingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[15]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1018,7 +1434,7 @@ func (x *UpdateOrgSettingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateOrgSettingsResponse.ProtoReflect.Descriptor instead.
 func (*UpdateOrgSettingsResponse) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{15}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *UpdateOrgSettingsResponse) GetSettings() *OrgSettings {
@@ -1039,7 +1455,7 @@ type ListActivityLogsFilter struct {
 
 func (x *ListActivityLogsFilter) Reset() {
 	*x = ListActivityLogsFilter{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[16]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1051,7 +1467,7 @@ func (x *ListActivityLogsFilter) String() string {
 func (*ListActivityLogsFilter) ProtoMessage() {}
 
 func (x *ListActivityLogsFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[16]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1064,7 +1480,7 @@ func (x *ListActivityLogsFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListActivityLogsFilter.ProtoReflect.Descriptor instead.
 func (*ListActivityLogsFilter) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{16}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *ListActivityLogsFilter) GetPart() *ListActivityLogsFilterPart {
@@ -1097,7 +1513,7 @@ type ListActivityLogsFilterPart struct {
 
 func (x *ListActivityLogsFilterPart) Reset() {
 	*x = ListActivityLogsFilterPart{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[17]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1109,7 +1525,7 @@ func (x *ListActivityLogsFilterPart) String() string {
 func (*ListActivityLogsFilterPart) ProtoMessage() {}
 
 func (x *ListActivityLogsFilterPart) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[17]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1122,7 +1538,7 @@ func (x *ListActivityLogsFilterPart) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListActivityLogsFilterPart.ProtoReflect.Descriptor instead.
 func (*ListActivityLogsFilterPart) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{17}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *ListActivityLogsFilterPart) GetType() isListActivityLogsFilterPart_Type {
@@ -1210,7 +1626,7 @@ type ListActivityLogActionFilter struct {
 
 func (x *ListActivityLogActionFilter) Reset() {
 	*x = ListActivityLogActionFilter{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[18]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1222,7 +1638,7 @@ func (x *ListActivityLogActionFilter) String() string {
 func (*ListActivityLogActionFilter) ProtoMessage() {}
 
 func (x *ListActivityLogActionFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[18]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1235,7 +1651,7 @@ func (x *ListActivityLogActionFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListActivityLogActionFilter.ProtoReflect.Descriptor instead.
 func (*ListActivityLogActionFilter) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{18}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *ListActivityLogActionFilter) GetInValues() []v2.ActivityTypeEnum {
@@ -1255,7 +1671,7 @@ type ListActivityLogResourceTypeFilter struct {
 
 func (x *ListActivityLogResourceTypeFilter) Reset() {
 	*x = ListActivityLogResourceTypeFilter{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[19]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1267,7 +1683,7 @@ func (x *ListActivityLogResourceTypeFilter) String() string {
 func (*ListActivityLogResourceTypeFilter) ProtoMessage() {}
 
 func (x *ListActivityLogResourceTypeFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[19]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1280,7 +1696,7 @@ func (x *ListActivityLogResourceTypeFilter) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use ListActivityLogResourceTypeFilter.ProtoReflect.Descriptor instead.
 func (*ListActivityLogResourceTypeFilter) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{19}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *ListActivityLogResourceTypeFilter) GetInValues() []ActivityResourceTypeEnum {
@@ -1300,7 +1716,7 @@ type ListActivityLogsSort struct {
 
 func (x *ListActivityLogsSort) Reset() {
 	*x = ListActivityLogsSort{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[20]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1312,7 +1728,7 @@ func (x *ListActivityLogsSort) String() string {
 func (*ListActivityLogsSort) ProtoMessage() {}
 
 func (x *ListActivityLogsSort) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[20]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1325,7 +1741,7 @@ func (x *ListActivityLogsSort) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListActivityLogsSort.ProtoReflect.Descriptor instead.
 func (*ListActivityLogsSort) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{20}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *ListActivityLogsSort) GetRules() []*ListActivityLogsSortRule {
@@ -1348,7 +1764,7 @@ type ListActivityLogsSortRule struct {
 
 func (x *ListActivityLogsSortRule) Reset() {
 	*x = ListActivityLogsSortRule{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[21]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1360,7 +1776,7 @@ func (x *ListActivityLogsSortRule) String() string {
 func (*ListActivityLogsSortRule) ProtoMessage() {}
 
 func (x *ListActivityLogsSortRule) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[21]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1373,7 +1789,7 @@ func (x *ListActivityLogsSortRule) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListActivityLogsSortRule.ProtoReflect.Descriptor instead.
 func (*ListActivityLogsSortRule) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{21}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *ListActivityLogsSortRule) GetType() isListActivityLogsSortRule_Type {
@@ -1414,7 +1830,7 @@ type ListActivityLogsRequest struct {
 
 func (x *ListActivityLogsRequest) Reset() {
 	*x = ListActivityLogsRequest{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[22]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1426,7 +1842,7 @@ func (x *ListActivityLogsRequest) String() string {
 func (*ListActivityLogsRequest) ProtoMessage() {}
 
 func (x *ListActivityLogsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[22]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1439,7 +1855,7 @@ func (x *ListActivityLogsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListActivityLogsRequest.ProtoReflect.Descriptor instead.
 func (*ListActivityLogsRequest) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{22}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *ListActivityLogsRequest) GetTenantId() string {
@@ -1481,7 +1897,7 @@ type ListActivityLogsResponse struct {
 
 func (x *ListActivityLogsResponse) Reset() {
 	*x = ListActivityLogsResponse{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[23]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1493,7 +1909,7 @@ func (x *ListActivityLogsResponse) String() string {
 func (*ListActivityLogsResponse) ProtoMessage() {}
 
 func (x *ListActivityLogsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[23]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1506,7 +1922,7 @@ func (x *ListActivityLogsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListActivityLogsResponse.ProtoReflect.Descriptor instead.
 func (*ListActivityLogsResponse) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{23}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *ListActivityLogsResponse) GetItems() []*v2.ActivityLog {
@@ -1539,7 +1955,7 @@ type GetActivityLogRequest struct {
 
 func (x *GetActivityLogRequest) Reset() {
 	*x = GetActivityLogRequest{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[24]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1551,7 +1967,7 @@ func (x *GetActivityLogRequest) String() string {
 func (*GetActivityLogRequest) ProtoMessage() {}
 
 func (x *GetActivityLogRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[24]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1564,7 +1980,7 @@ func (x *GetActivityLogRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetActivityLogRequest.ProtoReflect.Descriptor instead.
 func (*GetActivityLogRequest) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{24}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *GetActivityLogRequest) GetId() string {
@@ -1583,7 +1999,7 @@ type GetActivityLogResponse struct {
 
 func (x *GetActivityLogResponse) Reset() {
 	*x = GetActivityLogResponse{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[25]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1595,7 +2011,7 @@ func (x *GetActivityLogResponse) String() string {
 func (*GetActivityLogResponse) ProtoMessage() {}
 
 func (x *GetActivityLogResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[25]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1608,7 +2024,7 @@ func (x *GetActivityLogResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetActivityLogResponse.ProtoReflect.Descriptor instead.
 func (*GetActivityLogResponse) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{25}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *GetActivityLogResponse) GetLog() *v2.ActivityLog {
@@ -1637,7 +2053,7 @@ type ApiLog struct {
 
 func (x *ApiLog) Reset() {
 	*x = ApiLog{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[26]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1649,7 +2065,7 @@ func (x *ApiLog) String() string {
 func (*ApiLog) ProtoMessage() {}
 
 func (x *ApiLog) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[26]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1662,7 +2078,7 @@ func (x *ApiLog) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ApiLog.ProtoReflect.Descriptor instead.
 func (*ApiLog) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{26}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *ApiLog) GetId() string {
@@ -1746,7 +2162,7 @@ type ListApiLogsFilter struct {
 
 func (x *ListApiLogsFilter) Reset() {
 	*x = ListApiLogsFilter{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[27]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1758,7 +2174,7 @@ func (x *ListApiLogsFilter) String() string {
 func (*ListApiLogsFilter) ProtoMessage() {}
 
 func (x *ListApiLogsFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[27]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1771,7 +2187,7 @@ func (x *ListApiLogsFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListApiLogsFilter.ProtoReflect.Descriptor instead.
 func (*ListApiLogsFilter) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{27}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *ListApiLogsFilter) GetPart() *ListApiLogsFilterPart {
@@ -1804,7 +2220,7 @@ type ListApiLogsFilterPart struct {
 
 func (x *ListApiLogsFilterPart) Reset() {
 	*x = ListApiLogsFilterPart{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[28]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1816,7 +2232,7 @@ func (x *ListApiLogsFilterPart) String() string {
 func (*ListApiLogsFilterPart) ProtoMessage() {}
 
 func (x *ListApiLogsFilterPart) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[28]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1829,7 +2245,7 @@ func (x *ListApiLogsFilterPart) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListApiLogsFilterPart.ProtoReflect.Descriptor instead.
 func (*ListApiLogsFilterPart) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{28}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *ListApiLogsFilterPart) GetType() isListApiLogsFilterPart_Type {
@@ -1917,7 +2333,7 @@ type ListApiLogMethodFilter struct {
 
 func (x *ListApiLogMethodFilter) Reset() {
 	*x = ListApiLogMethodFilter{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[29]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1929,7 +2345,7 @@ func (x *ListApiLogMethodFilter) String() string {
 func (*ListApiLogMethodFilter) ProtoMessage() {}
 
 func (x *ListApiLogMethodFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[29]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1942,7 +2358,7 @@ func (x *ListApiLogMethodFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListApiLogMethodFilter.ProtoReflect.Descriptor instead.
 func (*ListApiLogMethodFilter) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{29}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *ListApiLogMethodFilter) GetInValues() []HttpMethod {
@@ -1963,7 +2379,7 @@ type ListApiLogStatusFilter struct {
 
 func (x *ListApiLogStatusFilter) Reset() {
 	*x = ListApiLogStatusFilter{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[30]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1975,7 +2391,7 @@ func (x *ListApiLogStatusFilter) String() string {
 func (*ListApiLogStatusFilter) ProtoMessage() {}
 
 func (x *ListApiLogStatusFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[30]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1988,7 +2404,7 @@ func (x *ListApiLogStatusFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListApiLogStatusFilter.ProtoReflect.Descriptor instead.
 func (*ListApiLogStatusFilter) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{30}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *ListApiLogStatusFilter) GetMin() int32 {
@@ -2015,7 +2431,7 @@ type ListApiLogsSort struct {
 
 func (x *ListApiLogsSort) Reset() {
 	*x = ListApiLogsSort{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[31]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2027,7 +2443,7 @@ func (x *ListApiLogsSort) String() string {
 func (*ListApiLogsSort) ProtoMessage() {}
 
 func (x *ListApiLogsSort) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[31]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2040,7 +2456,7 @@ func (x *ListApiLogsSort) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListApiLogsSort.ProtoReflect.Descriptor instead.
 func (*ListApiLogsSort) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{31}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *ListApiLogsSort) GetRules() []*ListApiLogsSortRule {
@@ -2064,7 +2480,7 @@ type ListApiLogsSortRule struct {
 
 func (x *ListApiLogsSortRule) Reset() {
 	*x = ListApiLogsSortRule{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[32]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2076,7 +2492,7 @@ func (x *ListApiLogsSortRule) String() string {
 func (*ListApiLogsSortRule) ProtoMessage() {}
 
 func (x *ListApiLogsSortRule) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[32]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2089,7 +2505,7 @@ func (x *ListApiLogsSortRule) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListApiLogsSortRule.ProtoReflect.Descriptor instead.
 func (*ListApiLogsSortRule) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{32}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *ListApiLogsSortRule) GetType() isListApiLogsSortRule_Type {
@@ -2145,7 +2561,7 @@ type ListApiLogsRequest struct {
 
 func (x *ListApiLogsRequest) Reset() {
 	*x = ListApiLogsRequest{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[33]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2157,7 +2573,7 @@ func (x *ListApiLogsRequest) String() string {
 func (*ListApiLogsRequest) ProtoMessage() {}
 
 func (x *ListApiLogsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[33]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2170,7 +2586,7 @@ func (x *ListApiLogsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListApiLogsRequest.ProtoReflect.Descriptor instead.
 func (*ListApiLogsRequest) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{33}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *ListApiLogsRequest) GetTenantId() string {
@@ -2212,7 +2628,7 @@ type ListApiLogsResponse struct {
 
 func (x *ListApiLogsResponse) Reset() {
 	*x = ListApiLogsResponse{}
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[34]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2224,7 +2640,7 @@ func (x *ListApiLogsResponse) String() string {
 func (*ListApiLogsResponse) ProtoMessage() {}
 
 func (x *ListApiLogsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[34]
+	mi := &file_invora_admin_billing_v2_service_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2237,7 +2653,7 @@ func (x *ListApiLogsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListApiLogsResponse.ProtoReflect.Descriptor instead.
 func (*ListApiLogsResponse) Descriptor() ([]byte, []int) {
-	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{34}
+	return file_invora_admin_billing_v2_service_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *ListApiLogsResponse) GetItems() []*ApiLog {
@@ -2265,7 +2681,33 @@ var File_invora_admin_billing_v2_service_proto protoreflect.FileDescriptor
 
 const file_invora_admin_billing_v2_service_proto_rawDesc = "" +
 	"\n" +
-	"%invora/admin/billing/v2/service.proto\x12\x17invora.admin.billing.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\x99\x01\n" +
+	"%invora/admin/billing/v2/service.proto\x12\x17invora.admin.billing.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\xf3\x01\n" +
+	"\x13CreateApiKeyRequest\x12\x1b\n" +
+	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12\x17\n" +
+	"\x04name\x18\x02 \x01(\tH\x00R\x04name\x88\x01\x01\x12>\n" +
+	"\vpermissions\x18\x03 \x01(\v2\x17.google.protobuf.StructH\x01R\vpermissions\x88\x01\x01\x12>\n" +
+	"\n" +
+	"expires_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampH\x02R\texpiresAt\x88\x01\x01B\a\n" +
+	"\x05_nameB\x0e\n" +
+	"\f_permissionsB\r\n" +
+	"\v_expires_at\"p\n" +
+	"\x14CreateApiKeyResponse\x12\x14\n" +
+	"\x05value\x18\x01 \x01(\tR\x05value\x12B\n" +
+	"\aapi_key\x18\x02 \x01(\v2).invora.billing.common.v2.SanitizedApiKeyR\x06apiKey\"B\n" +
+	"\x13RotateApiKeyRequest\x12\x1b\n" +
+	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12\x0e\n" +
+	"\x02id\x18\x02 \x01(\tR\x02id\"p\n" +
+	"\x14RotateApiKeyResponse\x12\x14\n" +
+	"\x05value\x18\x01 \x01(\tR\x05value\x12B\n" +
+	"\aapi_key\x18\x02 \x01(\v2).invora.billing.common.v2.SanitizedApiKeyR\x06apiKey\"1\n" +
+	"\x12ListApiKeysRequest\x12\x1b\n" +
+	"\ttenant_id\x18\x01 \x01(\tR\btenantId\"V\n" +
+	"\x13ListApiKeysResponse\x12?\n" +
+	"\x05items\x18\x01 \x03(\v2).invora.billing.common.v2.SanitizedApiKeyR\x05items\"B\n" +
+	"\x13RevokeApiKeyRequest\x12\x1b\n" +
+	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12\x0e\n" +
+	"\x02id\x18\x02 \x01(\tR\x02id\"\x16\n" +
+	"\x14RevokeApiKeyResponse\"\x99\x01\n" +
 	"\x13ProvisionOrgRequest\x12\x1b\n" +
 	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12!\n" +
 	"\fdisplay_name\x18\x02 \x01(\tR\vdisplayName\x12B\n" +
@@ -2436,7 +2878,7 @@ const file_invora_admin_billing_v2_service_proto_rawDesc = "" +
 	"\x11HTTP_METHOD_PATCH\x10\x04\x12\x16\n" +
 	"\x12HTTP_METHOD_DELETE\x10\x05\x12\x14\n" +
 	"\x10HTTP_METHOD_HEAD\x10\x06\x12\x17\n" +
-	"\x13HTTP_METHOD_OPTIONS\x10\a2\xad\x10\n" +
+	"\x13HTTP_METHOD_OPTIONS\x10\a2\x84\x17\n" +
 	"\x16BillingOrgAdminService\x12\xbc\x01\n" +
 	"\fProvisionOrg\x12,.invora.admin.billing.v2.ProvisionOrgRequest\x1a-.invora.admin.billing.v2.ProvisionOrgResponse\"O\xe2\xf2\x19&\n" +
 	"$Invora.Admin.Billing.v2.ProvisionOrg\x82\xd3\xe4\x93\x02\x1f:\x01*\"\x1a/api/admin/billing/v2/orgs\x12\xcd\x01\n" +
@@ -2458,7 +2900,15 @@ const file_invora_admin_billing_v2_service_proto_rawDesc = "" +
 	"\x0eGetActivityLog\x12..invora.admin.billing.v2.GetActivityLogRequest\x1a/.invora.admin.billing.v2.GetActivityLogResponse\"\\\xe2\xf2\x19(\n" +
 	"&Invora.Admin.Billing.v2.GetActivityLog\x82\xd3\xe4\x93\x02*\x12(/api/admin/billing/v2/activity-logs/{id}\x12\xca\x01\n" +
 	"\vListApiLogs\x12+.invora.admin.billing.v2.ListApiLogsRequest\x1a,.invora.admin.billing.v2.ListApiLogsResponse\"`\xe2\xf2\x19%\n" +
-	"#Invora.Admin.Billing.v2.ListApiLogs\x82\xd3\xe4\x93\x021\x12//api/admin/billing/v2/orgs/{tenant_id}/api-logsB\xf8\x01\n" +
+	"#Invora.Admin.Billing.v2.ListApiLogs\x82\xd3\xe4\x93\x021\x12//api/admin/billing/v2/orgs/{tenant_id}/api-logs\x12\xd1\x01\n" +
+	"\fCreateApiKey\x12,.invora.admin.billing.v2.CreateApiKeyRequest\x1a-.invora.admin.billing.v2.CreateApiKeyResponse\"d\xe2\xf2\x19&\n" +
+	"$Invora.Admin.Billing.v2.CreateApiKey\x82\xd3\xe4\x93\x024:\x01*\"//api/admin/billing/v2/orgs/{tenant_id}/api-keys\x12\xdd\x01\n" +
+	"\fRotateApiKey\x12,.invora.admin.billing.v2.RotateApiKeyRequest\x1a-.invora.admin.billing.v2.RotateApiKeyResponse\"p\xe2\xf2\x19&\n" +
+	"$Invora.Admin.Billing.v2.RotateApiKey\x82\xd3\xe4\x93\x02@:\x01*\";/api/admin/billing/v2/orgs/{tenant_id}/api-keys/{id}/rotate\x12\xca\x01\n" +
+	"\vListApiKeys\x12+.invora.admin.billing.v2.ListApiKeysRequest\x1a,.invora.admin.billing.v2.ListApiKeysResponse\"`\xe2\xf2\x19%\n" +
+	"#Invora.Admin.Billing.v2.ListApiKeys\x82\xd3\xe4\x93\x021\x12//api/admin/billing/v2/orgs/{tenant_id}/api-keys\x12\xd3\x01\n" +
+	"\fRevokeApiKey\x12,.invora.admin.billing.v2.RevokeApiKeyRequest\x1a-.invora.admin.billing.v2.RevokeApiKeyResponse\"f\xe2\xf2\x19&\n" +
+	"$Invora.Admin.Billing.v2.RevokeApiKey\x82\xd3\xe4\x93\x026*4/api/admin/billing/v2/orgs/{tenant_id}/api-keys/{id}B\xf8\x01\n" +
 	"\x1bcom.invora.admin.billing.v2B\fServiceProtoP\x01ZLgithub.com/invoraapp/invora-controller/gen/invora/admin/billing/v2;billingv2\xa2\x02\x03IAB\xaa\x02\x17Invora.Admin.Billing.V2\xca\x02\x17Invora\\Admin\\Billing\\V2\xe2\x02#Invora\\Admin\\Billing\\V2\\GPBMetadata\xea\x02\x1aInvora::Admin::Billing::V2b\x06proto3"
 
 var (
@@ -2474,124 +2924,147 @@ func file_invora_admin_billing_v2_service_proto_rawDescGZIP() []byte {
 }
 
 var file_invora_admin_billing_v2_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_invora_admin_billing_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 35)
+var file_invora_admin_billing_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 43)
 var file_invora_admin_billing_v2_service_proto_goTypes = []any{
 	(ActivityResourceTypeEnum)(0),             // 0: invora.admin.billing.v2.ActivityResourceTypeEnum
 	(HttpMethod)(0),                           // 1: invora.admin.billing.v2.HttpMethod
-	(*ProvisionOrgRequest)(nil),               // 2: invora.admin.billing.v2.ProvisionOrgRequest
-	(*ProvisionOrgResponse)(nil),              // 3: invora.admin.billing.v2.ProvisionOrgResponse
-	(*DeprovisionOrgRequest)(nil),             // 4: invora.admin.billing.v2.DeprovisionOrgRequest
-	(*DeprovisionOrgResponse)(nil),            // 5: invora.admin.billing.v2.DeprovisionOrgResponse
-	(*ListOrgsRequest)(nil),                   // 6: invora.admin.billing.v2.ListOrgsRequest
-	(*ListOrgsResponse)(nil),                  // 7: invora.admin.billing.v2.ListOrgsResponse
-	(*GetOrgStatusRequest)(nil),               // 8: invora.admin.billing.v2.GetOrgStatusRequest
-	(*GetOrgStatusResponse)(nil),              // 9: invora.admin.billing.v2.GetOrgStatusResponse
-	(*SuspendOrgRequest)(nil),                 // 10: invora.admin.billing.v2.SuspendOrgRequest
-	(*SuspendOrgResponse)(nil),                // 11: invora.admin.billing.v2.SuspendOrgResponse
-	(*ReactivateOrgRequest)(nil),              // 12: invora.admin.billing.v2.ReactivateOrgRequest
-	(*ReactivateOrgResponse)(nil),             // 13: invora.admin.billing.v2.ReactivateOrgResponse
-	(*OrgEmailSettings)(nil),                  // 14: invora.admin.billing.v2.OrgEmailSettings
-	(*OrgSettings)(nil),                       // 15: invora.admin.billing.v2.OrgSettings
-	(*UpdateOrgSettingsRequest)(nil),          // 16: invora.admin.billing.v2.UpdateOrgSettingsRequest
-	(*UpdateOrgSettingsResponse)(nil),         // 17: invora.admin.billing.v2.UpdateOrgSettingsResponse
-	(*ListActivityLogsFilter)(nil),            // 18: invora.admin.billing.v2.ListActivityLogsFilter
-	(*ListActivityLogsFilterPart)(nil),        // 19: invora.admin.billing.v2.ListActivityLogsFilterPart
-	(*ListActivityLogActionFilter)(nil),       // 20: invora.admin.billing.v2.ListActivityLogActionFilter
-	(*ListActivityLogResourceTypeFilter)(nil), // 21: invora.admin.billing.v2.ListActivityLogResourceTypeFilter
-	(*ListActivityLogsSort)(nil),              // 22: invora.admin.billing.v2.ListActivityLogsSort
-	(*ListActivityLogsSortRule)(nil),          // 23: invora.admin.billing.v2.ListActivityLogsSortRule
-	(*ListActivityLogsRequest)(nil),           // 24: invora.admin.billing.v2.ListActivityLogsRequest
-	(*ListActivityLogsResponse)(nil),          // 25: invora.admin.billing.v2.ListActivityLogsResponse
-	(*GetActivityLogRequest)(nil),             // 26: invora.admin.billing.v2.GetActivityLogRequest
-	(*GetActivityLogResponse)(nil),            // 27: invora.admin.billing.v2.GetActivityLogResponse
-	(*ApiLog)(nil),                            // 28: invora.admin.billing.v2.ApiLog
-	(*ListApiLogsFilter)(nil),                 // 29: invora.admin.billing.v2.ListApiLogsFilter
-	(*ListApiLogsFilterPart)(nil),             // 30: invora.admin.billing.v2.ListApiLogsFilterPart
-	(*ListApiLogMethodFilter)(nil),            // 31: invora.admin.billing.v2.ListApiLogMethodFilter
-	(*ListApiLogStatusFilter)(nil),            // 32: invora.admin.billing.v2.ListApiLogStatusFilter
-	(*ListApiLogsSort)(nil),                   // 33: invora.admin.billing.v2.ListApiLogsSort
-	(*ListApiLogsSortRule)(nil),               // 34: invora.admin.billing.v2.ListApiLogsSortRule
-	(*ListApiLogsRequest)(nil),                // 35: invora.admin.billing.v2.ListApiLogsRequest
-	(*ListApiLogsResponse)(nil),               // 36: invora.admin.billing.v2.ListApiLogsResponse
-	(v2.CurrencyEnum)(0),                      // 37: invora.billing.common.v2.CurrencyEnum
-	(*v2.BillingOrg)(nil),                     // 38: invora.billing.common.v2.BillingOrg
-	(v2.BillingOrgStatus)(0),                  // 39: invora.billing.common.v2.BillingOrgStatus
-	(v2.Timezone)(0),                          // 40: invora.billing.common.v2.Timezone
-	(v2.BillingEntityDocumentNumbering)(0),    // 41: invora.billing.common.v2.BillingEntityDocumentNumbering
-	(*fieldmaskpb.FieldMask)(nil),             // 42: google.protobuf.FieldMask
-	(*kernel.ListRequestFilterPartDate)(nil),  // 43: kernel.ListRequestFilterPartDate
-	(v2.ActivityTypeEnum)(0),                  // 44: invora.billing.common.v2.ActivityTypeEnum
-	(kernel.SortDirection)(0),                 // 45: kernel.SortDirection
-	(*kernel.PaginationInfo)(nil),             // 46: kernel.PaginationInfo
-	(*v2.ActivityLog)(nil),                    // 47: invora.billing.common.v2.ActivityLog
-	(*timestamppb.Timestamp)(nil),             // 48: google.protobuf.Timestamp
+	(*CreateApiKeyRequest)(nil),               // 2: invora.admin.billing.v2.CreateApiKeyRequest
+	(*CreateApiKeyResponse)(nil),              // 3: invora.admin.billing.v2.CreateApiKeyResponse
+	(*RotateApiKeyRequest)(nil),               // 4: invora.admin.billing.v2.RotateApiKeyRequest
+	(*RotateApiKeyResponse)(nil),              // 5: invora.admin.billing.v2.RotateApiKeyResponse
+	(*ListApiKeysRequest)(nil),                // 6: invora.admin.billing.v2.ListApiKeysRequest
+	(*ListApiKeysResponse)(nil),               // 7: invora.admin.billing.v2.ListApiKeysResponse
+	(*RevokeApiKeyRequest)(nil),               // 8: invora.admin.billing.v2.RevokeApiKeyRequest
+	(*RevokeApiKeyResponse)(nil),              // 9: invora.admin.billing.v2.RevokeApiKeyResponse
+	(*ProvisionOrgRequest)(nil),               // 10: invora.admin.billing.v2.ProvisionOrgRequest
+	(*ProvisionOrgResponse)(nil),              // 11: invora.admin.billing.v2.ProvisionOrgResponse
+	(*DeprovisionOrgRequest)(nil),             // 12: invora.admin.billing.v2.DeprovisionOrgRequest
+	(*DeprovisionOrgResponse)(nil),            // 13: invora.admin.billing.v2.DeprovisionOrgResponse
+	(*ListOrgsRequest)(nil),                   // 14: invora.admin.billing.v2.ListOrgsRequest
+	(*ListOrgsResponse)(nil),                  // 15: invora.admin.billing.v2.ListOrgsResponse
+	(*GetOrgStatusRequest)(nil),               // 16: invora.admin.billing.v2.GetOrgStatusRequest
+	(*GetOrgStatusResponse)(nil),              // 17: invora.admin.billing.v2.GetOrgStatusResponse
+	(*SuspendOrgRequest)(nil),                 // 18: invora.admin.billing.v2.SuspendOrgRequest
+	(*SuspendOrgResponse)(nil),                // 19: invora.admin.billing.v2.SuspendOrgResponse
+	(*ReactivateOrgRequest)(nil),              // 20: invora.admin.billing.v2.ReactivateOrgRequest
+	(*ReactivateOrgResponse)(nil),             // 21: invora.admin.billing.v2.ReactivateOrgResponse
+	(*OrgEmailSettings)(nil),                  // 22: invora.admin.billing.v2.OrgEmailSettings
+	(*OrgSettings)(nil),                       // 23: invora.admin.billing.v2.OrgSettings
+	(*UpdateOrgSettingsRequest)(nil),          // 24: invora.admin.billing.v2.UpdateOrgSettingsRequest
+	(*UpdateOrgSettingsResponse)(nil),         // 25: invora.admin.billing.v2.UpdateOrgSettingsResponse
+	(*ListActivityLogsFilter)(nil),            // 26: invora.admin.billing.v2.ListActivityLogsFilter
+	(*ListActivityLogsFilterPart)(nil),        // 27: invora.admin.billing.v2.ListActivityLogsFilterPart
+	(*ListActivityLogActionFilter)(nil),       // 28: invora.admin.billing.v2.ListActivityLogActionFilter
+	(*ListActivityLogResourceTypeFilter)(nil), // 29: invora.admin.billing.v2.ListActivityLogResourceTypeFilter
+	(*ListActivityLogsSort)(nil),              // 30: invora.admin.billing.v2.ListActivityLogsSort
+	(*ListActivityLogsSortRule)(nil),          // 31: invora.admin.billing.v2.ListActivityLogsSortRule
+	(*ListActivityLogsRequest)(nil),           // 32: invora.admin.billing.v2.ListActivityLogsRequest
+	(*ListActivityLogsResponse)(nil),          // 33: invora.admin.billing.v2.ListActivityLogsResponse
+	(*GetActivityLogRequest)(nil),             // 34: invora.admin.billing.v2.GetActivityLogRequest
+	(*GetActivityLogResponse)(nil),            // 35: invora.admin.billing.v2.GetActivityLogResponse
+	(*ApiLog)(nil),                            // 36: invora.admin.billing.v2.ApiLog
+	(*ListApiLogsFilter)(nil),                 // 37: invora.admin.billing.v2.ListApiLogsFilter
+	(*ListApiLogsFilterPart)(nil),             // 38: invora.admin.billing.v2.ListApiLogsFilterPart
+	(*ListApiLogMethodFilter)(nil),            // 39: invora.admin.billing.v2.ListApiLogMethodFilter
+	(*ListApiLogStatusFilter)(nil),            // 40: invora.admin.billing.v2.ListApiLogStatusFilter
+	(*ListApiLogsSort)(nil),                   // 41: invora.admin.billing.v2.ListApiLogsSort
+	(*ListApiLogsSortRule)(nil),               // 42: invora.admin.billing.v2.ListApiLogsSortRule
+	(*ListApiLogsRequest)(nil),                // 43: invora.admin.billing.v2.ListApiLogsRequest
+	(*ListApiLogsResponse)(nil),               // 44: invora.admin.billing.v2.ListApiLogsResponse
+	(*structpb.Struct)(nil),                   // 45: google.protobuf.Struct
+	(*timestamppb.Timestamp)(nil),             // 46: google.protobuf.Timestamp
+	(*v2.SanitizedApiKey)(nil),                // 47: invora.billing.common.v2.SanitizedApiKey
+	(v2.CurrencyEnum)(0),                      // 48: invora.billing.common.v2.CurrencyEnum
+	(*v2.BillingOrg)(nil),                     // 49: invora.billing.common.v2.BillingOrg
+	(v2.BillingOrgStatus)(0),                  // 50: invora.billing.common.v2.BillingOrgStatus
+	(v2.Timezone)(0),                          // 51: invora.billing.common.v2.Timezone
+	(v2.BillingEntityDocumentNumbering)(0),    // 52: invora.billing.common.v2.BillingEntityDocumentNumbering
+	(*fieldmaskpb.FieldMask)(nil),             // 53: google.protobuf.FieldMask
+	(*kernel.ListRequestFilterPartDate)(nil),  // 54: kernel.ListRequestFilterPartDate
+	(v2.ActivityTypeEnum)(0),                  // 55: invora.billing.common.v2.ActivityTypeEnum
+	(kernel.SortDirection)(0),                 // 56: kernel.SortDirection
+	(*kernel.PaginationInfo)(nil),             // 57: kernel.PaginationInfo
+	(*v2.ActivityLog)(nil),                    // 58: invora.billing.common.v2.ActivityLog
 }
 var file_invora_admin_billing_v2_service_proto_depIdxs = []int32{
-	37, // 0: invora.admin.billing.v2.ProvisionOrgRequest.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	38, // 1: invora.admin.billing.v2.ProvisionOrgResponse.org:type_name -> invora.billing.common.v2.BillingOrg
-	39, // 2: invora.admin.billing.v2.ListOrgsRequest.status_filter:type_name -> invora.billing.common.v2.BillingOrgStatus
-	38, // 3: invora.admin.billing.v2.ListOrgsResponse.items:type_name -> invora.billing.common.v2.BillingOrg
-	38, // 4: invora.admin.billing.v2.GetOrgStatusResponse.org:type_name -> invora.billing.common.v2.BillingOrg
-	38, // 5: invora.admin.billing.v2.SuspendOrgResponse.org:type_name -> invora.billing.common.v2.BillingOrg
-	38, // 6: invora.admin.billing.v2.ReactivateOrgResponse.org:type_name -> invora.billing.common.v2.BillingOrg
-	37, // 7: invora.admin.billing.v2.OrgSettings.default_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	40, // 8: invora.admin.billing.v2.OrgSettings.timezone:type_name -> invora.billing.common.v2.Timezone
-	41, // 9: invora.admin.billing.v2.OrgSettings.document_numbering:type_name -> invora.billing.common.v2.BillingEntityDocumentNumbering
-	14, // 10: invora.admin.billing.v2.OrgSettings.email_settings:type_name -> invora.admin.billing.v2.OrgEmailSettings
-	15, // 11: invora.admin.billing.v2.UpdateOrgSettingsRequest.settings:type_name -> invora.admin.billing.v2.OrgSettings
-	42, // 12: invora.admin.billing.v2.UpdateOrgSettingsRequest.update_mask:type_name -> google.protobuf.FieldMask
-	15, // 13: invora.admin.billing.v2.UpdateOrgSettingsResponse.settings:type_name -> invora.admin.billing.v2.OrgSettings
-	19, // 14: invora.admin.billing.v2.ListActivityLogsFilter.part:type_name -> invora.admin.billing.v2.ListActivityLogsFilterPart
-	20, // 15: invora.admin.billing.v2.ListActivityLogsFilterPart.action:type_name -> invora.admin.billing.v2.ListActivityLogActionFilter
-	21, // 16: invora.admin.billing.v2.ListActivityLogsFilterPart.resource_type:type_name -> invora.admin.billing.v2.ListActivityLogResourceTypeFilter
-	43, // 17: invora.admin.billing.v2.ListActivityLogsFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDate
-	44, // 18: invora.admin.billing.v2.ListActivityLogActionFilter.in_values:type_name -> invora.billing.common.v2.ActivityTypeEnum
-	0,  // 19: invora.admin.billing.v2.ListActivityLogResourceTypeFilter.in_values:type_name -> invora.admin.billing.v2.ActivityResourceTypeEnum
-	23, // 20: invora.admin.billing.v2.ListActivityLogsSort.rules:type_name -> invora.admin.billing.v2.ListActivityLogsSortRule
-	45, // 21: invora.admin.billing.v2.ListActivityLogsSortRule.created_at:type_name -> kernel.SortDirection
-	18, // 22: invora.admin.billing.v2.ListActivityLogsRequest.filter:type_name -> invora.admin.billing.v2.ListActivityLogsFilter
-	22, // 23: invora.admin.billing.v2.ListActivityLogsRequest.sort:type_name -> invora.admin.billing.v2.ListActivityLogsSort
-	46, // 24: invora.admin.billing.v2.ListActivityLogsRequest.pagination:type_name -> kernel.PaginationInfo
-	47, // 25: invora.admin.billing.v2.ListActivityLogsResponse.items:type_name -> invora.billing.common.v2.ActivityLog
-	47, // 26: invora.admin.billing.v2.GetActivityLogResponse.log:type_name -> invora.billing.common.v2.ActivityLog
-	48, // 27: invora.admin.billing.v2.ApiLog.created_at:type_name -> google.protobuf.Timestamp
-	30, // 28: invora.admin.billing.v2.ListApiLogsFilter.part:type_name -> invora.admin.billing.v2.ListApiLogsFilterPart
-	31, // 29: invora.admin.billing.v2.ListApiLogsFilterPart.method:type_name -> invora.admin.billing.v2.ListApiLogMethodFilter
-	32, // 30: invora.admin.billing.v2.ListApiLogsFilterPart.status_code:type_name -> invora.admin.billing.v2.ListApiLogStatusFilter
-	43, // 31: invora.admin.billing.v2.ListApiLogsFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDate
-	1,  // 32: invora.admin.billing.v2.ListApiLogMethodFilter.in_values:type_name -> invora.admin.billing.v2.HttpMethod
-	34, // 33: invora.admin.billing.v2.ListApiLogsSort.rules:type_name -> invora.admin.billing.v2.ListApiLogsSortRule
-	45, // 34: invora.admin.billing.v2.ListApiLogsSortRule.created_at:type_name -> kernel.SortDirection
-	45, // 35: invora.admin.billing.v2.ListApiLogsSortRule.duration_ms:type_name -> kernel.SortDirection
-	29, // 36: invora.admin.billing.v2.ListApiLogsRequest.filter:type_name -> invora.admin.billing.v2.ListApiLogsFilter
-	33, // 37: invora.admin.billing.v2.ListApiLogsRequest.sort:type_name -> invora.admin.billing.v2.ListApiLogsSort
-	46, // 38: invora.admin.billing.v2.ListApiLogsRequest.pagination:type_name -> kernel.PaginationInfo
-	28, // 39: invora.admin.billing.v2.ListApiLogsResponse.items:type_name -> invora.admin.billing.v2.ApiLog
-	2,  // 40: invora.admin.billing.v2.BillingOrgAdminService.ProvisionOrg:input_type -> invora.admin.billing.v2.ProvisionOrgRequest
-	4,  // 41: invora.admin.billing.v2.BillingOrgAdminService.DeprovisionOrg:input_type -> invora.admin.billing.v2.DeprovisionOrgRequest
-	6,  // 42: invora.admin.billing.v2.BillingOrgAdminService.ListOrgs:input_type -> invora.admin.billing.v2.ListOrgsRequest
-	8,  // 43: invora.admin.billing.v2.BillingOrgAdminService.GetOrgStatus:input_type -> invora.admin.billing.v2.GetOrgStatusRequest
-	10, // 44: invora.admin.billing.v2.BillingOrgAdminService.SuspendOrg:input_type -> invora.admin.billing.v2.SuspendOrgRequest
-	12, // 45: invora.admin.billing.v2.BillingOrgAdminService.ReactivateOrg:input_type -> invora.admin.billing.v2.ReactivateOrgRequest
-	16, // 46: invora.admin.billing.v2.BillingOrgAdminService.UpdateOrgSettings:input_type -> invora.admin.billing.v2.UpdateOrgSettingsRequest
-	24, // 47: invora.admin.billing.v2.BillingOrgAdminService.ListActivityLogs:input_type -> invora.admin.billing.v2.ListActivityLogsRequest
-	26, // 48: invora.admin.billing.v2.BillingOrgAdminService.GetActivityLog:input_type -> invora.admin.billing.v2.GetActivityLogRequest
-	35, // 49: invora.admin.billing.v2.BillingOrgAdminService.ListApiLogs:input_type -> invora.admin.billing.v2.ListApiLogsRequest
-	3,  // 50: invora.admin.billing.v2.BillingOrgAdminService.ProvisionOrg:output_type -> invora.admin.billing.v2.ProvisionOrgResponse
-	5,  // 51: invora.admin.billing.v2.BillingOrgAdminService.DeprovisionOrg:output_type -> invora.admin.billing.v2.DeprovisionOrgResponse
-	7,  // 52: invora.admin.billing.v2.BillingOrgAdminService.ListOrgs:output_type -> invora.admin.billing.v2.ListOrgsResponse
-	9,  // 53: invora.admin.billing.v2.BillingOrgAdminService.GetOrgStatus:output_type -> invora.admin.billing.v2.GetOrgStatusResponse
-	11, // 54: invora.admin.billing.v2.BillingOrgAdminService.SuspendOrg:output_type -> invora.admin.billing.v2.SuspendOrgResponse
-	13, // 55: invora.admin.billing.v2.BillingOrgAdminService.ReactivateOrg:output_type -> invora.admin.billing.v2.ReactivateOrgResponse
-	17, // 56: invora.admin.billing.v2.BillingOrgAdminService.UpdateOrgSettings:output_type -> invora.admin.billing.v2.UpdateOrgSettingsResponse
-	25, // 57: invora.admin.billing.v2.BillingOrgAdminService.ListActivityLogs:output_type -> invora.admin.billing.v2.ListActivityLogsResponse
-	27, // 58: invora.admin.billing.v2.BillingOrgAdminService.GetActivityLog:output_type -> invora.admin.billing.v2.GetActivityLogResponse
-	36, // 59: invora.admin.billing.v2.BillingOrgAdminService.ListApiLogs:output_type -> invora.admin.billing.v2.ListApiLogsResponse
-	50, // [50:60] is the sub-list for method output_type
-	40, // [40:50] is the sub-list for method input_type
-	40, // [40:40] is the sub-list for extension type_name
-	40, // [40:40] is the sub-list for extension extendee
-	0,  // [0:40] is the sub-list for field type_name
+	45, // 0: invora.admin.billing.v2.CreateApiKeyRequest.permissions:type_name -> google.protobuf.Struct
+	46, // 1: invora.admin.billing.v2.CreateApiKeyRequest.expires_at:type_name -> google.protobuf.Timestamp
+	47, // 2: invora.admin.billing.v2.CreateApiKeyResponse.api_key:type_name -> invora.billing.common.v2.SanitizedApiKey
+	47, // 3: invora.admin.billing.v2.RotateApiKeyResponse.api_key:type_name -> invora.billing.common.v2.SanitizedApiKey
+	47, // 4: invora.admin.billing.v2.ListApiKeysResponse.items:type_name -> invora.billing.common.v2.SanitizedApiKey
+	48, // 5: invora.admin.billing.v2.ProvisionOrgRequest.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	49, // 6: invora.admin.billing.v2.ProvisionOrgResponse.org:type_name -> invora.billing.common.v2.BillingOrg
+	50, // 7: invora.admin.billing.v2.ListOrgsRequest.status_filter:type_name -> invora.billing.common.v2.BillingOrgStatus
+	49, // 8: invora.admin.billing.v2.ListOrgsResponse.items:type_name -> invora.billing.common.v2.BillingOrg
+	49, // 9: invora.admin.billing.v2.GetOrgStatusResponse.org:type_name -> invora.billing.common.v2.BillingOrg
+	49, // 10: invora.admin.billing.v2.SuspendOrgResponse.org:type_name -> invora.billing.common.v2.BillingOrg
+	49, // 11: invora.admin.billing.v2.ReactivateOrgResponse.org:type_name -> invora.billing.common.v2.BillingOrg
+	48, // 12: invora.admin.billing.v2.OrgSettings.default_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	51, // 13: invora.admin.billing.v2.OrgSettings.timezone:type_name -> invora.billing.common.v2.Timezone
+	52, // 14: invora.admin.billing.v2.OrgSettings.document_numbering:type_name -> invora.billing.common.v2.BillingEntityDocumentNumbering
+	22, // 15: invora.admin.billing.v2.OrgSettings.email_settings:type_name -> invora.admin.billing.v2.OrgEmailSettings
+	23, // 16: invora.admin.billing.v2.UpdateOrgSettingsRequest.settings:type_name -> invora.admin.billing.v2.OrgSettings
+	53, // 17: invora.admin.billing.v2.UpdateOrgSettingsRequest.update_mask:type_name -> google.protobuf.FieldMask
+	23, // 18: invora.admin.billing.v2.UpdateOrgSettingsResponse.settings:type_name -> invora.admin.billing.v2.OrgSettings
+	27, // 19: invora.admin.billing.v2.ListActivityLogsFilter.part:type_name -> invora.admin.billing.v2.ListActivityLogsFilterPart
+	28, // 20: invora.admin.billing.v2.ListActivityLogsFilterPart.action:type_name -> invora.admin.billing.v2.ListActivityLogActionFilter
+	29, // 21: invora.admin.billing.v2.ListActivityLogsFilterPart.resource_type:type_name -> invora.admin.billing.v2.ListActivityLogResourceTypeFilter
+	54, // 22: invora.admin.billing.v2.ListActivityLogsFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDate
+	55, // 23: invora.admin.billing.v2.ListActivityLogActionFilter.in_values:type_name -> invora.billing.common.v2.ActivityTypeEnum
+	0,  // 24: invora.admin.billing.v2.ListActivityLogResourceTypeFilter.in_values:type_name -> invora.admin.billing.v2.ActivityResourceTypeEnum
+	31, // 25: invora.admin.billing.v2.ListActivityLogsSort.rules:type_name -> invora.admin.billing.v2.ListActivityLogsSortRule
+	56, // 26: invora.admin.billing.v2.ListActivityLogsSortRule.created_at:type_name -> kernel.SortDirection
+	26, // 27: invora.admin.billing.v2.ListActivityLogsRequest.filter:type_name -> invora.admin.billing.v2.ListActivityLogsFilter
+	30, // 28: invora.admin.billing.v2.ListActivityLogsRequest.sort:type_name -> invora.admin.billing.v2.ListActivityLogsSort
+	57, // 29: invora.admin.billing.v2.ListActivityLogsRequest.pagination:type_name -> kernel.PaginationInfo
+	58, // 30: invora.admin.billing.v2.ListActivityLogsResponse.items:type_name -> invora.billing.common.v2.ActivityLog
+	58, // 31: invora.admin.billing.v2.GetActivityLogResponse.log:type_name -> invora.billing.common.v2.ActivityLog
+	46, // 32: invora.admin.billing.v2.ApiLog.created_at:type_name -> google.protobuf.Timestamp
+	38, // 33: invora.admin.billing.v2.ListApiLogsFilter.part:type_name -> invora.admin.billing.v2.ListApiLogsFilterPart
+	39, // 34: invora.admin.billing.v2.ListApiLogsFilterPart.method:type_name -> invora.admin.billing.v2.ListApiLogMethodFilter
+	40, // 35: invora.admin.billing.v2.ListApiLogsFilterPart.status_code:type_name -> invora.admin.billing.v2.ListApiLogStatusFilter
+	54, // 36: invora.admin.billing.v2.ListApiLogsFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDate
+	1,  // 37: invora.admin.billing.v2.ListApiLogMethodFilter.in_values:type_name -> invora.admin.billing.v2.HttpMethod
+	42, // 38: invora.admin.billing.v2.ListApiLogsSort.rules:type_name -> invora.admin.billing.v2.ListApiLogsSortRule
+	56, // 39: invora.admin.billing.v2.ListApiLogsSortRule.created_at:type_name -> kernel.SortDirection
+	56, // 40: invora.admin.billing.v2.ListApiLogsSortRule.duration_ms:type_name -> kernel.SortDirection
+	37, // 41: invora.admin.billing.v2.ListApiLogsRequest.filter:type_name -> invora.admin.billing.v2.ListApiLogsFilter
+	41, // 42: invora.admin.billing.v2.ListApiLogsRequest.sort:type_name -> invora.admin.billing.v2.ListApiLogsSort
+	57, // 43: invora.admin.billing.v2.ListApiLogsRequest.pagination:type_name -> kernel.PaginationInfo
+	36, // 44: invora.admin.billing.v2.ListApiLogsResponse.items:type_name -> invora.admin.billing.v2.ApiLog
+	10, // 45: invora.admin.billing.v2.BillingOrgAdminService.ProvisionOrg:input_type -> invora.admin.billing.v2.ProvisionOrgRequest
+	12, // 46: invora.admin.billing.v2.BillingOrgAdminService.DeprovisionOrg:input_type -> invora.admin.billing.v2.DeprovisionOrgRequest
+	14, // 47: invora.admin.billing.v2.BillingOrgAdminService.ListOrgs:input_type -> invora.admin.billing.v2.ListOrgsRequest
+	16, // 48: invora.admin.billing.v2.BillingOrgAdminService.GetOrgStatus:input_type -> invora.admin.billing.v2.GetOrgStatusRequest
+	18, // 49: invora.admin.billing.v2.BillingOrgAdminService.SuspendOrg:input_type -> invora.admin.billing.v2.SuspendOrgRequest
+	20, // 50: invora.admin.billing.v2.BillingOrgAdminService.ReactivateOrg:input_type -> invora.admin.billing.v2.ReactivateOrgRequest
+	24, // 51: invora.admin.billing.v2.BillingOrgAdminService.UpdateOrgSettings:input_type -> invora.admin.billing.v2.UpdateOrgSettingsRequest
+	32, // 52: invora.admin.billing.v2.BillingOrgAdminService.ListActivityLogs:input_type -> invora.admin.billing.v2.ListActivityLogsRequest
+	34, // 53: invora.admin.billing.v2.BillingOrgAdminService.GetActivityLog:input_type -> invora.admin.billing.v2.GetActivityLogRequest
+	43, // 54: invora.admin.billing.v2.BillingOrgAdminService.ListApiLogs:input_type -> invora.admin.billing.v2.ListApiLogsRequest
+	2,  // 55: invora.admin.billing.v2.BillingOrgAdminService.CreateApiKey:input_type -> invora.admin.billing.v2.CreateApiKeyRequest
+	4,  // 56: invora.admin.billing.v2.BillingOrgAdminService.RotateApiKey:input_type -> invora.admin.billing.v2.RotateApiKeyRequest
+	6,  // 57: invora.admin.billing.v2.BillingOrgAdminService.ListApiKeys:input_type -> invora.admin.billing.v2.ListApiKeysRequest
+	8,  // 58: invora.admin.billing.v2.BillingOrgAdminService.RevokeApiKey:input_type -> invora.admin.billing.v2.RevokeApiKeyRequest
+	11, // 59: invora.admin.billing.v2.BillingOrgAdminService.ProvisionOrg:output_type -> invora.admin.billing.v2.ProvisionOrgResponse
+	13, // 60: invora.admin.billing.v2.BillingOrgAdminService.DeprovisionOrg:output_type -> invora.admin.billing.v2.DeprovisionOrgResponse
+	15, // 61: invora.admin.billing.v2.BillingOrgAdminService.ListOrgs:output_type -> invora.admin.billing.v2.ListOrgsResponse
+	17, // 62: invora.admin.billing.v2.BillingOrgAdminService.GetOrgStatus:output_type -> invora.admin.billing.v2.GetOrgStatusResponse
+	19, // 63: invora.admin.billing.v2.BillingOrgAdminService.SuspendOrg:output_type -> invora.admin.billing.v2.SuspendOrgResponse
+	21, // 64: invora.admin.billing.v2.BillingOrgAdminService.ReactivateOrg:output_type -> invora.admin.billing.v2.ReactivateOrgResponse
+	25, // 65: invora.admin.billing.v2.BillingOrgAdminService.UpdateOrgSettings:output_type -> invora.admin.billing.v2.UpdateOrgSettingsResponse
+	33, // 66: invora.admin.billing.v2.BillingOrgAdminService.ListActivityLogs:output_type -> invora.admin.billing.v2.ListActivityLogsResponse
+	35, // 67: invora.admin.billing.v2.BillingOrgAdminService.GetActivityLog:output_type -> invora.admin.billing.v2.GetActivityLogResponse
+	44, // 68: invora.admin.billing.v2.BillingOrgAdminService.ListApiLogs:output_type -> invora.admin.billing.v2.ListApiLogsResponse
+	3,  // 69: invora.admin.billing.v2.BillingOrgAdminService.CreateApiKey:output_type -> invora.admin.billing.v2.CreateApiKeyResponse
+	5,  // 70: invora.admin.billing.v2.BillingOrgAdminService.RotateApiKey:output_type -> invora.admin.billing.v2.RotateApiKeyResponse
+	7,  // 71: invora.admin.billing.v2.BillingOrgAdminService.ListApiKeys:output_type -> invora.admin.billing.v2.ListApiKeysResponse
+	9,  // 72: invora.admin.billing.v2.BillingOrgAdminService.RevokeApiKey:output_type -> invora.admin.billing.v2.RevokeApiKeyResponse
+	59, // [59:73] is the sub-list for method output_type
+	45, // [45:59] is the sub-list for method input_type
+	45, // [45:45] is the sub-list for extension type_name
+	45, // [45:45] is the sub-list for extension extendee
+	0,  // [0:45] is the sub-list for field type_name
 }
 
 func init() { file_invora_admin_billing_v2_service_proto_init() }
@@ -2599,34 +3072,35 @@ func file_invora_admin_billing_v2_service_proto_init() {
 	if File_invora_admin_billing_v2_service_proto != nil {
 		return
 	}
-	file_invora_admin_billing_v2_service_proto_msgTypes[17].OneofWrappers = []any{
+	file_invora_admin_billing_v2_service_proto_msgTypes[0].OneofWrappers = []any{}
+	file_invora_admin_billing_v2_service_proto_msgTypes[25].OneofWrappers = []any{
 		(*ListActivityLogsFilterPart_ActorId)(nil),
 		(*ListActivityLogsFilterPart_Action)(nil),
 		(*ListActivityLogsFilterPart_ResourceType)(nil),
 		(*ListActivityLogsFilterPart_CreatedAt)(nil),
 	}
-	file_invora_admin_billing_v2_service_proto_msgTypes[21].OneofWrappers = []any{
+	file_invora_admin_billing_v2_service_proto_msgTypes[29].OneofWrappers = []any{
 		(*ListActivityLogsSortRule_CreatedAt)(nil),
 	}
-	file_invora_admin_billing_v2_service_proto_msgTypes[23].OneofWrappers = []any{}
-	file_invora_admin_billing_v2_service_proto_msgTypes[28].OneofWrappers = []any{
+	file_invora_admin_billing_v2_service_proto_msgTypes[31].OneofWrappers = []any{}
+	file_invora_admin_billing_v2_service_proto_msgTypes[36].OneofWrappers = []any{
 		(*ListApiLogsFilterPart_Method)(nil),
 		(*ListApiLogsFilterPart_PathPrefix)(nil),
 		(*ListApiLogsFilterPart_StatusCode)(nil),
 		(*ListApiLogsFilterPart_CreatedAt)(nil),
 	}
-	file_invora_admin_billing_v2_service_proto_msgTypes[32].OneofWrappers = []any{
+	file_invora_admin_billing_v2_service_proto_msgTypes[40].OneofWrappers = []any{
 		(*ListApiLogsSortRule_CreatedAt)(nil),
 		(*ListApiLogsSortRule_DurationMs)(nil),
 	}
-	file_invora_admin_billing_v2_service_proto_msgTypes[34].OneofWrappers = []any{}
+	file_invora_admin_billing_v2_service_proto_msgTypes[42].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_admin_billing_v2_service_proto_rawDesc), len(file_invora_admin_billing_v2_service_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   35,
+			NumMessages:   43,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
