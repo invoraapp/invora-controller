@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"time"
 
-	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -119,41 +118,6 @@ func (r *BaseReconciler) EnsureFinalizer(ctx context.Context, obj client.Object)
 func (r *BaseReconciler) RemoveFinalizer(ctx context.Context, obj client.Object) error {
 	controllerutil.RemoveFinalizer(obj, billingv1alpha1.FinalizerName)
 	return r.Update(ctx, obj)
-}
-
-// WriteSecret creates or updates a Secret with the given data, setting owner reference.
-func (r *BaseReconciler) WriteSecret(
-	ctx context.Context,
-	owner client.Object,
-	ref billingv1alpha1.WriteSecretToRef,
-	defaultNamespace string,
-	data map[string][]byte,
-) error {
-	ns := ref.Namespace
-	if ns == "" {
-		ns = defaultNamespace
-	}
-
-	secret := &corev1.Secret{}
-	secret.Name = ref.Name
-	secret.Namespace = ns
-
-	_, err := controllerutil.CreateOrUpdate(ctx, r.Client, secret, func() error {
-		secret.Labels = ref.Labels
-		secret.Annotations = ref.Annotations
-		secret.Type = corev1.SecretTypeOpaque
-		if secret.Data == nil {
-			secret.Data = make(map[string][]byte)
-		}
-		for k, v := range data {
-			secret.Data[k] = v
-		}
-		if owner.GetNamespace() == ns {
-			return controllerutil.SetOwnerReference(owner, secret, r.Scheme)
-		}
-		return nil
-	})
-	return err
 }
 
 // GetImportID returns the import-id annotation value, if set.

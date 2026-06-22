@@ -342,10 +342,6 @@ func (s *ZitadelOrgEventSubscriber) handleOrgAdded(ctx context.Context, orgID st
 			},
 			Name:       displayName,
 			ExternalID: orgID,
-			WriteSecretToRef: billingv1alpha1.WriteSecretToRef{
-				Name:      "billing-org-" + orgID + "-api-key",
-				Namespace: s.Config.TenantNamespace,
-			},
 		},
 	}
 

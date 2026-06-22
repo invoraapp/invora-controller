@@ -88,29 +88,34 @@ func (r *BaseReconciler) resolveOrgDependencies(
 	SetCondition(conditions, billingv1alpha1.ConditionDependencyReady,
 		metav1.ConditionTrue, "DependenciesReady", "All referenced resources are available", generation)
 
-	secretRef := org.Spec.WriteSecretToRef
-	secretNS := secretRef.Namespace
-	if secretNS == "" {
-		secretNS = obj.GetNamespace()
-	}
-	apiKey, _ := billingclient.ResolveSecretValue(ctx, r.Client, secretRef.Name, secretNS, "apiKey", org.Namespace)
-
+	// Org-scoped child resources authenticate with the instance's super-admin
+	// token plus the x-invora-org-id tenant header — there is no per-org
+	// credential. The backend resolves the tenant from the header and uses its
+	// own backend-wide Lago machine credential downstream.
 	instance := &billingv1alpha1.InvoraBillingInstance{}
 	instRef := org.Spec.InstanceRef
 	instNS := instRef.Namespace
 	if instNS == "" {
 		instNS = obj.GetNamespace()
 	}
+	var token string
 	if err := r.Get(ctx, types.NamespacedName{Namespace: instNS, Name: instRef.Name}, instance); err == nil {
+		tokenRef := instance.Spec.TokenRef
+		tokenNS := tokenRef.Namespace
+		if tokenNS == "" {
+			tokenNS = instNS
+		}
+		token, _ = billingclient.ResolveSecretValue(ctx, r.Client, tokenRef.Name, tokenNS, tokenRef.Key, instance.Namespace)
+
 		conn, dialErr := dialGateway(instance.Spec.GatewayURL)
 		if dialErr == nil {
 			return &orgResourceContext{
-				org: org, conn: conn, token: apiKey, orgID: string(org.Status.OrganizationID),
+				org: org, conn: conn, token: token, orgID: string(org.Status.OrganizationID),
 			}, nil
 		}
 	}
 
-	return &orgResourceContext{org: org, token: apiKey, orgID: string(org.Status.OrganizationID)}, nil
+	return &orgResourceContext{org: org, token: token, orgID: string(org.Status.OrganizationID)}, nil
 }
 
 // handleGrpcDeletion handles deletion for resources using gRPC clients.
