@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/invoraapp/invora-controller/compare/v1.1.0...v1.2.0) (2026-06-22)
+
+
+### Features
+
+* **controller:** gRPC AdminClient + refreshed BSR stubs ([#3](https://github.com/invoraapp/invora-controller/issues/3)) ([d1c68fc](https://github.com/invoraapp/invora-controller/commit/d1c68fc6b3a5d29489aac2d8d3c6749ab7caaad1))
+
 # [1.1.0](https://github.com/invoraapp/invora-controller/compare/v1.0.1...v1.1.0) (2026-06-17)
 
 
