@@ -1804,4 +1804,3 @@ func (in *WalletRecurringTopUp) DeepCopy() *WalletRecurringTopUp {
 	in.DeepCopyInto(out)
 	return out
 }
-
