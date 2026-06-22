@@ -3553,8 +3553,13 @@ type CreateCollectionMappingRequest struct {
 	ExternalName        *string                        `protobuf:"bytes,6,opt,name=external_name,json=externalName,proto3,oneof" json:"external_name,omitempty"`
 	MappingType         v2.MappingTypeEnum             `protobuf:"varint,7,opt,name=mapping_type,json=mappingType,proto3,enum=invora.billing.common.v2.MappingTypeEnum" json:"mapping_type,omitempty"`
 	TaxCode             *string                        `protobuf:"bytes,8,opt,name=tax_code,json=taxCode,proto3,oneof" json:"tax_code,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	// Tax providers (Anrok, Avalara, Netsuite, Xero) qualify a collection mapping
+	// by jurisdiction nexus and tax type in addition to the code; CRM providers
+	// (Hubspot, Salesforce) leave these unset.
+	TaxNexus      *string `protobuf:"bytes,9,opt,name=tax_nexus,json=taxNexus,proto3,oneof" json:"tax_nexus,omitempty"`
+	TaxType       *string `protobuf:"bytes,10,opt,name=tax_type,json=taxType,proto3,oneof" json:"tax_type,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateCollectionMappingRequest) Reset() {
@@ -3643,6 +3648,20 @@ func (x *CreateCollectionMappingRequest) GetTaxCode() string {
 	return ""
 }
 
+func (x *CreateCollectionMappingRequest) GetTaxNexus() string {
+	if x != nil && x.TaxNexus != nil {
+		return *x.TaxNexus
+	}
+	return ""
+}
+
+func (x *CreateCollectionMappingRequest) GetTaxType() string {
+	if x != nil && x.TaxType != nil {
+		return *x.TaxType
+	}
+	return ""
+}
+
 type CreateCollectionMappingResponse struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	CollectionMapping *v2.CollectionMapping  `protobuf:"bytes,1,opt,name=collection_mapping,json=collectionMapping,proto3" json:"collection_mapping,omitempty"`
@@ -3697,9 +3716,12 @@ type UpdateCollectionMappingRequest struct {
 	IntegrationId       *string                        `protobuf:"bytes,6,opt,name=integration_id,json=integrationId,proto3,oneof" json:"integration_id,omitempty"`
 	MappingType         *v2.MappingTypeEnum            `protobuf:"varint,7,opt,name=mapping_type,json=mappingType,proto3,enum=invora.billing.common.v2.MappingTypeEnum,oneof" json:"mapping_type,omitempty"`
 	TaxCode             *string                        `protobuf:"bytes,8,opt,name=tax_code,json=taxCode,proto3,oneof" json:"tax_code,omitempty"`
-	UpdateMask          *fieldmaskpb.FieldMask         `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	// See CreateCollectionMappingRequest.tax_nexus / tax_type.
+	TaxNexus      *string                `protobuf:"bytes,9,opt,name=tax_nexus,json=taxNexus,proto3,oneof" json:"tax_nexus,omitempty"`
+	TaxType       *string                `protobuf:"bytes,10,opt,name=tax_type,json=taxType,proto3,oneof" json:"tax_type,omitempty"`
+	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *UpdateCollectionMappingRequest) Reset() {
@@ -3784,6 +3806,20 @@ func (x *UpdateCollectionMappingRequest) GetMappingType() v2.MappingTypeEnum {
 func (x *UpdateCollectionMappingRequest) GetTaxCode() string {
 	if x != nil && x.TaxCode != nil {
 		return *x.TaxCode
+	}
+	return ""
+}
+
+func (x *UpdateCollectionMappingRequest) GetTaxNexus() string {
+	if x != nil && x.TaxNexus != nil {
+		return *x.TaxNexus
+	}
+	return ""
+}
+
+func (x *UpdateCollectionMappingRequest) GetTaxType() string {
+	if x != nil && x.TaxType != nil {
+		return *x.TaxType
 	}
 	return ""
 }
@@ -4523,7 +4559,7 @@ const file_invora_billing_integrations_v2_service_proto_rawDesc = "" +
 	"\x04part\x18\x01 \x01(\v2;.invora.billing.integrations.v2.CollectionMappingFilterPartR\x04part\"u\n" +
 	"\x1bCollectionMappingFilterPart\x12N\n" +
 	"\fmapping_type\x18\x01 \x01(\x0e2).invora.billing.common.v2.MappingTypeEnumH\x00R\vmappingTypeB\x06\n" +
-	"\x04type\"\xa2\x04\n" +
+	"\x04type\"\xff\x04\n" +
 	"\x1eCreateCollectionMappingRequest\x12%\n" +
 	"\x0eintegration_id\x18\x01 \x01(\tR\rintegrationId\x12/\n" +
 	"\x11billing_entity_id\x18\x02 \x01(\tH\x00R\x0fbillingEntityId\x88\x01\x01\x12R\n" +
@@ -4535,14 +4571,20 @@ const file_invora_billing_integrations_v2_service_proto_rawDesc = "" +
 	"externalId\x88\x01\x01\x12(\n" +
 	"\rexternal_name\x18\x06 \x01(\tH\x03R\fexternalName\x88\x01\x01\x12L\n" +
 	"\fmapping_type\x18\a \x01(\x0e2).invora.billing.common.v2.MappingTypeEnumR\vmappingType\x12\x1e\n" +
-	"\btax_code\x18\b \x01(\tH\x04R\ataxCode\x88\x01\x01B\x14\n" +
+	"\btax_code\x18\b \x01(\tH\x04R\ataxCode\x88\x01\x01\x12 \n" +
+	"\ttax_nexus\x18\t \x01(\tH\x05R\btaxNexus\x88\x01\x01\x12\x1e\n" +
+	"\btax_type\x18\n" +
+	" \x01(\tH\x06R\ataxType\x88\x01\x01B\x14\n" +
 	"\x12_billing_entity_idB\x18\n" +
 	"\x16_external_account_codeB\x0e\n" +
 	"\f_external_idB\x10\n" +
 	"\x0e_external_nameB\v\n" +
-	"\t_tax_code\"}\n" +
+	"\t_tax_codeB\f\n" +
+	"\n" +
+	"_tax_nexusB\v\n" +
+	"\t_tax_type\"}\n" +
 	"\x1fCreateCollectionMappingResponse\x12Z\n" +
-	"\x12collection_mapping\x18\x01 \x01(\v2+.invora.billing.common.v2.CollectionMappingR\x11collectionMapping\"\xd6\x04\n" +
+	"\x12collection_mapping\x18\x01 \x01(\v2+.invora.billing.common.v2.CollectionMappingR\x11collectionMapping\"\xb3\x05\n" +
 	"\x1eUpdateCollectionMappingRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12R\n" +
 	"\n" +
@@ -4554,7 +4596,10 @@ const file_invora_billing_integrations_v2_service_proto_rawDesc = "" +
 	"\rexternal_name\x18\x05 \x01(\tH\x02R\fexternalName\x88\x01\x01\x12*\n" +
 	"\x0eintegration_id\x18\x06 \x01(\tH\x03R\rintegrationId\x88\x01\x01\x12Q\n" +
 	"\fmapping_type\x18\a \x01(\x0e2).invora.billing.common.v2.MappingTypeEnumH\x04R\vmappingType\x88\x01\x01\x12\x1e\n" +
-	"\btax_code\x18\b \x01(\tH\x05R\ataxCode\x88\x01\x01\x12;\n" +
+	"\btax_code\x18\b \x01(\tH\x05R\ataxCode\x88\x01\x01\x12 \n" +
+	"\ttax_nexus\x18\t \x01(\tH\x06R\btaxNexus\x88\x01\x01\x12\x1e\n" +
+	"\btax_type\x18\n" +
+	" \x01(\tH\aR\ataxType\x88\x01\x01\x12;\n" +
 	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
 	"updateMaskB\x18\n" +
 	"\x16_external_account_codeB\x0e\n" +
@@ -4562,7 +4607,10 @@ const file_invora_billing_integrations_v2_service_proto_rawDesc = "" +
 	"\x0e_external_nameB\x11\n" +
 	"\x0f_integration_idB\x0f\n" +
 	"\r_mapping_typeB\v\n" +
-	"\t_tax_code\"}\n" +
+	"\t_tax_codeB\f\n" +
+	"\n" +
+	"_tax_nexusB\v\n" +
+	"\t_tax_type\"}\n" +
 	"\x1fUpdateCollectionMappingResponse\x12Z\n" +
 	"\x12collection_mapping\x18\x01 \x01(\v2+.invora.billing.common.v2.CollectionMappingR\x11collectionMapping\"0\n" +
 	"\x1eDeleteCollectionMappingRequest\x12\x0e\n" +

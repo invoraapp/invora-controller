@@ -29,6 +29,10 @@ const (
 	BillingOrgAdminService_ListActivityLogs_FullMethodName  = "/invora.admin.billing.v2.BillingOrgAdminService/ListActivityLogs"
 	BillingOrgAdminService_GetActivityLog_FullMethodName    = "/invora.admin.billing.v2.BillingOrgAdminService/GetActivityLog"
 	BillingOrgAdminService_ListApiLogs_FullMethodName       = "/invora.admin.billing.v2.BillingOrgAdminService/ListApiLogs"
+	BillingOrgAdminService_CreateApiKey_FullMethodName      = "/invora.admin.billing.v2.BillingOrgAdminService/CreateApiKey"
+	BillingOrgAdminService_RotateApiKey_FullMethodName      = "/invora.admin.billing.v2.BillingOrgAdminService/RotateApiKey"
+	BillingOrgAdminService_ListApiKeys_FullMethodName       = "/invora.admin.billing.v2.BillingOrgAdminService/ListApiKeys"
+	BillingOrgAdminService_RevokeApiKey_FullMethodName      = "/invora.admin.billing.v2.BillingOrgAdminService/RevokeApiKey"
 )
 
 // BillingOrgAdminServiceClient is the client API for BillingOrgAdminService service.
@@ -62,6 +66,24 @@ type BillingOrgAdminServiceClient interface {
 	GetActivityLog(ctx context.Context, in *GetActivityLogRequest, opts ...grpc.CallOption) (*GetActivityLogResponse, error)
 	// List API request logs for a billing organization.
 	ListApiLogs(ctx context.Context, in *ListApiLogsRequest, opts ...grpc.CallOption) (*ListApiLogsResponse, error)
+	// Create a new API key for a billing organization and return its full
+	// plaintext value. The plaintext `value` is returned ONCE here and is
+	// never retrievable again; callers (e.g. the invora-controller provisioning
+	// a tenant) must persist it immediately. Subsequent reads expose only the
+	// masked form via ListApiKeys.
+	CreateApiKey(ctx context.Context, in *CreateApiKeyRequest, opts ...grpc.CallOption) (*CreateApiKeyResponse, error)
+	// Rotate an existing API key: the previous secret is revoked immediately
+	// and a fresh plaintext `value` is issued. Like CreateApiKey, the new
+	// plaintext is returned ONCE and must be stored by the caller. Used by the
+	// controller to recover when a stored key Secret is missing or invalid.
+	RotateApiKey(ctx context.Context, in *RotateApiKeyRequest, opts ...grpc.CallOption) (*RotateApiKeyResponse, error)
+	// List the API keys for a billing organization. Returns masked metadata
+	// only (SanitizedApiKey) — never the plaintext value. Used to discover
+	// whether a key already exists before creating one.
+	ListApiKeys(ctx context.Context, in *ListApiKeysRequest, opts ...grpc.CallOption) (*ListApiKeysResponse, error)
+	// Revoke (permanently disable) an API key. The key can no longer be used
+	// for authentication after this call.
+	RevokeApiKey(ctx context.Context, in *RevokeApiKeyRequest, opts ...grpc.CallOption) (*RevokeApiKeyResponse, error)
 }
 
 type billingOrgAdminServiceClient struct {
@@ -172,6 +194,46 @@ func (c *billingOrgAdminServiceClient) ListApiLogs(ctx context.Context, in *List
 	return out, nil
 }
 
+func (c *billingOrgAdminServiceClient) CreateApiKey(ctx context.Context, in *CreateApiKeyRequest, opts ...grpc.CallOption) (*CreateApiKeyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateApiKeyResponse)
+	err := c.cc.Invoke(ctx, BillingOrgAdminService_CreateApiKey_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingOrgAdminServiceClient) RotateApiKey(ctx context.Context, in *RotateApiKeyRequest, opts ...grpc.CallOption) (*RotateApiKeyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RotateApiKeyResponse)
+	err := c.cc.Invoke(ctx, BillingOrgAdminService_RotateApiKey_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingOrgAdminServiceClient) ListApiKeys(ctx context.Context, in *ListApiKeysRequest, opts ...grpc.CallOption) (*ListApiKeysResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListApiKeysResponse)
+	err := c.cc.Invoke(ctx, BillingOrgAdminService_ListApiKeys_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingOrgAdminServiceClient) RevokeApiKey(ctx context.Context, in *RevokeApiKeyRequest, opts ...grpc.CallOption) (*RevokeApiKeyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RevokeApiKeyResponse)
+	err := c.cc.Invoke(ctx, BillingOrgAdminService_RevokeApiKey_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BillingOrgAdminServiceServer is the server API for BillingOrgAdminService service.
 // All implementations must embed UnimplementedBillingOrgAdminServiceServer
 // for forward compatibility.
@@ -203,6 +265,24 @@ type BillingOrgAdminServiceServer interface {
 	GetActivityLog(context.Context, *GetActivityLogRequest) (*GetActivityLogResponse, error)
 	// List API request logs for a billing organization.
 	ListApiLogs(context.Context, *ListApiLogsRequest) (*ListApiLogsResponse, error)
+	// Create a new API key for a billing organization and return its full
+	// plaintext value. The plaintext `value` is returned ONCE here and is
+	// never retrievable again; callers (e.g. the invora-controller provisioning
+	// a tenant) must persist it immediately. Subsequent reads expose only the
+	// masked form via ListApiKeys.
+	CreateApiKey(context.Context, *CreateApiKeyRequest) (*CreateApiKeyResponse, error)
+	// Rotate an existing API key: the previous secret is revoked immediately
+	// and a fresh plaintext `value` is issued. Like CreateApiKey, the new
+	// plaintext is returned ONCE and must be stored by the caller. Used by the
+	// controller to recover when a stored key Secret is missing or invalid.
+	RotateApiKey(context.Context, *RotateApiKeyRequest) (*RotateApiKeyResponse, error)
+	// List the API keys for a billing organization. Returns masked metadata
+	// only (SanitizedApiKey) — never the plaintext value. Used to discover
+	// whether a key already exists before creating one.
+	ListApiKeys(context.Context, *ListApiKeysRequest) (*ListApiKeysResponse, error)
+	// Revoke (permanently disable) an API key. The key can no longer be used
+	// for authentication after this call.
+	RevokeApiKey(context.Context, *RevokeApiKeyRequest) (*RevokeApiKeyResponse, error)
 	mustEmbedUnimplementedBillingOrgAdminServiceServer()
 }
 
@@ -242,6 +322,18 @@ func (UnimplementedBillingOrgAdminServiceServer) GetActivityLog(context.Context,
 }
 func (UnimplementedBillingOrgAdminServiceServer) ListApiLogs(context.Context, *ListApiLogsRequest) (*ListApiLogsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListApiLogs not implemented")
+}
+func (UnimplementedBillingOrgAdminServiceServer) CreateApiKey(context.Context, *CreateApiKeyRequest) (*CreateApiKeyResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateApiKey not implemented")
+}
+func (UnimplementedBillingOrgAdminServiceServer) RotateApiKey(context.Context, *RotateApiKeyRequest) (*RotateApiKeyResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RotateApiKey not implemented")
+}
+func (UnimplementedBillingOrgAdminServiceServer) ListApiKeys(context.Context, *ListApiKeysRequest) (*ListApiKeysResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListApiKeys not implemented")
+}
+func (UnimplementedBillingOrgAdminServiceServer) RevokeApiKey(context.Context, *RevokeApiKeyRequest) (*RevokeApiKeyResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RevokeApiKey not implemented")
 }
 func (UnimplementedBillingOrgAdminServiceServer) mustEmbedUnimplementedBillingOrgAdminServiceServer() {
 }
@@ -445,6 +537,78 @@ func _BillingOrgAdminService_ListApiLogs_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BillingOrgAdminService_CreateApiKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateApiKeyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingOrgAdminServiceServer).CreateApiKey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingOrgAdminService_CreateApiKey_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingOrgAdminServiceServer).CreateApiKey(ctx, req.(*CreateApiKeyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingOrgAdminService_RotateApiKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RotateApiKeyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingOrgAdminServiceServer).RotateApiKey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingOrgAdminService_RotateApiKey_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingOrgAdminServiceServer).RotateApiKey(ctx, req.(*RotateApiKeyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingOrgAdminService_ListApiKeys_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListApiKeysRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingOrgAdminServiceServer).ListApiKeys(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingOrgAdminService_ListApiKeys_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingOrgAdminServiceServer).ListApiKeys(ctx, req.(*ListApiKeysRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingOrgAdminService_RevokeApiKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RevokeApiKeyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingOrgAdminServiceServer).RevokeApiKey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingOrgAdminService_RevokeApiKey_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingOrgAdminServiceServer).RevokeApiKey(ctx, req.(*RevokeApiKeyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BillingOrgAdminService_ServiceDesc is the grpc.ServiceDesc for BillingOrgAdminService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -491,6 +655,22 @@ var BillingOrgAdminService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListApiLogs",
 			Handler:    _BillingOrgAdminService_ListApiLogs_Handler,
+		},
+		{
+			MethodName: "CreateApiKey",
+			Handler:    _BillingOrgAdminService_CreateApiKey_Handler,
+		},
+		{
+			MethodName: "RotateApiKey",
+			Handler:    _BillingOrgAdminService_RotateApiKey_Handler,
+		},
+		{
+			MethodName: "ListApiKeys",
+			Handler:    _BillingOrgAdminService_ListApiKeys_Handler,
+		},
+		{
+			MethodName: "RevokeApiKey",
+			Handler:    _BillingOrgAdminService_RevokeApiKey_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
