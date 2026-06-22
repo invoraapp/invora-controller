@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/invoraapp/invora-controller/compare/v1.0.1...v1.1.0) (2026-06-17)
+
+
+### Features
+
+* **billing:** migrate org admin to BillingOrgAdminService gRPC ([#1](https://github.com/invoraapp/invora-controller/issues/1)) ([8920f39](https://github.com/invoraapp/invora-controller/commit/8920f39bba1f250f8050f70b4380b70b0cfb934b))
+
 ## [1.0.1](https://github.com/invoraapp/invora-controller/compare/v1.0.0...v1.0.1) (2026-06-17)
 
 
