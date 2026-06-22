@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/invoraapp/invora-controller/compare/v1.2.0...v1.2.1) (2026-06-22)
+
+
+### Bug Fixes
+
+* **org:** remove bogus per-org API-key provisioning ([#4](https://github.com/invoraapp/invora-controller/issues/4)) ([8d547ae](https://github.com/invoraapp/invora-controller/commit/8d547aeecf4ff488889c469f8014a477f6fde9ba))
+
 # [1.2.0](https://github.com/invoraapp/invora-controller/compare/v1.1.0...v1.2.0) (2026-06-22)
 
 
