@@ -13,7 +13,6 @@ import (
 	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
 	adminpb "github.com/invoraapp/invora-controller/gen/invora/admin/billing/v2"
 	customerspb "github.com/invoraapp/invora-controller/gen/invora/billing/customers/v2"
-	"github.com/invoraapp/invora-controller/internal/billingclient"
 )
 
 type InvoraBillingOrganizationReconciler struct {
@@ -93,29 +92,12 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 			return ctrl.Result{}, fmt.Errorf("clearing import-id annotation: %w", err)
 		}
 
-		// Ensure API key is written
-		if err := r.ensureApiKey(ctx, instCtx, &org); err != nil {
-			SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
-				metav1.ConditionFalse, "ApiKeyFailed", err.Error(), org.Generation)
-			_ = r.Status().Update(ctx, &org)
-			return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
-		}
-
 		return r.updateOrgStatusSuccess(ctx, &org, "Imported")
 	}
 
 	// If we already have an org ID, verify it still exists
 	if org.Status.OrganizationID != "" {
 		logger.V(1).Info("checking existing organization", "id", org.Status.OrganizationID)
-
-		// Ensure API key Secret still exists
-		if err := r.ensureApiKey(ctx, instCtx, &org); err != nil {
-			SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
-				metav1.ConditionFalse, "ApiKeyFailed", err.Error(), org.Generation)
-			_ = r.Status().Update(ctx, &org)
-			return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
-		}
-
 		return r.updateOrgStatusSuccess(ctx, &org, "InSync")
 	}
 
@@ -137,14 +119,6 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 		if existing.GetTenantId() == org.Name {
 			logger.Info("found existing org, adopting", "id", existing.GetOrganizationId())
 			org.Status.OrganizationID = existing.GetOrganizationId()
-
-			if err := r.ensureApiKey(ctx, instCtx, &org); err != nil {
-				SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
-					metav1.ConditionFalse, "ApiKeyFailed", err.Error(), org.Generation)
-				_ = r.Status().Update(ctx, &org)
-				return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
-			}
-
 			return r.updateOrgStatusSuccess(ctx, &org, "Adopted")
 		}
 	}
@@ -162,69 +136,7 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 	}
 	org.Status.OrganizationID = provisionResp.GetOrg().GetOrganizationId()
 
-	// Generate and store API key
-	if err := r.ensureApiKey(ctx, instCtx, &org); err != nil {
-		SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
-			metav1.ConditionFalse, "ApiKeyFailed", err.Error(), org.Generation)
-		_ = r.Status().Update(ctx, &org)
-		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
-	}
-
 	return r.updateOrgStatusSuccess(ctx, &org, "Created")
-}
-
-// ensureApiKey makes sure the org's API key Secret holds a usable key. If the
-// Secret already has a non-empty "apiKey", it is left untouched. Otherwise a
-// fresh key is minted via BillingOrgAdminService.CreateApiKey — which returns
-// the plaintext value exactly once — and written to the Secret. This closes the
-// former contract gap where provisioning looped forever because the proto had
-// no key-management RPCs.
-func (r *InvoraBillingOrganizationReconciler) ensureApiKey(
-	ctx context.Context,
-	instCtx *instanceAdminContext,
-	org *billingv1alpha1.InvoraBillingOrganization,
-) error {
-	secretRef := org.Spec.WriteSecretToRef
-	secretNS := secretRef.Namespace
-	if secretNS == "" {
-		secretNS = org.Namespace
-	}
-	// Pass ownerNamespace="" to bypass the cross-namespace guard: the org controller
-	// owns WriteSecretToRef and may target a different namespace (e.g. invora-dev).
-	// This is a trusted internal caller — no tenant-authored CR is involved here.
-	existingKey, err := billingclient.ResolveSecretValue(ctx, r.Client, secretRef.Name, secretNS, "apiKey", "")
-	if err == nil && existingKey != "" {
-		// Secret exists and has a key, nothing to do.
-		SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionCredentialsWritten,
-			metav1.ConditionTrue, "SecretExists", "API key Secret is up to date", org.Generation)
-		return nil
-	}
-
-	// No usable key on the Secret — mint one via the admin API. The plaintext
-	// value is returned only on this call, so it must be persisted immediately.
-	adminSvc := adminpb.NewBillingOrgAdminServiceClient(instCtx.Conn())
-	keyName := fmt.Sprintf("controller-%s", org.Name)
-	createResp, err := adminSvc.CreateApiKey(instCtx.GrpcCtx(ctx), &adminpb.CreateApiKeyRequest{
-		TenantId: org.Name,
-		Name:     &keyName,
-	})
-	if err != nil {
-		return fmt.Errorf("creating API key for org %s: %w", org.Name, err)
-	}
-	apiKey := createResp.GetValue()
-	if apiKey == "" {
-		return fmt.Errorf("CreateApiKey for org %s returned an empty value", org.Name)
-	}
-
-	if err := r.WriteSecret(ctx, org, secretRef, org.Namespace, map[string][]byte{
-		"apiKey": []byte(apiKey),
-	}); err != nil {
-		return fmt.Errorf("writing API key Secret %s/%s: %w", secretNS, secretRef.Name, err)
-	}
-
-	SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionCredentialsWritten,
-		metav1.ConditionTrue, "SecretCreated", "API key minted and written to Secret", org.Generation)
-	return nil
 }
 
 func (r *InvoraBillingOrganizationReconciler) updateOrgStatusSuccess(

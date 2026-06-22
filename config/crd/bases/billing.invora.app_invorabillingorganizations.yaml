@@ -31,9 +31,10 @@ spec:
       openAPIV3Schema:
         description: |-
           InvoraBillingOrganization represents an organization in a billing instance.
-          The controller creates the org via super-admin GraphQL mutations,
-          generates an API key, and writes it to the Secret specified by
-          spec.writeSecretToRef.
+          The controller provisions the org via the BillingOrgAdminService using the
+          instance's super-admin token. No per-org credential is issued: tenant-scoped
+          calls authenticate with the backend-wide Lago machine credential plus the
+          x-invora-org-id tenant header.
         properties:
           apiVersion:
             description: |-
@@ -131,46 +132,14 @@ spec:
               timezone:
                 description: Timezone (IANA format, e.g. "UTC", "America/New_York").
                 type: string
-              writeSecretToRef:
-                description: |-
-                  WriteSecretToRef specifies where to write the org's API key.
-                  The Secret will contain key "apiKey" with the org's bearer token.
-                  This is required — child resources need the API key to authenticate.
-                properties:
-                  annotations:
-                    additionalProperties:
-                      type: string
-                    description: Annotations to add to the created Secret.
-                    type: object
-                  labels:
-                    additionalProperties:
-                      type: string
-                    description: Labels to add to the created Secret.
-                    type: object
-                  name:
-                    description: Name of the Secret to create or update.
-                    minLength: 1
-                    type: string
-                  namespace:
-                    description: Namespace of the Secret. Defaults to the referencing
-                      resource's namespace.
-                    type: string
-                required:
-                - name
-                type: object
             required:
             - instanceRef
             - name
-            - writeSecretToRef
             type: object
           status:
             description: InvoraBillingOrganizationStatus defines the observed state
               of a InvoraBillingOrganization.
             properties:
-              apiKeyId:
-                description: ApiKeyID is the billing UUID of the current API key (needed
-                  for regeneration).
-                type: string
               conditions:
                 description: |-
                   Conditions represent the latest available observations of the

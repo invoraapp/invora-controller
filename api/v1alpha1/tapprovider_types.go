@@ -6,12 +6,12 @@ import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 // provider attached to a billing organization.
 //
 // Backed by the billing GraphQL mutations addTapPaymentProvider /
-// updateTapPaymentProvider, which authenticate as the organization (the
-// org's API key from spec.billingOrganizationRef's WriteSecretToRef Secret).
+// updateTapPaymentProvider, which authenticate with the billing instance's
+// super-admin token plus the org's x-invora-org-id tenant header.
 type InvoraBillingTapProviderSpec struct {
 	// InvoraBillingOrganizationRef references the InvoraBillingOrganization that owns this
-	// payment provider. The controller resolves the org's API key from the
-	// Secret declared in the InvoraBillingOrganization's writeSecretToRef.
+	// payment provider. The controller resolves the org's tenant id and
+	// authenticates with the instance's super-admin token.
 	InvoraBillingOrganizationRef ResourceRef `json:"organizationRef"`
 
 	// DeletionPolicy determines what happens to the billing resource when this

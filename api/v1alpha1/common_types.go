@@ -29,29 +29,6 @@ type SecretKeyRef struct {
 	Key string `json:"key"`
 }
 
-// WriteSecretToRef specifies where to write generated sensitive outputs
-// (e.g. API keys from organization creation). The controller creates the
-// Secret if it does not exist and updates the data keys on every successful
-// reconciliation. Ownership is set so that deleting the parent CR
-// garbage-collects the Secret.
-type WriteSecretToRef struct {
-	// Name of the Secret to create or update.
-	// +kubebuilder:validation:MinLength=1
-	Name string `json:"name"`
-
-	// Namespace of the Secret. Defaults to the referencing resource's namespace.
-	// +optional
-	Namespace string `json:"namespace,omitempty"`
-
-	// Labels to add to the created Secret.
-	// +optional
-	Labels map[string]string `json:"labels,omitempty"`
-
-	// Annotations to add to the created Secret.
-	// +optional
-	Annotations map[string]string `json:"annotations,omitempty"`
-}
-
 // DeletionPolicy determines what happens to the external billing resource
 // when the Kubernetes CR is deleted.
 //
@@ -87,11 +64,10 @@ type BillingResourceStatus struct {
 }
 
 const (
-	ConditionReady              = "Ready"
-	ConditionSynced             = "Synced"
-	ConditionDependencyReady    = "DependencyReady"
-	ConditionCredentialsWritten = "CredentialsWritten"
-	ConditionDeletionBlocked    = "DeletionBlocked"
+	ConditionReady           = "Ready"
+	ConditionSynced          = "Synced"
+	ConditionDependencyReady = "DependencyReady"
+	ConditionDeletionBlocked = "DeletionBlocked"
 )
 
 const (

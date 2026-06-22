@@ -31,11 +31,6 @@ type InvoraBillingOrganizationSpec struct {
 	// +optional
 	DocumentNumbering string `json:"documentNumbering,omitempty"`
 
-	// WriteSecretToRef specifies where to write the org's API key.
-	// The Secret will contain key "apiKey" with the org's bearer token.
-	// This is required — child resources need the API key to authenticate.
-	WriteSecretToRef WriteSecretToRef `json:"writeSecretToRef"`
-
 	// ParentOrgRef references another InvoraBillingOrganization that owns this tenant
 	// as a customer. When set, a corresponding InvoraBillingCustomer will be created
 	// in the parent org pointing at this org's externalId. Used to implement
@@ -66,10 +61,6 @@ type InvoraBillingOrganizationStatus struct {
 	// +optional
 	OrganizationID string `json:"organizationId,omitempty"`
 
-	// ApiKeyID is the billing UUID of the current API key (needed for regeneration).
-	// +optional
-	ApiKeyID string `json:"apiKeyId,omitempty"`
-
 	// ParentOrgRef echoes the spec.parentOrgRef the controller last reconciled
 	// against, so a change can be detected by comparing observed vs. desired.
 	// +optional
@@ -89,9 +80,10 @@ type InvoraBillingOrganizationStatus struct {
 // +kubebuilder:printcolumn:name="Age",type=date,JSONPath=`.metadata.creationTimestamp`
 
 // InvoraBillingOrganization represents an organization in a billing instance.
-// The controller creates the org via super-admin GraphQL mutations,
-// generates an API key, and writes it to the Secret specified by
-// spec.writeSecretToRef.
+// The controller provisions the org via the BillingOrgAdminService using the
+// instance's super-admin token. No per-org credential is issued: tenant-scoped
+// calls authenticate with the backend-wide Lago machine credential plus the
+// x-invora-org-id tenant header.
 type InvoraBillingOrganization struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

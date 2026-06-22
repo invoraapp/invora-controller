@@ -70,9 +70,6 @@ func TestHandleOrgAdded_CreatesInvoraBillingOrganization(t *testing.T) {
 	if got.Spec.InstanceRef.Name != "invora-billing" {
 		t.Errorf("InstanceRef.Name = %q, want invora-billing", got.Spec.InstanceRef.Name)
 	}
-	if got.Spec.WriteSecretToRef.Name != "billing-org-111222333-api-key" {
-		t.Errorf("WriteSecretToRef.Name = %q", got.Spec.WriteSecretToRef.Name)
-	}
 }
 
 func TestHandleOrgAdded_IdempotentOnReDelivery(t *testing.T) {
@@ -365,9 +362,6 @@ func TestHandleOrgAdded_ReusesExistingCR_OnlyUpdatesNameOnDrift(t *testing.T) {
 			},
 			Name:       "Old",
 			ExternalID: "pre",
-			WriteSecretToRef: billingv1alpha1.WriteSecretToRef{
-				Name: "manual-secret",
-			},
 		},
 	}
 	s := newSubscriberForTest(t, preExisting)
