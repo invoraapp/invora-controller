@@ -3,6 +3,8 @@ package controller
 import (
 	"context"
 	"fmt"
+	"regexp"
+	"strings"
 	"time"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -14,6 +16,24 @@ import (
 	adminpb "github.com/invoraapp/invora-controller/gen/invora/admin/billing/v2"
 	customerspb "github.com/invoraapp/invora-controller/gen/invora/billing/customers/v2"
 )
+
+// guidRe matches a canonical GUID (8-4-4-4-12 hex) — the exact form core's
+// BillingOrgAdminService.ProvisionOrg validates with Guid.TryParse. Any other
+// shape is rejected there with InvalidArgument "tenant_id must be a valid GUID".
+var guidRe = regexp.MustCompile(`(?i)^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$`)
+
+// resolveTenantID returns the billing tenant GUID for an org and whether one is
+// available. The billing backend requires tenant_id to be a GUID; the K8s object
+// name (e.g. "tenant-<zitadel-org-id>" or "invora-platform") is NOT one — sending
+// it triggers a permanent CreateFailed reconcile storm. For a real Invora tenant
+// the Zitadel org GUID (== ABP tenant id) is carried in spec.externalId. Platform
+// and numeric-snowflake landing orgs have no GUID here and are not billing tenants.
+func resolveTenantID(org *billingv1alpha1.InvoraBillingOrganization) (string, bool) {
+	if id := strings.TrimSpace(org.Spec.ExternalID); guidRe.MatchString(id) {
+		return id, true
+	}
+	return "", false
+}
 
 type InvoraBillingOrganizationReconciler struct {
 	BaseReconciler
@@ -67,6 +87,30 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 		return ctrl.Result{Requeue: true}, nil
 	}
 
+	tenantID, hasTenantID := resolveTenantID(&org)
+
+	// Platform / numeric-snowflake landing orgs carry no billing tenant GUID
+	// (spec.externalId is not a GUID). They are not billing tenants, so there is
+	// nothing to provision. Skip them explicitly with an observable status rather
+	// than hammering ProvisionOrg with a non-GUID id every 30s (the reconcile
+	// storm this fixes). A later spec change that adds a GUID re-triggers
+	// reconcile via the watch, so this is not a dead end.
+	if !hasTenantID && org.Status.OrganizationID == "" && GetImportID(&org) == "" {
+		logger.Info("skipping org with no billing tenant GUID", "name", org.Name, "externalId", org.Spec.ExternalID)
+		SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
+			metav1.ConditionTrue, "SkippedNoTenantGuid",
+			"Organization has no billing tenant GUID (spec.externalId is not a GUID); not a billing tenant, skipping provisioning", org.Generation)
+		SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionReady,
+			metav1.ConditionTrue, "Skipped", "Not a billing tenant; nothing to provision", org.Generation)
+		now := metav1.Now()
+		org.Status.LastSyncedAt = &now
+		org.Status.ObservedGeneration = org.Generation
+		if err := r.Status().Update(ctx, &org); err != nil {
+			return ctrl.Result{}, fmt.Errorf("updating skipped status: %w", err)
+		}
+		return ctrl.Result{}, nil
+	}
+
 	// Resolve instance -> super-admin admin client + gRPC connection
 	instCtx, err := r.ResolveInstanceAdmin(ctx, org.Spec.InstanceRef, org.Namespace)
 	if err != nil {
@@ -106,33 +150,40 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 
 	adminSvc := adminpb.NewBillingOrgAdminServiceClient(instCtx.Conn())
 
-	// Search for existing org by tenant_id (K8s resource name)
+	// Search for an existing org by tenant_id (the Zitadel org GUID), so a
+	// controller restart or a re-created CR adopts rather than duplicates.
 	listResp, err := adminSvc.ListOrgs(instCtx.GrpcCtx(ctx), &adminpb.ListOrgsRequest{})
 	if err != nil {
 		SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
 			metav1.ConditionFalse, "SearchFailed", err.Error(), org.Generation)
 		_ = r.Status().Update(ctx, &org)
-		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
+		// Return the error so controller-runtime applies capped exponential
+		// backoff instead of a fixed 30s hot loop.
+		return ctrl.Result{}, fmt.Errorf("listing billing orgs: %w", err)
 	}
 
 	for _, existing := range listResp.GetItems() {
-		if existing.GetTenantId() == org.Name {
+		if existing.GetTenantId() == tenantID {
 			logger.Info("found existing org, adopting", "id", existing.GetOrganizationId())
 			org.Status.OrganizationID = existing.GetOrganizationId()
 			return r.updateOrgStatusSuccess(ctx, &org, "Adopted")
 		}
 	}
 
-	// Create new org
+	// Create new org. tenant_id MUST be the Zitadel org GUID (== ABP tenant id),
+	// carried in spec.externalId — never the K8s object name, which core rejects
+	// as a non-GUID.
 	provisionResp, err := adminSvc.ProvisionOrg(instCtx.GrpcCtx(ctx), &adminpb.ProvisionOrgRequest{
-		TenantId:    org.Name,
+		TenantId:    tenantID,
 		DisplayName: org.Spec.Name,
 	})
 	if err != nil {
 		SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
 			metav1.ConditionFalse, "CreateFailed", err.Error(), org.Generation)
 		_ = r.Status().Update(ctx, &org)
-		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
+		// Return the error so controller-runtime applies capped exponential
+		// backoff instead of a fixed 30s hot loop.
+		return ctrl.Result{}, fmt.Errorf("provisioning billing org: %w", err)
 	}
 	org.Status.OrganizationID = provisionResp.GetOrg().GetOrganizationId()
 
@@ -150,7 +201,9 @@ func (r *InvoraBillingOrganizationReconciler) updateOrgStatusSuccess(
 		SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
 			metav1.ConditionFalse, "ParentDualWriteFailed", err.Error(), org.Generation)
 		_ = r.Status().Update(ctx, org)
-		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
+		// Return the error so controller-runtime applies capped exponential
+		// backoff instead of a fixed 30s hot loop.
+		return ctrl.Result{}, fmt.Errorf("reconciling parent dual-write: %w", err)
 	}
 
 	SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
@@ -292,7 +345,12 @@ func (r *InvoraBillingOrganizationReconciler) handleDeletion(
 		logger.Info("orphaning organization (deletionPolicy=Orphan)", "id", org.Status.OrganizationID)
 
 	case billingv1alpha1.DeletionPolicyDelete, "":
-		if org.Status.OrganizationID != "" {
+		// Only deprovision when we both provisioned it (OrganizationID set) and can
+		// resolve the GUID tenant_id core requires. A skipped/no-GUID org has no
+		// billing side to delete — deprovisioning with a non-GUID id would only
+		// loop on DeleteFailed and wedge the finalizer, so fall through to cleanup.
+		delTenantID, hasTenantID := resolveTenantID(org)
+		if org.Status.OrganizationID != "" && hasTenantID {
 			logger.Info("deleting organization from billing", "id", org.Status.OrganizationID)
 
 			instCtx, err := r.ResolveInstanceAdmin(ctx, org.Spec.InstanceRef, org.Namespace)
@@ -306,7 +364,7 @@ func (r *InvoraBillingOrganizationReconciler) handleDeletion(
 
 			delSvc := adminpb.NewBillingOrgAdminServiceClient(instCtx.Conn())
 			_, err = delSvc.DeprovisionOrg(instCtx.GrpcCtx(ctx), &adminpb.DeprovisionOrgRequest{
-				TenantId: org.Name,
+				TenantId: delTenantID,
 			})
 			if err != nil && !isGrpcNotFound(err) {
 				SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionDeletionBlocked,
