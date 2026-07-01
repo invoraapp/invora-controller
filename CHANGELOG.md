@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/invoraapp/invora-controller/compare/v1.2.1...v1.2.2) (2026-07-01)
+
+
+### Bug Fixes
+
+* **org:** send Zitadel org GUID as tenant_id, skip non-tenant orgs, backoff ([#6](https://github.com/invoraapp/invora-controller/issues/6)) ([4fafc66](https://github.com/invoraapp/invora-controller/commit/4fafc66c9dd3531f604e458261512660bacabb89))
+
 ## [1.2.1](https://github.com/invoraapp/invora-controller/compare/v1.2.0...v1.2.1) (2026-06-22)
 
 
