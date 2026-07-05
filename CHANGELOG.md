@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/invoraapp/invora-controller/compare/v1.2.2...v1.3.0) (2026-07-05)
+
+
+### Features
+
+* **subscription:** declarative subscription-level entitlements (connected_business grant) ([#7](https://github.com/invoraapp/invora-controller/issues/7)) ([22bc7f5](https://github.com/invoraapp/invora-controller/commit/22bc7f54b19ebc95fb3a020c7d8d738b07cb87c3))
+
 ## [1.2.2](https://github.com/invoraapp/invora-controller/compare/v1.2.1...v1.2.2) (2026-07-01)
 
 
