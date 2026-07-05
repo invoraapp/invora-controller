@@ -467,8 +467,11 @@ func (x *UpdateConnectedBusinessResponse) GetConnectedBusiness() *ConnectedBusin
 }
 
 type DeleteConnectedBusinessRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	TenantId      string                 `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	state    protoimpl.MessageState `protogen:"open.v1"`
+	TenantId string                 `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	// Without force=true, fails FAILED_PRECONDITION when blocking children
+	// (e.g. active subscriptions, sub-tenants) exist.
+	Force         bool `protobuf:"varint,2,opt,name=force,proto3" json:"force,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -508,6 +511,13 @@ func (x *DeleteConnectedBusinessRequest) GetTenantId() string {
 		return x.TenantId
 	}
 	return ""
+}
+
+func (x *DeleteConnectedBusinessRequest) GetForce() bool {
+	if x != nil {
+		return x.Force
+	}
+	return false
 }
 
 type DeleteConnectedBusinessResponse struct {
@@ -1376,9 +1386,10 @@ const file_invora_identity_v2_platform_enrollment_service_proto_rawDesc = "" +
 	"\x04name\x18\x04 \x01(\tH\x00R\x04name\x88\x01\x01B\a\n" +
 	"\x05_name\"w\n" +
 	"\x1fUpdateConnectedBusinessResponse\x12T\n" +
-	"\x12connected_business\x18\x01 \x01(\v2%.invora.identity.v2.ConnectedBusinessR\x11connectedBusiness\"=\n" +
+	"\x12connected_business\x18\x01 \x01(\v2%.invora.identity.v2.ConnectedBusinessR\x11connectedBusiness\"S\n" +
 	"\x1eDeleteConnectedBusinessRequest\x12\x1b\n" +
-	"\ttenant_id\x18\x01 \x01(\tR\btenantId\"!\n" +
+	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12\x14\n" +
+	"\x05force\x18\x02 \x01(\bR\x05force\"!\n" +
 	"\x1fDeleteConnectedBusinessResponse\"\x8b\x01\n" +
 	"\x1dListConnectedBusinessesFilter\x12I\n" +
 	"\x04part\x18\x01 \x01(\v25.invora.identity.v2.ListConnectedBusinessesFilterPartR\x04part\x12\x1f\n" +

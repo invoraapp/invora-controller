@@ -14,6 +14,7 @@ import (
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
 	structpb "google.golang.org/protobuf/types/known/structpb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -81,10 +82,20 @@ func (DocumentNumbering) EnumDescriptor() ([]byte, []int) {
 }
 
 // Business lifecycle state of a branch, independent of deletion.
+//
+// Zero-value fix (invora-protobuf#39): the zero value previously collided
+// with the meaningful ACTIVE state (proto3 treats an unset field as 0, so
+// every branch silently read as "active" even when the field was never
+// set). Fixed via `allow_alias` so BRANCH_LIFECYCLE_STATE_UNSPECIFIED and
+// BRANCH_LIFECYCLE_STATE_ACTIVE both alias wire value 0 — this is wire-safe:
+// no existing enum number changes, so no persisted/serialized data or
+// on-the-wire client is affected. New code should prefer checking ACTIVE
+// explicitly rather than relying on the zero-value default.
 type BranchLifecycleState int32
 
 const (
-	// A branch is active by default.
+	BranchLifecycleState_BRANCH_LIFECYCLE_STATE_UNSPECIFIED BranchLifecycleState = 0
+	// A branch is active by default. Aliases the zero value above.
 	// buf:lint:ignore ENUM_ZERO_VALUE_SUFFIX
 	BranchLifecycleState_BRANCH_LIFECYCLE_STATE_ACTIVE      BranchLifecycleState = 0
 	BranchLifecycleState_BRANCH_LIFECYCLE_STATE_PENDING     BranchLifecycleState = 1
@@ -94,11 +105,13 @@ const (
 // Enum value maps for BranchLifecycleState.
 var (
 	BranchLifecycleState_name = map[int32]string{
-		0: "BRANCH_LIFECYCLE_STATE_ACTIVE",
+		0: "BRANCH_LIFECYCLE_STATE_UNSPECIFIED",
+		// Duplicate value: 0: "BRANCH_LIFECYCLE_STATE_ACTIVE",
 		1: "BRANCH_LIFECYCLE_STATE_PENDING",
 		2: "BRANCH_LIFECYCLE_STATE_DEACTIVATED",
 	}
 	BranchLifecycleState_value = map[string]int32{
+		"BRANCH_LIFECYCLE_STATE_UNSPECIFIED": 0,
 		"BRANCH_LIFECYCLE_STATE_ACTIVE":      0,
 		"BRANCH_LIFECYCLE_STATE_PENDING":     1,
 		"BRANCH_LIFECYCLE_STATE_DEACTIVATED": 2,
@@ -284,8 +297,12 @@ type Branch struct {
 	LifecycleState BranchLifecycleState `protobuf:"varint,21,opt,name=lifecycle_state,json=lifecycleState,proto3,enum=invora.branches.v2.BranchLifecycleState" json:"lifecycle_state,omitempty"`
 	// Read-only. True if this branch has been deleted. Server-managed and ignored
 	// on create/update. Deleted branches are excluded from List/Get by default.
-	IsDeleted     bool                          `protobuf:"varint,22,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
-	Audit         *kernel.CreateUpdateAuditInfo `protobuf:"bytes,20,opt,name=audit,proto3" json:"audit,omitempty"`
+	IsDeleted bool                          `protobuf:"varint,22,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
+	Audit     *kernel.CreateUpdateAuditInfo `protobuf:"bytes,20,opt,name=audit,proto3" json:"audit,omitempty"`
+	// Output only. Timestamp when the branch was soft-deleted. Only set when
+	// is_deleted is true; cleared by Undelete. Server-managed and ignored on
+	// create/update.
+	DeleteTime    *timestamppb.Timestamp `protobuf:"bytes,23,opt,name=delete_time,json=deleteTime,proto3" json:"delete_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -450,7 +467,7 @@ func (x *Branch) GetLifecycleState() BranchLifecycleState {
 	if x != nil {
 		return x.LifecycleState
 	}
-	return BranchLifecycleState_BRANCH_LIFECYCLE_STATE_ACTIVE
+	return BranchLifecycleState_BRANCH_LIFECYCLE_STATE_UNSPECIFIED
 }
 
 func (x *Branch) GetIsDeleted() bool {
@@ -463,6 +480,13 @@ func (x *Branch) GetIsDeleted() bool {
 func (x *Branch) GetAudit() *kernel.CreateUpdateAuditInfo {
 	if x != nil {
 		return x.Audit
+	}
+	return nil
+}
+
+func (x *Branch) GetDeleteTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.DeleteTime
 	}
 	return nil
 }
@@ -746,7 +770,7 @@ func (x *ChangeBase) GetLifecycleState() BranchLifecycleState {
 	if x != nil {
 		return x.LifecycleState
 	}
-	return BranchLifecycleState_BRANCH_LIFECYCLE_STATE_ACTIVE
+	return BranchLifecycleState_BRANCH_LIFECYCLE_STATE_UNSPECIFIED
 }
 
 type CreateRequest struct {
@@ -958,8 +982,11 @@ func (x *UpdateResponse) GetDetails() *Branch {
 }
 
 type DeleteRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Keys          []string               `protobuf:"bytes,1,rep,name=keys,proto3" json:"keys,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Keys  []string               `protobuf:"bytes,1,rep,name=keys,proto3" json:"keys,omitempty"`
+	// Without force=true, fails FAILED_PRECONDITION when blocking children
+	// (Documents hard-reference branch_id) exist.
+	Force         bool `protobuf:"varint,2,opt,name=force,proto3" json:"force,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -999,6 +1026,13 @@ func (x *DeleteRequest) GetKeys() []string {
 		return x.Keys
 	}
 	return nil
+}
+
+func (x *DeleteRequest) GetForce() bool {
+	if x != nil {
+		return x.Force
+	}
+	return false
 }
 
 type DeleteResponse struct {
@@ -1278,7 +1312,7 @@ func (x *ListFilterPart) GetLifecycleState() BranchLifecycleState {
 			return x.LifecycleState
 		}
 	}
-	return BranchLifecycleState_BRANCH_LIFECYCLE_STATE_ACTIVE
+	return BranchLifecycleState_BRANCH_LIFECYCLE_STATE_UNSPECIFIED
 }
 
 type isListFilterPart_Type interface {
@@ -1591,7 +1625,7 @@ var File_invora_branches_v2_models_proto protoreflect.FileDescriptor
 
 const file_invora_branches_v2_models_proto_rawDesc = "" +
 	"\n" +
-	"\x1finvora/branches/v2/models.proto\x12\x12invora.branches.v2\x1a google/protobuf/field_mask.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a+invora/documents/v2/regulation_config.proto\x1a\x12kernel/audit.proto\x1a\x18kernel/key_version.proto\x1a\x12kernel/query.proto\x1aQoasis/names/specification/ubl/schema/xsd/commonaggregatecomponents_2/models.proto\"\xb4\n" +
+	"\x1finvora/branches/v2/models.proto\x12\x12invora.branches.v2\x1a google/protobuf/field_mask.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a+invora/documents/v2/regulation_config.proto\x1a\x12kernel/audit.proto\x1a\x18kernel/key_version.proto\x1a\x12kernel/query.proto\x1aQoasis/names/specification/ubl/schema/xsd/commonaggregatecomponents_2/models.proto\"\xf1\n" +
 	"\n" +
 	"\x06Branch\x12\"\n" +
 	"\x02id\x18\x01 \x01(\v2\x12.kernel.KeyVersionR\x02id\x12+\n" +
@@ -1618,7 +1652,9 @@ const file_invora_branches_v2_models_proto_rawDesc = "" +
 	"\x0flifecycle_state\x18\x15 \x01(\x0e2(.invora.branches.v2.BranchLifecycleStateR\x0elifecycleState\x12\x1d\n" +
 	"\n" +
 	"is_deleted\x18\x16 \x01(\bR\tisDeleted\x123\n" +
-	"\x05audit\x18\x14 \x01(\v2\x1d.kernel.CreateUpdateAuditInfoR\x05audit\x1ak\n" +
+	"\x05audit\x18\x14 \x01(\v2\x1d.kernel.CreateUpdateAuditInfoR\x05audit\x12;\n" +
+	"\vdelete_time\x18\x17 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"deleteTime\x1ak\n" +
 	"\x16RegulationConfigsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12;\n" +
 	"\x05value\x18\x02 \x01(\v2%.invora.documents.v2.RegulationConfigR\x05value:\x028\x01B\x11\n" +
@@ -1680,9 +1716,10 @@ const file_invora_branches_v2_models_proto_rawDesc = "" +
 	"\x04mask\x18\x03 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04mask\x128\n" +
 	"\achanges\x18\x04 \x01(\v2\x1e.invora.branches.v2.ChangeBaseR\achanges\"F\n" +
 	"\x0eUpdateResponse\x124\n" +
-	"\adetails\x18\x01 \x01(\v2\x1a.invora.branches.v2.BranchR\adetails\"#\n" +
+	"\adetails\x18\x01 \x01(\v2\x1a.invora.branches.v2.BranchR\adetails\"9\n" +
 	"\rDeleteRequest\x12\x12\n" +
-	"\x04keys\x18\x01 \x03(\tR\x04keys\"\x10\n" +
+	"\x04keys\x18\x01 \x03(\tR\x04keys\x12\x14\n" +
+	"\x05force\x18\x02 \x01(\bR\x05force\"\x10\n" +
 	"\x0eDeleteResponse\"N\n" +
 	"\n" +
 	"GetRequest\x12\x10\n" +
@@ -1732,11 +1769,12 @@ const file_invora_branches_v2_models_proto_rawDesc = "" +
 	"\x11DocumentNumbering\x12\"\n" +
 	"\x1eDOCUMENT_NUMBERING_UNSPECIFIED\x10\x00\x12#\n" +
 	"\x1fDOCUMENT_NUMBERING_PER_CUSTOMER\x10\x01\x12!\n" +
-	"\x1dDOCUMENT_NUMBERING_PER_BRANCH\x10\x02*\x85\x01\n" +
-	"\x14BranchLifecycleState\x12!\n" +
+	"\x1dDOCUMENT_NUMBERING_PER_BRANCH\x10\x02*\xb1\x01\n" +
+	"\x14BranchLifecycleState\x12&\n" +
+	"\"BRANCH_LIFECYCLE_STATE_UNSPECIFIED\x10\x00\x12!\n" +
 	"\x1dBRANCH_LIFECYCLE_STATE_ACTIVE\x10\x00\x12\"\n" +
 	"\x1eBRANCH_LIFECYCLE_STATE_PENDING\x10\x01\x12&\n" +
-	"\"BRANCH_LIFECYCLE_STATE_DEACTIVATED\x10\x02*\xe1\x01\n" +
+	"\"BRANCH_LIFECYCLE_STATE_DEACTIVATED\x10\x02\x1a\x02\x10\x01*\xe1\x01\n" +
 	"$SubscriptionInvoiceIssuingDateAnchor\x128\n" +
 	"4SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_UNSPECIFIED\x10\x00\x12?\n" +
 	";SUBSCRIPTION_INVOICE_ISSUING_DATE_ANCHOR_CURRENT_PERIOD_END\x10\x01\x12>\n" +
@@ -1789,12 +1827,13 @@ var file_invora_branches_v2_models_proto_goTypes = []any{
 	(*commonaggregatecomponents_2.PartyType)(nil), // 24: oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.PartyType
 	(*structpb.Struct)(nil),                       // 25: google.protobuf.Struct
 	(*kernel.CreateUpdateAuditInfo)(nil),          // 26: kernel.CreateUpdateAuditInfo
-	(*fieldmaskpb.FieldMask)(nil),                 // 27: google.protobuf.FieldMask
-	(*kernel.ListRequestFilterPartId)(nil),        // 28: kernel.ListRequestFilterPartId
-	(*kernel.ListRequestFilterPartDateV2)(nil),    // 29: kernel.ListRequestFilterPartDateV2
-	(kernel.SortDirection)(0),                     // 30: kernel.SortDirection
-	(*kernel.PaginationInfo)(nil),                 // 31: kernel.PaginationInfo
-	(*v2.RegulationConfig)(nil),                   // 32: invora.documents.v2.RegulationConfig
+	(*timestamppb.Timestamp)(nil),                 // 27: google.protobuf.Timestamp
+	(*fieldmaskpb.FieldMask)(nil),                 // 28: google.protobuf.FieldMask
+	(*kernel.ListRequestFilterPartId)(nil),        // 29: kernel.ListRequestFilterPartId
+	(*kernel.ListRequestFilterPartDateV2)(nil),    // 30: kernel.ListRequestFilterPartDateV2
+	(kernel.SortDirection)(0),                     // 31: kernel.SortDirection
+	(*kernel.PaginationInfo)(nil),                 // 32: kernel.PaginationInfo
+	(*v2.RegulationConfig)(nil),                   // 33: invora.documents.v2.RegulationConfig
 }
 var file_invora_branches_v2_models_proto_depIdxs = []int32{
 	23, // 0: invora.branches.v2.Branch.id:type_name -> kernel.KeyVersion
@@ -1805,42 +1844,43 @@ var file_invora_branches_v2_models_proto_depIdxs = []int32{
 	5,  // 5: invora.branches.v2.Branch.billing_config:type_name -> invora.branches.v2.BillingConfig
 	1,  // 6: invora.branches.v2.Branch.lifecycle_state:type_name -> invora.branches.v2.BranchLifecycleState
 	26, // 7: invora.branches.v2.Branch.audit:type_name -> kernel.CreateUpdateAuditInfo
-	2,  // 8: invora.branches.v2.BillingConfig.subscription_invoice_issuing_date_anchor:type_name -> invora.branches.v2.SubscriptionInvoiceIssuingDateAnchor
-	3,  // 9: invora.branches.v2.BillingConfig.subscription_invoice_issuing_date_adjustment:type_name -> invora.branches.v2.SubscriptionInvoiceIssuingDateAdjustment
-	24, // 10: invora.branches.v2.ChangeBase.party:type_name -> oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.PartyType
-	22, // 11: invora.branches.v2.ChangeBase.regulation_configs:type_name -> invora.branches.v2.ChangeBase.RegulationConfigsEntry
-	25, // 12: invora.branches.v2.ChangeBase.metadata:type_name -> google.protobuf.Struct
-	0,  // 13: invora.branches.v2.ChangeBase.document_numbering:type_name -> invora.branches.v2.DocumentNumbering
-	5,  // 14: invora.branches.v2.ChangeBase.billing_config:type_name -> invora.branches.v2.BillingConfig
-	1,  // 15: invora.branches.v2.ChangeBase.lifecycle_state:type_name -> invora.branches.v2.BranchLifecycleState
-	6,  // 16: invora.branches.v2.CreateRequest.changes:type_name -> invora.branches.v2.ChangeBase
-	4,  // 17: invora.branches.v2.CreateResponse.details:type_name -> invora.branches.v2.Branch
-	27, // 18: invora.branches.v2.UpdateRequest.mask:type_name -> google.protobuf.FieldMask
-	6,  // 19: invora.branches.v2.UpdateRequest.changes:type_name -> invora.branches.v2.ChangeBase
-	4,  // 20: invora.branches.v2.UpdateResponse.details:type_name -> invora.branches.v2.Branch
-	27, // 21: invora.branches.v2.GetRequest.mask:type_name -> google.protobuf.FieldMask
-	4,  // 22: invora.branches.v2.GetResponse.details:type_name -> invora.branches.v2.Branch
-	16, // 23: invora.branches.v2.ListFilter.part:type_name -> invora.branches.v2.ListFilterPart
-	28, // 24: invora.branches.v2.ListFilterPart.key:type_name -> kernel.ListRequestFilterPartId
-	29, // 25: invora.branches.v2.ListFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDateV2
-	29, // 26: invora.branches.v2.ListFilterPart.updated_at:type_name -> kernel.ListRequestFilterPartDateV2
-	1,  // 27: invora.branches.v2.ListFilterPart.lifecycle_state:type_name -> invora.branches.v2.BranchLifecycleState
-	18, // 28: invora.branches.v2.ListSort.rules:type_name -> invora.branches.v2.ListSortRule
-	30, // 29: invora.branches.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
-	30, // 30: invora.branches.v2.ListSortRule.updated_at:type_name -> kernel.SortDirection
-	30, // 31: invora.branches.v2.ListSortRule.name:type_name -> kernel.SortDirection
-	15, // 32: invora.branches.v2.ListRequest.filter:type_name -> invora.branches.v2.ListFilter
-	17, // 33: invora.branches.v2.ListRequest.sort:type_name -> invora.branches.v2.ListSort
-	31, // 34: invora.branches.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
-	27, // 35: invora.branches.v2.ListRequest.mask:type_name -> google.protobuf.FieldMask
-	4,  // 36: invora.branches.v2.ListResponse.items:type_name -> invora.branches.v2.Branch
-	32, // 37: invora.branches.v2.Branch.RegulationConfigsEntry.value:type_name -> invora.documents.v2.RegulationConfig
-	32, // 38: invora.branches.v2.ChangeBase.RegulationConfigsEntry.value:type_name -> invora.documents.v2.RegulationConfig
-	39, // [39:39] is the sub-list for method output_type
-	39, // [39:39] is the sub-list for method input_type
-	39, // [39:39] is the sub-list for extension type_name
-	39, // [39:39] is the sub-list for extension extendee
-	0,  // [0:39] is the sub-list for field type_name
+	27, // 8: invora.branches.v2.Branch.delete_time:type_name -> google.protobuf.Timestamp
+	2,  // 9: invora.branches.v2.BillingConfig.subscription_invoice_issuing_date_anchor:type_name -> invora.branches.v2.SubscriptionInvoiceIssuingDateAnchor
+	3,  // 10: invora.branches.v2.BillingConfig.subscription_invoice_issuing_date_adjustment:type_name -> invora.branches.v2.SubscriptionInvoiceIssuingDateAdjustment
+	24, // 11: invora.branches.v2.ChangeBase.party:type_name -> oasis.names.specification.ubl.schema.xsd.commonaggregatecomponents_2.PartyType
+	22, // 12: invora.branches.v2.ChangeBase.regulation_configs:type_name -> invora.branches.v2.ChangeBase.RegulationConfigsEntry
+	25, // 13: invora.branches.v2.ChangeBase.metadata:type_name -> google.protobuf.Struct
+	0,  // 14: invora.branches.v2.ChangeBase.document_numbering:type_name -> invora.branches.v2.DocumentNumbering
+	5,  // 15: invora.branches.v2.ChangeBase.billing_config:type_name -> invora.branches.v2.BillingConfig
+	1,  // 16: invora.branches.v2.ChangeBase.lifecycle_state:type_name -> invora.branches.v2.BranchLifecycleState
+	6,  // 17: invora.branches.v2.CreateRequest.changes:type_name -> invora.branches.v2.ChangeBase
+	4,  // 18: invora.branches.v2.CreateResponse.details:type_name -> invora.branches.v2.Branch
+	28, // 19: invora.branches.v2.UpdateRequest.mask:type_name -> google.protobuf.FieldMask
+	6,  // 20: invora.branches.v2.UpdateRequest.changes:type_name -> invora.branches.v2.ChangeBase
+	4,  // 21: invora.branches.v2.UpdateResponse.details:type_name -> invora.branches.v2.Branch
+	28, // 22: invora.branches.v2.GetRequest.mask:type_name -> google.protobuf.FieldMask
+	4,  // 23: invora.branches.v2.GetResponse.details:type_name -> invora.branches.v2.Branch
+	16, // 24: invora.branches.v2.ListFilter.part:type_name -> invora.branches.v2.ListFilterPart
+	29, // 25: invora.branches.v2.ListFilterPart.key:type_name -> kernel.ListRequestFilterPartId
+	30, // 26: invora.branches.v2.ListFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDateV2
+	30, // 27: invora.branches.v2.ListFilterPart.updated_at:type_name -> kernel.ListRequestFilterPartDateV2
+	1,  // 28: invora.branches.v2.ListFilterPart.lifecycle_state:type_name -> invora.branches.v2.BranchLifecycleState
+	18, // 29: invora.branches.v2.ListSort.rules:type_name -> invora.branches.v2.ListSortRule
+	31, // 30: invora.branches.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
+	31, // 31: invora.branches.v2.ListSortRule.updated_at:type_name -> kernel.SortDirection
+	31, // 32: invora.branches.v2.ListSortRule.name:type_name -> kernel.SortDirection
+	15, // 33: invora.branches.v2.ListRequest.filter:type_name -> invora.branches.v2.ListFilter
+	17, // 34: invora.branches.v2.ListRequest.sort:type_name -> invora.branches.v2.ListSort
+	32, // 35: invora.branches.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
+	28, // 36: invora.branches.v2.ListRequest.mask:type_name -> google.protobuf.FieldMask
+	4,  // 37: invora.branches.v2.ListResponse.items:type_name -> invora.branches.v2.Branch
+	33, // 38: invora.branches.v2.Branch.RegulationConfigsEntry.value:type_name -> invora.documents.v2.RegulationConfig
+	33, // 39: invora.branches.v2.ChangeBase.RegulationConfigsEntry.value:type_name -> invora.documents.v2.RegulationConfig
+	40, // [40:40] is the sub-list for method output_type
+	40, // [40:40] is the sub-list for method input_type
+	40, // [40:40] is the sub-list for extension type_name
+	40, // [40:40] is the sub-list for extension extendee
+	0,  // [0:40] is the sub-list for field type_name
 }
 
 func init() { file_invora_branches_v2_models_proto_init() }

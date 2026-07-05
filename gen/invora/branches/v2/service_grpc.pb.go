@@ -24,6 +24,7 @@ const (
 	BranchesService_Create_FullMethodName     = "/invora.branches.v2.BranchesService/Create"
 	BranchesService_Update_FullMethodName     = "/invora.branches.v2.BranchesService/Update"
 	BranchesService_Delete_FullMethodName     = "/invora.branches.v2.BranchesService/Delete"
+	BranchesService_Undelete_FullMethodName   = "/invora.branches.v2.BranchesService/Undelete"
 	BranchesService_SetPrimary_FullMethodName = "/invora.branches.v2.BranchesService/SetPrimary"
 )
 
@@ -50,7 +51,12 @@ type BranchesServiceClient interface {
 	// Update a branch's identity, regulation config, or preferences.
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
 	// Delete one or more branches. The primary branch cannot be deleted.
+	// Without force=true, fails FAILED_PRECONDITION when blocking children
+	// (Documents hard-reference branch_id) exist.
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
+	// Restore a soft-deleted branch. Reverses Delete; clears is_deleted and
+	// delete_time. Fails NOT_FOUND if the branch was never deleted.
+	Undelete(ctx context.Context, in *UndeleteRequest, opts ...grpc.CallOption) (*UndeleteResponse, error)
 	// Set a branch as the primary. The previous primary becomes non-primary.
 	// Documents that don't specify a branch_id use the primary branch.
 	SetPrimary(ctx context.Context, in *SetPrimaryRequest, opts ...grpc.CallOption) (*SetPrimaryResponse, error)
@@ -114,6 +120,16 @@ func (c *branchesServiceClient) Delete(ctx context.Context, in *DeleteRequest, o
 	return out, nil
 }
 
+func (c *branchesServiceClient) Undelete(ctx context.Context, in *UndeleteRequest, opts ...grpc.CallOption) (*UndeleteResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UndeleteResponse)
+	err := c.cc.Invoke(ctx, BranchesService_Undelete_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *branchesServiceClient) SetPrimary(ctx context.Context, in *SetPrimaryRequest, opts ...grpc.CallOption) (*SetPrimaryResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(SetPrimaryResponse)
@@ -147,7 +163,12 @@ type BranchesServiceServer interface {
 	// Update a branch's identity, regulation config, or preferences.
 	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
 	// Delete one or more branches. The primary branch cannot be deleted.
+	// Without force=true, fails FAILED_PRECONDITION when blocking children
+	// (Documents hard-reference branch_id) exist.
 	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
+	// Restore a soft-deleted branch. Reverses Delete; clears is_deleted and
+	// delete_time. Fails NOT_FOUND if the branch was never deleted.
+	Undelete(context.Context, *UndeleteRequest) (*UndeleteResponse, error)
 	// Set a branch as the primary. The previous primary becomes non-primary.
 	// Documents that don't specify a branch_id use the primary branch.
 	SetPrimary(context.Context, *SetPrimaryRequest) (*SetPrimaryResponse, error)
@@ -175,6 +196,9 @@ func (UnimplementedBranchesServiceServer) Update(context.Context, *UpdateRequest
 }
 func (UnimplementedBranchesServiceServer) Delete(context.Context, *DeleteRequest) (*DeleteResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedBranchesServiceServer) Undelete(context.Context, *UndeleteRequest) (*UndeleteResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Undelete not implemented")
 }
 func (UnimplementedBranchesServiceServer) SetPrimary(context.Context, *SetPrimaryRequest) (*SetPrimaryResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SetPrimary not implemented")
@@ -290,6 +314,24 @@ func _BranchesService_Delete_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BranchesService_Undelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UndeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranchesServiceServer).Undelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BranchesService_Undelete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranchesServiceServer).Undelete(ctx, req.(*UndeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _BranchesService_SetPrimary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SetPrimaryRequest)
 	if err := dec(in); err != nil {
@@ -334,6 +376,10 @@ var BranchesService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Delete",
 			Handler:    _BranchesService_Delete_Handler,
+		},
+		{
+			MethodName: "Undelete",
+			Handler:    _BranchesService_Undelete_Handler,
 		},
 		{
 			MethodName: "SetPrimary",

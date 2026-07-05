@@ -563,8 +563,11 @@ func (x *UpdateTenantResponse) GetTenant() *Tenant {
 }
 
 type DestroyTenantRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	TenantId      string                 `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	state    protoimpl.MessageState `protogen:"open.v1"`
+	TenantId string                 `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	// Without force=true, fails FAILED_PRECONDITION when blocking children
+	// (e.g. active subscriptions, connected businesses) exist.
+	Force         bool `protobuf:"varint,2,opt,name=force,proto3" json:"force,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -604,6 +607,13 @@ func (x *DestroyTenantRequest) GetTenantId() string {
 		return x.TenantId
 	}
 	return ""
+}
+
+func (x *DestroyTenantRequest) GetForce() bool {
+	if x != nil {
+		return x.Force
+	}
+	return false
 }
 
 type DestroyTenantResponse struct {
@@ -1793,9 +1803,10 @@ const file_invora_admin_identity_v2_service_proto_rawDesc = "" +
 	"\x04mask\x18\x03 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04mask\x12D\n" +
 	"\achanges\x18\x04 \x01(\v2*.invora.admin.identity.v2.TenantChangeBaseR\achanges\"P\n" +
 	"\x14UpdateTenantResponse\x128\n" +
-	"\x06tenant\x18\x01 \x01(\v2 .invora.admin.identity.v2.TenantR\x06tenant\"3\n" +
+	"\x06tenant\x18\x01 \x01(\v2 .invora.admin.identity.v2.TenantR\x06tenant\"I\n" +
 	"\x14DestroyTenantRequest\x12\x1b\n" +
-	"\ttenant_id\x18\x01 \x01(\tR\btenantId\"\x17\n" +
+	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12\x14\n" +
+	"\x05force\x18\x02 \x01(\bR\x05force\"\x17\n" +
 	"\x15DestroyTenantResponse\"N\n" +
 	"\x17DeactivateTenantRequest\x12\x1b\n" +
 	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12\x16\n" +

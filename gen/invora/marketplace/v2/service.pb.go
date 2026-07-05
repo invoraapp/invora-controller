@@ -26,7 +26,7 @@ var File_invora_marketplace_v2_service_proto protoreflect.FileDescriptor
 
 const file_invora_marketplace_v2_service_proto_rawDesc = "" +
 	"\n" +
-	"#invora/marketplace/v2/service.proto\x12\x15invora.marketplace.v2\x1a\x1cgoogle/api/annotations.proto\x1a\"invora/marketplace/v2/models.proto\x1a\x14kernel/options.proto2\xe2\x18\n" +
+	"#invora/marketplace/v2/service.proto\x12\x15invora.marketplace.v2\x1a\x1cgoogle/api/annotations.proto\x1a\"invora/marketplace/v2/models.proto\x1a\x14kernel/options.proto2\xc5\x1a\n" +
 	"\x12MarketplaceService\x12\xba\x01\n" +
 	"\rListProviders\x12+.invora.marketplace.v2.ListProvidersRequest\x1a,.invora.marketplace.v2.ListProvidersResponse\"N\xe2\xf2\x19%\n" +
 	"#Invora.Marketplace.v2.ListProviders\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v2/marketplace/providers\x12\xc0\x01\n" +
@@ -52,7 +52,9 @@ const file_invora_marketplace_v2_service_proto_rawDesc = "" +
 	"\x14ListProviderBranches\x122.invora.marketplace.v2.ListProviderBranchesRequest\x1a3.invora.marketplace.v2.ListProviderBranchesResponse\"y\xe2\xf2\x19,\n" +
 	"*Invora.Marketplace.v2.ListProviderBranches\x82\xd3\xe4\x93\x02C\x12A/api/v2/marketplace/connections/{connection_id}/provider-branches\x12\xdb\x01\n" +
 	"\vTriggerSync\x12).invora.marketplace.v2.TriggerSyncRequest\x1a*.invora.marketplace.v2.TriggerSyncResponse\"u\xe2\xf2\x19*\n" +
-	"(Invora.Marketplace.v2.Modify.TriggerSync\x82\xd3\xe4\x93\x02A:\x01*\"</api/v2/marketplace/connections/{connection_id}/trigger-sync\x12\xe4\x01\n" +
+	"(Invora.Marketplace.v2.Modify.TriggerSync\x82\xd3\xe4\x93\x02A:\x01*\"</api/v2/marketplace/connections/{connection_id}/trigger-sync\x12\xe0\x01\n" +
+	"\rSyncSallaTeam\x12+.invora.marketplace.v2.SyncSallaTeamRequest\x1a,.invora.marketplace.v2.SyncSallaTeamResponse\"t\xe2\xf2\x19,\n" +
+	"*Invora.Marketplace.v2.Modify.SyncSallaTeam\x82\xd3\xe4\x93\x02>:\x01*\"9/api/v2/marketplace/connections/{connection_id}/sync-team\x12\xe4\x01\n" +
 	"\x0eListSyncEvents\x12,.invora.marketplace.v2.ListSyncEventsRequest\x1a-.invora.marketplace.v2.ListSyncEventsResponse\"u\xe2\xf2\x19&\n" +
 	"$Invora.Marketplace.v2.ListSyncEvents\x82\xd3\xe4\x93\x02E:\x01*\"@/api/v2/marketplace/connections/{connection_id}/sync-events/list\x12\xf3\x01\n" +
 	"\x15CheckConnectionHealth\x123.invora.marketplace.v2.CheckConnectionHealthRequest\x1a4.invora.marketplace.v2.CheckConnectionHealthResponse\"o\xe2\xf2\x19-\n" +
@@ -72,22 +74,24 @@ var file_invora_marketplace_v2_service_proto_goTypes = []any{
 	(*ReauthorizeConnectionRequest)(nil),  // 9: invora.marketplace.v2.ReauthorizeConnectionRequest
 	(*ListProviderBranchesRequest)(nil),   // 10: invora.marketplace.v2.ListProviderBranchesRequest
 	(*TriggerSyncRequest)(nil),            // 11: invora.marketplace.v2.TriggerSyncRequest
-	(*ListSyncEventsRequest)(nil),         // 12: invora.marketplace.v2.ListSyncEventsRequest
-	(*CheckConnectionHealthRequest)(nil),  // 13: invora.marketplace.v2.CheckConnectionHealthRequest
-	(*ListProvidersResponse)(nil),         // 14: invora.marketplace.v2.ListProvidersResponse
-	(*GetProviderResponse)(nil),           // 15: invora.marketplace.v2.GetProviderResponse
-	(*InitiateConnectionResponse)(nil),    // 16: invora.marketplace.v2.InitiateConnectionResponse
-	(*CompleteConnectionResponse)(nil),    // 17: invora.marketplace.v2.CompleteConnectionResponse
-	(*ListConnectionsResponse)(nil),       // 18: invora.marketplace.v2.ListConnectionsResponse
-	(*GetConnectionResponse)(nil),         // 19: invora.marketplace.v2.GetConnectionResponse
-	(*UpdateConnectionResponse)(nil),      // 20: invora.marketplace.v2.UpdateConnectionResponse
-	(*DisconnectResponse)(nil),            // 21: invora.marketplace.v2.DisconnectResponse
-	(*SetSyncEnabledResponse)(nil),        // 22: invora.marketplace.v2.SetSyncEnabledResponse
-	(*ReauthorizeConnectionResponse)(nil), // 23: invora.marketplace.v2.ReauthorizeConnectionResponse
-	(*ListProviderBranchesResponse)(nil),  // 24: invora.marketplace.v2.ListProviderBranchesResponse
-	(*TriggerSyncResponse)(nil),           // 25: invora.marketplace.v2.TriggerSyncResponse
-	(*ListSyncEventsResponse)(nil),        // 26: invora.marketplace.v2.ListSyncEventsResponse
-	(*CheckConnectionHealthResponse)(nil), // 27: invora.marketplace.v2.CheckConnectionHealthResponse
+	(*SyncSallaTeamRequest)(nil),          // 12: invora.marketplace.v2.SyncSallaTeamRequest
+	(*ListSyncEventsRequest)(nil),         // 13: invora.marketplace.v2.ListSyncEventsRequest
+	(*CheckConnectionHealthRequest)(nil),  // 14: invora.marketplace.v2.CheckConnectionHealthRequest
+	(*ListProvidersResponse)(nil),         // 15: invora.marketplace.v2.ListProvidersResponse
+	(*GetProviderResponse)(nil),           // 16: invora.marketplace.v2.GetProviderResponse
+	(*InitiateConnectionResponse)(nil),    // 17: invora.marketplace.v2.InitiateConnectionResponse
+	(*CompleteConnectionResponse)(nil),    // 18: invora.marketplace.v2.CompleteConnectionResponse
+	(*ListConnectionsResponse)(nil),       // 19: invora.marketplace.v2.ListConnectionsResponse
+	(*GetConnectionResponse)(nil),         // 20: invora.marketplace.v2.GetConnectionResponse
+	(*UpdateConnectionResponse)(nil),      // 21: invora.marketplace.v2.UpdateConnectionResponse
+	(*DisconnectResponse)(nil),            // 22: invora.marketplace.v2.DisconnectResponse
+	(*SetSyncEnabledResponse)(nil),        // 23: invora.marketplace.v2.SetSyncEnabledResponse
+	(*ReauthorizeConnectionResponse)(nil), // 24: invora.marketplace.v2.ReauthorizeConnectionResponse
+	(*ListProviderBranchesResponse)(nil),  // 25: invora.marketplace.v2.ListProviderBranchesResponse
+	(*TriggerSyncResponse)(nil),           // 26: invora.marketplace.v2.TriggerSyncResponse
+	(*SyncSallaTeamResponse)(nil),         // 27: invora.marketplace.v2.SyncSallaTeamResponse
+	(*ListSyncEventsResponse)(nil),        // 28: invora.marketplace.v2.ListSyncEventsResponse
+	(*CheckConnectionHealthResponse)(nil), // 29: invora.marketplace.v2.CheckConnectionHealthResponse
 }
 var file_invora_marketplace_v2_service_proto_depIdxs = []int32{
 	0,  // 0: invora.marketplace.v2.MarketplaceService.ListProviders:input_type -> invora.marketplace.v2.ListProvidersRequest
@@ -102,24 +106,26 @@ var file_invora_marketplace_v2_service_proto_depIdxs = []int32{
 	9,  // 9: invora.marketplace.v2.MarketplaceService.ReauthorizeConnection:input_type -> invora.marketplace.v2.ReauthorizeConnectionRequest
 	10, // 10: invora.marketplace.v2.MarketplaceService.ListProviderBranches:input_type -> invora.marketplace.v2.ListProviderBranchesRequest
 	11, // 11: invora.marketplace.v2.MarketplaceService.TriggerSync:input_type -> invora.marketplace.v2.TriggerSyncRequest
-	12, // 12: invora.marketplace.v2.MarketplaceService.ListSyncEvents:input_type -> invora.marketplace.v2.ListSyncEventsRequest
-	13, // 13: invora.marketplace.v2.MarketplaceService.CheckConnectionHealth:input_type -> invora.marketplace.v2.CheckConnectionHealthRequest
-	14, // 14: invora.marketplace.v2.MarketplaceService.ListProviders:output_type -> invora.marketplace.v2.ListProvidersResponse
-	15, // 15: invora.marketplace.v2.MarketplaceService.GetProvider:output_type -> invora.marketplace.v2.GetProviderResponse
-	16, // 16: invora.marketplace.v2.MarketplaceService.InitiateConnection:output_type -> invora.marketplace.v2.InitiateConnectionResponse
-	17, // 17: invora.marketplace.v2.MarketplaceService.CompleteConnection:output_type -> invora.marketplace.v2.CompleteConnectionResponse
-	18, // 18: invora.marketplace.v2.MarketplaceService.ListConnections:output_type -> invora.marketplace.v2.ListConnectionsResponse
-	19, // 19: invora.marketplace.v2.MarketplaceService.GetConnection:output_type -> invora.marketplace.v2.GetConnectionResponse
-	20, // 20: invora.marketplace.v2.MarketplaceService.UpdateConnection:output_type -> invora.marketplace.v2.UpdateConnectionResponse
-	21, // 21: invora.marketplace.v2.MarketplaceService.Disconnect:output_type -> invora.marketplace.v2.DisconnectResponse
-	22, // 22: invora.marketplace.v2.MarketplaceService.SetSyncEnabled:output_type -> invora.marketplace.v2.SetSyncEnabledResponse
-	23, // 23: invora.marketplace.v2.MarketplaceService.ReauthorizeConnection:output_type -> invora.marketplace.v2.ReauthorizeConnectionResponse
-	24, // 24: invora.marketplace.v2.MarketplaceService.ListProviderBranches:output_type -> invora.marketplace.v2.ListProviderBranchesResponse
-	25, // 25: invora.marketplace.v2.MarketplaceService.TriggerSync:output_type -> invora.marketplace.v2.TriggerSyncResponse
-	26, // 26: invora.marketplace.v2.MarketplaceService.ListSyncEvents:output_type -> invora.marketplace.v2.ListSyncEventsResponse
-	27, // 27: invora.marketplace.v2.MarketplaceService.CheckConnectionHealth:output_type -> invora.marketplace.v2.CheckConnectionHealthResponse
-	14, // [14:28] is the sub-list for method output_type
-	0,  // [0:14] is the sub-list for method input_type
+	12, // 12: invora.marketplace.v2.MarketplaceService.SyncSallaTeam:input_type -> invora.marketplace.v2.SyncSallaTeamRequest
+	13, // 13: invora.marketplace.v2.MarketplaceService.ListSyncEvents:input_type -> invora.marketplace.v2.ListSyncEventsRequest
+	14, // 14: invora.marketplace.v2.MarketplaceService.CheckConnectionHealth:input_type -> invora.marketplace.v2.CheckConnectionHealthRequest
+	15, // 15: invora.marketplace.v2.MarketplaceService.ListProviders:output_type -> invora.marketplace.v2.ListProvidersResponse
+	16, // 16: invora.marketplace.v2.MarketplaceService.GetProvider:output_type -> invora.marketplace.v2.GetProviderResponse
+	17, // 17: invora.marketplace.v2.MarketplaceService.InitiateConnection:output_type -> invora.marketplace.v2.InitiateConnectionResponse
+	18, // 18: invora.marketplace.v2.MarketplaceService.CompleteConnection:output_type -> invora.marketplace.v2.CompleteConnectionResponse
+	19, // 19: invora.marketplace.v2.MarketplaceService.ListConnections:output_type -> invora.marketplace.v2.ListConnectionsResponse
+	20, // 20: invora.marketplace.v2.MarketplaceService.GetConnection:output_type -> invora.marketplace.v2.GetConnectionResponse
+	21, // 21: invora.marketplace.v2.MarketplaceService.UpdateConnection:output_type -> invora.marketplace.v2.UpdateConnectionResponse
+	22, // 22: invora.marketplace.v2.MarketplaceService.Disconnect:output_type -> invora.marketplace.v2.DisconnectResponse
+	23, // 23: invora.marketplace.v2.MarketplaceService.SetSyncEnabled:output_type -> invora.marketplace.v2.SetSyncEnabledResponse
+	24, // 24: invora.marketplace.v2.MarketplaceService.ReauthorizeConnection:output_type -> invora.marketplace.v2.ReauthorizeConnectionResponse
+	25, // 25: invora.marketplace.v2.MarketplaceService.ListProviderBranches:output_type -> invora.marketplace.v2.ListProviderBranchesResponse
+	26, // 26: invora.marketplace.v2.MarketplaceService.TriggerSync:output_type -> invora.marketplace.v2.TriggerSyncResponse
+	27, // 27: invora.marketplace.v2.MarketplaceService.SyncSallaTeam:output_type -> invora.marketplace.v2.SyncSallaTeamResponse
+	28, // 28: invora.marketplace.v2.MarketplaceService.ListSyncEvents:output_type -> invora.marketplace.v2.ListSyncEventsResponse
+	29, // 29: invora.marketplace.v2.MarketplaceService.CheckConnectionHealth:output_type -> invora.marketplace.v2.CheckConnectionHealthResponse
+	15, // [15:30] is the sub-list for method output_type
+	0,  // [0:15] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name
 	0,  // [0:0] is the sub-list for extension extendee
 	0,  // [0:0] is the sub-list for field type_name

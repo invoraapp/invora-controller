@@ -980,7 +980,7 @@ type UpdateSubscriptionAlertRequest struct {
 	Id               string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
 	Name             *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	Thresholds       []*ThresholdInput      `protobuf:"bytes,5,rep,name=thresholds,proto3" json:"thresholds,omitempty"`
-	UpdateMask       *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask             *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -1050,9 +1050,9 @@ func (x *UpdateSubscriptionAlertRequest) GetThresholds() []*ThresholdInput {
 	return nil
 }
 
-func (x *UpdateSubscriptionAlertRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateSubscriptionAlertRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -1108,7 +1108,7 @@ type UpdateCustomerWalletAlertRequest struct {
 	Id               string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
 	Name             *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	Thresholds       []*ThresholdInput      `protobuf:"bytes,5,rep,name=thresholds,proto3" json:"thresholds,omitempty"`
-	UpdateMask       *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask             *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -1178,9 +1178,9 @@ func (x *UpdateCustomerWalletAlertRequest) GetThresholds() []*ThresholdInput {
 	return nil
 }
 
-func (x *UpdateCustomerWalletAlertRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateCustomerWalletAlertRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -1452,7 +1452,7 @@ const file_invora_billing_alerts_v2_service_proto_rawDesc = "" +
 	"\x05_nameB\x12\n" +
 	"\x10_subscription_id\"a\n" +
 	"!CreateCustomerWalletAlertResponse\x12<\n" +
-	"\x05alert\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAlertR\x05alert\"\xc5\x02\n" +
+	"\x05alert\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAlertR\x05alert\"\xb8\x02\n" +
 	"\x1eUpdateSubscriptionAlertRequest\x121\n" +
 	"\x12billable_metric_id\x18\x01 \x01(\tH\x00R\x10billableMetricId\x88\x01\x01\x12\x17\n" +
 	"\x04code\x18\x02 \x01(\tH\x01R\x04code\x88\x01\x01\x12\x0e\n" +
@@ -1460,14 +1460,13 @@ const file_invora_billing_alerts_v2_service_proto_rawDesc = "" +
 	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x12H\n" +
 	"\n" +
 	"thresholds\x18\x05 \x03(\v2(.invora.billing.alerts.v2.ThresholdInputR\n" +
-	"thresholds\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\x15\n" +
+	"thresholds\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\x15\n" +
 	"\x13_billable_metric_idB\a\n" +
 	"\x05_codeB\a\n" +
 	"\x05_name\"_\n" +
 	"\x1fUpdateSubscriptionAlertResponse\x12<\n" +
-	"\x05alert\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAlertR\x05alert\"\xc7\x02\n" +
+	"\x05alert\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAlertR\x05alert\"\xba\x02\n" +
 	" UpdateCustomerWalletAlertRequest\x121\n" +
 	"\x12billable_metric_id\x18\x01 \x01(\tH\x00R\x10billableMetricId\x88\x01\x01\x12\x17\n" +
 	"\x04code\x18\x02 \x01(\tH\x01R\x04code\x88\x01\x01\x12\x0e\n" +
@@ -1475,9 +1474,8 @@ const file_invora_billing_alerts_v2_service_proto_rawDesc = "" +
 	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x12H\n" +
 	"\n" +
 	"thresholds\x18\x05 \x03(\v2(.invora.billing.alerts.v2.ThresholdInputR\n" +
-	"thresholds\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\x15\n" +
+	"thresholds\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\x15\n" +
 	"\x13_billable_metric_idB\a\n" +
 	"\x05_codeB\a\n" +
 	"\x05_name\"a\n" +
@@ -1587,10 +1585,10 @@ var file_invora_billing_alerts_v2_service_proto_depIdxs = []int32{
 	10, // 17: invora.billing.alerts.v2.CreateCustomerWalletAlertRequest.thresholds:type_name -> invora.billing.alerts.v2.ThresholdInput
 	24, // 18: invora.billing.alerts.v2.CreateCustomerWalletAlertResponse.alert:type_name -> invora.billing.common.v2.BillingAlert
 	10, // 19: invora.billing.alerts.v2.UpdateSubscriptionAlertRequest.thresholds:type_name -> invora.billing.alerts.v2.ThresholdInput
-	22, // 20: invora.billing.alerts.v2.UpdateSubscriptionAlertRequest.update_mask:type_name -> google.protobuf.FieldMask
+	22, // 20: invora.billing.alerts.v2.UpdateSubscriptionAlertRequest.mask:type_name -> google.protobuf.FieldMask
 	24, // 21: invora.billing.alerts.v2.UpdateSubscriptionAlertResponse.alert:type_name -> invora.billing.common.v2.BillingAlert
 	10, // 22: invora.billing.alerts.v2.UpdateCustomerWalletAlertRequest.thresholds:type_name -> invora.billing.alerts.v2.ThresholdInput
-	22, // 23: invora.billing.alerts.v2.UpdateCustomerWalletAlertRequest.update_mask:type_name -> google.protobuf.FieldMask
+	22, // 23: invora.billing.alerts.v2.UpdateCustomerWalletAlertRequest.mask:type_name -> google.protobuf.FieldMask
 	24, // 24: invora.billing.alerts.v2.UpdateCustomerWalletAlertResponse.alert:type_name -> invora.billing.common.v2.BillingAlert
 	4,  // 25: invora.billing.alerts.v2.AlertsService.List:input_type -> invora.billing.alerts.v2.ListRequest
 	2,  // 26: invora.billing.alerts.v2.AlertsService.Get:input_type -> invora.billing.alerts.v2.GetRequest

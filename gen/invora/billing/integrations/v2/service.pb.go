@@ -206,12 +206,13 @@ func (*Integration_Salesforce) isIntegration_Details() {}
 func (*Integration_Xero) isIntegration_Details() {}
 
 type AnrokDetails struct {
-	state                 protoimpl.MessageState `protogen:"open.v1"`
-	ApiKey                string                 `protobuf:"bytes,1,opt,name=api_key,json=apiKey,proto3" json:"api_key,omitempty"`
-	ConnectionId          *string                `protobuf:"bytes,2,opt,name=connection_id,json=connectionId,proto3,oneof" json:"connection_id,omitempty"`
-	ExternalAccountId     *string                `protobuf:"bytes,3,opt,name=external_account_id,json=externalAccountId,proto3,oneof" json:"external_account_id,omitempty"`
-	FailedInvoicesCount   *int32                 `protobuf:"varint,4,opt,name=failed_invoices_count,json=failedInvoicesCount,proto3,oneof" json:"failed_invoices_count,omitempty"`
-	HasMappingsConfigured *bool                  `protobuf:"varint,5,opt,name=has_mappings_configured,json=hasMappingsConfigured,proto3,oneof" json:"has_mappings_configured,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Masked (****1234). Raw value is write-only via AnrokCreateConfig/AnrokUpdateConfig.
+	ApiKeyMasked          string  `protobuf:"bytes,1,opt,name=api_key_masked,json=apiKeyMasked,proto3" json:"api_key_masked,omitempty"`
+	ConnectionId          *string `protobuf:"bytes,2,opt,name=connection_id,json=connectionId,proto3,oneof" json:"connection_id,omitempty"`
+	ExternalAccountId     *string `protobuf:"bytes,3,opt,name=external_account_id,json=externalAccountId,proto3,oneof" json:"external_account_id,omitempty"`
+	FailedInvoicesCount   *int32  `protobuf:"varint,4,opt,name=failed_invoices_count,json=failedInvoicesCount,proto3,oneof" json:"failed_invoices_count,omitempty"`
+	HasMappingsConfigured *bool   `protobuf:"varint,5,opt,name=has_mappings_configured,json=hasMappingsConfigured,proto3,oneof" json:"has_mappings_configured,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -246,9 +247,9 @@ func (*AnrokDetails) Descriptor() ([]byte, []int) {
 	return file_invora_billing_integrations_v2_service_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *AnrokDetails) GetApiKey() string {
+func (x *AnrokDetails) GetApiKeyMasked() string {
 	if x != nil {
-		return x.ApiKey
+		return x.ApiKeyMasked
 	}
 	return ""
 }
@@ -282,13 +283,14 @@ func (x *AnrokDetails) GetHasMappingsConfigured() bool {
 }
 
 type AvalaraDetails struct {
-	state                 protoimpl.MessageState `protogen:"open.v1"`
-	AccountId             *string                `protobuf:"bytes,1,opt,name=account_id,json=accountId,proto3,oneof" json:"account_id,omitempty"`
-	CompanyCode           string                 `protobuf:"bytes,2,opt,name=company_code,json=companyCode,proto3" json:"company_code,omitempty"`
-	CompanyId             *string                `protobuf:"bytes,3,opt,name=company_id,json=companyId,proto3,oneof" json:"company_id,omitempty"`
-	LicenseKey            string                 `protobuf:"bytes,4,opt,name=license_key,json=licenseKey,proto3" json:"license_key,omitempty"`
-	FailedInvoicesCount   *int32                 `protobuf:"varint,5,opt,name=failed_invoices_count,json=failedInvoicesCount,proto3,oneof" json:"failed_invoices_count,omitempty"`
-	HasMappingsConfigured *bool                  `protobuf:"varint,6,opt,name=has_mappings_configured,json=hasMappingsConfigured,proto3,oneof" json:"has_mappings_configured,omitempty"`
+	state       protoimpl.MessageState `protogen:"open.v1"`
+	AccountId   *string                `protobuf:"bytes,1,opt,name=account_id,json=accountId,proto3,oneof" json:"account_id,omitempty"`
+	CompanyCode string                 `protobuf:"bytes,2,opt,name=company_code,json=companyCode,proto3" json:"company_code,omitempty"`
+	CompanyId   *string                `protobuf:"bytes,3,opt,name=company_id,json=companyId,proto3,oneof" json:"company_id,omitempty"`
+	// Masked (****1234). Raw value is write-only via AvalaraCreateConfig/AvalaraUpdateConfig.
+	LicenseKeyMasked      string `protobuf:"bytes,4,opt,name=license_key_masked,json=licenseKeyMasked,proto3" json:"license_key_masked,omitempty"`
+	FailedInvoicesCount   *int32 `protobuf:"varint,5,opt,name=failed_invoices_count,json=failedInvoicesCount,proto3,oneof" json:"failed_invoices_count,omitempty"`
+	HasMappingsConfigured *bool  `protobuf:"varint,6,opt,name=has_mappings_configured,json=hasMappingsConfigured,proto3,oneof" json:"has_mappings_configured,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -344,9 +346,9 @@ func (x *AvalaraDetails) GetCompanyId() string {
 	return ""
 }
 
-func (x *AvalaraDetails) GetLicenseKey() string {
+func (x *AvalaraDetails) GetLicenseKeyMasked() string {
 	if x != nil {
-		return x.LicenseKey
+		return x.LicenseKeyMasked
 	}
 	return ""
 }
@@ -458,18 +460,20 @@ func (x *HubspotDetails) GetSyncSubscriptions() bool {
 }
 
 type NetsuiteDetails struct {
-	state                 protoimpl.MessageState `protogen:"open.v1"`
-	AccountId             *string                `protobuf:"bytes,1,opt,name=account_id,json=accountId,proto3,oneof" json:"account_id,omitempty"`
-	ClientId              *string                `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3,oneof" json:"client_id,omitempty"`
-	ClientSecret          *string                `protobuf:"bytes,3,opt,name=client_secret,json=clientSecret,proto3,oneof" json:"client_secret,omitempty"`
-	ConnectionId          string                 `protobuf:"bytes,4,opt,name=connection_id,json=connectionId,proto3" json:"connection_id,omitempty"`
-	ScriptEndpointUrl     string                 `protobuf:"bytes,5,opt,name=script_endpoint_url,json=scriptEndpointUrl,proto3" json:"script_endpoint_url,omitempty"`
-	TokenId               *string                `protobuf:"bytes,6,opt,name=token_id,json=tokenId,proto3,oneof" json:"token_id,omitempty"`
-	TokenSecret           *string                `protobuf:"bytes,7,opt,name=token_secret,json=tokenSecret,proto3,oneof" json:"token_secret,omitempty"`
-	SyncCreditNotes       *bool                  `protobuf:"varint,8,opt,name=sync_credit_notes,json=syncCreditNotes,proto3,oneof" json:"sync_credit_notes,omitempty"`
-	SyncInvoices          *bool                  `protobuf:"varint,9,opt,name=sync_invoices,json=syncInvoices,proto3,oneof" json:"sync_invoices,omitempty"`
-	SyncPayments          *bool                  `protobuf:"varint,10,opt,name=sync_payments,json=syncPayments,proto3,oneof" json:"sync_payments,omitempty"`
-	HasMappingsConfigured *bool                  `protobuf:"varint,11,opt,name=has_mappings_configured,json=hasMappingsConfigured,proto3,oneof" json:"has_mappings_configured,omitempty"`
+	state     protoimpl.MessageState `protogen:"open.v1"`
+	AccountId *string                `protobuf:"bytes,1,opt,name=account_id,json=accountId,proto3,oneof" json:"account_id,omitempty"`
+	ClientId  *string                `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3,oneof" json:"client_id,omitempty"`
+	// Masked (****1234). Raw value is write-only via NetsuiteCreateConfig/NetsuiteUpdateConfig.
+	ClientSecretMasked *string `protobuf:"bytes,3,opt,name=client_secret_masked,json=clientSecretMasked,proto3,oneof" json:"client_secret_masked,omitempty"`
+	ConnectionId       string  `protobuf:"bytes,4,opt,name=connection_id,json=connectionId,proto3" json:"connection_id,omitempty"`
+	ScriptEndpointUrl  string  `protobuf:"bytes,5,opt,name=script_endpoint_url,json=scriptEndpointUrl,proto3" json:"script_endpoint_url,omitempty"`
+	TokenId            *string `protobuf:"bytes,6,opt,name=token_id,json=tokenId,proto3,oneof" json:"token_id,omitempty"`
+	// Masked (****1234). Raw value is write-only via NetsuiteCreateConfig/NetsuiteUpdateConfig.
+	TokenSecretMasked     *string `protobuf:"bytes,7,opt,name=token_secret_masked,json=tokenSecretMasked,proto3,oneof" json:"token_secret_masked,omitempty"`
+	SyncCreditNotes       *bool   `protobuf:"varint,8,opt,name=sync_credit_notes,json=syncCreditNotes,proto3,oneof" json:"sync_credit_notes,omitempty"`
+	SyncInvoices          *bool   `protobuf:"varint,9,opt,name=sync_invoices,json=syncInvoices,proto3,oneof" json:"sync_invoices,omitempty"`
+	SyncPayments          *bool   `protobuf:"varint,10,opt,name=sync_payments,json=syncPayments,proto3,oneof" json:"sync_payments,omitempty"`
+	HasMappingsConfigured *bool   `protobuf:"varint,11,opt,name=has_mappings_configured,json=hasMappingsConfigured,proto3,oneof" json:"has_mappings_configured,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -518,9 +522,9 @@ func (x *NetsuiteDetails) GetClientId() string {
 	return ""
 }
 
-func (x *NetsuiteDetails) GetClientSecret() string {
-	if x != nil && x.ClientSecret != nil {
-		return *x.ClientSecret
+func (x *NetsuiteDetails) GetClientSecretMasked() string {
+	if x != nil && x.ClientSecretMasked != nil {
+		return *x.ClientSecretMasked
 	}
 	return ""
 }
@@ -546,9 +550,9 @@ func (x *NetsuiteDetails) GetTokenId() string {
 	return ""
 }
 
-func (x *NetsuiteDetails) GetTokenSecret() string {
-	if x != nil && x.TokenSecret != nil {
-		return *x.TokenSecret
+func (x *NetsuiteDetails) GetTokenSecretMasked() string {
+	if x != nil && x.TokenSecretMasked != nil {
+		return *x.TokenSecretMasked
 	}
 	return ""
 }
@@ -2196,8 +2200,8 @@ type UpdateRequest struct {
 	//	*UpdateRequest_Netsuite
 	//	*UpdateRequest_Salesforce
 	//	*UpdateRequest_Xero
-	//	*UpdateRequest_UpdateMask
 	Config        isUpdateRequest_Config `protobuf_oneof:"config"`
+	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2316,9 +2320,7 @@ func (x *UpdateRequest) GetXero() *XeroUpdateConfig {
 
 func (x *UpdateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		if x, ok := x.Config.(*UpdateRequest_UpdateMask); ok {
-			return x.UpdateMask
-		}
+		return x.UpdateMask
 	}
 	return nil
 }
@@ -2351,10 +2353,6 @@ type UpdateRequest_Xero struct {
 	Xero *XeroUpdateConfig `protobuf:"bytes,15,opt,name=xero,proto3,oneof"`
 }
 
-type UpdateRequest_UpdateMask struct {
-	UpdateMask *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3,oneof"`
-}
-
 func (*UpdateRequest_Anrok) isUpdateRequest_Config() {}
 
 func (*UpdateRequest_Avalara) isUpdateRequest_Config() {}
@@ -2366,8 +2364,6 @@ func (*UpdateRequest_Netsuite) isUpdateRequest_Config() {}
 func (*UpdateRequest_Salesforce) isUpdateRequest_Config() {}
 
 func (*UpdateRequest_Xero) isUpdateRequest_Config() {}
-
-func (*UpdateRequest_UpdateMask) isUpdateRequest_Config() {}
 
 type UpdateResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -4218,9 +4214,9 @@ const file_invora_billing_integrations_v2_service_proto_rawDesc = "" +
 	"salesforce\x18\x0e \x01(\v21.invora.billing.integrations.v2.SalesforceDetailsH\x00R\n" +
 	"salesforce\x12A\n" +
 	"\x04xero\x18\x0f \x01(\v2+.invora.billing.integrations.v2.XeroDetailsH\x00R\x04xeroB\t\n" +
-	"\adetails\"\xdc\x02\n" +
-	"\fAnrokDetails\x12\x17\n" +
-	"\aapi_key\x18\x01 \x01(\tR\x06apiKey\x12(\n" +
+	"\adetails\"\xe9\x02\n" +
+	"\fAnrokDetails\x12$\n" +
+	"\x0eapi_key_masked\x18\x01 \x01(\tR\fapiKeyMasked\x12(\n" +
 	"\rconnection_id\x18\x02 \x01(\tH\x00R\fconnectionId\x88\x01\x01\x123\n" +
 	"\x13external_account_id\x18\x03 \x01(\tH\x01R\x11externalAccountId\x88\x01\x01\x127\n" +
 	"\x15failed_invoices_count\x18\x04 \x01(\x05H\x02R\x13failedInvoicesCount\x88\x01\x01\x12;\n" +
@@ -4228,15 +4224,14 @@ const file_invora_billing_integrations_v2_service_proto_rawDesc = "" +
 	"\x0e_connection_idB\x16\n" +
 	"\x14_external_account_idB\x18\n" +
 	"\x16_failed_invoices_countB\x1a\n" +
-	"\x18_has_mappings_configured\"\xe6\x02\n" +
+	"\x18_has_mappings_configured\"\xf3\x02\n" +
 	"\x0eAvalaraDetails\x12\"\n" +
 	"\n" +
 	"account_id\x18\x01 \x01(\tH\x00R\taccountId\x88\x01\x01\x12!\n" +
 	"\fcompany_code\x18\x02 \x01(\tR\vcompanyCode\x12\"\n" +
 	"\n" +
-	"company_id\x18\x03 \x01(\tH\x01R\tcompanyId\x88\x01\x01\x12\x1f\n" +
-	"\vlicense_key\x18\x04 \x01(\tR\n" +
-	"licenseKey\x127\n" +
+	"company_id\x18\x03 \x01(\tH\x01R\tcompanyId\x88\x01\x01\x12,\n" +
+	"\x12license_key_masked\x18\x04 \x01(\tR\x10licenseKeyMasked\x127\n" +
 	"\x15failed_invoices_count\x18\x05 \x01(\x05H\x02R\x13failedInvoicesCount\x88\x01\x01\x12;\n" +
 	"\x17has_mappings_configured\x18\x06 \x01(\bH\x03R\x15hasMappingsConfigured\x88\x01\x01B\r\n" +
 	"\v_account_idB\r\n" +
@@ -4256,16 +4251,16 @@ const file_invora_billing_integrations_v2_service_proto_rawDesc = "" +
 	"\n" +
 	"_portal_idB\x10\n" +
 	"\x0e_sync_invoicesB\x15\n" +
-	"\x13_sync_subscriptions\"\x83\x05\n" +
+	"\x13_sync_subscriptions\"\xab\x05\n" +
 	"\x0fNetsuiteDetails\x12\"\n" +
 	"\n" +
 	"account_id\x18\x01 \x01(\tH\x00R\taccountId\x88\x01\x01\x12 \n" +
-	"\tclient_id\x18\x02 \x01(\tH\x01R\bclientId\x88\x01\x01\x12(\n" +
-	"\rclient_secret\x18\x03 \x01(\tH\x02R\fclientSecret\x88\x01\x01\x12#\n" +
+	"\tclient_id\x18\x02 \x01(\tH\x01R\bclientId\x88\x01\x01\x125\n" +
+	"\x14client_secret_masked\x18\x03 \x01(\tH\x02R\x12clientSecretMasked\x88\x01\x01\x12#\n" +
 	"\rconnection_id\x18\x04 \x01(\tR\fconnectionId\x12.\n" +
 	"\x13script_endpoint_url\x18\x05 \x01(\tR\x11scriptEndpointUrl\x12\x1e\n" +
-	"\btoken_id\x18\x06 \x01(\tH\x03R\atokenId\x88\x01\x01\x12&\n" +
-	"\ftoken_secret\x18\a \x01(\tH\x04R\vtokenSecret\x88\x01\x01\x12/\n" +
+	"\btoken_id\x18\x06 \x01(\tH\x03R\atokenId\x88\x01\x01\x123\n" +
+	"\x13token_secret_masked\x18\a \x01(\tH\x04R\x11tokenSecretMasked\x88\x01\x01\x12/\n" +
 	"\x11sync_credit_notes\x18\b \x01(\bH\x05R\x0fsyncCreditNotes\x88\x01\x01\x12(\n" +
 	"\rsync_invoices\x18\t \x01(\bH\x06R\fsyncInvoices\x88\x01\x01\x12(\n" +
 	"\rsync_payments\x18\n" +
@@ -4273,10 +4268,10 @@ const file_invora_billing_integrations_v2_service_proto_rawDesc = "" +
 	"\x17has_mappings_configured\x18\v \x01(\bH\bR\x15hasMappingsConfigured\x88\x01\x01B\r\n" +
 	"\v_account_idB\f\n" +
 	"\n" +
-	"_client_idB\x10\n" +
-	"\x0e_client_secretB\v\n" +
-	"\t_token_idB\x0f\n" +
-	"\r_token_secretB\x14\n" +
+	"_client_idB\x17\n" +
+	"\x15_client_secret_maskedB\v\n" +
+	"\t_token_idB\x16\n" +
+	"\x14_token_secret_maskedB\x14\n" +
 	"\x12_sync_credit_notesB\x10\n" +
 	"\x0e_sync_invoicesB\x10\n" +
 	"\x0e_sync_paymentsB\x1a\n" +
@@ -4446,7 +4441,7 @@ const file_invora_billing_integrations_v2_service_proto_rawDesc = "" +
 	"\x04xero\x18\x0f \x01(\v20.invora.billing.integrations.v2.XeroCreateConfigH\x00R\x04xeroB\b\n" +
 	"\x06config\"_\n" +
 	"\x0eCreateResponse\x12M\n" +
-	"\vintegration\x18\x01 \x01(\v2+.invora.billing.integrations.v2.IntegrationR\vintegration\"\x8f\x05\n" +
+	"\vintegration\x18\x01 \x01(\v2+.invora.billing.integrations.v2.IntegrationR\vintegration\"\x8d\x05\n" +
 	"\rUpdateRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\x04code\x18\x02 \x01(\tH\x01R\x04code\x88\x01\x01\x12\x17\n" +
@@ -4459,8 +4454,8 @@ const file_invora_billing_integrations_v2_service_proto_rawDesc = "" +
 	"\n" +
 	"salesforce\x18\x0e \x01(\v26.invora.billing.integrations.v2.SalesforceUpdateConfigH\x00R\n" +
 	"salesforce\x12F\n" +
-	"\x04xero\x18\x0f \x01(\v20.invora.billing.integrations.v2.XeroUpdateConfigH\x00R\x04xero\x12=\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskH\x00R\n" +
+	"\x04xero\x18\x0f \x01(\v20.invora.billing.integrations.v2.XeroUpdateConfigH\x00R\x04xero\x12;\n" +
+	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
 	"updateMaskB\b\n" +
 	"\x06configB\a\n" +
 	"\x05_codeB\a\n" +
@@ -4915,7 +4910,6 @@ func file_invora_billing_integrations_v2_service_proto_init() {
 		(*UpdateRequest_Netsuite)(nil),
 		(*UpdateRequest_Salesforce)(nil),
 		(*UpdateRequest_Xero)(nil),
-		(*UpdateRequest_UpdateMask)(nil),
 	}
 	file_invora_billing_integrations_v2_service_proto_msgTypes[34].OneofWrappers = []any{}
 	file_invora_billing_integrations_v2_service_proto_msgTypes[36].OneofWrappers = []any{

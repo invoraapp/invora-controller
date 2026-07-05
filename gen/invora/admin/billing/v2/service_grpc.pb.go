@@ -45,6 +45,7 @@ type BillingOrgAdminServiceClient interface {
 	// Provision a new billing organization for a tenant.
 	ProvisionOrg(ctx context.Context, in *ProvisionOrgRequest, opts ...grpc.CallOption) (*ProvisionOrgResponse, error)
 	// Deprovision a billing organization (permanent).
+	// Without force=true, fails FAILED_PRECONDITION when children exist.
 	DeprovisionOrg(ctx context.Context, in *DeprovisionOrgRequest, opts ...grpc.CallOption) (*DeprovisionOrgResponse, error)
 	// List all billing organizations.
 	ListOrgs(ctx context.Context, in *ListOrgsRequest, opts ...grpc.CallOption) (*ListOrgsResponse, error)
@@ -186,6 +187,7 @@ type BillingOrgAdminServiceServer interface {
 	// Provision a new billing organization for a tenant.
 	ProvisionOrg(context.Context, *ProvisionOrgRequest) (*ProvisionOrgResponse, error)
 	// Deprovision a billing organization (permanent).
+	// Without force=true, fails FAILED_PRECONDITION when children exist.
 	DeprovisionOrg(context.Context, *DeprovisionOrgRequest) (*DeprovisionOrgResponse, error)
 	// List all billing organizations.
 	ListOrgs(context.Context, *ListOrgsRequest) (*ListOrgsResponse, error)

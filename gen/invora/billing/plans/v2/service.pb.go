@@ -744,7 +744,7 @@ type UpdateRequest struct {
 	TaxCodes                []string                  `protobuf:"bytes,18,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
 	TrialPeriod             *float64                  `protobuf:"fixed64,19,opt,name=trial_period,json=trialPeriod,proto3,oneof" json:"trial_period,omitempty"`
 	UsageThresholds         []*v2.UsageThresholdInput `protobuf:"bytes,20,rep,name=usage_thresholds,json=usageThresholds,proto3" json:"usage_thresholds,omitempty"`
-	UpdateMask              *fieldmaskpb.FieldMask    `protobuf:"bytes,21,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask                    *fieldmaskpb.FieldMask    `protobuf:"bytes,21,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -919,9 +919,9 @@ func (x *UpdateRequest) GetUsageThresholds() []*v2.UsageThresholdInput {
 	return nil
 }
 
-func (x *UpdateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -1898,7 +1898,7 @@ type UpdateAddOnRequest struct {
 	InvoiceDisplayName *string                `protobuf:"bytes,6,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
 	Name               string                 `protobuf:"bytes,7,opt,name=name,proto3" json:"name,omitempty"`
 	TaxCodes           []string               `protobuf:"bytes,8,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
-	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask               *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -1989,9 +1989,9 @@ func (x *UpdateAddOnRequest) GetTaxCodes() []string {
 	return nil
 }
 
-func (x *UpdateAddOnRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateAddOnRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -2649,7 +2649,7 @@ type UpdateFeatureRequest struct {
 	Metadata      []*v2.MetadataInput      `protobuf:"bytes,3,rep,name=metadata,proto3" json:"metadata,omitempty"`
 	Name          *string                  `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	Privileges    []*FeaturePrivilegeInput `protobuf:"bytes,5,rep,name=privileges,proto3" json:"privileges,omitempty"`
-	UpdateMask    *fieldmaskpb.FieldMask   `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask          *fieldmaskpb.FieldMask   `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2719,9 +2719,9 @@ func (x *UpdateFeatureRequest) GetPrivileges() []*FeaturePrivilegeInput {
 	return nil
 }
 
-func (x *UpdateFeatureRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateFeatureRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -3039,7 +3039,7 @@ const file_invora_billing_plans_v2_service_proto_rawDesc = "" +
 	"\x13_minimum_commitmentB\x0f\n" +
 	"\r_trial_period\"K\n" +
 	"\x0eCreateResponse\x129\n" +
-	"\x04plan\x18\x01 \x01(\v2%.invora.billing.common.v2.BillingPlanR\x04plan\"\xa7\n" +
+	"\x04plan\x18\x01 \x01(\v2%.invora.billing.common.v2.BillingPlanR\x04plan\"\x9a\n" +
 	"\n" +
 	"\rUpdateRequest\x12!\n" +
 	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12O\n" +
@@ -3062,9 +3062,8 @@ const file_invora_billing_plans_v2_service_proto_rawDesc = "" +
 	"\x0epay_in_advance\x18\x11 \x01(\bR\fpayInAdvance\x12\x1b\n" +
 	"\ttax_codes\x18\x12 \x03(\tR\btaxCodes\x12&\n" +
 	"\ftrial_period\x18\x13 \x01(\x01H\x06R\vtrialPeriod\x88\x01\x01\x12X\n" +
-	"\x10usage_thresholds\x18\x14 \x03(\v2-.invora.billing.common.v2.UsageThresholdInputR\x0fusageThresholds\x12;\n" +
-	"\vupdate_mask\x18\x15 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\x17\n" +
+	"\x10usage_thresholds\x18\x14 \x03(\v2-.invora.billing.common.v2.UsageThresholdInputR\x0fusageThresholds\x12.\n" +
+	"\x04mask\x18\x15 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\x17\n" +
 	"\x15_bill_charges_monthlyB\x1d\n" +
 	"\x1b_bill_fixed_charges_monthlyB\x12\n" +
 	"\x10_cascade_updatesB\x0e\n" +
@@ -3169,7 +3168,7 @@ const file_invora_billing_plans_v2_service_proto_rawDesc = "" +
 	"\f_descriptionB\x17\n" +
 	"\x15_invoice_display_name\"T\n" +
 	"\x13CreateAddOnResponse\x12=\n" +
-	"\x06add_on\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAddOnR\x05addOn\"\xa1\x03\n" +
+	"\x06add_on\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAddOnR\x05addOn\"\x94\x03\n" +
 	"\x12UpdateAddOnRequest\x12!\n" +
 	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12O\n" +
 	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0eamountCurrency\x12\x12\n" +
@@ -3178,9 +3177,8 @@ const file_invora_billing_plans_v2_service_proto_rawDesc = "" +
 	"\x02id\x18\x05 \x01(\tR\x02id\x125\n" +
 	"\x14invoice_display_name\x18\x06 \x01(\tH\x01R\x12invoiceDisplayName\x88\x01\x01\x12\x12\n" +
 	"\x04name\x18\a \x01(\tR\x04name\x12\x1b\n" +
-	"\ttax_codes\x18\b \x03(\tR\btaxCodes\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\x0e\n" +
+	"\ttax_codes\x18\b \x03(\tR\btaxCodes\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\x0e\n" +
 	"\f_descriptionB\x17\n" +
 	"\x15_invoice_display_name\"T\n" +
 	"\x13UpdateAddOnResponse\x12=\n" +
@@ -3232,7 +3230,7 @@ const file_invora_billing_plans_v2_service_proto_rawDesc = "" +
 	"\f_descriptionB\a\n" +
 	"\x05_name\"Z\n" +
 	"\x15CreateFeatureResponse\x12A\n" +
-	"\afeature\x18\x01 \x01(\v2'.invora.billing.common.v2.FeatureObjectR\afeature\"\xd1\x02\n" +
+	"\afeature\x18\x01 \x01(\v2'.invora.billing.common.v2.FeatureObjectR\afeature\"\xc4\x02\n" +
 	"\x14UpdateFeatureRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12%\n" +
 	"\vdescription\x18\x02 \x01(\tH\x00R\vdescription\x88\x01\x01\x12C\n" +
@@ -3240,9 +3238,8 @@ const file_invora_billing_plans_v2_service_proto_rawDesc = "" +
 	"\x04name\x18\x04 \x01(\tH\x01R\x04name\x88\x01\x01\x12N\n" +
 	"\n" +
 	"privileges\x18\x05 \x03(\v2..invora.billing.plans.v2.FeaturePrivilegeInputR\n" +
-	"privileges\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\x0e\n" +
+	"privileges\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\x0e\n" +
 	"\f_descriptionB\a\n" +
 	"\x05_name\"Z\n" +
 	"\x15UpdateFeatureResponse\x12A\n" +
@@ -3408,7 +3405,7 @@ var file_invora_billing_plans_v2_service_proto_depIdxs = []int32{
 	53, // 26: invora.billing.plans.v2.UpdateRequest.metadata:type_name -> invora.billing.common.v2.MetadataInput
 	54, // 27: invora.billing.plans.v2.UpdateRequest.minimum_commitment:type_name -> invora.billing.common.v2.CommitmentInput
 	55, // 28: invora.billing.plans.v2.UpdateRequest.usage_thresholds:type_name -> invora.billing.common.v2.UsageThresholdInput
-	45, // 29: invora.billing.plans.v2.UpdateRequest.update_mask:type_name -> google.protobuf.FieldMask
+	45, // 29: invora.billing.plans.v2.UpdateRequest.mask:type_name -> google.protobuf.FieldMask
 	47, // 30: invora.billing.plans.v2.UpdateResponse.plan:type_name -> invora.billing.common.v2.BillingPlan
 	56, // 31: invora.billing.plans.v2.FixedChargeInput.charge_model:type_name -> invora.billing.common.v2.FixedChargeChargeModel
 	57, // 32: invora.billing.plans.v2.FixedChargeInput.properties:type_name -> invora.billing.common.v2.FixedChargePropertiesInput
@@ -3432,7 +3429,7 @@ var file_invora_billing_plans_v2_service_proto_depIdxs = []int32{
 	50, // 50: invora.billing.plans.v2.CreateAddOnRequest.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
 	63, // 51: invora.billing.plans.v2.CreateAddOnResponse.add_on:type_name -> invora.billing.common.v2.BillingAddOn
 	50, // 52: invora.billing.plans.v2.UpdateAddOnRequest.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	45, // 53: invora.billing.plans.v2.UpdateAddOnRequest.update_mask:type_name -> google.protobuf.FieldMask
+	45, // 53: invora.billing.plans.v2.UpdateAddOnRequest.mask:type_name -> google.protobuf.FieldMask
 	63, // 54: invora.billing.plans.v2.UpdateAddOnResponse.add_on:type_name -> invora.billing.common.v2.BillingAddOn
 	45, // 55: invora.billing.plans.v2.GetFeatureRequest.read_mask:type_name -> google.protobuf.FieldMask
 	46, // 56: invora.billing.plans.v2.GetFeatureRequest.view:type_name -> invora.billing.common.v2.View
@@ -3450,7 +3447,7 @@ var file_invora_billing_plans_v2_service_proto_depIdxs = []int32{
 	64, // 68: invora.billing.plans.v2.CreateFeatureResponse.feature:type_name -> invora.billing.common.v2.FeatureObject
 	53, // 69: invora.billing.plans.v2.UpdateFeatureRequest.metadata:type_name -> invora.billing.common.v2.MetadataInput
 	43, // 70: invora.billing.plans.v2.UpdateFeatureRequest.privileges:type_name -> invora.billing.plans.v2.FeaturePrivilegeInput
-	45, // 71: invora.billing.plans.v2.UpdateFeatureRequest.update_mask:type_name -> google.protobuf.FieldMask
+	45, // 71: invora.billing.plans.v2.UpdateFeatureRequest.mask:type_name -> google.protobuf.FieldMask
 	64, // 72: invora.billing.plans.v2.UpdateFeatureResponse.feature:type_name -> invora.billing.common.v2.FeatureObject
 	64, // 73: invora.billing.plans.v2.DeleteFeatureResponse.feature:type_name -> invora.billing.common.v2.FeatureObject
 	44, // 74: invora.billing.plans.v2.FeaturePrivilegeInput.config:type_name -> invora.billing.plans.v2.FeaturePrivilegeConfigInput

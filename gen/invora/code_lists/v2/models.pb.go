@@ -400,8 +400,11 @@ func (x *UpdateResponse) GetDetails() *CodeList {
 
 // Request to delete code lists.
 type DeleteRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Keys          []string               `protobuf:"bytes,1,rep,name=keys,proto3" json:"keys,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Keys  []string               `protobuf:"bytes,1,rep,name=keys,proto3" json:"keys,omitempty"`
+	// Without force=true, fails FAILED_PRECONDITION when blocking children
+	// (e.g. code items still referencing a list) exist.
+	Force         bool `protobuf:"varint,2,opt,name=force,proto3" json:"force,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -441,6 +444,13 @@ func (x *DeleteRequest) GetKeys() []string {
 		return x.Keys
 	}
 	return nil
+}
+
+func (x *DeleteRequest) GetForce() bool {
+	if x != nil {
+		return x.Force
+	}
+	return false
 }
 
 // Response for delete operations.
@@ -1102,9 +1112,10 @@ const file_invora_code_lists_v2_models_proto_rawDesc = "" +
 	"\x04mask\x18\x03 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04mask\x12:\n" +
 	"\achanges\x18\x04 \x01(\v2 .invora.code_lists.v2.ChangeBaseR\achanges\"J\n" +
 	"\x0eUpdateResponse\x128\n" +
-	"\adetails\x18\x01 \x01(\v2\x1e.invora.code_lists.v2.CodeListR\adetails\"#\n" +
+	"\adetails\x18\x01 \x01(\v2\x1e.invora.code_lists.v2.CodeListR\adetails\"9\n" +
 	"\rDeleteRequest\x12\x12\n" +
-	"\x04keys\x18\x01 \x03(\tR\x04keys\"\x10\n" +
+	"\x04keys\x18\x01 \x03(\tR\x04keys\x12\x14\n" +
+	"\x05force\x18\x02 \x01(\bR\x05force\"\x10\n" +
 	"\x0eDeleteResponse\"N\n" +
 	"\n" +
 	"GetRequest\x12\x10\n" +

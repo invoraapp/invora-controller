@@ -1705,8 +1705,12 @@ type CreateRequest struct {
 	FreezeImmediately bool                   `protobuf:"varint,10,opt,name=freeze_immediately,json=freezeImmediately,proto3" json:"freeze_immediately,omitempty"`
 	AutoCalculate     bool                   `protobuf:"varint,11,opt,name=auto_calculate,json=autoCalculate,proto3" json:"auto_calculate,omitempty"`
 	BranchId          *string                `protobuf:"bytes,12,opt,name=branch_id,json=branchId,proto3,oneof" json:"branch_id,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// Optional client-generated idempotency key (UUID4 recommended). Requests
+	// with the same request_id within the dedup window return the FIRST
+	// request's response without re-executing. See AIP-155.
+	RequestId     *string `protobuf:"bytes,13,opt,name=request_id,json=requestId,proto3,oneof" json:"request_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateRequest) Reset() {
@@ -1770,6 +1774,13 @@ func (x *CreateRequest) GetAutoCalculate() bool {
 func (x *CreateRequest) GetBranchId() string {
 	if x != nil && x.BranchId != nil {
 		return *x.BranchId
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetRequestId() string {
+	if x != nil && x.RequestId != nil {
+		return *x.RequestId
 	}
 	return ""
 }
@@ -2022,8 +2033,12 @@ type FreezeRequest struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	Key              string                 `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 	ConcurrencyStamp string                 `protobuf:"bytes,2,opt,name=concurrency_stamp,json=concurrencyStamp,proto3" json:"concurrency_stamp,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	// Optional client-generated idempotency key (UUID4 recommended). Requests
+	// with the same request_id within the dedup window return the FIRST
+	// request's response without re-executing. See AIP-155.
+	RequestId     *string `protobuf:"bytes,3,opt,name=request_id,json=requestId,proto3,oneof" json:"request_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *FreezeRequest) Reset() {
@@ -2066,6 +2081,13 @@ func (x *FreezeRequest) GetKey() string {
 func (x *FreezeRequest) GetConcurrencyStamp() string {
 	if x != nil {
 		return x.ConcurrencyStamp
+	}
+	return ""
+}
+
+func (x *FreezeRequest) GetRequestId() string {
+	if x != nil && x.RequestId != nil {
+		return *x.RequestId
 	}
 	return ""
 }
@@ -3814,6 +3836,343 @@ func (x *CalculateResponse) GetComputedFields() []*CalculatedField {
 	return nil
 }
 
+type GetStatsRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Optional. Same filter model as List, so the KPI tiles can reflect exactly
+	// the document set shown in a filtered list (by document type, edit state,
+	// date range, branch, free-text, …). Omit to summarize all of the tenant's
+	// documents.
+	Filter        *ListFilter `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetStatsRequest) Reset() {
+	*x = GetStatsRequest{}
+	mi := &file_invora_documents_v2_service_proto_msgTypes[60]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetStatsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetStatsRequest) ProtoMessage() {}
+
+func (x *GetStatsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_documents_v2_service_proto_msgTypes[60]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetStatsRequest.ProtoReflect.Descriptor instead.
+func (*GetStatsRequest) Descriptor() ([]byte, []int) {
+	return file_invora_documents_v2_service_proto_rawDescGZIP(), []int{60}
+}
+
+func (x *GetStatsRequest) GetFilter() *ListFilter {
+	if x != nil {
+		return x.Filter
+	}
+	return nil
+}
+
+type GetStatsResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Total number of documents matching the filter.
+	DocumentCount uint64 `protobuf:"varint,1,opt,name=document_count,json=documentCount,proto3" json:"document_count,omitempty"`
+	// Monetary totals. A document's currency is its branch's currency and is
+	// uniform within a branch, so amounts in the SAME currency are summed. When a
+	// tenant spans branches with DIFFERENT currencies, the totals are NEVER summed
+	// across currencies — `currency`/`total_payable_amount`/`total_tax_amount`
+	// carry the headline only when a single currency is present, and the full
+	// split is always available in `by_currency`.
+	TotalPayableAmount *kernel.DecimalValue `protobuf:"bytes,2,opt,name=total_payable_amount,json=totalPayableAmount,proto3" json:"total_payable_amount,omitempty"`
+	TotalTaxAmount     *kernel.DecimalValue `protobuf:"bytes,3,opt,name=total_tax_amount,json=totalTaxAmount,proto3" json:"total_tax_amount,omitempty"`
+	// ISO 4217 code when exactly one currency is present across the matched
+	// documents; empty when the result spans multiple currencies (read
+	// `by_currency` in that case).
+	Currency string `protobuf:"bytes,4,opt,name=currency,proto3" json:"currency,omitempty"`
+	// Per-document-type breakdown (invoices, credit notes, debit notes, …).
+	ByDocumentType []*DocumentTypeStat `protobuf:"bytes,5,rep,name=by_document_type,json=byDocumentType,proto3" json:"by_document_type,omitempty"`
+	// Per-edit-state breakdown (Draft / Validated / Frozen) — e.g. drafts vs
+	// finalized counts for the dashboard.
+	ByEditState []*EditStateStat `protobuf:"bytes,6,rep,name=by_edit_state,json=byEditState,proto3" json:"by_edit_state,omitempty"`
+	// Per-currency totals. Always populated; the single entry in the common
+	// one-currency case, one entry per distinct currency otherwise. This is the
+	// authoritative split — totals are summed only within a currency.
+	ByCurrency    []*CurrencyStat `protobuf:"bytes,7,rep,name=by_currency,json=byCurrency,proto3" json:"by_currency,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetStatsResponse) Reset() {
+	*x = GetStatsResponse{}
+	mi := &file_invora_documents_v2_service_proto_msgTypes[61]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetStatsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetStatsResponse) ProtoMessage() {}
+
+func (x *GetStatsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_documents_v2_service_proto_msgTypes[61]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetStatsResponse.ProtoReflect.Descriptor instead.
+func (*GetStatsResponse) Descriptor() ([]byte, []int) {
+	return file_invora_documents_v2_service_proto_rawDescGZIP(), []int{61}
+}
+
+func (x *GetStatsResponse) GetDocumentCount() uint64 {
+	if x != nil {
+		return x.DocumentCount
+	}
+	return 0
+}
+
+func (x *GetStatsResponse) GetTotalPayableAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.TotalPayableAmount
+	}
+	return nil
+}
+
+func (x *GetStatsResponse) GetTotalTaxAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.TotalTaxAmount
+	}
+	return nil
+}
+
+func (x *GetStatsResponse) GetCurrency() string {
+	if x != nil {
+		return x.Currency
+	}
+	return ""
+}
+
+func (x *GetStatsResponse) GetByDocumentType() []*DocumentTypeStat {
+	if x != nil {
+		return x.ByDocumentType
+	}
+	return nil
+}
+
+func (x *GetStatsResponse) GetByEditState() []*EditStateStat {
+	if x != nil {
+		return x.ByEditState
+	}
+	return nil
+}
+
+func (x *GetStatsResponse) GetByCurrency() []*CurrencyStat {
+	if x != nil {
+		return x.ByCurrency
+	}
+	return nil
+}
+
+type DocumentTypeStat struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	DocumentType       DocumentType           `protobuf:"varint,1,opt,name=document_type,json=documentType,proto3,enum=invora.documents.v2.DocumentType" json:"document_type,omitempty"`
+	Count              uint64                 `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	TotalPayableAmount *kernel.DecimalValue   `protobuf:"bytes,3,opt,name=total_payable_amount,json=totalPayableAmount,proto3" json:"total_payable_amount,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *DocumentTypeStat) Reset() {
+	*x = DocumentTypeStat{}
+	mi := &file_invora_documents_v2_service_proto_msgTypes[62]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DocumentTypeStat) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DocumentTypeStat) ProtoMessage() {}
+
+func (x *DocumentTypeStat) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_documents_v2_service_proto_msgTypes[62]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DocumentTypeStat.ProtoReflect.Descriptor instead.
+func (*DocumentTypeStat) Descriptor() ([]byte, []int) {
+	return file_invora_documents_v2_service_proto_rawDescGZIP(), []int{62}
+}
+
+func (x *DocumentTypeStat) GetDocumentType() DocumentType {
+	if x != nil {
+		return x.DocumentType
+	}
+	return DocumentType_DOCUMENT_TYPE_UNSPECIFIED
+}
+
+func (x *DocumentTypeStat) GetCount() uint64 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+func (x *DocumentTypeStat) GetTotalPayableAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.TotalPayableAmount
+	}
+	return nil
+}
+
+type EditStateStat struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	EditState     EditState              `protobuf:"varint,1,opt,name=edit_state,json=editState,proto3,enum=invora.documents.v2.EditState" json:"edit_state,omitempty"`
+	Count         uint64                 `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EditStateStat) Reset() {
+	*x = EditStateStat{}
+	mi := &file_invora_documents_v2_service_proto_msgTypes[63]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EditStateStat) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EditStateStat) ProtoMessage() {}
+
+func (x *EditStateStat) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_documents_v2_service_proto_msgTypes[63]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EditStateStat.ProtoReflect.Descriptor instead.
+func (*EditStateStat) Descriptor() ([]byte, []int) {
+	return file_invora_documents_v2_service_proto_rawDescGZIP(), []int{63}
+}
+
+func (x *EditStateStat) GetEditState() EditState {
+	if x != nil {
+		return x.EditState
+	}
+	return EditState_EDIT_STATE_UNSPECIFIED
+}
+
+func (x *EditStateStat) GetCount() uint64 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+type CurrencyStat struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ISO 4217 code. Empty string groups documents with no recorded currency.
+	Currency           string               `protobuf:"bytes,1,opt,name=currency,proto3" json:"currency,omitempty"`
+	Count              uint64               `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	TotalPayableAmount *kernel.DecimalValue `protobuf:"bytes,3,opt,name=total_payable_amount,json=totalPayableAmount,proto3" json:"total_payable_amount,omitempty"`
+	TotalTaxAmount     *kernel.DecimalValue `protobuf:"bytes,4,opt,name=total_tax_amount,json=totalTaxAmount,proto3" json:"total_tax_amount,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *CurrencyStat) Reset() {
+	*x = CurrencyStat{}
+	mi := &file_invora_documents_v2_service_proto_msgTypes[64]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CurrencyStat) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CurrencyStat) ProtoMessage() {}
+
+func (x *CurrencyStat) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_documents_v2_service_proto_msgTypes[64]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CurrencyStat.ProtoReflect.Descriptor instead.
+func (*CurrencyStat) Descriptor() ([]byte, []int) {
+	return file_invora_documents_v2_service_proto_rawDescGZIP(), []int{64}
+}
+
+func (x *CurrencyStat) GetCurrency() string {
+	if x != nil {
+		return x.Currency
+	}
+	return ""
+}
+
+func (x *CurrencyStat) GetCount() uint64 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+func (x *CurrencyStat) GetTotalPayableAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.TotalPayableAmount
+	}
+	return nil
+}
+
+func (x *CurrencyStat) GetTotalTaxAmount() *kernel.DecimalValue {
+	if x != nil {
+		return x.TotalTaxAmount
+	}
+	return nil
+}
+
 type ListFilterPart_Operands struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Operands      []*ListFilterPart      `protobuf:"bytes,1,rep,name=operands,proto3" json:"operands,omitempty"`
@@ -3823,7 +4182,7 @@ type ListFilterPart_Operands struct {
 
 func (x *ListFilterPart_Operands) Reset() {
 	*x = ListFilterPart_Operands{}
-	mi := &file_invora_documents_v2_service_proto_msgTypes[60]
+	mi := &file_invora_documents_v2_service_proto_msgTypes[65]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3835,7 +4194,7 @@ func (x *ListFilterPart_Operands) String() string {
 func (*ListFilterPart_Operands) ProtoMessage() {}
 
 func (x *ListFilterPart_Operands) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_documents_v2_service_proto_msgTypes[60]
+	mi := &file_invora_documents_v2_service_proto_msgTypes[65]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3862,7 +4221,7 @@ var File_invora_documents_v2_service_proto protoreflect.FileDescriptor
 
 const file_invora_documents_v2_service_proto_rawDesc = "" +
 	"\n" +
-	"!invora/documents/v2/service.proto\x12\x13invora.documents.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x16google/type/date.proto\x1a!invora/documents/v2/content.proto\x1a invora/documents/v2/models.proto\x1a\x14kernel/decimal.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\xa8\x01\n" +
+	"!invora/documents/v2/service.proto\x12\x13invora.documents.v2\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a google/protobuf/field_mask.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x16google/type/date.proto\x1a!invora/documents/v2/content.proto\x1a invora/documents/v2/models.proto\x1a\x14kernel/decimal.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\xa8\x01\n" +
 	"\n" +
 	"ListFilter\x127\n" +
 	"\x04part\x18\x01 \x01(\v2#.invora.documents.v2.ListFilterPartR\x04part\x12\x1f\n" +
@@ -3981,17 +4340,20 @@ const file_invora_documents_v2_service_proto_rawDesc = "" +
 	"\x04mask\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.FieldMaskR\x04mask\"L\n" +
 	"\x11GetStreamResponse\x127\n" +
-	"\adetails\x18\x01 \x01(\v2\x1d.invora.documents.v2.DocumentR\adetails\"\xef\x01\n" +
+	"\adetails\x18\x01 \x01(\v2\x1d.invora.documents.v2.DocumentR\adetails\"\xa7\x02\n" +
 	"\rCreateRequest\x12\x15\n" +
 	"\x03key\x18\x01 \x01(\tH\x00R\x03key\x88\x01\x01\x129\n" +
 	"\achanges\x18\x02 \x01(\v2\x1f.invora.documents.v2.ChangeBaseR\achanges\x12-\n" +
 	"\x12freeze_immediately\x18\n" +
 	" \x01(\bR\x11freezeImmediately\x12%\n" +
 	"\x0eauto_calculate\x18\v \x01(\bR\rautoCalculate\x12 \n" +
-	"\tbranch_id\x18\f \x01(\tH\x01R\bbranchId\x88\x01\x01B\x06\n" +
+	"\tbranch_id\x18\f \x01(\tH\x01R\bbranchId\x88\x01\x01\x12'\n" +
+	"\n" +
+	"request_id\x18\r \x01(\tB\x03\xe0A\x01H\x02R\trequestId\x88\x01\x01B\x06\n" +
 	"\x04_keyB\f\n" +
 	"\n" +
-	"_branch_id\"I\n" +
+	"_branch_idB\r\n" +
+	"\v_request_id\"I\n" +
 	"\x0eCreateResponse\x127\n" +
 	"\adetails\x18\x01 \x01(\v2\x1d.invora.documents.v2.DocumentR\adetails\"\xe0\x01\n" +
 	"\rUpdateRequest\x12\x10\n" +
@@ -4005,10 +4367,13 @@ const file_invora_documents_v2_service_proto_rawDesc = "" +
 	"\adetails\x18\x01 \x01(\v2\x1d.invora.documents.v2.DocumentR\adetails\"#\n" +
 	"\rDeleteRequest\x12\x12\n" +
 	"\x04keys\x18\x01 \x03(\tR\x04keys\"\x10\n" +
-	"\x0eDeleteResponse\"N\n" +
+	"\x0eDeleteResponse\"\x86\x01\n" +
 	"\rFreezeRequest\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12+\n" +
-	"\x11concurrency_stamp\x18\x02 \x01(\tR\x10concurrencyStamp\"I\n" +
+	"\x11concurrency_stamp\x18\x02 \x01(\tR\x10concurrencyStamp\x12'\n" +
+	"\n" +
+	"request_id\x18\x03 \x01(\tB\x03\xe0A\x01H\x00R\trequestId\x88\x01\x01B\r\n" +
+	"\v_request_id\"I\n" +
 	"\x0eFreezeResponse\x127\n" +
 	"\adetails\x18\x01 \x01(\v2\x1d.invora.documents.v2.DocumentR\adetails\"L\n" +
 	"\vSendRequest\x12\x10\n" +
@@ -4120,7 +4485,31 @@ const file_invora_documents_v2_service_proto_rawDesc = "" +
 	"\x0ecomputed_value\x18\x02 \x01(\v2\x16.google.protobuf.ValueR\rcomputedValue\"\xb7\x01\n" +
 	"\x11CalculateResponse\x12S\n" +
 	"\x12calculated_content\x18\x01 \x01(\v2$.invora.documents.v2.DocumentContentR\x11calculatedContent\x12M\n" +
-	"\x0fcomputed_fields\x18\x02 \x03(\v2$.invora.documents.v2.CalculatedFieldR\x0ecomputedFields*\x90\x04\n" +
+	"\x0fcomputed_fields\x18\x02 \x03(\v2$.invora.documents.v2.CalculatedFieldR\x0ecomputedFields\"J\n" +
+	"\x0fGetStatsRequest\x127\n" +
+	"\x06filter\x18\x01 \x01(\v2\x1f.invora.documents.v2.ListFilterR\x06filter\"\xba\x03\n" +
+	"\x10GetStatsResponse\x12%\n" +
+	"\x0edocument_count\x18\x01 \x01(\x04R\rdocumentCount\x12F\n" +
+	"\x14total_payable_amount\x18\x02 \x01(\v2\x14.kernel.DecimalValueR\x12totalPayableAmount\x12>\n" +
+	"\x10total_tax_amount\x18\x03 \x01(\v2\x14.kernel.DecimalValueR\x0etotalTaxAmount\x12\x1a\n" +
+	"\bcurrency\x18\x04 \x01(\tR\bcurrency\x12O\n" +
+	"\x10by_document_type\x18\x05 \x03(\v2%.invora.documents.v2.DocumentTypeStatR\x0ebyDocumentType\x12F\n" +
+	"\rby_edit_state\x18\x06 \x03(\v2\".invora.documents.v2.EditStateStatR\vbyEditState\x12B\n" +
+	"\vby_currency\x18\a \x03(\v2!.invora.documents.v2.CurrencyStatR\n" +
+	"byCurrency\"\xb8\x01\n" +
+	"\x10DocumentTypeStat\x12F\n" +
+	"\rdocument_type\x18\x01 \x01(\x0e2!.invora.documents.v2.DocumentTypeR\fdocumentType\x12\x14\n" +
+	"\x05count\x18\x02 \x01(\x04R\x05count\x12F\n" +
+	"\x14total_payable_amount\x18\x03 \x01(\v2\x14.kernel.DecimalValueR\x12totalPayableAmount\"d\n" +
+	"\rEditStateStat\x12=\n" +
+	"\n" +
+	"edit_state\x18\x01 \x01(\x0e2\x1e.invora.documents.v2.EditStateR\teditState\x12\x14\n" +
+	"\x05count\x18\x02 \x01(\x04R\x05count\"\xc8\x01\n" +
+	"\fCurrencyStat\x12\x1a\n" +
+	"\bcurrency\x18\x01 \x01(\tR\bcurrency\x12\x14\n" +
+	"\x05count\x18\x02 \x01(\x04R\x05count\x12F\n" +
+	"\x14total_payable_amount\x18\x03 \x01(\v2\x14.kernel.DecimalValueR\x12totalPayableAmount\x12>\n" +
+	"\x10total_tax_amount\x18\x04 \x01(\v2\x14.kernel.DecimalValueR\x0etotalTaxAmount*\x90\x04\n" +
 	"\x13FieldFilterOperator\x12%\n" +
 	"!FIELD_FILTER_OPERATOR_UNSPECIFIED\x10\x00\x12\x1f\n" +
 	"\x1bFIELD_FILTER_OPERATOR_EQUAL\x10\x01\x12#\n" +
@@ -4145,7 +4534,7 @@ const file_invora_documents_v2_service_proto_rawDesc = "" +
 	"\x19SHARE_CHANNEL_UNSPECIFIED\x10\x00\x12\x17\n" +
 	"\x13SHARE_CHANNEL_EMAIL\x10\x01\x12\x15\n" +
 	"\x11SHARE_CHANNEL_SMS\x10\x02\x12\x1a\n" +
-	"\x16SHARE_CHANNEL_WHATSAPP\x10\x032\xb1\x1d\n" +
+	"\x16SHARE_CHANNEL_WHATSAPP\x10\x032\xd1\x1e\n" +
 	"\x10DocumentsService\x12\x8c\x01\n" +
 	"\x04List\x12 .invora.documents.v2.ListRequest\x1a!.invora.documents.v2.ListResponse\"?\xe2\xf2\x19\x1a\n" +
 	"\x18Invora.Documents.v2.List\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/api/v2/documents/list\x12\x86\x01\n" +
@@ -4197,7 +4586,9 @@ const file_invora_documents_v2_service_proto_rawDesc = "" +
 	"\x03Fix\x12\x1f.invora.documents.v2.FixRequest\x1a .invora.documents.v2.FixResponse\"C\xe2\xf2\x19\x19\n" +
 	"\x17Invora.Documents.v2.Fix\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/api/v2/documents/{key}/fix\x12\xa5\x01\n" +
 	"\tCalculate\x12%.invora.documents.v2.CalculateRequest\x1a&.invora.documents.v2.CalculateResponse\"I\xe2\xf2\x19\x1f\n" +
-	"\x1dInvora.Documents.v2.Calculate\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/api/v2/documents/calculateB\xe1\x01\n" +
+	"\x1dInvora.Documents.v2.Calculate\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/api/v2/documents/calculate\x12\x9d\x01\n" +
+	"\bGetStats\x12$.invora.documents.v2.GetStatsRequest\x1a%.invora.documents.v2.GetStatsResponse\"D\xe2\xf2\x19\x1e\n" +
+	"\x1cInvora.Documents.v2.GetStats\x82\xd3\xe4\x93\x02\x1c:\x01*\"\x17/api/v2/documents/statsB\xe1\x01\n" +
 	"\x17com.invora.documents.v2B\fServiceProtoP\x01ZJgithub.com/invoraapp/invora-controller/gen/invora/documents/v2;documentsv2\xa2\x02\x03IDX\xaa\x02\x13Invora.Documents.V2\xca\x02\x13Invora\\Documents\\V2\xe2\x02\x1fInvora\\Documents\\V2\\GPBMetadata\xea\x02\x15Invora::Documents::V2b\x06proto3"
 
 var (
@@ -4213,7 +4604,7 @@ func file_invora_documents_v2_service_proto_rawDescGZIP() []byte {
 }
 
 var file_invora_documents_v2_service_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_invora_documents_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 61)
+var file_invora_documents_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 66)
 var file_invora_documents_v2_service_proto_goTypes = []any{
 	(FieldFilterOperator)(0),                   // 0: invora.documents.v2.FieldFilterOperator
 	(UnaryFieldFilterOperator)(0),              // 1: invora.documents.v2.UnaryFieldFilterOperator
@@ -4278,164 +4669,183 @@ var file_invora_documents_v2_service_proto_goTypes = []any{
 	(*CalculateRequest)(nil),                   // 60: invora.documents.v2.CalculateRequest
 	(*CalculatedField)(nil),                    // 61: invora.documents.v2.CalculatedField
 	(*CalculateResponse)(nil),                  // 62: invora.documents.v2.CalculateResponse
-	(*ListFilterPart_Operands)(nil),            // 63: invora.documents.v2.ListFilterPart.Operands
-	(*kernel.TimeReferenceInfo)(nil),           // 64: kernel.TimeReferenceInfo
-	(*kernel.ListRequestFilterPartId)(nil),     // 65: kernel.ListRequestFilterPartId
-	(*kernel.ListRequestFilterPartDateV2)(nil), // 66: kernel.ListRequestFilterPartDateV2
-	(*ListEditStateFilter)(nil),                // 67: invora.documents.v2.ListEditStateFilter
-	(DocumentType)(0),                          // 68: invora.documents.v2.DocumentType
-	(*timestamppb.Timestamp)(nil),              // 69: google.protobuf.Timestamp
-	(*date.Date)(nil),                          // 70: google.type.Date
-	(*kernel.DecimalValue)(nil),                // 71: kernel.DecimalValue
-	(kernel.SortDirection)(0),                  // 72: kernel.SortDirection
-	(*kernel.PaginationInfo)(nil),              // 73: kernel.PaginationInfo
-	(*fieldmaskpb.FieldMask)(nil),              // 74: google.protobuf.FieldMask
-	(*Document)(nil),                           // 75: invora.documents.v2.Document
-	(kernel.ListStreamResponseChangeType)(0),   // 76: kernel.ListStreamResponseChangeType
-	(*ChangeBase)(nil),                         // 77: invora.documents.v2.ChangeBase
-	(*BulkItemResult)(nil),                     // 78: invora.documents.v2.BulkItemResult
-	(*DocumentRef)(nil),                        // 79: invora.documents.v2.DocumentRef
-	(*ValidationError)(nil),                    // 80: invora.documents.v2.ValidationError
-	(*DocumentContent)(nil),                    // 81: invora.documents.v2.DocumentContent
-	(*structpb.Value)(nil),                     // 82: google.protobuf.Value
+	(*GetStatsRequest)(nil),                    // 63: invora.documents.v2.GetStatsRequest
+	(*GetStatsResponse)(nil),                   // 64: invora.documents.v2.GetStatsResponse
+	(*DocumentTypeStat)(nil),                   // 65: invora.documents.v2.DocumentTypeStat
+	(*EditStateStat)(nil),                      // 66: invora.documents.v2.EditStateStat
+	(*CurrencyStat)(nil),                       // 67: invora.documents.v2.CurrencyStat
+	(*ListFilterPart_Operands)(nil),            // 68: invora.documents.v2.ListFilterPart.Operands
+	(*kernel.TimeReferenceInfo)(nil),           // 69: kernel.TimeReferenceInfo
+	(*kernel.ListRequestFilterPartId)(nil),     // 70: kernel.ListRequestFilterPartId
+	(*kernel.ListRequestFilterPartDateV2)(nil), // 71: kernel.ListRequestFilterPartDateV2
+	(*ListEditStateFilter)(nil),                // 72: invora.documents.v2.ListEditStateFilter
+	(DocumentType)(0),                          // 73: invora.documents.v2.DocumentType
+	(*timestamppb.Timestamp)(nil),              // 74: google.protobuf.Timestamp
+	(*date.Date)(nil),                          // 75: google.type.Date
+	(*kernel.DecimalValue)(nil),                // 76: kernel.DecimalValue
+	(kernel.SortDirection)(0),                  // 77: kernel.SortDirection
+	(*kernel.PaginationInfo)(nil),              // 78: kernel.PaginationInfo
+	(*fieldmaskpb.FieldMask)(nil),              // 79: google.protobuf.FieldMask
+	(*Document)(nil),                           // 80: invora.documents.v2.Document
+	(kernel.ListStreamResponseChangeType)(0),   // 81: kernel.ListStreamResponseChangeType
+	(*ChangeBase)(nil),                         // 82: invora.documents.v2.ChangeBase
+	(*BulkItemResult)(nil),                     // 83: invora.documents.v2.BulkItemResult
+	(*DocumentRef)(nil),                        // 84: invora.documents.v2.DocumentRef
+	(*ValidationError)(nil),                    // 85: invora.documents.v2.ValidationError
+	(*DocumentContent)(nil),                    // 86: invora.documents.v2.DocumentContent
+	(*structpb.Value)(nil),                     // 87: google.protobuf.Value
+	(EditState)(0),                             // 88: invora.documents.v2.EditState
 }
 var file_invora_documents_v2_service_proto_depIdxs = []int32{
 	4,   // 0: invora.documents.v2.ListFilter.part:type_name -> invora.documents.v2.ListFilterPart
-	64,  // 1: invora.documents.v2.ListFilter.time_reference:type_name -> kernel.TimeReferenceInfo
-	65,  // 2: invora.documents.v2.ListFilterPart.key:type_name -> kernel.ListRequestFilterPartId
-	66,  // 3: invora.documents.v2.ListFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDateV2
-	66,  // 4: invora.documents.v2.ListFilterPart.updated_at:type_name -> kernel.ListRequestFilterPartDateV2
-	66,  // 5: invora.documents.v2.ListFilterPart.frozen_at:type_name -> kernel.ListRequestFilterPartDateV2
+	69,  // 1: invora.documents.v2.ListFilter.time_reference:type_name -> kernel.TimeReferenceInfo
+	70,  // 2: invora.documents.v2.ListFilterPart.key:type_name -> kernel.ListRequestFilterPartId
+	71,  // 3: invora.documents.v2.ListFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDateV2
+	71,  // 4: invora.documents.v2.ListFilterPart.updated_at:type_name -> kernel.ListRequestFilterPartDateV2
+	71,  // 5: invora.documents.v2.ListFilterPart.frozen_at:type_name -> kernel.ListRequestFilterPartDateV2
 	5,   // 6: invora.documents.v2.ListFilterPart.document_type:type_name -> invora.documents.v2.ListDocumentTypeFilter
-	67,  // 7: invora.documents.v2.ListFilterPart.edit_state:type_name -> invora.documents.v2.ListEditStateFilter
-	65,  // 8: invora.documents.v2.ListFilterPart.branch_id:type_name -> kernel.ListRequestFilterPartId
+	72,  // 7: invora.documents.v2.ListFilterPart.edit_state:type_name -> invora.documents.v2.ListEditStateFilter
+	70,  // 8: invora.documents.v2.ListFilterPart.branch_id:type_name -> kernel.ListRequestFilterPartId
 	6,   // 9: invora.documents.v2.ListFilterPart.field:type_name -> invora.documents.v2.FieldFilter
 	7,   // 10: invora.documents.v2.ListFilterPart.unary_field:type_name -> invora.documents.v2.UnaryFieldFilter
-	63,  // 11: invora.documents.v2.ListFilterPart.and:type_name -> invora.documents.v2.ListFilterPart.Operands
-	63,  // 12: invora.documents.v2.ListFilterPart.or:type_name -> invora.documents.v2.ListFilterPart.Operands
+	68,  // 11: invora.documents.v2.ListFilterPart.and:type_name -> invora.documents.v2.ListFilterPart.Operands
+	68,  // 12: invora.documents.v2.ListFilterPart.or:type_name -> invora.documents.v2.ListFilterPart.Operands
 	4,   // 13: invora.documents.v2.ListFilterPart.not:type_name -> invora.documents.v2.ListFilterPart
-	68,  // 14: invora.documents.v2.ListDocumentTypeFilter.in_values:type_name -> invora.documents.v2.DocumentType
+	73,  // 14: invora.documents.v2.ListDocumentTypeFilter.in_values:type_name -> invora.documents.v2.DocumentType
 	0,   // 15: invora.documents.v2.FieldFilter.op:type_name -> invora.documents.v2.FieldFilterOperator
 	8,   // 16: invora.documents.v2.FieldFilter.value:type_name -> invora.documents.v2.FieldFilterValue
 	1,   // 17: invora.documents.v2.UnaryFieldFilter.op:type_name -> invora.documents.v2.UnaryFieldFilterOperator
-	69,  // 18: invora.documents.v2.FieldFilterValue.timestamp_value:type_name -> google.protobuf.Timestamp
-	70,  // 19: invora.documents.v2.FieldFilterValue.date_value:type_name -> google.type.Date
-	71,  // 20: invora.documents.v2.FieldFilterValue.decimal_value:type_name -> kernel.DecimalValue
+	74,  // 18: invora.documents.v2.FieldFilterValue.timestamp_value:type_name -> google.protobuf.Timestamp
+	75,  // 19: invora.documents.v2.FieldFilterValue.date_value:type_name -> google.type.Date
+	76,  // 20: invora.documents.v2.FieldFilterValue.decimal_value:type_name -> kernel.DecimalValue
 	9,   // 21: invora.documents.v2.FieldFilterValue.list_value:type_name -> invora.documents.v2.FieldFilterValueList
 	8,   // 22: invora.documents.v2.FieldFilterValueList.values:type_name -> invora.documents.v2.FieldFilterValue
 	11,  // 23: invora.documents.v2.ListSort.rules:type_name -> invora.documents.v2.ListSortRule
-	72,  // 24: invora.documents.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
-	72,  // 25: invora.documents.v2.ListSortRule.updated_at:type_name -> kernel.SortDirection
-	72,  // 26: invora.documents.v2.ListSortRule.issue_date:type_name -> kernel.SortDirection
-	72,  // 27: invora.documents.v2.ListSortRule.due_date:type_name -> kernel.SortDirection
-	72,  // 28: invora.documents.v2.ListSortRule.payable_amount:type_name -> kernel.SortDirection
-	72,  // 29: invora.documents.v2.ListSortRule.frozen_at:type_name -> kernel.SortDirection
-	72,  // 30: invora.documents.v2.ListSortRule.sequence_id:type_name -> kernel.SortDirection
-	72,  // 31: invora.documents.v2.ListSortRule.validity_end_date:type_name -> kernel.SortDirection
-	72,  // 32: invora.documents.v2.ListSortRule.actual_date:type_name -> kernel.SortDirection
-	72,  // 33: invora.documents.v2.ListSortRule.tax_amount:type_name -> kernel.SortDirection
+	77,  // 24: invora.documents.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
+	77,  // 25: invora.documents.v2.ListSortRule.updated_at:type_name -> kernel.SortDirection
+	77,  // 26: invora.documents.v2.ListSortRule.issue_date:type_name -> kernel.SortDirection
+	77,  // 27: invora.documents.v2.ListSortRule.due_date:type_name -> kernel.SortDirection
+	77,  // 28: invora.documents.v2.ListSortRule.payable_amount:type_name -> kernel.SortDirection
+	77,  // 29: invora.documents.v2.ListSortRule.frozen_at:type_name -> kernel.SortDirection
+	77,  // 30: invora.documents.v2.ListSortRule.sequence_id:type_name -> kernel.SortDirection
+	77,  // 31: invora.documents.v2.ListSortRule.validity_end_date:type_name -> kernel.SortDirection
+	77,  // 32: invora.documents.v2.ListSortRule.actual_date:type_name -> kernel.SortDirection
+	77,  // 33: invora.documents.v2.ListSortRule.tax_amount:type_name -> kernel.SortDirection
 	3,   // 34: invora.documents.v2.ListRequest.filter:type_name -> invora.documents.v2.ListFilter
 	10,  // 35: invora.documents.v2.ListRequest.sort:type_name -> invora.documents.v2.ListSort
-	73,  // 36: invora.documents.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
-	74,  // 37: invora.documents.v2.ListRequest.mask:type_name -> google.protobuf.FieldMask
-	75,  // 38: invora.documents.v2.ListResponse.items:type_name -> invora.documents.v2.Document
+	78,  // 36: invora.documents.v2.ListRequest.pagination:type_name -> kernel.PaginationInfo
+	79,  // 37: invora.documents.v2.ListRequest.mask:type_name -> google.protobuf.FieldMask
+	80,  // 38: invora.documents.v2.ListResponse.items:type_name -> invora.documents.v2.Document
 	12,  // 39: invora.documents.v2.ListStreamRequest.request:type_name -> invora.documents.v2.ListRequest
 	13,  // 40: invora.documents.v2.ListStreamResponse.initial:type_name -> invora.documents.v2.ListResponse
 	16,  // 41: invora.documents.v2.ListStreamResponse.change:type_name -> invora.documents.v2.ListStreamResponseChange
-	75,  // 42: invora.documents.v2.ListStreamResponseChange.item:type_name -> invora.documents.v2.Document
-	76,  // 43: invora.documents.v2.ListStreamResponseChange.type:type_name -> kernel.ListStreamResponseChangeType
-	74,  // 44: invora.documents.v2.GetRequest.mask:type_name -> google.protobuf.FieldMask
-	75,  // 45: invora.documents.v2.GetResponse.details:type_name -> invora.documents.v2.Document
-	74,  // 46: invora.documents.v2.GetStreamRequest.mask:type_name -> google.protobuf.FieldMask
-	75,  // 47: invora.documents.v2.GetStreamResponse.details:type_name -> invora.documents.v2.Document
-	77,  // 48: invora.documents.v2.CreateRequest.changes:type_name -> invora.documents.v2.ChangeBase
-	75,  // 49: invora.documents.v2.CreateResponse.details:type_name -> invora.documents.v2.Document
-	74,  // 50: invora.documents.v2.UpdateRequest.mask:type_name -> google.protobuf.FieldMask
-	77,  // 51: invora.documents.v2.UpdateRequest.changes:type_name -> invora.documents.v2.ChangeBase
-	75,  // 52: invora.documents.v2.UpdateResponse.details:type_name -> invora.documents.v2.Document
-	75,  // 53: invora.documents.v2.FreezeResponse.details:type_name -> invora.documents.v2.Document
-	75,  // 54: invora.documents.v2.SendResponse.details:type_name -> invora.documents.v2.Document
+	80,  // 42: invora.documents.v2.ListStreamResponseChange.item:type_name -> invora.documents.v2.Document
+	81,  // 43: invora.documents.v2.ListStreamResponseChange.type:type_name -> kernel.ListStreamResponseChangeType
+	79,  // 44: invora.documents.v2.GetRequest.mask:type_name -> google.protobuf.FieldMask
+	80,  // 45: invora.documents.v2.GetResponse.details:type_name -> invora.documents.v2.Document
+	79,  // 46: invora.documents.v2.GetStreamRequest.mask:type_name -> google.protobuf.FieldMask
+	80,  // 47: invora.documents.v2.GetStreamResponse.details:type_name -> invora.documents.v2.Document
+	82,  // 48: invora.documents.v2.CreateRequest.changes:type_name -> invora.documents.v2.ChangeBase
+	80,  // 49: invora.documents.v2.CreateResponse.details:type_name -> invora.documents.v2.Document
+	79,  // 50: invora.documents.v2.UpdateRequest.mask:type_name -> google.protobuf.FieldMask
+	82,  // 51: invora.documents.v2.UpdateRequest.changes:type_name -> invora.documents.v2.ChangeBase
+	80,  // 52: invora.documents.v2.UpdateResponse.details:type_name -> invora.documents.v2.Document
+	80,  // 53: invora.documents.v2.FreezeResponse.details:type_name -> invora.documents.v2.Document
+	80,  // 54: invora.documents.v2.SendResponse.details:type_name -> invora.documents.v2.Document
 	2,   // 55: invora.documents.v2.ShareRecipient.channel:type_name -> invora.documents.v2.ShareChannel
 	31,  // 56: invora.documents.v2.ShareRequest.recipients:type_name -> invora.documents.v2.ShareRecipient
 	31,  // 57: invora.documents.v2.ShareResult.recipient:type_name -> invora.documents.v2.ShareRecipient
 	33,  // 58: invora.documents.v2.ShareResponse.results:type_name -> invora.documents.v2.ShareResult
 	21,  // 59: invora.documents.v2.BulkCreateRequest.items:type_name -> invora.documents.v2.CreateRequest
-	78,  // 60: invora.documents.v2.BulkCreateResponse.items:type_name -> invora.documents.v2.BulkItemResult
-	78,  // 61: invora.documents.v2.BulkFreezeResponse.items:type_name -> invora.documents.v2.BulkItemResult
-	78,  // 62: invora.documents.v2.BulkDeleteResponse.items:type_name -> invora.documents.v2.BulkItemResult
+	83,  // 60: invora.documents.v2.BulkCreateResponse.items:type_name -> invora.documents.v2.BulkItemResult
+	83,  // 61: invora.documents.v2.BulkFreezeResponse.items:type_name -> invora.documents.v2.BulkItemResult
+	83,  // 62: invora.documents.v2.BulkDeleteResponse.items:type_name -> invora.documents.v2.BulkItemResult
 	23,  // 63: invora.documents.v2.BulkUpdateRequest.items:type_name -> invora.documents.v2.UpdateRequest
-	78,  // 64: invora.documents.v2.BulkUpdateResponse.items:type_name -> invora.documents.v2.BulkItemResult
+	83,  // 64: invora.documents.v2.BulkUpdateResponse.items:type_name -> invora.documents.v2.BulkItemResult
 	21,  // 65: invora.documents.v2.StreamCreateRequest.item:type_name -> invora.documents.v2.CreateRequest
-	78,  // 66: invora.documents.v2.StreamCreateResponse.result:type_name -> invora.documents.v2.BulkItemResult
-	78,  // 67: invora.documents.v2.StreamFreezeResponse.result:type_name -> invora.documents.v2.BulkItemResult
+	83,  // 66: invora.documents.v2.StreamCreateResponse.result:type_name -> invora.documents.v2.BulkItemResult
+	83,  // 67: invora.documents.v2.StreamFreezeResponse.result:type_name -> invora.documents.v2.BulkItemResult
 	23,  // 68: invora.documents.v2.StreamUpdateRequest.item:type_name -> invora.documents.v2.UpdateRequest
-	78,  // 69: invora.documents.v2.StreamUpdateResponse.result:type_name -> invora.documents.v2.BulkItemResult
-	75,  // 70: invora.documents.v2.CloneResponse.details:type_name -> invora.documents.v2.Document
-	79,  // 71: invora.documents.v2.GetRelatedDocumentsResponse.billing_references:type_name -> invora.documents.v2.DocumentRef
-	79,  // 72: invora.documents.v2.GetRelatedDocumentsResponse.order_references:type_name -> invora.documents.v2.DocumentRef
-	79,  // 73: invora.documents.v2.GetRelatedDocumentsResponse.cloned_from:type_name -> invora.documents.v2.DocumentRef
-	79,  // 74: invora.documents.v2.GetRelatedDocumentsResponse.clones:type_name -> invora.documents.v2.DocumentRef
-	80,  // 75: invora.documents.v2.ValidateResponse.errors:type_name -> invora.documents.v2.ValidationError
-	77,  // 76: invora.documents.v2.ValidateContentRequest.content:type_name -> invora.documents.v2.ChangeBase
-	80,  // 77: invora.documents.v2.ValidateContentResponse.errors:type_name -> invora.documents.v2.ValidationError
-	81,  // 78: invora.documents.v2.FixResponse.fixed_content:type_name -> invora.documents.v2.DocumentContent
+	83,  // 69: invora.documents.v2.StreamUpdateResponse.result:type_name -> invora.documents.v2.BulkItemResult
+	80,  // 70: invora.documents.v2.CloneResponse.details:type_name -> invora.documents.v2.Document
+	84,  // 71: invora.documents.v2.GetRelatedDocumentsResponse.billing_references:type_name -> invora.documents.v2.DocumentRef
+	84,  // 72: invora.documents.v2.GetRelatedDocumentsResponse.order_references:type_name -> invora.documents.v2.DocumentRef
+	84,  // 73: invora.documents.v2.GetRelatedDocumentsResponse.cloned_from:type_name -> invora.documents.v2.DocumentRef
+	84,  // 74: invora.documents.v2.GetRelatedDocumentsResponse.clones:type_name -> invora.documents.v2.DocumentRef
+	85,  // 75: invora.documents.v2.ValidateResponse.errors:type_name -> invora.documents.v2.ValidationError
+	82,  // 76: invora.documents.v2.ValidateContentRequest.content:type_name -> invora.documents.v2.ChangeBase
+	85,  // 77: invora.documents.v2.ValidateContentResponse.errors:type_name -> invora.documents.v2.ValidationError
+	86,  // 78: invora.documents.v2.FixResponse.fixed_content:type_name -> invora.documents.v2.DocumentContent
 	58,  // 79: invora.documents.v2.FixResponse.applied_fixes:type_name -> invora.documents.v2.FixDescription
-	77,  // 80: invora.documents.v2.CalculateRequest.content:type_name -> invora.documents.v2.ChangeBase
-	82,  // 81: invora.documents.v2.CalculatedField.computed_value:type_name -> google.protobuf.Value
-	81,  // 82: invora.documents.v2.CalculateResponse.calculated_content:type_name -> invora.documents.v2.DocumentContent
+	82,  // 80: invora.documents.v2.CalculateRequest.content:type_name -> invora.documents.v2.ChangeBase
+	87,  // 81: invora.documents.v2.CalculatedField.computed_value:type_name -> google.protobuf.Value
+	86,  // 82: invora.documents.v2.CalculateResponse.calculated_content:type_name -> invora.documents.v2.DocumentContent
 	61,  // 83: invora.documents.v2.CalculateResponse.computed_fields:type_name -> invora.documents.v2.CalculatedField
-	4,   // 84: invora.documents.v2.ListFilterPart.Operands.operands:type_name -> invora.documents.v2.ListFilterPart
-	12,  // 85: invora.documents.v2.DocumentsService.List:input_type -> invora.documents.v2.ListRequest
-	14,  // 86: invora.documents.v2.DocumentsService.ListStream:input_type -> invora.documents.v2.ListStreamRequest
-	17,  // 87: invora.documents.v2.DocumentsService.Get:input_type -> invora.documents.v2.GetRequest
-	19,  // 88: invora.documents.v2.DocumentsService.GetStream:input_type -> invora.documents.v2.GetStreamRequest
-	21,  // 89: invora.documents.v2.DocumentsService.Create:input_type -> invora.documents.v2.CreateRequest
-	23,  // 90: invora.documents.v2.DocumentsService.Update:input_type -> invora.documents.v2.UpdateRequest
-	25,  // 91: invora.documents.v2.DocumentsService.Delete:input_type -> invora.documents.v2.DeleteRequest
-	27,  // 92: invora.documents.v2.DocumentsService.Freeze:input_type -> invora.documents.v2.FreezeRequest
-	35,  // 93: invora.documents.v2.DocumentsService.BulkCreate:input_type -> invora.documents.v2.BulkCreateRequest
-	37,  // 94: invora.documents.v2.DocumentsService.BulkFreeze:input_type -> invora.documents.v2.BulkFreezeRequest
-	39,  // 95: invora.documents.v2.DocumentsService.BulkDelete:input_type -> invora.documents.v2.BulkDeleteRequest
-	41,  // 96: invora.documents.v2.DocumentsService.BulkUpdate:input_type -> invora.documents.v2.BulkUpdateRequest
-	43,  // 97: invora.documents.v2.DocumentsService.StreamCreate:input_type -> invora.documents.v2.StreamCreateRequest
-	45,  // 98: invora.documents.v2.DocumentsService.StreamFreeze:input_type -> invora.documents.v2.StreamFreezeRequest
-	47,  // 99: invora.documents.v2.DocumentsService.StreamUpdate:input_type -> invora.documents.v2.StreamUpdateRequest
-	29,  // 100: invora.documents.v2.DocumentsService.Send:input_type -> invora.documents.v2.SendRequest
-	32,  // 101: invora.documents.v2.DocumentsService.Share:input_type -> invora.documents.v2.ShareRequest
-	49,  // 102: invora.documents.v2.DocumentsService.Clone:input_type -> invora.documents.v2.CloneRequest
-	51,  // 103: invora.documents.v2.DocumentsService.GetRelatedDocuments:input_type -> invora.documents.v2.GetRelatedDocumentsRequest
-	53,  // 104: invora.documents.v2.DocumentsService.Validate:input_type -> invora.documents.v2.ValidateRequest
-	55,  // 105: invora.documents.v2.DocumentsService.ValidateContent:input_type -> invora.documents.v2.ValidateContentRequest
-	57,  // 106: invora.documents.v2.DocumentsService.Fix:input_type -> invora.documents.v2.FixRequest
-	60,  // 107: invora.documents.v2.DocumentsService.Calculate:input_type -> invora.documents.v2.CalculateRequest
-	13,  // 108: invora.documents.v2.DocumentsService.List:output_type -> invora.documents.v2.ListResponse
-	15,  // 109: invora.documents.v2.DocumentsService.ListStream:output_type -> invora.documents.v2.ListStreamResponse
-	18,  // 110: invora.documents.v2.DocumentsService.Get:output_type -> invora.documents.v2.GetResponse
-	20,  // 111: invora.documents.v2.DocumentsService.GetStream:output_type -> invora.documents.v2.GetStreamResponse
-	22,  // 112: invora.documents.v2.DocumentsService.Create:output_type -> invora.documents.v2.CreateResponse
-	24,  // 113: invora.documents.v2.DocumentsService.Update:output_type -> invora.documents.v2.UpdateResponse
-	26,  // 114: invora.documents.v2.DocumentsService.Delete:output_type -> invora.documents.v2.DeleteResponse
-	28,  // 115: invora.documents.v2.DocumentsService.Freeze:output_type -> invora.documents.v2.FreezeResponse
-	36,  // 116: invora.documents.v2.DocumentsService.BulkCreate:output_type -> invora.documents.v2.BulkCreateResponse
-	38,  // 117: invora.documents.v2.DocumentsService.BulkFreeze:output_type -> invora.documents.v2.BulkFreezeResponse
-	40,  // 118: invora.documents.v2.DocumentsService.BulkDelete:output_type -> invora.documents.v2.BulkDeleteResponse
-	42,  // 119: invora.documents.v2.DocumentsService.BulkUpdate:output_type -> invora.documents.v2.BulkUpdateResponse
-	44,  // 120: invora.documents.v2.DocumentsService.StreamCreate:output_type -> invora.documents.v2.StreamCreateResponse
-	46,  // 121: invora.documents.v2.DocumentsService.StreamFreeze:output_type -> invora.documents.v2.StreamFreezeResponse
-	48,  // 122: invora.documents.v2.DocumentsService.StreamUpdate:output_type -> invora.documents.v2.StreamUpdateResponse
-	30,  // 123: invora.documents.v2.DocumentsService.Send:output_type -> invora.documents.v2.SendResponse
-	34,  // 124: invora.documents.v2.DocumentsService.Share:output_type -> invora.documents.v2.ShareResponse
-	50,  // 125: invora.documents.v2.DocumentsService.Clone:output_type -> invora.documents.v2.CloneResponse
-	52,  // 126: invora.documents.v2.DocumentsService.GetRelatedDocuments:output_type -> invora.documents.v2.GetRelatedDocumentsResponse
-	54,  // 127: invora.documents.v2.DocumentsService.Validate:output_type -> invora.documents.v2.ValidateResponse
-	56,  // 128: invora.documents.v2.DocumentsService.ValidateContent:output_type -> invora.documents.v2.ValidateContentResponse
-	59,  // 129: invora.documents.v2.DocumentsService.Fix:output_type -> invora.documents.v2.FixResponse
-	62,  // 130: invora.documents.v2.DocumentsService.Calculate:output_type -> invora.documents.v2.CalculateResponse
-	108, // [108:131] is the sub-list for method output_type
-	85,  // [85:108] is the sub-list for method input_type
-	85,  // [85:85] is the sub-list for extension type_name
-	85,  // [85:85] is the sub-list for extension extendee
-	0,   // [0:85] is the sub-list for field type_name
+	3,   // 84: invora.documents.v2.GetStatsRequest.filter:type_name -> invora.documents.v2.ListFilter
+	76,  // 85: invora.documents.v2.GetStatsResponse.total_payable_amount:type_name -> kernel.DecimalValue
+	76,  // 86: invora.documents.v2.GetStatsResponse.total_tax_amount:type_name -> kernel.DecimalValue
+	65,  // 87: invora.documents.v2.GetStatsResponse.by_document_type:type_name -> invora.documents.v2.DocumentTypeStat
+	66,  // 88: invora.documents.v2.GetStatsResponse.by_edit_state:type_name -> invora.documents.v2.EditStateStat
+	67,  // 89: invora.documents.v2.GetStatsResponse.by_currency:type_name -> invora.documents.v2.CurrencyStat
+	73,  // 90: invora.documents.v2.DocumentTypeStat.document_type:type_name -> invora.documents.v2.DocumentType
+	76,  // 91: invora.documents.v2.DocumentTypeStat.total_payable_amount:type_name -> kernel.DecimalValue
+	88,  // 92: invora.documents.v2.EditStateStat.edit_state:type_name -> invora.documents.v2.EditState
+	76,  // 93: invora.documents.v2.CurrencyStat.total_payable_amount:type_name -> kernel.DecimalValue
+	76,  // 94: invora.documents.v2.CurrencyStat.total_tax_amount:type_name -> kernel.DecimalValue
+	4,   // 95: invora.documents.v2.ListFilterPart.Operands.operands:type_name -> invora.documents.v2.ListFilterPart
+	12,  // 96: invora.documents.v2.DocumentsService.List:input_type -> invora.documents.v2.ListRequest
+	14,  // 97: invora.documents.v2.DocumentsService.ListStream:input_type -> invora.documents.v2.ListStreamRequest
+	17,  // 98: invora.documents.v2.DocumentsService.Get:input_type -> invora.documents.v2.GetRequest
+	19,  // 99: invora.documents.v2.DocumentsService.GetStream:input_type -> invora.documents.v2.GetStreamRequest
+	21,  // 100: invora.documents.v2.DocumentsService.Create:input_type -> invora.documents.v2.CreateRequest
+	23,  // 101: invora.documents.v2.DocumentsService.Update:input_type -> invora.documents.v2.UpdateRequest
+	25,  // 102: invora.documents.v2.DocumentsService.Delete:input_type -> invora.documents.v2.DeleteRequest
+	27,  // 103: invora.documents.v2.DocumentsService.Freeze:input_type -> invora.documents.v2.FreezeRequest
+	35,  // 104: invora.documents.v2.DocumentsService.BulkCreate:input_type -> invora.documents.v2.BulkCreateRequest
+	37,  // 105: invora.documents.v2.DocumentsService.BulkFreeze:input_type -> invora.documents.v2.BulkFreezeRequest
+	39,  // 106: invora.documents.v2.DocumentsService.BulkDelete:input_type -> invora.documents.v2.BulkDeleteRequest
+	41,  // 107: invora.documents.v2.DocumentsService.BulkUpdate:input_type -> invora.documents.v2.BulkUpdateRequest
+	43,  // 108: invora.documents.v2.DocumentsService.StreamCreate:input_type -> invora.documents.v2.StreamCreateRequest
+	45,  // 109: invora.documents.v2.DocumentsService.StreamFreeze:input_type -> invora.documents.v2.StreamFreezeRequest
+	47,  // 110: invora.documents.v2.DocumentsService.StreamUpdate:input_type -> invora.documents.v2.StreamUpdateRequest
+	29,  // 111: invora.documents.v2.DocumentsService.Send:input_type -> invora.documents.v2.SendRequest
+	32,  // 112: invora.documents.v2.DocumentsService.Share:input_type -> invora.documents.v2.ShareRequest
+	49,  // 113: invora.documents.v2.DocumentsService.Clone:input_type -> invora.documents.v2.CloneRequest
+	51,  // 114: invora.documents.v2.DocumentsService.GetRelatedDocuments:input_type -> invora.documents.v2.GetRelatedDocumentsRequest
+	53,  // 115: invora.documents.v2.DocumentsService.Validate:input_type -> invora.documents.v2.ValidateRequest
+	55,  // 116: invora.documents.v2.DocumentsService.ValidateContent:input_type -> invora.documents.v2.ValidateContentRequest
+	57,  // 117: invora.documents.v2.DocumentsService.Fix:input_type -> invora.documents.v2.FixRequest
+	60,  // 118: invora.documents.v2.DocumentsService.Calculate:input_type -> invora.documents.v2.CalculateRequest
+	63,  // 119: invora.documents.v2.DocumentsService.GetStats:input_type -> invora.documents.v2.GetStatsRequest
+	13,  // 120: invora.documents.v2.DocumentsService.List:output_type -> invora.documents.v2.ListResponse
+	15,  // 121: invora.documents.v2.DocumentsService.ListStream:output_type -> invora.documents.v2.ListStreamResponse
+	18,  // 122: invora.documents.v2.DocumentsService.Get:output_type -> invora.documents.v2.GetResponse
+	20,  // 123: invora.documents.v2.DocumentsService.GetStream:output_type -> invora.documents.v2.GetStreamResponse
+	22,  // 124: invora.documents.v2.DocumentsService.Create:output_type -> invora.documents.v2.CreateResponse
+	24,  // 125: invora.documents.v2.DocumentsService.Update:output_type -> invora.documents.v2.UpdateResponse
+	26,  // 126: invora.documents.v2.DocumentsService.Delete:output_type -> invora.documents.v2.DeleteResponse
+	28,  // 127: invora.documents.v2.DocumentsService.Freeze:output_type -> invora.documents.v2.FreezeResponse
+	36,  // 128: invora.documents.v2.DocumentsService.BulkCreate:output_type -> invora.documents.v2.BulkCreateResponse
+	38,  // 129: invora.documents.v2.DocumentsService.BulkFreeze:output_type -> invora.documents.v2.BulkFreezeResponse
+	40,  // 130: invora.documents.v2.DocumentsService.BulkDelete:output_type -> invora.documents.v2.BulkDeleteResponse
+	42,  // 131: invora.documents.v2.DocumentsService.BulkUpdate:output_type -> invora.documents.v2.BulkUpdateResponse
+	44,  // 132: invora.documents.v2.DocumentsService.StreamCreate:output_type -> invora.documents.v2.StreamCreateResponse
+	46,  // 133: invora.documents.v2.DocumentsService.StreamFreeze:output_type -> invora.documents.v2.StreamFreezeResponse
+	48,  // 134: invora.documents.v2.DocumentsService.StreamUpdate:output_type -> invora.documents.v2.StreamUpdateResponse
+	30,  // 135: invora.documents.v2.DocumentsService.Send:output_type -> invora.documents.v2.SendResponse
+	34,  // 136: invora.documents.v2.DocumentsService.Share:output_type -> invora.documents.v2.ShareResponse
+	50,  // 137: invora.documents.v2.DocumentsService.Clone:output_type -> invora.documents.v2.CloneResponse
+	52,  // 138: invora.documents.v2.DocumentsService.GetRelatedDocuments:output_type -> invora.documents.v2.GetRelatedDocumentsResponse
+	54,  // 139: invora.documents.v2.DocumentsService.Validate:output_type -> invora.documents.v2.ValidateResponse
+	56,  // 140: invora.documents.v2.DocumentsService.ValidateContent:output_type -> invora.documents.v2.ValidateContentResponse
+	59,  // 141: invora.documents.v2.DocumentsService.Fix:output_type -> invora.documents.v2.FixResponse
+	62,  // 142: invora.documents.v2.DocumentsService.Calculate:output_type -> invora.documents.v2.CalculateResponse
+	64,  // 143: invora.documents.v2.DocumentsService.GetStats:output_type -> invora.documents.v2.GetStatsResponse
+	120, // [120:144] is the sub-list for method output_type
+	96,  // [96:120] is the sub-list for method input_type
+	96,  // [96:96] is the sub-list for extension type_name
+	96,  // [96:96] is the sub-list for extension extendee
+	0,   // [0:96] is the sub-list for field type_name
 }
 
 func init() { file_invora_documents_v2_service_proto_init() }
@@ -4489,6 +4899,7 @@ func file_invora_documents_v2_service_proto_init() {
 	}
 	file_invora_documents_v2_service_proto_msgTypes[13].OneofWrappers = []any{}
 	file_invora_documents_v2_service_proto_msgTypes[18].OneofWrappers = []any{}
+	file_invora_documents_v2_service_proto_msgTypes[24].OneofWrappers = []any{}
 	file_invora_documents_v2_service_proto_msgTypes[28].OneofWrappers = []any{}
 	file_invora_documents_v2_service_proto_msgTypes[30].OneofWrappers = []any{}
 	file_invora_documents_v2_service_proto_msgTypes[46].OneofWrappers = []any{}
@@ -4500,7 +4911,7 @@ func file_invora_documents_v2_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_documents_v2_service_proto_rawDesc), len(file_invora_documents_v2_service_proto_rawDesc)),
 			NumEnums:      3,
-			NumMessages:   61,
+			NumMessages:   66,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

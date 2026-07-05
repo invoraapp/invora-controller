@@ -8,6 +8,7 @@ package commonv2
 
 import (
 	kernel "github.com/invoraapp/invora-controller/gen/kernel"
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	date "google.golang.org/genproto/googleapis/type/date"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -7860,6 +7861,9 @@ func (x *BillingPlan) GetUsageThresholds() []*UsageThreshold {
 	return nil
 }
 
+// Read-only: server-computed wallet state returned from Get/List. Never a
+// request payload — mutations go through the dedicated *Input messages on
+// WalletsService (invora-protobuf#35 field_behavior wave 1).
 type BillingWallet struct {
 	state                            protoimpl.MessageState      `protogen:"open.v1"`
 	AppliesTo                        *WalletAppliesTo            `protobuf:"bytes,2,opt,name=applies_to,json=appliesTo,proto3,oneof" json:"applies_to,omitempty"`
@@ -8184,6 +8188,8 @@ func (x *BillingWallet) GetUpdatedAt() *timestamppb.Timestamp {
 	return nil
 }
 
+// Read-only: server-computed wallet transaction state returned from
+// Get/List. Never a request payload (invora-protobuf#35 field_behavior wave 1).
 type BillingWalletTransaction struct {
 	state                            protoimpl.MessageState             `protogen:"open.v1"`
 	Amount                           *kernel.DecimalValue               `protobuf:"bytes,1,opt,name=amount,proto3" json:"amount,omitempty"`
@@ -8404,6 +8410,10 @@ func (x *BillingWalletTransaction) GetWalletName() string {
 	return ""
 }
 
+// Read-only: server-computed fee state returned from Get/List (including
+// previewed/created adjusted fees). Never a request payload — mutations use
+// CreateAdjustedFeeRequest/PreviewAdjustedFeeRequest on PaymentsService
+// (invora-protobuf#35 field_behavior wave 1).
 type BillingFee struct {
 	state                  protoimpl.MessageState    `protogen:"open.v1"`
 	AddOn                  *BillingAddOn             `protobuf:"bytes,1,opt,name=add_on,json=addOn,proto3,oneof" json:"add_on,omitempty"`
@@ -9462,6 +9472,9 @@ func (x *BillingBillableMetric) GetWeightedInterval() WeightedInterval {
 	return WeightedInterval_WEIGHTED_INTERVAL_UNSPECIFIED
 }
 
+// Read-only: server-computed payment-request state returned from Get/List.
+// Never a request payload — created via CreatePaymentRequestRequest on
+// PaymentsService (invora-protobuf#35 field_behavior wave 1).
 type BillingPaymentRequest struct {
 	state          protoimpl.MessageState   `protogen:"open.v1"`
 	AmountCents    int64                    `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
@@ -9578,6 +9591,8 @@ func (x *BillingPaymentRequest) GetUpdatedAt() *timestamppb.Timestamp {
 	return nil
 }
 
+// Read-only: server-generated receipt. Never a request payload
+// (invora-protobuf#35 field_behavior wave 1).
 type BillingPaymentReceipt struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
@@ -9670,6 +9685,10 @@ func (x *BillingPaymentReceipt) GetXmlUrl() string {
 	return ""
 }
 
+// Read-only: server-computed payment state returned from Get/List. Manual
+// payments are recorded via CreateRequest on PaymentsService, but the
+// resulting BillingPayment itself is always server-managed
+// (invora-protobuf#35 field_behavior wave 1).
 type BillingPayment struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
 	AmountCents          int64                  `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
@@ -16422,6 +16441,9 @@ func (*Payable_BillingInvoice) isPayable_Value() {}
 
 func (*Payable_BillingPaymentRequest) isPayable_Value() {}
 
+// Read-only: server-managed payment instrument returned from Get/List.
+// Never a request payload — referenced by ID via PaymentMethodReferenceInput
+// (invora-protobuf#35 field_behavior wave 1).
 type PaymentMethod struct {
 	state                     protoimpl.MessageState `protogen:"open.v1"`
 	CreatedAt                 *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
@@ -18927,7 +18949,7 @@ var File_invora_billing_common_v2_models_proto protoreflect.FileDescriptor
 
 const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\n" +
-	"%invora/billing/common/v2/models.proto\x12\x18invora.billing.common.v2\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x16google/type/date.proto\x1a\x14kernel/decimal.proto\"\x97\x1b\n" +
+	"%invora/billing/common/v2/models.proto\x12\x18invora.billing.common.v2\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x16google/type/date.proto\x1a\x14kernel/decimal.proto\"\x97\x1b\n" +
 	"\x0fBillingCustomer\x12P\n" +
 	"\faccount_type\x18\x01 \x01(\x0e2-.invora.billing.common.v2.CustomerAccountTypeR\vaccountType\x12<\n" +
 	"\x1aactive_subscriptions_count\x18\x02 \x01(\x05R\x18activeSubscriptionsCount\x12(\n" +
@@ -19282,50 +19304,50 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x13_minimum_commitmentB\x0f\n" +
 	"\r_organizationB\t\n" +
 	"\a_parentB\x0f\n" +
-	"\r_trial_period\"\xca\x15\n" +
-	"\rBillingWallet\x12M\n" +
+	"\r_trial_period\"\xfe\x16\n" +
+	"\rBillingWallet\x12R\n" +
 	"\n" +
-	"applies_to\x18\x02 \x01(\v2).invora.billing.common.v2.WalletAppliesToH\x00R\tappliesTo\x88\x01\x01\x12#\n" +
-	"\rbalance_cents\x18\x03 \x01(\x03R\fbalanceCents\x12\x17\n" +
-	"\x04code\x18\x04 \x01(\tH\x01R\x04code\x88\x01\x01\x122\n" +
-	"\x15consumed_amount_cents\x18\x05 \x01(\x03R\x13consumedAmountCents\x12?\n" +
-	"\x10consumed_credits\x18\x06 \x01(\v2\x14.kernel.DecimalValueR\x0fconsumedCredits\x129\n" +
+	"applies_to\x18\x02 \x01(\v2).invora.billing.common.v2.WalletAppliesToB\x03\xe0A\x03H\x00R\tappliesTo\x88\x01\x01\x12(\n" +
+	"\rbalance_cents\x18\x03 \x01(\x03B\x03\xe0A\x03R\fbalanceCents\x12\x1c\n" +
+	"\x04code\x18\x04 \x01(\tB\x03\xe0A\x03H\x01R\x04code\x88\x01\x01\x127\n" +
+	"\x15consumed_amount_cents\x18\x05 \x01(\x03B\x03\xe0A\x03R\x13consumedAmountCents\x12D\n" +
+	"\x10consumed_credits\x18\x06 \x01(\v2\x14.kernel.DecimalValueB\x03\xe0A\x03R\x0fconsumedCredits\x12>\n" +
 	"\n" +
-	"created_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12=\n" +
-	"\x0fcredits_balance\x18\b \x01(\v2\x14.kernel.DecimalValueR\x0ecreditsBalance\x12L\n" +
-	"\x17credits_ongoing_balance\x18\t \x01(\v2\x14.kernel.DecimalValueR\x15creditsOngoingBalance\x12W\n" +
+	"created_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\tcreatedAt\x12B\n" +
+	"\x0fcredits_balance\x18\b \x01(\v2\x14.kernel.DecimalValueB\x03\xe0A\x03R\x0ecreditsBalance\x12Q\n" +
+	"\x17credits_ongoing_balance\x18\t \x01(\v2\x14.kernel.DecimalValueB\x03\xe0A\x03R\x15creditsOngoingBalance\x12\\\n" +
 	"\x1dcredits_ongoing_usage_balance\x18\n" +
-	" \x01(\v2\x14.kernel.DecimalValueR\x1acreditsOngoingUsageBalance\x12B\n" +
-	"\bcurrency\x18\v \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\bcurrency\x12J\n" +
-	"\bcustomer\x18\f \x01(\v2).invora.billing.common.v2.BillingCustomerH\x02R\bcustomer\x88\x01\x01\x12D\n" +
-	"\rexpiration_at\x18\r \x01(\v2\x1a.google.protobuf.TimestampH\x03R\fexpirationAt\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x0e \x01(\tR\x02id\x12M\n" +
-	"#invoice_requires_successful_payment\x18\x0f \x01(\bR invoiceRequiresSuccessfulPayment\x12P\n" +
-	"\x14last_balance_sync_at\x18\x10 \x01(\v2\x1a.google.protobuf.TimestampH\x04R\x11lastBalanceSyncAt\x88\x01\x01\x12V\n" +
-	"\x17last_consumed_credit_at\x18\x11 \x01(\v2\x1a.google.protobuf.TimestampH\x05R\x14lastConsumedCreditAt\x88\x01\x01\x12_\n" +
-	"\x1clast_ongoing_balance_sync_at\x18\x12 \x01(\v2\x1a.google.protobuf.TimestampH\x06R\x18lastOngoingBalanceSyncAt\x88\x01\x01\x12B\n" +
-	"\bmetadata\x18\x13 \x03(\v2&.invora.billing.common.v2.ItemMetadataR\bmetadata\x12\x17\n" +
-	"\x04name\x18\x14 \x01(\tH\aR\x04name\x88\x01\x01\x122\n" +
-	"\x15ongoing_balance_cents\x18\x15 \x01(\x03R\x13ongoingBalanceCents\x12=\n" +
-	"\x1bongoing_usage_balance_cents\x18\x16 \x01(\x03R\x18ongoingUsageBalanceCents\x12B\n" +
-	"\x1cpaid_top_up_max_amount_cents\x18\x17 \x01(\x03H\bR\x17paidTopUpMaxAmountCents\x88\x01\x01\x129\n" +
-	"\x17paid_top_up_max_credits\x18\x18 \x01(\x03H\tR\x13paidTopUpMaxCredits\x88\x01\x01\x12B\n" +
-	"\x1cpaid_top_up_min_amount_cents\x18\x19 \x01(\x03H\n" +
-	"R\x17paidTopUpMinAmountCents\x88\x01\x01\x129\n" +
-	"\x17paid_top_up_min_credits\x18\x1a \x01(\x03H\vR\x13paidTopUpMinCredits\x88\x01\x01\x12S\n" +
-	"\x0epayment_method\x18\x1b \x01(\v2'.invora.billing.common.v2.PaymentMethodH\fR\rpaymentMethod\x88\x01\x01\x12`\n" +
-	"\x13payment_method_type\x18\x1c \x01(\x0e2+.invora.billing.common.v2.PaymentMethodTypeH\rR\x11paymentMethodType\x88\x01\x01\x12\x1a\n" +
-	"\bpriority\x18\x1d \x01(\x05R\bpriority\x125\n" +
-	"\vrate_amount\x18\x1e \x01(\v2\x14.kernel.DecimalValueR\n" +
-	"rateAmount\x12r\n" +
-	"\x1brecurring_transaction_rules\x18\x1f \x03(\v22.invora.billing.common.v2.RecurringTransactionRuleR\x19recurringTransactionRules\x12w\n" +
-	" selected_invoice_custom_sections\x18  \x03(\v2..invora.billing.common.v2.InvoiceCustomSectionR\x1dselectedInvoiceCustomSections\x12D\n" +
-	"\x1cskip_invoice_custom_sections\x18! \x01(\bH\x0eR\x19skipInvoiceCustomSections\x88\x01\x01\x12>\n" +
-	"\x06status\x18\" \x01(\x0e2&.invora.billing.common.v2.WalletStatusR\x06status\x12D\n" +
-	"\rterminated_at\x18# \x01(\v2\x1a.google.protobuf.TimestampH\x0fR\fterminatedAt\x88\x01\x01\x12\x1c\n" +
-	"\ttraceable\x18$ \x01(\bR\ttraceable\x129\n" +
+	" \x01(\v2\x14.kernel.DecimalValueB\x03\xe0A\x03R\x1acreditsOngoingUsageBalance\x12G\n" +
+	"\bcurrency\x18\v \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumB\x03\xe0A\x03R\bcurrency\x12O\n" +
+	"\bcustomer\x18\f \x01(\v2).invora.billing.common.v2.BillingCustomerB\x03\xe0A\x03H\x02R\bcustomer\x88\x01\x01\x12I\n" +
+	"\rexpiration_at\x18\r \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03H\x03R\fexpirationAt\x88\x01\x01\x12\x13\n" +
+	"\x02id\x18\x0e \x01(\tB\x03\xe0A\x03R\x02id\x12R\n" +
+	"#invoice_requires_successful_payment\x18\x0f \x01(\bB\x03\xe0A\x03R invoiceRequiresSuccessfulPayment\x12U\n" +
+	"\x14last_balance_sync_at\x18\x10 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03H\x04R\x11lastBalanceSyncAt\x88\x01\x01\x12[\n" +
+	"\x17last_consumed_credit_at\x18\x11 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03H\x05R\x14lastConsumedCreditAt\x88\x01\x01\x12d\n" +
+	"\x1clast_ongoing_balance_sync_at\x18\x12 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03H\x06R\x18lastOngoingBalanceSyncAt\x88\x01\x01\x12G\n" +
+	"\bmetadata\x18\x13 \x03(\v2&.invora.billing.common.v2.ItemMetadataB\x03\xe0A\x03R\bmetadata\x12\x1c\n" +
+	"\x04name\x18\x14 \x01(\tB\x03\xe0A\x03H\aR\x04name\x88\x01\x01\x127\n" +
+	"\x15ongoing_balance_cents\x18\x15 \x01(\x03B\x03\xe0A\x03R\x13ongoingBalanceCents\x12B\n" +
+	"\x1bongoing_usage_balance_cents\x18\x16 \x01(\x03B\x03\xe0A\x03R\x18ongoingUsageBalanceCents\x12G\n" +
+	"\x1cpaid_top_up_max_amount_cents\x18\x17 \x01(\x03B\x03\xe0A\x03H\bR\x17paidTopUpMaxAmountCents\x88\x01\x01\x12>\n" +
+	"\x17paid_top_up_max_credits\x18\x18 \x01(\x03B\x03\xe0A\x03H\tR\x13paidTopUpMaxCredits\x88\x01\x01\x12G\n" +
+	"\x1cpaid_top_up_min_amount_cents\x18\x19 \x01(\x03B\x03\xe0A\x03H\n" +
+	"R\x17paidTopUpMinAmountCents\x88\x01\x01\x12>\n" +
+	"\x17paid_top_up_min_credits\x18\x1a \x01(\x03B\x03\xe0A\x03H\vR\x13paidTopUpMinCredits\x88\x01\x01\x12X\n" +
+	"\x0epayment_method\x18\x1b \x01(\v2'.invora.billing.common.v2.PaymentMethodB\x03\xe0A\x03H\fR\rpaymentMethod\x88\x01\x01\x12e\n" +
+	"\x13payment_method_type\x18\x1c \x01(\x0e2+.invora.billing.common.v2.PaymentMethodTypeB\x03\xe0A\x03H\rR\x11paymentMethodType\x88\x01\x01\x12\x1f\n" +
+	"\bpriority\x18\x1d \x01(\x05B\x03\xe0A\x03R\bpriority\x12:\n" +
+	"\vrate_amount\x18\x1e \x01(\v2\x14.kernel.DecimalValueB\x03\xe0A\x03R\n" +
+	"rateAmount\x12w\n" +
+	"\x1brecurring_transaction_rules\x18\x1f \x03(\v22.invora.billing.common.v2.RecurringTransactionRuleB\x03\xe0A\x03R\x19recurringTransactionRules\x12|\n" +
+	" selected_invoice_custom_sections\x18  \x03(\v2..invora.billing.common.v2.InvoiceCustomSectionB\x03\xe0A\x03R\x1dselectedInvoiceCustomSections\x12I\n" +
+	"\x1cskip_invoice_custom_sections\x18! \x01(\bB\x03\xe0A\x03H\x0eR\x19skipInvoiceCustomSections\x88\x01\x01\x12C\n" +
+	"\x06status\x18\" \x01(\x0e2&.invora.billing.common.v2.WalletStatusB\x03\xe0A\x03R\x06status\x12I\n" +
+	"\rterminated_at\x18# \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03H\x0fR\fterminatedAt\x88\x01\x01\x12!\n" +
+	"\ttraceable\x18$ \x01(\bB\x03\xe0A\x03R\ttraceable\x12>\n" +
 	"\n" +
-	"updated_at\x18% \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAtB\r\n" +
+	"updated_at\x18% \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\tupdatedAtB\r\n" +
 	"\v_applies_toB\a\n" +
 	"\x05_codeB\v\n" +
 	"\t_customerB\x10\n" +
@@ -19341,35 +19363,35 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x0f_payment_methodB\x16\n" +
 	"\x14_payment_method_typeB\x1f\n" +
 	"\x1d_skip_invoice_custom_sectionsB\x10\n" +
-	"\x0e_terminated_at\"\xdc\r\n" +
-	"\x18BillingWalletTransaction\x12,\n" +
-	"\x06amount\x18\x01 \x01(\v2\x14.kernel.DecimalValueR\x06amount\x129\n" +
+	"\x0e_terminated_at\"\xcf\x0e\n" +
+	"\x18BillingWalletTransaction\x121\n" +
+	"\x06amount\x18\x01 \x01(\v2\x14.kernel.DecimalValueB\x03\xe0A\x03R\x06amount\x12>\n" +
 	"\n" +
-	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
-	"\rcredit_amount\x18\x03 \x01(\v2\x14.kernel.DecimalValueR\fcreditAmount\x12<\n" +
-	"\tfailed_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\bfailedAt\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x05 \x01(\tR\x02id\x12G\n" +
-	"\ainvoice\x18\x06 \x01(\v2(.invora.billing.common.v2.BillingInvoiceH\x01R\ainvoice\x88\x01\x01\x12M\n" +
-	"#invoice_requires_successful_payment\x18\a \x01(\bR invoiceRequiresSuccessfulPayment\x12U\n" +
-	"\bmetadata\x18\b \x03(\v29.invora.billing.common.v2.WalletTransactionMetadataObjectR\bmetadata\x12\x17\n" +
-	"\x04name\x18\t \x01(\tH\x02R\x04name\x88\x01\x01\x12\x1a\n" +
+	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\tcreatedAt\x12>\n" +
+	"\rcredit_amount\x18\x03 \x01(\v2\x14.kernel.DecimalValueB\x03\xe0A\x03R\fcreditAmount\x12A\n" +
+	"\tfailed_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03H\x00R\bfailedAt\x88\x01\x01\x12\x13\n" +
+	"\x02id\x18\x05 \x01(\tB\x03\xe0A\x03R\x02id\x12L\n" +
+	"\ainvoice\x18\x06 \x01(\v2(.invora.billing.common.v2.BillingInvoiceB\x03\xe0A\x03H\x01R\ainvoice\x88\x01\x01\x12R\n" +
+	"#invoice_requires_successful_payment\x18\a \x01(\bB\x03\xe0A\x03R invoiceRequiresSuccessfulPayment\x12Z\n" +
+	"\bmetadata\x18\b \x03(\v29.invora.billing.common.v2.WalletTransactionMetadataObjectB\x03\xe0A\x03R\bmetadata\x12\x1c\n" +
+	"\x04name\x18\t \x01(\tB\x03\xe0A\x03H\x02R\x04name\x88\x01\x01\x12\x1f\n" +
 	"\bpriority\x18\n" +
-	" \x01(\x05R\bpriority\x129\n" +
-	"\x16remaining_amount_cents\x18\v \x01(\x03H\x03R\x14remainingAmountCents\x88\x01\x01\x12Q\n" +
-	"\x17remaining_credit_amount\x18\f \x01(\v2\x14.kernel.DecimalValueH\x04R\x15remainingCreditAmount\x88\x01\x01\x12w\n" +
-	" selected_invoice_custom_sections\x18\r \x03(\v2..invora.billing.common.v2.InvoiceCustomSectionR\x1dselectedInvoiceCustomSections\x12>\n" +
+	" \x01(\x05B\x03\xe0A\x03R\bpriority\x12>\n" +
+	"\x16remaining_amount_cents\x18\v \x01(\x03B\x03\xe0A\x03H\x03R\x14remainingAmountCents\x88\x01\x01\x12V\n" +
+	"\x17remaining_credit_amount\x18\f \x01(\v2\x14.kernel.DecimalValueB\x03\xe0A\x03H\x04R\x15remainingCreditAmount\x88\x01\x01\x12|\n" +
+	" selected_invoice_custom_sections\x18\r \x03(\v2..invora.billing.common.v2.InvoiceCustomSectionB\x03\xe0A\x03R\x1dselectedInvoiceCustomSections\x12C\n" +
 	"\n" +
-	"settled_at\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampH\x05R\tsettledAt\x88\x01\x01\x12D\n" +
-	"\x1cskip_invoice_custom_sections\x18\x0f \x01(\bH\x06R\x19skipInvoiceCustomSections\x88\x01\x01\x12I\n" +
-	"\x06source\x18\x10 \x01(\x0e21.invora.billing.common.v2.WalletTransactionSourceR\x06source\x12I\n" +
-	"\x06status\x18\x11 \x01(\x0e21.invora.billing.common.v2.WalletTransactionStatusR\x06status\x12k\n" +
-	"\x12transaction_status\x18\x12 \x01(\x0e2<.invora.billing.common.v2.WalletTransactionTransactionStatusR\x11transactionStatus\x12e\n" +
-	"\x10transaction_type\x18\x13 \x01(\x0e2:.invora.billing.common.v2.WalletTransactionTransactionTypeR\x0ftransactionType\x129\n" +
+	"settled_at\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03H\x05R\tsettledAt\x88\x01\x01\x12I\n" +
+	"\x1cskip_invoice_custom_sections\x18\x0f \x01(\bB\x03\xe0A\x03H\x06R\x19skipInvoiceCustomSections\x88\x01\x01\x12N\n" +
+	"\x06source\x18\x10 \x01(\x0e21.invora.billing.common.v2.WalletTransactionSourceB\x03\xe0A\x03R\x06source\x12N\n" +
+	"\x06status\x18\x11 \x01(\x0e21.invora.billing.common.v2.WalletTransactionStatusB\x03\xe0A\x03R\x06status\x12p\n" +
+	"\x12transaction_status\x18\x12 \x01(\x0e2<.invora.billing.common.v2.WalletTransactionTransactionStatusB\x03\xe0A\x03R\x11transactionStatus\x12j\n" +
+	"\x10transaction_type\x18\x13 \x01(\x0e2:.invora.billing.common.v2.WalletTransactionTransactionTypeB\x03\xe0A\x03R\x0ftransactionType\x12>\n" +
 	"\n" +
-	"updated_at\x18\x14 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12T\n" +
-	"\x0evoided_invoice\x18\x15 \x01(\v2(.invora.billing.common.v2.BillingInvoiceH\aR\rvoidedInvoice\x88\x01\x01\x12D\n" +
-	"\x06wallet\x18\x16 \x01(\v2'.invora.billing.common.v2.BillingWalletH\bR\x06wallet\x88\x01\x01\x12$\n" +
-	"\vwallet_name\x18\x17 \x01(\tH\tR\n" +
+	"updated_at\x18\x14 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\tupdatedAt\x12Y\n" +
+	"\x0evoided_invoice\x18\x15 \x01(\v2(.invora.billing.common.v2.BillingInvoiceB\x03\xe0A\x03H\aR\rvoidedInvoice\x88\x01\x01\x12I\n" +
+	"\x06wallet\x18\x16 \x01(\v2'.invora.billing.common.v2.BillingWalletB\x03\xe0A\x03H\bR\x06wallet\x88\x01\x01\x12)\n" +
+	"\vwallet_name\x18\x17 \x01(\tB\x03\xe0A\x03H\tR\n" +
 	"walletName\x88\x01\x01B\f\n" +
 	"\n" +
 	"_failed_atB\n" +
@@ -19382,51 +19404,51 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\x1d_skip_invoice_custom_sectionsB\x11\n" +
 	"\x0f_voided_invoiceB\t\n" +
 	"\a_walletB\x0e\n" +
-	"\f_wallet_name\"\xae\x13\n" +
+	"\f_wallet_name\"\xdd\x14\n" +
 	"\n" +
-	"BillingFee\x12B\n" +
-	"\x06add_on\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAddOnH\x00R\x05addOn\x88\x01\x01\x12!\n" +
-	"\fadjusted_fee\x18\x02 \x01(\bR\vadjustedFee\x12Z\n" +
-	"\x11adjusted_fee_type\x18\x03 \x01(\x0e2).invora.billing.common.v2.AdjustedFeeTypeH\x01R\x0fadjustedFeeType\x88\x01\x01\x12!\n" +
-	"\famount_cents\x18\x04 \x01(\x03R\vamountCents\x12O\n" +
-	"\x0famount_currency\x18\x05 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0eamountCurrency\x12V\n" +
-	"\x0eamount_details\x18\x06 \x01(\v2*.invora.billing.common.v2.FeeAmountDetailsH\x02R\ramountDetails\x88\x01\x01\x12L\n" +
-	"\rapplied_taxes\x18\a \x03(\v2'.invora.billing.common.v2.FeeAppliedTaxR\fappliedTaxes\x12=\n" +
-	"\x06charge\x18\b \x01(\v2 .invora.billing.common.v2.ChargeH\x03R\x06charge\x88\x01\x01\x12P\n" +
-	"\rcharge_filter\x18\t \x01(\v2&.invora.billing.common.v2.ChargeFilterH\x04R\fchargeFilter\x88\x01\x01\x126\n" +
+	"BillingFee\x12G\n" +
+	"\x06add_on\x18\x01 \x01(\v2&.invora.billing.common.v2.BillingAddOnB\x03\xe0A\x03H\x00R\x05addOn\x88\x01\x01\x12&\n" +
+	"\fadjusted_fee\x18\x02 \x01(\bB\x03\xe0A\x03R\vadjustedFee\x12_\n" +
+	"\x11adjusted_fee_type\x18\x03 \x01(\x0e2).invora.billing.common.v2.AdjustedFeeTypeB\x03\xe0A\x03H\x01R\x0fadjustedFeeType\x88\x01\x01\x12&\n" +
+	"\famount_cents\x18\x04 \x01(\x03B\x03\xe0A\x03R\vamountCents\x12T\n" +
+	"\x0famount_currency\x18\x05 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumB\x03\xe0A\x03R\x0eamountCurrency\x12[\n" +
+	"\x0eamount_details\x18\x06 \x01(\v2*.invora.billing.common.v2.FeeAmountDetailsB\x03\xe0A\x03H\x02R\ramountDetails\x88\x01\x01\x12Q\n" +
+	"\rapplied_taxes\x18\a \x03(\v2'.invora.billing.common.v2.FeeAppliedTaxB\x03\xe0A\x03R\fappliedTaxes\x12B\n" +
+	"\x06charge\x18\b \x01(\v2 .invora.billing.common.v2.ChargeB\x03\xe0A\x03H\x03R\x06charge\x88\x01\x01\x12U\n" +
+	"\rcharge_filter\x18\t \x01(\v2&.invora.billing.common.v2.ChargeFilterB\x03\xe0A\x03H\x04R\fchargeFilter\x88\x01\x01\x12;\n" +
 	"\x17creditable_amount_cents\x18\n" +
-	" \x01(\x03R\x15creditableAmountCents\x12B\n" +
-	"\bcurrency\x18\v \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\bcurrency\x12%\n" +
-	"\vdescription\x18\f \x01(\tH\x05R\vdescription\x88\x01\x01\x12&\n" +
-	"\fevents_count\x18\r \x01(\x03H\x06R\veventsCount\x88\x01\x01\x12=\n" +
-	"\bfee_type\x18\x0e \x01(\x0e2\".invora.billing.common.v2.FeeTypesR\afeeType\x12M\n" +
-	"\ffixed_charge\x18\x0f \x01(\v2%.invora.billing.common.v2.FixedChargeH\aR\vfixedCharge\x88\x01\x01\x126\n" +
+	" \x01(\x03B\x03\xe0A\x03R\x15creditableAmountCents\x12G\n" +
+	"\bcurrency\x18\v \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumB\x03\xe0A\x03R\bcurrency\x12*\n" +
+	"\vdescription\x18\f \x01(\tB\x03\xe0A\x03H\x05R\vdescription\x88\x01\x01\x12+\n" +
+	"\fevents_count\x18\r \x01(\x03B\x03\xe0A\x03H\x06R\veventsCount\x88\x01\x01\x12B\n" +
+	"\bfee_type\x18\x0e \x01(\x0e2\".invora.billing.common.v2.FeeTypesB\x03\xe0A\x03R\afeeType\x12R\n" +
+	"\ffixed_charge\x18\x0f \x01(\v2%.invora.billing.common.v2.FixedChargeB\x03\xe0A\x03H\aR\vfixedCharge\x88\x01\x01\x12;\n" +
 	"\n" +
-	"grouped_by\x18\x10 \x01(\v2\x17.google.protobuf.StructR\tgroupedBy\x12\x0e\n" +
-	"\x02id\x18\x11 \x01(\tR\x02id\x125\n" +
-	"\x14invoice_display_name\x18\x12 \x01(\tH\bR\x12invoiceDisplayName\x88\x01\x01\x12\"\n" +
+	"grouped_by\x18\x10 \x01(\v2\x17.google.protobuf.StructB\x03\xe0A\x03R\tgroupedBy\x12\x13\n" +
+	"\x02id\x18\x11 \x01(\tB\x03\xe0A\x03R\x02id\x12:\n" +
+	"\x14invoice_display_name\x18\x12 \x01(\tB\x03\xe0A\x03H\bR\x12invoiceDisplayName\x88\x01\x01\x12'\n" +
 	"\n" +
-	"invoice_id\x18\x13 \x01(\tH\tR\tinvoiceId\x88\x01\x01\x12&\n" +
-	"\finvoice_name\x18\x14 \x01(\tH\n" +
-	"R\vinvoiceName\x88\x01\x01\x12\x1b\n" +
-	"\titem_code\x18\x15 \x01(\tR\bitemCode\x12\x1b\n" +
-	"\titem_name\x18\x16 \x01(\tR\bitemName\x12\x1b\n" +
-	"\titem_type\x18\x17 \x01(\tR\bitemType\x128\n" +
-	"\x18offsettable_amount_cents\x18\x18 \x01(\x03R\x16offsettableAmountCents\x12D\n" +
-	"\x13precise_unit_amount\x18\x19 \x01(\v2\x14.kernel.DecimalValueR\x11preciseUnitAmount\x12]\n" +
-	"\x12pricing_unit_usage\x18\x1a \x01(\v2*.invora.billing.common.v2.PricingUnitUsageH\vR\x10pricingUnitUsage\x88\x01\x01\x12L\n" +
+	"invoice_id\x18\x13 \x01(\tB\x03\xe0A\x03H\tR\tinvoiceId\x88\x01\x01\x12+\n" +
+	"\finvoice_name\x18\x14 \x01(\tB\x03\xe0A\x03H\n" +
+	"R\vinvoiceName\x88\x01\x01\x12 \n" +
+	"\titem_code\x18\x15 \x01(\tB\x03\xe0A\x03R\bitemCode\x12 \n" +
+	"\titem_name\x18\x16 \x01(\tB\x03\xe0A\x03R\bitemName\x12 \n" +
+	"\titem_type\x18\x17 \x01(\tB\x03\xe0A\x03R\bitemType\x12=\n" +
+	"\x18offsettable_amount_cents\x18\x18 \x01(\x03B\x03\xe0A\x03R\x16offsettableAmountCents\x12I\n" +
+	"\x13precise_unit_amount\x18\x19 \x01(\v2\x14.kernel.DecimalValueB\x03\xe0A\x03R\x11preciseUnitAmount\x12b\n" +
+	"\x12pricing_unit_usage\x18\x1a \x01(\v2*.invora.billing.common.v2.PricingUnitUsageB\x03\xe0A\x03H\vR\x10pricingUnitUsage\x88\x01\x01\x12Q\n" +
 	"\n" +
-	"properties\x18\x1b \x01(\v2'.invora.billing.common.v2.FeePropertiesH\fR\n" +
-	"properties\x88\x01\x01\x12V\n" +
-	"\fsubscription\x18\x1c \x01(\v2-.invora.billing.common.v2.BillingSubscriptionH\rR\fsubscription\x88\x01\x01\x12B\n" +
-	"\fsucceeded_at\x18\x1d \x01(\v2\x1a.google.protobuf.TimestampH\x0eR\vsucceededAt\x88\x01\x01\x12,\n" +
-	"\x12taxes_amount_cents\x18\x1e \x01(\x03R\x10taxesAmountCents\x128\n" +
+	"properties\x18\x1b \x01(\v2'.invora.billing.common.v2.FeePropertiesB\x03\xe0A\x03H\fR\n" +
+	"properties\x88\x01\x01\x12[\n" +
+	"\fsubscription\x18\x1c \x01(\v2-.invora.billing.common.v2.BillingSubscriptionB\x03\xe0A\x03H\rR\fsubscription\x88\x01\x01\x12G\n" +
+	"\fsucceeded_at\x18\x1d \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03H\x0eR\vsucceededAt\x88\x01\x01\x121\n" +
+	"\x12taxes_amount_cents\x18\x1e \x01(\x03B\x03\xe0A\x03R\x10taxesAmountCents\x12=\n" +
 	"\n" +
-	"taxes_rate\x18\x1f \x01(\v2\x14.kernel.DecimalValueH\x0fR\ttaxesRate\x88\x01\x01\x12I\n" +
-	"\vtrue_up_fee\x18  \x01(\v2$.invora.billing.common.v2.BillingFeeH\x10R\ttrueUpFee\x88\x01\x01\x12V\n" +
-	"\x12true_up_parent_fee\x18! \x01(\v2$.invora.billing.common.v2.BillingFeeH\x11R\x0ftrueUpParentFee\x88\x01\x01\x12*\n" +
-	"\x05units\x18\" \x01(\v2\x14.kernel.DecimalValueR\x05units\x12f\n" +
-	"\x12wallet_transaction\x18# \x01(\v22.invora.billing.common.v2.BillingWalletTransactionH\x12R\x11walletTransaction\x88\x01\x01B\t\n" +
+	"taxes_rate\x18\x1f \x01(\v2\x14.kernel.DecimalValueB\x03\xe0A\x03H\x0fR\ttaxesRate\x88\x01\x01\x12N\n" +
+	"\vtrue_up_fee\x18  \x01(\v2$.invora.billing.common.v2.BillingFeeB\x03\xe0A\x03H\x10R\ttrueUpFee\x88\x01\x01\x12[\n" +
+	"\x12true_up_parent_fee\x18! \x01(\v2$.invora.billing.common.v2.BillingFeeB\x03\xe0A\x03H\x11R\x0ftrueUpParentFee\x88\x01\x01\x12/\n" +
+	"\x05units\x18\" \x01(\v2\x14.kernel.DecimalValueB\x03\xe0A\x03R\x05units\x12k\n" +
+	"\x12wallet_transaction\x18# \x01(\v22.invora.billing.common.v2.BillingWalletTransactionB\x03\xe0A\x03H\x12R\x11walletTransaction\x88\x01\x01B\t\n" +
 	"\a_add_onB\x14\n" +
 	"\x12_adjusted_fee_typeB\x11\n" +
 	"\x0f_amount_detailsB\t\n" +
@@ -19569,52 +19591,52 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\r_organizationB\x14\n" +
 	"\x12_rounding_functionB\x15\n" +
 	"\x13_rounding_precisionB\x14\n" +
-	"\x12_weighted_interval\"\xb2\x04\n" +
-	"\x15BillingPaymentRequest\x12!\n" +
-	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12O\n" +
-	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0eamountCurrency\x129\n" +
+	"\x12_weighted_interval\"\xe4\x04\n" +
+	"\x15BillingPaymentRequest\x12&\n" +
+	"\famount_cents\x18\x01 \x01(\x03B\x03\xe0A\x03R\vamountCents\x12T\n" +
+	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumB\x03\xe0A\x03R\x0eamountCurrency\x12>\n" +
 	"\n" +
-	"created_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12E\n" +
-	"\bcustomer\x18\x04 \x01(\v2).invora.billing.common.v2.BillingCustomerR\bcustomer\x12\x14\n" +
-	"\x05email\x18\x05 \x01(\tR\x05email\x12\x0e\n" +
-	"\x02id\x18\x06 \x01(\tR\x02id\x12D\n" +
-	"\binvoices\x18\a \x03(\v2(.invora.billing.common.v2.BillingInvoiceR\binvoices\x12!\n" +
-	"\fpayable_type\x18\b \x01(\tR\vpayableType\x12Y\n" +
-	"\x0epayment_status\x18\t \x01(\x0e22.invora.billing.common.v2.InvoicePaymentStatusTypeR\rpaymentStatus\x129\n" +
+	"created_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\tcreatedAt\x12J\n" +
+	"\bcustomer\x18\x04 \x01(\v2).invora.billing.common.v2.BillingCustomerB\x03\xe0A\x03R\bcustomer\x12\x19\n" +
+	"\x05email\x18\x05 \x01(\tB\x03\xe0A\x03R\x05email\x12\x13\n" +
+	"\x02id\x18\x06 \x01(\tB\x03\xe0A\x03R\x02id\x12I\n" +
+	"\binvoices\x18\a \x03(\v2(.invora.billing.common.v2.BillingInvoiceB\x03\xe0A\x03R\binvoices\x12&\n" +
+	"\fpayable_type\x18\b \x01(\tB\x03\xe0A\x03R\vpayableType\x12^\n" +
+	"\x0epayment_status\x18\t \x01(\x0e22.invora.billing.common.v2.InvoicePaymentStatusTypeB\x03\xe0A\x03R\rpaymentStatus\x12>\n" +
 	"\n" +
 	"updated_at\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"\xe1\x02\n" +
-	"\x15BillingPaymentReceipt\x129\n" +
+	" \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\tupdatedAt\"\x84\x03\n" +
+	"\x15BillingPaymentReceipt\x12>\n" +
 	"\n" +
-	"created_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x1e\n" +
-	"\bfile_url\x18\x02 \x01(\tH\x00R\afileUrl\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x03 \x01(\tR\x02id\x12\x16\n" +
-	"\x06number\x18\x04 \x01(\tR\x06number\x12J\n" +
-	"\forganization\x18\x05 \x01(\v2&.invora.billing.common.v2.OrganizationR\forganization\x12B\n" +
-	"\apayment\x18\x06 \x01(\v2(.invora.billing.common.v2.BillingPaymentR\apayment\x12\x1c\n" +
-	"\axml_url\x18\a \x01(\tH\x01R\x06xmlUrl\x88\x01\x01B\v\n" +
+	"created_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\tcreatedAt\x12#\n" +
+	"\bfile_url\x18\x02 \x01(\tB\x03\xe0A\x03H\x00R\afileUrl\x88\x01\x01\x12\x13\n" +
+	"\x02id\x18\x03 \x01(\tB\x03\xe0A\x03R\x02id\x12\x1b\n" +
+	"\x06number\x18\x04 \x01(\tB\x03\xe0A\x03R\x06number\x12O\n" +
+	"\forganization\x18\x05 \x01(\v2&.invora.billing.common.v2.OrganizationB\x03\xe0A\x03R\forganization\x12G\n" +
+	"\apayment\x18\x06 \x01(\v2(.invora.billing.common.v2.BillingPaymentB\x03\xe0A\x03R\apayment\x12!\n" +
+	"\axml_url\x18\a \x01(\tB\x03\xe0A\x03H\x01R\x06xmlUrl\x88\x01\x01B\v\n" +
 	"\t_file_urlB\n" +
 	"\n" +
-	"\b_xml_url\"\x95\t\n" +
-	"\x0eBillingPayment\x12!\n" +
-	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x12O\n" +
-	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\x0eamountCurrency\x129\n" +
+	"\b_xml_url\"\xe0\t\n" +
+	"\x0eBillingPayment\x12&\n" +
+	"\famount_cents\x18\x01 \x01(\x03B\x03\xe0A\x03R\vamountCents\x12T\n" +
+	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumB\x03\xe0A\x03R\x0eamountCurrency\x12>\n" +
 	"\n" +
-	"created_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12E\n" +
-	"\bcustomer\x18\x04 \x01(\v2).invora.billing.common.v2.BillingCustomerR\bcustomer\x12\x0e\n" +
-	"\x02id\x18\x05 \x01(\tR\x02id\x12;\n" +
-	"\apayable\x18\x06 \x01(\v2!.invora.billing.common.v2.PayableR\apayable\x12i\n" +
-	"\x16payable_payment_status\x18\a \x01(\x0e2..invora.billing.common.v2.PayablePaymentStatusH\x00R\x14payablePaymentStatus\x88\x01\x01\x12/\n" +
-	"\x11payment_method_id\x18\b \x01(\tH\x01R\x0fpaymentMethodId\x88\x01\x01\x12Y\n" +
-	"\x10payment_provider\x18\t \x01(\v2).invora.billing.common.v2.PaymentProviderH\x02R\x0fpaymentProvider\x88\x01\x01\x12_\n" +
+	"created_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\tcreatedAt\x12J\n" +
+	"\bcustomer\x18\x04 \x01(\v2).invora.billing.common.v2.BillingCustomerB\x03\xe0A\x03R\bcustomer\x12\x13\n" +
+	"\x02id\x18\x05 \x01(\tB\x03\xe0A\x03R\x02id\x12@\n" +
+	"\apayable\x18\x06 \x01(\v2!.invora.billing.common.v2.PayableB\x03\xe0A\x03R\apayable\x12n\n" +
+	"\x16payable_payment_status\x18\a \x01(\x0e2..invora.billing.common.v2.PayablePaymentStatusB\x03\xe0A\x03H\x00R\x14payablePaymentStatus\x88\x01\x01\x124\n" +
+	"\x11payment_method_id\x18\b \x01(\tB\x03\xe0A\x03H\x01R\x0fpaymentMethodId\x88\x01\x01\x12^\n" +
+	"\x10payment_provider\x18\t \x01(\v2).invora.billing.common.v2.PaymentProviderB\x03\xe0A\x03H\x02R\x0fpaymentProvider\x88\x01\x01\x12d\n" +
 	"\x15payment_provider_type\x18\n" +
-	" \x01(\x0e2&.invora.billing.common.v2.ProviderTypeH\x03R\x13paymentProviderType\x88\x01\x01\x12]\n" +
-	"\x0fpayment_receipt\x18\v \x01(\v2/.invora.billing.common.v2.BillingPaymentReceiptH\x04R\x0epaymentReceipt\x88\x01\x01\x12H\n" +
-	"\fpayment_type\x18\f \x01(\x0e2%.invora.billing.common.v2.PaymentTypeR\vpaymentType\x123\n" +
-	"\x13provider_payment_id\x18\r \x01(\tH\x05R\x11providerPaymentId\x88\x01\x01\x12!\n" +
-	"\treference\x18\x0e \x01(\tH\x06R\treference\x88\x01\x01\x12>\n" +
+	" \x01(\x0e2&.invora.billing.common.v2.ProviderTypeB\x03\xe0A\x03H\x03R\x13paymentProviderType\x88\x01\x01\x12b\n" +
+	"\x0fpayment_receipt\x18\v \x01(\v2/.invora.billing.common.v2.BillingPaymentReceiptB\x03\xe0A\x03H\x04R\x0epaymentReceipt\x88\x01\x01\x12M\n" +
+	"\fpayment_type\x18\f \x01(\x0e2%.invora.billing.common.v2.PaymentTypeB\x03\xe0A\x03R\vpaymentType\x128\n" +
+	"\x13provider_payment_id\x18\r \x01(\tB\x03\xe0A\x03H\x05R\x11providerPaymentId\x88\x01\x01\x12&\n" +
+	"\treference\x18\x0e \x01(\tB\x03\xe0A\x03H\x06R\treference\x88\x01\x01\x12C\n" +
 	"\n" +
-	"updated_at\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampH\aR\tupdatedAt\x88\x01\x01B\x19\n" +
+	"updated_at\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03H\aR\tupdatedAt\x88\x01\x01B\x19\n" +
 	"\x17_payable_payment_statusB\x14\n" +
 	"\x12_payment_method_idB\x13\n" +
 	"\x11_payment_providerB\x18\n" +
@@ -20514,25 +20536,25 @@ const file_invora_billing_common_v2_models_proto_rawDesc = "" +
 	"\aPayable\x12S\n" +
 	"\x0fbilling_invoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceH\x00R\x0ebillingInvoice\x12i\n" +
 	"\x17billing_payment_request\x18\x02 \x01(\v2/.invora.billing.common.v2.BillingPaymentRequestH\x00R\x15billingPaymentRequestB\a\n" +
-	"\x05value\"\xef\x06\n" +
-	"\rPaymentMethod\x129\n" +
+	"\x05value\"\xab\a\n" +
+	"\rPaymentMethod\x12>\n" +
 	"\n" +
-	"created_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12E\n" +
-	"\bcustomer\x18\x02 \x01(\v2).invora.billing.common.v2.BillingCustomerR\bcustomer\x12>\n" +
+	"created_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\tcreatedAt\x12J\n" +
+	"\bcustomer\x18\x02 \x01(\v2).invora.billing.common.v2.BillingCustomerB\x03\xe0A\x03R\bcustomer\x12C\n" +
 	"\n" +
-	"deleted_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\tdeletedAt\x88\x01\x01\x12M\n" +
-	"\adetails\x18\x04 \x01(\v2..invora.billing.common.v2.PaymentMethodDetailsH\x01R\adetails\x88\x01\x01\x12\x0e\n" +
-	"\x02id\x18\x05 \x01(\tR\x02id\x12\x1d\n" +
+	"deleted_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03H\x00R\tdeletedAt\x88\x01\x01\x12R\n" +
+	"\adetails\x18\x04 \x01(\v2..invora.billing.common.v2.PaymentMethodDetailsB\x03\xe0A\x03H\x01R\adetails\x88\x01\x01\x12\x13\n" +
+	"\x02id\x18\x05 \x01(\tB\x03\xe0A\x03R\x02id\x12\"\n" +
 	"\n" +
-	"is_default\x18\x06 \x01(\bR\tisDefault\x127\n" +
-	"\x15payment_provider_code\x18\a \x01(\tH\x02R\x13paymentProviderCode\x88\x01\x01\x12D\n" +
-	"\x1cpayment_provider_customer_id\x18\b \x01(\tH\x03R\x19paymentProviderCustomerId\x88\x01\x01\x127\n" +
-	"\x15payment_provider_name\x18\t \x01(\tH\x04R\x13paymentProviderName\x88\x01\x01\x12_\n" +
+	"is_default\x18\x06 \x01(\bB\x03\xe0A\x03R\tisDefault\x12<\n" +
+	"\x15payment_provider_code\x18\a \x01(\tB\x03\xe0A\x03H\x02R\x13paymentProviderCode\x88\x01\x01\x12I\n" +
+	"\x1cpayment_provider_customer_id\x18\b \x01(\tB\x03\xe0A\x03H\x03R\x19paymentProviderCustomerId\x88\x01\x01\x12<\n" +
+	"\x15payment_provider_name\x18\t \x01(\tB\x03\xe0A\x03H\x04R\x13paymentProviderName\x88\x01\x01\x12d\n" +
 	"\x15payment_provider_type\x18\n" +
-	" \x01(\x0e2&.invora.billing.common.v2.ProviderTypeH\x05R\x13paymentProviderType\x88\x01\x01\x12,\n" +
-	"\x12provider_method_id\x18\v \x01(\tR\x10providerMethodId\x12>\n" +
+	" \x01(\x0e2&.invora.billing.common.v2.ProviderTypeB\x03\xe0A\x03H\x05R\x13paymentProviderType\x88\x01\x01\x121\n" +
+	"\x12provider_method_id\x18\v \x01(\tB\x03\xe0A\x03R\x10providerMethodId\x12C\n" +
 	"\n" +
-	"updated_at\x18\f \x01(\v2\x1a.google.protobuf.TimestampH\x06R\tupdatedAt\x88\x01\x01B\r\n" +
+	"updated_at\x18\f \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03H\x06R\tupdatedAt\x88\x01\x01B\r\n" +
 	"\v_deleted_atB\n" +
 	"\n" +
 	"\b_detailsB\x18\n" +

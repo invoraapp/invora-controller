@@ -264,6 +264,62 @@ func (ProviderSubscriptionStatus) EnumDescriptor() ([]byte, []int) {
 	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{3}
 }
 
+// Outcome of reconciling one provider store employee into the Invora org.
+type SyncOutcome int32
+
+const (
+	SyncOutcome_SYNC_OUTCOME_UNSPECIFIED SyncOutcome = 0
+	// A new Invora member was created for this employee.
+	SyncOutcome_SYNC_OUTCOME_CREATED SyncOutcome = 1
+	// An existing Invora user (matched by email) was already a member — no-op.
+	SyncOutcome_SYNC_OUTCOME_ALREADY_EXISTS SyncOutcome = 2
+	// Employee is suspended on the provider; reported but not created.
+	SyncOutcome_SYNC_OUTCOME_SKIPPED_SUSPENDED SyncOutcome = 3
+)
+
+// Enum value maps for SyncOutcome.
+var (
+	SyncOutcome_name = map[int32]string{
+		0: "SYNC_OUTCOME_UNSPECIFIED",
+		1: "SYNC_OUTCOME_CREATED",
+		2: "SYNC_OUTCOME_ALREADY_EXISTS",
+		3: "SYNC_OUTCOME_SKIPPED_SUSPENDED",
+	}
+	SyncOutcome_value = map[string]int32{
+		"SYNC_OUTCOME_UNSPECIFIED":       0,
+		"SYNC_OUTCOME_CREATED":           1,
+		"SYNC_OUTCOME_ALREADY_EXISTS":    2,
+		"SYNC_OUTCOME_SKIPPED_SUSPENDED": 3,
+	}
+)
+
+func (x SyncOutcome) Enum() *SyncOutcome {
+	p := new(SyncOutcome)
+	*p = x
+	return p
+}
+
+func (x SyncOutcome) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SyncOutcome) Descriptor() protoreflect.EnumDescriptor {
+	return file_invora_marketplace_v2_models_proto_enumTypes[4].Descriptor()
+}
+
+func (SyncOutcome) Type() protoreflect.EnumType {
+	return &file_invora_marketplace_v2_models_proto_enumTypes[4]
+}
+
+func (x SyncOutcome) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SyncOutcome.Descriptor instead.
+func (SyncOutcome) EnumDescriptor() ([]byte, []int) {
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{4}
+}
+
 type MarketplaceProvider struct {
 	state        protoimpl.MessageState   `protogen:"open.v1"`
 	Id           string                   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -1242,6 +1298,86 @@ func (x *ConnectionHealthReport) GetOverallHealthy() bool {
 	return false
 }
 
+// Result of reconciling one provider store employee into the Invora org.
+type SyncedEmployee struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Zitadel user id of the created-or-adopted Invora member.
+	// Empty when the employee was skipped (e.g. suspended).
+	ZitadelUserId string `protobuf:"bytes,1,opt,name=zitadel_user_id,json=zitadelUserId,proto3" json:"zitadel_user_id,omitempty"`
+	// Provider-side employee id (Salla store user id).
+	SallaUserId   string      `protobuf:"bytes,2,opt,name=salla_user_id,json=sallaUserId,proto3" json:"salla_user_id,omitempty"`
+	Email         string      `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
+	Name          string      `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	Outcome       SyncOutcome `protobuf:"varint,5,opt,name=outcome,proto3,enum=invora.marketplace.v2.SyncOutcome" json:"outcome,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncedEmployee) Reset() {
+	*x = SyncedEmployee{}
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncedEmployee) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncedEmployee) ProtoMessage() {}
+
+func (x *SyncedEmployee) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncedEmployee.ProtoReflect.Descriptor instead.
+func (*SyncedEmployee) Descriptor() ([]byte, []int) {
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *SyncedEmployee) GetZitadelUserId() string {
+	if x != nil {
+		return x.ZitadelUserId
+	}
+	return ""
+}
+
+func (x *SyncedEmployee) GetSallaUserId() string {
+	if x != nil {
+		return x.SallaUserId
+	}
+	return ""
+}
+
+func (x *SyncedEmployee) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *SyncedEmployee) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *SyncedEmployee) GetOutcome() SyncOutcome {
+	if x != nil {
+		return x.Outcome
+	}
+	return SyncOutcome_SYNC_OUTCOME_UNSPECIFIED
+}
+
 // Standard redirect OAuth (Shopify, Zid).
 type OAuthCodeExchange struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -1255,7 +1391,7 @@ type OAuthCodeExchange struct {
 
 func (x *OAuthCodeExchange) Reset() {
 	*x = OAuthCodeExchange{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[9]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1267,7 +1403,7 @@ func (x *OAuthCodeExchange) String() string {
 func (*OAuthCodeExchange) ProtoMessage() {}
 
 func (x *OAuthCodeExchange) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[9]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1280,7 +1416,7 @@ func (x *OAuthCodeExchange) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OAuthCodeExchange.ProtoReflect.Descriptor instead.
 func (*OAuthCodeExchange) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{9}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *OAuthCodeExchange) GetConnectionId() string {
@@ -1320,7 +1456,7 @@ type WebhookTokenDelivery struct {
 
 func (x *WebhookTokenDelivery) Reset() {
 	*x = WebhookTokenDelivery{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[10]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1332,7 +1468,7 @@ func (x *WebhookTokenDelivery) String() string {
 func (*WebhookTokenDelivery) ProtoMessage() {}
 
 func (x *WebhookTokenDelivery) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[10]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1345,7 +1481,7 @@ func (x *WebhookTokenDelivery) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WebhookTokenDelivery.ProtoReflect.Descriptor instead.
 func (*WebhookTokenDelivery) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{10}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *WebhookTokenDelivery) GetMerchantId() string {
@@ -1409,7 +1545,7 @@ type ApiKeyAuth struct {
 
 func (x *ApiKeyAuth) Reset() {
 	*x = ApiKeyAuth{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[11]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1421,7 +1557,7 @@ func (x *ApiKeyAuth) String() string {
 func (*ApiKeyAuth) ProtoMessage() {}
 
 func (x *ApiKeyAuth) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[11]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1434,7 +1570,7 @@ func (x *ApiKeyAuth) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ApiKeyAuth.ProtoReflect.Descriptor instead.
 func (*ApiKeyAuth) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{11}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *ApiKeyAuth) GetApiKey() string {
@@ -1466,7 +1602,7 @@ type ListProvidersRequest struct {
 
 func (x *ListProvidersRequest) Reset() {
 	*x = ListProvidersRequest{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[12]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1478,7 +1614,7 @@ func (x *ListProvidersRequest) String() string {
 func (*ListProvidersRequest) ProtoMessage() {}
 
 func (x *ListProvidersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[12]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1491,7 +1627,7 @@ func (x *ListProvidersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListProvidersRequest.ProtoReflect.Descriptor instead.
 func (*ListProvidersRequest) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{12}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{13}
 }
 
 type ListProvidersResponse struct {
@@ -1503,7 +1639,7 @@ type ListProvidersResponse struct {
 
 func (x *ListProvidersResponse) Reset() {
 	*x = ListProvidersResponse{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[13]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1515,7 +1651,7 @@ func (x *ListProvidersResponse) String() string {
 func (*ListProvidersResponse) ProtoMessage() {}
 
 func (x *ListProvidersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[13]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1528,7 +1664,7 @@ func (x *ListProvidersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListProvidersResponse.ProtoReflect.Descriptor instead.
 func (*ListProvidersResponse) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{13}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ListProvidersResponse) GetItems() []*MarketplaceProvider {
@@ -1547,7 +1683,7 @@ type GetProviderRequest struct {
 
 func (x *GetProviderRequest) Reset() {
 	*x = GetProviderRequest{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[14]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1559,7 +1695,7 @@ func (x *GetProviderRequest) String() string {
 func (*GetProviderRequest) ProtoMessage() {}
 
 func (x *GetProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[14]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1572,7 +1708,7 @@ func (x *GetProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetProviderRequest.ProtoReflect.Descriptor instead.
 func (*GetProviderRequest) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{14}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *GetProviderRequest) GetProviderId() string {
@@ -1591,7 +1727,7 @@ type GetProviderResponse struct {
 
 func (x *GetProviderResponse) Reset() {
 	*x = GetProviderResponse{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[15]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1603,7 +1739,7 @@ func (x *GetProviderResponse) String() string {
 func (*GetProviderResponse) ProtoMessage() {}
 
 func (x *GetProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[15]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1616,7 +1752,7 @@ func (x *GetProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetProviderResponse.ProtoReflect.Descriptor instead.
 func (*GetProviderResponse) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{15}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *GetProviderResponse) GetDetails() *MarketplaceProvider {
@@ -1638,7 +1774,7 @@ type InitiateConnectionRequest struct {
 
 func (x *InitiateConnectionRequest) Reset() {
 	*x = InitiateConnectionRequest{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[16]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1650,7 +1786,7 @@ func (x *InitiateConnectionRequest) String() string {
 func (*InitiateConnectionRequest) ProtoMessage() {}
 
 func (x *InitiateConnectionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[16]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1663,7 +1799,7 @@ func (x *InitiateConnectionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InitiateConnectionRequest.ProtoReflect.Descriptor instead.
 func (*InitiateConnectionRequest) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{16}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *InitiateConnectionRequest) GetProviderId() string {
@@ -1699,7 +1835,7 @@ type InitiateConnectionResponse struct {
 
 func (x *InitiateConnectionResponse) Reset() {
 	*x = InitiateConnectionResponse{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[17]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1711,7 +1847,7 @@ func (x *InitiateConnectionResponse) String() string {
 func (*InitiateConnectionResponse) ProtoMessage() {}
 
 func (x *InitiateConnectionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[17]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1724,7 +1860,7 @@ func (x *InitiateConnectionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InitiateConnectionResponse.ProtoReflect.Descriptor instead.
 func (*InitiateConnectionResponse) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{17}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *InitiateConnectionResponse) GetConnectionId() string {
@@ -1766,7 +1902,7 @@ type CompleteConnectionRequest struct {
 
 func (x *CompleteConnectionRequest) Reset() {
 	*x = CompleteConnectionRequest{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[18]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1778,7 +1914,7 @@ func (x *CompleteConnectionRequest) String() string {
 func (*CompleteConnectionRequest) ProtoMessage() {}
 
 func (x *CompleteConnectionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[18]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1791,7 +1927,7 @@ func (x *CompleteConnectionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CompleteConnectionRequest.ProtoReflect.Descriptor instead.
 func (*CompleteConnectionRequest) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{18}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *CompleteConnectionRequest) GetProviderId() string {
@@ -1873,7 +2009,7 @@ type CompleteConnectionResponse struct {
 
 func (x *CompleteConnectionResponse) Reset() {
 	*x = CompleteConnectionResponse{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[19]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1885,7 +2021,7 @@ func (x *CompleteConnectionResponse) String() string {
 func (*CompleteConnectionResponse) ProtoMessage() {}
 
 func (x *CompleteConnectionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[19]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1898,7 +2034,7 @@ func (x *CompleteConnectionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CompleteConnectionResponse.ProtoReflect.Descriptor instead.
 func (*CompleteConnectionResponse) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{19}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *CompleteConnectionResponse) GetDetails() *MarketplaceConnection {
@@ -1920,7 +2056,7 @@ type ListConnectionsRequest struct {
 
 func (x *ListConnectionsRequest) Reset() {
 	*x = ListConnectionsRequest{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[20]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1932,7 +2068,7 @@ func (x *ListConnectionsRequest) String() string {
 func (*ListConnectionsRequest) ProtoMessage() {}
 
 func (x *ListConnectionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[20]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1945,7 +2081,7 @@ func (x *ListConnectionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListConnectionsRequest.ProtoReflect.Descriptor instead.
 func (*ListConnectionsRequest) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{20}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *ListConnectionsRequest) GetFilter() *ListConnectionsFilter {
@@ -1987,7 +2123,7 @@ type ListConnectionsResponse struct {
 
 func (x *ListConnectionsResponse) Reset() {
 	*x = ListConnectionsResponse{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[21]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1999,7 +2135,7 @@ func (x *ListConnectionsResponse) String() string {
 func (*ListConnectionsResponse) ProtoMessage() {}
 
 func (x *ListConnectionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[21]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2012,7 +2148,7 @@ func (x *ListConnectionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListConnectionsResponse.ProtoReflect.Descriptor instead.
 func (*ListConnectionsResponse) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{21}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *ListConnectionsResponse) GetItems() []*MarketplaceConnection {
@@ -2046,7 +2182,7 @@ type GetConnectionRequest struct {
 
 func (x *GetConnectionRequest) Reset() {
 	*x = GetConnectionRequest{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[22]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2058,7 +2194,7 @@ func (x *GetConnectionRequest) String() string {
 func (*GetConnectionRequest) ProtoMessage() {}
 
 func (x *GetConnectionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[22]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2071,7 +2207,7 @@ func (x *GetConnectionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetConnectionRequest.ProtoReflect.Descriptor instead.
 func (*GetConnectionRequest) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{22}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *GetConnectionRequest) GetConnectionId() string {
@@ -2097,7 +2233,7 @@ type GetConnectionResponse struct {
 
 func (x *GetConnectionResponse) Reset() {
 	*x = GetConnectionResponse{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[23]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2109,7 +2245,7 @@ func (x *GetConnectionResponse) String() string {
 func (*GetConnectionResponse) ProtoMessage() {}
 
 func (x *GetConnectionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[23]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2122,7 +2258,7 @@ func (x *GetConnectionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetConnectionResponse.ProtoReflect.Descriptor instead.
 func (*GetConnectionResponse) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{23}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *GetConnectionResponse) GetDetails() *MarketplaceConnection {
@@ -2144,7 +2280,7 @@ type UpdateConnectionRequest struct {
 
 func (x *UpdateConnectionRequest) Reset() {
 	*x = UpdateConnectionRequest{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[24]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2156,7 +2292,7 @@ func (x *UpdateConnectionRequest) String() string {
 func (*UpdateConnectionRequest) ProtoMessage() {}
 
 func (x *UpdateConnectionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[24]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2169,7 +2305,7 @@ func (x *UpdateConnectionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateConnectionRequest.ProtoReflect.Descriptor instead.
 func (*UpdateConnectionRequest) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{24}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *UpdateConnectionRequest) GetConnectionId() string {
@@ -2209,7 +2345,7 @@ type UpdateConnectionResponse struct {
 
 func (x *UpdateConnectionResponse) Reset() {
 	*x = UpdateConnectionResponse{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[25]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2221,7 +2357,7 @@ func (x *UpdateConnectionResponse) String() string {
 func (*UpdateConnectionResponse) ProtoMessage() {}
 
 func (x *UpdateConnectionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[25]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2234,7 +2370,7 @@ func (x *UpdateConnectionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateConnectionResponse.ProtoReflect.Descriptor instead.
 func (*UpdateConnectionResponse) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{25}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *UpdateConnectionResponse) GetDetails() *MarketplaceConnection {
@@ -2253,7 +2389,7 @@ type DisconnectRequest struct {
 
 func (x *DisconnectRequest) Reset() {
 	*x = DisconnectRequest{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[26]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2265,7 +2401,7 @@ func (x *DisconnectRequest) String() string {
 func (*DisconnectRequest) ProtoMessage() {}
 
 func (x *DisconnectRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[26]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2278,7 +2414,7 @@ func (x *DisconnectRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DisconnectRequest.ProtoReflect.Descriptor instead.
 func (*DisconnectRequest) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{26}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *DisconnectRequest) GetConnectionId() string {
@@ -2296,7 +2432,7 @@ type DisconnectResponse struct {
 
 func (x *DisconnectResponse) Reset() {
 	*x = DisconnectResponse{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[27]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2308,7 +2444,7 @@ func (x *DisconnectResponse) String() string {
 func (*DisconnectResponse) ProtoMessage() {}
 
 func (x *DisconnectResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[27]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2321,7 +2457,7 @@ func (x *DisconnectResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DisconnectResponse.ProtoReflect.Descriptor instead.
 func (*DisconnectResponse) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{27}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{28}
 }
 
 type SetSyncEnabledRequest struct {
@@ -2334,7 +2470,7 @@ type SetSyncEnabledRequest struct {
 
 func (x *SetSyncEnabledRequest) Reset() {
 	*x = SetSyncEnabledRequest{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[28]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2346,7 +2482,7 @@ func (x *SetSyncEnabledRequest) String() string {
 func (*SetSyncEnabledRequest) ProtoMessage() {}
 
 func (x *SetSyncEnabledRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[28]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2359,7 +2495,7 @@ func (x *SetSyncEnabledRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetSyncEnabledRequest.ProtoReflect.Descriptor instead.
 func (*SetSyncEnabledRequest) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{28}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *SetSyncEnabledRequest) GetConnectionId() string {
@@ -2385,7 +2521,7 @@ type SetSyncEnabledResponse struct {
 
 func (x *SetSyncEnabledResponse) Reset() {
 	*x = SetSyncEnabledResponse{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[29]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2397,7 +2533,7 @@ func (x *SetSyncEnabledResponse) String() string {
 func (*SetSyncEnabledResponse) ProtoMessage() {}
 
 func (x *SetSyncEnabledResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[29]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2410,7 +2546,7 @@ func (x *SetSyncEnabledResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetSyncEnabledResponse.ProtoReflect.Descriptor instead.
 func (*SetSyncEnabledResponse) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{29}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *SetSyncEnabledResponse) GetDetails() *MarketplaceConnection {
@@ -2431,7 +2567,7 @@ type ReauthorizeConnectionRequest struct {
 
 func (x *ReauthorizeConnectionRequest) Reset() {
 	*x = ReauthorizeConnectionRequest{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[30]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2443,7 +2579,7 @@ func (x *ReauthorizeConnectionRequest) String() string {
 func (*ReauthorizeConnectionRequest) ProtoMessage() {}
 
 func (x *ReauthorizeConnectionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[30]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2456,7 +2592,7 @@ func (x *ReauthorizeConnectionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReauthorizeConnectionRequest.ProtoReflect.Descriptor instead.
 func (*ReauthorizeConnectionRequest) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{30}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *ReauthorizeConnectionRequest) GetConnectionId() string {
@@ -2483,7 +2619,7 @@ type ReauthorizeConnectionResponse struct {
 
 func (x *ReauthorizeConnectionResponse) Reset() {
 	*x = ReauthorizeConnectionResponse{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[31]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2495,7 +2631,7 @@ func (x *ReauthorizeConnectionResponse) String() string {
 func (*ReauthorizeConnectionResponse) ProtoMessage() {}
 
 func (x *ReauthorizeConnectionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[31]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2508,7 +2644,7 @@ func (x *ReauthorizeConnectionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReauthorizeConnectionResponse.ProtoReflect.Descriptor instead.
 func (*ReauthorizeConnectionResponse) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{31}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *ReauthorizeConnectionResponse) GetAuthorizationUrl() string {
@@ -2527,7 +2663,7 @@ type ListProviderBranchesRequest struct {
 
 func (x *ListProviderBranchesRequest) Reset() {
 	*x = ListProviderBranchesRequest{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[32]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2539,7 +2675,7 @@ func (x *ListProviderBranchesRequest) String() string {
 func (*ListProviderBranchesRequest) ProtoMessage() {}
 
 func (x *ListProviderBranchesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[32]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2552,7 +2688,7 @@ func (x *ListProviderBranchesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListProviderBranchesRequest.ProtoReflect.Descriptor instead.
 func (*ListProviderBranchesRequest) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{32}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *ListProviderBranchesRequest) GetConnectionId() string {
@@ -2571,7 +2707,7 @@ type ListProviderBranchesResponse struct {
 
 func (x *ListProviderBranchesResponse) Reset() {
 	*x = ListProviderBranchesResponse{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[33]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2583,7 +2719,7 @@ func (x *ListProviderBranchesResponse) String() string {
 func (*ListProviderBranchesResponse) ProtoMessage() {}
 
 func (x *ListProviderBranchesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[33]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2596,7 +2732,7 @@ func (x *ListProviderBranchesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListProviderBranchesResponse.ProtoReflect.Descriptor instead.
 func (*ListProviderBranchesResponse) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{33}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *ListProviderBranchesResponse) GetItems() []*ProviderBranch {
@@ -2617,7 +2753,7 @@ type TriggerSyncRequest struct {
 
 func (x *TriggerSyncRequest) Reset() {
 	*x = TriggerSyncRequest{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[34]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2629,7 +2765,7 @@ func (x *TriggerSyncRequest) String() string {
 func (*TriggerSyncRequest) ProtoMessage() {}
 
 func (x *TriggerSyncRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[34]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2642,7 +2778,7 @@ func (x *TriggerSyncRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TriggerSyncRequest.ProtoReflect.Descriptor instead.
 func (*TriggerSyncRequest) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{34}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *TriggerSyncRequest) GetConnectionId() string {
@@ -2675,7 +2811,7 @@ type TriggerSyncResponse struct {
 
 func (x *TriggerSyncResponse) Reset() {
 	*x = TriggerSyncResponse{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[35]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2687,7 +2823,7 @@ func (x *TriggerSyncResponse) String() string {
 func (*TriggerSyncResponse) ProtoMessage() {}
 
 func (x *TriggerSyncResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[35]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2700,7 +2836,7 @@ func (x *TriggerSyncResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TriggerSyncResponse.ProtoReflect.Descriptor instead.
 func (*TriggerSyncResponse) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{35}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *TriggerSyncResponse) GetDetails() *MarketplaceConnection {
@@ -2708,6 +2844,123 @@ func (x *TriggerSyncResponse) GetDetails() *MarketplaceConnection {
 		return x.Details
 	}
 	return nil
+}
+
+type SyncSallaTeamRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Salla marketplace connection whose store staff to reconcile.
+	ConnectionId  string `protobuf:"bytes,1,opt,name=connection_id,json=connectionId,proto3" json:"connection_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncSallaTeamRequest) Reset() {
+	*x = SyncSallaTeamRequest{}
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[37]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncSallaTeamRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncSallaTeamRequest) ProtoMessage() {}
+
+func (x *SyncSallaTeamRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[37]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncSallaTeamRequest.ProtoReflect.Descriptor instead.
+func (*SyncSallaTeamRequest) Descriptor() ([]byte, []int) {
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *SyncSallaTeamRequest) GetConnectionId() string {
+	if x != nil {
+		return x.ConnectionId
+	}
+	return ""
+}
+
+type SyncSallaTeamResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Per-employee outcome, one entry per provider store employee seen.
+	Items []*SyncedEmployee `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	// Count of employees for which a new Invora member was created.
+	Created uint32 `protobuf:"varint,2,opt,name=created,proto3" json:"created,omitempty"`
+	// Count of employees that already had an Invora member (adopted by email).
+	AlreadyExisting uint32 `protobuf:"varint,3,opt,name=already_existing,json=alreadyExisting,proto3" json:"already_existing,omitempty"`
+	// Count of suspended provider employees skipped.
+	SuspendedSkipped uint32 `protobuf:"varint,4,opt,name=suspended_skipped,json=suspendedSkipped,proto3" json:"suspended_skipped,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *SyncSallaTeamResponse) Reset() {
+	*x = SyncSallaTeamResponse{}
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[38]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncSallaTeamResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncSallaTeamResponse) ProtoMessage() {}
+
+func (x *SyncSallaTeamResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[38]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncSallaTeamResponse.ProtoReflect.Descriptor instead.
+func (*SyncSallaTeamResponse) Descriptor() ([]byte, []int) {
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{38}
+}
+
+func (x *SyncSallaTeamResponse) GetItems() []*SyncedEmployee {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+func (x *SyncSallaTeamResponse) GetCreated() uint32 {
+	if x != nil {
+		return x.Created
+	}
+	return 0
+}
+
+func (x *SyncSallaTeamResponse) GetAlreadyExisting() uint32 {
+	if x != nil {
+		return x.AlreadyExisting
+	}
+	return 0
+}
+
+func (x *SyncSallaTeamResponse) GetSuspendedSkipped() uint32 {
+	if x != nil {
+		return x.SuspendedSkipped
+	}
+	return 0
 }
 
 type ListSyncEventsRequest struct {
@@ -2723,7 +2976,7 @@ type ListSyncEventsRequest struct {
 
 func (x *ListSyncEventsRequest) Reset() {
 	*x = ListSyncEventsRequest{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[36]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2735,7 +2988,7 @@ func (x *ListSyncEventsRequest) String() string {
 func (*ListSyncEventsRequest) ProtoMessage() {}
 
 func (x *ListSyncEventsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[36]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2748,7 +3001,7 @@ func (x *ListSyncEventsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSyncEventsRequest.ProtoReflect.Descriptor instead.
 func (*ListSyncEventsRequest) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{36}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *ListSyncEventsRequest) GetConnectionId() string {
@@ -2797,7 +3050,7 @@ type ListSyncEventsResponse struct {
 
 func (x *ListSyncEventsResponse) Reset() {
 	*x = ListSyncEventsResponse{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[37]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2809,7 +3062,7 @@ func (x *ListSyncEventsResponse) String() string {
 func (*ListSyncEventsResponse) ProtoMessage() {}
 
 func (x *ListSyncEventsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[37]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2822,7 +3075,7 @@ func (x *ListSyncEventsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSyncEventsResponse.ProtoReflect.Descriptor instead.
 func (*ListSyncEventsResponse) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{37}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *ListSyncEventsResponse) GetItems() []*SyncEvent {
@@ -2855,7 +3108,7 @@ type CheckConnectionHealthRequest struct {
 
 func (x *CheckConnectionHealthRequest) Reset() {
 	*x = CheckConnectionHealthRequest{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[38]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2867,7 +3120,7 @@ func (x *CheckConnectionHealthRequest) String() string {
 func (*CheckConnectionHealthRequest) ProtoMessage() {}
 
 func (x *CheckConnectionHealthRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[38]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2880,7 +3133,7 @@ func (x *CheckConnectionHealthRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CheckConnectionHealthRequest.ProtoReflect.Descriptor instead.
 func (*CheckConnectionHealthRequest) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{38}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *CheckConnectionHealthRequest) GetConnectionId() string {
@@ -2899,7 +3152,7 @@ type CheckConnectionHealthResponse struct {
 
 func (x *CheckConnectionHealthResponse) Reset() {
 	*x = CheckConnectionHealthResponse{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[39]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2911,7 +3164,7 @@ func (x *CheckConnectionHealthResponse) String() string {
 func (*CheckConnectionHealthResponse) ProtoMessage() {}
 
 func (x *CheckConnectionHealthResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[39]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2924,7 +3177,7 @@ func (x *CheckConnectionHealthResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CheckConnectionHealthResponse.ProtoReflect.Descriptor instead.
 func (*CheckConnectionHealthResponse) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{39}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *CheckConnectionHealthResponse) GetReport() *ConnectionHealthReport {
@@ -2945,7 +3198,7 @@ type ListConnectionsFilter struct {
 
 func (x *ListConnectionsFilter) Reset() {
 	*x = ListConnectionsFilter{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[40]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2957,7 +3210,7 @@ func (x *ListConnectionsFilter) String() string {
 func (*ListConnectionsFilter) ProtoMessage() {}
 
 func (x *ListConnectionsFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[40]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2970,7 +3223,7 @@ func (x *ListConnectionsFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListConnectionsFilter.ProtoReflect.Descriptor instead.
 func (*ListConnectionsFilter) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{40}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *ListConnectionsFilter) GetPart() *ListConnectionsFilterPart {
@@ -3016,7 +3269,7 @@ type ListConnectionsFilterPart struct {
 
 func (x *ListConnectionsFilterPart) Reset() {
 	*x = ListConnectionsFilterPart{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[41]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3028,7 +3281,7 @@ func (x *ListConnectionsFilterPart) String() string {
 func (*ListConnectionsFilterPart) ProtoMessage() {}
 
 func (x *ListConnectionsFilterPart) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[41]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3041,7 +3294,7 @@ func (x *ListConnectionsFilterPart) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListConnectionsFilterPart.ProtoReflect.Descriptor instead.
 func (*ListConnectionsFilterPart) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{41}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *ListConnectionsFilterPart) GetType() isListConnectionsFilterPart_Type {
@@ -3229,7 +3482,7 @@ type ListConnectionStatusFilter struct {
 
 func (x *ListConnectionStatusFilter) Reset() {
 	*x = ListConnectionStatusFilter{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[42]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[45]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3241,7 +3494,7 @@ func (x *ListConnectionStatusFilter) String() string {
 func (*ListConnectionStatusFilter) ProtoMessage() {}
 
 func (x *ListConnectionStatusFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[42]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[45]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3254,7 +3507,7 @@ func (x *ListConnectionStatusFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListConnectionStatusFilter.ProtoReflect.Descriptor instead.
 func (*ListConnectionStatusFilter) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{42}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{45}
 }
 
 func (x *ListConnectionStatusFilter) GetInValues() []ConnectionStatus {
@@ -3273,7 +3526,7 @@ type ListAuthMethodFilter struct {
 
 func (x *ListAuthMethodFilter) Reset() {
 	*x = ListAuthMethodFilter{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[43]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[46]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3285,7 +3538,7 @@ func (x *ListAuthMethodFilter) String() string {
 func (*ListAuthMethodFilter) ProtoMessage() {}
 
 func (x *ListAuthMethodFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[43]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[46]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3298,7 +3551,7 @@ func (x *ListAuthMethodFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAuthMethodFilter.ProtoReflect.Descriptor instead.
 func (*ListAuthMethodFilter) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{43}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *ListAuthMethodFilter) GetInValues() []AuthMethod {
@@ -3317,7 +3570,7 @@ type ListConnectionsSort struct {
 
 func (x *ListConnectionsSort) Reset() {
 	*x = ListConnectionsSort{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[44]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[47]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3329,7 +3582,7 @@ func (x *ListConnectionsSort) String() string {
 func (*ListConnectionsSort) ProtoMessage() {}
 
 func (x *ListConnectionsSort) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[44]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[47]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3342,7 +3595,7 @@ func (x *ListConnectionsSort) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListConnectionsSort.ProtoReflect.Descriptor instead.
 func (*ListConnectionsSort) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{44}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *ListConnectionsSort) GetRules() []*ListConnectionsSortRule {
@@ -3367,7 +3620,7 @@ type ListConnectionsSortRule struct {
 
 func (x *ListConnectionsSortRule) Reset() {
 	*x = ListConnectionsSortRule{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[45]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3379,7 +3632,7 @@ func (x *ListConnectionsSortRule) String() string {
 func (*ListConnectionsSortRule) ProtoMessage() {}
 
 func (x *ListConnectionsSortRule) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[45]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3392,7 +3645,7 @@ func (x *ListConnectionsSortRule) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListConnectionsSortRule.ProtoReflect.Descriptor instead.
 func (*ListConnectionsSortRule) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{45}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *ListConnectionsSortRule) GetType() isListConnectionsSortRule_Type {
@@ -3476,7 +3729,7 @@ type ListSyncEventsFilter struct {
 
 func (x *ListSyncEventsFilter) Reset() {
 	*x = ListSyncEventsFilter{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[46]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[49]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3488,7 +3741,7 @@ func (x *ListSyncEventsFilter) String() string {
 func (*ListSyncEventsFilter) ProtoMessage() {}
 
 func (x *ListSyncEventsFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[46]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[49]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3501,7 +3754,7 @@ func (x *ListSyncEventsFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSyncEventsFilter.ProtoReflect.Descriptor instead.
 func (*ListSyncEventsFilter) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{46}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{49}
 }
 
 func (x *ListSyncEventsFilter) GetPart() *ListSyncEventsFilterPart {
@@ -3537,7 +3790,7 @@ type ListSyncEventsFilterPart struct {
 
 func (x *ListSyncEventsFilterPart) Reset() {
 	*x = ListSyncEventsFilterPart{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[47]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[50]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3549,7 +3802,7 @@ func (x *ListSyncEventsFilterPart) String() string {
 func (*ListSyncEventsFilterPart) ProtoMessage() {}
 
 func (x *ListSyncEventsFilterPart) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[47]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[50]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3562,7 +3815,7 @@ func (x *ListSyncEventsFilterPart) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSyncEventsFilterPart.ProtoReflect.Descriptor instead.
 func (*ListSyncEventsFilterPart) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{47}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *ListSyncEventsFilterPart) GetType() isListSyncEventsFilterPart_Type {
@@ -3705,7 +3958,7 @@ type ListSyncEventTypeFilter struct {
 
 func (x *ListSyncEventTypeFilter) Reset() {
 	*x = ListSyncEventTypeFilter{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[48]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3717,7 +3970,7 @@ func (x *ListSyncEventTypeFilter) String() string {
 func (*ListSyncEventTypeFilter) ProtoMessage() {}
 
 func (x *ListSyncEventTypeFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[48]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3730,7 +3983,7 @@ func (x *ListSyncEventTypeFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSyncEventTypeFilter.ProtoReflect.Descriptor instead.
 func (*ListSyncEventTypeFilter) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{48}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *ListSyncEventTypeFilter) GetInValues() []SyncEventType {
@@ -3749,7 +4002,7 @@ type ListSyncEventsSort struct {
 
 func (x *ListSyncEventsSort) Reset() {
 	*x = ListSyncEventsSort{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[49]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[52]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3761,7 +4014,7 @@ func (x *ListSyncEventsSort) String() string {
 func (*ListSyncEventsSort) ProtoMessage() {}
 
 func (x *ListSyncEventsSort) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[49]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[52]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3774,7 +4027,7 @@ func (x *ListSyncEventsSort) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSyncEventsSort.ProtoReflect.Descriptor instead.
 func (*ListSyncEventsSort) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{49}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *ListSyncEventsSort) GetRules() []*ListSyncEventsSortRule {
@@ -3797,7 +4050,7 @@ type ListSyncEventsSortRule struct {
 
 func (x *ListSyncEventsSortRule) Reset() {
 	*x = ListSyncEventsSortRule{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[50]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[53]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3809,7 +4062,7 @@ func (x *ListSyncEventsSortRule) String() string {
 func (*ListSyncEventsSortRule) ProtoMessage() {}
 
 func (x *ListSyncEventsSortRule) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[50]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[53]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3822,7 +4075,7 @@ func (x *ListSyncEventsSortRule) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSyncEventsSortRule.ProtoReflect.Descriptor instead.
 func (*ListSyncEventsSortRule) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{50}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{53}
 }
 
 func (x *ListSyncEventsSortRule) GetType() isListSyncEventsSortRule_Type {
@@ -3875,7 +4128,7 @@ type ListConnectionsFilterPart_Operands struct {
 
 func (x *ListConnectionsFilterPart_Operands) Reset() {
 	*x = ListConnectionsFilterPart_Operands{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[51]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[54]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3887,7 +4140,7 @@ func (x *ListConnectionsFilterPart_Operands) String() string {
 func (*ListConnectionsFilterPart_Operands) ProtoMessage() {}
 
 func (x *ListConnectionsFilterPart_Operands) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[51]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[54]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3900,7 +4153,7 @@ func (x *ListConnectionsFilterPart_Operands) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use ListConnectionsFilterPart_Operands.ProtoReflect.Descriptor instead.
 func (*ListConnectionsFilterPart_Operands) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{41, 0}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{44, 0}
 }
 
 func (x *ListConnectionsFilterPart_Operands) GetOperands() []*ListConnectionsFilterPart {
@@ -3919,7 +4172,7 @@ type ListSyncEventsFilterPart_Operands struct {
 
 func (x *ListSyncEventsFilterPart_Operands) Reset() {
 	*x = ListSyncEventsFilterPart_Operands{}
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[52]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[55]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3931,7 +4184,7 @@ func (x *ListSyncEventsFilterPart_Operands) String() string {
 func (*ListSyncEventsFilterPart_Operands) ProtoMessage() {}
 
 func (x *ListSyncEventsFilterPart_Operands) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_marketplace_v2_models_proto_msgTypes[52]
+	mi := &file_invora_marketplace_v2_models_proto_msgTypes[55]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3944,7 +4197,7 @@ func (x *ListSyncEventsFilterPart_Operands) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use ListSyncEventsFilterPart_Operands.ProtoReflect.Descriptor instead.
 func (*ListSyncEventsFilterPart_Operands) Descriptor() ([]byte, []int) {
-	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{47, 0}
+	return file_invora_marketplace_v2_models_proto_rawDescGZIP(), []int{50, 0}
 }
 
 func (x *ListSyncEventsFilterPart_Operands) GetOperands() []*ListSyncEventsFilterPart {
@@ -4082,7 +4335,13 @@ const file_invora_marketplace_v2_models_proto_rawDesc = "" +
 	"\x0ewebhook_health\x18\x05 \x01(\v2$.invora.marketplace.v2.WebhookHealthR\rwebhookHealth\x12Q\n" +
 	"\x17last_successful_sync_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\x14lastSuccessfulSyncAt\x12\x16\n" +
 	"\x06issues\x18\a \x03(\tR\x06issues\x12'\n" +
-	"\x0foverall_healthy\x18\b \x01(\bR\x0eoverallHealthy\"}\n" +
+	"\x0foverall_healthy\x18\b \x01(\bR\x0eoverallHealthy\"\xc4\x01\n" +
+	"\x0eSyncedEmployee\x12&\n" +
+	"\x0fzitadel_user_id\x18\x01 \x01(\tR\rzitadelUserId\x12\"\n" +
+	"\rsalla_user_id\x18\x02 \x01(\tR\vsallaUserId\x12\x14\n" +
+	"\x05email\x18\x03 \x01(\tR\x05email\x12\x12\n" +
+	"\x04name\x18\x04 \x01(\tR\x04name\x12<\n" +
+	"\aoutcome\x18\x05 \x01(\x0e2\".invora.marketplace.v2.SyncOutcomeR\aoutcome\"}\n" +
 	"\x11OAuthCodeExchange\x12#\n" +
 	"\rconnection_id\x18\x01 \x01(\tR\fconnectionId\x12-\n" +
 	"\x12authorization_code\x18\x02 \x01(\tR\x11authorizationCode\x12\x14\n" +
@@ -4190,7 +4449,14 @@ const file_invora_marketplace_v2_models_proto_rawDesc = "" +
 	"\tfrom_date\x18\x02 \x01(\v2\x11.google.type.DateR\bfromDate\x12*\n" +
 	"\ato_date\x18\x03 \x01(\v2\x11.google.type.DateR\x06toDate\"]\n" +
 	"\x13TriggerSyncResponse\x12F\n" +
-	"\adetails\x18\x01 \x01(\v2,.invora.marketplace.v2.MarketplaceConnectionR\adetails\"\xa8\x02\n" +
+	"\adetails\x18\x01 \x01(\v2,.invora.marketplace.v2.MarketplaceConnectionR\adetails\";\n" +
+	"\x14SyncSallaTeamRequest\x12#\n" +
+	"\rconnection_id\x18\x01 \x01(\tR\fconnectionId\"\xc6\x01\n" +
+	"\x15SyncSallaTeamResponse\x12;\n" +
+	"\x05items\x18\x01 \x03(\v2%.invora.marketplace.v2.SyncedEmployeeR\x05items\x12\x18\n" +
+	"\acreated\x18\x02 \x01(\rR\acreated\x12)\n" +
+	"\x10already_existing\x18\x03 \x01(\rR\x0falreadyExisting\x12+\n" +
+	"\x11suspended_skipped\x18\x04 \x01(\rR\x10suspendedSkipped\"\xa8\x02\n" +
 	"\x15ListSyncEventsRequest\x12#\n" +
 	"\rconnection_id\x18\x01 \x01(\tR\fconnectionId\x12C\n" +
 	"\x06filter\x18\x02 \x01(\v2+.invora.marketplace.v2.ListSyncEventsFilterR\x06filter\x12=\n" +
@@ -4307,7 +4573,12 @@ const file_invora_marketplace_v2_models_proto_rawDesc = "" +
 	"\"PROVIDER_SUBSCRIPTION_STATUS_TRIAL\x10\x01\x12'\n" +
 	"#PROVIDER_SUBSCRIPTION_STATUS_ACTIVE\x10\x02\x12(\n" +
 	"$PROVIDER_SUBSCRIPTION_STATUS_EXPIRED\x10\x03\x12)\n" +
-	"%PROVIDER_SUBSCRIPTION_STATUS_CANCELED\x10\x04B\xee\x01\n" +
+	"%PROVIDER_SUBSCRIPTION_STATUS_CANCELED\x10\x04*\x8a\x01\n" +
+	"\vSyncOutcome\x12\x1c\n" +
+	"\x18SYNC_OUTCOME_UNSPECIFIED\x10\x00\x12\x18\n" +
+	"\x14SYNC_OUTCOME_CREATED\x10\x01\x12\x1f\n" +
+	"\x1bSYNC_OUTCOME_ALREADY_EXISTS\x10\x02\x12\"\n" +
+	"\x1eSYNC_OUTCOME_SKIPPED_SUSPENDED\x10\x03B\xee\x01\n" +
 	"\x19com.invora.marketplace.v2B\vModelsProtoP\x01ZNgithub.com/invoraapp/invora-controller/gen/invora/marketplace/v2;marketplacev2\xa2\x02\x03IMX\xaa\x02\x15Invora.Marketplace.V2\xca\x02\x15Invora\\Marketplace\\V2\xe2\x02!Invora\\Marketplace\\V2\\GPBMetadata\xea\x02\x17Invora::Marketplace::V2b\x06proto3"
 
 var (
@@ -4322,171 +4593,177 @@ func file_invora_marketplace_v2_models_proto_rawDescGZIP() []byte {
 	return file_invora_marketplace_v2_models_proto_rawDescData
 }
 
-var file_invora_marketplace_v2_models_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_invora_marketplace_v2_models_proto_msgTypes = make([]protoimpl.MessageInfo, 53)
+var file_invora_marketplace_v2_models_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
+var file_invora_marketplace_v2_models_proto_msgTypes = make([]protoimpl.MessageInfo, 56)
 var file_invora_marketplace_v2_models_proto_goTypes = []any{
 	(ConnectionStatus)(0),                      // 0: invora.marketplace.v2.ConnectionStatus
 	(AuthMethod)(0),                            // 1: invora.marketplace.v2.AuthMethod
 	(SyncEventType)(0),                         // 2: invora.marketplace.v2.SyncEventType
 	(ProviderSubscriptionStatus)(0),            // 3: invora.marketplace.v2.ProviderSubscriptionStatus
-	(*MarketplaceProvider)(nil),                // 4: invora.marketplace.v2.MarketplaceProvider
-	(*MarketplaceCapabilities)(nil),            // 5: invora.marketplace.v2.MarketplaceCapabilities
-	(*BranchMapping)(nil),                      // 6: invora.marketplace.v2.BranchMapping
-	(*SyncConfig)(nil),                         // 7: invora.marketplace.v2.SyncConfig
-	(*WebhookHealth)(nil),                      // 8: invora.marketplace.v2.WebhookHealth
-	(*MarketplaceConnection)(nil),              // 9: invora.marketplace.v2.MarketplaceConnection
-	(*SyncEvent)(nil),                          // 10: invora.marketplace.v2.SyncEvent
-	(*ProviderBranch)(nil),                     // 11: invora.marketplace.v2.ProviderBranch
-	(*ConnectionHealthReport)(nil),             // 12: invora.marketplace.v2.ConnectionHealthReport
-	(*OAuthCodeExchange)(nil),                  // 13: invora.marketplace.v2.OAuthCodeExchange
-	(*WebhookTokenDelivery)(nil),               // 14: invora.marketplace.v2.WebhookTokenDelivery
-	(*ApiKeyAuth)(nil),                         // 15: invora.marketplace.v2.ApiKeyAuth
-	(*ListProvidersRequest)(nil),               // 16: invora.marketplace.v2.ListProvidersRequest
-	(*ListProvidersResponse)(nil),              // 17: invora.marketplace.v2.ListProvidersResponse
-	(*GetProviderRequest)(nil),                 // 18: invora.marketplace.v2.GetProviderRequest
-	(*GetProviderResponse)(nil),                // 19: invora.marketplace.v2.GetProviderResponse
-	(*InitiateConnectionRequest)(nil),          // 20: invora.marketplace.v2.InitiateConnectionRequest
-	(*InitiateConnectionResponse)(nil),         // 21: invora.marketplace.v2.InitiateConnectionResponse
-	(*CompleteConnectionRequest)(nil),          // 22: invora.marketplace.v2.CompleteConnectionRequest
-	(*CompleteConnectionResponse)(nil),         // 23: invora.marketplace.v2.CompleteConnectionResponse
-	(*ListConnectionsRequest)(nil),             // 24: invora.marketplace.v2.ListConnectionsRequest
-	(*ListConnectionsResponse)(nil),            // 25: invora.marketplace.v2.ListConnectionsResponse
-	(*GetConnectionRequest)(nil),               // 26: invora.marketplace.v2.GetConnectionRequest
-	(*GetConnectionResponse)(nil),              // 27: invora.marketplace.v2.GetConnectionResponse
-	(*UpdateConnectionRequest)(nil),            // 28: invora.marketplace.v2.UpdateConnectionRequest
-	(*UpdateConnectionResponse)(nil),           // 29: invora.marketplace.v2.UpdateConnectionResponse
-	(*DisconnectRequest)(nil),                  // 30: invora.marketplace.v2.DisconnectRequest
-	(*DisconnectResponse)(nil),                 // 31: invora.marketplace.v2.DisconnectResponse
-	(*SetSyncEnabledRequest)(nil),              // 32: invora.marketplace.v2.SetSyncEnabledRequest
-	(*SetSyncEnabledResponse)(nil),             // 33: invora.marketplace.v2.SetSyncEnabledResponse
-	(*ReauthorizeConnectionRequest)(nil),       // 34: invora.marketplace.v2.ReauthorizeConnectionRequest
-	(*ReauthorizeConnectionResponse)(nil),      // 35: invora.marketplace.v2.ReauthorizeConnectionResponse
-	(*ListProviderBranchesRequest)(nil),        // 36: invora.marketplace.v2.ListProviderBranchesRequest
-	(*ListProviderBranchesResponse)(nil),       // 37: invora.marketplace.v2.ListProviderBranchesResponse
-	(*TriggerSyncRequest)(nil),                 // 38: invora.marketplace.v2.TriggerSyncRequest
-	(*TriggerSyncResponse)(nil),                // 39: invora.marketplace.v2.TriggerSyncResponse
-	(*ListSyncEventsRequest)(nil),              // 40: invora.marketplace.v2.ListSyncEventsRequest
-	(*ListSyncEventsResponse)(nil),             // 41: invora.marketplace.v2.ListSyncEventsResponse
-	(*CheckConnectionHealthRequest)(nil),       // 42: invora.marketplace.v2.CheckConnectionHealthRequest
-	(*CheckConnectionHealthResponse)(nil),      // 43: invora.marketplace.v2.CheckConnectionHealthResponse
-	(*ListConnectionsFilter)(nil),              // 44: invora.marketplace.v2.ListConnectionsFilter
-	(*ListConnectionsFilterPart)(nil),          // 45: invora.marketplace.v2.ListConnectionsFilterPart
-	(*ListConnectionStatusFilter)(nil),         // 46: invora.marketplace.v2.ListConnectionStatusFilter
-	(*ListAuthMethodFilter)(nil),               // 47: invora.marketplace.v2.ListAuthMethodFilter
-	(*ListConnectionsSort)(nil),                // 48: invora.marketplace.v2.ListConnectionsSort
-	(*ListConnectionsSortRule)(nil),            // 49: invora.marketplace.v2.ListConnectionsSortRule
-	(*ListSyncEventsFilter)(nil),               // 50: invora.marketplace.v2.ListSyncEventsFilter
-	(*ListSyncEventsFilterPart)(nil),           // 51: invora.marketplace.v2.ListSyncEventsFilterPart
-	(*ListSyncEventTypeFilter)(nil),            // 52: invora.marketplace.v2.ListSyncEventTypeFilter
-	(*ListSyncEventsSort)(nil),                 // 53: invora.marketplace.v2.ListSyncEventsSort
-	(*ListSyncEventsSortRule)(nil),             // 54: invora.marketplace.v2.ListSyncEventsSortRule
-	(*ListConnectionsFilterPart_Operands)(nil), // 55: invora.marketplace.v2.ListConnectionsFilterPart.Operands
-	(*ListSyncEventsFilterPart_Operands)(nil),  // 56: invora.marketplace.v2.ListSyncEventsFilterPart.Operands
-	(*structpb.Struct)(nil),                    // 57: google.protobuf.Struct
-	(*date.Date)(nil),                          // 58: google.type.Date
-	(*timestamppb.Timestamp)(nil),              // 59: google.protobuf.Timestamp
-	(*kernel.CreateUpdateAuditInfo)(nil),       // 60: kernel.CreateUpdateAuditInfo
-	(*kernel.PaginationInfo)(nil),              // 61: kernel.PaginationInfo
-	(*fieldmaskpb.FieldMask)(nil),              // 62: google.protobuf.FieldMask
-	(*kernel.TimeReferenceInfo)(nil),           // 63: kernel.TimeReferenceInfo
-	(*kernel.ListRequestFilterPartId)(nil),     // 64: kernel.ListRequestFilterPartId
-	(*kernel.ListRequestFilterPartDateV2)(nil), // 65: kernel.ListRequestFilterPartDateV2
-	(kernel.SortDirection)(0),                  // 66: kernel.SortDirection
+	(SyncOutcome)(0),                           // 4: invora.marketplace.v2.SyncOutcome
+	(*MarketplaceProvider)(nil),                // 5: invora.marketplace.v2.MarketplaceProvider
+	(*MarketplaceCapabilities)(nil),            // 6: invora.marketplace.v2.MarketplaceCapabilities
+	(*BranchMapping)(nil),                      // 7: invora.marketplace.v2.BranchMapping
+	(*SyncConfig)(nil),                         // 8: invora.marketplace.v2.SyncConfig
+	(*WebhookHealth)(nil),                      // 9: invora.marketplace.v2.WebhookHealth
+	(*MarketplaceConnection)(nil),              // 10: invora.marketplace.v2.MarketplaceConnection
+	(*SyncEvent)(nil),                          // 11: invora.marketplace.v2.SyncEvent
+	(*ProviderBranch)(nil),                     // 12: invora.marketplace.v2.ProviderBranch
+	(*ConnectionHealthReport)(nil),             // 13: invora.marketplace.v2.ConnectionHealthReport
+	(*SyncedEmployee)(nil),                     // 14: invora.marketplace.v2.SyncedEmployee
+	(*OAuthCodeExchange)(nil),                  // 15: invora.marketplace.v2.OAuthCodeExchange
+	(*WebhookTokenDelivery)(nil),               // 16: invora.marketplace.v2.WebhookTokenDelivery
+	(*ApiKeyAuth)(nil),                         // 17: invora.marketplace.v2.ApiKeyAuth
+	(*ListProvidersRequest)(nil),               // 18: invora.marketplace.v2.ListProvidersRequest
+	(*ListProvidersResponse)(nil),              // 19: invora.marketplace.v2.ListProvidersResponse
+	(*GetProviderRequest)(nil),                 // 20: invora.marketplace.v2.GetProviderRequest
+	(*GetProviderResponse)(nil),                // 21: invora.marketplace.v2.GetProviderResponse
+	(*InitiateConnectionRequest)(nil),          // 22: invora.marketplace.v2.InitiateConnectionRequest
+	(*InitiateConnectionResponse)(nil),         // 23: invora.marketplace.v2.InitiateConnectionResponse
+	(*CompleteConnectionRequest)(nil),          // 24: invora.marketplace.v2.CompleteConnectionRequest
+	(*CompleteConnectionResponse)(nil),         // 25: invora.marketplace.v2.CompleteConnectionResponse
+	(*ListConnectionsRequest)(nil),             // 26: invora.marketplace.v2.ListConnectionsRequest
+	(*ListConnectionsResponse)(nil),            // 27: invora.marketplace.v2.ListConnectionsResponse
+	(*GetConnectionRequest)(nil),               // 28: invora.marketplace.v2.GetConnectionRequest
+	(*GetConnectionResponse)(nil),              // 29: invora.marketplace.v2.GetConnectionResponse
+	(*UpdateConnectionRequest)(nil),            // 30: invora.marketplace.v2.UpdateConnectionRequest
+	(*UpdateConnectionResponse)(nil),           // 31: invora.marketplace.v2.UpdateConnectionResponse
+	(*DisconnectRequest)(nil),                  // 32: invora.marketplace.v2.DisconnectRequest
+	(*DisconnectResponse)(nil),                 // 33: invora.marketplace.v2.DisconnectResponse
+	(*SetSyncEnabledRequest)(nil),              // 34: invora.marketplace.v2.SetSyncEnabledRequest
+	(*SetSyncEnabledResponse)(nil),             // 35: invora.marketplace.v2.SetSyncEnabledResponse
+	(*ReauthorizeConnectionRequest)(nil),       // 36: invora.marketplace.v2.ReauthorizeConnectionRequest
+	(*ReauthorizeConnectionResponse)(nil),      // 37: invora.marketplace.v2.ReauthorizeConnectionResponse
+	(*ListProviderBranchesRequest)(nil),        // 38: invora.marketplace.v2.ListProviderBranchesRequest
+	(*ListProviderBranchesResponse)(nil),       // 39: invora.marketplace.v2.ListProviderBranchesResponse
+	(*TriggerSyncRequest)(nil),                 // 40: invora.marketplace.v2.TriggerSyncRequest
+	(*TriggerSyncResponse)(nil),                // 41: invora.marketplace.v2.TriggerSyncResponse
+	(*SyncSallaTeamRequest)(nil),               // 42: invora.marketplace.v2.SyncSallaTeamRequest
+	(*SyncSallaTeamResponse)(nil),              // 43: invora.marketplace.v2.SyncSallaTeamResponse
+	(*ListSyncEventsRequest)(nil),              // 44: invora.marketplace.v2.ListSyncEventsRequest
+	(*ListSyncEventsResponse)(nil),             // 45: invora.marketplace.v2.ListSyncEventsResponse
+	(*CheckConnectionHealthRequest)(nil),       // 46: invora.marketplace.v2.CheckConnectionHealthRequest
+	(*CheckConnectionHealthResponse)(nil),      // 47: invora.marketplace.v2.CheckConnectionHealthResponse
+	(*ListConnectionsFilter)(nil),              // 48: invora.marketplace.v2.ListConnectionsFilter
+	(*ListConnectionsFilterPart)(nil),          // 49: invora.marketplace.v2.ListConnectionsFilterPart
+	(*ListConnectionStatusFilter)(nil),         // 50: invora.marketplace.v2.ListConnectionStatusFilter
+	(*ListAuthMethodFilter)(nil),               // 51: invora.marketplace.v2.ListAuthMethodFilter
+	(*ListConnectionsSort)(nil),                // 52: invora.marketplace.v2.ListConnectionsSort
+	(*ListConnectionsSortRule)(nil),            // 53: invora.marketplace.v2.ListConnectionsSortRule
+	(*ListSyncEventsFilter)(nil),               // 54: invora.marketplace.v2.ListSyncEventsFilter
+	(*ListSyncEventsFilterPart)(nil),           // 55: invora.marketplace.v2.ListSyncEventsFilterPart
+	(*ListSyncEventTypeFilter)(nil),            // 56: invora.marketplace.v2.ListSyncEventTypeFilter
+	(*ListSyncEventsSort)(nil),                 // 57: invora.marketplace.v2.ListSyncEventsSort
+	(*ListSyncEventsSortRule)(nil),             // 58: invora.marketplace.v2.ListSyncEventsSortRule
+	(*ListConnectionsFilterPart_Operands)(nil), // 59: invora.marketplace.v2.ListConnectionsFilterPart.Operands
+	(*ListSyncEventsFilterPart_Operands)(nil),  // 60: invora.marketplace.v2.ListSyncEventsFilterPart.Operands
+	(*structpb.Struct)(nil),                    // 61: google.protobuf.Struct
+	(*date.Date)(nil),                          // 62: google.type.Date
+	(*timestamppb.Timestamp)(nil),              // 63: google.protobuf.Timestamp
+	(*kernel.CreateUpdateAuditInfo)(nil),       // 64: kernel.CreateUpdateAuditInfo
+	(*kernel.PaginationInfo)(nil),              // 65: kernel.PaginationInfo
+	(*fieldmaskpb.FieldMask)(nil),              // 66: google.protobuf.FieldMask
+	(*kernel.TimeReferenceInfo)(nil),           // 67: kernel.TimeReferenceInfo
+	(*kernel.ListRequestFilterPartId)(nil),     // 68: kernel.ListRequestFilterPartId
+	(*kernel.ListRequestFilterPartDateV2)(nil), // 69: kernel.ListRequestFilterPartDateV2
+	(kernel.SortDirection)(0),                  // 70: kernel.SortDirection
 }
 var file_invora_marketplace_v2_models_proto_depIdxs = []int32{
-	5,  // 0: invora.marketplace.v2.MarketplaceProvider.capabilities:type_name -> invora.marketplace.v2.MarketplaceCapabilities
-	57, // 1: invora.marketplace.v2.MarketplaceProvider.config_schema:type_name -> google.protobuf.Struct
+	6,  // 0: invora.marketplace.v2.MarketplaceProvider.capabilities:type_name -> invora.marketplace.v2.MarketplaceCapabilities
+	61, // 1: invora.marketplace.v2.MarketplaceProvider.config_schema:type_name -> google.protobuf.Struct
 	1,  // 2: invora.marketplace.v2.MarketplaceProvider.supported_auth_methods:type_name -> invora.marketplace.v2.AuthMethod
-	57, // 3: invora.marketplace.v2.SyncConfig.provider_config:type_name -> google.protobuf.Struct
-	6,  // 4: invora.marketplace.v2.SyncConfig.branch_mappings:type_name -> invora.marketplace.v2.BranchMapping
-	58, // 5: invora.marketplace.v2.SyncConfig.backfill_from_date:type_name -> google.type.Date
-	59, // 6: invora.marketplace.v2.SyncConfig.last_applied_at:type_name -> google.protobuf.Timestamp
-	59, // 7: invora.marketplace.v2.WebhookHealth.last_webhook_received_at:type_name -> google.protobuf.Timestamp
+	61, // 3: invora.marketplace.v2.SyncConfig.provider_config:type_name -> google.protobuf.Struct
+	7,  // 4: invora.marketplace.v2.SyncConfig.branch_mappings:type_name -> invora.marketplace.v2.BranchMapping
+	62, // 5: invora.marketplace.v2.SyncConfig.backfill_from_date:type_name -> google.type.Date
+	63, // 6: invora.marketplace.v2.SyncConfig.last_applied_at:type_name -> google.protobuf.Timestamp
+	63, // 7: invora.marketplace.v2.WebhookHealth.last_webhook_received_at:type_name -> google.protobuf.Timestamp
 	0,  // 8: invora.marketplace.v2.MarketplaceConnection.status:type_name -> invora.marketplace.v2.ConnectionStatus
 	1,  // 9: invora.marketplace.v2.MarketplaceConnection.auth_method:type_name -> invora.marketplace.v2.AuthMethod
-	7,  // 10: invora.marketplace.v2.MarketplaceConnection.sync_config:type_name -> invora.marketplace.v2.SyncConfig
-	59, // 11: invora.marketplace.v2.MarketplaceConnection.last_sync_at:type_name -> google.protobuf.Timestamp
-	59, // 12: invora.marketplace.v2.MarketplaceConnection.token_expires_at:type_name -> google.protobuf.Timestamp
-	8,  // 13: invora.marketplace.v2.MarketplaceConnection.webhook_health:type_name -> invora.marketplace.v2.WebhookHealth
+	8,  // 10: invora.marketplace.v2.MarketplaceConnection.sync_config:type_name -> invora.marketplace.v2.SyncConfig
+	63, // 11: invora.marketplace.v2.MarketplaceConnection.last_sync_at:type_name -> google.protobuf.Timestamp
+	63, // 12: invora.marketplace.v2.MarketplaceConnection.token_expires_at:type_name -> google.protobuf.Timestamp
+	9,  // 13: invora.marketplace.v2.MarketplaceConnection.webhook_health:type_name -> invora.marketplace.v2.WebhookHealth
 	3,  // 14: invora.marketplace.v2.MarketplaceConnection.provider_subscription_status:type_name -> invora.marketplace.v2.ProviderSubscriptionStatus
-	60, // 15: invora.marketplace.v2.MarketplaceConnection.audit:type_name -> kernel.CreateUpdateAuditInfo
+	64, // 15: invora.marketplace.v2.MarketplaceConnection.audit:type_name -> kernel.CreateUpdateAuditInfo
 	2,  // 16: invora.marketplace.v2.SyncEvent.event_type:type_name -> invora.marketplace.v2.SyncEventType
-	59, // 17: invora.marketplace.v2.SyncEvent.timestamp:type_name -> google.protobuf.Timestamp
-	57, // 18: invora.marketplace.v2.SyncEvent.raw_payload:type_name -> google.protobuf.Struct
-	57, // 19: invora.marketplace.v2.ProviderBranch.metadata:type_name -> google.protobuf.Struct
-	59, // 20: invora.marketplace.v2.ConnectionHealthReport.checked_at:type_name -> google.protobuf.Timestamp
-	59, // 21: invora.marketplace.v2.ConnectionHealthReport.token_expires_at:type_name -> google.protobuf.Timestamp
-	8,  // 22: invora.marketplace.v2.ConnectionHealthReport.webhook_health:type_name -> invora.marketplace.v2.WebhookHealth
-	59, // 23: invora.marketplace.v2.ConnectionHealthReport.last_successful_sync_at:type_name -> google.protobuf.Timestamp
-	59, // 24: invora.marketplace.v2.WebhookTokenDelivery.token_expires_at:type_name -> google.protobuf.Timestamp
-	4,  // 25: invora.marketplace.v2.ListProvidersResponse.items:type_name -> invora.marketplace.v2.MarketplaceProvider
-	4,  // 26: invora.marketplace.v2.GetProviderResponse.details:type_name -> invora.marketplace.v2.MarketplaceProvider
-	7,  // 27: invora.marketplace.v2.InitiateConnectionRequest.sync_config:type_name -> invora.marketplace.v2.SyncConfig
-	13, // 28: invora.marketplace.v2.CompleteConnectionRequest.code_exchange:type_name -> invora.marketplace.v2.OAuthCodeExchange
-	14, // 29: invora.marketplace.v2.CompleteConnectionRequest.webhook_token:type_name -> invora.marketplace.v2.WebhookTokenDelivery
-	15, // 30: invora.marketplace.v2.CompleteConnectionRequest.api_key:type_name -> invora.marketplace.v2.ApiKeyAuth
-	7,  // 31: invora.marketplace.v2.CompleteConnectionRequest.sync_config:type_name -> invora.marketplace.v2.SyncConfig
-	9,  // 32: invora.marketplace.v2.CompleteConnectionResponse.details:type_name -> invora.marketplace.v2.MarketplaceConnection
-	44, // 33: invora.marketplace.v2.ListConnectionsRequest.filter:type_name -> invora.marketplace.v2.ListConnectionsFilter
-	48, // 34: invora.marketplace.v2.ListConnectionsRequest.sort:type_name -> invora.marketplace.v2.ListConnectionsSort
-	61, // 35: invora.marketplace.v2.ListConnectionsRequest.pagination:type_name -> kernel.PaginationInfo
-	62, // 36: invora.marketplace.v2.ListConnectionsRequest.mask:type_name -> google.protobuf.FieldMask
-	9,  // 37: invora.marketplace.v2.ListConnectionsResponse.items:type_name -> invora.marketplace.v2.MarketplaceConnection
-	62, // 38: invora.marketplace.v2.GetConnectionRequest.mask:type_name -> google.protobuf.FieldMask
-	9,  // 39: invora.marketplace.v2.GetConnectionResponse.details:type_name -> invora.marketplace.v2.MarketplaceConnection
-	62, // 40: invora.marketplace.v2.UpdateConnectionRequest.mask:type_name -> google.protobuf.FieldMask
-	7,  // 41: invora.marketplace.v2.UpdateConnectionRequest.sync_config:type_name -> invora.marketplace.v2.SyncConfig
-	9,  // 42: invora.marketplace.v2.UpdateConnectionResponse.details:type_name -> invora.marketplace.v2.MarketplaceConnection
-	9,  // 43: invora.marketplace.v2.SetSyncEnabledResponse.details:type_name -> invora.marketplace.v2.MarketplaceConnection
-	11, // 44: invora.marketplace.v2.ListProviderBranchesResponse.items:type_name -> invora.marketplace.v2.ProviderBranch
-	58, // 45: invora.marketplace.v2.TriggerSyncRequest.from_date:type_name -> google.type.Date
-	58, // 46: invora.marketplace.v2.TriggerSyncRequest.to_date:type_name -> google.type.Date
-	9,  // 47: invora.marketplace.v2.TriggerSyncResponse.details:type_name -> invora.marketplace.v2.MarketplaceConnection
-	50, // 48: invora.marketplace.v2.ListSyncEventsRequest.filter:type_name -> invora.marketplace.v2.ListSyncEventsFilter
-	53, // 49: invora.marketplace.v2.ListSyncEventsRequest.sort:type_name -> invora.marketplace.v2.ListSyncEventsSort
-	61, // 50: invora.marketplace.v2.ListSyncEventsRequest.pagination:type_name -> kernel.PaginationInfo
-	62, // 51: invora.marketplace.v2.ListSyncEventsRequest.mask:type_name -> google.protobuf.FieldMask
-	10, // 52: invora.marketplace.v2.ListSyncEventsResponse.items:type_name -> invora.marketplace.v2.SyncEvent
-	12, // 53: invora.marketplace.v2.CheckConnectionHealthResponse.report:type_name -> invora.marketplace.v2.ConnectionHealthReport
-	45, // 54: invora.marketplace.v2.ListConnectionsFilter.part:type_name -> invora.marketplace.v2.ListConnectionsFilterPart
-	63, // 55: invora.marketplace.v2.ListConnectionsFilter.time_reference:type_name -> kernel.TimeReferenceInfo
-	64, // 56: invora.marketplace.v2.ListConnectionsFilterPart.connection_id:type_name -> kernel.ListRequestFilterPartId
-	64, // 57: invora.marketplace.v2.ListConnectionsFilterPart.provider_id:type_name -> kernel.ListRequestFilterPartId
-	46, // 58: invora.marketplace.v2.ListConnectionsFilterPart.status:type_name -> invora.marketplace.v2.ListConnectionStatusFilter
-	65, // 59: invora.marketplace.v2.ListConnectionsFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDateV2
-	65, // 60: invora.marketplace.v2.ListConnectionsFilterPart.updated_at:type_name -> kernel.ListRequestFilterPartDateV2
-	65, // 61: invora.marketplace.v2.ListConnectionsFilterPart.last_sync_at:type_name -> kernel.ListRequestFilterPartDateV2
-	47, // 62: invora.marketplace.v2.ListConnectionsFilterPart.auth_method:type_name -> invora.marketplace.v2.ListAuthMethodFilter
-	55, // 63: invora.marketplace.v2.ListConnectionsFilterPart.and:type_name -> invora.marketplace.v2.ListConnectionsFilterPart.Operands
-	55, // 64: invora.marketplace.v2.ListConnectionsFilterPart.or:type_name -> invora.marketplace.v2.ListConnectionsFilterPart.Operands
-	45, // 65: invora.marketplace.v2.ListConnectionsFilterPart.not:type_name -> invora.marketplace.v2.ListConnectionsFilterPart
-	0,  // 66: invora.marketplace.v2.ListConnectionStatusFilter.in_values:type_name -> invora.marketplace.v2.ConnectionStatus
-	1,  // 67: invora.marketplace.v2.ListAuthMethodFilter.in_values:type_name -> invora.marketplace.v2.AuthMethod
-	49, // 68: invora.marketplace.v2.ListConnectionsSort.rules:type_name -> invora.marketplace.v2.ListConnectionsSortRule
-	66, // 69: invora.marketplace.v2.ListConnectionsSortRule.created_at:type_name -> kernel.SortDirection
-	66, // 70: invora.marketplace.v2.ListConnectionsSortRule.updated_at:type_name -> kernel.SortDirection
-	66, // 71: invora.marketplace.v2.ListConnectionsSortRule.last_sync_at:type_name -> kernel.SortDirection
-	66, // 72: invora.marketplace.v2.ListConnectionsSortRule.store_name:type_name -> kernel.SortDirection
-	51, // 73: invora.marketplace.v2.ListSyncEventsFilter.part:type_name -> invora.marketplace.v2.ListSyncEventsFilterPart
-	65, // 74: invora.marketplace.v2.ListSyncEventsFilterPart.timestamp:type_name -> kernel.ListRequestFilterPartDateV2
-	52, // 75: invora.marketplace.v2.ListSyncEventsFilterPart.event_type:type_name -> invora.marketplace.v2.ListSyncEventTypeFilter
-	64, // 76: invora.marketplace.v2.ListSyncEventsFilterPart.marketplace_order_id:type_name -> kernel.ListRequestFilterPartId
-	64, // 77: invora.marketplace.v2.ListSyncEventsFilterPart.imported_invoice_key:type_name -> kernel.ListRequestFilterPartId
-	64, // 78: invora.marketplace.v2.ListSyncEventsFilterPart.invora_branch_id:type_name -> kernel.ListRequestFilterPartId
-	56, // 79: invora.marketplace.v2.ListSyncEventsFilterPart.and:type_name -> invora.marketplace.v2.ListSyncEventsFilterPart.Operands
-	56, // 80: invora.marketplace.v2.ListSyncEventsFilterPart.or:type_name -> invora.marketplace.v2.ListSyncEventsFilterPart.Operands
-	51, // 81: invora.marketplace.v2.ListSyncEventsFilterPart.not:type_name -> invora.marketplace.v2.ListSyncEventsFilterPart
-	2,  // 82: invora.marketplace.v2.ListSyncEventTypeFilter.in_values:type_name -> invora.marketplace.v2.SyncEventType
-	54, // 83: invora.marketplace.v2.ListSyncEventsSort.rules:type_name -> invora.marketplace.v2.ListSyncEventsSortRule
-	66, // 84: invora.marketplace.v2.ListSyncEventsSortRule.timestamp:type_name -> kernel.SortDirection
-	66, // 85: invora.marketplace.v2.ListSyncEventsSortRule.event_type:type_name -> kernel.SortDirection
-	45, // 86: invora.marketplace.v2.ListConnectionsFilterPart.Operands.operands:type_name -> invora.marketplace.v2.ListConnectionsFilterPart
-	51, // 87: invora.marketplace.v2.ListSyncEventsFilterPart.Operands.operands:type_name -> invora.marketplace.v2.ListSyncEventsFilterPart
-	88, // [88:88] is the sub-list for method output_type
-	88, // [88:88] is the sub-list for method input_type
-	88, // [88:88] is the sub-list for extension type_name
-	88, // [88:88] is the sub-list for extension extendee
-	0,  // [0:88] is the sub-list for field type_name
+	63, // 17: invora.marketplace.v2.SyncEvent.timestamp:type_name -> google.protobuf.Timestamp
+	61, // 18: invora.marketplace.v2.SyncEvent.raw_payload:type_name -> google.protobuf.Struct
+	61, // 19: invora.marketplace.v2.ProviderBranch.metadata:type_name -> google.protobuf.Struct
+	63, // 20: invora.marketplace.v2.ConnectionHealthReport.checked_at:type_name -> google.protobuf.Timestamp
+	63, // 21: invora.marketplace.v2.ConnectionHealthReport.token_expires_at:type_name -> google.protobuf.Timestamp
+	9,  // 22: invora.marketplace.v2.ConnectionHealthReport.webhook_health:type_name -> invora.marketplace.v2.WebhookHealth
+	63, // 23: invora.marketplace.v2.ConnectionHealthReport.last_successful_sync_at:type_name -> google.protobuf.Timestamp
+	4,  // 24: invora.marketplace.v2.SyncedEmployee.outcome:type_name -> invora.marketplace.v2.SyncOutcome
+	63, // 25: invora.marketplace.v2.WebhookTokenDelivery.token_expires_at:type_name -> google.protobuf.Timestamp
+	5,  // 26: invora.marketplace.v2.ListProvidersResponse.items:type_name -> invora.marketplace.v2.MarketplaceProvider
+	5,  // 27: invora.marketplace.v2.GetProviderResponse.details:type_name -> invora.marketplace.v2.MarketplaceProvider
+	8,  // 28: invora.marketplace.v2.InitiateConnectionRequest.sync_config:type_name -> invora.marketplace.v2.SyncConfig
+	15, // 29: invora.marketplace.v2.CompleteConnectionRequest.code_exchange:type_name -> invora.marketplace.v2.OAuthCodeExchange
+	16, // 30: invora.marketplace.v2.CompleteConnectionRequest.webhook_token:type_name -> invora.marketplace.v2.WebhookTokenDelivery
+	17, // 31: invora.marketplace.v2.CompleteConnectionRequest.api_key:type_name -> invora.marketplace.v2.ApiKeyAuth
+	8,  // 32: invora.marketplace.v2.CompleteConnectionRequest.sync_config:type_name -> invora.marketplace.v2.SyncConfig
+	10, // 33: invora.marketplace.v2.CompleteConnectionResponse.details:type_name -> invora.marketplace.v2.MarketplaceConnection
+	48, // 34: invora.marketplace.v2.ListConnectionsRequest.filter:type_name -> invora.marketplace.v2.ListConnectionsFilter
+	52, // 35: invora.marketplace.v2.ListConnectionsRequest.sort:type_name -> invora.marketplace.v2.ListConnectionsSort
+	65, // 36: invora.marketplace.v2.ListConnectionsRequest.pagination:type_name -> kernel.PaginationInfo
+	66, // 37: invora.marketplace.v2.ListConnectionsRequest.mask:type_name -> google.protobuf.FieldMask
+	10, // 38: invora.marketplace.v2.ListConnectionsResponse.items:type_name -> invora.marketplace.v2.MarketplaceConnection
+	66, // 39: invora.marketplace.v2.GetConnectionRequest.mask:type_name -> google.protobuf.FieldMask
+	10, // 40: invora.marketplace.v2.GetConnectionResponse.details:type_name -> invora.marketplace.v2.MarketplaceConnection
+	66, // 41: invora.marketplace.v2.UpdateConnectionRequest.mask:type_name -> google.protobuf.FieldMask
+	8,  // 42: invora.marketplace.v2.UpdateConnectionRequest.sync_config:type_name -> invora.marketplace.v2.SyncConfig
+	10, // 43: invora.marketplace.v2.UpdateConnectionResponse.details:type_name -> invora.marketplace.v2.MarketplaceConnection
+	10, // 44: invora.marketplace.v2.SetSyncEnabledResponse.details:type_name -> invora.marketplace.v2.MarketplaceConnection
+	12, // 45: invora.marketplace.v2.ListProviderBranchesResponse.items:type_name -> invora.marketplace.v2.ProviderBranch
+	62, // 46: invora.marketplace.v2.TriggerSyncRequest.from_date:type_name -> google.type.Date
+	62, // 47: invora.marketplace.v2.TriggerSyncRequest.to_date:type_name -> google.type.Date
+	10, // 48: invora.marketplace.v2.TriggerSyncResponse.details:type_name -> invora.marketplace.v2.MarketplaceConnection
+	14, // 49: invora.marketplace.v2.SyncSallaTeamResponse.items:type_name -> invora.marketplace.v2.SyncedEmployee
+	54, // 50: invora.marketplace.v2.ListSyncEventsRequest.filter:type_name -> invora.marketplace.v2.ListSyncEventsFilter
+	57, // 51: invora.marketplace.v2.ListSyncEventsRequest.sort:type_name -> invora.marketplace.v2.ListSyncEventsSort
+	65, // 52: invora.marketplace.v2.ListSyncEventsRequest.pagination:type_name -> kernel.PaginationInfo
+	66, // 53: invora.marketplace.v2.ListSyncEventsRequest.mask:type_name -> google.protobuf.FieldMask
+	11, // 54: invora.marketplace.v2.ListSyncEventsResponse.items:type_name -> invora.marketplace.v2.SyncEvent
+	13, // 55: invora.marketplace.v2.CheckConnectionHealthResponse.report:type_name -> invora.marketplace.v2.ConnectionHealthReport
+	49, // 56: invora.marketplace.v2.ListConnectionsFilter.part:type_name -> invora.marketplace.v2.ListConnectionsFilterPart
+	67, // 57: invora.marketplace.v2.ListConnectionsFilter.time_reference:type_name -> kernel.TimeReferenceInfo
+	68, // 58: invora.marketplace.v2.ListConnectionsFilterPart.connection_id:type_name -> kernel.ListRequestFilterPartId
+	68, // 59: invora.marketplace.v2.ListConnectionsFilterPart.provider_id:type_name -> kernel.ListRequestFilterPartId
+	50, // 60: invora.marketplace.v2.ListConnectionsFilterPart.status:type_name -> invora.marketplace.v2.ListConnectionStatusFilter
+	69, // 61: invora.marketplace.v2.ListConnectionsFilterPart.created_at:type_name -> kernel.ListRequestFilterPartDateV2
+	69, // 62: invora.marketplace.v2.ListConnectionsFilterPart.updated_at:type_name -> kernel.ListRequestFilterPartDateV2
+	69, // 63: invora.marketplace.v2.ListConnectionsFilterPart.last_sync_at:type_name -> kernel.ListRequestFilterPartDateV2
+	51, // 64: invora.marketplace.v2.ListConnectionsFilterPart.auth_method:type_name -> invora.marketplace.v2.ListAuthMethodFilter
+	59, // 65: invora.marketplace.v2.ListConnectionsFilterPart.and:type_name -> invora.marketplace.v2.ListConnectionsFilterPart.Operands
+	59, // 66: invora.marketplace.v2.ListConnectionsFilterPart.or:type_name -> invora.marketplace.v2.ListConnectionsFilterPart.Operands
+	49, // 67: invora.marketplace.v2.ListConnectionsFilterPart.not:type_name -> invora.marketplace.v2.ListConnectionsFilterPart
+	0,  // 68: invora.marketplace.v2.ListConnectionStatusFilter.in_values:type_name -> invora.marketplace.v2.ConnectionStatus
+	1,  // 69: invora.marketplace.v2.ListAuthMethodFilter.in_values:type_name -> invora.marketplace.v2.AuthMethod
+	53, // 70: invora.marketplace.v2.ListConnectionsSort.rules:type_name -> invora.marketplace.v2.ListConnectionsSortRule
+	70, // 71: invora.marketplace.v2.ListConnectionsSortRule.created_at:type_name -> kernel.SortDirection
+	70, // 72: invora.marketplace.v2.ListConnectionsSortRule.updated_at:type_name -> kernel.SortDirection
+	70, // 73: invora.marketplace.v2.ListConnectionsSortRule.last_sync_at:type_name -> kernel.SortDirection
+	70, // 74: invora.marketplace.v2.ListConnectionsSortRule.store_name:type_name -> kernel.SortDirection
+	55, // 75: invora.marketplace.v2.ListSyncEventsFilter.part:type_name -> invora.marketplace.v2.ListSyncEventsFilterPart
+	69, // 76: invora.marketplace.v2.ListSyncEventsFilterPart.timestamp:type_name -> kernel.ListRequestFilterPartDateV2
+	56, // 77: invora.marketplace.v2.ListSyncEventsFilterPart.event_type:type_name -> invora.marketplace.v2.ListSyncEventTypeFilter
+	68, // 78: invora.marketplace.v2.ListSyncEventsFilterPart.marketplace_order_id:type_name -> kernel.ListRequestFilterPartId
+	68, // 79: invora.marketplace.v2.ListSyncEventsFilterPart.imported_invoice_key:type_name -> kernel.ListRequestFilterPartId
+	68, // 80: invora.marketplace.v2.ListSyncEventsFilterPart.invora_branch_id:type_name -> kernel.ListRequestFilterPartId
+	60, // 81: invora.marketplace.v2.ListSyncEventsFilterPart.and:type_name -> invora.marketplace.v2.ListSyncEventsFilterPart.Operands
+	60, // 82: invora.marketplace.v2.ListSyncEventsFilterPart.or:type_name -> invora.marketplace.v2.ListSyncEventsFilterPart.Operands
+	55, // 83: invora.marketplace.v2.ListSyncEventsFilterPart.not:type_name -> invora.marketplace.v2.ListSyncEventsFilterPart
+	2,  // 84: invora.marketplace.v2.ListSyncEventTypeFilter.in_values:type_name -> invora.marketplace.v2.SyncEventType
+	58, // 85: invora.marketplace.v2.ListSyncEventsSort.rules:type_name -> invora.marketplace.v2.ListSyncEventsSortRule
+	70, // 86: invora.marketplace.v2.ListSyncEventsSortRule.timestamp:type_name -> kernel.SortDirection
+	70, // 87: invora.marketplace.v2.ListSyncEventsSortRule.event_type:type_name -> kernel.SortDirection
+	49, // 88: invora.marketplace.v2.ListConnectionsFilterPart.Operands.operands:type_name -> invora.marketplace.v2.ListConnectionsFilterPart
+	55, // 89: invora.marketplace.v2.ListSyncEventsFilterPart.Operands.operands:type_name -> invora.marketplace.v2.ListSyncEventsFilterPart
+	90, // [90:90] is the sub-list for method output_type
+	90, // [90:90] is the sub-list for method input_type
+	90, // [90:90] is the sub-list for extension type_name
+	90, // [90:90] is the sub-list for extension extendee
+	0,  // [0:90] is the sub-list for field type_name
 }
 
 func init() { file_invora_marketplace_v2_models_proto_init() }
@@ -4500,20 +4777,20 @@ func file_invora_marketplace_v2_models_proto_init() {
 	file_invora_marketplace_v2_models_proto_msgTypes[5].OneofWrappers = []any{}
 	file_invora_marketplace_v2_models_proto_msgTypes[6].OneofWrappers = []any{}
 	file_invora_marketplace_v2_models_proto_msgTypes[7].OneofWrappers = []any{}
-	file_invora_marketplace_v2_models_proto_msgTypes[10].OneofWrappers = []any{}
 	file_invora_marketplace_v2_models_proto_msgTypes[11].OneofWrappers = []any{}
-	file_invora_marketplace_v2_models_proto_msgTypes[16].OneofWrappers = []any{}
+	file_invora_marketplace_v2_models_proto_msgTypes[12].OneofWrappers = []any{}
 	file_invora_marketplace_v2_models_proto_msgTypes[17].OneofWrappers = []any{}
-	file_invora_marketplace_v2_models_proto_msgTypes[18].OneofWrappers = []any{
+	file_invora_marketplace_v2_models_proto_msgTypes[18].OneofWrappers = []any{}
+	file_invora_marketplace_v2_models_proto_msgTypes[19].OneofWrappers = []any{
 		(*CompleteConnectionRequest_CodeExchange)(nil),
 		(*CompleteConnectionRequest_WebhookToken)(nil),
 		(*CompleteConnectionRequest_ApiKey)(nil),
 	}
-	file_invora_marketplace_v2_models_proto_msgTypes[21].OneofWrappers = []any{}
-	file_invora_marketplace_v2_models_proto_msgTypes[30].OneofWrappers = []any{}
+	file_invora_marketplace_v2_models_proto_msgTypes[22].OneofWrappers = []any{}
 	file_invora_marketplace_v2_models_proto_msgTypes[31].OneofWrappers = []any{}
-	file_invora_marketplace_v2_models_proto_msgTypes[37].OneofWrappers = []any{}
-	file_invora_marketplace_v2_models_proto_msgTypes[41].OneofWrappers = []any{
+	file_invora_marketplace_v2_models_proto_msgTypes[32].OneofWrappers = []any{}
+	file_invora_marketplace_v2_models_proto_msgTypes[40].OneofWrappers = []any{}
+	file_invora_marketplace_v2_models_proto_msgTypes[44].OneofWrappers = []any{
 		(*ListConnectionsFilterPart_ConnectionId)(nil),
 		(*ListConnectionsFilterPart_ProviderId)(nil),
 		(*ListConnectionsFilterPart_Status)(nil),
@@ -4526,13 +4803,13 @@ func file_invora_marketplace_v2_models_proto_init() {
 		(*ListConnectionsFilterPart_Or)(nil),
 		(*ListConnectionsFilterPart_Not)(nil),
 	}
-	file_invora_marketplace_v2_models_proto_msgTypes[45].OneofWrappers = []any{
+	file_invora_marketplace_v2_models_proto_msgTypes[48].OneofWrappers = []any{
 		(*ListConnectionsSortRule_CreatedAt)(nil),
 		(*ListConnectionsSortRule_UpdatedAt)(nil),
 		(*ListConnectionsSortRule_LastSyncAt)(nil),
 		(*ListConnectionsSortRule_StoreName)(nil),
 	}
-	file_invora_marketplace_v2_models_proto_msgTypes[47].OneofWrappers = []any{
+	file_invora_marketplace_v2_models_proto_msgTypes[50].OneofWrappers = []any{
 		(*ListSyncEventsFilterPart_Timestamp)(nil),
 		(*ListSyncEventsFilterPart_EventType)(nil),
 		(*ListSyncEventsFilterPart_MarketplaceOrderId)(nil),
@@ -4542,7 +4819,7 @@ func file_invora_marketplace_v2_models_proto_init() {
 		(*ListSyncEventsFilterPart_Or)(nil),
 		(*ListSyncEventsFilterPart_Not)(nil),
 	}
-	file_invora_marketplace_v2_models_proto_msgTypes[50].OneofWrappers = []any{
+	file_invora_marketplace_v2_models_proto_msgTypes[53].OneofWrappers = []any{
 		(*ListSyncEventsSortRule_Timestamp)(nil),
 		(*ListSyncEventsSortRule_EventType)(nil),
 	}
@@ -4551,8 +4828,8 @@ func file_invora_marketplace_v2_models_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_marketplace_v2_models_proto_rawDesc), len(file_invora_marketplace_v2_models_proto_rawDesc)),
-			NumEnums:      4,
-			NumMessages:   53,
+			NumEnums:      5,
+			NumMessages:   56,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

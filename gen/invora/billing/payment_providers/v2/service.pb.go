@@ -723,7 +723,7 @@ type UpdateAdyenRequest struct {
 	Name               *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
 	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
-	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask               *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -800,9 +800,9 @@ func (x *UpdateAdyenRequest) GetSupports3Ds() bool {
 	return false
 }
 
-func (x *UpdateAdyenRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateAdyenRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -979,7 +979,7 @@ type UpdateCashfreeRequest struct {
 	Name               *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
 	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
-	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask               *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -1056,9 +1056,9 @@ func (x *UpdateCashfreeRequest) GetSupports3Ds() bool {
 	return false
 }
 
-func (x *UpdateCashfreeRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateCashfreeRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -1227,7 +1227,7 @@ type UpdateFlutterwaveRequest struct {
 	Name               *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
 	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
-	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask               *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -1304,9 +1304,9 @@ func (x *UpdateFlutterwaveRequest) GetSupports3Ds() bool {
 	return false
 }
 
-func (x *UpdateFlutterwaveRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateFlutterwaveRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -1475,7 +1475,7 @@ type UpdateGocardlessRequest struct {
 	Name               *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
 	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
-	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask               *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -1552,9 +1552,9 @@ func (x *UpdateGocardlessRequest) GetSupports3Ds() bool {
 	return false
 }
 
-func (x *UpdateGocardlessRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateGocardlessRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -1731,7 +1731,7 @@ type UpdateMoneyhashRequest struct {
 	Name               *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
 	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
-	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask               *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -1808,9 +1808,9 @@ func (x *UpdateMoneyhashRequest) GetSupports3Ds() bool {
 	return false
 }
 
-func (x *UpdateMoneyhashRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateMoneyhashRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -1987,7 +1987,7 @@ type UpdateStripeRequest struct {
 	Name               *string                `protobuf:"bytes,4,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	SuccessRedirectUrl *string                `protobuf:"bytes,5,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
 	Supports3Ds        *bool                  `protobuf:"varint,6,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
-	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask               *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -2064,9 +2064,9 @@ func (x *UpdateStripeRequest) GetSupports3Ds() bool {
 	return false
 }
 
-func (x *UpdateStripeRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateStripeRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -2254,7 +2254,7 @@ type UpdateTapRequest struct {
 	SaveCardEnabled    *bool                  `protobuf:"varint,5,opt,name=save_card_enabled,json=saveCardEnabled,proto3,oneof" json:"save_card_enabled,omitempty"`
 	SuccessRedirectUrl *string                `protobuf:"bytes,6,opt,name=success_redirect_url,json=successRedirectUrl,proto3,oneof" json:"success_redirect_url,omitempty"`
 	Supports3Ds        *bool                  `protobuf:"varint,7,opt,name=supports3ds,proto3,oneof" json:"supports3ds,omitempty"`
-	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask               *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -2338,9 +2338,9 @@ func (x *UpdateTapRequest) GetSupports3Ds() bool {
 	return false
 }
 
-func (x *UpdateTapRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateTapRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -2448,16 +2448,15 @@ const file_invora_billing_payment_providers_v2_service_proto_rawDesc = "" +
 	"\f_live_prefixB\x17\n" +
 	"\x15_success_redirect_url\"e\n" +
 	"\x13CreateAdyenResponse\x12N\n" +
-	"\x0eadyen_provider\x18\x01 \x01(\v2'.invora.billing.common.v2.AdyenProviderR\radyenProvider\"\xd6\x02\n" +
+	"\x0eadyen_provider\x18\x01 \x01(\v2'.invora.billing.common.v2.AdyenProviderR\radyenProvider\"\xc9\x02\n" +
 	"\x12UpdateAdyenRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
 	"\aflow_id\x18\x03 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x125\n" +
 	"\x14success_redirect_url\x18\x05 \x01(\tH\x03R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
-	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\a\n" +
+	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\a\n" +
 	"\x05_codeB\n" +
 	"\n" +
 	"\b_flow_idB\a\n" +
@@ -2474,16 +2473,15 @@ const file_invora_billing_payment_providers_v2_service_proto_rawDesc = "" +
 	"\x14success_redirect_url\x18\x05 \x01(\tH\x00R\x12successRedirectUrl\x88\x01\x01B\x17\n" +
 	"\x15_success_redirect_url\"q\n" +
 	"\x16CreateCashfreeResponse\x12W\n" +
-	"\x11cashfree_provider\x18\x01 \x01(\v2*.invora.billing.common.v2.CashfreeProviderR\x10cashfreeProvider\"\xd9\x02\n" +
+	"\x11cashfree_provider\x18\x01 \x01(\v2*.invora.billing.common.v2.CashfreeProviderR\x10cashfreeProvider\"\xcc\x02\n" +
 	"\x15UpdateCashfreeRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
 	"\aflow_id\x18\x03 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x125\n" +
 	"\x14success_redirect_url\x18\x05 \x01(\tH\x03R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
-	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\a\n" +
+	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\a\n" +
 	"\x05_codeB\n" +
 	"\n" +
 	"\b_flow_idB\a\n" +
@@ -2500,16 +2498,15 @@ const file_invora_billing_payment_providers_v2_service_proto_rawDesc = "" +
 	"\x14success_redirect_url\x18\x04 \x01(\tH\x00R\x12successRedirectUrl\x88\x01\x01B\x17\n" +
 	"\x15_success_redirect_url\"}\n" +
 	"\x19CreateFlutterwaveResponse\x12`\n" +
-	"\x14flutterwave_provider\x18\x01 \x01(\v2-.invora.billing.common.v2.FlutterwaveProviderR\x13flutterwaveProvider\"\xdc\x02\n" +
+	"\x14flutterwave_provider\x18\x01 \x01(\v2-.invora.billing.common.v2.FlutterwaveProviderR\x13flutterwaveProvider\"\xcf\x02\n" +
 	"\x18UpdateFlutterwaveRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
 	"\aflow_id\x18\x03 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x125\n" +
 	"\x14success_redirect_url\x18\x05 \x01(\tH\x03R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
-	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\a\n" +
+	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\a\n" +
 	"\x05_codeB\n" +
 	"\n" +
 	"\b_flow_idB\a\n" +
@@ -2527,16 +2524,15 @@ const file_invora_billing_payment_providers_v2_service_proto_rawDesc = "" +
 	"\f_access_codeB\x17\n" +
 	"\x15_success_redirect_url\"y\n" +
 	"\x18CreateGocardlessResponse\x12]\n" +
-	"\x13gocardless_provider\x18\x01 \x01(\v2,.invora.billing.common.v2.GocardlessProviderR\x12gocardlessProvider\"\xdb\x02\n" +
+	"\x13gocardless_provider\x18\x01 \x01(\v2,.invora.billing.common.v2.GocardlessProviderR\x12gocardlessProvider\"\xce\x02\n" +
 	"\x17UpdateGocardlessRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
 	"\aflow_id\x18\x03 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x125\n" +
 	"\x14success_redirect_url\x18\x05 \x01(\tH\x03R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
-	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\a\n" +
+	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\a\n" +
 	"\x05_codeB\n" +
 	"\n" +
 	"\b_flow_idB\a\n" +
@@ -2553,16 +2549,15 @@ const file_invora_billing_payment_providers_v2_service_proto_rawDesc = "" +
 	"\x14success_redirect_url\x18\x05 \x01(\tH\x00R\x12successRedirectUrl\x88\x01\x01B\x17\n" +
 	"\x15_success_redirect_url\"u\n" +
 	"\x17CreateMoneyhashResponse\x12Z\n" +
-	"\x12moneyhash_provider\x18\x01 \x01(\v2+.invora.billing.common.v2.MoneyhashProviderR\x11moneyhashProvider\"\xda\x02\n" +
+	"\x12moneyhash_provider\x18\x01 \x01(\v2+.invora.billing.common.v2.MoneyhashProviderR\x11moneyhashProvider\"\xcd\x02\n" +
 	"\x16UpdateMoneyhashRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
 	"\aflow_id\x18\x03 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x125\n" +
 	"\x14success_redirect_url\x18\x05 \x01(\tH\x03R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
-	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\a\n" +
+	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\a\n" +
 	"\x05_codeB\n" +
 	"\n" +
 	"\b_flow_idB\a\n" +
@@ -2582,16 +2577,15 @@ const file_invora_billing_payment_providers_v2_service_proto_rawDesc = "" +
 	"\x15_success_redirect_urlB\x0e\n" +
 	"\f_supports3ds\"i\n" +
 	"\x14CreateStripeResponse\x12Q\n" +
-	"\x0fstripe_provider\x18\x01 \x01(\v2(.invora.billing.common.v2.StripeProviderR\x0estripeProvider\"\xd7\x02\n" +
+	"\x0fstripe_provider\x18\x01 \x01(\v2(.invora.billing.common.v2.StripeProviderR\x0estripeProvider\"\xca\x02\n" +
 	"\x13UpdateStripeRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
 	"\aflow_id\x18\x03 \x01(\tH\x01R\x06flowId\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x125\n" +
 	"\x14success_redirect_url\x18\x05 \x01(\tH\x03R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
-	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\a\n" +
+	"\vsupports3ds\x18\x06 \x01(\bH\x04R\vsupports3ds\x88\x01\x01\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\a\n" +
 	"\x05_codeB\n" +
 	"\n" +
 	"\b_flow_idB\a\n" +
@@ -2613,7 +2607,7 @@ const file_invora_billing_payment_providers_v2_service_proto_rawDesc = "" +
 	"\x15_success_redirect_urlB\x0e\n" +
 	"\f_supports3ds\"]\n" +
 	"\x11CreateTapResponse\x12H\n" +
-	"\ftap_provider\x18\x01 \x01(\v2%.invora.billing.common.v2.TapProviderR\vtapProvider\"\x9b\x03\n" +
+	"\ftap_provider\x18\x01 \x01(\v2%.invora.billing.common.v2.TapProviderR\vtapProvider\"\x8e\x03\n" +
 	"\x10UpdateTapRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\x04code\x18\x02 \x01(\tH\x00R\x04code\x88\x01\x01\x12\x1c\n" +
@@ -2621,9 +2615,8 @@ const file_invora_billing_payment_providers_v2_service_proto_rawDesc = "" +
 	"\x04name\x18\x04 \x01(\tH\x02R\x04name\x88\x01\x01\x12/\n" +
 	"\x11save_card_enabled\x18\x05 \x01(\bH\x03R\x0fsaveCardEnabled\x88\x01\x01\x125\n" +
 	"\x14success_redirect_url\x18\x06 \x01(\tH\x04R\x12successRedirectUrl\x88\x01\x01\x12%\n" +
-	"\vsupports3ds\x18\a \x01(\bH\x05R\vsupports3ds\x88\x01\x01\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\a\n" +
+	"\vsupports3ds\x18\a \x01(\bH\x05R\vsupports3ds\x88\x01\x01\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\a\n" +
 	"\x05_codeB\n" +
 	"\n" +
 	"\b_flow_idB\a\n" +
@@ -2751,25 +2744,25 @@ var file_invora_billing_payment_providers_v2_service_proto_depIdxs = []int32{
 	7,  // 11: invora.billing.payment_providers.v2.ListSort.rules:type_name -> invora.billing.payment_providers.v2.ListSortRule
 	43, // 12: invora.billing.payment_providers.v2.ListSortRule.created_at:type_name -> kernel.SortDirection
 	44, // 13: invora.billing.payment_providers.v2.CreateAdyenResponse.adyen_provider:type_name -> invora.billing.common.v2.AdyenProvider
-	38, // 14: invora.billing.payment_providers.v2.UpdateAdyenRequest.update_mask:type_name -> google.protobuf.FieldMask
+	38, // 14: invora.billing.payment_providers.v2.UpdateAdyenRequest.mask:type_name -> google.protobuf.FieldMask
 	44, // 15: invora.billing.payment_providers.v2.UpdateAdyenResponse.adyen_provider:type_name -> invora.billing.common.v2.AdyenProvider
 	45, // 16: invora.billing.payment_providers.v2.CreateCashfreeResponse.cashfree_provider:type_name -> invora.billing.common.v2.CashfreeProvider
-	38, // 17: invora.billing.payment_providers.v2.UpdateCashfreeRequest.update_mask:type_name -> google.protobuf.FieldMask
+	38, // 17: invora.billing.payment_providers.v2.UpdateCashfreeRequest.mask:type_name -> google.protobuf.FieldMask
 	45, // 18: invora.billing.payment_providers.v2.UpdateCashfreeResponse.cashfree_provider:type_name -> invora.billing.common.v2.CashfreeProvider
 	46, // 19: invora.billing.payment_providers.v2.CreateFlutterwaveResponse.flutterwave_provider:type_name -> invora.billing.common.v2.FlutterwaveProvider
-	38, // 20: invora.billing.payment_providers.v2.UpdateFlutterwaveRequest.update_mask:type_name -> google.protobuf.FieldMask
+	38, // 20: invora.billing.payment_providers.v2.UpdateFlutterwaveRequest.mask:type_name -> google.protobuf.FieldMask
 	46, // 21: invora.billing.payment_providers.v2.UpdateFlutterwaveResponse.flutterwave_provider:type_name -> invora.billing.common.v2.FlutterwaveProvider
 	47, // 22: invora.billing.payment_providers.v2.CreateGocardlessResponse.gocardless_provider:type_name -> invora.billing.common.v2.GocardlessProvider
-	38, // 23: invora.billing.payment_providers.v2.UpdateGocardlessRequest.update_mask:type_name -> google.protobuf.FieldMask
+	38, // 23: invora.billing.payment_providers.v2.UpdateGocardlessRequest.mask:type_name -> google.protobuf.FieldMask
 	47, // 24: invora.billing.payment_providers.v2.UpdateGocardlessResponse.gocardless_provider:type_name -> invora.billing.common.v2.GocardlessProvider
 	48, // 25: invora.billing.payment_providers.v2.CreateMoneyhashResponse.moneyhash_provider:type_name -> invora.billing.common.v2.MoneyhashProvider
-	38, // 26: invora.billing.payment_providers.v2.UpdateMoneyhashRequest.update_mask:type_name -> google.protobuf.FieldMask
+	38, // 26: invora.billing.payment_providers.v2.UpdateMoneyhashRequest.mask:type_name -> google.protobuf.FieldMask
 	48, // 27: invora.billing.payment_providers.v2.UpdateMoneyhashResponse.moneyhash_provider:type_name -> invora.billing.common.v2.MoneyhashProvider
 	49, // 28: invora.billing.payment_providers.v2.CreateStripeResponse.stripe_provider:type_name -> invora.billing.common.v2.StripeProvider
-	38, // 29: invora.billing.payment_providers.v2.UpdateStripeRequest.update_mask:type_name -> google.protobuf.FieldMask
+	38, // 29: invora.billing.payment_providers.v2.UpdateStripeRequest.mask:type_name -> google.protobuf.FieldMask
 	49, // 30: invora.billing.payment_providers.v2.UpdateStripeResponse.stripe_provider:type_name -> invora.billing.common.v2.StripeProvider
 	50, // 31: invora.billing.payment_providers.v2.CreateTapResponse.tap_provider:type_name -> invora.billing.common.v2.TapProvider
-	38, // 32: invora.billing.payment_providers.v2.UpdateTapRequest.update_mask:type_name -> google.protobuf.FieldMask
+	38, // 32: invora.billing.payment_providers.v2.UpdateTapRequest.mask:type_name -> google.protobuf.FieldMask
 	50, // 33: invora.billing.payment_providers.v2.UpdateTapResponse.tap_provider:type_name -> invora.billing.common.v2.TapProvider
 	2,  // 34: invora.billing.payment_providers.v2.PaymentProvidersService.List:input_type -> invora.billing.payment_providers.v2.ListRequest
 	0,  // 35: invora.billing.payment_providers.v2.PaymentProvidersService.Get:input_type -> invora.billing.payment_providers.v2.GetRequest

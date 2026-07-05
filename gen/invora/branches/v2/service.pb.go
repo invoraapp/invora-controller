@@ -113,6 +113,96 @@ func (x *SetPrimaryResponse) GetDetails() *Branch {
 	return nil
 }
 
+// Request to restore a soft-deleted branch.
+type UndeleteRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Key           string                 `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UndeleteRequest) Reset() {
+	*x = UndeleteRequest{}
+	mi := &file_invora_branches_v2_service_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UndeleteRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UndeleteRequest) ProtoMessage() {}
+
+func (x *UndeleteRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_branches_v2_service_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UndeleteRequest.ProtoReflect.Descriptor instead.
+func (*UndeleteRequest) Descriptor() ([]byte, []int) {
+	return file_invora_branches_v2_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *UndeleteRequest) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+// Response after restoring a soft-deleted branch.
+type UndeleteResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Details       *Branch                `protobuf:"bytes,1,opt,name=details,proto3" json:"details,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UndeleteResponse) Reset() {
+	*x = UndeleteResponse{}
+	mi := &file_invora_branches_v2_service_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UndeleteResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UndeleteResponse) ProtoMessage() {}
+
+func (x *UndeleteResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_invora_branches_v2_service_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UndeleteResponse.ProtoReflect.Descriptor instead.
+func (*UndeleteResponse) Descriptor() ([]byte, []int) {
+	return file_invora_branches_v2_service_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *UndeleteResponse) GetDetails() *Branch {
+	if x != nil {
+		return x.Details
+	}
+	return nil
+}
+
 var File_invora_branches_v2_service_proto protoreflect.FileDescriptor
 
 const file_invora_branches_v2_service_proto_rawDesc = "" +
@@ -121,7 +211,11 @@ const file_invora_branches_v2_service_proto_rawDesc = "" +
 	"\x11SetPrimaryRequest\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\"J\n" +
 	"\x12SetPrimaryResponse\x124\n" +
-	"\adetails\x18\x01 \x01(\v2\x1a.invora.branches.v2.BranchR\adetails2\xa4\a\n" +
+	"\adetails\x18\x01 \x01(\v2\x1a.invora.branches.v2.BranchR\adetails\"#\n" +
+	"\x0fUndeleteRequest\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\"H\n" +
+	"\x10UndeleteResponse\x124\n" +
+	"\adetails\x18\x01 \x01(\v2\x1a.invora.branches.v2.BranchR\adetails2\xd0\b\n" +
 	"\x0fBranchesService\x12\x88\x01\n" +
 	"\x04List\x12\x1f.invora.branches.v2.ListRequest\x1a .invora.branches.v2.ListResponse\"=\xe2\xf2\x19\x19\n" +
 	"\x17Invora.Branches.v2.List\x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/api/v2/branches/list\x12\x82\x01\n" +
@@ -132,7 +226,9 @@ const file_invora_branches_v2_service_proto_rawDesc = "" +
 	"\x06Update\x12!.invora.branches.v2.UpdateRequest\x1a\".invora.branches.v2.UpdateResponse\"G\xe2\xf2\x19\"\n" +
 	" Invora.Branches.v2.Modify.Update\x82\xd3\xe4\x93\x02\x1b:\x01*\x1a\x16/api/v2/branches/{key}\x12\x99\x01\n" +
 	"\x06Delete\x12!.invora.branches.v2.DeleteRequest\x1a\".invora.branches.v2.DeleteResponse\"H\xe2\xf2\x19\"\n" +
-	" Invora.Branches.v2.Modify.Delete\x82\xd3\xe4\x93\x02\x1c:\x01*\"\x17/api/v2/branches/delete\x12\xb4\x01\n" +
+	" Invora.Branches.v2.Modify.Delete\x82\xd3\xe4\x93\x02\x1c:\x01*\"\x17/api/v2/branches/delete\x12\xa9\x01\n" +
+	"\bUndelete\x12#.invora.branches.v2.UndeleteRequest\x1a$.invora.branches.v2.UndeleteResponse\"R\xe2\xf2\x19$\n" +
+	"\"Invora.Branches.v2.Modify.Undelete\x82\xd3\xe4\x93\x02$:\x01*\"\x1f/api/v2/branches/{key}:undelete\x12\xb4\x01\n" +
 	"\n" +
 	"SetPrimary\x12%.invora.branches.v2.SetPrimaryRequest\x1a&.invora.branches.v2.SetPrimaryResponse\"W\xe2\xf2\x19&\n" +
 	"$Invora.Branches.v2.Modify.SetPrimary\x82\xd3\xe4\x93\x02':\x01*\"\"/api/v2/branches/{key}/set-primaryB\xda\x01\n" +
@@ -150,41 +246,46 @@ func file_invora_branches_v2_service_proto_rawDescGZIP() []byte {
 	return file_invora_branches_v2_service_proto_rawDescData
 }
 
-var file_invora_branches_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_invora_branches_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_invora_branches_v2_service_proto_goTypes = []any{
 	(*SetPrimaryRequest)(nil),  // 0: invora.branches.v2.SetPrimaryRequest
 	(*SetPrimaryResponse)(nil), // 1: invora.branches.v2.SetPrimaryResponse
-	(*Branch)(nil),             // 2: invora.branches.v2.Branch
-	(*ListRequest)(nil),        // 3: invora.branches.v2.ListRequest
-	(*GetRequest)(nil),         // 4: invora.branches.v2.GetRequest
-	(*CreateRequest)(nil),      // 5: invora.branches.v2.CreateRequest
-	(*UpdateRequest)(nil),      // 6: invora.branches.v2.UpdateRequest
-	(*DeleteRequest)(nil),      // 7: invora.branches.v2.DeleteRequest
-	(*ListResponse)(nil),       // 8: invora.branches.v2.ListResponse
-	(*GetResponse)(nil),        // 9: invora.branches.v2.GetResponse
-	(*CreateResponse)(nil),     // 10: invora.branches.v2.CreateResponse
-	(*UpdateResponse)(nil),     // 11: invora.branches.v2.UpdateResponse
-	(*DeleteResponse)(nil),     // 12: invora.branches.v2.DeleteResponse
+	(*UndeleteRequest)(nil),    // 2: invora.branches.v2.UndeleteRequest
+	(*UndeleteResponse)(nil),   // 3: invora.branches.v2.UndeleteResponse
+	(*Branch)(nil),             // 4: invora.branches.v2.Branch
+	(*ListRequest)(nil),        // 5: invora.branches.v2.ListRequest
+	(*GetRequest)(nil),         // 6: invora.branches.v2.GetRequest
+	(*CreateRequest)(nil),      // 7: invora.branches.v2.CreateRequest
+	(*UpdateRequest)(nil),      // 8: invora.branches.v2.UpdateRequest
+	(*DeleteRequest)(nil),      // 9: invora.branches.v2.DeleteRequest
+	(*ListResponse)(nil),       // 10: invora.branches.v2.ListResponse
+	(*GetResponse)(nil),        // 11: invora.branches.v2.GetResponse
+	(*CreateResponse)(nil),     // 12: invora.branches.v2.CreateResponse
+	(*UpdateResponse)(nil),     // 13: invora.branches.v2.UpdateResponse
+	(*DeleteResponse)(nil),     // 14: invora.branches.v2.DeleteResponse
 }
 var file_invora_branches_v2_service_proto_depIdxs = []int32{
-	2,  // 0: invora.branches.v2.SetPrimaryResponse.details:type_name -> invora.branches.v2.Branch
-	3,  // 1: invora.branches.v2.BranchesService.List:input_type -> invora.branches.v2.ListRequest
-	4,  // 2: invora.branches.v2.BranchesService.Get:input_type -> invora.branches.v2.GetRequest
-	5,  // 3: invora.branches.v2.BranchesService.Create:input_type -> invora.branches.v2.CreateRequest
-	6,  // 4: invora.branches.v2.BranchesService.Update:input_type -> invora.branches.v2.UpdateRequest
-	7,  // 5: invora.branches.v2.BranchesService.Delete:input_type -> invora.branches.v2.DeleteRequest
-	0,  // 6: invora.branches.v2.BranchesService.SetPrimary:input_type -> invora.branches.v2.SetPrimaryRequest
-	8,  // 7: invora.branches.v2.BranchesService.List:output_type -> invora.branches.v2.ListResponse
-	9,  // 8: invora.branches.v2.BranchesService.Get:output_type -> invora.branches.v2.GetResponse
-	10, // 9: invora.branches.v2.BranchesService.Create:output_type -> invora.branches.v2.CreateResponse
-	11, // 10: invora.branches.v2.BranchesService.Update:output_type -> invora.branches.v2.UpdateResponse
-	12, // 11: invora.branches.v2.BranchesService.Delete:output_type -> invora.branches.v2.DeleteResponse
-	1,  // 12: invora.branches.v2.BranchesService.SetPrimary:output_type -> invora.branches.v2.SetPrimaryResponse
-	7,  // [7:13] is the sub-list for method output_type
-	1,  // [1:7] is the sub-list for method input_type
-	1,  // [1:1] is the sub-list for extension type_name
-	1,  // [1:1] is the sub-list for extension extendee
-	0,  // [0:1] is the sub-list for field type_name
+	4,  // 0: invora.branches.v2.SetPrimaryResponse.details:type_name -> invora.branches.v2.Branch
+	4,  // 1: invora.branches.v2.UndeleteResponse.details:type_name -> invora.branches.v2.Branch
+	5,  // 2: invora.branches.v2.BranchesService.List:input_type -> invora.branches.v2.ListRequest
+	6,  // 3: invora.branches.v2.BranchesService.Get:input_type -> invora.branches.v2.GetRequest
+	7,  // 4: invora.branches.v2.BranchesService.Create:input_type -> invora.branches.v2.CreateRequest
+	8,  // 5: invora.branches.v2.BranchesService.Update:input_type -> invora.branches.v2.UpdateRequest
+	9,  // 6: invora.branches.v2.BranchesService.Delete:input_type -> invora.branches.v2.DeleteRequest
+	2,  // 7: invora.branches.v2.BranchesService.Undelete:input_type -> invora.branches.v2.UndeleteRequest
+	0,  // 8: invora.branches.v2.BranchesService.SetPrimary:input_type -> invora.branches.v2.SetPrimaryRequest
+	10, // 9: invora.branches.v2.BranchesService.List:output_type -> invora.branches.v2.ListResponse
+	11, // 10: invora.branches.v2.BranchesService.Get:output_type -> invora.branches.v2.GetResponse
+	12, // 11: invora.branches.v2.BranchesService.Create:output_type -> invora.branches.v2.CreateResponse
+	13, // 12: invora.branches.v2.BranchesService.Update:output_type -> invora.branches.v2.UpdateResponse
+	14, // 13: invora.branches.v2.BranchesService.Delete:output_type -> invora.branches.v2.DeleteResponse
+	3,  // 14: invora.branches.v2.BranchesService.Undelete:output_type -> invora.branches.v2.UndeleteResponse
+	1,  // 15: invora.branches.v2.BranchesService.SetPrimary:output_type -> invora.branches.v2.SetPrimaryResponse
+	9,  // [9:16] is the sub-list for method output_type
+	2,  // [2:9] is the sub-list for method input_type
+	2,  // [2:2] is the sub-list for extension type_name
+	2,  // [2:2] is the sub-list for extension extendee
+	0,  // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_invora_branches_v2_service_proto_init() }
@@ -199,7 +300,7 @@ func file_invora_branches_v2_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_branches_v2_service_proto_rawDesc), len(file_invora_branches_v2_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

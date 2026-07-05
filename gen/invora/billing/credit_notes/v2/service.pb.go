@@ -994,8 +994,12 @@ type CreateRequest struct {
 	OffsetAmountCents *int64                 `protobuf:"varint,6,opt,name=offset_amount_cents,json=offsetAmountCents,proto3,oneof" json:"offset_amount_cents,omitempty"`
 	Reason            v2.CreditNoteReason    `protobuf:"varint,7,opt,name=reason,proto3,enum=invora.billing.common.v2.CreditNoteReason" json:"reason,omitempty"`
 	RefundAmountCents *int64                 `protobuf:"varint,8,opt,name=refund_amount_cents,json=refundAmountCents,proto3,oneof" json:"refund_amount_cents,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// Optional client-generated idempotency key (UUID4 recommended). Requests
+	// with the same request_id within the dedup window return the FIRST
+	// request's response without re-executing. See AIP-155.
+	RequestId     *string `protobuf:"bytes,9,opt,name=request_id,json=requestId,proto3,oneof" json:"request_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateRequest) Reset() {
@@ -1084,6 +1088,13 @@ func (x *CreateRequest) GetRefundAmountCents() int64 {
 	return 0
 }
 
+func (x *CreateRequest) GetRequestId() string {
+	if x != nil && x.RequestId != nil {
+		return *x.RequestId
+	}
+	return ""
+}
+
 type CreateResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	CreditNote    *v2.BillingCreditNote  `protobuf:"bytes,1,opt,name=credit_note,json=creditNote,proto3" json:"credit_note,omitempty"`
@@ -1133,7 +1144,7 @@ type UpdateRequest struct {
 	Id            string                     `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Metadata      []*v2.MetadataInput        `protobuf:"bytes,2,rep,name=metadata,proto3" json:"metadata,omitempty"`
 	RefundStatus  *v2.CreditNoteRefundStatus `protobuf:"varint,3,opt,name=refund_status,json=refundStatus,proto3,enum=invora.billing.common.v2.CreditNoteRefundStatus,oneof" json:"refund_status,omitempty"`
-	UpdateMask    *fieldmaskpb.FieldMask     `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask          *fieldmaskpb.FieldMask     `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1189,9 +1200,9 @@ func (x *UpdateRequest) GetRefundStatus() v2.CreditNoteRefundStatus {
 	return v2.CreditNoteRefundStatus(0)
 }
 
-func (x *UpdateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -1677,8 +1688,12 @@ func (x *DownloadXmlResponse) GetCreditNote() *v2.BillingCreditNote {
 }
 
 type VoidCreditNoteRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Id    string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Optional client-generated idempotency key (UUID4 recommended). Requests
+	// with the same request_id within the dedup window return the FIRST
+	// request's response without re-executing. See AIP-155.
+	RequestId     *string `protobuf:"bytes,2,opt,name=request_id,json=requestId,proto3,oneof" json:"request_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1716,6 +1731,13 @@ func (*VoidCreditNoteRequest) Descriptor() ([]byte, []int) {
 func (x *VoidCreditNoteRequest) GetId() string {
 	if x != nil {
 		return x.Id
+	}
+	return ""
+}
+
+func (x *VoidCreditNoteRequest) GetRequestId() string {
+	if x != nil && x.RequestId != nil {
+		return *x.RequestId
 	}
 	return ""
 }
@@ -2558,7 +2580,7 @@ var File_invora_billing_credit_notes_v2_service_proto protoreflect.FileDescripto
 
 const file_invora_billing_credit_notes_v2_service_proto_rawDesc = "" +
 	"\n" +
-	",invora/billing/credit_notes/v2/service.proto\x12\x1einvora.billing.credit_notes.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x16google/type/date.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/decimal.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\xb4\x02\n" +
+	",invora/billing/credit_notes/v2/service.proto\x12\x1einvora.billing.credit_notes.v2\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a google/protobuf/field_mask.proto\x1a\x16google/type/date.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/decimal.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\xb4\x02\n" +
 	"\vListRequest\x12B\n" +
 	"\x06filter\x18\x01 \x01(\v2*.invora.billing.credit_notes.v2.ListFilterR\x06filter\x12<\n" +
 	"\x04sort\x18\x02 \x01(\v2(.invora.billing.credit_notes.v2.ListSortR\x04sort\x126\n" +
@@ -2621,7 +2643,7 @@ const file_invora_billing_credit_notes_v2_service_proto_rawDesc = "" +
 	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"[\n" +
 	"\vGetResponse\x12L\n" +
 	"\vcredit_note\x18\x01 \x01(\v2+.invora.billing.common.v2.BillingCreditNoteR\n" +
-	"creditNote\"\xa0\x04\n" +
+	"creditNote\"\xd8\x04\n" +
 	"\rCreateRequest\x123\n" +
 	"\x13credit_amount_cents\x18\x01 \x01(\x03H\x00R\x11creditAmountCents\x88\x01\x01\x12%\n" +
 	"\vdescription\x18\x02 \x01(\tH\x01R\vdescription\x88\x01\x01\x12\x1d\n" +
@@ -2631,20 +2653,22 @@ const file_invora_billing_credit_notes_v2_service_proto_rawDesc = "" +
 	"\bmetadata\x18\x05 \x03(\v2'.invora.billing.common.v2.MetadataInputR\bmetadata\x123\n" +
 	"\x13offset_amount_cents\x18\x06 \x01(\x03H\x02R\x11offsetAmountCents\x88\x01\x01\x12B\n" +
 	"\x06reason\x18\a \x01(\x0e2*.invora.billing.common.v2.CreditNoteReasonR\x06reason\x123\n" +
-	"\x13refund_amount_cents\x18\b \x01(\x03H\x03R\x11refundAmountCents\x88\x01\x01B\x16\n" +
+	"\x13refund_amount_cents\x18\b \x01(\x03H\x03R\x11refundAmountCents\x88\x01\x01\x12'\n" +
+	"\n" +
+	"request_id\x18\t \x01(\tB\x03\xe0A\x01H\x04R\trequestId\x88\x01\x01B\x16\n" +
 	"\x14_credit_amount_centsB\x0e\n" +
 	"\f_descriptionB\x16\n" +
 	"\x14_offset_amount_centsB\x16\n" +
-	"\x14_refund_amount_cents\"^\n" +
+	"\x14_refund_amount_centsB\r\n" +
+	"\v_request_id\"^\n" +
 	"\x0eCreateResponse\x12L\n" +
 	"\vcredit_note\x18\x01 \x01(\v2+.invora.billing.common.v2.BillingCreditNoteR\n" +
-	"creditNote\"\x8f\x02\n" +
+	"creditNote\"\x82\x02\n" +
 	"\rUpdateRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12C\n" +
 	"\bmetadata\x18\x02 \x03(\v2'.invora.billing.common.v2.MetadataInputR\bmetadata\x12Z\n" +
-	"\rrefund_status\x18\x03 \x01(\x0e20.invora.billing.common.v2.CreditNoteRefundStatusH\x00R\frefundStatus\x88\x01\x01\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\x10\n" +
+	"\rrefund_status\x18\x03 \x01(\x0e20.invora.billing.common.v2.CreditNoteRefundStatusH\x00R\frefundStatus\x88\x01\x01\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\x10\n" +
 	"\x0e_refund_status\"^\n" +
 	"\x0eUpdateResponse\x12L\n" +
 	"\vcredit_note\x18\x01 \x01(\v2+.invora.billing.common.v2.BillingCreditNoteR\n" +
@@ -2684,9 +2708,12 @@ const file_invora_billing_credit_notes_v2_service_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"c\n" +
 	"\x13DownloadXmlResponse\x12L\n" +
 	"\vcredit_note\x18\x01 \x01(\v2+.invora.billing.common.v2.BillingCreditNoteR\n" +
-	"creditNote\"'\n" +
+	"creditNote\"_\n" +
 	"\x15VoidCreditNoteRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"f\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12'\n" +
+	"\n" +
+	"request_id\x18\x02 \x01(\tB\x03\xe0A\x01H\x00R\trequestId\x88\x01\x01B\r\n" +
+	"\v_request_id\"f\n" +
 	"\x16VoidCreditNoteResponse\x12L\n" +
 	"\vcredit_note\x18\x01 \x01(\v2+.invora.billing.common.v2.BillingCreditNoteR\n" +
 	"creditNote\"V\n" +
@@ -2911,7 +2938,7 @@ var file_invora_billing_credit_notes_v2_service_proto_depIdxs = []int32{
 	43, // 27: invora.billing.credit_notes.v2.CreateResponse.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
 	51, // 28: invora.billing.credit_notes.v2.UpdateRequest.metadata:type_name -> invora.billing.common.v2.MetadataInput
 	46, // 29: invora.billing.credit_notes.v2.UpdateRequest.refund_status:type_name -> invora.billing.common.v2.CreditNoteRefundStatus
-	41, // 30: invora.billing.credit_notes.v2.UpdateRequest.update_mask:type_name -> google.protobuf.FieldMask
+	41, // 30: invora.billing.credit_notes.v2.UpdateRequest.mask:type_name -> google.protobuf.FieldMask
 	43, // 31: invora.billing.credit_notes.v2.UpdateResponse.credit_note:type_name -> invora.billing.common.v2.BillingCreditNote
 	37, // 32: invora.billing.credit_notes.v2.GetEstimateRequest.items:type_name -> invora.billing.credit_notes.v2.CreditNoteItemInput
 	41, // 33: invora.billing.credit_notes.v2.GetEstimateRequest.read_mask:type_name -> google.protobuf.FieldMask
@@ -3007,6 +3034,7 @@ func file_invora_billing_credit_notes_v2_service_proto_init() {
 	file_invora_billing_credit_notes_v2_service_proto_msgTypes[12].OneofWrappers = []any{}
 	file_invora_billing_credit_notes_v2_service_proto_msgTypes[14].OneofWrappers = []any{}
 	file_invora_billing_credit_notes_v2_service_proto_msgTypes[19].OneofWrappers = []any{}
+	file_invora_billing_credit_notes_v2_service_proto_msgTypes[24].OneofWrappers = []any{}
 	file_invora_billing_credit_notes_v2_service_proto_msgTypes[31].OneofWrappers = []any{}
 	file_invora_billing_credit_notes_v2_service_proto_msgTypes[34].OneofWrappers = []any{}
 	type x struct{}
