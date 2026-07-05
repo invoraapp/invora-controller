@@ -274,8 +274,11 @@ func (x *ProvisionOrgResponse) GetOrg() *v2.BillingOrg {
 }
 
 type DeprovisionOrgRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	TenantId      string                 `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	state    protoimpl.MessageState `protogen:"open.v1"`
+	TenantId string                 `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	// Without force=true, fails FAILED_PRECONDITION when blocking children
+	// (e.g. active subscriptions, unpaid invoices) exist.
+	Force         bool `protobuf:"varint,2,opt,name=force,proto3" json:"force,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -315,6 +318,13 @@ func (x *DeprovisionOrgRequest) GetTenantId() string {
 		return x.TenantId
 	}
 	return ""
+}
+
+func (x *DeprovisionOrgRequest) GetForce() bool {
+	if x != nil {
+		return x.Force
+	}
+	return false
 }
 
 type DeprovisionOrgResponse struct {
@@ -928,7 +938,7 @@ type UpdateOrgSettingsRequest struct {
 	// a partial update — only the listed paths are changed and the rest are
 	// left as-is. Mirrors the mask used by UpdateTenant /
 	// UpdateConnectedBusiness.
-	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,3,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask          *fieldmaskpb.FieldMask `protobuf:"bytes,3,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -977,9 +987,9 @@ func (x *UpdateOrgSettingsRequest) GetSettings() *OrgSettings {
 	return nil
 }
 
-func (x *UpdateOrgSettingsRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateOrgSettingsRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -2271,9 +2281,10 @@ const file_invora_admin_billing_v2_service_proto_rawDesc = "" +
 	"\fdisplay_name\x18\x02 \x01(\tR\vdisplayName\x12B\n" +
 	"\bcurrency\x18\x03 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\bcurrency\"N\n" +
 	"\x14ProvisionOrgResponse\x126\n" +
-	"\x03org\x18\x01 \x01(\v2$.invora.billing.common.v2.BillingOrgR\x03org\"4\n" +
+	"\x03org\x18\x01 \x01(\v2$.invora.billing.common.v2.BillingOrgR\x03org\"J\n" +
 	"\x15DeprovisionOrgRequest\x12\x1b\n" +
-	"\ttenant_id\x18\x01 \x01(\tR\btenantId\"\x18\n" +
+	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12\x14\n" +
+	"\x05force\x18\x02 \x01(\bR\x05force\"\x18\n" +
 	"\x16DeprovisionOrgResponse\"\x9e\x01\n" +
 	"\x0fListOrgsRequest\x12\x1b\n" +
 	"\tpage_size\x18\x01 \x01(\x05R\bpageSize\x12\x1d\n" +
@@ -2309,12 +2320,11 @@ const file_invora_admin_billing_v2_service_proto_rawDesc = "" +
 	"\fgrace_period\x18\x06 \x01(\x05R\vgracePeriod\x12\x16\n" +
 	"\x06locale\x18\a \x01(\tR\x06locale\x12(\n" +
 	"\x10net_payment_term\x18\b \x01(\x05R\x0enetPaymentTerm\x12?\n" +
-	"\x1cfinalize_zero_amount_invoice\x18\t \x01(\bR\x19finalizeZeroAmountInvoice\"\xb6\x01\n" +
+	"\x1cfinalize_zero_amount_invoice\x18\t \x01(\bR\x19finalizeZeroAmountInvoice\"\xa9\x01\n" +
 	"\x18UpdateOrgSettingsRequest\x12\x1b\n" +
 	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12@\n" +
-	"\bsettings\x18\x02 \x01(\v2$.invora.admin.billing.v2.OrgSettingsR\bsettings\x12;\n" +
-	"\vupdate_mask\x18\x03 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMask\"]\n" +
+	"\bsettings\x18\x02 \x01(\v2$.invora.admin.billing.v2.OrgSettingsR\bsettings\x12.\n" +
+	"\x04mask\x18\x03 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04mask\"]\n" +
 	"\x19UpdateOrgSettingsResponse\x12@\n" +
 	"\bsettings\x18\x01 \x01(\v2$.invora.admin.billing.v2.OrgSettingsR\bsettings\"\x82\x01\n" +
 	"\x16ListActivityLogsFilter\x12G\n" +
@@ -2539,7 +2549,7 @@ var file_invora_admin_billing_v2_service_proto_depIdxs = []int32{
 	41, // 9: invora.admin.billing.v2.OrgSettings.document_numbering:type_name -> invora.billing.common.v2.BillingEntityDocumentNumbering
 	14, // 10: invora.admin.billing.v2.OrgSettings.email_settings:type_name -> invora.admin.billing.v2.OrgEmailSettings
 	15, // 11: invora.admin.billing.v2.UpdateOrgSettingsRequest.settings:type_name -> invora.admin.billing.v2.OrgSettings
-	42, // 12: invora.admin.billing.v2.UpdateOrgSettingsRequest.update_mask:type_name -> google.protobuf.FieldMask
+	42, // 12: invora.admin.billing.v2.UpdateOrgSettingsRequest.mask:type_name -> google.protobuf.FieldMask
 	15, // 13: invora.admin.billing.v2.UpdateOrgSettingsResponse.settings:type_name -> invora.admin.billing.v2.OrgSettings
 	19, // 14: invora.admin.billing.v2.ListActivityLogsFilter.part:type_name -> invora.admin.billing.v2.ListActivityLogsFilterPart
 	20, // 15: invora.admin.billing.v2.ListActivityLogsFilterPart.action:type_name -> invora.admin.billing.v2.ListActivityLogActionFilter

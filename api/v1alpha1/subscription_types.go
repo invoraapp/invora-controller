@@ -44,6 +44,39 @@ type InvoraBillingSubscriptionSpec struct {
 	// +kubebuilder:validation:Enum=calendar;anniversary
 	// +optional
 	BillingTime string `json:"billingTime,omitempty"`
+
+	// Entitlements declares subscription-level feature entitlements (e.g. a
+	// connected_business grant). The controller reconciles these
+	// declaratively: entries here are created/updated on the subscription,
+	// and entries this CR previously declared but has since removed are
+	// pruned. Entitlements never declared by this CR — granted out-of-band
+	// directly against the billing backend — are always left untouched.
+	// +optional
+	Entitlements []SubscriptionEntitlement `json:"entitlements,omitempty"`
+}
+
+// SubscriptionEntitlement declares a single feature entitlement for a
+// subscription. Maps 1:1 to invora.billing.common.v2.EntitlementInput.
+type SubscriptionEntitlement struct {
+	// FeatureCode references the feature by code.
+	// +kubebuilder:validation:MinLength=1
+	FeatureCode string `json:"featureCode"`
+
+	// Privileges overrides privilege values for this feature on this subscription.
+	// +optional
+	Privileges []EntitlementPrivilege `json:"privileges,omitempty"`
+}
+
+// EntitlementPrivilege overrides a single privilege value on an entitlement.
+// Maps 1:1 to invora.billing.common.v2.EntitlementPrivilegeInput.
+type EntitlementPrivilege struct {
+	// PrivilegeCode references the privilege by code.
+	// +kubebuilder:validation:MinLength=1
+	PrivilegeCode string `json:"privilegeCode"`
+
+	// Value is the overridden privilege value.
+	// +optional
+	Value string `json:"value,omitempty"`
 }
 
 // InvoraBillingSubscriptionStatus defines the observed state.
@@ -65,6 +98,14 @@ type InvoraBillingSubscriptionStatus struct {
 	// SubscriptionStatus is the current billing status (pending, active, terminated, canceled).
 	// +optional
 	SubscriptionStatus string `json:"subscriptionStatus,omitempty"`
+
+	// ManagedEntitlementCodes tracks the feature codes this CR has previously
+	// applied via spec.entitlements. Used to guard entitlement pruning: only
+	// a feature code that appears here AND is no longer in spec.entitlements
+	// is removed from the remote subscription. Feature codes never tracked
+	// here (granted out-of-band) are never pruned by this controller.
+	// +optional
+	ManagedEntitlementCodes []string `json:"managedEntitlementCodes,omitempty"`
 }
 
 // +kubebuilder:object:root=true

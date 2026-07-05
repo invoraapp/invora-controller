@@ -516,11 +516,15 @@ type ListSortRule_CreatedAt struct {
 func (*ListSortRule_CreatedAt) isListSortRule_Type() {}
 
 type CreateRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	AmountCents   int64                  `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
-	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	InvoiceId     string                 `protobuf:"bytes,3,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
-	Reference     string                 `protobuf:"bytes,4,opt,name=reference,proto3" json:"reference,omitempty"`
+	state       protoimpl.MessageState `protogen:"open.v1"`
+	AmountCents int64                  `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
+	CreatedAt   *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	InvoiceId   string                 `protobuf:"bytes,3,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
+	Reference   string                 `protobuf:"bytes,4,opt,name=reference,proto3" json:"reference,omitempty"`
+	// Optional client-generated idempotency key (UUID4 recommended). Requests
+	// with the same request_id within the dedup window return the FIRST
+	// request's response without re-executing. See AIP-155.
+	RequestId     *string `protobuf:"bytes,5,opt,name=request_id,json=requestId,proto3,oneof" json:"request_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -579,6 +583,13 @@ func (x *CreateRequest) GetInvoiceId() string {
 func (x *CreateRequest) GetReference() string {
 	if x != nil {
 		return x.Reference
+	}
+	return ""
+}
+
+func (x *CreateRequest) GetRequestId() string {
+	if x != nil && x.RequestId != nil {
+		return *x.RequestId
 	}
 	return ""
 }
@@ -2195,15 +2206,15 @@ var File_invora_billing_payments_v2_service_proto protoreflect.FileDescriptor
 
 const file_invora_billing_payments_v2_service_proto_rawDesc = "" +
 	"\n" +
-	"(invora/billing/payments/v2/service.proto\x12\x1ainvora.billing.payments.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/decimal.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\x89\x01\n" +
+	"(invora/billing/payments/v2/service.proto\x12\x1ainvora.billing.payments.v2\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/decimal.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\x8e\x01\n" +
 	"\n" +
-	"GetRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
+	"GetRequest\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x127\n" +
 	"\tread_mask\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
-	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"Q\n" +
-	"\vGetResponse\x12B\n" +
-	"\apayment\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingPaymentR\apayment\"\xac\x02\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"V\n" +
+	"\vGetResponse\x12G\n" +
+	"\apayment\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingPaymentB\x03\xe0A\x03R\apayment\"\xac\x02\n" +
 	"\vListRequest\x12>\n" +
 	"\x06filter\x18\x01 \x01(\v2&.invora.billing.payments.v2.ListFilterR\x06filter\x128\n" +
 	"\x04sort\x18\x02 \x01(\v2$.invora.billing.payments.v2.ListSortR\x04sort\x126\n" +
@@ -2212,12 +2223,12 @@ const file_invora_billing_payments_v2_service_proto_rawDesc = "" +
 	"pagination\x127\n" +
 	"\tread_mask\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
-	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xb3\x01\n" +
-	"\fListResponse\x12>\n" +
-	"\x05items\x18\x01 \x03(\v2(.invora.billing.common.v2.BillingPaymentR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12-\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xc2\x01\n" +
+	"\fListResponse\x12C\n" +
+	"\x05items\x18\x01 \x03(\v2(.invora.billing.common.v2.BillingPaymentB\x03\xe0A\x03R\x05items\x12$\n" +
+	"\vtotal_count\x18\x02 \x01(\x04B\x03\xe0A\x03R\n" +
+	"totalCount\x122\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tB\x03\xe0A\x03H\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
 	"\x11_next_page_cursor\"m\n" +
 	"\n" +
 	"ListFilter\x12>\n" +
@@ -2234,19 +2245,22 @@ const file_invora_billing_payments_v2_service_proto_rawDesc = "" +
 	"\fListSortRule\x126\n" +
 	"\n" +
 	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAtB\x06\n" +
-	"\x04type\"\xaa\x01\n" +
-	"\rCreateRequest\x12!\n" +
-	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x129\n" +
+	"\x04type\"\xec\x01\n" +
+	"\rCreateRequest\x12&\n" +
+	"\famount_cents\x18\x01 \x01(\x03B\x03\xe0A\x02R\vamountCents\x129\n" +
 	"\n" +
-	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x1d\n" +
+	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12\"\n" +
 	"\n" +
-	"invoice_id\x18\x03 \x01(\tR\tinvoiceId\x12\x1c\n" +
-	"\treference\x18\x04 \x01(\tR\treference\"T\n" +
-	"\x0eCreateResponse\x12B\n" +
-	"\apayment\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingPaymentR\apayment\"5\n" +
-	"\x14GetPaymentUrlRequest\x12\x1d\n" +
+	"invoice_id\x18\x03 \x01(\tB\x03\xe0A\x02R\tinvoiceId\x12\x1c\n" +
+	"\treference\x18\x04 \x01(\tR\treference\x12'\n" +
 	"\n" +
-	"invoice_id\x18\x01 \x01(\tR\tinvoiceId\"M\n" +
+	"request_id\x18\x05 \x01(\tB\x03\xe0A\x01H\x00R\trequestId\x88\x01\x01B\r\n" +
+	"\v_request_id\"Y\n" +
+	"\x0eCreateResponse\x12G\n" +
+	"\apayment\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingPaymentB\x03\xe0A\x03R\apayment\":\n" +
+	"\x14GetPaymentUrlRequest\x12\"\n" +
+	"\n" +
+	"invoice_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tinvoiceId\"M\n" +
 	"\x15GetPaymentUrlResponse\x12$\n" +
 	"\vpayment_url\x18\x01 \x01(\tH\x00R\n" +
 	"paymentUrl\x88\x01\x01B\x0e\n" +
@@ -2271,37 +2285,37 @@ const file_invora_billing_payments_v2_service_proto_rawDesc = "" +
 	"pagination\x127\n" +
 	"\tread_mask\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
-	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xc9\x01\n" +
-	"\x1bListPaymentRequestsResponse\x12E\n" +
-	"\x05items\x18\x01 \x03(\v2/.invora.billing.common.v2.BillingPaymentRequestR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12-\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
-	"\x11_next_page_cursor\"\xab\x02\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xd8\x01\n" +
+	"\x1bListPaymentRequestsResponse\x12J\n" +
+	"\x05items\x18\x01 \x03(\v2/.invora.billing.common.v2.BillingPaymentRequestB\x03\xe0A\x03R\x05items\x12$\n" +
+	"\vtotal_count\x18\x02 \x01(\x04B\x03\xe0A\x03R\n" +
+	"totalCount\x122\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tB\x03\xe0A\x03H\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"\xb5\x02\n" +
 	"\x1bCreatePaymentRequestRequest\x12\x19\n" +
-	"\x05email\x18\x01 \x01(\tH\x00R\x05email\x88\x01\x01\x120\n" +
-	"\x14external_customer_id\x18\x02 \x01(\tR\x12externalCustomerId\x12?\n" +
-	"\x1cbilling_provider_invoice_ids\x18\x03 \x03(\tR\x19billingProviderInvoiceIds\x12a\n" +
+	"\x05email\x18\x01 \x01(\tH\x00R\x05email\x88\x01\x01\x125\n" +
+	"\x14external_customer_id\x18\x02 \x01(\tB\x03\xe0A\x02R\x12externalCustomerId\x12D\n" +
+	"\x1cbilling_provider_invoice_ids\x18\x03 \x03(\tB\x03\xe0A\x02R\x19billingProviderInvoiceIds\x12a\n" +
 	"\x0epayment_method\x18\x04 \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\x01R\rpaymentMethod\x88\x01\x01B\b\n" +
 	"\x06_emailB\x11\n" +
-	"\x0f_payment_method\"x\n" +
-	"\x1cCreatePaymentRequestResponse\x12X\n" +
-	"\x0fpayment_request\x18\x01 \x01(\v2/.invora.billing.common.v2.BillingPaymentRequestR\x0epaymentRequest\"/\n" +
-	"\x1dDownloadPaymentReceiptRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"z\n" +
-	"\x1eDownloadPaymentReceiptResponse\x12X\n" +
-	"\x0fpayment_receipt\x18\x01 \x01(\v2/.invora.billing.common.v2.BillingPaymentReceiptR\x0epaymentReceipt\"2\n" +
-	" DownloadXmlPaymentReceiptRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"}\n" +
-	"!DownloadXmlPaymentReceiptResponse\x12X\n" +
-	"\x0fpayment_receipt\x18\x01 \x01(\v2/.invora.billing.common.v2.BillingPaymentReceiptR\x0epaymentReceipt\"d\n" +
-	" ResendPaymentReceiptEmailRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x10\n" +
+	"\x0f_payment_method\"}\n" +
+	"\x1cCreatePaymentRequestResponse\x12]\n" +
+	"\x0fpayment_request\x18\x01 \x01(\v2/.invora.billing.common.v2.BillingPaymentRequestB\x03\xe0A\x03R\x0epaymentRequest\"4\n" +
+	"\x1dDownloadPaymentReceiptRequest\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\x7f\n" +
+	"\x1eDownloadPaymentReceiptResponse\x12]\n" +
+	"\x0fpayment_receipt\x18\x01 \x01(\v2/.invora.billing.common.v2.BillingPaymentReceiptB\x03\xe0A\x03R\x0epaymentReceipt\"7\n" +
+	" DownloadXmlPaymentReceiptRequest\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\x82\x01\n" +
+	"!DownloadXmlPaymentReceiptResponse\x12]\n" +
+	"\x0fpayment_receipt\x18\x01 \x01(\v2/.invora.billing.common.v2.BillingPaymentReceiptB\x03\xe0A\x03R\x0epaymentReceipt\"i\n" +
+	" ResendPaymentReceiptEmailRequest\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12\x10\n" +
 	"\x03bcc\x18\x02 \x03(\tR\x03bcc\x12\x0e\n" +
 	"\x02cc\x18\x03 \x03(\tR\x02cc\x12\x0e\n" +
-	"\x02to\x18\x04 \x03(\tR\x02to\"}\n" +
-	"!ResendPaymentReceiptEmailResponse\x12X\n" +
-	"\x0fpayment_receipt\x18\x01 \x01(\v2/.invora.billing.common.v2.BillingPaymentReceiptR\x0epaymentReceipt\"\xce\x02\n" +
+	"\x02to\x18\x04 \x03(\tR\x02to\"\x82\x01\n" +
+	"!ResendPaymentReceiptEmailResponse\x12]\n" +
+	"\x0fpayment_receipt\x18\x01 \x01(\v2/.invora.billing.common.v2.BillingPaymentReceiptB\x03\xe0A\x03R\x0epaymentReceipt\"\xce\x02\n" +
 	"\x19ListPaymentMethodsRequest\x12H\n" +
 	"\x06filter\x18\x01 \x01(\v20.invora.billing.payments.v2.PaymentRequestFilterR\x06filter\x12B\n" +
 	"\x04sort\x18\x02 \x01(\v2..invora.billing.payments.v2.PaymentRequestSortR\x04sort\x126\n" +
@@ -2310,28 +2324,28 @@ const file_invora_billing_payments_v2_service_proto_rawDesc = "" +
 	"pagination\x127\n" +
 	"\tread_mask\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
-	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xc0\x01\n" +
-	"\x1aListPaymentMethodsResponse\x12=\n" +
-	"\x05items\x18\x01 \x03(\v2'.invora.billing.common.v2.PaymentMethodR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12-\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
-	"\x11_next_page_cursor\"2\n" +
-	" SetPaymentMethodAsDefaultRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"s\n" +
-	"!SetPaymentMethodAsDefaultResponse\x12N\n" +
-	"\x0epayment_method\x18\x01 \x01(\v2'.invora.billing.common.v2.PaymentMethodR\rpaymentMethod\",\n" +
-	"\x1aDeletePaymentMethodRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\x1d\n" +
-	"\x1bDeletePaymentMethodResponse\"\x9e\x05\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xcf\x01\n" +
+	"\x1aListPaymentMethodsResponse\x12B\n" +
+	"\x05items\x18\x01 \x03(\v2'.invora.billing.common.v2.PaymentMethodB\x03\xe0A\x03R\x05items\x12$\n" +
+	"\vtotal_count\x18\x02 \x01(\x04B\x03\xe0A\x03R\n" +
+	"totalCount\x122\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tB\x03\xe0A\x03H\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"7\n" +
+	" SetPaymentMethodAsDefaultRequest\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"x\n" +
+	"!SetPaymentMethodAsDefaultResponse\x12S\n" +
+	"\x0epayment_method\x18\x01 \x01(\v2'.invora.billing.common.v2.PaymentMethodB\x03\xe0A\x03R\rpaymentMethod\"1\n" +
+	"\x1aDeletePaymentMethodRequest\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\x1d\n" +
+	"\x1bDeletePaymentMethodResponse\"\xa3\x05\n" +
 	"\x18CreateAdjustedFeeRequest\x12-\n" +
 	"\x10charge_filter_id\x18\x01 \x01(\tH\x00R\x0echargeFilterId\x88\x01\x01\x12 \n" +
 	"\tcharge_id\x18\x02 \x01(\tH\x01R\bchargeId\x88\x01\x01\x12\x1a\n" +
 	"\x06fee_id\x18\x03 \x01(\tH\x02R\x05feeId\x88\x01\x01\x12+\n" +
 	"\x0ffixed_charge_id\x18\x04 \x01(\tH\x03R\rfixedChargeId\x88\x01\x01\x125\n" +
-	"\x14invoice_display_name\x18\x05 \x01(\tH\x04R\x12invoiceDisplayName\x88\x01\x01\x12\x1d\n" +
+	"\x14invoice_display_name\x18\x05 \x01(\tH\x04R\x12invoiceDisplayName\x88\x01\x01\x12\"\n" +
 	"\n" +
-	"invoice_id\x18\x06 \x01(\tR\tinvoiceId\x12;\n" +
+	"invoice_id\x18\x06 \x01(\tB\x03\xe0A\x02R\tinvoiceId\x12;\n" +
 	"\x17invoice_subscription_id\x18\a \x01(\tH\x05R\x15invoiceSubscriptionId\x88\x01\x01\x12,\n" +
 	"\x0fsubscription_id\x18\b \x01(\tH\x06R\x0esubscriptionId\x88\x01\x01\x12I\n" +
 	"\x13unit_precise_amount\x18\t \x01(\v2\x14.kernel.DecimalValueH\aR\x11unitPreciseAmount\x88\x01\x01\x12/\n" +
@@ -2346,20 +2360,20 @@ const file_invora_billing_payments_v2_service_proto_rawDesc = "" +
 	"\x18_invoice_subscription_idB\x12\n" +
 	"\x10_subscription_idB\x16\n" +
 	"\x14_unit_precise_amountB\b\n" +
-	"\x06_units\"S\n" +
-	"\x19CreateAdjustedFeeResponse\x126\n" +
-	"\x03fee\x18\x01 \x01(\v2$.invora.billing.common.v2.BillingFeeR\x03fee\"*\n" +
-	"\x18DeleteAdjustedFeeRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\x1b\n" +
-	"\x19DeleteAdjustedFeeResponse\"\x9f\x05\n" +
+	"\x06_units\"X\n" +
+	"\x19CreateAdjustedFeeResponse\x12;\n" +
+	"\x03fee\x18\x01 \x01(\v2$.invora.billing.common.v2.BillingFeeB\x03\xe0A\x03R\x03fee\"/\n" +
+	"\x18DeleteAdjustedFeeRequest\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\x1b\n" +
+	"\x19DeleteAdjustedFeeResponse\"\xa4\x05\n" +
 	"\x19PreviewAdjustedFeeRequest\x12-\n" +
 	"\x10charge_filter_id\x18\x01 \x01(\tH\x00R\x0echargeFilterId\x88\x01\x01\x12 \n" +
 	"\tcharge_id\x18\x02 \x01(\tH\x01R\bchargeId\x88\x01\x01\x12\x1a\n" +
 	"\x06fee_id\x18\x03 \x01(\tH\x02R\x05feeId\x88\x01\x01\x12+\n" +
 	"\x0ffixed_charge_id\x18\x04 \x01(\tH\x03R\rfixedChargeId\x88\x01\x01\x125\n" +
-	"\x14invoice_display_name\x18\x05 \x01(\tH\x04R\x12invoiceDisplayName\x88\x01\x01\x12\x1d\n" +
+	"\x14invoice_display_name\x18\x05 \x01(\tH\x04R\x12invoiceDisplayName\x88\x01\x01\x12\"\n" +
 	"\n" +
-	"invoice_id\x18\x06 \x01(\tR\tinvoiceId\x12;\n" +
+	"invoice_id\x18\x06 \x01(\tB\x03\xe0A\x02R\tinvoiceId\x12;\n" +
 	"\x17invoice_subscription_id\x18\a \x01(\tH\x05R\x15invoiceSubscriptionId\x88\x01\x01\x12,\n" +
 	"\x0fsubscription_id\x18\b \x01(\tH\x06R\x0esubscriptionId\x88\x01\x01\x12I\n" +
 	"\x13unit_precise_amount\x18\t \x01(\v2\x14.kernel.DecimalValueH\aR\x11unitPreciseAmount\x88\x01\x01\x12/\n" +
@@ -2374,9 +2388,9 @@ const file_invora_billing_payments_v2_service_proto_rawDesc = "" +
 	"\x18_invoice_subscription_idB\x12\n" +
 	"\x10_subscription_idB\x16\n" +
 	"\x14_unit_precise_amountB\b\n" +
-	"\x06_units\"T\n" +
-	"\x1aPreviewAdjustedFeeResponse\x126\n" +
-	"\x03fee\x18\x01 \x01(\v2$.invora.billing.common.v2.BillingFeeR\x03fee2\xa9\x1b\n" +
+	"\x06_units\"Y\n" +
+	"\x1aPreviewAdjustedFeeResponse\x12;\n" +
+	"\x03fee\x18\x01 \x01(\v2$.invora.billing.common.v2.BillingFeeB\x03\xe0A\x03R\x03fee2\xa9\x1b\n" +
 	"\x0fPaymentsService\x12\xa8\x01\n" +
 	"\x04List\x12'.invora.billing.payments.v2.ListRequest\x1a(.invora.billing.payments.v2.ListResponse\"M\xe2\xf2\x19!\n" +
 	"\x1fInvora.Billing.Payments.v2.List\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/api/billing/v2/payments/list\x12\xa1\x01\n" +
@@ -2567,6 +2581,7 @@ func file_invora_billing_payments_v2_service_proto_init() {
 	file_invora_billing_payments_v2_service_proto_msgTypes[7].OneofWrappers = []any{
 		(*ListSortRule_CreatedAt)(nil),
 	}
+	file_invora_billing_payments_v2_service_proto_msgTypes[8].OneofWrappers = []any{}
 	file_invora_billing_payments_v2_service_proto_msgTypes[11].OneofWrappers = []any{}
 	file_invora_billing_payments_v2_service_proto_msgTypes[13].OneofWrappers = []any{
 		(*PaymentRequestFilterPart_ExternalCustomerId)(nil),

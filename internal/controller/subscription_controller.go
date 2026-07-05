@@ -3,6 +3,7 @@ package controller
 import (
 	"context"
 	"fmt"
+	"sort"
 	"time"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -12,6 +13,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
+	commonpb "github.com/invoraapp/invora-controller/gen/invora/billing/common/v2"
 	customerspb "github.com/invoraapp/invora-controller/gen/invora/billing/customers/v2"
 	subscriptionspb "github.com/invoraapp/invora-controller/gen/invora/billing/subscriptions/v2"
 	"github.com/invoraapp/invora-controller/internal/convert"
@@ -131,6 +133,11 @@ func (r *InvoraBillingSubscriptionReconciler) Reconcile(ctx context.Context, req
 				_ = r.Status().Update(ctx, &sub)
 				return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 			}
+			if err := r.reconcileEntitlements(grpcCtx, svc, &sub); err != nil {
+				SetCondition(&sub.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "EntitlementSyncFailed", err.Error(), sub.Generation)
+				_ = r.Status().Update(ctx, &sub)
+				return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
+			}
 			setSuccessStatus(&sub.Status.Conditions, &sub.Status.LastSyncedAt, &sub.Status.ObservedGeneration, sub.Generation, "InSync")
 			_ = r.Status().Update(ctx, &sub)
 			return SuccessResult(&sub), nil
@@ -158,11 +165,98 @@ func (r *InvoraBillingSubscriptionReconciler) Reconcile(ctx context.Context, req
 	sub.Status.ExternalID = created.GetSubscription().GetId()
 	sub.Status.ID = created.GetSubscription().GetId()
 	sub.Status.SubscriptionStatus = created.GetSubscription().GetStatus().String()
+	if err := r.reconcileEntitlements(grpcCtx, svc, &sub); err != nil {
+		SetCondition(&sub.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "EntitlementSyncFailed", err.Error(), sub.Generation)
+		_ = r.Status().Update(ctx, &sub)
+		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
+	}
 	setSuccessStatus(&sub.Status.Conditions, &sub.Status.LastSyncedAt, &sub.Status.ObservedGeneration, sub.Generation, "Created")
 	if err := r.Status().Update(ctx, &sub); err != nil {
 		return ctrl.Result{}, fmt.Errorf("updating status: %w", err)
 	}
 	return SuccessResult(&sub), nil
+}
+
+// reconcileEntitlements declaratively syncs sub.Spec.Entitlements against the
+// billing backend: every declared entitlement is created/updated, then any
+// entitlement this CR previously applied (tracked in
+// Status.ManagedEntitlementCodes) but has since dropped from spec is removed.
+//
+// Entitlements never declared by this CR are never touched, even if spec.Entitlements
+// is nil/empty — e.g. a connected_business grant applied directly against the
+// billing backend, out-of-band from this CR, must survive every reconcile.
+func (r *InvoraBillingSubscriptionReconciler) reconcileEntitlements(
+	grpcCtx context.Context,
+	svc subscriptionspb.SubscriptionsServiceClient,
+	sub *billingv1alpha1.InvoraBillingSubscription,
+) error {
+	desired := make(map[string]billingv1alpha1.SubscriptionEntitlement, len(sub.Spec.Entitlements))
+	for _, e := range sub.Spec.Entitlements {
+		desired[e.FeatureCode] = e
+	}
+
+	for _, e := range sub.Spec.Entitlements {
+		privileges := make([]*commonpb.EntitlementPrivilegeInput, len(e.Privileges))
+		for i, p := range e.Privileges {
+			privileges[i] = &commonpb.EntitlementPrivilegeInput{
+				PrivilegeCode: p.PrivilegeCode,
+				Value:         p.Value,
+			}
+		}
+		_, err := svc.CreateOrUpdateEntitlement(grpcCtx, &subscriptionspb.CreateOrUpdateEntitlementRequest{
+			SubscriptionId: sub.Status.ExternalID,
+			Entitlement: &commonpb.EntitlementInput{
+				FeatureCode: e.FeatureCode,
+				Privileges:  privileges,
+			},
+		})
+		if err != nil {
+			return fmt.Errorf("upserting entitlement %q: %w", e.FeatureCode, err)
+		}
+	}
+
+	// Guarded prune: only remove a remote entitlement if THIS CR previously
+	// applied it (tracked in status) and it has since been dropped from spec.
+	// Entitlements this CR never tracked as managed are left alone regardless
+	// of what spec.Entitlements currently contains — they were granted
+	// out-of-band and this controller must never delete them.
+	previouslyManaged := make(map[string]bool, len(sub.Status.ManagedEntitlementCodes))
+	for _, code := range sub.Status.ManagedEntitlementCodes {
+		previouslyManaged[code] = true
+	}
+
+	if len(previouslyManaged) > 0 {
+		listResp, err := svc.ListEntitlements(grpcCtx, &subscriptionspb.ListEntitlementsRequest{
+			SubscriptionId: sub.Status.ExternalID,
+		})
+		if err != nil {
+			return fmt.Errorf("listing entitlements: %w", err)
+		}
+		for _, remote := range listResp.GetItems() {
+			code := remote.GetCode()
+			if _, stillDesired := desired[code]; stillDesired {
+				continue
+			}
+			if !previouslyManaged[code] {
+				continue // not managed by this CR — never touch (out-of-band grant)
+			}
+			if _, err := svc.RemoveEntitlement(grpcCtx, &subscriptionspb.RemoveEntitlementRequest{
+				SubscriptionId: sub.Status.ExternalID,
+				FeatureCode:    code,
+			}); err != nil && !isGrpcNotFound(err) {
+				return fmt.Errorf("removing entitlement %q: %w", code, err)
+			}
+		}
+	}
+
+	managedCodes := make([]string, 0, len(desired))
+	for code := range desired {
+		managedCodes = append(managedCodes, code)
+	}
+	sort.Strings(managedCodes)
+	sub.Status.ManagedEntitlementCodes = managedCodes
+
+	return nil
 }
 
 func resolveBillingCustomerID(ctx context.Context, svc customerspb.CustomersServiceClient, externalID string) (string, error) {

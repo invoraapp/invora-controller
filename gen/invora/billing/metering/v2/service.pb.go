@@ -766,7 +766,7 @@ type UpdateRequest struct {
 	RoundingFunction  *v2.RoundingFunction   `protobuf:"varint,10,opt,name=rounding_function,json=roundingFunction,proto3,enum=invora.billing.common.v2.RoundingFunction,oneof" json:"rounding_function,omitempty"`
 	RoundingPrecision *int32                 `protobuf:"varint,11,opt,name=rounding_precision,json=roundingPrecision,proto3,oneof" json:"rounding_precision,omitempty"`
 	WeightedInterval  *v2.WeightedInterval   `protobuf:"varint,12,opt,name=weighted_interval,json=weightedInterval,proto3,enum=invora.billing.common.v2.WeightedInterval,oneof" json:"weighted_interval,omitempty"`
-	UpdateMask        *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask              *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -885,9 +885,9 @@ func (x *UpdateRequest) GetWeightedInterval() v2.WeightedInterval {
 	return v2.WeightedInterval(0)
 }
 
-func (x *UpdateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -1140,7 +1140,7 @@ const file_invora_billing_metering_v2_service_proto_rawDesc = "" +
 	"\x13_rounding_precisionB\x14\n" +
 	"\x12_weighted_interval\"j\n" +
 	"\x0eCreateResponse\x12X\n" +
-	"\x0fbillable_metric\x18\x01 \x01(\v2/.invora.billing.common.v2.BillingBillableMetricR\x0ebillableMetric\"\x99\x06\n" +
+	"\x0fbillable_metric\x18\x01 \x01(\v2/.invora.billing.common.v2.BillingBillableMetricR\x0ebillableMetric\"\x8c\x06\n" +
 	"\rUpdateRequest\x12T\n" +
 	"\x10aggregation_type\x18\x01 \x01(\x0e2).invora.billing.common.v2.AggregationTypeR\x0faggregationType\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\tR\x04code\x12 \n" +
@@ -1157,9 +1157,8 @@ const file_invora_billing_metering_v2_service_proto_rawDesc = "" +
 	"\x11rounding_function\x18\n" +
 	" \x01(\x0e2*.invora.billing.common.v2.RoundingFunctionH\x03R\x10roundingFunction\x88\x01\x01\x122\n" +
 	"\x12rounding_precision\x18\v \x01(\x05H\x04R\x11roundingPrecision\x88\x01\x01\x12\\\n" +
-	"\x11weighted_interval\x18\f \x01(\x0e2*.invora.billing.common.v2.WeightedIntervalH\x05R\x10weightedInterval\x88\x01\x01\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\r\n" +
+	"\x11weighted_interval\x18\f \x01(\x0e2*.invora.billing.common.v2.WeightedIntervalH\x05R\x10weightedInterval\x88\x01\x01\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\r\n" +
 	"\v_expressionB\r\n" +
 	"\v_field_nameB\f\n" +
 	"\n" +
@@ -1251,7 +1250,7 @@ var file_invora_billing_metering_v2_service_proto_depIdxs = []int32{
 	15, // 20: invora.billing.metering.v2.UpdateRequest.filters:type_name -> invora.billing.metering.v2.BillableMetricFiltersInput
 	22, // 21: invora.billing.metering.v2.UpdateRequest.rounding_function:type_name -> invora.billing.common.v2.RoundingFunction
 	23, // 22: invora.billing.metering.v2.UpdateRequest.weighted_interval:type_name -> invora.billing.common.v2.WeightedInterval
-	16, // 23: invora.billing.metering.v2.UpdateRequest.update_mask:type_name -> google.protobuf.FieldMask
+	16, // 23: invora.billing.metering.v2.UpdateRequest.mask:type_name -> google.protobuf.FieldMask
 	18, // 24: invora.billing.metering.v2.UpdateResponse.billable_metric:type_name -> invora.billing.common.v2.BillingBillableMetric
 	7,  // 25: invora.billing.metering.v2.BillableMetricsService.List:input_type -> invora.billing.metering.v2.ListRequest
 	0,  // 26: invora.billing.metering.v2.BillableMetricsService.Get:input_type -> invora.billing.metering.v2.GetRequest

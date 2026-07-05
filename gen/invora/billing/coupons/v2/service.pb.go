@@ -766,7 +766,7 @@ type UpdateRequest struct {
 	Name              string                 `protobuf:"bytes,12,opt,name=name,proto3" json:"name,omitempty"`
 	PercentageRate    *kernel.DecimalValue   `protobuf:"bytes,13,opt,name=percentage_rate,json=percentageRate,proto3,oneof" json:"percentage_rate,omitempty"`
 	Reusable          *bool                  `protobuf:"varint,14,opt,name=reusable,proto3,oneof" json:"reusable,omitempty"`
-	UpdateMask        *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask              *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -899,9 +899,9 @@ func (x *UpdateRequest) GetReusable() bool {
 	return false
 }
 
-func (x *UpdateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -1606,7 +1606,7 @@ const file_invora_billing_coupons_v2_service_proto_rawDesc = "" +
 	"\x10_percentage_rateB\v\n" +
 	"\t_reusable\"Q\n" +
 	"\x0eCreateResponse\x12?\n" +
-	"\x06coupon\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingCouponR\x06coupon\"\xd0\a\n" +
+	"\x06coupon\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingCouponR\x06coupon\"\xc3\a\n" +
 	"\rUpdateRequest\x12&\n" +
 	"\famount_cents\x18\x01 \x01(\x03H\x00R\vamountCents\x88\x01\x01\x12T\n" +
 	"\x0famount_currency\x18\x02 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumH\x01R\x0eamountCurrency\x88\x01\x01\x12N\n" +
@@ -1626,9 +1626,8 @@ const file_invora_billing_coupons_v2_service_proto_rawDesc = "" +
 	"\x02id\x18\v \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\f \x01(\tR\x04name\x12B\n" +
 	"\x0fpercentage_rate\x18\r \x01(\v2\x14.kernel.DecimalValueH\aR\x0epercentageRate\x88\x01\x01\x12\x1f\n" +
-	"\breusable\x18\x0e \x01(\bH\bR\breusable\x88\x01\x01\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\x0f\n" +
+	"\breusable\x18\x0e \x01(\bH\bR\breusable\x88\x01\x01\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\x0f\n" +
 	"\r_amount_centsB\x12\n" +
 	"\x10_amount_currencyB\r\n" +
 	"\v_applies_toB\a\n" +
@@ -1789,7 +1788,7 @@ var file_invora_billing_coupons_v2_service_proto_depIdxs = []int32{
 	33, // 26: invora.billing.coupons.v2.UpdateRequest.expiration_at:type_name -> google.protobuf.Timestamp
 	34, // 27: invora.billing.coupons.v2.UpdateRequest.frequency:type_name -> invora.billing.common.v2.CouponFrequency
 	35, // 28: invora.billing.coupons.v2.UpdateRequest.percentage_rate:type_name -> kernel.DecimalValue
-	24, // 29: invora.billing.coupons.v2.UpdateRequest.update_mask:type_name -> google.protobuf.FieldMask
+	24, // 29: invora.billing.coupons.v2.UpdateRequest.mask:type_name -> google.protobuf.FieldMask
 	26, // 30: invora.billing.coupons.v2.UpdateResponse.coupon:type_name -> invora.billing.common.v2.BillingCoupon
 	26, // 31: invora.billing.coupons.v2.TerminateResponse.coupon:type_name -> invora.billing.common.v2.BillingCoupon
 	4,  // 32: invora.billing.coupons.v2.ListAppliedCouponsRequest.filter:type_name -> invora.billing.coupons.v2.ListFilter

@@ -35,6 +35,21 @@ managed:
       path: google/api/http.proto
       value: google.golang.org/genproto/googleapis/api/annotations;annotations
     - file_option: go_package
+      path: google/api/field_behavior.proto
+      value: google.golang.org/genproto/googleapis/api/annotations;annotations
+    - file_option: go_package
+      path: google/api/resource.proto
+      value: google.golang.org/genproto/googleapis/api/annotations;annotations
+    - file_option: go_package
+      path: google/api/field_info.proto
+      value: google.golang.org/genproto/googleapis/api/annotations;annotations
+    - file_option: go_package
+      path: google/api/client.proto
+      value: google.golang.org/genproto/googleapis/api/annotations;annotations
+    - file_option: go_package
+      path: google/api/routing.proto
+      value: google.golang.org/genproto/googleapis/api/annotations;annotations
+    - file_option: go_package
       path: google/type/date.proto
       value: google.golang.org/genproto/googleapis/type/date;date
     - file_option: go_package

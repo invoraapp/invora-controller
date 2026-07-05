@@ -31,6 +31,7 @@ const (
 	MarketplaceService_ReauthorizeConnection_FullMethodName = "/invora.marketplace.v2.MarketplaceService/ReauthorizeConnection"
 	MarketplaceService_ListProviderBranches_FullMethodName  = "/invora.marketplace.v2.MarketplaceService/ListProviderBranches"
 	MarketplaceService_TriggerSync_FullMethodName           = "/invora.marketplace.v2.MarketplaceService/TriggerSync"
+	MarketplaceService_SyncSallaTeam_FullMethodName         = "/invora.marketplace.v2.MarketplaceService/SyncSallaTeam"
 	MarketplaceService_ListSyncEvents_FullMethodName        = "/invora.marketplace.v2.MarketplaceService/ListSyncEvents"
 	MarketplaceService_CheckConnectionHealth_FullMethodName = "/invora.marketplace.v2.MarketplaceService/CheckConnectionHealth"
 )
@@ -77,6 +78,11 @@ type MarketplaceServiceClient interface {
 	ListProviderBranches(ctx context.Context, in *ListProviderBranchesRequest, opts ...grpc.CallOption) (*ListProviderBranchesResponse, error)
 	// Manual sync with optional date range for backfill.
 	TriggerSync(ctx context.Context, in *TriggerSyncRequest, opts ...grpc.CallOption) (*TriggerSyncResponse, error)
+	// On-demand reconcile of the provider's store staff into the Invora org as
+	// members (Salla List Employees -> GET /admin/v2/users). Admin-only,
+	// idempotent (adopt-by-email). Active employees become org members with no
+	// notification email; suspended employees are reported, not created.
+	SyncSallaTeam(ctx context.Context, in *SyncSallaTeamRequest, opts ...grpc.CallOption) (*SyncSallaTeamResponse, error)
 	ListSyncEvents(ctx context.Context, in *ListSyncEventsRequest, opts ...grpc.CallOption) (*ListSyncEventsResponse, error)
 	// Token validity, webhook subscription status, sync staleness.
 	CheckConnectionHealth(ctx context.Context, in *CheckConnectionHealthRequest, opts ...grpc.CallOption) (*CheckConnectionHealthResponse, error)
@@ -210,6 +216,16 @@ func (c *marketplaceServiceClient) TriggerSync(ctx context.Context, in *TriggerS
 	return out, nil
 }
 
+func (c *marketplaceServiceClient) SyncSallaTeam(ctx context.Context, in *SyncSallaTeamRequest, opts ...grpc.CallOption) (*SyncSallaTeamResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SyncSallaTeamResponse)
+	err := c.cc.Invoke(ctx, MarketplaceService_SyncSallaTeam_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *marketplaceServiceClient) ListSyncEvents(ctx context.Context, in *ListSyncEventsRequest, opts ...grpc.CallOption) (*ListSyncEventsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListSyncEventsResponse)
@@ -272,6 +288,11 @@ type MarketplaceServiceServer interface {
 	ListProviderBranches(context.Context, *ListProviderBranchesRequest) (*ListProviderBranchesResponse, error)
 	// Manual sync with optional date range for backfill.
 	TriggerSync(context.Context, *TriggerSyncRequest) (*TriggerSyncResponse, error)
+	// On-demand reconcile of the provider's store staff into the Invora org as
+	// members (Salla List Employees -> GET /admin/v2/users). Admin-only,
+	// idempotent (adopt-by-email). Active employees become org members with no
+	// notification email; suspended employees are reported, not created.
+	SyncSallaTeam(context.Context, *SyncSallaTeamRequest) (*SyncSallaTeamResponse, error)
 	ListSyncEvents(context.Context, *ListSyncEventsRequest) (*ListSyncEventsResponse, error)
 	// Token validity, webhook subscription status, sync staleness.
 	CheckConnectionHealth(context.Context, *CheckConnectionHealthRequest) (*CheckConnectionHealthResponse, error)
@@ -320,6 +341,9 @@ func (UnimplementedMarketplaceServiceServer) ListProviderBranches(context.Contex
 }
 func (UnimplementedMarketplaceServiceServer) TriggerSync(context.Context, *TriggerSyncRequest) (*TriggerSyncResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method TriggerSync not implemented")
+}
+func (UnimplementedMarketplaceServiceServer) SyncSallaTeam(context.Context, *SyncSallaTeamRequest) (*SyncSallaTeamResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SyncSallaTeam not implemented")
 }
 func (UnimplementedMarketplaceServiceServer) ListSyncEvents(context.Context, *ListSyncEventsRequest) (*ListSyncEventsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListSyncEvents not implemented")
@@ -564,6 +588,24 @@ func _MarketplaceService_TriggerSync_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MarketplaceService_SyncSallaTeam_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SyncSallaTeamRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketplaceServiceServer).SyncSallaTeam(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MarketplaceService_SyncSallaTeam_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketplaceServiceServer).SyncSallaTeam(ctx, req.(*SyncSallaTeamRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _MarketplaceService_ListSyncEvents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListSyncEventsRequest)
 	if err := dec(in); err != nil {
@@ -654,6 +696,10 @@ var MarketplaceService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TriggerSync",
 			Handler:    _MarketplaceService_TriggerSync_Handler,
+		},
+		{
+			MethodName: "SyncSallaTeam",
+			Handler:    _MarketplaceService_SyncSallaTeam_Handler,
 		},
 		{
 			MethodName: "ListSyncEvents",

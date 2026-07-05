@@ -1122,7 +1122,7 @@ type UpdateRequest struct {
 	Id            string                       `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Metadata      []*InvoiceMetadataInput      `protobuf:"bytes,2,rep,name=metadata,proto3" json:"metadata,omitempty"`
 	PaymentStatus *v2.InvoicePaymentStatusType `protobuf:"varint,3,opt,name=payment_status,json=paymentStatus,proto3,enum=invora.billing.common.v2.InvoicePaymentStatusType,oneof" json:"payment_status,omitempty"`
-	UpdateMask    *fieldmaskpb.FieldMask       `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask          *fieldmaskpb.FieldMask       `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1178,9 +1178,9 @@ func (x *UpdateRequest) GetPaymentStatus() v2.InvoicePaymentStatusType {
 	return v2.InvoicePaymentStatusType(0)
 }
 
-func (x *UpdateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -1618,8 +1618,12 @@ func (x *TaxBreakdownObject) GetType() string {
 }
 
 type FinalizeRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Id    string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Optional client-generated idempotency key (UUID4 recommended). Requests
+	// with the same request_id within the dedup window return the FIRST
+	// request's response without re-executing. See AIP-155.
+	RequestId     *string `protobuf:"bytes,2,opt,name=request_id,json=requestId,proto3,oneof" json:"request_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1657,6 +1661,13 @@ func (*FinalizeRequest) Descriptor() ([]byte, []int) {
 func (x *FinalizeRequest) GetId() string {
 	if x != nil {
 		return x.Id
+	}
+	return ""
+}
+
+func (x *FinalizeRequest) GetRequestId() string {
+	if x != nil && x.RequestId != nil {
+		return *x.RequestId
 	}
 	return ""
 }
@@ -1807,8 +1818,12 @@ type VoidInvoiceRequest struct {
 	CreditAmount       *int64                 `protobuf:"varint,2,opt,name=credit_amount,json=creditAmount,proto3,oneof" json:"credit_amount,omitempty"`
 	GenerateCreditNote *bool                  `protobuf:"varint,3,opt,name=generate_credit_note,json=generateCreditNote,proto3,oneof" json:"generate_credit_note,omitempty"`
 	RefundAmount       *int64                 `protobuf:"varint,4,opt,name=refund_amount,json=refundAmount,proto3,oneof" json:"refund_amount,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+	// Optional client-generated idempotency key (UUID4 recommended). Requests
+	// with the same request_id within the dedup window return the FIRST
+	// request's response without re-executing. See AIP-155.
+	RequestId     *string `protobuf:"bytes,5,opt,name=request_id,json=requestId,proto3,oneof" json:"request_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *VoidInvoiceRequest) Reset() {
@@ -1867,6 +1882,13 @@ func (x *VoidInvoiceRequest) GetRefundAmount() int64 {
 		return *x.RefundAmount
 	}
 	return 0
+}
+
+func (x *VoidInvoiceRequest) GetRequestId() string {
+	if x != nil && x.RequestId != nil {
+		return *x.RequestId
+	}
+	return ""
 }
 
 type VoidInvoiceResponse struct {
@@ -2510,6 +2532,10 @@ type RetryInvoicePaymentRequest struct {
 	state         protoimpl.MessageState          `protogen:"open.v1"`
 	Id            string                          `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	PaymentMethod *v2.PaymentMethodReferenceInput `protobuf:"bytes,2,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
+	// Optional client-generated idempotency key (UUID4 recommended). Requests
+	// with the same request_id within the dedup window return the FIRST
+	// request's response without re-executing. See AIP-155.
+	RequestId     *string `protobuf:"bytes,3,opt,name=request_id,json=requestId,proto3,oneof" json:"request_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2556,6 +2582,13 @@ func (x *RetryInvoicePaymentRequest) GetPaymentMethod() *v2.PaymentMethodReferen
 		return x.PaymentMethod
 	}
 	return nil
+}
+
+func (x *RetryInvoicePaymentRequest) GetRequestId() string {
+	if x != nil && x.RequestId != nil {
+		return *x.RequestId
+	}
+	return ""
 }
 
 type RetryInvoicePaymentResponse struct {
@@ -3994,7 +4027,7 @@ type UpdateCustomSectionRequest struct {
 	DisplayName   *string                `protobuf:"bytes,4,opt,name=display_name,json=displayName,proto3,oneof" json:"display_name,omitempty"`
 	Id            string                 `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
 	Name          *string                `protobuf:"bytes,6,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	UpdateMask    *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask          *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4071,9 +4104,9 @@ func (x *UpdateCustomSectionRequest) GetName() string {
 	return ""
 }
 
-func (x *UpdateCustomSectionRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateCustomSectionRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -4206,7 +4239,7 @@ var File_invora_billing_invoices_v2_service_proto protoreflect.FileDescriptor
 
 const file_invora_billing_invoices_v2_service_proto_rawDesc = "" +
 	"\n" +
-	"(invora/billing/invoices/v2/service.proto\x12\x1ainvora.billing.invoices.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x16google/type/date.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/decimal.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"m\n" +
+	"(invora/billing/invoices/v2/service.proto\x12\x1ainvora.billing.invoices.v2\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x16google/type/date.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/decimal.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"m\n" +
 	"\n" +
 	"ListFilter\x12>\n" +
 	"\x04part\x18\x01 \x01(\v2*.invora.billing.invoices.v2.ListFilterPartR\x04part\x12\x1f\n" +
@@ -4287,13 +4320,12 @@ const file_invora_billing_invoices_v2_service_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x88\x01\x01\x12\x10\n" +
 	"\x03key\x18\x02 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x03 \x01(\tR\x05valueB\x05\n" +
-	"\x03_id\"\x9d\x02\n" +
+	"\x03_id\"\x90\x02\n" +
 	"\rUpdateRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12L\n" +
 	"\bmetadata\x18\x02 \x03(\v20.invora.billing.invoices.v2.InvoiceMetadataInputR\bmetadata\x12^\n" +
-	"\x0epayment_status\x18\x03 \x01(\x0e22.invora.billing.common.v2.InvoicePaymentStatusTypeH\x00R\rpaymentStatus\x88\x01\x01\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\x11\n" +
+	"\x0epayment_status\x18\x03 \x01(\x0e22.invora.billing.common.v2.InvoicePaymentStatusTypeH\x00R\rpaymentStatus\x88\x01\x01\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\x11\n" +
 	"\x0f_payment_status\"T\n" +
 	"\x0eUpdateResponse\x12B\n" +
 	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"\xff\x03\n" +
@@ -4352,9 +4384,12 @@ const file_invora_billing_invoices_v2_service_proto_rawDesc = "" +
 	"\x05_nameB\a\n" +
 	"\x05_rateB\r\n" +
 	"\v_tax_amountB\a\n" +
-	"\x05_type\"!\n" +
+	"\x05_type\"Y\n" +
 	"\x0fFinalizeRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"V\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12'\n" +
+	"\n" +
+	"request_id\x18\x02 \x01(\tB\x03\xe0A\x01H\x00R\trequestId\x88\x01\x01B\r\n" +
+	"\v_request_id\"V\n" +
 	"\x10FinalizeResponse\x12B\n" +
 	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"V\n" +
 	"\x1aFinalizeAllInvoicesRequest\x12\x1f\n" +
@@ -4362,15 +4397,18 @@ const file_invora_billing_invoices_v2_service_proto_rawDesc = "" +
 	"invoiceIds\x12\x17\n" +
 	"\adry_run\x18\x02 \x01(\bR\x06dryRun\"]\n" +
 	"\x1bFinalizeAllInvoicesResponse\x12>\n" +
-	"\x05items\x18\x01 \x03(\v2(.invora.billing.common.v2.BillingInvoiceR\x05items\"\xec\x01\n" +
+	"\x05items\x18\x01 \x03(\v2(.invora.billing.common.v2.BillingInvoiceR\x05items\"\xa4\x02\n" +
 	"\x12VoidInvoiceRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12(\n" +
 	"\rcredit_amount\x18\x02 \x01(\x03H\x00R\fcreditAmount\x88\x01\x01\x125\n" +
 	"\x14generate_credit_note\x18\x03 \x01(\bH\x01R\x12generateCreditNote\x88\x01\x01\x12(\n" +
-	"\rrefund_amount\x18\x04 \x01(\x03H\x02R\frefundAmount\x88\x01\x01B\x10\n" +
+	"\rrefund_amount\x18\x04 \x01(\x03H\x02R\frefundAmount\x88\x01\x01\x12'\n" +
+	"\n" +
+	"request_id\x18\x05 \x01(\tB\x03\xe0A\x01H\x03R\trequestId\x88\x01\x01B\x10\n" +
 	"\x0e_credit_amountB\x17\n" +
 	"\x15_generate_credit_noteB\x10\n" +
-	"\x0e_refund_amount\"Y\n" +
+	"\x0e_refund_amountB\r\n" +
+	"\v_request_id\"Y\n" +
 	"\x13VoidInvoiceResponse\x12B\n" +
 	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"+\n" +
 	"\x19LoseInvoiceDisputeRequest\x12\x0e\n" +
@@ -4420,11 +4458,14 @@ const file_invora_billing_invoices_v2_service_proto_rawDesc = "" +
 	"\x13RetryInvoiceRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"Z\n" +
 	"\x14RetryInvoiceResponse\x12B\n" +
-	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"\xa2\x01\n" +
+	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"\xda\x01\n" +
 	"\x1aRetryInvoicePaymentRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12a\n" +
-	"\x0epayment_method\x18\x02 \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\x00R\rpaymentMethod\x88\x01\x01B\x11\n" +
-	"\x0f_payment_method\"a\n" +
+	"\x0epayment_method\x18\x02 \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\x00R\rpaymentMethod\x88\x01\x01\x12'\n" +
+	"\n" +
+	"request_id\x18\x03 \x01(\tB\x03\xe0A\x01H\x01R\trequestId\x88\x01\x01B\x11\n" +
+	"\x0f_payment_methodB\r\n" +
+	"\v_request_id\"a\n" +
 	"\x1bRetryInvoicePaymentResponse\x12B\n" +
 	"\ainvoice\x18\x01 \x01(\v2(.invora.billing.common.v2.BillingInvoiceR\ainvoice\"S\n" +
 	"\x17RetryAllInvoicesRequest\x12\x1f\n" +
@@ -4538,16 +4579,15 @@ const file_invora_billing_invoices_v2_service_proto_rawDesc = "" +
 	"\b_detailsB\x0f\n" +
 	"\r_display_name\"\x83\x01\n" +
 	"\x1bCreateCustomSectionResponse\x12d\n" +
-	"\x16invoice_custom_section\x18\x01 \x01(\v2..invora.billing.common.v2.InvoiceCustomSectionR\x14invoiceCustomSection\"\xc8\x02\n" +
+	"\x16invoice_custom_section\x18\x01 \x01(\v2..invora.billing.common.v2.InvoiceCustomSectionR\x14invoiceCustomSection\"\xbb\x02\n" +
 	"\x1aUpdateCustomSectionRequest\x12\x17\n" +
 	"\x04code\x18\x01 \x01(\tH\x00R\x04code\x88\x01\x01\x12%\n" +
 	"\vdescription\x18\x02 \x01(\tH\x01R\vdescription\x88\x01\x01\x12\x1d\n" +
 	"\adetails\x18\x03 \x01(\tH\x02R\adetails\x88\x01\x01\x12&\n" +
 	"\fdisplay_name\x18\x04 \x01(\tH\x03R\vdisplayName\x88\x01\x01\x12\x0e\n" +
 	"\x02id\x18\x05 \x01(\tR\x02id\x12\x17\n" +
-	"\x04name\x18\x06 \x01(\tH\x04R\x04name\x88\x01\x01\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\a\n" +
+	"\x04name\x18\x06 \x01(\tH\x04R\x04name\x88\x01\x01\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\a\n" +
 	"\x05_codeB\x0e\n" +
 	"\f_descriptionB\n" +
 	"\n" +
@@ -4770,7 +4810,7 @@ var file_invora_billing_invoices_v2_service_proto_depIdxs = []int32{
 	83,  // 27: invora.billing.invoices.v2.CreateResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
 	18,  // 28: invora.billing.invoices.v2.UpdateRequest.metadata:type_name -> invora.billing.invoices.v2.InvoiceMetadataInput
 	78,  // 29: invora.billing.invoices.v2.UpdateRequest.payment_status:type_name -> invora.billing.common.v2.InvoicePaymentStatusType
-	81,  // 30: invora.billing.invoices.v2.UpdateRequest.update_mask:type_name -> google.protobuf.FieldMask
+	81,  // 30: invora.billing.invoices.v2.UpdateRequest.mask:type_name -> google.protobuf.FieldMask
 	83,  // 31: invora.billing.invoices.v2.UpdateResponse.invoice:type_name -> invora.billing.common.v2.BillingInvoice
 	87,  // 32: invora.billing.invoices.v2.FeeInput.from_datetime:type_name -> google.protobuf.Timestamp
 	87,  // 33: invora.billing.invoices.v2.FeeInput.to_datetime:type_name -> google.protobuf.Timestamp
@@ -4816,7 +4856,7 @@ var file_invora_billing_invoices_v2_service_proto_depIdxs = []int32{
 	82,  // 73: invora.billing.invoices.v2.GetCustomSectionRequest.view:type_name -> invora.billing.common.v2.View
 	93,  // 74: invora.billing.invoices.v2.GetCustomSectionResponse.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSection
 	93,  // 75: invora.billing.invoices.v2.CreateCustomSectionResponse.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSection
-	81,  // 76: invora.billing.invoices.v2.UpdateCustomSectionRequest.update_mask:type_name -> google.protobuf.FieldMask
+	81,  // 76: invora.billing.invoices.v2.UpdateCustomSectionRequest.mask:type_name -> google.protobuf.FieldMask
 	93,  // 77: invora.billing.invoices.v2.UpdateCustomSectionResponse.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSection
 	10,  // 78: invora.billing.invoices.v2.InvoicesService.List:input_type -> invora.billing.invoices.v2.ListRequest
 	12,  // 79: invora.billing.invoices.v2.InvoicesService.Get:input_type -> invora.billing.invoices.v2.GetRequest
@@ -4906,6 +4946,7 @@ func file_invora_billing_invoices_v2_service_proto_init() {
 	file_invora_billing_invoices_v2_service_proto_msgTypes[20].OneofWrappers = []any{}
 	file_invora_billing_invoices_v2_service_proto_msgTypes[22].OneofWrappers = []any{}
 	file_invora_billing_invoices_v2_service_proto_msgTypes[23].OneofWrappers = []any{}
+	file_invora_billing_invoices_v2_service_proto_msgTypes[24].OneofWrappers = []any{}
 	file_invora_billing_invoices_v2_service_proto_msgTypes[28].OneofWrappers = []any{}
 	file_invora_billing_invoices_v2_service_proto_msgTypes[34].OneofWrappers = []any{}
 	file_invora_billing_invoices_v2_service_proto_msgTypes[41].OneofWrappers = []any{}

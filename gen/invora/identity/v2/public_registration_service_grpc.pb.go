@@ -19,11 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	PublicRegistrationService_CompleteBusinessProfile_FullMethodName = "/invora.identity.v2.PublicRegistrationService/CompleteBusinessProfile"
-	PublicRegistrationService_UpdateBusinessDetails_FullMethodName   = "/invora.identity.v2.PublicRegistrationService/UpdateBusinessDetails"
-	PublicRegistrationService_SelectPlan_FullMethodName              = "/invora.identity.v2.PublicRegistrationService/SelectPlan"
-	PublicRegistrationService_GetOnboardingStatus_FullMethodName     = "/invora.identity.v2.PublicRegistrationService/GetOnboardingStatus"
-	PublicRegistrationService_ListAvailablePlans_FullMethodName      = "/invora.identity.v2.PublicRegistrationService/ListAvailablePlans"
+	PublicRegistrationService_CreateBusiness_FullMethodName     = "/invora.identity.v2.PublicRegistrationService/CreateBusiness"
+	PublicRegistrationService_SelectPlan_FullMethodName         = "/invora.identity.v2.PublicRegistrationService/SelectPlan"
+	PublicRegistrationService_ListAvailablePlans_FullMethodName = "/invora.identity.v2.PublicRegistrationService/ListAvailablePlans"
 )
 
 // PublicRegistrationServiceClient is the client API for PublicRegistrationService service.
@@ -35,18 +33,23 @@ const (
 // their organization, configure their profile, and select a billing plan.
 // All endpoints require an authenticated user token.
 type PublicRegistrationServiceClient interface {
-	// Complete initial business setup after account creation.
-	// Creates the organization, activates a free trial, and returns
-	// API credentials for machine-to-machine integration.
-	CompleteBusinessProfile(ctx context.Context, in *CompleteBusinessProfileRequest, opts ...grpc.CallOption) (*CompleteBusinessProfileResponse, error)
-	// Add optional business details (tax ID, address, currency, timezone).
-	// Can be completed later — progressive profiling.
-	UpdateBusinessDetails(ctx context.Context, in *UpdateBusinessDetailsRequest, opts ...grpc.CallOption) (*UpdateBusinessDetailsResponse, error)
+	// Step 1 of 2 in the onboarding flow: creates a new business (Zitadel
+	// organization), synchronously. When business_name is omitted, the
+	// server falls back to the invora:org_name (+ invora:default_branch_country)
+	// metadata the login UI stamped on the user at registration
+	// (invora-zitadel-login/src/lib/server/register.ts); those keys are
+	// cleared server-side once consumed, so a later CreateBusiness call
+	// (e.g. for a second business) requires an explicit business_name.
+	//
+	// Step 2 (client-driven, not part of this RPC): the client sets the
+	// returned org_id as the org-context header, then calls the existing
+	// BranchesService.Create with default_branch_country (or a
+	// user-supplied country if that field came back empty) to create the
+	// default branch. There is no server-side auto-branch creation in this
+	// flow — the client always creates the branch explicitly.
+	CreateBusiness(ctx context.Context, in *CreateBusinessRequest, opts ...grpc.CallOption) (*CreateBusinessResponse, error)
 	// Step 4: Select a plan (shows available plans via AccountService).
 	SelectPlan(ctx context.Context, in *SelectPlanRequest, opts ...grpc.CallOption) (*SelectPlanResponse, error)
-	// Get the onboarding progress checklist showing which setup steps
-	// are complete and what's remaining.
-	GetOnboardingStatus(ctx context.Context, in *GetOnboardingStatusRequest, opts ...grpc.CallOption) (*GetOnboardingStatusResponse, error)
 	// List the public-facing billing plans available to a user during
 	// onboarding. Intentionally scoped to authenticated-only (no tenant
 	// membership required): a freshly registered user has no organization
@@ -67,20 +70,10 @@ func NewPublicRegistrationServiceClient(cc grpc.ClientConnInterface) PublicRegis
 	return &publicRegistrationServiceClient{cc}
 }
 
-func (c *publicRegistrationServiceClient) CompleteBusinessProfile(ctx context.Context, in *CompleteBusinessProfileRequest, opts ...grpc.CallOption) (*CompleteBusinessProfileResponse, error) {
+func (c *publicRegistrationServiceClient) CreateBusiness(ctx context.Context, in *CreateBusinessRequest, opts ...grpc.CallOption) (*CreateBusinessResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CompleteBusinessProfileResponse)
-	err := c.cc.Invoke(ctx, PublicRegistrationService_CompleteBusinessProfile_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *publicRegistrationServiceClient) UpdateBusinessDetails(ctx context.Context, in *UpdateBusinessDetailsRequest, opts ...grpc.CallOption) (*UpdateBusinessDetailsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateBusinessDetailsResponse)
-	err := c.cc.Invoke(ctx, PublicRegistrationService_UpdateBusinessDetails_FullMethodName, in, out, cOpts...)
+	out := new(CreateBusinessResponse)
+	err := c.cc.Invoke(ctx, PublicRegistrationService_CreateBusiness_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -91,16 +84,6 @@ func (c *publicRegistrationServiceClient) SelectPlan(ctx context.Context, in *Se
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(SelectPlanResponse)
 	err := c.cc.Invoke(ctx, PublicRegistrationService_SelectPlan_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *publicRegistrationServiceClient) GetOnboardingStatus(ctx context.Context, in *GetOnboardingStatusRequest, opts ...grpc.CallOption) (*GetOnboardingStatusResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetOnboardingStatusResponse)
-	err := c.cc.Invoke(ctx, PublicRegistrationService_GetOnboardingStatus_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -126,18 +109,23 @@ func (c *publicRegistrationServiceClient) ListAvailablePlans(ctx context.Context
 // their organization, configure their profile, and select a billing plan.
 // All endpoints require an authenticated user token.
 type PublicRegistrationServiceServer interface {
-	// Complete initial business setup after account creation.
-	// Creates the organization, activates a free trial, and returns
-	// API credentials for machine-to-machine integration.
-	CompleteBusinessProfile(context.Context, *CompleteBusinessProfileRequest) (*CompleteBusinessProfileResponse, error)
-	// Add optional business details (tax ID, address, currency, timezone).
-	// Can be completed later — progressive profiling.
-	UpdateBusinessDetails(context.Context, *UpdateBusinessDetailsRequest) (*UpdateBusinessDetailsResponse, error)
+	// Step 1 of 2 in the onboarding flow: creates a new business (Zitadel
+	// organization), synchronously. When business_name is omitted, the
+	// server falls back to the invora:org_name (+ invora:default_branch_country)
+	// metadata the login UI stamped on the user at registration
+	// (invora-zitadel-login/src/lib/server/register.ts); those keys are
+	// cleared server-side once consumed, so a later CreateBusiness call
+	// (e.g. for a second business) requires an explicit business_name.
+	//
+	// Step 2 (client-driven, not part of this RPC): the client sets the
+	// returned org_id as the org-context header, then calls the existing
+	// BranchesService.Create with default_branch_country (or a
+	// user-supplied country if that field came back empty) to create the
+	// default branch. There is no server-side auto-branch creation in this
+	// flow — the client always creates the branch explicitly.
+	CreateBusiness(context.Context, *CreateBusinessRequest) (*CreateBusinessResponse, error)
 	// Step 4: Select a plan (shows available plans via AccountService).
 	SelectPlan(context.Context, *SelectPlanRequest) (*SelectPlanResponse, error)
-	// Get the onboarding progress checklist showing which setup steps
-	// are complete and what's remaining.
-	GetOnboardingStatus(context.Context, *GetOnboardingStatusRequest) (*GetOnboardingStatusResponse, error)
 	// List the public-facing billing plans available to a user during
 	// onboarding. Intentionally scoped to authenticated-only (no tenant
 	// membership required): a freshly registered user has no organization
@@ -158,17 +146,11 @@ type PublicRegistrationServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedPublicRegistrationServiceServer struct{}
 
-func (UnimplementedPublicRegistrationServiceServer) CompleteBusinessProfile(context.Context, *CompleteBusinessProfileRequest) (*CompleteBusinessProfileResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method CompleteBusinessProfile not implemented")
-}
-func (UnimplementedPublicRegistrationServiceServer) UpdateBusinessDetails(context.Context, *UpdateBusinessDetailsRequest) (*UpdateBusinessDetailsResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method UpdateBusinessDetails not implemented")
+func (UnimplementedPublicRegistrationServiceServer) CreateBusiness(context.Context, *CreateBusinessRequest) (*CreateBusinessResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateBusiness not implemented")
 }
 func (UnimplementedPublicRegistrationServiceServer) SelectPlan(context.Context, *SelectPlanRequest) (*SelectPlanResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SelectPlan not implemented")
-}
-func (UnimplementedPublicRegistrationServiceServer) GetOnboardingStatus(context.Context, *GetOnboardingStatusRequest) (*GetOnboardingStatusResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetOnboardingStatus not implemented")
 }
 func (UnimplementedPublicRegistrationServiceServer) ListAvailablePlans(context.Context, *ListAvailablePlansRequest) (*ListAvailablePlansResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListAvailablePlans not implemented")
@@ -195,38 +177,20 @@ func RegisterPublicRegistrationServiceServer(s grpc.ServiceRegistrar, srv Public
 	s.RegisterService(&PublicRegistrationService_ServiceDesc, srv)
 }
 
-func _PublicRegistrationService_CompleteBusinessProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CompleteBusinessProfileRequest)
+func _PublicRegistrationService_CreateBusiness_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateBusinessRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PublicRegistrationServiceServer).CompleteBusinessProfile(ctx, in)
+		return srv.(PublicRegistrationServiceServer).CreateBusiness(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PublicRegistrationService_CompleteBusinessProfile_FullMethodName,
+		FullMethod: PublicRegistrationService_CreateBusiness_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PublicRegistrationServiceServer).CompleteBusinessProfile(ctx, req.(*CompleteBusinessProfileRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PublicRegistrationService_UpdateBusinessDetails_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateBusinessDetailsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PublicRegistrationServiceServer).UpdateBusinessDetails(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: PublicRegistrationService_UpdateBusinessDetails_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PublicRegistrationServiceServer).UpdateBusinessDetails(ctx, req.(*UpdateBusinessDetailsRequest))
+		return srv.(PublicRegistrationServiceServer).CreateBusiness(ctx, req.(*CreateBusinessRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -245,24 +209,6 @@ func _PublicRegistrationService_SelectPlan_Handler(srv interface{}, ctx context.
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PublicRegistrationServiceServer).SelectPlan(ctx, req.(*SelectPlanRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PublicRegistrationService_GetOnboardingStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetOnboardingStatusRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PublicRegistrationServiceServer).GetOnboardingStatus(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: PublicRegistrationService_GetOnboardingStatus_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PublicRegistrationServiceServer).GetOnboardingStatus(ctx, req.(*GetOnboardingStatusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -293,20 +239,12 @@ var PublicRegistrationService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*PublicRegistrationServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CompleteBusinessProfile",
-			Handler:    _PublicRegistrationService_CompleteBusinessProfile_Handler,
-		},
-		{
-			MethodName: "UpdateBusinessDetails",
-			Handler:    _PublicRegistrationService_UpdateBusinessDetails_Handler,
+			MethodName: "CreateBusiness",
+			Handler:    _PublicRegistrationService_CreateBusiness_Handler,
 		},
 		{
 			MethodName: "SelectPlan",
 			Handler:    _PublicRegistrationService_SelectPlan_Handler,
-		},
-		{
-			MethodName: "GetOnboardingStatus",
-			Handler:    _PublicRegistrationService_GetOnboardingStatus_Handler,
 		},
 		{
 			MethodName: "ListAvailablePlans",

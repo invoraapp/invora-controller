@@ -44,10 +44,11 @@ type ConnectedBusinessServiceClient interface {
 	// Returns API credentials for the new business. Requires a plan
 	// that includes the connected business capability.
 	CreateConnectedBusiness(ctx context.Context, in *CreateConnectedBusinessRequest, opts ...grpc.CallOption) (*CreateConnectedBusinessResponse, error)
-	// Update a Connected Business's details (name, tax ID, country).
+	// Update a Connected Business's name.
 	UpdateConnectedBusiness(ctx context.Context, in *UpdateConnectedBusinessRequest, opts ...grpc.CallOption) (*UpdateConnectedBusinessResponse, error)
 	// Permanently delete a Connected Business and all its data.
 	// This is irreversible. Suspend instead if you may need to restore later.
+	// Without force=true, fails FAILED_PRECONDITION when children exist.
 	DeleteConnectedBusiness(ctx context.Context, in *DeleteConnectedBusinessRequest, opts ...grpc.CallOption) (*DeleteConnectedBusinessResponse, error)
 	// List all Connected Businesses under your organization with filtering.
 	ListConnectedBusinesses(ctx context.Context, in *ListConnectedBusinessesRequest, opts ...grpc.CallOption) (*ListConnectedBusinessesResponse, error)
@@ -178,10 +179,11 @@ type ConnectedBusinessServiceServer interface {
 	// Returns API credentials for the new business. Requires a plan
 	// that includes the connected business capability.
 	CreateConnectedBusiness(context.Context, *CreateConnectedBusinessRequest) (*CreateConnectedBusinessResponse, error)
-	// Update a Connected Business's details (name, tax ID, country).
+	// Update a Connected Business's name.
 	UpdateConnectedBusiness(context.Context, *UpdateConnectedBusinessRequest) (*UpdateConnectedBusinessResponse, error)
 	// Permanently delete a Connected Business and all its data.
 	// This is irreversible. Suspend instead if you may need to restore later.
+	// Without force=true, fails FAILED_PRECONDITION when children exist.
 	DeleteConnectedBusiness(context.Context, *DeleteConnectedBusinessRequest) (*DeleteConnectedBusinessResponse, error)
 	// List all Connected Businesses under your organization with filtering.
 	ListConnectedBusinesses(context.Context, *ListConnectedBusinessesRequest) (*ListConnectedBusinessesResponse, error)

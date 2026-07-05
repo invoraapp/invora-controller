@@ -872,7 +872,7 @@ type UpdateRequest struct {
 	Name          *string                       `protobuf:"bytes,3,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	SignatureAlgo *WebhookEndpointSignatureAlgo `protobuf:"varint,4,opt,name=signature_algo,json=signatureAlgo,proto3,enum=invora.billing.webhooks.v2.WebhookEndpointSignatureAlgo,oneof" json:"signature_algo,omitempty"`
 	WebhookUrl    string                        `protobuf:"bytes,5,opt,name=webhook_url,json=webhookUrl,proto3" json:"webhook_url,omitempty"`
-	UpdateMask    *fieldmaskpb.FieldMask        `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask          *fieldmaskpb.FieldMask        `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -942,9 +942,9 @@ func (x *UpdateRequest) GetWebhookUrl() string {
 	return ""
 }
 
-func (x *UpdateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -1915,7 +1915,7 @@ const file_invora_billing_webhooks_v2_service_proto_rawDesc = "" +
 	"\x05_nameB\x11\n" +
 	"\x0f_signature_algo\"m\n" +
 	"\x0eCreateResponse\x12[\n" +
-	"\x10webhook_endpoint\x18\x01 \x01(\v20.invora.billing.common.v2.BillingWebhookEndpointR\x0fwebhookEndpoint\"\xe0\x02\n" +
+	"\x10webhook_endpoint\x18\x01 \x01(\v20.invora.billing.common.v2.BillingWebhookEndpointR\x0fwebhookEndpoint\"\xd3\x02\n" +
 	"\rUpdateRequest\x12F\n" +
 	"\vevent_types\x18\x01 \x03(\x0e2%.invora.billing.webhooks.v2.EventTypeR\n" +
 	"eventTypes\x12\x0e\n" +
@@ -1923,9 +1923,8 @@ const file_invora_billing_webhooks_v2_service_proto_rawDesc = "" +
 	"\x04name\x18\x03 \x01(\tH\x00R\x04name\x88\x01\x01\x12d\n" +
 	"\x0esignature_algo\x18\x04 \x01(\x0e28.invora.billing.webhooks.v2.WebhookEndpointSignatureAlgoH\x01R\rsignatureAlgo\x88\x01\x01\x12\x1f\n" +
 	"\vwebhook_url\x18\x05 \x01(\tR\n" +
-	"webhookUrl\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\a\n" +
+	"webhookUrl\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\a\n" +
 	"\x05_nameB\x11\n" +
 	"\x0f_signature_algo\"m\n" +
 	"\x0eUpdateResponse\x12[\n" +
@@ -2147,7 +2146,7 @@ var file_invora_billing_webhooks_v2_service_proto_depIdxs = []int32{
 	31, // 13: invora.billing.webhooks.v2.CreateResponse.webhook_endpoint:type_name -> invora.billing.common.v2.BillingWebhookEndpoint
 	1,  // 14: invora.billing.webhooks.v2.UpdateRequest.event_types:type_name -> invora.billing.webhooks.v2.EventType
 	0,  // 15: invora.billing.webhooks.v2.UpdateRequest.signature_algo:type_name -> invora.billing.webhooks.v2.WebhookEndpointSignatureAlgo
-	29, // 16: invora.billing.webhooks.v2.UpdateRequest.update_mask:type_name -> google.protobuf.FieldMask
+	29, // 16: invora.billing.webhooks.v2.UpdateRequest.mask:type_name -> google.protobuf.FieldMask
 	31, // 17: invora.billing.webhooks.v2.UpdateResponse.webhook_endpoint:type_name -> invora.billing.common.v2.BillingWebhookEndpoint
 	29, // 18: invora.billing.webhooks.v2.GetWebhookRequest.read_mask:type_name -> google.protobuf.FieldMask
 	30, // 19: invora.billing.webhooks.v2.GetWebhookRequest.view:type_name -> invora.billing.common.v2.View

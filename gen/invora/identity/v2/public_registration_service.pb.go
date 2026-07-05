@@ -295,32 +295,31 @@ func (x *OnboardingChecklist) GetCompletionRatio() float32 {
 	return 0
 }
 
-type CompleteBusinessProfileRequest struct {
+type CreateBusinessRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Display name for the business.
-	BusinessName string `protobuf:"bytes,1,opt,name=business_name,json=businessName,proto3" json:"business_name,omitempty"`
-	// ISO 3166-1 alpha-2 country code (e.g. "SA", "EG").
-	Country string `protobuf:"bytes,2,opt,name=country,proto3" json:"country,omitempty"`
-	// Capabilities the business wants (einvoicing, billing, or both).
-	Capabilities  []BusinessCapability `protobuf:"varint,3,rep,packed,name=capabilities,proto3,enum=invora.identity.v2.BusinessCapability" json:"capabilities,omitempty"`
+	// Optional. Display name for the business, used as the initial Zitadel
+	// organization name. When omitted, the server uses the invora:org_name
+	// metadata stamped on the user at registration by the login UI. Errors
+	// FAILED_PRECONDITION when neither is present.
+	BusinessName  string `protobuf:"bytes,1,opt,name=business_name,json=businessName,proto3" json:"business_name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CompleteBusinessProfileRequest) Reset() {
-	*x = CompleteBusinessProfileRequest{}
+func (x *CreateBusinessRequest) Reset() {
+	*x = CreateBusinessRequest{}
 	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CompleteBusinessProfileRequest) String() string {
+func (x *CreateBusinessRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CompleteBusinessProfileRequest) ProtoMessage() {}
+func (*CreateBusinessRequest) ProtoMessage() {}
 
-func (x *CompleteBusinessProfileRequest) ProtoReflect() protoreflect.Message {
+func (x *CreateBusinessRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -332,64 +331,50 @@ func (x *CompleteBusinessProfileRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CompleteBusinessProfileRequest.ProtoReflect.Descriptor instead.
-func (*CompleteBusinessProfileRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use CreateBusinessRequest.ProtoReflect.Descriptor instead.
+func (*CreateBusinessRequest) Descriptor() ([]byte, []int) {
 	return file_invora_identity_v2_public_registration_service_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *CompleteBusinessProfileRequest) GetBusinessName() string {
+func (x *CreateBusinessRequest) GetBusinessName() string {
 	if x != nil {
 		return x.BusinessName
 	}
 	return ""
 }
 
-func (x *CompleteBusinessProfileRequest) GetCountry() string {
-	if x != nil {
-		return x.Country
-	}
-	return ""
-}
-
-func (x *CompleteBusinessProfileRequest) GetCapabilities() []BusinessCapability {
-	if x != nil {
-		return x.Capabilities
-	}
-	return nil
-}
-
-type CompleteBusinessProfileResponse struct {
+type CreateBusinessResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The Zitadel org ID of the newly created organization.
-	TenantId string `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
-	// The business display name.
-	BusinessName string `protobuf:"bytes,2,opt,name=business_name,json=businessName,proto3" json:"business_name,omitempty"`
-	// Current onboarding checklist state.
-	Checklist *OnboardingChecklist `protobuf:"bytes,3,opt,name=checklist,proto3" json:"checklist,omitempty"`
-	// OIDC client_id for machine-to-machine API access.
-	// Only populated on initial creation.
-	ClientId string `protobuf:"bytes,4,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
-	// OIDC client_secret for machine-to-machine API access.
-	// Only populated on initial creation. Store securely — not retrievable again.
-	ClientSecret  string `protobuf:"bytes,5,opt,name=client_secret,json=clientSecret,proto3" json:"client_secret,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	// The Zitadel org ID of the newly created organization. Set this as the
+	// org-context header for subsequent calls (e.g. BranchesService.Create).
+	// This value IS the tenant id — there is no separate tenant identifier.
+	OrgId string `protobuf:"bytes,1,opt,name=org_id,json=orgId,proto3" json:"org_id,omitempty"`
+	// The effective organization display name (the request value, or the
+	// invora:org_name metadata value when the request omitted it).
+	OrgName string `protobuf:"bytes,2,opt,name=org_name,json=orgName,proto3" json:"org_name,omitempty"`
+	// The country captured at registration (invora:default_branch_country),
+	// if any. The client uses it to drive BranchesService.Create for the
+	// default branch. Empty when registration didn't capture one (the client
+	// then asks the user for a country before creating the default branch).
+	DefaultBranchCountry string `protobuf:"bytes,4,opt,name=default_branch_country,json=defaultBranchCountry,proto3" json:"default_branch_country,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
-func (x *CompleteBusinessProfileResponse) Reset() {
-	*x = CompleteBusinessProfileResponse{}
+func (x *CreateBusinessResponse) Reset() {
+	*x = CreateBusinessResponse{}
 	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CompleteBusinessProfileResponse) String() string {
+func (x *CreateBusinessResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CompleteBusinessProfileResponse) ProtoMessage() {}
+func (*CreateBusinessResponse) ProtoMessage() {}
 
-func (x *CompleteBusinessProfileResponse) ProtoReflect() protoreflect.Message {
+func (x *CreateBusinessResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -401,188 +386,30 @@ func (x *CompleteBusinessProfileResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CompleteBusinessProfileResponse.ProtoReflect.Descriptor instead.
-func (*CompleteBusinessProfileResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use CreateBusinessResponse.ProtoReflect.Descriptor instead.
+func (*CreateBusinessResponse) Descriptor() ([]byte, []int) {
 	return file_invora_identity_v2_public_registration_service_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *CompleteBusinessProfileResponse) GetTenantId() string {
+func (x *CreateBusinessResponse) GetOrgId() string {
 	if x != nil {
-		return x.TenantId
+		return x.OrgId
 	}
 	return ""
 }
 
-func (x *CompleteBusinessProfileResponse) GetBusinessName() string {
+func (x *CreateBusinessResponse) GetOrgName() string {
 	if x != nil {
-		return x.BusinessName
+		return x.OrgName
 	}
 	return ""
 }
 
-func (x *CompleteBusinessProfileResponse) GetChecklist() *OnboardingChecklist {
+func (x *CreateBusinessResponse) GetDefaultBranchCountry() string {
 	if x != nil {
-		return x.Checklist
-	}
-	return nil
-}
-
-func (x *CompleteBusinessProfileResponse) GetClientId() string {
-	if x != nil {
-		return x.ClientId
+		return x.DefaultBranchCountry
 	}
 	return ""
-}
-
-func (x *CompleteBusinessProfileResponse) GetClientSecret() string {
-	if x != nil {
-		return x.ClientSecret
-	}
-	return ""
-}
-
-type UpdateBusinessDetailsRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Tax identification number.
-	TaxId string `protobuf:"bytes,1,opt,name=tax_id,json=taxId,proto3" json:"tax_id,omitempty"`
-	// Business address line.
-	AddressLine string `protobuf:"bytes,2,opt,name=address_line,json=addressLine,proto3" json:"address_line,omitempty"`
-	// City.
-	City string `protobuf:"bytes,3,opt,name=city,proto3" json:"city,omitempty"`
-	// Postal code.
-	PostalCode string `protobuf:"bytes,4,opt,name=postal_code,json=postalCode,proto3" json:"postal_code,omitempty"`
-	// ISO 3166-1 alpha-2 country code.
-	Country string `protobuf:"bytes,5,opt,name=country,proto3" json:"country,omitempty"`
-	// ISO 4217 currency code (e.g. "SAR", "EGP").
-	Currency string `protobuf:"bytes,6,opt,name=currency,proto3" json:"currency,omitempty"`
-	// IANA timezone (e.g. "Asia/Riyadh").
-	Timezone      string `protobuf:"bytes,7,opt,name=timezone,proto3" json:"timezone,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateBusinessDetailsRequest) Reset() {
-	*x = UpdateBusinessDetailsRequest{}
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateBusinessDetailsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateBusinessDetailsRequest) ProtoMessage() {}
-
-func (x *UpdateBusinessDetailsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[4]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateBusinessDetailsRequest.ProtoReflect.Descriptor instead.
-func (*UpdateBusinessDetailsRequest) Descriptor() ([]byte, []int) {
-	return file_invora_identity_v2_public_registration_service_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *UpdateBusinessDetailsRequest) GetTaxId() string {
-	if x != nil {
-		return x.TaxId
-	}
-	return ""
-}
-
-func (x *UpdateBusinessDetailsRequest) GetAddressLine() string {
-	if x != nil {
-		return x.AddressLine
-	}
-	return ""
-}
-
-func (x *UpdateBusinessDetailsRequest) GetCity() string {
-	if x != nil {
-		return x.City
-	}
-	return ""
-}
-
-func (x *UpdateBusinessDetailsRequest) GetPostalCode() string {
-	if x != nil {
-		return x.PostalCode
-	}
-	return ""
-}
-
-func (x *UpdateBusinessDetailsRequest) GetCountry() string {
-	if x != nil {
-		return x.Country
-	}
-	return ""
-}
-
-func (x *UpdateBusinessDetailsRequest) GetCurrency() string {
-	if x != nil {
-		return x.Currency
-	}
-	return ""
-}
-
-func (x *UpdateBusinessDetailsRequest) GetTimezone() string {
-	if x != nil {
-		return x.Timezone
-	}
-	return ""
-}
-
-type UpdateBusinessDetailsResponse struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Updated onboarding checklist state.
-	Checklist     *OnboardingChecklist `protobuf:"bytes,1,opt,name=checklist,proto3" json:"checklist,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateBusinessDetailsResponse) Reset() {
-	*x = UpdateBusinessDetailsResponse{}
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateBusinessDetailsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateBusinessDetailsResponse) ProtoMessage() {}
-
-func (x *UpdateBusinessDetailsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[5]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateBusinessDetailsResponse.ProtoReflect.Descriptor instead.
-func (*UpdateBusinessDetailsResponse) Descriptor() ([]byte, []int) {
-	return file_invora_identity_v2_public_registration_service_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *UpdateBusinessDetailsResponse) GetChecklist() *OnboardingChecklist {
-	if x != nil {
-		return x.Checklist
-	}
-	return nil
 }
 
 type SelectPlanRequest struct {
@@ -595,7 +422,7 @@ type SelectPlanRequest struct {
 
 func (x *SelectPlanRequest) Reset() {
 	*x = SelectPlanRequest{}
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[6]
+	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -607,7 +434,7 @@ func (x *SelectPlanRequest) String() string {
 func (*SelectPlanRequest) ProtoMessage() {}
 
 func (x *SelectPlanRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[6]
+	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -620,7 +447,7 @@ func (x *SelectPlanRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SelectPlanRequest.ProtoReflect.Descriptor instead.
 func (*SelectPlanRequest) Descriptor() ([]byte, []int) {
-	return file_invora_identity_v2_public_registration_service_proto_rawDescGZIP(), []int{6}
+	return file_invora_identity_v2_public_registration_service_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *SelectPlanRequest) GetPlanCode() string {
@@ -642,7 +469,7 @@ type SelectPlanResponse struct {
 
 func (x *SelectPlanResponse) Reset() {
 	*x = SelectPlanResponse{}
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[7]
+	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -654,7 +481,7 @@ func (x *SelectPlanResponse) String() string {
 func (*SelectPlanResponse) ProtoMessage() {}
 
 func (x *SelectPlanResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[7]
+	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -667,7 +494,7 @@ func (x *SelectPlanResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SelectPlanResponse.ProtoReflect.Descriptor instead.
 func (*SelectPlanResponse) Descriptor() ([]byte, []int) {
-	return file_invora_identity_v2_public_registration_service_proto_rawDescGZIP(), []int{7}
+	return file_invora_identity_v2_public_registration_service_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *SelectPlanResponse) GetSubscriptionId() string {
@@ -678,105 +505,6 @@ func (x *SelectPlanResponse) GetSubscriptionId() string {
 }
 
 func (x *SelectPlanResponse) GetChecklist() *OnboardingChecklist {
-	if x != nil {
-		return x.Checklist
-	}
-	return nil
-}
-
-type GetOnboardingStatusRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetOnboardingStatusRequest) Reset() {
-	*x = GetOnboardingStatusRequest{}
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[8]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetOnboardingStatusRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetOnboardingStatusRequest) ProtoMessage() {}
-
-func (x *GetOnboardingStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[8]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetOnboardingStatusRequest.ProtoReflect.Descriptor instead.
-func (*GetOnboardingStatusRequest) Descriptor() ([]byte, []int) {
-	return file_invora_identity_v2_public_registration_service_proto_rawDescGZIP(), []int{8}
-}
-
-type GetOnboardingStatusResponse struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// The tenant ID.
-	TenantId string `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
-	// The current org type.
-	OrgType OrgType `protobuf:"varint,2,opt,name=org_type,json=orgType,proto3,enum=invora.identity.v2.OrgType" json:"org_type,omitempty"`
-	// Current onboarding checklist state.
-	Checklist     *OnboardingChecklist `protobuf:"bytes,3,opt,name=checklist,proto3" json:"checklist,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetOnboardingStatusResponse) Reset() {
-	*x = GetOnboardingStatusResponse{}
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[9]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetOnboardingStatusResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetOnboardingStatusResponse) ProtoMessage() {}
-
-func (x *GetOnboardingStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[9]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetOnboardingStatusResponse.ProtoReflect.Descriptor instead.
-func (*GetOnboardingStatusResponse) Descriptor() ([]byte, []int) {
-	return file_invora_identity_v2_public_registration_service_proto_rawDescGZIP(), []int{9}
-}
-
-func (x *GetOnboardingStatusResponse) GetTenantId() string {
-	if x != nil {
-		return x.TenantId
-	}
-	return ""
-}
-
-func (x *GetOnboardingStatusResponse) GetOrgType() OrgType {
-	if x != nil {
-		return x.OrgType
-	}
-	return OrgType_ORG_TYPE_UNSPECIFIED
-}
-
-func (x *GetOnboardingStatusResponse) GetChecklist() *OnboardingChecklist {
 	if x != nil {
 		return x.Checklist
 	}
@@ -801,7 +529,7 @@ type PlanFeature struct {
 
 func (x *PlanFeature) Reset() {
 	*x = PlanFeature{}
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[10]
+	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -813,7 +541,7 @@ func (x *PlanFeature) String() string {
 func (*PlanFeature) ProtoMessage() {}
 
 func (x *PlanFeature) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[10]
+	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -826,7 +554,7 @@ func (x *PlanFeature) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PlanFeature.ProtoReflect.Descriptor instead.
 func (*PlanFeature) Descriptor() ([]byte, []int) {
-	return file_invora_identity_v2_public_registration_service_proto_rawDescGZIP(), []int{10}
+	return file_invora_identity_v2_public_registration_service_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *PlanFeature) GetLabel() string {
@@ -884,7 +612,7 @@ type AvailablePlan struct {
 
 func (x *AvailablePlan) Reset() {
 	*x = AvailablePlan{}
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[11]
+	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -896,7 +624,7 @@ func (x *AvailablePlan) String() string {
 func (*AvailablePlan) ProtoMessage() {}
 
 func (x *AvailablePlan) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[11]
+	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -909,7 +637,7 @@ func (x *AvailablePlan) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AvailablePlan.ProtoReflect.Descriptor instead.
 func (*AvailablePlan) Descriptor() ([]byte, []int) {
-	return file_invora_identity_v2_public_registration_service_proto_rawDescGZIP(), []int{11}
+	return file_invora_identity_v2_public_registration_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *AvailablePlan) GetId() string {
@@ -1003,7 +731,7 @@ type ListAvailablePlansRequest struct {
 
 func (x *ListAvailablePlansRequest) Reset() {
 	*x = ListAvailablePlansRequest{}
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[12]
+	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1015,7 +743,7 @@ func (x *ListAvailablePlansRequest) String() string {
 func (*ListAvailablePlansRequest) ProtoMessage() {}
 
 func (x *ListAvailablePlansRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[12]
+	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1028,7 +756,7 @@ func (x *ListAvailablePlansRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAvailablePlansRequest.ProtoReflect.Descriptor instead.
 func (*ListAvailablePlansRequest) Descriptor() ([]byte, []int) {
-	return file_invora_identity_v2_public_registration_service_proto_rawDescGZIP(), []int{12}
+	return file_invora_identity_v2_public_registration_service_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ListAvailablePlansRequest) GetCurrency() v2.CurrencyEnum {
@@ -1049,14 +777,14 @@ type ListAvailablePlansResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Plans in display order. The backend is responsible for ordering
 	// (typically: free first, recommended highlighted, enterprise last).
-	Plans         []*AvailablePlan `protobuf:"bytes,1,rep,name=plans,proto3" json:"plans,omitempty"`
+	Items         []*AvailablePlan `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListAvailablePlansResponse) Reset() {
 	*x = ListAvailablePlansResponse{}
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[13]
+	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1068,7 +796,7 @@ func (x *ListAvailablePlansResponse) String() string {
 func (*ListAvailablePlansResponse) ProtoMessage() {}
 
 func (x *ListAvailablePlansResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[13]
+	mi := &file_invora_identity_v2_public_registration_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1081,12 +809,12 @@ func (x *ListAvailablePlansResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAvailablePlansResponse.ProtoReflect.Descriptor instead.
 func (*ListAvailablePlansResponse) Descriptor() ([]byte, []int) {
-	return file_invora_identity_v2_public_registration_service_proto_rawDescGZIP(), []int{13}
+	return file_invora_identity_v2_public_registration_service_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *ListAvailablePlansResponse) GetPlans() []*AvailablePlan {
+func (x *ListAvailablePlansResponse) GetItems() []*AvailablePlan {
 	if x != nil {
-		return x.Plans
+		return x.Items
 	}
 	return nil
 }
@@ -1095,45 +823,25 @@ var File_invora_identity_v2_public_registration_service_proto protoreflect.FileD
 
 const file_invora_identity_v2_public_registration_service_proto_rawDesc = "" +
 	"\n" +
-	"4invora/identity/v2/public_registration_service.proto\x12\x12invora.identity.v2\x1a\x1cgoogle/api/annotations.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\"V\n" +
+	"4invora/identity/v2/public_registration_service.proto\x12\x12invora.identity.v2\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\"V\n" +
 	"\x0eOnboardingStep\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x1c\n" +
 	"\tcompleted\x18\x03 \x01(\bR\tcompleted\"z\n" +
 	"\x13OnboardingChecklist\x128\n" +
 	"\x05steps\x18\x01 \x03(\v2\".invora.identity.v2.OnboardingStepR\x05steps\x12)\n" +
-	"\x10completion_ratio\x18\x02 \x01(\x02R\x0fcompletionRatio\"\xab\x01\n" +
-	"\x1eCompleteBusinessProfileRequest\x12#\n" +
-	"\rbusiness_name\x18\x01 \x01(\tR\fbusinessName\x12\x18\n" +
-	"\acountry\x18\x02 \x01(\tR\acountry\x12J\n" +
-	"\fcapabilities\x18\x03 \x03(\x0e2&.invora.identity.v2.BusinessCapabilityR\fcapabilities\"\xec\x01\n" +
-	"\x1fCompleteBusinessProfileResponse\x12\x1b\n" +
-	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12#\n" +
-	"\rbusiness_name\x18\x02 \x01(\tR\fbusinessName\x12E\n" +
-	"\tchecklist\x18\x03 \x01(\v2'.invora.identity.v2.OnboardingChecklistR\tchecklist\x12\x1b\n" +
-	"\tclient_id\x18\x04 \x01(\tR\bclientId\x12#\n" +
-	"\rclient_secret\x18\x05 \x01(\tR\fclientSecret\"\xdf\x01\n" +
-	"\x1cUpdateBusinessDetailsRequest\x12\x15\n" +
-	"\x06tax_id\x18\x01 \x01(\tR\x05taxId\x12!\n" +
-	"\faddress_line\x18\x02 \x01(\tR\vaddressLine\x12\x12\n" +
-	"\x04city\x18\x03 \x01(\tR\x04city\x12\x1f\n" +
-	"\vpostal_code\x18\x04 \x01(\tR\n" +
-	"postalCode\x12\x18\n" +
-	"\acountry\x18\x05 \x01(\tR\acountry\x12\x1a\n" +
-	"\bcurrency\x18\x06 \x01(\tR\bcurrency\x12\x1a\n" +
-	"\btimezone\x18\a \x01(\tR\btimezone\"f\n" +
-	"\x1dUpdateBusinessDetailsResponse\x12E\n" +
-	"\tchecklist\x18\x01 \x01(\v2'.invora.identity.v2.OnboardingChecklistR\tchecklist\"0\n" +
+	"\x10completion_ratio\x18\x02 \x01(\x02R\x0fcompletionRatio\"A\n" +
+	"\x15CreateBusinessRequest\x12(\n" +
+	"\rbusiness_name\x18\x01 \x01(\tB\x03\xe0A\x01R\fbusinessName\"\x95\x01\n" +
+	"\x16CreateBusinessResponse\x12\x1a\n" +
+	"\x06org_id\x18\x01 \x01(\tB\x03\xe0A\x03R\x05orgId\x12\x1e\n" +
+	"\borg_name\x18\x02 \x01(\tB\x03\xe0A\x03R\aorgName\x129\n" +
+	"\x16default_branch_country\x18\x04 \x01(\tB\x03\xe0A\x03R\x14defaultBranchCountryJ\x04\b\x03\x10\x04\"0\n" +
 	"\x11SelectPlanRequest\x12\x1b\n" +
 	"\tplan_code\x18\x01 \x01(\tR\bplanCode\"\x84\x01\n" +
 	"\x12SelectPlanResponse\x12'\n" +
 	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\x12E\n" +
-	"\tchecklist\x18\x02 \x01(\v2'.invora.identity.v2.OnboardingChecklistR\tchecklist\"\x1c\n" +
-	"\x1aGetOnboardingStatusRequest\"\xb9\x01\n" +
-	"\x1bGetOnboardingStatusResponse\x12\x1b\n" +
-	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x126\n" +
-	"\borg_type\x18\x02 \x01(\x0e2\x1b.invora.identity.v2.OrgTypeR\aorgType\x12E\n" +
-	"\tchecklist\x18\x03 \x01(\v2'.invora.identity.v2.OnboardingChecklistR\tchecklist\"W\n" +
+	"\tchecklist\x18\x02 \x01(\v2'.invora.identity.v2.OnboardingChecklistR\tchecklist\"W\n" +
 	"\vPlanFeature\x12\x14\n" +
 	"\x05label\x18\x01 \x01(\tR\x05label\x12\x16\n" +
 	"\x06detail\x18\x02 \x01(\tR\x06detail\x12\x1a\n" +
@@ -1155,7 +863,7 @@ const file_invora_identity_v2_public_registration_service_proto_rawDesc = "" +
 	"\bcurrency\x18\x01 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\bcurrency\x12J\n" +
 	"\fcapabilities\x18\x02 \x03(\x0e2&.invora.identity.v2.BusinessCapabilityR\fcapabilities\"U\n" +
 	"\x1aListAvailablePlansResponse\x127\n" +
-	"\x05plans\x18\x01 \x03(\v2!.invora.identity.v2.AvailablePlanR\x05plans*r\n" +
+	"\x05items\x18\x01 \x03(\v2!.invora.identity.v2.AvailablePlanR\x05items*r\n" +
 	"\aOrgType\x12\x18\n" +
 	"\x14ORG_TYPE_UNSPECIFIED\x10\x00\x12\x15\n" +
 	"\x11ORG_TYPE_BUSINESS\x10\x01\x12\x15\n" +
@@ -1169,17 +877,13 @@ const file_invora_identity_v2_public_registration_service_proto_rawDesc = "" +
 	"\x12BusinessCapability\x12#\n" +
 	"\x1fBUSINESS_CAPABILITY_UNSPECIFIED\x10\x00\x12\"\n" +
 	"\x1eBUSINESS_CAPABILITY_EINVOICING\x10\x01\x12\x1f\n" +
-	"\x1bBUSINESS_CAPABILITY_BILLING\x10\x022\xe0\b\n" +
-	"\x19PublicRegistrationService\x12\xed\x01\n" +
-	"\x17CompleteBusinessProfile\x122.invora.identity.v2.CompleteBusinessProfileRequest\x1a3.invora.identity.v2.CompleteBusinessProfileResponse\"i\xe2\xf2\x19,\n" +
-	"*Invora.Identity.v2.CompleteBusinessProfile\x82\xd3\xe4\x93\x023:\x01*\"./api/identity/v2/registration/complete-profile\x12\xe5\x01\n" +
-	"\x15UpdateBusinessDetails\x120.invora.identity.v2.UpdateBusinessDetailsRequest\x1a1.invora.identity.v2.UpdateBusinessDetailsResponse\"g\xe2\xf2\x19*\n" +
-	"(Invora.Identity.v2.UpdateBusinessDetails\x82\xd3\xe4\x93\x023:\x01*\x1a./api/identity/v2/registration/business-details\x12\xb4\x01\n" +
+	"\x1bBUSINESS_CAPABILITY_BILLING\x10\x022\xe3\x04\n" +
+	"\x19PublicRegistrationService\x12\xb6\x01\n" +
+	"\x0eCreateBusiness\x12).invora.identity.v2.CreateBusinessRequest\x1a*.invora.identity.v2.CreateBusinessResponse\"M\xe2\xf2\x19#\n" +
+	"!Invora.Identity.v2.CreateBusiness\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/api/v2/identity/businesses\x12\xb4\x01\n" +
 	"\n" +
 	"SelectPlan\x12%.invora.identity.v2.SelectPlanRequest\x1a&.invora.identity.v2.SelectPlanResponse\"W\xe2\xf2\x19\x1f\n" +
-	"\x1dInvora.Identity.v2.SelectPlan\x82\xd3\xe4\x93\x02.:\x01*\")/api/identity/v2/registration/select-plan\x12\xdb\x01\n" +
-	"\x13GetOnboardingStatus\x12..invora.identity.v2.GetOnboardingStatusRequest\x1a/.invora.identity.v2.GetOnboardingStatusResponse\"c\xe2\xf2\x19(\n" +
-	"&Invora.Identity.v2.GetOnboardingStatus\x82\xd3\xe4\x93\x021\x12//api/identity/v2/registration/onboarding-status\x12\xd5\x01\n" +
+	"\x1dInvora.Identity.v2.SelectPlan\x82\xd3\xe4\x93\x02.:\x01*\")/api/identity/v2/registration/select-plan\x12\xd5\x01\n" +
 	"\x12ListAvailablePlans\x12-.invora.identity.v2.ListAvailablePlansRequest\x1a..invora.identity.v2.ListAvailablePlansResponse\"`\xe2\xf2\x19'\n" +
 	"%Invora.Identity.v2.ListAvailablePlans\x82\xd3\xe4\x93\x02/\x12-/api/identity/v2/registration/available-plansB\xec\x01\n" +
 	"\x16com.invora.identity.v2B\x1ePublicRegistrationServiceProtoP\x01ZHgithub.com/invoraapp/invora-controller/gen/invora/identity/v2;identityv2\xa2\x02\x03IIX\xaa\x02\x12Invora.Identity.V2\xca\x02\x12Invora\\Identity\\V2\xe2\x02\x1eInvora\\Identity\\V2\\GPBMetadata\xea\x02\x14Invora::Identity::V2b\x06proto3"
@@ -1197,57 +901,44 @@ func file_invora_identity_v2_public_registration_service_proto_rawDescGZIP() []b
 }
 
 var file_invora_identity_v2_public_registration_service_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_invora_identity_v2_public_registration_service_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
+var file_invora_identity_v2_public_registration_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_invora_identity_v2_public_registration_service_proto_goTypes = []any{
-	(OrgType)(0),                            // 0: invora.identity.v2.OrgType
-	(ProvisioningStatus)(0),                 // 1: invora.identity.v2.ProvisioningStatus
-	(BusinessCapability)(0),                 // 2: invora.identity.v2.BusinessCapability
-	(*OnboardingStep)(nil),                  // 3: invora.identity.v2.OnboardingStep
-	(*OnboardingChecklist)(nil),             // 4: invora.identity.v2.OnboardingChecklist
-	(*CompleteBusinessProfileRequest)(nil),  // 5: invora.identity.v2.CompleteBusinessProfileRequest
-	(*CompleteBusinessProfileResponse)(nil), // 6: invora.identity.v2.CompleteBusinessProfileResponse
-	(*UpdateBusinessDetailsRequest)(nil),    // 7: invora.identity.v2.UpdateBusinessDetailsRequest
-	(*UpdateBusinessDetailsResponse)(nil),   // 8: invora.identity.v2.UpdateBusinessDetailsResponse
-	(*SelectPlanRequest)(nil),               // 9: invora.identity.v2.SelectPlanRequest
-	(*SelectPlanResponse)(nil),              // 10: invora.identity.v2.SelectPlanResponse
-	(*GetOnboardingStatusRequest)(nil),      // 11: invora.identity.v2.GetOnboardingStatusRequest
-	(*GetOnboardingStatusResponse)(nil),     // 12: invora.identity.v2.GetOnboardingStatusResponse
-	(*PlanFeature)(nil),                     // 13: invora.identity.v2.PlanFeature
-	(*AvailablePlan)(nil),                   // 14: invora.identity.v2.AvailablePlan
-	(*ListAvailablePlansRequest)(nil),       // 15: invora.identity.v2.ListAvailablePlansRequest
-	(*ListAvailablePlansResponse)(nil),      // 16: invora.identity.v2.ListAvailablePlansResponse
-	(v2.CurrencyEnum)(0),                    // 17: invora.billing.common.v2.CurrencyEnum
-	(v2.PlanInterval)(0),                    // 18: invora.billing.common.v2.PlanInterval
+	(OrgType)(0),                       // 0: invora.identity.v2.OrgType
+	(ProvisioningStatus)(0),            // 1: invora.identity.v2.ProvisioningStatus
+	(BusinessCapability)(0),            // 2: invora.identity.v2.BusinessCapability
+	(*OnboardingStep)(nil),             // 3: invora.identity.v2.OnboardingStep
+	(*OnboardingChecklist)(nil),        // 4: invora.identity.v2.OnboardingChecklist
+	(*CreateBusinessRequest)(nil),      // 5: invora.identity.v2.CreateBusinessRequest
+	(*CreateBusinessResponse)(nil),     // 6: invora.identity.v2.CreateBusinessResponse
+	(*SelectPlanRequest)(nil),          // 7: invora.identity.v2.SelectPlanRequest
+	(*SelectPlanResponse)(nil),         // 8: invora.identity.v2.SelectPlanResponse
+	(*PlanFeature)(nil),                // 9: invora.identity.v2.PlanFeature
+	(*AvailablePlan)(nil),              // 10: invora.identity.v2.AvailablePlan
+	(*ListAvailablePlansRequest)(nil),  // 11: invora.identity.v2.ListAvailablePlansRequest
+	(*ListAvailablePlansResponse)(nil), // 12: invora.identity.v2.ListAvailablePlansResponse
+	(v2.CurrencyEnum)(0),               // 13: invora.billing.common.v2.CurrencyEnum
+	(v2.PlanInterval)(0),               // 14: invora.billing.common.v2.PlanInterval
 }
 var file_invora_identity_v2_public_registration_service_proto_depIdxs = []int32{
 	3,  // 0: invora.identity.v2.OnboardingChecklist.steps:type_name -> invora.identity.v2.OnboardingStep
-	2,  // 1: invora.identity.v2.CompleteBusinessProfileRequest.capabilities:type_name -> invora.identity.v2.BusinessCapability
-	4,  // 2: invora.identity.v2.CompleteBusinessProfileResponse.checklist:type_name -> invora.identity.v2.OnboardingChecklist
-	4,  // 3: invora.identity.v2.UpdateBusinessDetailsResponse.checklist:type_name -> invora.identity.v2.OnboardingChecklist
-	4,  // 4: invora.identity.v2.SelectPlanResponse.checklist:type_name -> invora.identity.v2.OnboardingChecklist
-	0,  // 5: invora.identity.v2.GetOnboardingStatusResponse.org_type:type_name -> invora.identity.v2.OrgType
-	4,  // 6: invora.identity.v2.GetOnboardingStatusResponse.checklist:type_name -> invora.identity.v2.OnboardingChecklist
-	17, // 7: invora.identity.v2.AvailablePlan.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	18, // 8: invora.identity.v2.AvailablePlan.interval:type_name -> invora.billing.common.v2.PlanInterval
-	13, // 9: invora.identity.v2.AvailablePlan.features:type_name -> invora.identity.v2.PlanFeature
-	17, // 10: invora.identity.v2.ListAvailablePlansRequest.currency:type_name -> invora.billing.common.v2.CurrencyEnum
-	2,  // 11: invora.identity.v2.ListAvailablePlansRequest.capabilities:type_name -> invora.identity.v2.BusinessCapability
-	14, // 12: invora.identity.v2.ListAvailablePlansResponse.plans:type_name -> invora.identity.v2.AvailablePlan
-	5,  // 13: invora.identity.v2.PublicRegistrationService.CompleteBusinessProfile:input_type -> invora.identity.v2.CompleteBusinessProfileRequest
-	7,  // 14: invora.identity.v2.PublicRegistrationService.UpdateBusinessDetails:input_type -> invora.identity.v2.UpdateBusinessDetailsRequest
-	9,  // 15: invora.identity.v2.PublicRegistrationService.SelectPlan:input_type -> invora.identity.v2.SelectPlanRequest
-	11, // 16: invora.identity.v2.PublicRegistrationService.GetOnboardingStatus:input_type -> invora.identity.v2.GetOnboardingStatusRequest
-	15, // 17: invora.identity.v2.PublicRegistrationService.ListAvailablePlans:input_type -> invora.identity.v2.ListAvailablePlansRequest
-	6,  // 18: invora.identity.v2.PublicRegistrationService.CompleteBusinessProfile:output_type -> invora.identity.v2.CompleteBusinessProfileResponse
-	8,  // 19: invora.identity.v2.PublicRegistrationService.UpdateBusinessDetails:output_type -> invora.identity.v2.UpdateBusinessDetailsResponse
-	10, // 20: invora.identity.v2.PublicRegistrationService.SelectPlan:output_type -> invora.identity.v2.SelectPlanResponse
-	12, // 21: invora.identity.v2.PublicRegistrationService.GetOnboardingStatus:output_type -> invora.identity.v2.GetOnboardingStatusResponse
-	16, // 22: invora.identity.v2.PublicRegistrationService.ListAvailablePlans:output_type -> invora.identity.v2.ListAvailablePlansResponse
-	18, // [18:23] is the sub-list for method output_type
-	13, // [13:18] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+	4,  // 1: invora.identity.v2.SelectPlanResponse.checklist:type_name -> invora.identity.v2.OnboardingChecklist
+	13, // 2: invora.identity.v2.AvailablePlan.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	14, // 3: invora.identity.v2.AvailablePlan.interval:type_name -> invora.billing.common.v2.PlanInterval
+	9,  // 4: invora.identity.v2.AvailablePlan.features:type_name -> invora.identity.v2.PlanFeature
+	13, // 5: invora.identity.v2.ListAvailablePlansRequest.currency:type_name -> invora.billing.common.v2.CurrencyEnum
+	2,  // 6: invora.identity.v2.ListAvailablePlansRequest.capabilities:type_name -> invora.identity.v2.BusinessCapability
+	10, // 7: invora.identity.v2.ListAvailablePlansResponse.items:type_name -> invora.identity.v2.AvailablePlan
+	5,  // 8: invora.identity.v2.PublicRegistrationService.CreateBusiness:input_type -> invora.identity.v2.CreateBusinessRequest
+	7,  // 9: invora.identity.v2.PublicRegistrationService.SelectPlan:input_type -> invora.identity.v2.SelectPlanRequest
+	11, // 10: invora.identity.v2.PublicRegistrationService.ListAvailablePlans:input_type -> invora.identity.v2.ListAvailablePlansRequest
+	6,  // 11: invora.identity.v2.PublicRegistrationService.CreateBusiness:output_type -> invora.identity.v2.CreateBusinessResponse
+	8,  // 12: invora.identity.v2.PublicRegistrationService.SelectPlan:output_type -> invora.identity.v2.SelectPlanResponse
+	12, // 13: invora.identity.v2.PublicRegistrationService.ListAvailablePlans:output_type -> invora.identity.v2.ListAvailablePlansResponse
+	11, // [11:14] is the sub-list for method output_type
+	8,  // [8:11] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_invora_identity_v2_public_registration_service_proto_init() }
@@ -1261,7 +952,7 @@ func file_invora_identity_v2_public_registration_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_invora_identity_v2_public_registration_service_proto_rawDesc), len(file_invora_identity_v2_public_registration_service_proto_rawDesc)),
 			NumEnums:      3,
-			NumMessages:   14,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

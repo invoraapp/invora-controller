@@ -1410,7 +1410,7 @@ type UpdateRequest struct {
 	Timezone                            *v2.Timezone                       `protobuf:"varint,37,opt,name=timezone,proto3,enum=invora.billing.common.v2.Timezone,oneof" json:"timezone,omitempty"`
 	Url                                 *string                            `protobuf:"bytes,38,opt,name=url,proto3,oneof" json:"url,omitempty"`
 	Zipcode                             *string                            `protobuf:"bytes,39,opt,name=zipcode,proto3,oneof" json:"zipcode,omitempty"`
-	UpdateMask                          *fieldmaskpb.FieldMask             `protobuf:"bytes,40,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask                                *fieldmaskpb.FieldMask             `protobuf:"bytes,40,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields                       protoimpl.UnknownFields
 	sizeCache                           protoimpl.SizeCache
 }
@@ -1718,9 +1718,9 @@ func (x *UpdateRequest) GetZipcode() string {
 	return ""
 }
 
-func (x *UpdateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -2488,7 +2488,7 @@ type UpdateInvoiceGracePeriodRequest struct {
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Grace period in days (null to use org default).
 	InvoiceGracePeriod *int32                 `protobuf:"varint,2,opt,name=invoice_grace_period,json=invoiceGracePeriod,proto3,oneof" json:"invoice_grace_period,omitempty"`
-	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask               *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -2537,9 +2537,9 @@ func (x *UpdateInvoiceGracePeriodRequest) GetInvoiceGracePeriod() int32 {
 	return 0
 }
 
-func (x *UpdateInvoiceGracePeriodRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateInvoiceGracePeriodRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -2607,7 +2607,7 @@ type UpdatePortalCustomerRequest struct {
 	State                   *string                `protobuf:"bytes,14,opt,name=state,proto3,oneof" json:"state,omitempty"`
 	TaxIdentificationNumber *string                `protobuf:"bytes,15,opt,name=tax_identification_number,json=taxIdentificationNumber,proto3,oneof" json:"tax_identification_number,omitempty"`
 	Zipcode                 *string                `protobuf:"bytes,16,opt,name=zipcode,proto3,oneof" json:"zipcode,omitempty"`
-	UpdateMask              *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask                    *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -2754,9 +2754,9 @@ func (x *UpdatePortalCustomerRequest) GetZipcode() string {
 	return ""
 }
 
-func (x *UpdatePortalCustomerRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdatePortalCustomerRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -3325,7 +3325,7 @@ const file_invora_billing_customers_v2_service_proto_rawDesc = "" +
 	"\n" +
 	"\b_zipcode\"W\n" +
 	"\x0eCreateResponse\x12E\n" +
-	"\bcustomer\x18\x01 \x01(\v2).invora.billing.common.v2.BillingCustomerR\bcustomer\"\x8e\x17\n" +
+	"\bcustomer\x18\x01 \x01(\v2).invora.billing.common.v2.BillingCustomerR\bcustomer\"\x81\x17\n" +
 	"\rUpdateRequest\x12U\n" +
 	"\faccount_type\x18\x01 \x01(\x0e2-.invora.billing.common.v2.CustomerAccountTypeH\x00R\vaccountType\x88\x01\x01\x12(\n" +
 	"\raddress_line1\x18\x02 \x01(\tH\x01R\faddressLine1\x88\x01\x01\x12(\n" +
@@ -3369,9 +3369,8 @@ const file_invora_billing_customers_v2_service_proto_rawDesc = "" +
 	"\x19tax_identification_number\x18$ \x01(\tH\x1dR\x17taxIdentificationNumber\x88\x01\x01\x12C\n" +
 	"\btimezone\x18% \x01(\x0e2\".invora.billing.common.v2.TimezoneH\x1eR\btimezone\x88\x01\x01\x12\x15\n" +
 	"\x03url\x18& \x01(\tH\x1fR\x03url\x88\x01\x01\x12\x1d\n" +
-	"\azipcode\x18' \x01(\tH R\azipcode\x88\x01\x01\x12;\n" +
-	"\vupdate_mask\x18( \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\x0f\n" +
+	"\azipcode\x18' \x01(\tH R\azipcode\x88\x01\x01\x12.\n" +
+	"\x04mask\x18( \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\x0f\n" +
 	"\r_account_typeB\x10\n" +
 	"\x0e_address_line1B\x10\n" +
 	"\x0e_address_line2B\x1e\n" +
@@ -3462,15 +3461,14 @@ const file_invora_billing_customers_v2_service_proto_rawDesc = "" +
 	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
 	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"b\n" +
 	"\x10GetUsageResponse\x12N\n" +
-	"\x0ecustomer_usage\x18\x01 \x01(\v2'.invora.billing.common.v2.CustomerUsageR\rcustomerUsage\"\xbe\x01\n" +
+	"\x0ecustomer_usage\x18\x01 \x01(\v2'.invora.billing.common.v2.CustomerUsageR\rcustomerUsage\"\xb1\x01\n" +
 	"\x1fUpdateInvoiceGracePeriodRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x125\n" +
-	"\x14invoice_grace_period\x18\x02 \x01(\x05H\x00R\x12invoiceGracePeriod\x88\x01\x01\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\x17\n" +
+	"\x14invoice_grace_period\x18\x02 \x01(\x05H\x00R\x12invoiceGracePeriod\x88\x01\x01\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\x17\n" +
 	"\x15_invoice_grace_period\"i\n" +
 	" UpdateInvoiceGracePeriodResponse\x12E\n" +
-	"\bcustomer\x18\x01 \x01(\v2).invora.billing.common.v2.BillingCustomerR\bcustomer\"\xfc\a\n" +
+	"\bcustomer\x18\x01 \x01(\v2).invora.billing.common.v2.BillingCustomerR\bcustomer\"\xef\a\n" +
 	"\x1bUpdatePortalCustomerRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12(\n" +
 	"\raddress_line1\x18\x02 \x01(\tH\x00R\faddressLine1\x88\x01\x01\x12(\n" +
@@ -3490,9 +3488,8 @@ const file_invora_billing_customers_v2_service_proto_rawDesc = "" +
 	"\x10shipping_address\x18\r \x01(\v21.invora.billing.customers.v2.CustomerAddressInputH\vR\x0fshippingAddress\x88\x01\x01\x12\x19\n" +
 	"\x05state\x18\x0e \x01(\tH\fR\x05state\x88\x01\x01\x12?\n" +
 	"\x19tax_identification_number\x18\x0f \x01(\tH\rR\x17taxIdentificationNumber\x88\x01\x01\x12\x1d\n" +
-	"\azipcode\x18\x10 \x01(\tH\x0eR\azipcode\x88\x01\x01\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\x10\n" +
+	"\azipcode\x18\x10 \x01(\tH\x0eR\azipcode\x88\x01\x01\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\x10\n" +
 	"\x0e_address_line1B\x10\n" +
 	"\x0e_address_line2B\a\n" +
 	"\x05_cityB\n" +
@@ -3723,7 +3720,7 @@ var file_invora_billing_customers_v2_service_proto_depIdxs = []int32{
 	37, // 46: invora.billing.customers.v2.UpdateRequest.provider_customer:type_name -> invora.billing.customers.v2.ProviderCustomerInput
 	36, // 47: invora.billing.customers.v2.UpdateRequest.shipping_address:type_name -> invora.billing.customers.v2.CustomerAddressInput
 	53, // 48: invora.billing.customers.v2.UpdateRequest.timezone:type_name -> invora.billing.common.v2.Timezone
-	41, // 49: invora.billing.customers.v2.UpdateRequest.update_mask:type_name -> google.protobuf.FieldMask
+	41, // 49: invora.billing.customers.v2.UpdateRequest.mask:type_name -> google.protobuf.FieldMask
 	43, // 50: invora.billing.customers.v2.UpdateResponse.customer:type_name -> invora.billing.common.v2.BillingCustomer
 	23, // 51: invora.billing.customers.v2.CreatePortalWalletTransactionResponse.transaction:type_name -> invora.billing.customers.v2.CustomerPortalWalletTransaction
 	54, // 52: invora.billing.customers.v2.CustomerPortalWalletTransaction.created_at:type_name -> google.protobuf.Timestamp
@@ -3739,12 +3736,12 @@ var file_invora_billing_customers_v2_service_proto_depIdxs = []int32{
 	41, // 62: invora.billing.customers.v2.GetUsageRequest.read_mask:type_name -> google.protobuf.FieldMask
 	42, // 63: invora.billing.customers.v2.GetUsageRequest.view:type_name -> invora.billing.common.v2.View
 	60, // 64: invora.billing.customers.v2.GetUsageResponse.customer_usage:type_name -> invora.billing.common.v2.CustomerUsage
-	41, // 65: invora.billing.customers.v2.UpdateInvoiceGracePeriodRequest.update_mask:type_name -> google.protobuf.FieldMask
+	41, // 65: invora.billing.customers.v2.UpdateInvoiceGracePeriodRequest.mask:type_name -> google.protobuf.FieldMask
 	43, // 66: invora.billing.customers.v2.UpdateInvoiceGracePeriodResponse.customer:type_name -> invora.billing.common.v2.BillingCustomer
 	48, // 67: invora.billing.customers.v2.UpdatePortalCustomerRequest.country:type_name -> invora.billing.common.v2.CountryCode
 	46, // 68: invora.billing.customers.v2.UpdatePortalCustomerRequest.customer_type:type_name -> invora.billing.common.v2.CustomerType
 	36, // 69: invora.billing.customers.v2.UpdatePortalCustomerRequest.shipping_address:type_name -> invora.billing.customers.v2.CustomerAddressInput
-	41, // 70: invora.billing.customers.v2.UpdatePortalCustomerRequest.update_mask:type_name -> google.protobuf.FieldMask
+	41, // 70: invora.billing.customers.v2.UpdatePortalCustomerRequest.mask:type_name -> google.protobuf.FieldMask
 	61, // 71: invora.billing.customers.v2.UpdatePortalCustomerResponse.customer_portal_customer:type_name -> invora.billing.common.v2.CustomerPortalCustomer
 	48, // 72: invora.billing.customers.v2.CustomerAddressInput.country:type_name -> invora.billing.common.v2.CountryCode
 	62, // 73: invora.billing.customers.v2.ProviderCustomerInput.provider_payment_methods:type_name -> invora.billing.common.v2.ProviderPaymentMethods

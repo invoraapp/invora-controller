@@ -768,7 +768,7 @@ type UpdateRequest struct {
 	PaymentMethod                    *v2.PaymentMethodReferenceInput         `protobuf:"bytes,11,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
 	Priority                         int32                                   `protobuf:"varint,12,opt,name=priority,proto3" json:"priority,omitempty"`
 	RecurringTransactionRules        []*UpdateRecurringTransactionRuleInput  `protobuf:"bytes,13,rep,name=recurring_transaction_rules,json=recurringTransactionRules,proto3" json:"recurring_transaction_rules,omitempty"`
-	UpdateMask                       *fieldmaskpb.FieldMask                  `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask                             *fieldmaskpb.FieldMask                  `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields                    protoimpl.UnknownFields
 	sizeCache                        protoimpl.SizeCache
 }
@@ -894,9 +894,9 @@ func (x *UpdateRequest) GetRecurringTransactionRules() []*UpdateRecurringTransac
 	return nil
 }
 
-func (x *UpdateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -1048,8 +1048,12 @@ type CreateTransactionRequest struct {
 	PaymentMethod                    *v2.PaymentMethodReferenceInput         `protobuf:"bytes,9,opt,name=payment_method,json=paymentMethod,proto3,oneof" json:"payment_method,omitempty"`
 	Priority                         *int32                                  `protobuf:"varint,10,opt,name=priority,proto3,oneof" json:"priority,omitempty"`
 	VoidedCredits                    *string                                 `protobuf:"bytes,11,opt,name=voided_credits,json=voidedCredits,proto3,oneof" json:"voided_credits,omitempty"`
-	unknownFields                    protoimpl.UnknownFields
-	sizeCache                        protoimpl.SizeCache
+	// Optional client-generated idempotency key (UUID4 recommended). Requests
+	// with the same request_id within the dedup window return the FIRST
+	// request's response without re-executing. See AIP-155.
+	RequestId     *string `protobuf:"bytes,12,opt,name=request_id,json=requestId,proto3,oneof" json:"request_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateTransactionRequest) Reset() {
@@ -1155,6 +1159,13 @@ func (x *CreateTransactionRequest) GetPriority() int32 {
 func (x *CreateTransactionRequest) GetVoidedCredits() string {
 	if x != nil && x.VoidedCredits != nil {
 		return *x.VoidedCredits
+	}
+	return ""
+}
+
+func (x *CreateTransactionRequest) GetRequestId() string {
+	if x != nil && x.RequestId != nil {
+		return *x.RequestId
 	}
 	return ""
 }
@@ -2536,6 +2547,7 @@ func (x *TransactionMetadataInput) GetValue() string {
 }
 
 // A single credit consumption record within a wallet transaction.
+// Read-only: server-computed, never a request payload.
 type WalletTransactionConsumption struct {
 	state             protoimpl.MessageState       `protogen:"open.v1"`
 	AmountCents       int64                        `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
@@ -2613,6 +2625,7 @@ func (x *WalletTransactionConsumption) GetWalletTransaction() *v2.BillingWalletT
 }
 
 // A single credit funding record within a wallet transaction.
+// Read-only: server-computed, never a request payload.
 type WalletTransactionFunding struct {
 	state             protoimpl.MessageState       `protogen:"open.v1"`
 	AmountCents       int64                        `protobuf:"varint,1,opt,name=amount_cents,json=amountCents,proto3" json:"amount_cents,omitempty"`
@@ -2693,7 +2706,7 @@ var File_invora_billing_wallets_v2_service_proto protoreflect.FileDescriptor
 
 const file_invora_billing_wallets_v2_service_proto_rawDesc = "" +
 	"\n" +
-	"'invora/billing/wallets/v2/service.proto\x12\x19invora.billing.wallets.v2\x1a\x1cgoogle/api/annotations.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\xb6\x02\n" +
+	"'invora/billing/wallets/v2/service.proto\x12\x19invora.billing.wallets.v2\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%invora/billing/common/v2/models.proto\x1a\x14kernel/options.proto\x1a\x12kernel/query.proto\"\xb6\x02\n" +
 	"\vListRequest\x12C\n" +
 	"\x06filter\x18\x01 \x01(\v2+.invora.billing.wallets.v2.ListWalletFilterR\x06filter\x12=\n" +
 	"\x04sort\x18\x02 \x01(\v2).invora.billing.wallets.v2.ListWalletSortR\x04sort\x126\n" +
@@ -2702,12 +2715,12 @@ const file_invora_billing_wallets_v2_service_proto_rawDesc = "" +
 	"pagination\x127\n" +
 	"\tread_mask\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
-	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xb2\x01\n" +
-	"\fListResponse\x12=\n" +
-	"\x05items\x18\x01 \x03(\v2'.invora.billing.common.v2.BillingWalletR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12-\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xc1\x01\n" +
+	"\fListResponse\x12B\n" +
+	"\x05items\x18\x01 \x03(\v2'.invora.billing.common.v2.BillingWalletB\x03\xe0A\x03R\x05items\x12$\n" +
+	"\vtotal_count\x18\x02 \x01(\x04B\x03\xe0A\x03R\n" +
+	"totalCount\x122\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tB\x03\xe0A\x03H\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
 	"\x11_next_page_cursor\"x\n" +
 	"\x10ListWalletFilter\x12C\n" +
 	"\x04part\x18\x01 \x01(\v2/.invora.billing.wallets.v2.ListWalletFilterPartR\x04part\x12\x1f\n" +
@@ -2723,36 +2736,36 @@ const file_invora_billing_wallets_v2_service_proto_rawDesc = "" +
 	"\x12ListWalletSortRule\x126\n" +
 	"\n" +
 	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAtB\x06\n" +
-	"\x04type\"\x89\x01\n" +
+	"\x04type\"\x8e\x01\n" +
 	"\n" +
-	"GetRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
+	"GetRequest\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x127\n" +
 	"\tread_mask\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
-	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"N\n" +
-	"\vGetResponse\x12?\n" +
-	"\x06wallet\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingWalletR\x06wallet\"\xd1\v\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"S\n" +
+	"\vGetResponse\x12D\n" +
+	"\x06wallet\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingWalletB\x03\xe0A\x03R\x06wallet\"\xea\v\n" +
 	"\rCreateRequest\x12M\n" +
 	"\n" +
 	"applies_to\x18\x01 \x01(\v2).invora.billing.wallets.v2.AppliesToInputH\x00R\tappliesTo\x88\x01\x01\x12\x17\n" +
-	"\x04code\x18\x02 \x01(\tH\x01R\x04code\x88\x01\x01\x12B\n" +
-	"\bcurrency\x18\x03 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumR\bcurrency\x12\x1f\n" +
-	"\vcustomer_id\x18\x04 \x01(\tR\n" +
+	"\x04code\x18\x02 \x01(\tH\x01R\x04code\x88\x01\x01\x12G\n" +
+	"\bcurrency\x18\x03 \x01(\x0e2&.invora.billing.common.v2.CurrencyEnumB\x03\xe0A\x02R\bcurrency\x12$\n" +
+	"\vcustomer_id\x18\x04 \x01(\tB\x03\xe0A\x02R\n" +
 	"customerId\x12D\n" +
-	"\rexpiration_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampH\x02R\fexpirationAt\x88\x01\x01\x12'\n" +
-	"\x0fgranted_credits\x18\x06 \x01(\tR\x0egrantedCredits\x12S\n" +
+	"\rexpiration_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampH\x02R\fexpirationAt\x88\x01\x01\x12,\n" +
+	"\x0fgranted_credits\x18\x06 \x01(\tB\x03\xe0A\x02R\x0egrantedCredits\x12S\n" +
 	"%ignore_paid_top_up_limits_on_creation\x18\a \x01(\bH\x03R\x1fignorePaidTopUpLimitsOnCreation\x88\x01\x01\x12x\n" +
 	"\x16invoice_custom_section\x18\b \x01(\v2=.invora.billing.common.v2.InvoiceCustomSectionsReferenceInputH\x04R\x14invoiceCustomSection\x88\x01\x01\x12R\n" +
 	"#invoice_requires_successful_payment\x18\t \x01(\bH\x05R invoiceRequiresSuccessfulPayment\x88\x01\x01\x12C\n" +
 	"\bmetadata\x18\n" +
 	" \x03(\v2'.invora.billing.common.v2.MetadataInputR\bmetadata\x12\x17\n" +
-	"\x04name\x18\v \x01(\tH\x06R\x04name\x88\x01\x01\x12!\n" +
-	"\fpaid_credits\x18\f \x01(\tR\vpaidCredits\x12B\n" +
+	"\x04name\x18\v \x01(\tH\x06R\x04name\x88\x01\x01\x12&\n" +
+	"\fpaid_credits\x18\f \x01(\tB\x03\xe0A\x02R\vpaidCredits\x12B\n" +
 	"\x1cpaid_top_up_max_amount_cents\x18\r \x01(\x03H\aR\x17paidTopUpMaxAmountCents\x88\x01\x01\x12B\n" +
 	"\x1cpaid_top_up_min_amount_cents\x18\x0e \x01(\x03H\bR\x17paidTopUpMinAmountCents\x88\x01\x01\x12a\n" +
 	"\x0epayment_method\x18\x0f \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\tR\rpaymentMethod\x88\x01\x01\x12\x1a\n" +
-	"\bpriority\x18\x10 \x01(\x05R\bpriority\x12\x1f\n" +
-	"\vrate_amount\x18\x11 \x01(\tR\n" +
+	"\bpriority\x18\x10 \x01(\x05R\bpriority\x12$\n" +
+	"\vrate_amount\x18\x11 \x01(\tB\x03\xe0A\x02R\n" +
 	"rateAmount\x12~\n" +
 	"\x1brecurring_transaction_rules\x18\x12 \x03(\v2>.invora.billing.wallets.v2.CreateRecurringTransactionRuleInputR\x19recurringTransactionRules\x12.\n" +
 	"\x10transaction_name\x18\x13 \x01(\tH\n" +
@@ -2767,11 +2780,11 @@ const file_invora_billing_wallets_v2_service_proto_rawDesc = "" +
 	"\x1d_paid_top_up_max_amount_centsB\x1f\n" +
 	"\x1d_paid_top_up_min_amount_centsB\x11\n" +
 	"\x0f_payment_methodB\x13\n" +
-	"\x11_transaction_name\"Q\n" +
-	"\x0eCreateResponse\x12?\n" +
-	"\x06wallet\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingWalletR\x06wallet\"\x88\t\n" +
-	"\rUpdateRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12M\n" +
+	"\x11_transaction_name\"V\n" +
+	"\x0eCreateResponse\x12D\n" +
+	"\x06wallet\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingWalletB\x03\xe0A\x03R\x06wallet\"\x85\t\n" +
+	"\rUpdateRequest\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12M\n" +
 	"\n" +
 	"applies_to\x18\x02 \x01(\v2).invora.billing.wallets.v2.AppliesToInputH\x00R\tappliesTo\x88\x01\x01\x12\x17\n" +
 	"\x04code\x18\x03 \x01(\tH\x01R\x04code\x88\x01\x01\x12D\n" +
@@ -2785,9 +2798,8 @@ const file_invora_billing_wallets_v2_service_proto_rawDesc = "" +
 	" \x01(\x03H\aR\x17paidTopUpMinAmountCents\x88\x01\x01\x12a\n" +
 	"\x0epayment_method\x18\v \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\bR\rpaymentMethod\x88\x01\x01\x12\x1a\n" +
 	"\bpriority\x18\f \x01(\x05R\bpriority\x12~\n" +
-	"\x1brecurring_transaction_rules\x18\r \x03(\v2>.invora.billing.wallets.v2.UpdateRecurringTransactionRuleInputR\x19recurringTransactionRules\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\r\n" +
+	"\x1brecurring_transaction_rules\x18\r \x03(\v2>.invora.billing.wallets.v2.UpdateRecurringTransactionRuleInputR\x19recurringTransactionRules\x123\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskB\x03\xe0A\x02R\x04maskB\r\n" +
 	"\v_applies_toB\a\n" +
 	"\x05_codeB\x10\n" +
 	"\x0e_expiration_atB\x19\n" +
@@ -2796,15 +2808,15 @@ const file_invora_billing_wallets_v2_service_proto_rawDesc = "" +
 	"\x05_nameB\x1f\n" +
 	"\x1d_paid_top_up_max_amount_centsB\x1f\n" +
 	"\x1d_paid_top_up_min_amount_centsB\x11\n" +
-	"\x0f_payment_method\"Q\n" +
-	"\x0eUpdateResponse\x12?\n" +
-	"\x06wallet\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingWalletR\x06wallet\"\"\n" +
-	"\x10TerminateRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"T\n" +
-	"\x11TerminateResponse\x12?\n" +
-	"\x06wallet\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingWalletR\x06wallet\"\xf6\x06\n" +
-	"\x18CreateTransactionRequest\x12\x1b\n" +
-	"\twallet_id\x18\x01 \x01(\tR\bwalletId\x12,\n" +
+	"\x0f_payment_method\"V\n" +
+	"\x0eUpdateResponse\x12D\n" +
+	"\x06wallet\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingWalletB\x03\xe0A\x03R\x06wallet\"'\n" +
+	"\x10TerminateRequest\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"Y\n" +
+	"\x11TerminateResponse\x12D\n" +
+	"\x06wallet\x18\x01 \x01(\v2'.invora.billing.common.v2.BillingWalletB\x03\xe0A\x03R\x06wallet\"\xb3\a\n" +
+	"\x18CreateTransactionRequest\x12 \n" +
+	"\twallet_id\x18\x01 \x01(\tB\x03\xe0A\x02R\bwalletId\x12,\n" +
 	"\x0fgranted_credits\x18\x02 \x01(\tH\x00R\x0egrantedCredits\x88\x01\x01\x12=\n" +
 	"\x19ignore_paid_top_up_limits\x18\x03 \x01(\bH\x01R\x15ignorePaidTopUpLimits\x88\x01\x01\x12x\n" +
 	"\x16invoice_custom_section\x18\x04 \x01(\v2=.invora.billing.common.v2.InvoiceCustomSectionsReferenceInputH\x02R\x14invoiceCustomSection\x88\x01\x01\x12R\n" +
@@ -2815,7 +2827,9 @@ const file_invora_billing_wallets_v2_service_proto_rawDesc = "" +
 	"\x0epayment_method\x18\t \x01(\v25.invora.billing.common.v2.PaymentMethodReferenceInputH\x06R\rpaymentMethod\x88\x01\x01\x12\x1f\n" +
 	"\bpriority\x18\n" +
 	" \x01(\x05H\aR\bpriority\x88\x01\x01\x12*\n" +
-	"\x0evoided_credits\x18\v \x01(\tH\bR\rvoidedCredits\x88\x01\x01B\x12\n" +
+	"\x0evoided_credits\x18\v \x01(\tH\bR\rvoidedCredits\x88\x01\x01\x12'\n" +
+	"\n" +
+	"request_id\x18\f \x01(\tB\x03\xe0A\x01H\tR\trequestId\x88\x01\x01B\x12\n" +
 	"\x10_granted_creditsB\x1c\n" +
 	"\x1a_ignore_paid_top_up_limitsB\x19\n" +
 	"\x17_invoice_custom_sectionB&\n" +
@@ -2824,19 +2838,20 @@ const file_invora_billing_wallets_v2_service_proto_rawDesc = "" +
 	"\r_paid_creditsB\x11\n" +
 	"\x0f_payment_methodB\v\n" +
 	"\t_priorityB\x11\n" +
-	"\x0f_voided_credits\"q\n" +
-	"\x19CreateTransactionResponse\x12T\n" +
-	"\vtransaction\x18\x01 \x01(\v22.invora.billing.common.v2.BillingWalletTransactionR\vtransaction\"\xb1\x01\n" +
-	"\x15GetTransactionRequest\x12\x1b\n" +
-	"\twallet_id\x18\x01 \x01(\tR\bwalletId\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\tR\x02id\x127\n" +
+	"\x0f_voided_creditsB\r\n" +
+	"\v_request_id\"v\n" +
+	"\x19CreateTransactionResponse\x12Y\n" +
+	"\vtransaction\x18\x01 \x01(\v22.invora.billing.common.v2.BillingWalletTransactionB\x03\xe0A\x03R\vtransaction\"\xbb\x01\n" +
+	"\x15GetTransactionRequest\x12 \n" +
+	"\twallet_id\x18\x01 \x01(\tB\x03\xe0A\x02R\bwalletId\x12\x13\n" +
+	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\x127\n" +
 	"\tread_mask\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
-	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"n\n" +
-	"\x16GetTransactionResponse\x12T\n" +
-	"\vtransaction\x18\x01 \x01(\v22.invora.billing.common.v2.BillingWalletTransactionR\vtransaction\"\xe9\x02\n" +
-	"\x17ListTransactionsRequest\x12\x1b\n" +
-	"\twallet_id\x18\x01 \x01(\tR\bwalletId\x12H\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"s\n" +
+	"\x16GetTransactionResponse\x12Y\n" +
+	"\vtransaction\x18\x01 \x01(\v22.invora.billing.common.v2.BillingWalletTransactionB\x03\xe0A\x03R\vtransaction\"\xee\x02\n" +
+	"\x17ListTransactionsRequest\x12 \n" +
+	"\twallet_id\x18\x01 \x01(\tB\x03\xe0A\x02R\bwalletId\x12H\n" +
 	"\x06filter\x18\x02 \x01(\v20.invora.billing.wallets.v2.ListTransactionFilterR\x06filter\x12B\n" +
 	"\x04sort\x18\x03 \x01(\v2..invora.billing.wallets.v2.ListTransactionSortR\x04sort\x126\n" +
 	"\n" +
@@ -2844,12 +2859,12 @@ const file_invora_billing_wallets_v2_service_proto_rawDesc = "" +
 	"pagination\x127\n" +
 	"\tread_mask\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
-	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xc9\x01\n" +
-	"\x18ListTransactionsResponse\x12H\n" +
-	"\x05items\x18\x01 \x03(\v22.invora.billing.common.v2.BillingWalletTransactionR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12-\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xd8\x01\n" +
+	"\x18ListTransactionsResponse\x12M\n" +
+	"\x05items\x18\x01 \x03(\v22.invora.billing.common.v2.BillingWalletTransactionB\x03\xe0A\x03R\x05items\x12$\n" +
+	"\vtotal_count\x18\x02 \x01(\x04B\x03\xe0A\x03R\n" +
+	"totalCount\x122\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tB\x03\xe0A\x03H\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
 	"\x11_next_page_cursor\"\x82\x01\n" +
 	"\x15ListTransactionFilter\x12H\n" +
 	"\x04part\x18\x01 \x01(\v24.invora.billing.wallets.v2.ListTransactionFilterPartR\x04part\x12\x1f\n" +
@@ -2864,38 +2879,38 @@ const file_invora_billing_wallets_v2_service_proto_rawDesc = "" +
 	"\x17ListTransactionSortRule\x126\n" +
 	"\n" +
 	"created_at\x18\x01 \x01(\x0e2\x15.kernel.SortDirectionH\x00R\tcreatedAtB\x06\n" +
-	"\x04type\"\xd7\x02\n" +
-	"\"ListTransactionConsumptionsRequest\x12\x1b\n" +
-	"\twallet_id\x18\x01 \x01(\tR\bwalletId\x12%\n" +
-	"\x0etransaction_id\x18\x02 \x01(\tR\rtransactionId\x12H\n" +
+	"\x04type\"\xe1\x02\n" +
+	"\"ListTransactionConsumptionsRequest\x12 \n" +
+	"\twallet_id\x18\x01 \x01(\tB\x03\xe0A\x02R\bwalletId\x12*\n" +
+	"\x0etransaction_id\x18\x02 \x01(\tB\x03\xe0A\x02R\rtransactionId\x12H\n" +
 	"\x04sort\x18\x03 \x01(\v24.invora.billing.wallets.v2.ListTransactionDetailSortR\x04sort\x126\n" +
 	"\n" +
 	"pagination\x18\x04 \x01(\v2\x16.kernel.PaginationInfoR\n" +
 	"pagination\x127\n" +
 	"\tread_mask\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
-	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xd9\x01\n" +
-	"#ListTransactionConsumptionsResponse\x12M\n" +
-	"\x05items\x18\x01 \x03(\v27.invora.billing.wallets.v2.WalletTransactionConsumptionR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12-\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
-	"\x11_next_page_cursor\"\xd3\x02\n" +
-	"\x1eListTransactionFundingsRequest\x12\x1b\n" +
-	"\twallet_id\x18\x01 \x01(\tR\bwalletId\x12%\n" +
-	"\x0etransaction_id\x18\x02 \x01(\tR\rtransactionId\x12H\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xe8\x01\n" +
+	"#ListTransactionConsumptionsResponse\x12R\n" +
+	"\x05items\x18\x01 \x03(\v27.invora.billing.wallets.v2.WalletTransactionConsumptionB\x03\xe0A\x03R\x05items\x12$\n" +
+	"\vtotal_count\x18\x02 \x01(\x04B\x03\xe0A\x03R\n" +
+	"totalCount\x122\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tB\x03\xe0A\x03H\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x11_next_page_cursor\"\xdd\x02\n" +
+	"\x1eListTransactionFundingsRequest\x12 \n" +
+	"\twallet_id\x18\x01 \x01(\tB\x03\xe0A\x02R\bwalletId\x12*\n" +
+	"\x0etransaction_id\x18\x02 \x01(\tB\x03\xe0A\x02R\rtransactionId\x12H\n" +
 	"\x04sort\x18\x03 \x01(\v24.invora.billing.wallets.v2.ListTransactionDetailSortR\x04sort\x126\n" +
 	"\n" +
 	"pagination\x18\x04 \x01(\v2\x16.kernel.PaginationInfoR\n" +
 	"pagination\x127\n" +
 	"\tread_mask\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.FieldMaskR\breadMask\x122\n" +
-	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xd1\x01\n" +
-	"\x1fListTransactionFundingsResponse\x12I\n" +
-	"\x05items\x18\x01 \x03(\v23.invora.billing.wallets.v2.WalletTransactionFundingR\x05items\x12\x1f\n" +
-	"\vtotal_count\x18\x02 \x01(\x04R\n" +
-	"totalCount\x12-\n" +
-	"\x10next_page_cursor\x18\x03 \x01(\tH\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
+	"\x04view\x18\v \x01(\x0e2\x1e.invora.billing.common.v2.ViewR\x04view\"\xe0\x01\n" +
+	"\x1fListTransactionFundingsResponse\x12N\n" +
+	"\x05items\x18\x01 \x03(\v23.invora.billing.wallets.v2.WalletTransactionFundingB\x03\xe0A\x03R\x05items\x12$\n" +
+	"\vtotal_count\x18\x02 \x01(\x04B\x03\xe0A\x03R\n" +
+	"totalCount\x122\n" +
+	"\x10next_page_cursor\x18\x03 \x01(\tB\x03\xe0A\x03H\x00R\x0enextPageCursor\x88\x01\x01B\x13\n" +
 	"\x11_next_page_cursor\"k\n" +
 	"\x19ListTransactionDetailSort\x12N\n" +
 	"\x05rules\x18\x01 \x03(\v28.invora.billing.wallets.v2.ListTransactionDetailSortRuleR\x05rules\"_\n" +
@@ -2976,21 +2991,21 @@ const file_invora_billing_wallets_v2_service_proto_rawDesc = "" +
 	"\b_trigger\"B\n" +
 	"\x18TransactionMetadataInput\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value\"\x94\x02\n" +
-	"\x1cWalletTransactionConsumption\x12!\n" +
-	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x129\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value\"\xad\x02\n" +
+	"\x1cWalletTransactionConsumption\x12&\n" +
+	"\famount_cents\x18\x01 \x01(\x03B\x03\xe0A\x03R\vamountCents\x12>\n" +
 	"\n" +
-	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12#\n" +
-	"\rcredit_amount\x18\x03 \x01(\tR\fcreditAmount\x12\x0e\n" +
-	"\x02id\x18\x04 \x01(\tR\x02id\x12a\n" +
-	"\x12wallet_transaction\x18\x05 \x01(\v22.invora.billing.common.v2.BillingWalletTransactionR\x11walletTransaction\"\x90\x02\n" +
-	"\x18WalletTransactionFunding\x12!\n" +
-	"\famount_cents\x18\x01 \x01(\x03R\vamountCents\x129\n" +
+	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\tcreatedAt\x12(\n" +
+	"\rcredit_amount\x18\x03 \x01(\tB\x03\xe0A\x03R\fcreditAmount\x12\x13\n" +
+	"\x02id\x18\x04 \x01(\tB\x03\xe0A\x03R\x02id\x12f\n" +
+	"\x12wallet_transaction\x18\x05 \x01(\v22.invora.billing.common.v2.BillingWalletTransactionB\x03\xe0A\x03R\x11walletTransaction\"\xa9\x02\n" +
+	"\x18WalletTransactionFunding\x12&\n" +
+	"\famount_cents\x18\x01 \x01(\x03B\x03\xe0A\x03R\vamountCents\x12>\n" +
 	"\n" +
-	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12#\n" +
-	"\rcredit_amount\x18\x03 \x01(\tR\fcreditAmount\x12\x0e\n" +
-	"\x02id\x18\x04 \x01(\tR\x02id\x12a\n" +
-	"\x12wallet_transaction\x18\x05 \x01(\v22.invora.billing.common.v2.BillingWalletTransactionR\x11walletTransaction2\xf5\x10\n" +
+	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampB\x03\xe0A\x03R\tcreatedAt\x12(\n" +
+	"\rcredit_amount\x18\x03 \x01(\tB\x03\xe0A\x03R\fcreditAmount\x12\x13\n" +
+	"\x02id\x18\x04 \x01(\tB\x03\xe0A\x03R\x02id\x12f\n" +
+	"\x12wallet_transaction\x18\x05 \x01(\v22.invora.billing.common.v2.BillingWalletTransactionB\x03\xe0A\x03R\x11walletTransaction2\xf5\x10\n" +
 	"\x0eWalletsService\x12\xa4\x01\n" +
 	"\x04List\x12&.invora.billing.wallets.v2.ListRequest\x1a'.invora.billing.wallets.v2.ListResponse\"K\xe2\xf2\x19 \n" +
 	"\x1eInvora.Billing.Wallets.v2.List\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/api/billing/v2/wallets/list\x12\x9d\x01\n" +
@@ -3109,7 +3124,7 @@ var file_invora_billing_wallets_v2_service_proto_depIdxs = []int32{
 	44, // 24: invora.billing.wallets.v2.UpdateRequest.metadata:type_name -> invora.billing.common.v2.MetadataInput
 	45, // 25: invora.billing.wallets.v2.UpdateRequest.payment_method:type_name -> invora.billing.common.v2.PaymentMethodReferenceInput
 	32, // 26: invora.billing.wallets.v2.UpdateRequest.recurring_transaction_rules:type_name -> invora.billing.wallets.v2.UpdateRecurringTransactionRuleInput
-	37, // 27: invora.billing.wallets.v2.UpdateRequest.update_mask:type_name -> google.protobuf.FieldMask
+	37, // 27: invora.billing.wallets.v2.UpdateRequest.mask:type_name -> google.protobuf.FieldMask
 	39, // 28: invora.billing.wallets.v2.UpdateResponse.wallet:type_name -> invora.billing.common.v2.BillingWallet
 	39, // 29: invora.billing.wallets.v2.TerminateResponse.wallet:type_name -> invora.billing.common.v2.BillingWallet
 	43, // 30: invora.billing.wallets.v2.CreateTransactionRequest.invoice_custom_section:type_name -> invora.billing.common.v2.InvoiceCustomSectionsReferenceInput

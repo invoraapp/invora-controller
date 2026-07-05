@@ -618,7 +618,7 @@ type UpdateRequest struct {
 	Description           *string                `protobuf:"bytes,4,opt,name=description,proto3,oneof" json:"description,omitempty"`
 	Name                  *string                `protobuf:"bytes,5,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	Rate                  *kernel.DecimalValue   `protobuf:"bytes,6,opt,name=rate,proto3,oneof" json:"rate,omitempty"`
-	UpdateMask            *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask                  *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -695,9 +695,9 @@ func (x *UpdateRequest) GetRate() *kernel.DecimalValue {
 	return nil
 }
 
-func (x *UpdateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -1205,16 +1205,15 @@ const file_invora_billing_taxes_v2_service_proto_rawDesc = "" +
 	"\x04rate\x18\x04 \x01(\v2\x14.kernel.DecimalValueR\x04rateB\x0e\n" +
 	"\f_description\"H\n" +
 	"\x0eCreateResponse\x126\n" +
-	"\x03tax\x18\x01 \x01(\v2$.invora.billing.common.v2.BillingTaxR\x03tax\"\xe8\x02\n" +
+	"\x03tax\x18\x01 \x01(\v2$.invora.billing.common.v2.BillingTaxR\x03tax\"\xdb\x02\n" +
 	"\rUpdateRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12;\n" +
 	"\x17applied_to_organization\x18\x02 \x01(\bH\x00R\x15appliedToOrganization\x88\x01\x01\x12\x17\n" +
 	"\x04code\x18\x03 \x01(\tH\x01R\x04code\x88\x01\x01\x12%\n" +
 	"\vdescription\x18\x04 \x01(\tH\x02R\vdescription\x88\x01\x01\x12\x17\n" +
 	"\x04name\x18\x05 \x01(\tH\x03R\x04name\x88\x01\x01\x12-\n" +
-	"\x04rate\x18\x06 \x01(\v2\x14.kernel.DecimalValueH\x04R\x04rate\x88\x01\x01\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\x1a\n" +
+	"\x04rate\x18\x06 \x01(\v2\x14.kernel.DecimalValueH\x04R\x04rate\x88\x01\x01\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\x1a\n" +
 	"\x18_applied_to_organizationB\a\n" +
 	"\x05_codeB\x0e\n" +
 	"\f_descriptionB\a\n" +
@@ -1327,7 +1326,7 @@ var file_invora_billing_taxes_v2_service_proto_depIdxs = []int32{
 	25, // 12: invora.billing.taxes.v2.CreateRequest.rate:type_name -> kernel.DecimalValue
 	22, // 13: invora.billing.taxes.v2.CreateResponse.tax:type_name -> invora.billing.common.v2.BillingTax
 	25, // 14: invora.billing.taxes.v2.UpdateRequest.rate:type_name -> kernel.DecimalValue
-	20, // 15: invora.billing.taxes.v2.UpdateRequest.update_mask:type_name -> google.protobuf.FieldMask
+	20, // 15: invora.billing.taxes.v2.UpdateRequest.mask:type_name -> google.protobuf.FieldMask
 	22, // 16: invora.billing.taxes.v2.UpdateResponse.tax:type_name -> invora.billing.common.v2.BillingTax
 	22, // 17: invora.billing.taxes.v2.ApplyTaxesResponse.applied_taxes:type_name -> invora.billing.common.v2.BillingTax
 	22, // 18: invora.billing.taxes.v2.RemoveTaxesResponse.removed_taxes:type_name -> invora.billing.common.v2.BillingTax

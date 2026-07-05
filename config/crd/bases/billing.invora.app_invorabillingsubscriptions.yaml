@@ -87,6 +87,47 @@ spec:
                 - Delete
                 - Orphan
                 type: string
+              entitlements:
+                description: |-
+                  Entitlements declares subscription-level feature entitlements (e.g. a
+                  connected_business grant). The controller reconciles these
+                  declaratively: entries here are created/updated on the subscription,
+                  and entries this CR previously declared but has since removed are
+                  pruned. Entitlements never declared by this CR — granted out-of-band
+                  directly against the billing backend — are always left untouched.
+                items:
+                  description: |-
+                    SubscriptionEntitlement declares a single feature entitlement for a
+                    subscription. Maps 1:1 to invora.billing.common.v2.EntitlementInput.
+                  properties:
+                    featureCode:
+                      description: FeatureCode references the feature by code.
+                      minLength: 1
+                      type: string
+                    privileges:
+                      description: Privileges overrides privilege values for this
+                        feature on this subscription.
+                      items:
+                        description: |-
+                          EntitlementPrivilege overrides a single privilege value on an entitlement.
+                          Maps 1:1 to invora.billing.common.v2.EntitlementPrivilegeInput.
+                        properties:
+                          privilegeCode:
+                            description: PrivilegeCode references the privilege by
+                              code.
+                            minLength: 1
+                            type: string
+                          value:
+                            description: Value is the overridden privilege value.
+                            type: string
+                        required:
+                        - privilegeCode
+                        type: object
+                      type: array
+                  required:
+                  - featureCode
+                  type: object
+                type: array
               externalCustomerId:
                 description: |-
                   ExternalCustomerID references the customer by external ID.
@@ -216,6 +257,16 @@ spec:
                   the resource against the billing API.
                 format: date-time
                 type: string
+              managedEntitlementCodes:
+                description: |-
+                  ManagedEntitlementCodes tracks the feature codes this CR has previously
+                  applied via spec.entitlements. Used to guard entitlement pruning: only
+                  a feature code that appears here AND is no longer in spec.entitlements
+                  is removed from the remote subscription. Feature codes never tracked
+                  here (granted out-of-band) are never pruned by this controller.
+                items:
+                  type: string
+                type: array
               observedGeneration:
                 description: |-
                   ObservedGeneration is the most recent .metadata.generation observed

@@ -39,6 +39,7 @@ type CodeListAdminServiceClient interface {
 	// Update a code list's name or description.
 	Update(ctx context.Context, in *v2.UpdateRequest, opts ...grpc.CallOption) (*v2.UpdateResponse, error)
 	// Remove one or more code lists and their associated code items.
+	// Without force=true, fails FAILED_PRECONDITION when children exist.
 	Delete(ctx context.Context, in *v2.DeleteRequest, opts ...grpc.CallOption) (*v2.DeleteResponse, error)
 }
 
@@ -94,6 +95,7 @@ type CodeListAdminServiceServer interface {
 	// Update a code list's name or description.
 	Update(context.Context, *v2.UpdateRequest) (*v2.UpdateResponse, error)
 	// Remove one or more code lists and their associated code items.
+	// Without force=true, fails FAILED_PRECONDITION when children exist.
 	Delete(context.Context, *v2.DeleteRequest) (*v2.DeleteResponse, error)
 	mustEmbedUnimplementedCodeListAdminServiceServer()
 }

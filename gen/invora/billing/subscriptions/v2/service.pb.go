@@ -797,7 +797,7 @@ type UpdateRequest struct {
 	ProgressiveBillingDisabled *bool                                   `protobuf:"varint,7,opt,name=progressive_billing_disabled,json=progressiveBillingDisabled,proto3,oneof" json:"progressive_billing_disabled,omitempty"`
 	SubscriptionAt             *timestamppb.Timestamp                  `protobuf:"bytes,8,opt,name=subscription_at,json=subscriptionAt,proto3,oneof" json:"subscription_at,omitempty"`
 	UsageThresholds            []*v2.UsageThresholdInput               `protobuf:"bytes,9,rep,name=usage_thresholds,json=usageThresholds,proto3" json:"usage_thresholds,omitempty"`
-	UpdateMask                 *fieldmaskpb.FieldMask                  `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask                       *fieldmaskpb.FieldMask                  `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields              protoimpl.UnknownFields
 	sizeCache                  protoimpl.SizeCache
 }
@@ -895,9 +895,9 @@ func (x *UpdateRequest) GetUsageThresholds() []*v2.UsageThresholdInput {
 	return nil
 }
 
-func (x *UpdateRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -1060,7 +1060,7 @@ type UpdateChargeRequest struct {
 	MinAmountCents     *int64                           `protobuf:"varint,6,opt,name=min_amount_cents,json=minAmountCents,proto3,oneof" json:"min_amount_cents,omitempty"`
 	Properties         *v2.PropertiesInput              `protobuf:"bytes,7,opt,name=properties,proto3,oneof" json:"properties,omitempty"`
 	TaxCodes           []string                         `protobuf:"bytes,8,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
-	UpdateMask         *fieldmaskpb.FieldMask           `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask               *fieldmaskpb.FieldMask           `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -1151,9 +1151,9 @@ func (x *UpdateChargeRequest) GetTaxCodes() []string {
 	return nil
 }
 
-func (x *UpdateChargeRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateChargeRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -1373,7 +1373,7 @@ type UpdateChargeFilterRequest struct {
 	InvoiceDisplayName *string                `protobuf:"bytes,3,opt,name=invoice_display_name,json=invoiceDisplayName,proto3,oneof" json:"invoice_display_name,omitempty"`
 	Properties         *v2.PropertiesInput    `protobuf:"bytes,4,opt,name=properties,proto3,oneof" json:"properties,omitempty"`
 	Values             *structpb.Struct       `protobuf:"bytes,5,opt,name=values,proto3" json:"values,omitempty"`
-	UpdateMask         *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask               *fieldmaskpb.FieldMask `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -1443,9 +1443,9 @@ func (x *UpdateChargeFilterRequest) GetValues() *structpb.Struct {
 	return nil
 }
 
-func (x *UpdateChargeFilterRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateChargeFilterRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -1703,7 +1703,7 @@ type UpdateFixedChargeRequest struct {
 	Properties            *v2.FixedChargePropertiesInput `protobuf:"bytes,5,opt,name=properties,proto3,oneof" json:"properties,omitempty"`
 	TaxCodes              []string                       `protobuf:"bytes,6,rep,name=tax_codes,json=taxCodes,proto3" json:"tax_codes,omitempty"`
 	Units                 *string                        `protobuf:"bytes,7,opt,name=units,proto3,oneof" json:"units,omitempty"`
-	UpdateMask            *fieldmaskpb.FieldMask         `protobuf:"bytes,20,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	Mask                  *fieldmaskpb.FieldMask         `protobuf:"bytes,20,opt,name=mask,proto3" json:"mask,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -1787,9 +1787,9 @@ func (x *UpdateFixedChargeRequest) GetUnits() string {
 	return ""
 }
 
-func (x *UpdateFixedChargeRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+func (x *UpdateFixedChargeRequest) GetMask() *fieldmaskpb.FieldMask {
 	if x != nil {
-		return x.UpdateMask
+		return x.Mask
 	}
 	return nil
 }
@@ -2874,7 +2874,7 @@ const file_invora_billing_subscriptions_v2_service_proto_rawDesc = "" +
 	"\x10_subscription_atB\x12\n" +
 	"\x10_subscription_id\"c\n" +
 	"\x0eCreateResponse\x12Q\n" +
-	"\fsubscription\x18\x01 \x01(\v2-.invora.billing.common.v2.BillingSubscriptionR\fsubscription\"\xe9\x06\n" +
+	"\fsubscription\x18\x01 \x01(\v2-.invora.billing.common.v2.BillingSubscriptionR\fsubscription\"\xdc\x06\n" +
 	"\rUpdateRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12<\n" +
 	"\tending_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\bendingAt\x88\x01\x01\x12x\n" +
@@ -2884,9 +2884,8 @@ const file_invora_billing_subscriptions_v2_service_proto_rawDesc = "" +
 	"\x0eplan_overrides\x18\x06 \x01(\v23.invora.billing.subscriptions.v2.PlanOverridesInputH\x04R\rplanOverrides\x88\x01\x01\x12E\n" +
 	"\x1cprogressive_billing_disabled\x18\a \x01(\bH\x05R\x1aprogressiveBillingDisabled\x88\x01\x01\x12H\n" +
 	"\x0fsubscription_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampH\x06R\x0esubscriptionAt\x88\x01\x01\x12X\n" +
-	"\x10usage_thresholds\x18\t \x03(\v2-.invora.billing.common.v2.UsageThresholdInputR\x0fusageThresholds\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\f\n" +
+	"\x10usage_thresholds\x18\t \x03(\v2-.invora.billing.common.v2.UsageThresholdInputR\x0fusageThresholds\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\f\n" +
 	"\n" +
 	"_ending_atB\x19\n" +
 	"\x17_invoice_custom_sectionB\a\n" +
@@ -2904,7 +2903,7 @@ const file_invora_billing_subscriptions_v2_service_proto_rawDesc = "" +
 	"\x1b_on_termination_credit_noteB\x19\n" +
 	"\x17_on_termination_invoice\"f\n" +
 	"\x11TerminateResponse\x12Q\n" +
-	"\fsubscription\x18\x01 \x01(\v2-.invora.billing.common.v2.BillingSubscriptionR\fsubscription\"\x85\x05\n" +
+	"\fsubscription\x18\x01 \x01(\v2-.invora.billing.common.v2.BillingSubscriptionR\fsubscription\"\xf8\x04\n" +
 	"\x13UpdateChargeRequest\x12'\n" +
 	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\x12\x1f\n" +
 	"\vcharge_code\x18\x02 \x01(\tR\n" +
@@ -2916,9 +2915,8 @@ const file_invora_billing_subscriptions_v2_service_proto_rawDesc = "" +
 	"\n" +
 	"properties\x18\a \x01(\v2).invora.billing.common.v2.PropertiesInputH\x03R\n" +
 	"properties\x88\x01\x01\x12\x1b\n" +
-	"\ttax_codes\x18\b \x03(\tR\btaxCodes\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\x17\n" +
+	"\ttax_codes\x18\b \x03(\tR\btaxCodes\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\x17\n" +
 	"\x15_applied_pricing_unitB\x17\n" +
 	"\x15_invoice_display_nameB\x13\n" +
 	"\x11_min_amount_centsB\r\n" +
@@ -2938,7 +2936,7 @@ const file_invora_billing_subscriptions_v2_service_proto_rawDesc = "" +
 	"\x06values\x18\x05 \x01(\v2\x17.google.protobuf.StructR\x06valuesB\x17\n" +
 	"\x15_invoice_display_name\"i\n" +
 	"\x1aCreateChargeFilterResponse\x12K\n" +
-	"\rcharge_filter\x18\x01 \x01(\v2&.invora.billing.common.v2.ChargeFilterR\fchargeFilter\"\x82\x03\n" +
+	"\rcharge_filter\x18\x01 \x01(\v2&.invora.billing.common.v2.ChargeFilterR\fchargeFilter\"\xf5\x02\n" +
 	"\x19UpdateChargeFilterRequest\x12'\n" +
 	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\x12\x1f\n" +
 	"\vcharge_code\x18\x02 \x01(\tR\n" +
@@ -2947,9 +2945,8 @@ const file_invora_billing_subscriptions_v2_service_proto_rawDesc = "" +
 	"\n" +
 	"properties\x18\x04 \x01(\v2).invora.billing.common.v2.PropertiesInputH\x01R\n" +
 	"properties\x88\x01\x01\x12/\n" +
-	"\x06values\x18\x05 \x01(\v2\x17.google.protobuf.StructR\x06values\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\x17\n" +
+	"\x06values\x18\x05 \x01(\v2\x17.google.protobuf.StructR\x06values\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\x17\n" +
 	"\x15_invoice_display_nameB\r\n" +
 	"\v_properties\"i\n" +
 	"\x1aUpdateChargeFilterResponse\x12K\n" +
@@ -2966,7 +2963,7 @@ const file_invora_billing_subscriptions_v2_service_proto_rawDesc = "" +
 	"\ffeature_code\x18\x02 \x01(\tR\vfeatureCode\"T\n" +
 	"\x19RemoveEntitlementResponse\x12&\n" +
 	"\ffeature_code\x18\x01 \x01(\tH\x00R\vfeatureCode\x88\x01\x01B\x0f\n" +
-	"\r_feature_code\"\x81\x04\n" +
+	"\r_feature_code\"\xf4\x03\n" +
 	"\x18UpdateFixedChargeRequest\x12'\n" +
 	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\x12*\n" +
 	"\x11fixed_charge_code\x18\x02 \x01(\tR\x0ffixedChargeCode\x12;\n" +
@@ -2976,9 +2973,8 @@ const file_invora_billing_subscriptions_v2_service_proto_rawDesc = "" +
 	"properties\x18\x05 \x01(\v24.invora.billing.common.v2.FixedChargePropertiesInputH\x02R\n" +
 	"properties\x88\x01\x01\x12\x1b\n" +
 	"\ttax_codes\x18\x06 \x03(\tR\btaxCodes\x12\x19\n" +
-	"\x05units\x18\a \x01(\tH\x03R\x05units\x88\x01\x01\x12;\n" +
-	"\vupdate_mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\n" +
-	"updateMaskB\x1a\n" +
+	"\x05units\x18\a \x01(\tH\x03R\x05units\x88\x01\x01\x12.\n" +
+	"\x04mask\x18\x14 \x01(\v2\x1a.google.protobuf.FieldMaskR\x04maskB\x1a\n" +
 	"\x18_apply_units_immediatelyB\x17\n" +
 	"\x15_invoice_display_nameB\r\n" +
 	"\v_propertiesB\b\n" +
@@ -3235,7 +3231,7 @@ var file_invora_billing_subscriptions_v2_service_proto_depIdxs = []int32{
 	28, // 25: invora.billing.subscriptions.v2.UpdateRequest.plan_overrides:type_name -> invora.billing.subscriptions.v2.PlanOverridesInput
 	49, // 26: invora.billing.subscriptions.v2.UpdateRequest.subscription_at:type_name -> google.protobuf.Timestamp
 	52, // 27: invora.billing.subscriptions.v2.UpdateRequest.usage_thresholds:type_name -> invora.billing.common.v2.UsageThresholdInput
-	42, // 28: invora.billing.subscriptions.v2.UpdateRequest.update_mask:type_name -> google.protobuf.FieldMask
+	42, // 28: invora.billing.subscriptions.v2.UpdateRequest.mask:type_name -> google.protobuf.FieldMask
 	44, // 29: invora.billing.subscriptions.v2.UpdateResponse.subscription:type_name -> invora.billing.common.v2.BillingSubscription
 	53, // 30: invora.billing.subscriptions.v2.TerminateRequest.on_termination_credit_note:type_name -> invora.billing.common.v2.OnTerminationCreditNote
 	54, // 31: invora.billing.subscriptions.v2.TerminateRequest.on_termination_invoice:type_name -> invora.billing.common.v2.OnTerminationInvoice
@@ -3243,7 +3239,7 @@ var file_invora_billing_subscriptions_v2_service_proto_depIdxs = []int32{
 	17, // 33: invora.billing.subscriptions.v2.UpdateChargeRequest.applied_pricing_unit:type_name -> invora.billing.subscriptions.v2.AppliedPricingUnitOverrideInput
 	55, // 34: invora.billing.subscriptions.v2.UpdateChargeRequest.filters:type_name -> invora.billing.common.v2.ChargeFilterInput
 	56, // 35: invora.billing.subscriptions.v2.UpdateChargeRequest.properties:type_name -> invora.billing.common.v2.PropertiesInput
-	42, // 36: invora.billing.subscriptions.v2.UpdateChargeRequest.update_mask:type_name -> google.protobuf.FieldMask
+	42, // 36: invora.billing.subscriptions.v2.UpdateChargeRequest.mask:type_name -> google.protobuf.FieldMask
 	57, // 37: invora.billing.subscriptions.v2.UpdateChargeResponse.charge:type_name -> invora.billing.common.v2.Charge
 	58, // 38: invora.billing.subscriptions.v2.AppliedPricingUnitOverrideInput.conversion_rate:type_name -> kernel.DecimalValue
 	56, // 39: invora.billing.subscriptions.v2.CreateChargeFilterRequest.properties:type_name -> invora.billing.common.v2.PropertiesInput
@@ -3251,12 +3247,12 @@ var file_invora_billing_subscriptions_v2_service_proto_depIdxs = []int32{
 	60, // 41: invora.billing.subscriptions.v2.CreateChargeFilterResponse.charge_filter:type_name -> invora.billing.common.v2.ChargeFilter
 	56, // 42: invora.billing.subscriptions.v2.UpdateChargeFilterRequest.properties:type_name -> invora.billing.common.v2.PropertiesInput
 	59, // 43: invora.billing.subscriptions.v2.UpdateChargeFilterRequest.values:type_name -> google.protobuf.Struct
-	42, // 44: invora.billing.subscriptions.v2.UpdateChargeFilterRequest.update_mask:type_name -> google.protobuf.FieldMask
+	42, // 44: invora.billing.subscriptions.v2.UpdateChargeFilterRequest.mask:type_name -> google.protobuf.FieldMask
 	60, // 45: invora.billing.subscriptions.v2.UpdateChargeFilterResponse.charge_filter:type_name -> invora.billing.common.v2.ChargeFilter
 	59, // 46: invora.billing.subscriptions.v2.DeleteChargeFilterRequest.values:type_name -> google.protobuf.Struct
 	60, // 47: invora.billing.subscriptions.v2.DeleteChargeFilterResponse.charge_filter:type_name -> invora.billing.common.v2.ChargeFilter
 	61, // 48: invora.billing.subscriptions.v2.UpdateFixedChargeRequest.properties:type_name -> invora.billing.common.v2.FixedChargePropertiesInput
-	42, // 49: invora.billing.subscriptions.v2.UpdateFixedChargeRequest.update_mask:type_name -> google.protobuf.FieldMask
+	42, // 49: invora.billing.subscriptions.v2.UpdateFixedChargeRequest.mask:type_name -> google.protobuf.FieldMask
 	62, // 50: invora.billing.subscriptions.v2.UpdateFixedChargeResponse.fixed_charge:type_name -> invora.billing.common.v2.FixedCharge
 	63, // 51: invora.billing.subscriptions.v2.PlanOverridesInput.amount_currency:type_name -> invora.billing.common.v2.CurrencyEnum
 	30, // 52: invora.billing.subscriptions.v2.PlanOverridesInput.charges:type_name -> invora.billing.subscriptions.v2.ChargeOverridesInput

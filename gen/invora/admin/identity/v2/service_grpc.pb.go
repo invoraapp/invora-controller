@@ -45,6 +45,7 @@ type TenantAdminServiceClient interface {
 	// Update an existing tenant.
 	UpdateTenant(ctx context.Context, in *UpdateTenantRequest, opts ...grpc.CallOption) (*UpdateTenantResponse, error)
 	// Permanently destroy a tenant and cascade to all associated resources.
+	// Without force=true, fails FAILED_PRECONDITION when children exist.
 	DestroyTenant(ctx context.Context, in *DestroyTenantRequest, opts ...grpc.CallOption) (*DestroyTenantResponse, error)
 	// Soft-deactivate a tenant (disables sign-in, preserves data).
 	DeactivateTenant(ctx context.Context, in *DeactivateTenantRequest, opts ...grpc.CallOption) (*DeactivateTenantResponse, error)
@@ -173,6 +174,7 @@ type TenantAdminServiceServer interface {
 	// Update an existing tenant.
 	UpdateTenant(context.Context, *UpdateTenantRequest) (*UpdateTenantResponse, error)
 	// Permanently destroy a tenant and cascade to all associated resources.
+	// Without force=true, fails FAILED_PRECONDITION when children exist.
 	DestroyTenant(context.Context, *DestroyTenantRequest) (*DestroyTenantResponse, error)
 	// Soft-deactivate a tenant (disables sign-in, preserves data).
 	DeactivateTenant(context.Context, *DeactivateTenantRequest) (*DeactivateTenantResponse, error)

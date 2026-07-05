@@ -42,6 +42,7 @@ const (
 	DocumentsService_ValidateContent_FullMethodName     = "/invora.documents.v2.DocumentsService/ValidateContent"
 	DocumentsService_Fix_FullMethodName                 = "/invora.documents.v2.DocumentsService/Fix"
 	DocumentsService_Calculate_FullMethodName           = "/invora.documents.v2.DocumentsService/Calculate"
+	DocumentsService_GetStats_FullMethodName            = "/invora.documents.v2.DocumentsService/GetStats"
 )
 
 // DocumentsServiceClient is the client API for DocumentsService service.
@@ -77,6 +78,10 @@ type DocumentsServiceClient interface {
 	ValidateContent(ctx context.Context, in *ValidateContentRequest, opts ...grpc.CallOption) (*ValidateContentResponse, error)
 	Fix(ctx context.Context, in *FixRequest, opts ...grpc.CallOption) (*FixResponse, error)
 	Calculate(ctx context.Context, in *CalculateRequest, opts ...grpc.CallOption) (*CalculateResponse, error)
+	// Aggregate counts and monetary totals over the tenant's own (issued / "sales")
+	// documents — the data behind the dashboard KPI tiles. Scoped to the documents
+	// collection only; purchases (imported documents) are a separate surface.
+	GetStats(ctx context.Context, in *GetStatsRequest, opts ...grpc.CallOption) (*GetStatsResponse, error)
 }
 
 type documentsServiceClient struct {
@@ -344,6 +349,16 @@ func (c *documentsServiceClient) Calculate(ctx context.Context, in *CalculateReq
 	return out, nil
 }
 
+func (c *documentsServiceClient) GetStats(ctx context.Context, in *GetStatsRequest, opts ...grpc.CallOption) (*GetStatsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetStatsResponse)
+	err := c.cc.Invoke(ctx, DocumentsService_GetStats_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DocumentsServiceServer is the server API for DocumentsService service.
 // All implementations must embed UnimplementedDocumentsServiceServer
 // for forward compatibility.
@@ -377,6 +392,10 @@ type DocumentsServiceServer interface {
 	ValidateContent(context.Context, *ValidateContentRequest) (*ValidateContentResponse, error)
 	Fix(context.Context, *FixRequest) (*FixResponse, error)
 	Calculate(context.Context, *CalculateRequest) (*CalculateResponse, error)
+	// Aggregate counts and monetary totals over the tenant's own (issued / "sales")
+	// documents — the data behind the dashboard KPI tiles. Scoped to the documents
+	// collection only; purchases (imported documents) are a separate surface.
+	GetStats(context.Context, *GetStatsRequest) (*GetStatsResponse, error)
 	mustEmbedUnimplementedDocumentsServiceServer()
 }
 
@@ -455,6 +474,9 @@ func (UnimplementedDocumentsServiceServer) Fix(context.Context, *FixRequest) (*F
 }
 func (UnimplementedDocumentsServiceServer) Calculate(context.Context, *CalculateRequest) (*CalculateResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Calculate not implemented")
+}
+func (UnimplementedDocumentsServiceServer) GetStats(context.Context, *GetStatsRequest) (*GetStatsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetStats not implemented")
 }
 func (UnimplementedDocumentsServiceServer) mustEmbedUnimplementedDocumentsServiceServer() {}
 func (UnimplementedDocumentsServiceServer) testEmbeddedByValue()                          {}
@@ -844,6 +866,24 @@ func _DocumentsService_Calculate_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DocumentsService_GetStats_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetStatsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DocumentsServiceServer).GetStats(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DocumentsService_GetStats_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DocumentsServiceServer).GetStats(ctx, req.(*GetStatsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DocumentsService_ServiceDesc is the grpc.ServiceDesc for DocumentsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -922,6 +962,10 @@ var DocumentsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Calculate",
 			Handler:    _DocumentsService_Calculate_Handler,
+		},
+		{
+			MethodName: "GetStats",
+			Handler:    _DocumentsService_GetStats_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
