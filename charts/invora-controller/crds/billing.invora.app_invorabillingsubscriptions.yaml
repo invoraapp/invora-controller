@@ -113,8 +113,8 @@ spec:
                           Maps 1:1 to invora.billing.common.v2.EntitlementPrivilegeInput.
                         properties:
                           privilegeCode:
-                            description: PrivilegeCode references the privilege
-                              by code.
+                            description: PrivilegeCode references the privilege by
+                              code.
                             minLength: 1
                             type: string
                           value:

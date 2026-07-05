@@ -1823,9 +1823,7 @@ func (in *SubscriptionEntitlement) DeepCopyInto(out *SubscriptionEntitlement) {
 	if in.Privileges != nil {
 		in, out := &in.Privileges, &out.Privileges
 		*out = make([]EntitlementPrivilege, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
+		copy(*out, *in)
 	}
 }
 
