@@ -111,6 +111,29 @@ func (r *InvoraBillingPlanReconciler) Reconcile(ctx context.Context, req ctrl.Re
 		}
 	}
 
+	// Adopt-by-code: check for a pre-existing plan with this code in the same
+	// org before attempting Create. Guards: only reached when
+	// plan.Status.ExternalID == "" (structurally guaranteed by the branch this
+	// sits in); List is called through orc's org-scoped grpcCtx (x-invora-org-id
+	// header), so results are inherently same-org-only; match is an exact
+	// string-equality on code, so adoption is deterministic. Mirrors the
+	// List-first adopt pattern already used by organization_controller.go and
+	// webhookendpoint_controller.go.
+	if listResp, err := svc.List(grpcCtx, &planspb.ListRequest{}); err == nil {
+		for _, existing := range listResp.GetItems() {
+			if existing.GetCode() == plan.Spec.Code {
+				logger.Info("found existing plan by code, adopting", "externalId", existing.GetId())
+				plan.Status.ExternalID = existing.GetId()
+				plan.Status.ID = existing.GetId()
+				setSuccessStatus(&plan.Status.Conditions, &plan.Status.LastSyncedAt, &plan.Status.ObservedGeneration, plan.Generation, "Adopted")
+				if err := r.Status().Update(ctx, &plan); err != nil {
+					return ctrl.Result{}, fmt.Errorf("updating status: %w", err)
+				}
+				return SuccessResult(&plan), nil
+			}
+		}
+	}
+
 	logger.Info("creating plan", "code", plan.Spec.Code)
 	trialPeriod := parseTrialPeriod(plan.Spec.TrialPeriod)
 	created, err := svc.Create(grpcCtx, &planspb.CreateRequest{
