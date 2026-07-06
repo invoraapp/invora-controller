@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/invoraapp/invora-controller/compare/v1.3.0...v1.3.1) (2026-07-06)
+
+
+### Bug Fixes
+
+* **plan:** adopt pre-existing plan by code instead of failing on conflict ([#8](https://github.com/invoraapp/invora-controller/issues/8)) ([1cab50d](https://github.com/invoraapp/invora-controller/commit/1cab50ded0594ad6aed2f49730b86cc238a01621))
+
 # [1.3.0](https://github.com/invoraapp/invora-controller/compare/v1.2.2...v1.3.0) (2026-07-05)
 
 
