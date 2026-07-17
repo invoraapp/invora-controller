@@ -7,6 +7,8 @@ import (
 	"strings"
 	"time"
 
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -145,39 +147,61 @@ func (r *InvoraBillingOrganizationReconciler) Reconcile(ctx context.Context, req
 		return r.updateOrgStatusSuccess(ctx, &org, "InSync")
 	}
 
-	// No org ID -> create via billing admin gRPC API
-	logger.Info("creating organization in billing", "name", org.Spec.Name)
-
+	// No org ID yet. Adopt a pre-existing billing org for this tenant if one
+	// exists, otherwise provision a fresh one.
 	adminSvc := adminpb.NewBillingOrgAdminServiceClient(instCtx.Conn())
 
-	// Search for an existing org by tenant_id (the Zitadel org GUID), so a
-	// controller restart or a re-created CR adopts rather than duplicates.
-	listResp, err := adminSvc.ListOrgs(instCtx.GrpcCtx(ctx), &adminpb.ListOrgsRequest{})
-	if err != nil {
+	// A self-registered tenant already HAS a billing org: CreateBusiness / the
+	// UserRegisteredEventHandler best-effort-provision a TenantBillingConfig row
+	// for the tenant at registration. Adopt that row rather than re-creating it.
+	//
+	// GetOrgStatus looks the org up by tenant_id via core's FindByTenantIdAsync,
+	// which queries the raw Mongo collection and BYPASSES the ABP IMultiTenant
+	// data filter — so it returns the org even though this admin call runs in
+	// host context (ICurrentTenant.Id == nil). The previous ListOrgs scan could
+	// NOT: ListOrgs goes through the tenant-filtered LINQ pipeline, so in host
+	// context it only ever returned host-owned rows; every real tenant's org was
+	// invisible, the adopt scan always missed, and ProvisionOrg then hard-failed
+	// with AlreadyExists on every reconcile. tenant_id is the Zitadel org GUID
+	// (spec.externalId) — never the K8s object name, which core rejects.
+	statusResp, err := adminSvc.GetOrgStatus(instCtx.GrpcCtx(ctx), &adminpb.GetOrgStatusRequest{
+		TenantId: tenantID,
+	})
+	switch {
+	case err == nil:
+		logger.Info("found existing org, adopting", "id", statusResp.GetOrg().GetOrganizationId())
+		org.Status.OrganizationID = statusResp.GetOrg().GetOrganizationId()
+		return r.updateOrgStatusSuccess(ctx, &org, "Adopted")
+	case status.Code(err) == codes.NotFound:
+		// No billing org for this tenant yet — provision one below.
+	default:
 		SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
 			metav1.ConditionFalse, "SearchFailed", err.Error(), org.Generation)
 		_ = r.Status().Update(ctx, &org)
 		// Return the error so controller-runtime applies capped exponential
 		// backoff instead of a fixed 30s hot loop.
-		return ctrl.Result{}, fmt.Errorf("listing billing orgs: %w", err)
+		return ctrl.Result{}, fmt.Errorf("checking existing billing org: %w", err)
 	}
 
-	for _, existing := range listResp.GetItems() {
-		if existing.GetTenantId() == tenantID {
-			logger.Info("found existing org, adopting", "id", existing.GetOrganizationId())
-			org.Status.OrganizationID = existing.GetOrganizationId()
-			return r.updateOrgStatusSuccess(ctx, &org, "Adopted")
-		}
-	}
-
-	// Create new org. tenant_id MUST be the Zitadel org GUID (== ABP tenant id),
-	// carried in spec.externalId — never the K8s object name, which core rejects
-	// as a non-GUID.
+	logger.Info("creating organization in billing", "name", org.Spec.Name)
 	provisionResp, err := adminSvc.ProvisionOrg(instCtx.GrpcCtx(ctx), &adminpb.ProvisionOrgRequest{
 		TenantId:    tenantID,
 		DisplayName: org.Spec.Name,
 	})
 	if err != nil {
+		// Defensive adopt: the tenant may have provisioned its own billing org
+		// (self-registration) between our GetOrgStatus check and here. Adopt it
+		// rather than storming on AlreadyExists — mirrors the Zitadel
+		// controllers' adopt-on-AlreadyExists pattern.
+		if status.Code(err) == codes.AlreadyExists {
+			if adopt, gerr := adminSvc.GetOrgStatus(instCtx.GrpcCtx(ctx), &adminpb.GetOrgStatusRequest{
+				TenantId: tenantID,
+			}); gerr == nil {
+				logger.Info("org already exists, adopting", "id", adopt.GetOrg().GetOrganizationId())
+				org.Status.OrganizationID = adopt.GetOrg().GetOrganizationId()
+				return r.updateOrgStatusSuccess(ctx, &org, "Adopted")
+			}
+		}
 		SetCondition(&org.Status.Conditions, billingv1alpha1.ConditionSynced,
 			metav1.ConditionFalse, "CreateFailed", err.Error(), org.Generation)
 		_ = r.Status().Update(ctx, &org)
