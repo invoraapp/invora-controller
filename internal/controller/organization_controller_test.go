@@ -43,10 +43,35 @@ type fakeAdminServer struct {
 	provisionTenantIDs   []string
 	deprovisionTenantIDs []string
 	listCalls            int
+	getStatusTenantIDs   []string
 
 	// behaviour knobs (set before serving)
 	mimicCore    bool  // reject non-GUID tenant_id with InvalidArgument, like core
 	provisionErr error // if set, ProvisionOrg returns this regardless of input
+
+	// existingOrg, when set, is returned by GetOrgStatus for its TenantId,
+	// modelling a tenant that already has a billing org (the adopt path). When
+	// raceOnly is true it is withheld until ProvisionOrg has been attempted,
+	// modelling a create/register race where the pre-check GetOrgStatus misses
+	// but the post-AlreadyExists recovery finds it.
+	existingOrg *commonpb.BillingOrg
+	raceOnly    bool
+}
+
+// GetOrgStatus mirrors core's tenant-keyed lookup (FindByTenantIdAsync, which
+// bypasses the IMultiTenant filter). Returns NotFound unless existingOrg matches
+// the requested tenant_id — so tests without an existing org still provision.
+func (s *fakeAdminServer) GetOrgStatus(_ context.Context, req *adminpb.GetOrgStatusRequest) (*adminpb.GetOrgStatusResponse, error) {
+	s.mu.Lock()
+	s.getStatusTenantIDs = append(s.getStatusTenantIDs, req.GetTenantId())
+	provisionAttempted := len(s.provisionTenantIDs) > 0
+	org := s.existingOrg
+	s.mu.Unlock()
+
+	if org != nil && org.GetTenantId() == req.GetTenantId() && (!s.raceOnly || provisionAttempted) {
+		return &adminpb.GetOrgStatusResponse{Org: org}, nil
+	}
+	return nil, status.Error(codes.NotFound, "Tenant not found.")
 }
 
 func (s *fakeAdminServer) ProvisionOrg(_ context.Context, req *adminpb.ProvisionOrgRequest) (*adminpb.ProvisionOrgResponse, error) {
@@ -195,6 +220,104 @@ func syncedCondition(t *testing.T, r *InvoraBillingOrganizationReconciler, name 
 	}
 	t.Fatalf("no Synced condition set; conditions=%+v", got.Status.Conditions)
 	return metav1.Condition{}
+}
+
+func conditionOfType(t *testing.T, r *InvoraBillingOrganizationReconciler, name, condType string) metav1.Condition {
+	t.Helper()
+	got := &billingv1alpha1.InvoraBillingOrganization{}
+	if err := r.Get(context.Background(), types.NamespacedName{Name: name, Namespace: "invora-controller"}, got); err != nil {
+		t.Fatalf("re-reading org: %v", err)
+	}
+	for _, c := range got.Status.Conditions {
+		if c.Type == condType {
+			return c
+		}
+	}
+	t.Fatalf("no %s condition set; conditions=%+v", condType, got.Status.Conditions)
+	return metav1.Condition{}
+}
+
+// TestOrg_ExistingOrg_Adopts_NoProvision is the bayader blocker directly: a
+// tenant that already HAS a billing org (best-effort-provisioned at
+// self-registration) must be ADOPTED via GetOrgStatus, never re-provisioned.
+//
+// Pre-fix this FAILS: the old ListOrgs scan is blind to the tenant's org
+// (core's ListOrgs runs through the IMultiTenant LINQ filter and, in host
+// context, returns only host-owned rows), so every reconcile fell through to
+// ProvisionOrg -> AlreadyExists and wedged the org — and its dependent
+// InvoraBillingPlan / InvoraBillingTapProvider CRs — on CreateFailed.
+func TestOrg_ExistingOrg_Adopts_NoProvision(t *testing.T) {
+	const guid = "f84623f4-bff4-4313-b68c-3a2283e5c92d" // bayader's tenant GUID
+	fs := &fakeAdminServer{
+		mimicCore:   true,
+		existingOrg: &commonpb.BillingOrg{OrganizationId: "org-" + guid, TenantId: guid, DisplayName: "Bayader"},
+	}
+	target := startFakeAdminServer(t, fs)
+
+	org := orgCR("bayader", guid)
+	r := newOrgReconcilerForTest(t, target, org)
+
+	result, err := r.Reconcile(context.Background(), ctrl.Request{
+		NamespacedName: types.NamespacedName{Namespace: "invora-controller", Name: org.Name},
+	})
+	if err != nil {
+		t.Fatalf("Reconcile returned error: %v", err)
+	}
+	if got := fs.provisions(); len(got) != 0 {
+		t.Fatalf("ProvisionOrg called with %v; want adoption of the existing org with NO provisioning", got)
+	}
+	if c := syncedCondition(t, r, org.Name); c.Status != metav1.ConditionTrue || c.Reason != "Adopted" {
+		t.Fatalf("Synced = %s/%s, want True/Adopted", c.Status, c.Reason)
+	}
+	// Ready=True is what unblocks the dependent Plan/TapProvider CRs
+	// (getReadyBillingOrganization gates on it).
+	if c := conditionOfType(t, r, org.Name, billingv1alpha1.ConditionReady); c.Status != metav1.ConditionTrue {
+		t.Fatalf("Ready = %s, want True (so dependent Plan/TapProvider CRs unblock)", c.Status)
+	}
+	got := &billingv1alpha1.InvoraBillingOrganization{}
+	if err := r.Get(context.Background(), types.NamespacedName{Name: org.Name, Namespace: "invora-controller"}, got); err != nil {
+		t.Fatalf("re-reading org: %v", err)
+	}
+	if got.Status.OrganizationID != "org-"+guid {
+		t.Fatalf("Status.OrganizationID = %q, want the adopted org id org-%s", got.Status.OrganizationID, guid)
+	}
+	if result.RequeueAfter != DefaultRequeueInterval {
+		t.Errorf("RequeueAfter = %v, want steady-state %v", result.RequeueAfter, DefaultRequeueInterval)
+	}
+}
+
+// TestOrg_ProvisionAlreadyExists_Adopts covers the create/register race: the
+// pre-check GetOrgStatus misses (NotFound), ProvisionOrg then races the tenant's
+// own self-registration and returns AlreadyExists. The controller must recover
+// by re-fetching via GetOrgStatus and adopting — not surface CreateFailed.
+func TestOrg_ProvisionAlreadyExists_Adopts(t *testing.T) {
+	const guid = "3a16dbef-dead-beef-cafe-444455556666"
+	fs := &fakeAdminServer{
+		provisionErr: status.Error(codes.AlreadyExists,
+			"A billing organization already exists for tenant '"+guid+"'."),
+		existingOrg: &commonpb.BillingOrg{OrganizationId: "org-" + guid, TenantId: guid, DisplayName: "Racer"},
+		raceOnly:    true,
+	}
+	target := startFakeAdminServer(t, fs)
+
+	org := orgCR("tenant-"+guid, guid)
+	r := newOrgReconcilerForTest(t, target, org)
+
+	_, err := r.Reconcile(context.Background(), ctrl.Request{
+		NamespacedName: types.NamespacedName{Namespace: "invora-controller", Name: org.Name},
+	})
+	if err != nil {
+		t.Fatalf("Reconcile returned error on AlreadyExists; want silent adoption: %v", err)
+	}
+	if got := fs.provisions(); len(got) != 1 {
+		t.Fatalf("ProvisionOrg calls = %v, want exactly one attempt before adopting on AlreadyExists", got)
+	}
+	if c := syncedCondition(t, r, org.Name); c.Status != metav1.ConditionTrue || c.Reason != "Adopted" {
+		t.Fatalf("Synced = %s/%s, want True/Adopted", c.Status, c.Reason)
+	}
+	if c := conditionOfType(t, r, org.Name, billingv1alpha1.ConditionReady); c.Status != metav1.ConditionTrue {
+		t.Fatalf("Ready = %s, want True", c.Status)
+	}
 }
 
 // TestOrg_GuidTenant_SendsGuid_Provisions: a real tenant CR (name tenant-<guid>,
