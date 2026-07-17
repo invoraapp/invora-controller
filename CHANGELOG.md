@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/invoraapp/invora-controller/compare/v1.3.1...v1.3.2) (2026-07-17)
+
+
+### Bug Fixes
+
+* **org:** adopt existing billing org via GetOrgStatus, not fail on AlreadyExists ([#10](https://github.com/invoraapp/invora-controller/issues/10)) ([21e2d4d](https://github.com/invoraapp/invora-controller/commit/21e2d4def8d3f08b590ef0c7aefd8ac9027c24aa))
+
 ## [1.3.1](https://github.com/invoraapp/invora-controller/compare/v1.3.0...v1.3.1) (2026-07-06)
 
 
