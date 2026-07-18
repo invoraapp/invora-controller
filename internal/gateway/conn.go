@@ -56,10 +56,12 @@ func (c *ConnCache) Invalidate(gatewayURL string) {
 }
 
 // AuthContext returns a context with Bearer token and optional org ID in gRPC metadata.
+// The org is asserted via x-zitadel-orgid (gateway-validated); x-invora-org-id is
+// a trusted-internal header the gateway strips from inbound requests.
 func AuthContext(ctx context.Context, token, orgID string) context.Context {
 	pairs := []string{"authorization", "Bearer " + token}
 	if orgID != "" {
-		pairs = append(pairs, "x-invora-org-id", orgID)
+		pairs = append(pairs, "x-zitadel-orgid", orgID)
 	}
 	return metadata.AppendToOutgoingContext(ctx, pairs...)
 }

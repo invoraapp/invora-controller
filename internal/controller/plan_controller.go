@@ -114,7 +114,7 @@ func (r *InvoraBillingPlanReconciler) Reconcile(ctx context.Context, req ctrl.Re
 	// Adopt-by-code: check for a pre-existing plan with this code in the same
 	// org before attempting Create. Guards: only reached when
 	// plan.Status.ExternalID == "" (structurally guaranteed by the branch this
-	// sits in); List is called through orc's org-scoped grpcCtx (x-invora-org-id
+	// sits in); List is called through orc's org-scoped grpcCtx (x-zitadel-orgid
 	// header), so results are inherently same-org-only; match is an exact
 	// string-equality on code, so adoption is deterministic. Mirrors the
 	// List-first adopt pattern already used by organization_controller.go and

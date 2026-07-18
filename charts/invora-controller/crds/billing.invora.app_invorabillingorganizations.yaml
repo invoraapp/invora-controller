@@ -33,8 +33,9 @@ spec:
           InvoraBillingOrganization represents an organization in a billing instance.
           The controller provisions the org via the BillingOrgAdminService using the
           instance's super-admin token. No per-org credential is issued: tenant-scoped
-          calls authenticate with the backend-wide Lago machine credential plus the
-          x-invora-org-id tenant header.
+          calls authenticate with the instance token plus the x-zitadel-orgid
+          acting-org header (the tenant GUID from spec.externalId), which the gateway
+          validates against the trusted-resolver allowlist.
         properties:
           apiVersion:
             description: |-

@@ -36,10 +36,22 @@ type instanceAdminContext struct {
 }
 
 // GrpcCtx returns a context with auth metadata for gRPC calls.
+//
+// The acting org is asserted via `x-zitadel-orgid` — the CLIENT-side header the
+// WebGateway's OrgContextMiddleware validates (home org / per-org grant /
+// trusted-resolver machine identity) and converts into the trusted internal
+// `x-invora-org-id` header. Never stamp `x-invora-org-id` here: the gateway
+// unconditionally STRIPS that inbound header (anti-spoofing — the gateway is
+// its sole writer) and rewrites it to the token's HOME org, which silently
+// re-scoped every org-scoped write to the controller PAT's home (admin) org —
+// bayader's plans landed in the admin org's Lago bucket while tenant reads hit
+// the (empty) correctly-keyed org. Requires the controller machine user's sub
+// in Invora:Zitadel:ResolverMachineUserSubs, else the gateway 403s the
+// assertion (fail-closed).
 func (o *orgResourceContext) GrpcCtx(ctx context.Context) context.Context {
 	pairs := []string{"authorization", "Bearer " + o.token}
 	if o.orgID != "" {
-		pairs = append(pairs, "x-invora-org-id", o.orgID)
+		pairs = append(pairs, "x-zitadel-orgid", o.orgID)
 	}
 	return metadata.AppendToOutgoingContext(ctx, pairs...)
 }
@@ -89,9 +101,14 @@ func (r *BaseReconciler) resolveOrgDependencies(
 		metav1.ConditionTrue, "DependenciesReady", "All referenced resources are available", generation)
 
 	// Org-scoped child resources authenticate with the instance's super-admin
-	// token plus the x-invora-org-id tenant header — there is no per-org
-	// credential. The backend resolves the tenant from the header and uses its
-	// own backend-wide Lago machine credential downstream.
+	// token plus the x-zitadel-orgid acting-org header — there is no per-org
+	// credential. The gateway validates the header (trusted-resolver machine
+	// identity) and forwards the org as trusted context; the backend resolves
+	// the tenant from it and uses its own backend-wide Lago machine credential
+	// downstream. The org value is the tenant GUID from spec.externalId (==
+	// Zitadel org id == ABP tenant id), NOT status.organizationId — that field
+	// holds core's TenantBillingConfig.BillingOrgId, which is typically empty
+	// on the ProvisionOrg path and is not an org id the gateway can validate.
 	instance := &billingv1alpha1.InvoraBillingInstance{}
 	instRef := org.Spec.InstanceRef
 	instNS := instRef.Namespace
@@ -110,12 +127,24 @@ func (r *BaseReconciler) resolveOrgDependencies(
 		conn, dialErr := dialGateway(instance.Spec.GatewayURL)
 		if dialErr == nil {
 			return &orgResourceContext{
-				org: org, conn: conn, token: token, orgID: string(org.Status.OrganizationID),
+				org: org, conn: conn, token: token, orgID: orgActingID(org),
 			}, nil
 		}
 	}
 
-	return &orgResourceContext{org: org, token: token, orgID: string(org.Status.OrganizationID)}, nil
+	return &orgResourceContext{org: org, token: token, orgID: orgActingID(org)}, nil
+}
+
+// orgActingID returns the org id to assert via x-zitadel-orgid for org-scoped
+// child-resource calls: the tenant GUID from spec.externalId. Non-GUID orgs
+// (the platform org, snowflake landing orgs) return "" — no header is stamped
+// and the call scopes to the token's home org, the pre-existing behavior that
+// is correct for the platform catalog.
+func orgActingID(org *billingv1alpha1.InvoraBillingOrganization) string {
+	if tenantID, ok := resolveTenantID(org); ok {
+		return tenantID
+	}
+	return ""
 }
 
 // handleGrpcDeletion handles deletion for resources using gRPC clients.

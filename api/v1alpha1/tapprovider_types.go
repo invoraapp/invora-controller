@@ -7,7 +7,7 @@ import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 //
 // Backed by the billing GraphQL mutations addTapPaymentProvider /
 // updateTapPaymentProvider, which authenticate with the billing instance's
-// super-admin token plus the org's x-invora-org-id tenant header.
+// super-admin token plus the org's x-zitadel-orgid acting-org header.
 type InvoraBillingTapProviderSpec struct {
 	// InvoraBillingOrganizationRef references the InvoraBillingOrganization that owns this
 	// payment provider. The controller resolves the org's tenant id and
