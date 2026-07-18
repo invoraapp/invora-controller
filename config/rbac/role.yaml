@@ -16,11 +16,10 @@ rules:
   - update
   - watch
 - apiGroups:
-  - billing.bdaya-dev.com
+  - billing.invora.app
   resources:
   - billingaddons
   - billingbillablemetrics
-  - billingbillingentities
   - billingcoupons
   - billingcustomers
   - billingfeatures
@@ -40,11 +39,10 @@ rules:
   - update
   - watch
 - apiGroups:
-  - billing.bdaya-dev.com
+  - billing.invora.app
   resources:
   - billingaddons/finalizers
   - billingbillablemetrics/finalizers
-  - billingbillingentities/finalizers
   - billingcoupons/finalizers
   - billingcustomers/finalizers
   - billingfeatures/finalizers
@@ -58,11 +56,10 @@ rules:
   verbs:
   - update
 - apiGroups:
-  - billing.bdaya-dev.com
+  - billing.invora.app
   resources:
   - billingaddons/status
   - billingbillablemetrics/status
-  - billingbillingentities/status
   - billingcoupons/status
   - billingcustomers/status
   - billingfeatures/status

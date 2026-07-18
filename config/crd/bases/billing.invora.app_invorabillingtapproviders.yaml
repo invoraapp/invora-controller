@@ -60,7 +60,7 @@ spec:
 
               Backed by the billing GraphQL mutations addTapPaymentProvider /
               updateTapPaymentProvider, which authenticate with the billing instance's
-              super-admin token plus the org's x-invora-org-id tenant header.
+              super-admin token plus the org's x-zitadel-orgid acting-org header.
             properties:
               code:
                 description: Code is the provider code (billing concept). Immutable

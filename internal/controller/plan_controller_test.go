@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -31,9 +32,16 @@ type fakePlansServer struct {
 
 	createFunc   func(*planspb.CreateRequest) (*planspb.CreateResponse, error)
 	createCalled bool
+
+	// lastMetadata captures the inbound gRPC metadata of the most recent call,
+	// so tests can assert the org-scoping headers the reconciler stamps.
+	lastMetadata metadata.MD
 }
 
-func (f *fakePlansServer) List(context.Context, *planspb.ListRequest) (*planspb.ListResponse, error) {
+func (f *fakePlansServer) List(ctx context.Context, _ *planspb.ListRequest) (*planspb.ListResponse, error) {
+	if md, ok := metadata.FromIncomingContext(ctx); ok {
+		f.lastMetadata = md
+	}
 	if f.listErr != nil {
 		return nil, f.listErr
 	}
@@ -85,7 +93,7 @@ func newPlanScheme(t *testing.T) *runtime.Scheme {
 // InvoraBillingPlanReconciler.Reconcile call reaches the List/Create branch
 // directly (finalizer already attached, dependencies already resolved).
 // Org-scoped resources authenticate with the instance's super-admin token plus
-// the x-invora-org-id header — there is no per-org credential/Secret.
+// the x-zitadel-orgid header — there is no per-org credential/Secret.
 func planTestFixtures(gatewayAddr string) (*billingv1alpha1.InvoraBillingInstance, *billingv1alpha1.InvoraBillingOrganization, *corev1.Secret) {
 	instSecret := &corev1.Secret{
 		ObjectMeta: metav1.ObjectMeta{Name: "inst-token", Namespace: "default"},
@@ -247,5 +255,57 @@ func TestPlanReconciler_CreatesWhenNoCodeMatch(t *testing.T) {
 	synced := meta.FindStatusCondition(got.Status.Conditions, billingv1alpha1.ConditionSynced)
 	if synced == nil || synced.Status != metav1.ConditionTrue || synced.Reason != "Created" {
 		t.Fatalf("Synced condition = %+v, want True/Created", synced)
+	}
+}
+
+// TestPlanReconciler_AssertsActingOrgViaZitadelOrgidHeader is the regression
+// test for the zero-plans split-brain: org-scoped calls MUST assert the acting
+// org with `x-zitadel-orgid: <spec.externalId GUID>`. The previously-stamped
+// `x-invora-org-id` is a trusted-INTERNAL header the WebGateway strips from
+// every inbound request and rewrites to the token's HOME org, so all
+// child-resource writes (plans, taxes, ...) silently landed in the controller
+// PAT's home (admin) org while tenant reads hit the correctly-keyed — and
+// therefore empty — Lago org ({"items":[],"totalCount":0}).
+func TestPlanReconciler_AssertsActingOrgViaZitadelOrgidHeader(t *testing.T) {
+	fakeSrv := &fakePlansServer{
+		listResp: &planspb.ListResponse{},
+		createFunc: func(req *planspb.CreateRequest) (*planspb.CreateResponse, error) {
+			return &planspb.CreateResponse{
+				Plan: &commonpb.BillingPlan{Id: "plan-id-789", Code: req.GetCode()},
+			}, nil
+		},
+	}
+	addr := startFakePlansGateway(t, fakeSrv)
+
+	instance, org, instSecret := planTestFixtures(addr)
+	plan := newTestPlan("basic-monthly")
+
+	s := newPlanScheme(t)
+	r := &InvoraBillingPlanReconciler{BaseReconciler: BaseReconciler{
+		Client: fake.NewClientBuilder().
+			WithScheme(s).
+			WithObjects(instance, org, instSecret, plan).
+			WithStatusSubresource(plan).
+			Build(),
+		Scheme: s,
+	}}
+
+	_, err := r.Reconcile(context.Background(), ctrl.Request{
+		NamespacedName: types.NamespacedName{Namespace: "default", Name: "basic-monthly"},
+	})
+	if err != nil {
+		t.Fatalf("Reconcile returned error: %v", err)
+	}
+
+	if fakeSrv.lastMetadata == nil {
+		t.Fatal("fake gateway captured no inbound metadata")
+	}
+	// The acting org is the org CR's externalId (tenant GUID), never
+	// status.organizationId ("org-123" in the fixture).
+	if got := fakeSrv.lastMetadata.Get("x-zitadel-orgid"); len(got) != 1 || got[0] != org.Spec.ExternalID {
+		t.Fatalf("x-zitadel-orgid = %v, want [%q]", got, org.Spec.ExternalID)
+	}
+	if got := fakeSrv.lastMetadata.Get("x-invora-org-id"); len(got) != 0 {
+		t.Fatalf("x-invora-org-id must not be stamped (gateway strips it); got %v", got)
 	}
 }
