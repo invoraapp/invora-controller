@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/invoraapp/invora-controller/compare/v1.3.2...v1.3.3) (2026-07-18)
+
+
+### Bug Fixes
+
+* assert acting org via x-zitadel-orgid on org-scoped gateway calls ([10a1ab0](https://github.com/invoraapp/invora-controller/commit/10a1ab02b94994ac9bc3b3728ba670ec7a90e734)), closes [invora/devops#90](https://github.com/invora/devops/issues/90)
+
 ## [1.3.2](https://github.com/invoraapp/invora-controller/compare/v1.3.1...v1.3.2) (2026-07-17)
 
 
