@@ -121,26 +121,31 @@ func (r *InvoraBillingTapProviderReconciler) Reconcile(ctx context.Context, req 
 		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 	}
 
+	// Resolve the id to act on in a LOCAL, so status.providerId only ever moves
+	// on a successful write. Clearing it in place would let a failed create
+	// persist the erasure and destroy the only in-cluster record of the row the
+	// CR used to point at.
+	providerID := tap.Status.ProviderID
 	switch {
 	case foundID == "":
 		// Nothing in the acting org. Drop any stale/foreign id so the create
 		// path runs instead of updating a row this org cannot see.
-		if tap.Status.ProviderID != "" {
+		if providerID != "" {
 			logger.Info("stored provider id is not visible in the acting org, recreating",
-				"staleProviderId", tap.Status.ProviderID, "code", tap.Spec.Code)
-			tap.Status.ProviderID = ""
+				"staleProviderId", providerID, "code", tap.Spec.Code)
+			providerID = ""
 		}
-	case foundID != tap.Status.ProviderID:
+	case foundID != providerID:
 		logger.Info("adopting existing Tap provider from the acting org",
-			"id", foundID, "previousProviderId", tap.Status.ProviderID)
-		tap.Status.ProviderID = foundID
+			"id", foundID, "previousProviderId", providerID)
+		providerID = foundID
 	}
 
-	if tap.Status.ProviderID != "" {
+	if providerID != "" {
 		name := tap.Spec.Name
 		redirect := tap.Spec.SuccessRedirectUrl
 		updated, err := svc.UpdateTap(grpcCtx, &paymentproviderspb.UpdateTapRequest{
-			Id:                 tap.Status.ProviderID,
+			Id:                 providerID,
 			Code:               &code,
 			Name:               &name,
 			SuccessRedirectUrl: &redirect,

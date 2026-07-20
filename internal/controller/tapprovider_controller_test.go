@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net"
 	"testing"
+	"time"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -254,22 +255,24 @@ type fakePaymentProvidersServer struct {
 	updateCalled bool
 	updateReq    *paymentproviderspb.UpdateTapRequest
 
-	// lastMetadata captures the inbound gRPC metadata of the most recent call
-	// so tests can assert the acting-org header the reconciler stamps.
-	lastMetadata metadata.MD
+	// Metadata is captured PER RPC, not into one shared field: the whole point
+	// of #209 is which org the WRITE lands in, so asserting the header on the
+	// lookup alone would prove nothing about the mutation.
+	getMD    metadata.MD
+	createMD metadata.MD
+	updateMD metadata.MD
 }
 
 func (f *fakePaymentProvidersServer) Get(ctx context.Context, _ *paymentproviderspb.GetRequest) (*paymentproviderspb.GetResponse, error) {
-	if md, ok := metadata.FromIncomingContext(ctx); ok {
-		f.lastMetadata = md
-	}
+	f.getMD, _ = metadata.FromIncomingContext(ctx)
 	if f.getErr != nil {
 		return nil, f.getErr
 	}
 	return f.getResp, nil
 }
 
-func (f *fakePaymentProvidersServer) CreateTap(_ context.Context, req *paymentproviderspb.CreateTapRequest) (*paymentproviderspb.CreateTapResponse, error) {
+func (f *fakePaymentProvidersServer) CreateTap(ctx context.Context, req *paymentproviderspb.CreateTapRequest) (*paymentproviderspb.CreateTapResponse, error) {
+	f.createMD, _ = metadata.FromIncomingContext(ctx)
 	f.createCalled = true
 	f.createReq = req
 	if f.createFunc != nil {
@@ -278,13 +281,31 @@ func (f *fakePaymentProvidersServer) CreateTap(_ context.Context, req *paymentpr
 	return nil, errors.New("CreateTap should not have been called")
 }
 
-func (f *fakePaymentProvidersServer) UpdateTap(_ context.Context, req *paymentproviderspb.UpdateTapRequest) (*paymentproviderspb.UpdateTapResponse, error) {
+func (f *fakePaymentProvidersServer) UpdateTap(ctx context.Context, req *paymentproviderspb.UpdateTapRequest) (*paymentproviderspb.UpdateTapResponse, error) {
+	f.updateMD, _ = metadata.FromIncomingContext(ctx)
 	f.updateCalled = true
 	f.updateReq = req
 	if f.updateFunc != nil {
 		return f.updateFunc(req)
 	}
 	return nil, errors.New("UpdateTap should not have been called")
+}
+
+// assertActingOrg pins the acting-org headers on a single captured RPC.
+// `x-invora-org-id` is trusted-internal: the WebGateway strips it and rewrites
+// it to the token's HOME org, which is how the provider landed in the platform
+// org in the first place, so it must never be stamped.
+func assertActingOrg(t *testing.T, rpc string, md metadata.MD, wantOrgID string) {
+	t.Helper()
+	if md == nil {
+		t.Fatalf("%s: no inbound metadata captured (was the RPC called?)", rpc)
+	}
+	if got := md.Get("x-zitadel-orgid"); len(got) != 1 || got[0] != wantOrgID {
+		t.Fatalf("%s: x-zitadel-orgid = %v, want [%q]", rpc, got, wantOrgID)
+	}
+	if got := md.Get("x-invora-org-id"); len(got) != 0 {
+		t.Fatalf("%s: x-invora-org-id must not be stamped (gateway strips it); got %v", rpc, got)
+	}
 }
 
 func startFakeProvidersGateway(t *testing.T, srv *fakePaymentProvidersServer) string {
@@ -359,18 +380,19 @@ func newTapReconcilerWithGateway(t *testing.T, gatewayAddr string, tap *billingv
 	}}
 }
 
-func reconcileTap(t *testing.T, r *InvoraBillingTapProviderReconciler) billingv1alpha1.InvoraBillingTapProvider {
+func reconcileTap(t *testing.T, r *InvoraBillingTapProviderReconciler) (billingv1alpha1.InvoraBillingTapProvider, ctrl.Result) {
 	t.Helper()
-	if _, err := r.Reconcile(context.Background(), ctrl.Request{
+	res, err := r.Reconcile(context.Background(), ctrl.Request{
 		NamespacedName: types.NamespacedName{Namespace: "default", Name: "bayader-tap"},
-	}); err != nil {
+	})
+	if err != nil {
 		t.Fatalf("Reconcile returned error: %v", err)
 	}
 	var got billingv1alpha1.InvoraBillingTapProvider
 	if err := r.Get(context.Background(), types.NamespacedName{Namespace: "default", Name: "bayader-tap"}, &got); err != nil {
 		t.Fatalf("re-reading Tap CR: %v", err)
 	}
-	return got
+	return got, res
 }
 
 // TestTapReconciler_RecreatesWhenStoredProviderIdInvisibleInActingOrg is THE
@@ -400,8 +422,9 @@ func TestTapReconciler_RecreatesWhenStoredProviderIdInvisibleInActingOrg(t *test
 	addr := startFakeProvidersGateway(t, fakeSrv)
 
 	// 73ce31ed... is the real platform-org row from the issue.
+	_, org, _ := planTestFixtures(addr)
 	r := newTapReconcilerWithGateway(t, addr, newTapCR("73ce31ed-9b56-4e1e-8941-bd44baac404f"))
-	got := reconcileTap(t, r)
+	got, _ := reconcileTap(t, r)
 
 	if fakeSrv.updateCalled {
 		t.Fatal("UpdateTap must NOT be called for a provider id the acting org cannot see")
@@ -419,6 +442,9 @@ func TestTapReconciler_RecreatesWhenStoredProviderIdInvisibleInActingOrg(t *test
 	if synced == nil || synced.Status != metav1.ConditionTrue || synced.Reason != "Created" {
 		t.Fatalf("Synced condition = %+v, want True/Created", synced)
 	}
+	// The row must be MINTED in the tenant org, not merely looked up there.
+	assertActingOrg(t, "Get", fakeSrv.getMD, org.Spec.ExternalID)
+	assertActingOrg(t, "CreateTap", fakeSrv.createMD, org.Spec.ExternalID)
 }
 
 // TestTapReconciler_AdoptsProviderFromActingOrgAndRehomesStaleId covers the
@@ -438,8 +464,9 @@ func TestTapReconciler_AdoptsProviderFromActingOrgAndRehomesStaleId(t *testing.T
 	}
 	addr := startFakeProvidersGateway(t, fakeSrv)
 
+	_, org, _ := planTestFixtures(addr)
 	r := newTapReconcilerWithGateway(t, addr, newTapCR("73ce31ed-9b56-4e1e-8941-bd44baac404f"))
-	got := reconcileTap(t, r)
+	got, _ := reconcileTap(t, r)
 
 	if fakeSrv.createCalled {
 		t.Fatal("CreateTap must NOT be called when the acting org already has a provider with this code")
@@ -458,6 +485,8 @@ func TestTapReconciler_AdoptsProviderFromActingOrgAndRehomesStaleId(t *testing.T
 	if synced == nil || synced.Status != metav1.ConditionTrue || synced.Reason != "InSync" {
 		t.Fatalf("Synced condition = %+v, want True/InSync", synced)
 	}
+	assertActingOrg(t, "Get", fakeSrv.getMD, org.Spec.ExternalID)
+	assertActingOrg(t, "UpdateTap", fakeSrv.updateMD, org.Spec.ExternalID)
 }
 
 // TestTapReconciler_CreatesWhenAbsentWithNoStoredId guards the greenfield path:
@@ -474,7 +503,7 @@ func TestTapReconciler_CreatesWhenAbsentWithNoStoredId(t *testing.T) {
 	addr := startFakeProvidersGateway(t, fakeSrv)
 
 	r := newTapReconcilerWithGateway(t, addr, newTapCR(""))
-	got := reconcileTap(t, r)
+	got, _ := reconcileTap(t, r)
 
 	if !fakeSrv.createCalled {
 		t.Fatal("CreateTap must be called on the greenfield path")
@@ -495,7 +524,7 @@ func TestTapReconciler_LookupTransportErrorDoesNotRecreate(t *testing.T) {
 	addr := startFakeProvidersGateway(t, fakeSrv)
 
 	r := newTapReconcilerWithGateway(t, addr, newTapCR("73ce31ed-9b56-4e1e-8941-bd44baac404f"))
-	got := reconcileTap(t, r)
+	got, res := reconcileTap(t, r)
 
 	if fakeSrv.createCalled || fakeSrv.updateCalled {
 		t.Fatal("neither CreateTap nor UpdateTap may run when the lookup itself failed")
@@ -506,6 +535,38 @@ func TestTapReconciler_LookupTransportErrorDoesNotRecreate(t *testing.T) {
 	synced := meta.FindStatusCondition(got.Status.Conditions, billingv1alpha1.ConditionSynced)
 	if synced == nil || synced.Status != metav1.ConditionFalse || synced.Reason != "LookupFailed" {
 		t.Fatalf("Synced condition = %+v, want False/LookupFailed", synced)
+	}
+	if res.RequeueAfter != 30*time.Second {
+		t.Fatalf("RequeueAfter = %v, want 30s so a transient gateway failure retries", res.RequeueAfter)
+	}
+}
+
+// TestTapReconciler_FailedCreatePreservesStaleProviderId guards the audit
+// trail. The stale id is only dropped from a LOCAL, so a CreateTap that fails
+// must leave status.providerId pointing at the row the CR used to own —
+// otherwise the first failed create erases the only in-cluster link to the
+// orphaned platform-org row and the operator loses the thread.
+func TestTapReconciler_FailedCreatePreservesStaleProviderId(t *testing.T) {
+	fakeSrv := &fakePaymentProvidersServer{
+		getErr: tapNotFound,
+		createFunc: func(*paymentproviderspb.CreateTapRequest) (*paymentproviderspb.CreateTapResponse, error) {
+			return nil, status.Error(codes.Internal, "billing exploded")
+		},
+	}
+	addr := startFakeProvidersGateway(t, fakeSrv)
+
+	r := newTapReconcilerWithGateway(t, addr, newTapCR("73ce31ed-9b56-4e1e-8941-bd44baac404f"))
+	got, _ := reconcileTap(t, r)
+
+	if !fakeSrv.createCalled {
+		t.Fatal("CreateTap should have been attempted")
+	}
+	if got.Status.ProviderID != "73ce31ed-9b56-4e1e-8941-bd44baac404f" {
+		t.Fatalf("Status.ProviderID = %q, must survive a failed create", got.Status.ProviderID)
+	}
+	synced := meta.FindStatusCondition(got.Status.Conditions, billingv1alpha1.ConditionSynced)
+	if synced == nil || synced.Status != metav1.ConditionFalse || synced.Reason != "CreateFailed" {
+		t.Fatalf("Synced condition = %+v, want False/CreateFailed", synced)
 	}
 }
 
@@ -529,13 +590,6 @@ func TestTapReconciler_AssertsActingOrgViaZitadelOrgidHeader(t *testing.T) {
 	r := newTapReconcilerWithGateway(t, addr, newTapCR(""))
 	reconcileTap(t, r)
 
-	if fakeSrv.lastMetadata == nil {
-		t.Fatal("fake gateway captured no inbound metadata")
-	}
-	if got := fakeSrv.lastMetadata.Get("x-zitadel-orgid"); len(got) != 1 || got[0] != org.Spec.ExternalID {
-		t.Fatalf("x-zitadel-orgid = %v, want [%q]", got, org.Spec.ExternalID)
-	}
-	if got := fakeSrv.lastMetadata.Get("x-invora-org-id"); len(got) != 0 {
-		t.Fatalf("x-invora-org-id must not be stamped (gateway strips it); got %v", got)
-	}
+	assertActingOrg(t, "Get", fakeSrv.getMD, org.Spec.ExternalID)
+	assertActingOrg(t, "UpdateTap", fakeSrv.updateMD, org.Spec.ExternalID)
 }
