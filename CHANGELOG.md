@@ -1,3 +1,10 @@
+## [1.3.4](https://github.com/invoraapp/invora-controller/compare/v1.3.3...v1.3.4) (2026-07-20)
+
+
+### Bug Fixes
+
+* **tap:** resolve the Tap provider by code in the acting org every reconcile (invora-backend[#209](https://github.com/invoraapp/invora-controller/issues/209)) ([#12](https://github.com/invoraapp/invora-controller/issues/12)) ([4933569](https://github.com/invoraapp/invora-controller/commit/4933569467b74df536a479946e8bec1b354e0234))
+
 ## [1.3.3](https://github.com/invoraapp/invora-controller/compare/v1.3.2...v1.3.3) (2026-07-18)
 
 
