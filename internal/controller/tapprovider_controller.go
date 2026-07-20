@@ -171,6 +171,7 @@ func (r *InvoraBillingTapProviderReconciler) Reconcile(ctx context.Context, req 
 		if err := r.Status().Update(ctx, &tap); err != nil {
 			return ctrl.Result{}, fmt.Errorf("updating status: %w", err)
 		}
+		r.cleanupPlatformTwin(ctx, svc, orc, code, tap.Status.ProviderID)
 		return SuccessResult(&tap), nil
 	}
 
@@ -195,7 +196,76 @@ func (r *InvoraBillingTapProviderReconciler) Reconcile(ctx context.Context, req 
 	if err := r.Status().Update(ctx, &tap); err != nil {
 		return ctrl.Result{}, fmt.Errorf("updating status: %w", err)
 	}
+	r.cleanupPlatformTwin(ctx, svc, orc, code, tap.Status.ProviderID)
 	return SuccessResult(&tap), nil
+}
+
+// cleanupPlatformTwin is the invora-backend#209 migration: releases <= 1.3.2
+// asserted the acting org with the trusted-internal x-invora-org-id header,
+// which the WebGateway strips and rewrites to the token's HOME (platform) org,
+// so every tenant CR's CreateTap landed its row - api key and all - in the
+// platform org (dev: 73ce31ed-... for code tap_bayader). Those twins are
+// invisible to the tenant flow but still poison the platform org: with more
+// than one provider row and no code, PaymentProviders::FindService fails with
+// payment_provider_code_missing (find_service.rb:26-31).
+//
+// The probe is deliberately STATELESS - re-derived from live state on every
+// successful reconcile rather than from the stale status.providerId, which the
+// adoption path above has already overwritten by the time we run. That makes it
+// idempotent (once the twin is gone the home-org lookup returns NotFound and
+// this is a no-op) and self-healing for stg/prod twins that may be minted
+// before their held CRs land on a fixed controller.
+//
+// It is also strictly BEST-EFFORT: the tenant row is already written and
+// status already says Synced=True, so a failed probe or delete only logs and
+// leaves retry to the next reconcile. Cleanup must never un-sync a CR whose
+// desired state is correct.
+//
+// Guards, in order:
+//   - tenant CRs only (orgID != ""): for the platform's own CR the acting org
+//     IS the home org - the row just written is the "twin" by id, and there is
+//     nothing stranded by construction.
+//   - Tap rows only: a non-Tap provider owning the code in the home org was
+//     never minted by this controller.
+//   - never the acting org's row: if the home-scoped lookup resolves to the id
+//     we just wrote (org assertion ineffective, or aliasing), deleting it would
+//     destroy the tenant's live provider. The billing-side delete is a
+//     soft-delete (PaymentProviders::DestroyService discard!), but relying on
+//     that would still break checkout until restored.
+func (r *InvoraBillingTapProviderReconciler) cleanupPlatformTwin(
+	ctx context.Context,
+	svc paymentproviderspb.PaymentProvidersServiceClient,
+	orc *orgResourceContext,
+	code, actingProviderID string,
+) {
+	logger := log.FromContext(ctx)
+	if orc.orgID == "" || actingProviderID == "" {
+		return
+	}
+	homeCtx := orc.HomeGrpcCtx(ctx)
+	resp, err := svc.Get(homeCtx, &paymentproviderspb.GetRequest{Code: &code})
+	switch {
+	case isGrpcNotFound(err):
+		return
+	case err != nil:
+		logger.Info("platform-twin probe failed; cleanup retries on a later reconcile",
+			"code", code, "error", err.Error())
+		return
+	}
+	twin := resp.GetPaymentProvider().GetTapProvider()
+	if twin == nil {
+		return
+	}
+	if twin.GetId() == "" || twin.GetId() == actingProviderID {
+		return
+	}
+	if _, err := svc.Delete(homeCtx, &paymentproviderspb.DeleteRequest{Id: twin.GetId()}); err != nil {
+		logger.Info("platform-twin delete failed; cleanup retries on a later reconcile",
+			"twinId", twin.GetId(), "code", code, "error", err.Error())
+		return
+	}
+	logger.Info("deleted platform-org twin provider stranded by the pre-1.3.3 header rewrite",
+		"twinId", twin.GetId(), "code", code, "actingProviderId", actingProviderID)
 }
 
 func (r *InvoraBillingTapProviderReconciler) SetupWithManager(mgr ctrl.Manager) error {
