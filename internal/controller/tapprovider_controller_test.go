@@ -2,10 +2,17 @@ package controller
 
 import (
 	"context"
+	"errors"
+	"net"
 	"testing"
 
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 	corev1 "k8s.io/api/core/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
+	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
@@ -15,6 +22,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 
 	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
+	commonpb "github.com/invoraapp/invora-controller/gen/invora/billing/common/v2"
+	paymentproviderspb "github.com/invoraapp/invora-controller/gen/invora/billing/payment_providers/v2"
 	"github.com/invoraapp/invora-controller/internal/billingclient"
 )
 
@@ -75,8 +84,8 @@ func TestInvoraBillingTapProvider_AddsFinalizer(t *testing.T) {
 		ObjectMeta: metav1.ObjectMeta{Name: "tap-test", Namespace: "billing-dev"},
 		Spec: billingv1alpha1.InvoraBillingTapProviderSpec{
 			InvoraBillingOrganizationRef: billingv1alpha1.ResourceRef{Name: "invora-org"},
-			Code:                "tap-prod",
-			Name:                "Tap (Production)",
+			Code:                         "tap-prod",
+			Name:                         "Tap (Production)",
 			TapApiKeyRef: billingv1alpha1.SecretKeyRef{
 				Name: "tap-keys",
 				Key:  "apiKey",
@@ -120,8 +129,8 @@ func TestInvoraBillingTapProvider_RequeuesWhenOrgMissing(t *testing.T) {
 		},
 		Spec: billingv1alpha1.InvoraBillingTapProviderSpec{
 			InvoraBillingOrganizationRef: billingv1alpha1.ResourceRef{Name: "missing-org"},
-			Code:                "tap-prod",
-			Name:                "Tap (Production)",
+			Code:                         "tap-prod",
+			Name:                         "Tap (Production)",
 			TapApiKeyRef: billingv1alpha1.SecretKeyRef{
 				Name: "tap-keys",
 				Key:  "apiKey",
@@ -177,8 +186,8 @@ func TestInvoraBillingTapProvider_DeletionRemovesFinalizer(t *testing.T) {
 		},
 		Spec: billingv1alpha1.InvoraBillingTapProviderSpec{
 			InvoraBillingOrganizationRef: billingv1alpha1.ResourceRef{Name: "invora-org"},
-			Code:                "tap-prod",
-			Name:                "Tap (Production)",
+			Code:                         "tap-prod",
+			Name:                         "Tap (Production)",
 			TapApiKeyRef: billingv1alpha1.SecretKeyRef{
 				Name: "tap-keys",
 				Key:  "apiKey",
@@ -209,6 +218,324 @@ func TestInvoraBillingTapProvider_DeletionRemovesFinalizer(t *testing.T) {
 	}
 }
 
-// silence unused import linter; corev1 stays for parity with the
-// sibling test file pattern (handlers may grow to attach Secret refs).
-var _ corev1.Secret
+// ---------------------------------------------------------------------------
+// invora/invora-backend#209 — org-scoped adoption regression suite
+//
+// These drive the reconciler against a real (in-process) gRPC gateway so the
+// Get/CreateTap/UpdateTap call sequence and the acting-org metadata are
+// observable, mirroring fakePlansServer in plan_controller_test.go.
+// ---------------------------------------------------------------------------
+
+// tapNotFound is the status a gateway returns for a code the ACTING org cannot
+// see. lago-api raises ActiveRecord::RecordNotFound from
+// `org.payment_providers.find_by!(code:)` and the gruf interceptor maps it to
+// GRPC::NotFound (config/initializers/gruf.rb).
+var tapNotFound = status.Error(codes.NotFound, "Couldn't find PaymentProviders::BaseProvider")
+
+// tapApiKeyMandatory reproduces what billing actually returns when UpdateTap
+// targets an id the acting org cannot see: PaymentProviders::FindService misses
+// (it scopes BaseProvider.where(organization_id:) first), TapService builds a
+// NEW record, and UpdateTapRequest carries no api_key field to populate it.
+var tapApiKeyMandatory = status.Error(codes.InvalidArgument,
+	`Validation errors: {"api_key":["value_is_mandatory"]}`)
+
+type fakePaymentProvidersServer struct {
+	paymentproviderspb.UnimplementedPaymentProvidersServiceServer
+
+	// getResp/getErr drive the by-code lookup in the acting org.
+	getResp *paymentproviderspb.GetResponse
+	getErr  error
+
+	createFunc   func(*paymentproviderspb.CreateTapRequest) (*paymentproviderspb.CreateTapResponse, error)
+	createCalled bool
+	createReq    *paymentproviderspb.CreateTapRequest
+
+	updateFunc   func(*paymentproviderspb.UpdateTapRequest) (*paymentproviderspb.UpdateTapResponse, error)
+	updateCalled bool
+	updateReq    *paymentproviderspb.UpdateTapRequest
+
+	// lastMetadata captures the inbound gRPC metadata of the most recent call
+	// so tests can assert the acting-org header the reconciler stamps.
+	lastMetadata metadata.MD
+}
+
+func (f *fakePaymentProvidersServer) Get(ctx context.Context, _ *paymentproviderspb.GetRequest) (*paymentproviderspb.GetResponse, error) {
+	if md, ok := metadata.FromIncomingContext(ctx); ok {
+		f.lastMetadata = md
+	}
+	if f.getErr != nil {
+		return nil, f.getErr
+	}
+	return f.getResp, nil
+}
+
+func (f *fakePaymentProvidersServer) CreateTap(_ context.Context, req *paymentproviderspb.CreateTapRequest) (*paymentproviderspb.CreateTapResponse, error) {
+	f.createCalled = true
+	f.createReq = req
+	if f.createFunc != nil {
+		return f.createFunc(req)
+	}
+	return nil, errors.New("CreateTap should not have been called")
+}
+
+func (f *fakePaymentProvidersServer) UpdateTap(_ context.Context, req *paymentproviderspb.UpdateTapRequest) (*paymentproviderspb.UpdateTapResponse, error) {
+	f.updateCalled = true
+	f.updateReq = req
+	if f.updateFunc != nil {
+		return f.updateFunc(req)
+	}
+	return nil, errors.New("UpdateTap should not have been called")
+}
+
+func startFakeProvidersGateway(t *testing.T, srv *fakePaymentProvidersServer) string {
+	t.Helper()
+	lis, err := net.Listen("tcp", "127.0.0.1:0")
+	if err != nil {
+		t.Fatalf("listening for fake gateway: %v", err)
+	}
+	s := grpc.NewServer()
+	paymentproviderspb.RegisterPaymentProvidersServiceServer(s, srv)
+	go func() { _ = s.Serve(lis) }()
+	t.Cleanup(func() {
+		s.Stop()
+		_ = lis.Close()
+	})
+	return lis.Addr().String()
+}
+
+// tapProviderResponse builds the oneof-wrapped Get payload for a Tap provider.
+func tapProviderResponse(id, code string) *paymentproviderspb.GetResponse {
+	return &paymentproviderspb.GetResponse{
+		PaymentProvider: &commonpb.PaymentProvider{
+			Value: &commonpb.PaymentProvider_TapProvider{
+				TapProvider: &commonpb.TapProvider{Id: id, Code: code},
+			},
+		},
+	}
+}
+
+// newTapCR builds a reconcile-ready Tap CR: finalizer attached, org ref wired to
+// the planTestFixtures org, api key Secret in its own namespace.
+func newTapCR(storedProviderID string) *billingv1alpha1.InvoraBillingTapProvider {
+	tap := &billingv1alpha1.InvoraBillingTapProvider{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:       "bayader-tap",
+			Namespace:  "default",
+			Finalizers: []string{billingv1alpha1.FinalizerName},
+		},
+		Spec: billingv1alpha1.InvoraBillingTapProviderSpec{
+			InvoraBillingOrganizationRef: billingv1alpha1.ResourceRef{Name: "test-org"},
+			Code:                         "tap_bayader",
+			Name:                         "Tap Payments (Bayader)",
+			TapApiKeyRef: billingv1alpha1.SecretKeyRef{
+				Name: "bayader-tap-credentials",
+				Key:  "secretKey",
+			},
+			SuccessRedirectUrl: "https://dev-app-bayader.invora.app/payment/return",
+		},
+	}
+	tap.Status.ProviderID = storedProviderID
+	return tap
+}
+
+func tapApiKeySecret() *corev1.Secret {
+	return &corev1.Secret{
+		ObjectMeta: metav1.ObjectMeta{Name: "bayader-tap-credentials", Namespace: "default"},
+		Data:       map[string][]byte{"secretKey": []byte("sk_test_bayader")},
+	}
+}
+
+func newTapReconcilerWithGateway(t *testing.T, gatewayAddr string, tap *billingv1alpha1.InvoraBillingTapProvider) *InvoraBillingTapProviderReconciler {
+	t.Helper()
+	instance, org, instSecret := planTestFixtures(gatewayAddr)
+	s := newPlanScheme(t)
+	return &InvoraBillingTapProviderReconciler{BaseReconciler: BaseReconciler{
+		Client: fake.NewClientBuilder().
+			WithScheme(s).
+			WithObjects(instance, org, instSecret, tapApiKeySecret(), tap).
+			WithStatusSubresource(tap).
+			Build(),
+		Scheme: s,
+	}}
+}
+
+func reconcileTap(t *testing.T, r *InvoraBillingTapProviderReconciler) billingv1alpha1.InvoraBillingTapProvider {
+	t.Helper()
+	if _, err := r.Reconcile(context.Background(), ctrl.Request{
+		NamespacedName: types.NamespacedName{Namespace: "default", Name: "bayader-tap"},
+	}); err != nil {
+		t.Fatalf("Reconcile returned error: %v", err)
+	}
+	var got billingv1alpha1.InvoraBillingTapProvider
+	if err := r.Get(context.Background(), types.NamespacedName{Namespace: "default", Name: "bayader-tap"}, &got); err != nil {
+		t.Fatalf("re-reading Tap CR: %v", err)
+	}
+	return got
+}
+
+// TestTapReconciler_RecreatesWhenStoredProviderIdInvisibleInActingOrg is THE
+// invora-backend#209 regression. The CR carries a providerId minted under a
+// different org (releases <= 1.3.2 stamped x-invora-org-id, which the gateway
+// strips and rewrites to the token's HOME/platform org). Once the acting org
+// became the tenant, that id is invisible: billing's lookup is org-scoped, so
+// UpdateTap built a NEW record and died on `api_key value_is_mandatory` forever,
+// because UpdateTapRequest has no api_key field.
+//
+// The reconciler must instead resolve by code in the ACTING org, see nothing,
+// drop the stale id, and CreateTap with the resolved api key.
+func TestTapReconciler_RecreatesWhenStoredProviderIdInvisibleInActingOrg(t *testing.T) {
+	fakeSrv := &fakePaymentProvidersServer{
+		getErr: tapNotFound,
+		createFunc: func(req *paymentproviderspb.CreateTapRequest) (*paymentproviderspb.CreateTapResponse, error) {
+			return &paymentproviderspb.CreateTapResponse{
+				TapProvider: &commonpb.TapProvider{Id: "tenant-scoped-id-8561ed9b", Code: req.GetCode()},
+			}, nil
+		},
+		// Pre-fix behaviour: the reconciler skips the lookup and updates the
+		// stale id, which billing rejects exactly like this.
+		updateFunc: func(*paymentproviderspb.UpdateTapRequest) (*paymentproviderspb.UpdateTapResponse, error) {
+			return nil, tapApiKeyMandatory
+		},
+	}
+	addr := startFakeProvidersGateway(t, fakeSrv)
+
+	// 73ce31ed... is the real platform-org row from the issue.
+	r := newTapReconcilerWithGateway(t, addr, newTapCR("73ce31ed-9b56-4e1e-8941-bd44baac404f"))
+	got := reconcileTap(t, r)
+
+	if fakeSrv.updateCalled {
+		t.Fatal("UpdateTap must NOT be called for a provider id the acting org cannot see")
+	}
+	if !fakeSrv.createCalled {
+		t.Fatal("CreateTap must be called when the acting org has no provider with this code")
+	}
+	if fakeSrv.createReq.GetApiKey() != "sk_test_bayader" {
+		t.Fatalf("CreateTap api_key = %q, want the resolved Secret value", fakeSrv.createReq.GetApiKey())
+	}
+	if got.Status.ProviderID != "tenant-scoped-id-8561ed9b" {
+		t.Fatalf("Status.ProviderID = %q, want the newly created tenant-scoped id", got.Status.ProviderID)
+	}
+	synced := meta.FindStatusCondition(got.Status.Conditions, billingv1alpha1.ConditionSynced)
+	if synced == nil || synced.Status != metav1.ConditionTrue || synced.Reason != "Created" {
+		t.Fatalf("Synced condition = %+v, want True/Created", synced)
+	}
+}
+
+// TestTapReconciler_AdoptsProviderFromActingOrgAndRehomesStaleId covers the
+// already-remediated state: dev has BOTH the stranded platform-org row
+// (73ce31ed...) that status.providerId still points at AND a hand-created
+// tenant-scoped row (8561ed9b...). The reconciler must adopt the row the acting
+// org actually sees and update THAT id — never duplicate, never update the
+// stale one.
+func TestTapReconciler_AdoptsProviderFromActingOrgAndRehomesStaleId(t *testing.T) {
+	fakeSrv := &fakePaymentProvidersServer{
+		getResp: tapProviderResponse("tenant-scoped-id-8561ed9b", "tap_bayader"),
+		updateFunc: func(req *paymentproviderspb.UpdateTapRequest) (*paymentproviderspb.UpdateTapResponse, error) {
+			return &paymentproviderspb.UpdateTapResponse{
+				TapProvider: &commonpb.TapProvider{Id: req.GetId(), Code: req.GetCode()},
+			}, nil
+		},
+	}
+	addr := startFakeProvidersGateway(t, fakeSrv)
+
+	r := newTapReconcilerWithGateway(t, addr, newTapCR("73ce31ed-9b56-4e1e-8941-bd44baac404f"))
+	got := reconcileTap(t, r)
+
+	if fakeSrv.createCalled {
+		t.Fatal("CreateTap must NOT be called when the acting org already has a provider with this code")
+	}
+	if !fakeSrv.updateCalled {
+		t.Fatal("UpdateTap must be called for the adopted provider")
+	}
+	if fakeSrv.updateReq.GetId() != "tenant-scoped-id-8561ed9b" {
+		t.Fatalf("UpdateTap id = %q, want the id resolved in the acting org (not the stale one)",
+			fakeSrv.updateReq.GetId())
+	}
+	if got.Status.ProviderID != "tenant-scoped-id-8561ed9b" {
+		t.Fatalf("Status.ProviderID = %q, want the re-homed acting-org id", got.Status.ProviderID)
+	}
+	synced := meta.FindStatusCondition(got.Status.Conditions, billingv1alpha1.ConditionSynced)
+	if synced == nil || synced.Status != metav1.ConditionTrue || synced.Reason != "InSync" {
+		t.Fatalf("Synced condition = %+v, want True/InSync", synced)
+	}
+}
+
+// TestTapReconciler_CreatesWhenAbsentWithNoStoredId guards the greenfield path:
+// no stored id, nothing in the acting org, so Create still runs with the api key.
+func TestTapReconciler_CreatesWhenAbsentWithNoStoredId(t *testing.T) {
+	fakeSrv := &fakePaymentProvidersServer{
+		getErr: tapNotFound,
+		createFunc: func(req *paymentproviderspb.CreateTapRequest) (*paymentproviderspb.CreateTapResponse, error) {
+			return &paymentproviderspb.CreateTapResponse{
+				TapProvider: &commonpb.TapProvider{Id: "fresh-id", Code: req.GetCode()},
+			}, nil
+		},
+	}
+	addr := startFakeProvidersGateway(t, fakeSrv)
+
+	r := newTapReconcilerWithGateway(t, addr, newTapCR(""))
+	got := reconcileTap(t, r)
+
+	if !fakeSrv.createCalled {
+		t.Fatal("CreateTap must be called on the greenfield path")
+	}
+	if got.Status.ProviderID != "fresh-id" {
+		t.Fatalf("Status.ProviderID = %q, want fresh-id", got.Status.ProviderID)
+	}
+}
+
+// TestTapReconciler_LookupTransportErrorDoesNotRecreate is the safety
+// counterpart: a lookup failure that is NOT NotFound (gateway down, auth
+// rejected, Internal) must NOT be read as "absent", or every blip would mint a
+// duplicate provider and clobber status.providerId.
+func TestTapReconciler_LookupTransportErrorDoesNotRecreate(t *testing.T) {
+	fakeSrv := &fakePaymentProvidersServer{
+		getErr: status.Error(codes.Unavailable, "gateway down"),
+	}
+	addr := startFakeProvidersGateway(t, fakeSrv)
+
+	r := newTapReconcilerWithGateway(t, addr, newTapCR("73ce31ed-9b56-4e1e-8941-bd44baac404f"))
+	got := reconcileTap(t, r)
+
+	if fakeSrv.createCalled || fakeSrv.updateCalled {
+		t.Fatal("neither CreateTap nor UpdateTap may run when the lookup itself failed")
+	}
+	if got.Status.ProviderID != "73ce31ed-9b56-4e1e-8941-bd44baac404f" {
+		t.Fatalf("Status.ProviderID = %q, must be preserved across a failed lookup", got.Status.ProviderID)
+	}
+	synced := meta.FindStatusCondition(got.Status.Conditions, billingv1alpha1.ConditionSynced)
+	if synced == nil || synced.Status != metav1.ConditionFalse || synced.Reason != "LookupFailed" {
+		t.Fatalf("Synced condition = %+v, want False/LookupFailed", synced)
+	}
+}
+
+// TestTapReconciler_AssertsActingOrgViaZitadelOrgidHeader pins the org scope the
+// whole fix depends on: the Tap path must assert the acting org with
+// `x-zitadel-orgid: <spec.externalId>`. `x-invora-org-id` is trusted-internal —
+// the WebGateway strips it and rewrites it to the token's HOME org, which is how
+// the provider landed in the platform org in the first place.
+func TestTapReconciler_AssertsActingOrgViaZitadelOrgidHeader(t *testing.T) {
+	fakeSrv := &fakePaymentProvidersServer{
+		getResp: tapProviderResponse("tenant-scoped-id-8561ed9b", "tap_bayader"),
+		updateFunc: func(req *paymentproviderspb.UpdateTapRequest) (*paymentproviderspb.UpdateTapResponse, error) {
+			return &paymentproviderspb.UpdateTapResponse{
+				TapProvider: &commonpb.TapProvider{Id: req.GetId(), Code: req.GetCode()},
+			}, nil
+		},
+	}
+	addr := startFakeProvidersGateway(t, fakeSrv)
+
+	_, org, _ := planTestFixtures(addr)
+	r := newTapReconcilerWithGateway(t, addr, newTapCR(""))
+	reconcileTap(t, r)
+
+	if fakeSrv.lastMetadata == nil {
+		t.Fatal("fake gateway captured no inbound metadata")
+	}
+	if got := fakeSrv.lastMetadata.Get("x-zitadel-orgid"); len(got) != 1 || got[0] != org.Spec.ExternalID {
+		t.Fatalf("x-zitadel-orgid = %v, want [%q]", got, org.Spec.ExternalID)
+	}
+	if got := fakeSrv.lastMetadata.Get("x-invora-org-id"); len(got) != 0 {
+		t.Fatalf("x-invora-org-id must not be stamped (gateway strips it); got %v", got)
+	}
+}

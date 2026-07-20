@@ -11,8 +11,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
-	"github.com/invoraapp/invora-controller/internal/billingclient"
 	paymentproviderspb "github.com/invoraapp/invora-controller/gen/invora/billing/payment_providers/v2"
+	"github.com/invoraapp/invora-controller/internal/billingclient"
 )
 
 type InvoraBillingTapProviderReconciler struct{ BaseReconciler }
@@ -81,26 +81,63 @@ func (r *InvoraBillingTapProviderReconciler) Reconcile(ctx context.Context, req 
 	svc := paymentproviderspb.NewPaymentProvidersServiceClient(orc.Conn())
 	grpcCtx := orc.GrpcCtx(ctx)
 
-	if tap.Status.ProviderID == "" {
-		code := tap.Spec.Code
-		resp, err := svc.Get(grpcCtx, &paymentproviderspb.GetRequest{Code: &code})
-		if err != nil && !isGrpcNotFound(err) {
-			SetCondition(&tap.Status.Conditions, billingv1alpha1.ConditionSynced,
-				metav1.ConditionFalse, "LookupFailed", err.Error(), tap.Generation)
-			_ = r.Status().Update(ctx, &tap)
-			return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
+	// Resolve the provider by code in the ACTING org on EVERY reconcile, and
+	// treat that lookup as authoritative over status.providerId.
+	//
+	// invora/invora-backend#209: status.providerId used to be trusted forever
+	// (the lookup below was gated on it being empty), so a providerId minted
+	// under a DIFFERENT org than the one we act as today wedged the CR
+	// permanently. That is exactly what happened on dev: releases up to 1.3.2
+	// stamped `x-invora-org-id`, which the WebGateway strips and rewrites to the
+	// token's HOME (platform) org, so CreateTap landed the row in the platform
+	// org; 1.3.3 (10a1ab0) switched to the gateway-validated `x-zitadel-orgid`
+	// from spec.externalId, so the acting org became the tenant. The stored
+	// platform-org id is invisible to the tenant org, and billing's lookup is
+	// strictly org-scoped (PaymentProviders::FindService scopes
+	// BaseProvider.where(organization_id:) before matching on id), so UpdateTap
+	// found nothing, built a NEW record, and failed validation with
+	// `{"api_key":["value_is_mandatory"]}` — UpdateTapRequest carries no api_key
+	// field, only CreateTapRequest does. There was no path back to Create.
+	//
+	// Looking up by code first makes create, update and lookup agree on ONE org
+	// scope: whatever the acting org is, we only ever Update a row that org can
+	// actually see, and we Create (with the api key) when it cannot. A CR
+	// stranded by the header change self-heals on its next reconcile, and an
+	// already-remediated tenant row is adopted rather than duplicated.
+	code := tap.Spec.Code
+	foundID := ""
+	resp, err := svc.Get(grpcCtx, &paymentproviderspb.GetRequest{Code: &code})
+	switch {
+	case err == nil:
+		if tp := resp.GetPaymentProvider().GetTapProvider(); tp != nil {
+			foundID = tp.GetId()
 		}
-		if err == nil {
-			if tp := resp.GetPaymentProvider().GetTapProvider(); tp != nil {
-				logger.Info("adopting existing Tap provider", "id", tp.GetId())
-				tap.Status.ProviderID = tp.GetId()
-			}
+	case isGrpcNotFound(err):
+		// Absent in the acting org — fall through to the create path below.
+	default:
+		SetCondition(&tap.Status.Conditions, billingv1alpha1.ConditionSynced,
+			metav1.ConditionFalse, "LookupFailed", err.Error(), tap.Generation)
+		_ = r.Status().Update(ctx, &tap)
+		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
+	}
+
+	switch {
+	case foundID == "":
+		// Nothing in the acting org. Drop any stale/foreign id so the create
+		// path runs instead of updating a row this org cannot see.
+		if tap.Status.ProviderID != "" {
+			logger.Info("stored provider id is not visible in the acting org, recreating",
+				"staleProviderId", tap.Status.ProviderID, "code", tap.Spec.Code)
+			tap.Status.ProviderID = ""
 		}
+	case foundID != tap.Status.ProviderID:
+		logger.Info("adopting existing Tap provider from the acting org",
+			"id", foundID, "previousProviderId", tap.Status.ProviderID)
+		tap.Status.ProviderID = foundID
 	}
 
 	if tap.Status.ProviderID != "" {
 		name := tap.Spec.Name
-		code := tap.Spec.Code
 		redirect := tap.Spec.SuccessRedirectUrl
 		updated, err := svc.UpdateTap(grpcCtx, &paymentproviderspb.UpdateTapRequest{
 			Id:                 tap.Status.ProviderID,
