@@ -111,6 +111,13 @@ func (r *InvoraBillingTapProviderReconciler) Reconcile(ctx context.Context, req 
 	case err == nil:
 		if tp := resp.GetPaymentProvider().GetTapProvider(); tp != nil {
 			foundID = tp.GetId()
+		} else {
+			// Billing resolves the code without a type filter, so another
+			// provider kind can own it. Creating below will then trip the
+			// org-scoped code-uniqueness constraint with an opaque message;
+			// say so here, or the CR just loops on CreateFailed.
+			logger.Info("code is owned by a non-Tap provider in the acting org; create will collide",
+				"code", tap.Spec.Code)
 		}
 	case isGrpcNotFound(err):
 		// Absent in the acting org — fall through to the create path below.

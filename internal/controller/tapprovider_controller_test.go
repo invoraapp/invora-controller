@@ -527,7 +527,7 @@ func TestTapReconciler_LookupTransportErrorDoesNotRecreate(t *testing.T) {
 	got, res := reconcileTap(t, r)
 
 	if fakeSrv.createCalled || fakeSrv.updateCalled {
-		t.Fatal("neither CreateTap nor UpdateTap may run when the lookup itself failed")
+		t.Fatal("a failed lookup was treated as a verdict: an unreadable acting org must not drive a write")
 	}
 	if got.Status.ProviderID != "73ce31ed-9b56-4e1e-8941-bd44baac404f" {
 		t.Fatalf("Status.ProviderID = %q, must be preserved across a failed lookup", got.Status.ProviderID)
@@ -559,7 +559,7 @@ func TestTapReconciler_FailedCreatePreservesStaleProviderId(t *testing.T) {
 	got, _ := reconcileTap(t, r)
 
 	if !fakeSrv.createCalled {
-		t.Fatal("CreateTap should have been attempted")
+		t.Fatal("a stale id was not recreated around: CreateTap must run when the acting org has no such provider")
 	}
 	if got.Status.ProviderID != "73ce31ed-9b56-4e1e-8941-bd44baac404f" {
 		t.Fatalf("Status.ProviderID = %q, must survive a failed create", got.Status.ProviderID)
