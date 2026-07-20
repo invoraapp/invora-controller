@@ -59,6 +59,16 @@ func (o *orgResourceContext) GrpcCtx(ctx context.Context) context.Context {
 // Conn returns the gRPC connection to the gateway.
 func (o *orgResourceContext) Conn() *grpc.ClientConn { return o.conn }
 
+// HomeGrpcCtx returns a context whose auth metadata deliberately OMITS the
+// x-zitadel-orgid acting-org assertion, so the gateway scopes the call to the
+// token's HOME (platform) org — exactly where releases <= 1.3.2 stranded
+// tenant provider rows by stamping the stripped-and-rewritten x-invora-org-id
+// header. Only the #209 platform-twin migration in the Tap reconciler may use
+// this; every desired-state write goes through GrpcCtx.
+func (o *orgResourceContext) HomeGrpcCtx(ctx context.Context) context.Context {
+	return metadata.AppendToOutgoingContext(ctx, "authorization", "Bearer "+o.token)
+}
+
 // GrpcCtx returns a context with super-admin auth metadata for gRPC calls.
 func (i *instanceAdminContext) GrpcCtx(ctx context.Context) context.Context {
 	return metadata.AppendToOutgoingContext(ctx, "authorization", "Bearer "+i.token)
