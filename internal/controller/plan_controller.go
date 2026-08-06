@@ -99,6 +99,7 @@ func (r *InvoraBillingPlanReconciler) Reconcile(ctx context.Context, req ctrl.Re
 				TrialPeriod:    &trialPeriod,
 				TaxCodes:       plan.Spec.TaxCodes,
 				Charges:        r.buildChargeInputs(&plan),
+				Entitlements:   r.buildEntitlementInputs(&plan),
 			})
 			if err != nil {
 				SetCondition(&plan.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "UpdateFailed", err.Error(), plan.Generation)
@@ -147,6 +148,7 @@ func (r *InvoraBillingPlanReconciler) Reconcile(ctx context.Context, req ctrl.Re
 		TrialPeriod:    &trialPeriod,
 		TaxCodes:       plan.Spec.TaxCodes,
 		Charges:        r.buildChargeInputs(&plan),
+		Entitlements:   r.buildEntitlementInputs(&plan),
 	})
 	if err != nil {
 		SetCondition(&plan.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "CreateFailed", err.Error(), plan.Generation)
@@ -186,6 +188,36 @@ func (r *InvoraBillingPlanReconciler) buildChargeInputs(plan *billingv1alpha1.In
 		charges[i] = charge
 	}
 	return charges
+}
+
+// buildEntitlementInputs converts plan.Spec.Entitlements into the wire
+// EntitlementInput slice. Returns nil (the proto zero value for a repeated
+// field) when spec.Entitlements is nil — critically NOT when it is a
+// non-nil empty slice — so that a plan CR which never declares
+// spec.entitlements never sends an entitlements field on Create/Update at
+// all, and the billing backend's full-replace semantics are never
+// triggered for that plan. This mirrors the same nil-vs-empty distinction
+// Kubernetes API machinery preserves for a CR's repeated/list fields.
+func (r *InvoraBillingPlanReconciler) buildEntitlementInputs(plan *billingv1alpha1.InvoraBillingPlan) []*commonpb.EntitlementInput {
+	if plan.Spec.Entitlements == nil {
+		return nil
+	}
+
+	entitlements := make([]*commonpb.EntitlementInput, len(plan.Spec.Entitlements))
+	for i, e := range plan.Spec.Entitlements {
+		privileges := make([]*commonpb.EntitlementPrivilegeInput, len(e.Privileges))
+		for j, p := range e.Privileges {
+			privileges[j] = &commonpb.EntitlementPrivilegeInput{
+				PrivilegeCode: p.PrivilegeCode,
+				Value:         p.Value,
+			}
+		}
+		entitlements[i] = &commonpb.EntitlementInput{
+			FeatureCode: e.FeatureCode,
+			Privileges:  privileges,
+		}
+	}
+	return entitlements
 }
 
 func chargeModelEnum(s string) commonpb.ChargeModel {
