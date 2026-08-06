@@ -19,11 +19,14 @@ import (
 
 // --- buildEntitlementInputs: pure-function coverage -------------------------
 
-// TestBuildEntitlementInputs_NilSpec_ReturnsNil asserts the critical
-// nil-vs-empty-slice distinction: a plan CR that never declares
-// spec.entitlements must produce a nil (proto "field absent") Entitlements
-// slice, never an empty-but-present one — the billing backend only replaces
-// a plan's entitlement set when the field is present at all.
+// TestBuildEntitlementInputs_NilSpec_ReturnsNil asserts the Go-layer
+// nil-vs-empty-slice distinction the function itself preserves. NOTE: this
+// distinction has no effect on the wire — proto3 gives repeated fields no
+// presence, so a nil and an empty slice marshal identically either way. The
+// actual "never touches an unmanaged plan's entitlements" guarantee lives
+// on the backend (invora/lago/lago-api's `input.entitlements.any?` gate),
+// not here — see TestBuildEntitlementInputs_EmptyNonNilSlice_ReturnsEmptyNonNilSlice
+// below for the wire-equivalence this test's counterpart documents.
 func TestBuildEntitlementInputs_NilSpec_ReturnsNil(t *testing.T) {
 	r := &InvoraBillingPlanReconciler{}
 	plan := &billingv1alpha1.InvoraBillingPlan{}

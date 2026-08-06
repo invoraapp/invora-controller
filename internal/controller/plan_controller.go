@@ -191,13 +191,17 @@ func (r *InvoraBillingPlanReconciler) buildChargeInputs(plan *billingv1alpha1.In
 }
 
 // buildEntitlementInputs converts plan.Spec.Entitlements into the wire
-// EntitlementInput slice. Returns nil (the proto zero value for a repeated
-// field) when spec.Entitlements is nil — critically NOT when it is a
-// non-nil empty slice — so that a plan CR which never declares
-// spec.entitlements never sends an entitlements field on Create/Update at
-// all, and the billing backend's full-replace semantics are never
-// triggered for that plan. This mirrors the same nil-vs-empty distinction
-// Kubernetes API machinery preserves for a CR's repeated/list fields.
+// EntitlementInput slice. Returns nil for a nil spec.Entitlements — kept
+// distinct from a non-nil empty slice at the Go layer for clarity, though
+// proto3 gives repeated fields no on-wire presence, so nil and an empty
+// slice serialize IDENTICALLY: the billing backend cannot tell "field
+// omitted" from "field present but empty" either way. The real gate that
+// keeps a plan CR which never declares a non-empty spec.entitlements (e.g.
+// the Salla plans) from ever touching that plan's remote entitlements
+// lives entirely on the backend — invora/lago/lago-api's
+// update_params_from_proto only sets params[:entitlements] when
+// `input.entitlements.any?` — NOT here. Do not rely on this function's
+// nil-vs-empty distinction as a safety mechanism.
 func (r *InvoraBillingPlanReconciler) buildEntitlementInputs(plan *billingv1alpha1.InvoraBillingPlan) []*commonpb.EntitlementInput {
 	if plan.Spec.Entitlements == nil {
 		return nil

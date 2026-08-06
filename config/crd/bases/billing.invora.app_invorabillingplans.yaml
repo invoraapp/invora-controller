@@ -131,12 +131,16 @@ spec:
                   invora-controller#9 / invora/lago/lago-api MR wiring
                   Entitlement::PlanEntitlementsUpdateService with partial: false).
 
-                  Leaving this field unset/nil (the zero value) never touches the
-                  plan's remote entitlements at all — the controller only calls the
-                  backend's entitlement-replace path when this field is non-nil, so a
-                  plan CR that never declares spec.entitlements (e.g. the Salla
-                  plans) leaves any out-of-band-granted entitlements on that plan
-                  completely untouched forever.
+                  Leaving this field unset, or setting it to an empty list, never
+                  touches the plan's remote entitlements at all — the controller only
+                  calls the backend's entitlement-replace path when this list is
+                  NON-EMPTY (the backend gates on `entitlements.any?`, and proto3
+                  serializes a nil and an empty repeated field identically, so an
+                  explicit `entitlements: []` is wire-indistinguishable from omitting
+                  the field — it does NOT clear a plan's existing entitlements). A
+                  plan CR that never declares a non-empty spec.entitlements (e.g. the
+                  Salla plans) leaves any out-of-band-granted entitlements on that
+                  plan completely untouched forever.
                 items:
                   description: |-
                     PlanEntitlement declares a single feature entitlement for a plan. Maps
