@@ -30,8 +30,14 @@ type fakePlansServer struct {
 	listResp *planspb.ListResponse
 	listErr  error
 
+	getResp *planspb.GetResponse
+	getErr  error
+
 	createFunc   func(*planspb.CreateRequest) (*planspb.CreateResponse, error)
 	createCalled bool
+
+	updateCalled bool
+	lastUpdate   *planspb.UpdateRequest
 
 	// lastMetadata captures the inbound gRPC metadata of the most recent call,
 	// so tests can assert the org-scoping headers the reconciler stamps.
