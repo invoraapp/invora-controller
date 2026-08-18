@@ -108,6 +108,50 @@ func (r *InvoraBillingMetricReconciler) Reconcile(ctx context.Context, req ctrl.
 		}
 	}
 
+	// Adopt-by-code before Create — see adopt_by_code.go for the full rationale.
+	// Reached only when metric.Status.ExternalID == "" (structurally guaranteed
+	// by the branch above). The probe runs on orc's org-scoped grpcCtx
+	// (x-zitadel-orgid), so results are inherently same-org-only, and the match
+	// is exact string equality on code, so adoption is deterministic.
+	//
+	// The probe FAILS CLOSED: on any error the reconciler refuses to Create,
+	// because a failed probe cannot distinguish "no such metric" from "the
+	// metric exists but I could not see it", and only the second is
+	// catastrophic (invora/devops#109).
+	adoptedID, err := scanPagesForCode(grpcCtx, metric.Spec.Code,
+		func(ctx context.Context, cursor string) (string, string, int, error) {
+			resp, err := svc.List(ctx, &meteringpb.ListRequest{Pagination: adoptPagination(cursor)})
+			if err != nil {
+				return "", "", 0, err
+			}
+			for _, existing := range resp.GetItems() {
+				if existing.GetCode() == metric.Spec.Code {
+					return existing.GetId(), "", 0, nil
+				}
+			}
+			return "", resp.GetNextPageCursor(), len(resp.GetItems()), nil
+		})
+	if err != nil {
+		logger.Error(err, "adopt-by-code probe failed; not creating", "code", metric.Spec.Code)
+		SetCondition(&metric.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse,
+			"AdoptProbeFailed",
+			fmt.Sprintf("listing existing billable metrics to adopt code %q failed; refusing to Create to avoid a duplicate: %v", metric.Spec.Code, err),
+			metric.Generation)
+		_ = r.Status().Update(ctx, &metric)
+		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
+	}
+	if adoptedID != "" {
+		logger.Info("found existing billable metric by code, adopting", "code", metric.Spec.Code, "externalId", adoptedID)
+		metric.Status.ExternalID = adoptedID
+		metric.Status.ID = adoptedID
+		setSuccessStatus(&metric.Status.Conditions, &metric.Status.LastSyncedAt,
+			&metric.Status.ObservedGeneration, metric.Generation, "Adopted")
+		if err := r.Status().Update(ctx, &metric); err != nil {
+			return ctrl.Result{}, fmt.Errorf("updating status: %w", err)
+		}
+		return SuccessResult(&metric), nil
+	}
+
 	logger.Info("creating billable metric", "code", metric.Spec.Code)
 	created, err := svc.Create(grpcCtx, buildCreateBillableMetricRequest(&metric))
 	if err != nil {
