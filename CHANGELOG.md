@@ -1,3 +1,10 @@
+## [1.3.5](https://github.com/invoraapp/invora-controller/compare/v1.3.4...v1.3.5) (2026-08-22)
+
+
+### Bug Fixes
+
+* **tax,metric:** adopt existing billing record by code before Create ([#15](https://github.com/invoraapp/invora-controller/issues/15)) ([4bc84b1](https://github.com/invoraapp/invora-controller/commit/4bc84b1e251d697c678a744d63aaede9c949785e)), closes [invora/devops#56](https://github.com/invora/devops/issues/56) [invora/devops#57](https://github.com/invora/devops/issues/57) [invora/devops#109](https://github.com/invora/devops/issues/109)
+
 ## [1.3.4](https://github.com/invoraapp/invora-controller/compare/v1.3.3...v1.3.4) (2026-07-20)
 
 
