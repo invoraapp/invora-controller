@@ -93,6 +93,49 @@ func (r *InvoraBillingTaxReconciler) Reconcile(ctx context.Context, req ctrl.Req
 		}
 	}
 
+	// Adopt-by-code before Create — see adopt_by_code.go for the full rationale.
+	// Reached only when tax.Status.ExternalID == "" (structurally guaranteed by
+	// the branch above). The probe runs on orc's org-scoped grpcCtx
+	// (x-zitadel-orgid), so results are inherently same-org-only, and the match
+	// is exact string equality on code, so adoption is deterministic.
+	//
+	// The probe FAILS CLOSED: on any error the reconciler refuses to Create,
+	// because a failed probe cannot distinguish "no such tax" from "the tax
+	// exists but I could not see it", and only the second is catastrophic
+	// (invora/devops#109).
+	adoptedID, err := scanPagesForCode(grpcCtx, tax.Spec.Code,
+		func(ctx context.Context, cursor string) (string, string, int, error) {
+			resp, err := svc.List(ctx, &taxespb.ListRequest{Pagination: adoptPagination(cursor)})
+			if err != nil {
+				return "", "", 0, err
+			}
+			for _, existing := range resp.GetItems() {
+				if existing.GetCode() == tax.Spec.Code {
+					return existing.GetId(), "", 0, nil
+				}
+			}
+			return "", resp.GetNextPageCursor(), len(resp.GetItems()), nil
+		})
+	if err != nil {
+		logger.Error(err, "adopt-by-code probe failed; not creating", "code", tax.Spec.Code)
+		SetCondition(&tax.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse,
+			"AdoptProbeFailed",
+			fmt.Sprintf("listing existing taxes to adopt code %q failed; refusing to Create to avoid a duplicate: %v", tax.Spec.Code, err),
+			tax.Generation)
+		_ = r.Status().Update(ctx, &tax)
+		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
+	}
+	if adoptedID != "" {
+		logger.Info("found existing tax by code, adopting", "code", tax.Spec.Code, "externalId", adoptedID)
+		tax.Status.ExternalID = adoptedID
+		tax.Status.ID = adoptedID
+		setSuccessStatus(&tax.Status.Conditions, &tax.Status.LastSyncedAt, &tax.Status.ObservedGeneration, tax.Generation, "Adopted")
+		if err := r.Status().Update(ctx, &tax); err != nil {
+			return ctrl.Result{}, fmt.Errorf("updating status: %w", err)
+		}
+		return SuccessResult(&tax), nil
+	}
+
 	logger.Info("creating tax", "code", tax.Spec.Code)
 	created, err := svc.Create(grpcCtx, buildTaxCreateRequest(&tax))
 	if err != nil {
