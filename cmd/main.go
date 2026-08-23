@@ -79,6 +79,7 @@ func main() {
 		Client:      mgr.GetClient(),
 		Scheme:      mgr.GetScheme(),
 		ClientCache: clientCache,
+		Recorder:    mgr.GetEventRecorderFor("invora-controller"),
 	}
 
 	controllers := []struct {
