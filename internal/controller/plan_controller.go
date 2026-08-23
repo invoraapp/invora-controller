@@ -99,6 +99,7 @@ func (r *InvoraBillingPlanReconciler) Reconcile(ctx context.Context, req ctrl.Re
 				TrialPeriod:    &trialPeriod,
 				TaxCodes:       plan.Spec.TaxCodes,
 				Charges:        r.buildChargeInputs(&plan),
+				Entitlements:   r.buildEntitlementInputs(&plan),
 			})
 			if err != nil {
 				SetCondition(&plan.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "UpdateFailed", err.Error(), plan.Generation)
@@ -147,6 +148,7 @@ func (r *InvoraBillingPlanReconciler) Reconcile(ctx context.Context, req ctrl.Re
 		TrialPeriod:    &trialPeriod,
 		TaxCodes:       plan.Spec.TaxCodes,
 		Charges:        r.buildChargeInputs(&plan),
+		Entitlements:   r.buildEntitlementInputs(&plan),
 	})
 	if err != nil {
 		SetCondition(&plan.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "CreateFailed", err.Error(), plan.Generation)
@@ -186,6 +188,40 @@ func (r *InvoraBillingPlanReconciler) buildChargeInputs(plan *billingv1alpha1.In
 		charges[i] = charge
 	}
 	return charges
+}
+
+// buildEntitlementInputs converts plan.Spec.Entitlements into the wire
+// EntitlementInput slice. Returns nil for a nil spec.Entitlements — kept
+// distinct from a non-nil empty slice at the Go layer for clarity, though
+// proto3 gives repeated fields no on-wire presence, so nil and an empty
+// slice serialize IDENTICALLY: the billing backend cannot tell "field
+// omitted" from "field present but empty" either way. The real gate that
+// keeps a plan CR which never declares a non-empty spec.entitlements (e.g.
+// the Salla plans) from ever touching that plan's remote entitlements
+// lives entirely on the backend — invora/lago/lago-api's
+// update_params_from_proto only sets params[:entitlements] when
+// `input.entitlements.any?` — NOT here. Do not rely on this function's
+// nil-vs-empty distinction as a safety mechanism.
+func (r *InvoraBillingPlanReconciler) buildEntitlementInputs(plan *billingv1alpha1.InvoraBillingPlan) []*commonpb.EntitlementInput {
+	if plan.Spec.Entitlements == nil {
+		return nil
+	}
+
+	entitlements := make([]*commonpb.EntitlementInput, len(plan.Spec.Entitlements))
+	for i, e := range plan.Spec.Entitlements {
+		privileges := make([]*commonpb.EntitlementPrivilegeInput, len(e.Privileges))
+		for j, p := range e.Privileges {
+			privileges[j] = &commonpb.EntitlementPrivilegeInput{
+				PrivilegeCode: p.PrivilegeCode,
+				Value:         p.Value,
+			}
+		}
+		entitlements[i] = &commonpb.EntitlementInput{
+			FeatureCode: e.FeatureCode,
+			Privileges:  privileges,
+		}
+	}
+	return entitlements
 }
 
 func chargeModelEnum(s string) commonpb.ChargeModel {

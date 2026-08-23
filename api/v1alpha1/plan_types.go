@@ -54,6 +54,42 @@ type InvoraBillingPlanSpec struct {
 	// TaxCodes references billing tax codes to apply to this plan.
 	// +optional
 	TaxCodes []string `json:"taxCodes,omitempty"`
+
+	// Entitlements declares the plan-level feature entitlements (e.g. a
+	// connected_business grant) that apply to EVERY subscription on this
+	// plan — current and future. The controller reconciles this field
+	// declaratively and AUTHORITATIVELY: on every reconcile the full list
+	// here is sent to the billing backend, which replaces the plan's
+	// entire entitlement set with exactly what is declared (the backend's
+	// plan-update semantics are full-replace, not merge — see
+	// invora-controller#9 / invora/lago/lago-api MR wiring
+	// Entitlement::PlanEntitlementsUpdateService with partial: false).
+	//
+	// Leaving this field unset, or setting it to an empty list, never
+	// touches the plan's remote entitlements at all — the controller only
+	// calls the backend's entitlement-replace path when this list is
+	// NON-EMPTY (the backend gates on `entitlements.any?`, and proto3
+	// serializes a nil and an empty repeated field identically, so an
+	// explicit `entitlements: []` is wire-indistinguishable from omitting
+	// the field — it does NOT clear a plan's existing entitlements). A
+	// plan CR that never declares a non-empty spec.entitlements (e.g. the
+	// Salla plans) leaves any out-of-band-granted entitlements on that
+	// plan completely untouched forever.
+	// +optional
+	Entitlements []PlanEntitlement `json:"entitlements,omitempty"`
+}
+
+// PlanEntitlement declares a single feature entitlement for a plan. Maps
+// 1:1 to invora.billing.common.v2.EntitlementInput — mirrors
+// SubscriptionEntitlement (subscription_types.go) at the plan level.
+type PlanEntitlement struct {
+	// FeatureCode references the feature by code.
+	// +kubebuilder:validation:MinLength=1
+	FeatureCode string `json:"featureCode"`
+
+	// Privileges overrides privilege values for this feature on this plan.
+	// +optional
+	Privileges []EntitlementPrivilege `json:"privileges,omitempty"`
 }
 
 // PlanCharge defines a usage-based charge on a plan.
