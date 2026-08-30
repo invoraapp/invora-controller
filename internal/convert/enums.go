@@ -9,8 +9,8 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	commonpb "github.com/invoraapp/invora-controller/gen/invora/billing/common/v2"
-	"github.com/invoraapp/invora-controller/gen/kernel"
 	webhookspb "github.com/invoraapp/invora-controller/gen/invora/billing/webhooks/v2"
+	"github.com/invoraapp/invora-controller/gen/kernel"
 )
 
 // Currency converts a string currency code (e.g., "SAR") to proto enum.
@@ -82,6 +82,18 @@ func WeightedInterval(s string) commonpb.WeightedInterval {
 		return commonpb.WeightedInterval_WEIGHTED_INTERVAL_UNSPECIFIED
 	}
 	return billingEnum[commonpb.WeightedInterval](commonpb.WeightedInterval_value, "WEIGHTED_INTERVAL_", s)
+}
+
+// PrivilegeValueType maps CR valueType (integer / boolean / string / select) to proto enum.
+func PrivilegeValueType(s string) commonpb.PrivilegeValueTypeEnum {
+	if s == "" {
+		return commonpb.PrivilegeValueTypeEnum_PRIVILEGE_VALUE_TYPE_ENUM_UNSPECIFIED
+	}
+	return billingEnum[commonpb.PrivilegeValueTypeEnum](
+		commonpb.PrivilegeValueTypeEnum_value,
+		"PRIVILEGE_VALUE_TYPE_ENUM_",
+		s,
+	)
 }
 
 // WebhookSignatureAlgo maps CR signatureAlgo (hmac / jwt) to proto enum.

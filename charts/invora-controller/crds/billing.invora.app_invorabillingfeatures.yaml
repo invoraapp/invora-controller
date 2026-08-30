@@ -95,6 +95,41 @@ spec:
                 required:
                 - name
                 type: object
+              privileges:
+                description: |-
+                  Privileges declares the privilege definitions this feature exposes.
+                  A subscription-level entitlement override (SubscriptionEntitlement.Privileges)
+                  can only override the VALUE of a privilege declared here — it cannot invent one.
+                items:
+                  description: |-
+                    FeaturePrivilege declares a single privilege definition on a feature.
+                    Maps 1:1 to invora.billing.plans.v2.FeaturePrivilegeInput.
+                  properties:
+                    code:
+                      description: Code is the unique identifier for the privilege
+                        within this feature. Immutable.
+                      minLength: 1
+                      type: string
+                    name:
+                      description: Name is the display name.
+                      type: string
+                    selectOptions:
+                      description: SelectOptions is used only when valueType is "select".
+                      items:
+                        type: string
+                      type: array
+                    valueType:
+                      description: ValueType is the privilege's data type.
+                      enum:
+                      - integer
+                      - boolean
+                      - string
+                      - select
+                      type: string
+                  required:
+                  - code
+                  type: object
+                type: array
             required:
             - code
             - name

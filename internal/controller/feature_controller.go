@@ -111,8 +111,9 @@ func (r *InvoraBillingFeatureReconciler) Reconcile(ctx context.Context, req ctrl
 
 func buildCreateFeatureRequest(feature *billingv1alpha1.InvoraBillingFeature) *planspb.CreateFeatureRequest {
 	in := &planspb.CreateFeatureRequest{
-		Code:     feature.Spec.Code,
-		Metadata: convert.MetadataInputs(feature.Spec.Metadata),
+		Code:       feature.Spec.Code,
+		Metadata:   convert.MetadataInputs(feature.Spec.Metadata),
+		Privileges: buildFeaturePrivileges(feature.Spec.Privileges),
 	}
 	if feature.Spec.Name != "" {
 		in.Name = &feature.Spec.Name
@@ -125,8 +126,9 @@ func buildCreateFeatureRequest(feature *billingv1alpha1.InvoraBillingFeature) *p
 
 func buildUpdateFeatureRequest(feature *billingv1alpha1.InvoraBillingFeature) *planspb.UpdateFeatureRequest {
 	in := &planspb.UpdateFeatureRequest{
-		Id:       feature.Status.ExternalID,
-		Metadata: convert.MetadataInputs(feature.Spec.Metadata),
+		Id:         feature.Status.ExternalID,
+		Metadata:   convert.MetadataInputs(feature.Spec.Metadata),
+		Privileges: buildFeaturePrivileges(feature.Spec.Privileges),
 	}
 	if feature.Spec.Name != "" {
 		in.Name = &feature.Spec.Name
@@ -135,6 +137,31 @@ func buildUpdateFeatureRequest(feature *billingv1alpha1.InvoraBillingFeature) *p
 		in.Description = &feature.Spec.Description
 	}
 	return in
+}
+
+// buildFeaturePrivileges maps CR privilege declarations to the wire shape.
+// bayader-devops#101: a subscription-level entitlement override can only override the
+// VALUE of a privilege the Feature already declares — this is what lets it declare one.
+func buildFeaturePrivileges(privs []billingv1alpha1.FeaturePrivilege) []*planspb.FeaturePrivilegeInput {
+	if len(privs) == 0 {
+		return nil
+	}
+	out := make([]*planspb.FeaturePrivilegeInput, 0, len(privs))
+	for _, p := range privs {
+		in := &planspb.FeaturePrivilegeInput{Code: p.Code}
+		if p.Name != "" {
+			in.Name = &p.Name
+		}
+		if p.ValueType != "" {
+			vt := convert.PrivilegeValueType(p.ValueType)
+			in.ValueType = &vt
+		}
+		if len(p.SelectOptions) > 0 {
+			in.Config = &planspb.FeaturePrivilegeConfigInput{SelectOptions: p.SelectOptions}
+		}
+		out = append(out, in)
+	}
+	return out
 }
 
 func (r *InvoraBillingFeatureReconciler) SetupWithManager(mgr ctrl.Manager) error {
