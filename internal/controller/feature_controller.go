@@ -11,6 +11,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	billingv1alpha1 "github.com/invoraapp/invora-controller/api/v1alpha1"
+	commonpb "github.com/invoraapp/invora-controller/gen/invora/billing/common/v2"
 	planspb "github.com/invoraapp/invora-controller/gen/invora/billing/plans/v2"
 	"github.com/invoraapp/invora-controller/internal/convert"
 )
@@ -120,7 +121,37 @@ func buildCreateFeatureRequest(feature *billingv1alpha1.InvoraBillingFeature) *p
 	if feature.Spec.Description != "" {
 		in.Description = &feature.Spec.Description
 	}
+	in.Privileges = buildFeaturePrivilegeInputs(feature.Spec.Privileges)
 	return in
+}
+
+func buildFeaturePrivilegeInputs(privs []billingv1alpha1.FeaturePrivilege) []*planspb.FeaturePrivilegeInput {
+	if len(privs) == 0 {
+		return nil
+	}
+	out := make([]*planspb.FeaturePrivilegeInput, 0, len(privs))
+	for _, p := range privs {
+		pi := &planspb.FeaturePrivilegeInput{Code: p.Code}
+		if p.Name != "" {
+			n := p.Name
+			pi.Name = &n
+		}
+		vt := commonpb.PrivilegeValueTypeEnum_PRIVILEGE_VALUE_TYPE_ENUM_INTEGER
+		switch p.ValueType {
+		case "boolean":
+			vt = commonpb.PrivilegeValueTypeEnum_PRIVILEGE_VALUE_TYPE_ENUM_BOOLEAN
+		case "select":
+			vt = commonpb.PrivilegeValueTypeEnum_PRIVILEGE_VALUE_TYPE_ENUM_SELECT
+		case "string":
+			vt = commonpb.PrivilegeValueTypeEnum_PRIVILEGE_VALUE_TYPE_ENUM_STRING
+		}
+		pi.ValueType = &vt
+		if len(p.SelectOptions) > 0 {
+			pi.Config = &planspb.FeaturePrivilegeConfigInput{SelectOptions: p.SelectOptions}
+		}
+		out = append(out, pi)
+	}
+	return out
 }
 
 func buildUpdateFeatureRequest(feature *billingv1alpha1.InvoraBillingFeature) *planspb.UpdateFeatureRequest {
@@ -134,6 +165,7 @@ func buildUpdateFeatureRequest(feature *billingv1alpha1.InvoraBillingFeature) *p
 	if feature.Spec.Description != "" {
 		in.Description = &feature.Spec.Description
 	}
+	in.Privileges = buildFeaturePrivilegeInputs(feature.Spec.Privileges)
 	return in
 }
 

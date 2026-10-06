@@ -28,6 +28,35 @@ type InvoraBillingFeatureSpec struct {
 	// Useful for categorizing features (e.g. entity_type: "book").
 	// +optional
 	Metadata map[string]string `json:"metadata,omitempty"`
+
+	// Privileges declares the privileges (typed values) the feature carries.
+	// A subscription-level entitlement can only set the value of a privilege
+	// declared here.
+	// +optional
+	// +listType=map
+	// +listMapKey=code
+	Privileges []FeaturePrivilege `json:"privileges,omitempty"`
+}
+
+// FeaturePrivilege is a privilege definition on a feature.
+type FeaturePrivilege struct {
+	// Code is the privilege identifier, unique within the feature.
+	// +kubebuilder:validation:MinLength=1
+	Code string `json:"code"`
+
+	// Name is the optional display name.
+	// +optional
+	Name string `json:"name,omitempty"`
+
+	// ValueType is the privilege value type.
+	// +kubebuilder:validation:Enum=boolean;integer;select;string
+	// +kubebuilder:default=integer
+	// +optional
+	ValueType string `json:"valueType,omitempty"`
+
+	// SelectOptions lists the allowed values when valueType is select.
+	// +optional
+	SelectOptions []string `json:"selectOptions,omitempty"`
 }
 
 // InvoraBillingFeatureStatus defines the observed state.
