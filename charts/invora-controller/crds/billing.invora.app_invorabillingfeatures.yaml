@@ -95,6 +95,44 @@ spec:
                 required:
                 - name
                 type: object
+              privileges:
+                description: |-
+                  Privileges declares the privileges (typed values) the feature carries.
+                  A subscription-level entitlement can only set the value of a privilege
+                  declared here.
+                items:
+                  description: FeaturePrivilege is a privilege definition on a feature.
+                  properties:
+                    code:
+                      description: Code is the privilege identifier, unique within
+                        the feature.
+                      minLength: 1
+                      type: string
+                    name:
+                      description: Name is the optional display name.
+                      type: string
+                    selectOptions:
+                      description: SelectOptions lists the allowed values when valueType
+                        is select.
+                      items:
+                        type: string
+                      type: array
+                    valueType:
+                      default: integer
+                      description: ValueType is the privilege value type.
+                      enum:
+                      - boolean
+                      - integer
+                      - select
+                      - string
+                      type: string
+                  required:
+                  - code
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - code
+                x-kubernetes-list-type: map
             required:
             - code
             - name
