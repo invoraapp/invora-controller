@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"time"
 
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -96,6 +98,27 @@ func (r *InvoraBillingFeatureReconciler) Reconcile(ctx context.Context, req ctrl
 	logger.Info("creating feature", "code", feature.Spec.Code)
 	created, err := svc.CreateFeature(grpcCtx, buildCreateFeatureRequest(&feature))
 	if err != nil {
+		// Defensive adopt: a prior reconcile may have created this feature and
+		// lost its ExternalID write before persisting it (reproduced live —
+		// invora-controller/bayader-session-quota, wedged on
+		// Synced=False/CreateFailed since 2026-07-19, "value_already_exist" on
+		// every retry because Status.ExternalID stayed empty). Recover by
+		// looking the feature up by its (immutable) code rather than storming
+		// on AlreadyExists forever — mirrors the organization/Zitadel
+		// controllers' adopt-on-AlreadyExists pattern (bayader-devops#100).
+		if status.Code(err) == codes.AlreadyExists {
+			code := feature.Spec.Code
+			if existing, gerr := svc.GetFeature(grpcCtx, &planspb.GetFeatureRequest{Code: &code}); gerr == nil {
+				logger.Info("feature already exists, adopting", "id", existing.GetFeature().GetId())
+				feature.Status.ExternalID = existing.GetFeature().GetId()
+				feature.Status.ID = existing.GetFeature().GetId()
+				setSuccessStatus(&feature.Status.Conditions, &feature.Status.LastSyncedAt, &feature.Status.ObservedGeneration, feature.Generation, "Adopted")
+				if serr := r.Status().Update(ctx, &feature); serr != nil {
+					return ctrl.Result{}, fmt.Errorf("updating status: %w", serr)
+				}
+				return SuccessResult(&feature), nil
+			}
+		}
 		SetCondition(&feature.Status.Conditions, billingv1alpha1.ConditionSynced, metav1.ConditionFalse, "CreateFailed", err.Error(), feature.Generation)
 		_ = r.Status().Update(ctx, &feature)
 		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
